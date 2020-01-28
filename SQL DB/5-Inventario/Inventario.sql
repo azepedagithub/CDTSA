@@ -1477,7 +1477,7 @@ END
 
 GO
 
-CREATE   PROCEDURE dbo.invUpdateDocumentoInvDetalle(@Operacion AS NVARCHAR(1),@IDTransaccion AS INT,@IDProducto AS INT,@IDLote AS INT,@IDTipoTran AS INT,@IDBodega AS INT,
+CREATE   PROCEDURE dbo.invUpdateDocumentoInvDetalle(@Operacion AS NVARCHAR(1),@IDTransaccion AS INT,@IDProducto AS BIGINT,@IDLote AS INT,@IDTipoTran AS INT,@IDBodega AS INT,
 											@IDTraslado AS INT,@Cantidad AS DECIMAL(28,4),@PrecioUnitarioDolar AS DECIMAL(28,4),@PrecioUnitarioLocal AS DECIMAL(28,4), 
 											@CostoDolar AS decimal(28,4), @CostoLocal AS decimal(28,4), @Transaccion AS NVARCHAR(3),@TipoCambio AS decimal(26,4),@Aplicado AS BIT)
 AS 
@@ -1619,7 +1619,7 @@ SELECT Transaccion,Descr FROM dbo.globalClaseTipoTran WHERE (Transaccion = @Tran
 GO
 
 
-CREATE  PROCEDURE  dbo.invUpdateLote(@Operacion AS NVARCHAR(1), @IDLote AS int OUTPUT, @IDProducto INT, @LoteInterno AS NVARCHAR(50),@LoteProveedor AS NVARCHAR(50),@FechaVencimiento AS DATE,@FechaFabricacion AS DATE,@FechaIngreso AS DATE )
+CREATE  PROCEDURE  dbo.invUpdateLote(@Operacion AS NVARCHAR(1), @IDLote AS int OUTPUT, @IDProducto BIGINT, @LoteInterno AS NVARCHAR(50),@LoteProveedor AS NVARCHAR(50),@FechaVencimiento AS DATE,@FechaFabricacion AS DATE,@FechaIngreso AS DATE )
 AS 
 
 IF UPPER(@Operacion) ='I'
@@ -1666,7 +1666,7 @@ END
 
 GO
 
-CREATE   PROCEDURE dbo.invGetLote(@IDLote AS INT,@IDProducto AS INT ,@LoteInterno AS NVARCHAR(50),@LoteProveedor AS NVARCHAR(50))
+CREATE   PROCEDURE dbo.invGetLote(@IDLote AS INT,@IDProducto AS BIGINT ,@LoteInterno AS NVARCHAR(50),@LoteProveedor AS NVARCHAR(50))
 AS 
 SELECT  IDLote ,
         L.IDProducto ,
@@ -1931,7 +1931,7 @@ WHERE (IDBodega IN (SELECT *  FROM dbo.ConvertListToTable(@lstBodega,',')) OR @l
 GO
 
 
-CREATE  PROCEDURE [dbo].[invGetTransaccionesByProducto] (@Bodega AS NVARCHAR(4000), @IDProducto AS INT,
+CREATE  PROCEDURE [dbo].[invGetTransaccionesByProducto] (@Bodega AS NVARCHAR(4000), @IDProducto AS BIGINT,
 							@Lote AS  NVARCHAR(4000),@Transacciones NVARCHAR(4000),@Paquete NVARCHAR(4000),
 							@Documento NVARCHAR(4000), @Referencia NVARCHAR(4000),@FechaInicial DATE, @FechaFinal DATE)
 AS 
@@ -2144,7 +2144,7 @@ go
 
 
 --// Imprime las Boletas
-CREATE PROCEDURE dbo.invGetBoletas @IDBodega AS INT,@IDProducto AS INT,@Clasif1 AS INT,@Clasif2 AS INT,@Clasif3 AS INT,@Clasif4 AS INT,@Clasif5 AS INT, @Clasif6 AS INT,@ConsolidaByProducto AS BIT
+CREATE PROCEDURE dbo.invGetBoletas @IDBodega AS INT,@IDProducto AS BIGINT,@Clasif1 AS INT,@Clasif2 AS INT,@Clasif3 AS INT,@Clasif4 AS INT,@Clasif5 AS INT, @Clasif6 AS INT,@ConsolidaByProducto AS BIT
 AS
 /*SET @IDBodega=-1
 SET @IDProducto=-1
@@ -2196,7 +2196,7 @@ GO
 
 --// Cuadre de Diferencias
 
-CREATE  PROCEDURE dbo.invGetBoletasVrsInventario @IDBodega AS INT,@IDProducto AS INT,@Clasif1 AS INT,@Clasif2 AS INT,@Clasif3 AS INT,@Clasif4 AS INT,@Clasif5 AS INT, @Clasif6 AS INT,@ConsolidaByProducto AS BIT
+CREATE  PROCEDURE dbo.invGetBoletasVrsInventario @IDBodega AS INT,@IDProducto AS BIGINT,@Clasif1 AS INT,@Clasif2 AS INT,@Clasif3 AS INT,@Clasif4 AS INT,@Clasif5 AS INT, @Clasif6 AS INT,@ConsolidaByProducto AS BIT
 AS
 /*
 SET @IDBodega=-1
@@ -2381,7 +2381,7 @@ CREATE TABLE #Catalogo(IDBodega INT,IDProducto INT,IDLote INT)
 	
 	WHILE (@i<=@Count)
 	BEGIN
-		DECLARE @IDProducto AS INT,@IDLote AS INT,@IDBodegaDet AS INT,@Boleta AS DECIMAL(28,4),@Existencia AS DECIMAL(28,4) ,@Dif AS decimal(28,4),@CostoLocal AS DECIMAL(28,4),@CostoDolar AS DECIMAL(28,4)
+		DECLARE @IDProducto AS BIGINT,@IDLote AS INT,@IDBodegaDet AS INT,@Boleta AS DECIMAL(28,4),@Existencia AS DECIMAL(28,4) ,@Dif AS decimal(28,4),@CostoLocal AS DECIMAL(28,4),@CostoDolar AS DECIMAL(28,4)
 		DECLARE @IDTipoTran AS INT
 		DECLARE @Tran AS NVARCHAR(3)
 		
@@ -2608,7 +2608,7 @@ WHERE IDFactura =@IDDocumento
 
 SET @Rows = @@ROWCOUNT
 
-DECLARE @IDProducto AS INT,@IDBodega AS INT,@IDLote AS INT,@Cantidad AS DECIMAL(28,4),@PrecioLocal AS DECIMAL(28,4),@PrecioDolar AS DECIMAL(28,4),
+DECLARE @IDProducto AS BIGINT,@IDBodega AS INT,@IDLote AS INT,@Cantidad AS DECIMAL(28,4),@PrecioLocal AS DECIMAL(28,4),@PrecioDolar AS DECIMAL(28,4),
 @CostoPromDolar AS DECIMAL(28,4),@CostoPromLocal AS DECIMAL(28,4),
 @CtaContado AS BIGINT,@CtrContado AS INT,
 @CtaCostoVenta AS BIGINT, @CtrCostoVenta AS INT,
@@ -2764,7 +2764,7 @@ SELECT A.IDProducto,A.IDBodega,A.IDLote,A.Cantidad,P.CostoPromDolar,P.CostoPromL
 
 SET @Rows = @@ROWCOUNT
 
-DECLARE @IDProducto AS INT,@IDBodega AS INT,@IDLote AS INT,@Cantidad AS DECIMAL(28,4),
+DECLARE @IDProducto AS BIGINT,@IDBodega AS INT,@IDLote AS INT,@Cantidad AS DECIMAL(28,4),
 @CostoPromDolar AS DECIMAL(28,4),@CostoPromLocal AS DECIMAL(28,4),@CostoUntLocal AS decimal(28,4),
 @PrecioUntLocal AS decimal(28,4),@CtaInventario AS BIGINT,@CtrInventario AS INT,
 @CtaSobranteInvFisico AS BIGINT, @CtrSobranteInvFisico AS INT,
@@ -3153,7 +3153,7 @@ GO
 
 
 
-CREATE  PROCEDURE [dbo].[invGetExistenciaProductoCorte] @Fecha DATETIME,@IDBodega AS INT, @IDProducto AS INT,
+CREATE  PROCEDURE [dbo].[invGetExistenciaProductoCorte] @Fecha DATETIME,@IDBodega AS INT, @IDProducto AS BIGINT,
 							@IDLote AS  INT,@DetallaLote BIT=0
 							
 AS 
@@ -3236,7 +3236,7 @@ DROP TABLE  #tmpSaldos
 GO
 
 CREATE PROCEDURE dbo.invGetKardex @FechaInicio DATETIME,@FechaFin DATETIME,
-																				@IDBodega AS INT, @IDProducto AS INT,@IDLote AS  INT
+																				@IDBodega AS INT, @IDProducto AS BIGINT,@IDLote AS  INT
 
 AS 
 
@@ -3361,7 +3361,7 @@ DROP TABLE  #Movimientos
 
 GO
 
-CREATE PROCEDURE  dbo.invKardexConsolidado  @FechaInicio DATETIME,@FechaFin DATETIME,@IDBodega AS INT, @IDProducto AS INT,
+CREATE PROCEDURE  dbo.invKardexConsolidado  @FechaInicio DATETIME,@FechaFin DATETIME,@IDBodega AS INT, @IDProducto AS BIGINT,
 							@IDLote AS  INT
 AS 
 --SET @FechaInicio='20181126'

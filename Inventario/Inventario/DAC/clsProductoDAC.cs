@@ -54,7 +54,6 @@ namespace CI.DAC
                 oAdaptador.InsertCommand.CommandType = CommandType.StoredProcedure;
                 oAdaptador.InsertCommand.Parameters.Add("@Operacion", SqlDbType.NChar).Value = "I";
                 oAdaptador.InsertCommand.Parameters.Add("@IDProducto", SqlDbType.BigInt).SourceColumn = "IDProducto";
-                oAdaptador.InsertCommand.Parameters["@IDProducto"].Direction = ParameterDirection.InputOutput;
                 oAdaptador.InsertCommand.Parameters.Add("@Descr", SqlDbType.NChar).SourceColumn = "Descr";
                 oAdaptador.InsertCommand.Parameters.Add("@Alias", SqlDbType.NChar).SourceColumn = "Alias";
                 oAdaptador.InsertCommand.Parameters.Add("@Clasif1", SqlDbType.Int).SourceColumn = "Clasif1";

@@ -672,6 +672,25 @@ namespace CI
 
                 tool.ShowPreview();
             }
+
+        private void txtIDProducto_Validating(object sender, CancelEventArgs e)
+        {
+            //Validar si el codigo ingresado existe en la base de datos.
+            DataSet dsProd = DAC.clsProductoDAC.GetProductoByID(Convert.ToInt32(this.txtIDProducto.Text.Trim()), "*");
+            if (dsProd.Tables[0].Rows.Count > 0)
+            {
+                MessageBox.Show("El código de producto ya existe en la base de datos");
+                this.txtIDProducto.ErrorText = "El produducto ya existe en la base de datos";
+                e.Cancel = true;
+            }
+            else
+            {
+                this.txtIDProducto.ErrorText = "";
+            }
+
+        }
+
+       
         }
         
  
