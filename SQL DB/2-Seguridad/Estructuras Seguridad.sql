@@ -188,6 +188,52 @@ VALUES (100, 'Módulo Contable')
 
 GO
 
+insert [dbo].[secMODULO](
+	[IDModulo],
+	[Descr] )
+VALUES (200, 'Módulo Control Bancario')
+
+GO
+
+insert [dbo].[secMODULO](
+	[IDModulo],
+	[Descr] )
+VALUES (300, 'Módulo Inventario')
+
+GO
+
+insert [dbo].[secMODULO](
+	[IDModulo],
+	[Descr] )
+VALUES (400, 'Módulo Compras')
+
+GO
+
+insert [dbo].[secMODULO](
+	[IDModulo],
+	[Descr] )
+VALUES (500, 'Módulo Facturacion')
+
+GO
+
+insert [dbo].[secMODULO](
+	[IDModulo],
+	[Descr] )
+VALUES (600, 'Módulo Cuentas por Cobrar')
+
+GO
+
+insert [dbo].[secMODULO](
+	[IDModulo],
+	[Descr] )
+VALUES (700, 'Módulo Cuentas por Pagar')
+
+GO
+
+
+
+
+
 INSERT   [dbo].[secACCION](   [IDMODULO] ,   [IDACCION] ,   [DESCR]   )  values ( 0,1,'Acceso al Sistema')   
 insert [dbo].[secACCION](   [IDMODULO] ,   [IDACCION] ,   [DESCR]   )  values ( 0,2,'Modificacion de Reportes')   
 insert [dbo].[secACCION](   [IDMODULO] ,   [IDACCION] ,   [DESCR]   )  values ( 0,3,'Administracion del Sistema')   

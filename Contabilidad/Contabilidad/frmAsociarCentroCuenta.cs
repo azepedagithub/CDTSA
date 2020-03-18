@@ -93,7 +93,8 @@ namespace CG
                         MessageBox.Show(ex.Message);
                     }
 
-                    PopulateGrid();
+                    //PopulateGrid();
+                    this.Close();
                 }
             }
             finally

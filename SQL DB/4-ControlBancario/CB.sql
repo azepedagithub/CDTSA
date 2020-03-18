@@ -261,7 +261,7 @@ Alter Table dbo.globalMoneda add constraint ukglobalMoneda unique (Moneda)
 go
 
 INSERT dbo.globalMoneda (IDMoneda, Moneda , Descr, Simbolo )
-VALUES (1, 'LOCAL', 'Córdobas', 'C$' )
+VALUES (1, 'CORDOBAS', 'CORDOBAS', 'C$' )
 GO
 INSERT dbo.globalMoneda (IDMoneda, Moneda , Descr, Simbolo )
 VALUES (2, 'DOLAR', 'DOLAR', '$' )

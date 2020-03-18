@@ -175,8 +175,8 @@ namespace CI
 
         private void HabilitarControles(bool Activo)
         {
-            
-            this.txtIDProducto.ReadOnly =true;
+
+            this.txtIDProducto.ReadOnly = !Activo;
             this.txtDescr.ReadOnly = !Activo;
             this.txtAlias.ReadOnly = !Activo;
             this.txtCodigoBarra.ReadOnly = !Activo;
@@ -399,7 +399,7 @@ namespace CI
                 else {
 
                     _currentRow = _dtProducto.NewRow();
-                    //_currentRow["IDProducto"] = this.txtIDProducto.Text.Trim();
+                    _currentRow["IDProducto"] = this.txtIDProducto.Text.Trim();
                     _currentRow["Descr"] = this.txtDescr.Text.Trim();
                     _currentRow["Alias"] = this.txtAlias.Text.Trim();
                     _currentRow["Clasif1"] = (this.slkupClasif1.EditValue == null) ? 1 : Convert.ToInt32(this.slkupClasif1.EditValue);

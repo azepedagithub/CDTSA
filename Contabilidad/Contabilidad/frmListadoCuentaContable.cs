@@ -591,11 +591,13 @@ namespace CG
             {
                 this.chkEsMayor.Enabled = false;
                 this.chkEsMayor.EditValue = false;
+                this.chkUsaCentroCosto.Enabled = true;
             }
             else
             {
                 this.chkEsMayor.Enabled = true;
                 this.chkEsMayor.EditValue = true;
+                this.chkUsaCentroCosto.Enabled = false;
             }
         }
 
