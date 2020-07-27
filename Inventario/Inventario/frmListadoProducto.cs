@@ -46,6 +46,11 @@ namespace CI
         public frmListadoProducto()
         {
             InitializeComponent();
+            this.SetStyle(
+          ControlStyles.AllPaintingInWmPaint |
+          ControlStyles.UserPaint |
+          ControlStyles.DoubleBuffer,
+          true);
             
         }
 
@@ -101,7 +106,7 @@ namespace CI
 
 
                 sSql = "SELECT IDProducto,Descr ,Alias ,Clasif1 ,Clasif2 ,Clasif3 ,Clasif4 ,Clasif5 ,Clasif6 ,CodigoBarra ,IDUnidad ,FactorEmpaque,IDCuentaContable ,TipoImpuesto ," +
-                        "EsMuestra ,EsControlado ,EsEtico," +
+                        "EsMuestra ,EsControlado ,EsEtico,IDProveedor," +
                         " Activo ,UserInsert ,UserUpdate  ,UpdateDate,CreateDate  FROM dbo.invProducto";
               
 

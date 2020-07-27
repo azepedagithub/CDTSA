@@ -117,7 +117,7 @@ namespace CI.Consultas
                 {
                     lytFechaCorte.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
                     this.grRangoFecha.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Always;
-                    IDProducto = (long)this.slkupProducto.EditValue;
+                    IDProducto = Convert.ToInt64(this.slkupProducto.EditValue);
                     IDLote = (this.slkupLote.EditValue ==  null|| this.slkupLote.EditValue.ToString() == "") ? -1 : (int)this.slkupLote.EditValue;
                     IDBodega = (int)this.slkupBodega.EditValue;
                     if (this.cmbReporte.SelectedIndex == 1)

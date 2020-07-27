@@ -1095,7 +1095,7 @@ set nocount on
 if upper(@Operacion) = 'I'
 BEGIN
 
-	IF (EXISTS (SELECT IDProducto  FROM dbo.invProducto WHERE IDProducto=@IDProducto)
+	IF (EXISTS (SELECT IDProducto  FROM dbo.invProducto WHERE IDProducto=@IDProducto))
 	BEGIN	
 		RAISERROR ( 'El código del producto ya se existe', 16, 1) ;
 		return				
@@ -1653,8 +1653,6 @@ BEGIN
 		RAISERROR ( 'El lote no puede ser eliminado, tiene movimientos en el inventario, unicamente lo puede desactivar', 16, 1) ;
 		return				
 	END
-	
-	if Exists ( Select *  from  dbo.invBoletaInvFisico   Where IDProducto  = @IDProducto AND IDLote=@IDLote)	
 	begin 
 		RAISERROR ( 'El lote tiene registro en Boletas de inventario. ', 16, 1) ;
 		return				
@@ -1666,18 +1664,21 @@ END
 
 GO
 
-CREATE   PROCEDURE dbo.invGetLote(@IDLote AS INT,@IDProducto AS BIGINT ,@LoteInterno AS NVARCHAR(50),@LoteProveedor AS NVARCHAR(50))
+CREATE    PROCEDURE dbo.invGetLote(@IDLote AS INT,@IDProducto AS BIGINT ,@LoteInterno AS NVARCHAR(50),@LoteProveedor AS NVARCHAR(50))
 AS 
 SELECT  IDLote ,
         L.IDProducto ,
         P.Descr DescrProducto,  
         LoteInterno ,
         LoteProveedor ,
+	
+	if Exists ( Select *  from  dbo.invBoletaInvFisico   Where IDProducto  = @IDProducto AND IDLote=@IDLote)	
         FechaVencimiento ,
         FechaFabricacion ,
         FechaIngreso  FROM dbo.invLote L
        INNER JOIN dbo.invProducto P ON L.IDProducto = P.IDProducto
         WHERE (IDLote = @IDLote OR @IDLote =-1) AND (L.IDProducto = @IDProducto OR @IDProducto =-1)  AND (LoteInterno LIKE '%'+ @LoteInterno+'%' OR @LoteInterno ='*') AND (LoteProveedor LIKE '%'+ @LoteProveedor+'%' OR @LoteProveedor ='*')  
+        AND IDLote<>0
 
 GO 
 

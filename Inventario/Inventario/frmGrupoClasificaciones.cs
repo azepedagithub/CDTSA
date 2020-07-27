@@ -19,6 +19,11 @@ namespace CI
         public frmGrupoClasificaciones()
         {
             InitializeComponent();
+            this.SetStyle(
+          ControlStyles.AllPaintingInWmPaint |
+          ControlStyles.UserPaint |
+          ControlStyles.DoubleBuffer,
+          true);
         }
 
         private void frmGrupoClasificaciones_Load(object sender, EventArgs e)

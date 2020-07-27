@@ -170,6 +170,7 @@ namespace CG
 
         private void PopulateGrid()
         {
+          
             _dsCuenta = CuentaContableDAC.GetData(-1, -1, -1, "*", "*", "*", "*", "*", "*","*", -1, -1, -1, -1, -1, -1);
 
             _dtCuenta = _dsCuenta.Tables[0];

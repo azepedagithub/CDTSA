@@ -20,6 +20,21 @@ namespace CI
         DataRow _currentRow = null;
         const String _tituloVentana = "Listado de Documentos";
 
+        private static frmListadoDocumentos ints;
+
+        public static frmListadoDocumentos GetForm
+        {
+            get {
+                if (ints == null || ints.IsDisposed)
+                {
+                    ints = new frmListadoDocumentos();
+                     
+                }
+                return ints;
+            }
+        }
+
+
         private void EnlazarEventos()
         {
             this.btnAgregar.ItemClick += BtnAgregar_ItemClick;

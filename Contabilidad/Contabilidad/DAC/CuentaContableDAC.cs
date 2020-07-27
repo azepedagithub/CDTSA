@@ -15,21 +15,7 @@ namespace CG
 
         private static SqlDataAdapter InicializarAdaptador()
         {
-            String getSQL = "SELECT A.IDCuenta,A.IDGrupo,G.Descr DescrGrupo,A.IDTipo,T.Descr DescrTipo,A.IDSubTipo,ST.Descr DescrSubTipo,A.Tipo,A.SubTipo,A.Nivel1,A.Nivel2,A.Nivel3,A.Nivel4,A.Nivel5,A.Nivel6,A.Cuenta,A.Descr,A.Complementaria," +
-                             "A.EsMayor,A.AceptaDatos,A.Activa,A.IDCuentaAnterior,A.IDCuentaMayor,B.Descr DescrCuentaMayor, A.UsaCentroCosto " +
-                            "FROM dbo.cntCuenta A" +
-                            " LEFT JOIN dbo.cntCuenta B ON A.IDCuentaMayor = B.IDCuenta " +
-                            "INNER JOIN dbo.cntTipoCuenta T ON A.IDTipo=T.IDTipo " +
-                            "INNER JOIN dbo.cntSubTipoCuenta ST ON A.IDSubTipo = ST.IDSubTipo AND A.IDTipo = ST.IDTipo " +
-                            "INNER JOIN dbo.cntGrupoCuenta G ON A.IDTipo = G.IDTipo AND A.IDSubTipo = G.IDSubTipo AND A.IDGrupo = G.IDGrupo " +
-                            "WHERE(A.IDCuenta = @IDCuenta OR @IDCuenta = -1) AND(A.IDGrupo = @IDGrupo OR  @IDGrupo = -1) " +
-                            "AND(A.IDSubTipo = @IDSubTipo OR @IDSubTipo = -1) AND(A.Nivel1 = @Nivel1 OR @Nivel1 = '*') " +
-                            "AND(A.Nivel2 = @Nivel2 OR @Nivel2 = '*')  AND(A.Nivel3 = @Nivel3 OR @Nivel3 = '*') " +
-                            "AND(A.Nivel4 = @Nivel4 OR @Nivel4 = '*') AND(A.Nivel5 = @Nivel5 OR @Nivel5 = '*') " +
-                            "AND(A.Cuenta = @Cuenta OR @Cuenta = '*') AND(A.Complementaria = @Complementaria OR  @Complementaria = -1) " +
-                            "AND(A.EsMayor = @EsMayor OR @EsMayor = -1) AND(A.AceptaDatos = @AceptaDatos  OR @AceptaDatos = -1) " +
-                            "AND(A.Activa = @Activa OR @Activa = -1) AND(A.IDCuentaMayor = @IDCuentaMayor OR @IDCuentaMayor = -1) " +
-                            "AND(A.UsaCentroCosto = @UsaCentroCosto OR @UsaCentroCosto = -1) order by A.Cuenta";
+            String getSQL = "dbo.cntGetCuentas";
             String InsertSQL = "[dbo].[cntUpdateCuenta]";
             String UpdateSQL = "[dbo].[cntUpdateCuenta]";
             String DeleteSQL = "[dbo].[cntUpdateCuenta]";
@@ -47,22 +33,23 @@ namespace CG
 
 
                 //Paremetros Select 
-                oAdaptador.SelectCommand.Parameters.Add("@IDCuenta", SqlDbType.BigInt).SourceColumn = "IDCentro";
-                oAdaptador.SelectCommand.Parameters.Add("@IDGrupo", SqlDbType.Int).SourceColumn = "Nivel1";
-                oAdaptador.SelectCommand.Parameters.Add("@IDSubTipo", SqlDbType.NVarChar).SourceColumn = "Nivel2";
-                oAdaptador.SelectCommand.Parameters.Add("@Nivel1", SqlDbType.NVarChar).SourceColumn = "Nivel3";
-                oAdaptador.SelectCommand.Parameters.Add("@Nivel2", SqlDbType.NVarChar).SourceColumn = "Descr";
-                oAdaptador.SelectCommand.Parameters.Add("@Nivel3", SqlDbType.NVarChar).SourceColumn = "Acumulador";
-                oAdaptador.SelectCommand.Parameters.Add("@Nivel4", SqlDbType.NVarChar).SourceColumn = "Acumulador";
-                oAdaptador.SelectCommand.Parameters.Add("@Nivel5", SqlDbType.NVarChar).SourceColumn = "Acumulador";
-                oAdaptador.SelectCommand.Parameters.Add("@Nivel6", SqlDbType.NVarChar).SourceColumn = "Acumulador";
-                oAdaptador.SelectCommand.Parameters.Add("@Cuenta", SqlDbType.NVarChar).SourceColumn = "Acumulador";
-                oAdaptador.SelectCommand.Parameters.Add("@Complementaria", SqlDbType.Int).SourceColumn = "Acumulador";
-                oAdaptador.SelectCommand.Parameters.Add("@EsMayor", SqlDbType.Int).SourceColumn = "Acumulador";
-                oAdaptador.SelectCommand.Parameters.Add("@AceptaDatos", SqlDbType.Int).SourceColumn = "Acumulador";
-                oAdaptador.SelectCommand.Parameters.Add("@Activa", SqlDbType.Int).SourceColumn = "Acumulador";
-                oAdaptador.SelectCommand.Parameters.Add("@IDCuentaMayor", SqlDbType.BigInt).SourceColumn = "Acumulador";
-                oAdaptador.SelectCommand.Parameters.Add("@UsaCentroCosto", SqlDbType.BigInt).SourceColumn = "Acumulador";
+                oAdaptador.SelectCommand.CommandType = CommandType.StoredProcedure;
+                oAdaptador.SelectCommand.Parameters.Add("@IDCuenta", SqlDbType.BigInt).SourceColumn = "IDCuenta";
+                oAdaptador.SelectCommand.Parameters.Add("@IDGrupo", SqlDbType.Int).SourceColumn = "IDGrupo";
+                oAdaptador.SelectCommand.Parameters.Add("@IDSubTipo", SqlDbType.Int).SourceColumn = "IDSubTipo";
+                oAdaptador.SelectCommand.Parameters.Add("@Nivel1", SqlDbType.NVarChar).SourceColumn = "Nivel1";
+                oAdaptador.SelectCommand.Parameters.Add("@Nivel2", SqlDbType.NVarChar).SourceColumn = "Nivel2";
+                oAdaptador.SelectCommand.Parameters.Add("@Nivel3", SqlDbType.NVarChar).SourceColumn = "Nivel3";
+                oAdaptador.SelectCommand.Parameters.Add("@Nivel4", SqlDbType.NVarChar).SourceColumn = "Nivel4";
+                oAdaptador.SelectCommand.Parameters.Add("@Nivel5", SqlDbType.NVarChar).SourceColumn = "Nivel5";
+                oAdaptador.SelectCommand.Parameters.Add("@Nivel6", SqlDbType.NVarChar).SourceColumn = "Nivel6";
+                oAdaptador.SelectCommand.Parameters.Add("@Cuenta", SqlDbType.NVarChar).SourceColumn = "Cuenta";
+                oAdaptador.SelectCommand.Parameters.Add("@Complementaria", SqlDbType.Int).SourceColumn = "Complementaria";
+                oAdaptador.SelectCommand.Parameters.Add("@EsMayor", SqlDbType.Int).SourceColumn = "EsMayor";
+                oAdaptador.SelectCommand.Parameters.Add("@AceptaDatos", SqlDbType.Int).SourceColumn = "AceptaDatos";
+                oAdaptador.SelectCommand.Parameters.Add("@Activa", SqlDbType.Int).SourceColumn = "Activa";
+                oAdaptador.SelectCommand.Parameters.Add("@IDCuentaMayor", SqlDbType.BigInt).SourceColumn = "IDCuentaMayor";
+                oAdaptador.SelectCommand.Parameters.Add("@UsaCentroCosto", SqlDbType.Int).SourceColumn = "UsaCentroCosto";
 
 
 
@@ -184,8 +171,7 @@ namespace CG
             oAdaptador.SelectCommand.Parameters["@Activa"].Value = Activa;
             oAdaptador.SelectCommand.Parameters["@IDCuentaMayor"].Value = IDCuentaMayor;
             oAdaptador.SelectCommand.Parameters["@UsaCentroCosto"].Value = UsaCentroCosto;
-
-            
+    
             oAdaptador.Fill(DS.Tables["Data"]);
             return DS;
         }

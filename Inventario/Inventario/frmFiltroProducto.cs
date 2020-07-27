@@ -36,6 +36,11 @@ namespace CI
         public frmFiltroProducto()
         {
             InitializeComponent();
+            this.SetStyle(
+          ControlStyles.AllPaintingInWmPaint |
+          ControlStyles.UserPaint |
+          ControlStyles.DoubleBuffer,
+          true);
             this.Load += frmFiltroProducto_Load;
         }
 
@@ -124,9 +129,29 @@ namespace CI
 
          
              PopulateDataSearchLookup();
-            
+
+             CargarDescripcionesClasificaciones();
 
             ActualizarEstados();
+        }
+
+
+        private void CargarDescripcionesClasificaciones()
+        {
+            DataTable DT = clsGrupoClasificacionDAC.GetData(-1, "*").Tables[0];
+
+            this.lyClasificacion1.Text = DT.Rows[0]["Descr"].ToString() + ":";
+
+            this.lyClasificacion2.Text = DT.Rows[1]["Descr"].ToString() + ":";
+
+            this.lyClasificacion3.Text = DT.Rows[2]["Descr"].ToString() + ":";
+
+            this.lyClasificacion4.Text = DT.Rows[3]["Descr"].ToString() + ":";
+
+            this.lyClasificacion5.Text = DT.Rows[4]["Descr"].ToString() + ":";
+
+            this.lyClasificacion6.Text = DT.Rows[5]["Descr"].ToString() + ":";
+
         }
 
 

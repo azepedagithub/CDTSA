@@ -30,6 +30,11 @@ namespace CI
         public frmLote()
         {
             InitializeComponent();
+            this.SetStyle(
+          ControlStyles.AllPaintingInWmPaint |
+          ControlStyles.UserPaint |
+          ControlStyles.DoubleBuffer,
+          true);
             this.ribbonControl.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonControlStyle.Office2010;
             this.StartPosition = FormStartPosition.CenterScreen;
         }
@@ -399,9 +404,14 @@ namespace CI
 
         private void txtLote_TextChanged(object sender, EventArgs e)
         {
-            if (this.txtLoteProveedor.EditValue == null || this.txtLoteProveedor.EditValue.ToString() == "")
+          
+        }
+
+        private void txtLote_EditValueChanging(object sender, DevExpress.XtraEditors.Controls.ChangingEventArgs e)
+        {
+            if (this.txtLoteProveedor.EditValue == e.OldValue || this.txtLoteProveedor.EditValue == null)
             {
-                this.txtLoteProveedor.EditValue = this.txtLote.EditValue;
+                this.txtLoteProveedor.EditValue = e.NewValue;
             }
         }
 

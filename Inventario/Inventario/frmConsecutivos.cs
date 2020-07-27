@@ -31,6 +31,11 @@ namespace CI
         public frmConsecutivos()
         {
             InitializeComponent();
+            this.SetStyle(
+          ControlStyles.AllPaintingInWmPaint |
+          ControlStyles.UserPaint |
+          ControlStyles.DoubleBuffer,
+          true);
             this.ribbonControl.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonControlStyle.Office2010;
             this.StartPosition = FormStartPosition.CenterScreen;
             this.Load += frmConsecutivos_Load;

@@ -28,6 +28,11 @@ namespace MainMenu
         public frmMain()
         {
             InitializeComponent();
+            this.SetStyle(
+            ControlStyles.AllPaintingInWmPaint |
+            ControlStyles.UserPaint |
+            ControlStyles.DoubleBuffer,
+            true);
             CreateNodes(treeListInventario);
             CreateNodes(treeListFactura);
             CreateNodes(treeListContabilidad);
@@ -909,7 +914,7 @@ namespace MainMenu
                     ofrm.Show();
                     break;
                 case "frmDocumentoInv":
-                    frmListadoDocumentos ofrmListadoDocumento = new frmListadoDocumentos();
+                    frmListadoDocumentos ofrmListadoDocumento = frmListadoDocumentos.GetForm;
                     ofrmListadoDocumento.MdiParent = this;
                     ofrmListadoDocumento.WindowState = FormWindowState.Maximized;
                     ShowPagesRibbonMan(false);

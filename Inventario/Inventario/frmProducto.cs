@@ -33,6 +33,11 @@ namespace CI
         public frmProducto()
         {
             InitializeComponent();
+            this.SetStyle(
+           ControlStyles.AllPaintingInWmPaint |
+           ControlStyles.UserPaint |
+           ControlStyles.DoubleBuffer,
+           true);
             InicializaNuevoElemento();
         }
 
@@ -279,6 +284,8 @@ namespace CI
             bool result = true;
             String sMensaje = "";
 
+            if (this.txtIDProducto.EditValue == null)
+                sMensaje = sMensaje + "     • Ingrese el Código del Producto. \n\r";
             if (this.txtDescr.EditValue == null)
                 sMensaje = sMensaje + "     • Ingrese la descripción del Producto. \n\r";
             if (this.slkupProveedor.EditValue == null || this.slkupProveedor.EditValue.ToString() =="")
@@ -675,19 +682,21 @@ namespace CI
 
         private void txtIDProducto_Validating(object sender, CancelEventArgs e)
         {
-            //Validar si el codigo ingresado existe en la base de datos.
-            DataSet dsProd = DAC.clsProductoDAC.GetProductoByID(Convert.ToInt32(this.txtIDProducto.Text.Trim()), "*");
-            if (dsProd.Tables[0].Rows.Count > 0)
+            if (this.txtIDProducto.Text != "")
             {
-                MessageBox.Show("El código de producto ya existe en la base de datos");
-                this.txtIDProducto.ErrorText = "El produducto ya existe en la base de datos";
-                e.Cancel = true;
+                //Validar si el codigo ingresado existe en la base de datos.
+                DataSet dsProd = DAC.clsProductoDAC.GetProductoByID(Convert.ToInt32(this.txtIDProducto.Text.Trim()), "*");
+                if (dsProd.Tables[0].Rows.Count > 0)
+                {
+                    MessageBox.Show("El código de producto ya existe en la base de datos");
+                    this.txtIDProducto.ErrorText = "El produducto ya existe en la base de datos";
+                    e.Cancel = true;
+                }
+                else
+                {
+                    this.txtIDProducto.ErrorText = "";
+                }
             }
-            else
-            {
-                this.txtIDProducto.ErrorText = "";
-            }
-
         }
 
        

@@ -631,6 +631,7 @@
             this.txtLote.Size = new System.Drawing.Size(222, 20);
             this.txtLote.StyleController = this.layoutControl1;
             this.txtLote.TabIndex = 5;
+            this.txtLote.EditValueChanging += new DevExpress.XtraEditors.Controls.ChangingEventHandler(this.txtLote_EditValueChanging);
             this.txtLote.TextChanged += new System.EventHandler(this.txtLote_TextChanged);
             // 
             // slkupProducto

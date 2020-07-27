@@ -44,6 +44,11 @@ namespace CI
         public frmDocumentoInv(int IdPaquete)
         {
             InitializeComponent();
+            this.SetStyle(
+          ControlStyles.AllPaintingInWmPaint |
+          ControlStyles.UserPaint |
+          ControlStyles.DoubleBuffer,
+          true);
             this.IDPaquete = IdPaquete;
             InicializaNuevoElemento();
             
