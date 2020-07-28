@@ -263,6 +263,29 @@ namespace CI.DAC
         }
 
 
+        public static bool ValidaCuentasInventario(long IDProducto, ref String Mensaje)
+        {
+            bool bOk = false;
+            String strSQL = "dbo.validaCuentasCentrosInventario";
+
+            SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
+
+            oCmd.Parameters.Add(new SqlParameter("@IDProducto", IDProducto));
+            oCmd.Parameters.Add("@Mensaje", SqlDbType.NVarChar, 250);
+            oCmd.Parameters["@Mensaje"].Direction = ParameterDirection.Output;
+            oCmd.Parameters.Add("@Result", SqlDbType.Bit, 1);
+            oCmd.Parameters["@Result"].Direction = ParameterDirection.Output;
+            oCmd.CommandType = CommandType.StoredProcedure;
+            if (oCmd.Connection.State == ConnectionState.Closed)
+                oCmd.Connection.Open();
+            oCmd.ExecuteNonQuery();
+
+            bOk = Convert.ToBoolean(oCmd.Parameters["@Result"].Value);
+            Mensaje = oCmd.Parameters["@Mensaje"].Value.ToString();
+            return bOk;
+
+        }
+
 
     }
 }

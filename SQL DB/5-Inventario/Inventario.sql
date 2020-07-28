@@ -3469,3 +3469,35 @@ DROP TABLE  #Movimientos
 
 
 GO
+
+
+PROCEDURE dbo.validaCuentasCentrosInventario @IDProducto AS INT ,@Result BIT OUTPUT , @Mensaje NVARCHAR(250) OUTPUT
+AS 
+
+--SET @IDProducto = 334
+DECLARE @Centros AS int	
+DECLARE @Descr NVARCHAR(250)
+DECLARE @Cuentas AS INT
+DECLARE @DescrCuenta AS NVARCHAR(250)
+
+SET @Mensaje=''
+SELECT  @Descr = Descr ,
+         @Centros =CtrInventario +CtrVenta + CtrCompra +CtrDescVenta +CtrCostoVenta +CtrComisionVenta +CtrComisionCobro +CtrDescLinea +  CtrCostoDesc +CtrSobranteInvFisico +CtrFaltanteInvFisico +CtrVariacionCosto +
+        CtrVencimiento +CtrDescBonificacion +CtrDevVentas +CtrConsumo ,
+        @Cuentas = CtaInventario +CtaVenta +CtaCompra+ CtaDescVenta +CtaCostoVenta +CtaComisionVenta +CtaComisionCobro +CtaDescLinea +CtaCostoDesc +CtaSobranteInvFisico +CtaFaltanteInvFisico +CtaVariacionCosto +
+        CtaVencimiento +CtaDescBonificacion +CtaDevVentas +CtaConsumo
+FROM dbo.invCuentaContable WHERE IDCuenta = (SELECT TOP 1 IDCuentaContable  FROM dbo.invProducto WHERE IDProducto=@IDProducto)
+
+IF @Centros IS NULL
+	SET @Mensaje = ' (Centros de Costos) ' 
+IF @Cuentas IS NULL
+	SET @Mensaje = @Mensaje + '  (Cuentas Contables)'
+
+IF @Mensaje IS NOT null
+	SET @Mensaje = @Descr + @Mensaje
+IF  @Mensaje = ''
+	SET @Result =1
+ELSE 
+	SET @Result= 0
+	
+GO

@@ -542,6 +542,8 @@ namespace CI
                 sMensaje = " • Seleccione el producto \n\r";
             if (this.txtCantidad.EditValue==null || this.txtCantidad.EditValue.ToString() == "" )
                 sMensaje = " • Ingrese la cantidad\n\r";
+            if (this.slkupLote.EditValue == null || this.slkupLote.EditValue.ToString() == "---")
+                sMensaje = " • Seleccione los el lote del producto\n\r"; 
             
             //DataRowView dr =  (DataRowView)slkupTransaccion.Properties.View.GetRow(slkupTransaccion.Properties.GetIndexByKeyValue(slkupTransaccion.EditValue));
             DataRowView dr = (DataRowView)slkupTransaccion.Properties.GetRowByKeyValue(slkupTransaccion.EditValue);
@@ -831,6 +833,23 @@ namespace CI
         {
             if (MessageBox.Show("La acción que va realizar aplicará el documento al inventario \n\r Desea proseguir? ", "Aplicación del Documento", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.No)
                 return;
+            //Validar si hay problemas a nivel de cuentas contables de productos.
+            string sMensaje = "";
+            for (int i = 0; i < _dsDetalle.Tables[0].Rows.Count; i++)
+            {
+                String tmpMsg ="";
+                if (!clsProductoDAC.ValidaCuentasInventario(Convert.ToInt64(_dsDetalle.Tables[0].Rows[0]["IDProducto"]), ref tmpMsg))
+                {
+                    sMensaje = sMensaje + tmpMsg + "\n\r";
+                }
+            }
+
+            if (sMensaje != "") {
+                MessageBox.Show("Por favor verifique la cuenta contable de inventario: \n\r"  + sMensaje);
+                return;
+            }
+                      
+
             //Validar  los datos de Cabecera
             if (ValidasDatosCabecera() && ValidarDatosDetalle())
             { 
@@ -949,6 +968,7 @@ namespace CI
                     AplicarPrivilegios();
                     BotoneriaSuperior();
 
+                   
                     //Crear el asiento contable y aplicar el documento en inventario
                     long IDTransaccion = (long)_dsDocumentoInv.Tables[0].Rows[0]["IDTransaccion"];
                     bool result = clsDocumentoInvCabecera.AplicaInventario(IDTransaccion, ConnectionManager.Tran);
