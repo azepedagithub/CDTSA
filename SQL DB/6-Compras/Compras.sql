@@ -787,7 +787,7 @@ LEFT JOIN dbo.invSolicitudOrdenCompra OS ON B.IDProducto=OS.IDProducto AND B.IDS
 WHERE (A.IDSolicitud BETWEEN @IDSolicitudDesde AND @IDSolicitudHasta) AND (FechaRequerida  BETWEEN @FechaRequeridaDesde AND @FechaRequeridaHasta)
 AND (P.Clasif1 = @IDClasif1 OR @IDClasif1=-1) AND  (P.Clasif2 = @IDClasif2 OR @IDClasif2=-1) AND  (P.Clasif3 = @IDClasif3 OR @IDClasif3=-1) 
 AND  (P.Clasif4 = @IDClasif4 OR @IDClasif4=-1) AND  (P.Clasif5 = @IDClasif5 OR @IDClasif5=-1) AND  (P.Clasif6 = @IDClasif6 OR @IDClasif6=-1) AND (B.IDProducto = @IDProducto OR @IDProducto=-1)
-AND D.IDProveedor = @IDProveedor  AND A.IDEstado  IN (1) 
+AND P.IDProveedor = @IDProveedor  AND A.IDEstado  IN (1) 
 GROUP BY A.IDSolicitud,A.Fecha,A.FechaRequerida,B.IDProducto,P.Descr,B.Comentario
 HAVING  ISNULL(SUM(B.Cantidad),0) - isnull(SUM(OS.Cantidad),0) >0
 

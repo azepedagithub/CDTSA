@@ -1069,7 +1069,7 @@ namespace CG
                 if (!ValidaDatos()) return;
 
                 //Validar si la fecha del asiento contable corresponde a una fecha valida
-                DateTime Fecha = Convert.ToDateTime(this.dtpFecha.EditValue);
+                DateTime Fecha = Convert.ToDateTime(this.dtpFecha.EditValue).Date;
                 try
                 {
                     //if (Fecha == null || PeriodoContableDAC.ValidaFechaInPeriodoContable(Fecha))
@@ -1090,7 +1090,7 @@ namespace CG
                 _currentRow["Periodo"] = this.txtPeriodo.Text.Trim();
                 _currentRow["Asiento"] = this.txtAsiento.Text.Trim() != "" ? this.txtAsiento.Text.Trim() : "---";
                 _currentRow["Tipo"] = this.slkupTipo.EditValue;
-                _currentRow["Fecha"] = this.dtpFecha.EditValue;
+                _currentRow["Fecha"] = Convert.ToDateTime(this.dtpFecha.EditValue).Date;
                 _currentRow["FechaHora"] = DateTime.Now;
                 _currentRow["Createdby"] = sUsuario;
                 _currentRow["CreateDate"] = DateTime.Now;

@@ -129,9 +129,8 @@ namespace CG
             {
                 HabilitarControles(false);
                 _dtTipo = TipoCuentaDAC.GetData().Tables["Data"];
-                _dtSubTipo = SubTipoCuentaDAC.GetData(-1, -1).Tables["Data"];
                 _dtGrupo = GrupoDAC.GetData(-1, -1, -1).Tables["Data"];
-
+                //_dtSubTipo = SubTipoCuentaDAC.GetData(Convert.ToInt32(dt.Rows[0]["IDTipo"]), Convert.ToInt32(dt.Rows[0]["IDSubTipo"])).Tables["Data"];
                 Util.Util.SetDefaultBehaviorControls(this.gridView, false, this.dtg, _tituloVentana, this);
 
                 EnlazarEventos();
@@ -147,6 +146,7 @@ namespace CG
                 Util.Util.ConfigLookupEdit(this.slkupSubTipo, _dtSubTipo, "Descr", "IDSubTipo");
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupSubTipo, "[{'ColumnCaption':'IDSubTipo','ColumnField':'IDSubTipo','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");
 
+                
                 this.slkupSubTipo.ReadOnly = true;
                 this.slkupTipo.ReadOnly = true;
                 this.slkupCuentaAnterior.ReadOnly = true;
@@ -624,6 +624,9 @@ namespace CG
                         return;
                     //Llenar tipo y sub Tipo
                     this.slkupTipo.EditValue = dt.Rows[0]["IDTipo"].ToString();
+
+                    _dtSubTipo = SubTipoCuentaDAC.GetData(Convert.ToInt32(dt.Rows[0]["IDTipo"]), Convert.ToInt32(dt.Rows[0]["IDSubTipo"])).Tables["Data"];
+                    Util.Util.ConfigLookupEdit(this.slkupSubTipo, _dtSubTipo, "Descr", "IDSubTipo");
                     this.slkupSubTipo.EditValue = dt.Rows[0]["IDSubTipo"].ToString();
 
                     //Validar si el tipo seleccionado ya tiene el elemento del primer nivel

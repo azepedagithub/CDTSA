@@ -104,16 +104,16 @@ namespace CG
 
         private void PopulateData()
         {
-            _lstCentroAcumuladores = CentroCostoDAC.GetData(-1, "*", "*", "*", "*", 1).Tables["Data"];
+            _lstCentroAcumuladores = CentroCostoDAC.GetData(-1, "*", "*", "*", "*", "*", 1).Tables["Data"];
             Util.Util.ConfigLookupEdit(this.slkupCentroAcumulador, _lstCentroAcumuladores, "Descr", "IDCentro");
-            Util.Util.ConfigLookupEditSetViewColumns(this.slkupCentroAcumulador, "[{'ColumnCaption':'Centro','ColumnField':'Centro','width':30},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':70}]");
+            Util.Util.ConfigLookupEditSetViewColumns(this.slkupCentroAcumulador, "[{'ColumnCaption':'Centro','ColumnField':'Centro','width':50},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':70}]");
 
             
         }
 
         private void PopulateGrid()
         {
-            _dsCentro = CentroCostoDAC.GetData(-1, "*", "*", "*", "*", -1);
+            _dsCentro = CentroCostoDAC.GetData(-1, "*", "*", "*", "*", "*", -1);
 
             _dtCentro = _dsCentro.Tables[0];
             this.dtg.DataSource = null;
@@ -128,6 +128,7 @@ namespace CG
             this.txtNivel1.Text = "";
             this.txtNivel2.Text = "";
             this.txtNivel3.Text = "";
+            this.txtNivel4.Text = "";
             this.txtCentro.Text = "";
             this.txtDescripcion.Text = "";
             this.chkActivo.EditValue = true;
@@ -140,6 +141,7 @@ namespace CG
                 this.txtNivel1.Text = "1";
                 this.txtNivel2.Text = "0";
                 this.txtNivel3.Text = "0";
+                this.txtNivel4.Text = "0";
             }
 
         }
@@ -182,6 +184,7 @@ namespace CG
             this.txtNivel1.Text = Row["Nivel1"].ToString();
             this.txtNivel2.Text = Row["Nivel2"].ToString();
             this.txtNivel3.Text = Row["Nivel3"].ToString();
+            this.txtNivel4.Text = Row["Nivel4"].ToString();
             this.txtCentro.Text = Row["Centro"].ToString();
             this.txtDescripcion.Text = Row["Descr"].ToString();
             this.chkActivo.EditValue = Convert.ToBoolean(Row["Activo"]);
@@ -211,11 +214,12 @@ namespace CG
 
             //Agregar  los consecutivos
 
-            int iProximoConsecutivo = CentroCostoDAC.GetNextConsecutivo(-1, 0, 0);
+            int iProximoConsecutivo = CentroCostoDAC.GetNextConsecutivo(-1, 0, 0,0);
             //iProximoConsecutivo++;
 
             this.txtNivel3.Text = "0";
             this.txtNivel2.Text = "0";
+            this.txtNivel4.Text = "0";
             this.txtNivel1.Text = iProximoConsecutivo.ToString();
 
             this.txtDescripcion.Focus();
@@ -281,6 +285,7 @@ namespace CG
                     currentRow["Nivel1"] = (this.txtNivel1.Text == "") ? "0" : this.txtNivel1.Text;
                     currentRow["Nivel2"] = (this.txtNivel2.Text == "") ? "0" : this.txtNivel2.Text;
                     currentRow["Nivel3"] = (this.txtNivel3.Text == "") ? "0" : this.txtNivel3.Text;
+                    currentRow["Nivel4"] = (this.txtNivel4.Text == "") ? "0" : this.txtNivel4.Text;
                     currentRow["Centro"] = this.txtCentro.Text;
                     currentRow["Descr"] = this.txtDescripcion.Text;
                     currentRow["Activo"] = this.chkActivo.EditValue;
@@ -343,6 +348,7 @@ namespace CG
                     currentRow["Nivel1"] = (this.txtNivel1.Text == "") ? "0" : this.txtNivel1.Text;
                     currentRow["Nivel2"] = (this.txtNivel2.Text == "") ? "0" : this.txtNivel2.Text;
                     currentRow["Nivel3"] = (this.txtNivel3.Text == "") ? "0" : this.txtNivel3.Text;
+                    currentRow["Nivel4"] = (this.txtNivel4.Text == "") ? "0" : this.txtNivel4.Text;
                     currentRow["Centro"] = this.txtCentro.Text;
                     currentRow["Descr"] = this.txtDescripcion.Text;
                     currentRow["Activo"] = this.chkActivo.EditValue;
@@ -436,11 +442,12 @@ namespace CG
                     bool EsAcumulador = Convert.ToBoolean((this.chkAcumulador.EditValue == null) ? false : this.chkAcumulador.EditValue);
 
 
-                    int iProximoConsecutivo = CentroCostoDAC.GetNextConsecutivo(-1, 0, 0);
+                    int iProximoConsecutivo = CentroCostoDAC.GetNextConsecutivo(-1, 0, 0, 0);
                     //iProximoConsecutivo++;
 
                     this.txtNivel3.Text = "0";
                     this.txtNivel2.Text = "0";
+                    this.txtNivel4.Text = "0";
                     this.txtNivel1.Text = iProximoConsecutivo.ToString();
 
 
@@ -513,10 +520,20 @@ namespace CG
                     DataTable dt = dv.ToTable();
 
                     bool EsAcumulador = Convert.ToBoolean((this.chkAcumulador.EditValue == null) ? false : this.chkAcumulador.EditValue);
-                    
-                   if (dt.Rows[0]["Nivel2"].ToString() != "0")
+
+                    if (dt.Rows[0]["Nivel3"].ToString() != "0")
                     {
-                        int iProximoConsecutivo = CentroCostoDAC.GetNextConsecutivo(Convert.ToInt32(dt.Rows[0]["Nivel1"]), Convert.ToInt32(dt.Rows[0]["Nivel2"]), -1);
+                        int iProximoConsecutivo = CentroCostoDAC.GetNextConsecutivo(Convert.ToInt32(dt.Rows[0]["Nivel1"]), Convert.ToInt32(dt.Rows[0]["Nivel2"]), Convert.ToInt32(dt.Rows[0]["Nivel3"]), -1);
+
+                        //iProximoConsecutivo++;
+
+                        this.txtNivel4.Text = iProximoConsecutivo.ToString();
+                        this.txtNivel3.Text = dt.Rows[0]["Nivel3"].ToString();
+                        this.txtNivel2.Text = dt.Rows[0]["Nivel2"].ToString();
+                        this.txtNivel1.Text = dt.Rows[0]["Nivel1"].ToString();
+                    }  else if (dt.Rows[0]["Nivel2"].ToString() != "0")
+                    {
+                        int iProximoConsecutivo = CentroCostoDAC.GetNextConsecutivo(Convert.ToInt32(dt.Rows[0]["Nivel1"]), Convert.ToInt32(dt.Rows[0]["Nivel2"]), -1,0);
                         
                         //iProximoConsecutivo++;
 
@@ -526,7 +543,7 @@ namespace CG
                     }
                     else if (dt.Rows[0]["Nivel1"].ToString() != "0")
                     {
-                        int iProximoConsecutivo = CentroCostoDAC.GetNextConsecutivo(Convert.ToInt32(dt.Rows[0]["Nivel1"]), -1, 0);
+                        int iProximoConsecutivo = CentroCostoDAC.GetNextConsecutivo(Convert.ToInt32(dt.Rows[0]["Nivel1"]), -1, 0, 0);
                         //iProximoConsecutivo++;
 
                         this.txtNivel3.Text = "0";
@@ -535,7 +552,7 @@ namespace CG
                     }
 
                    //Inactivar  los acumuladores
-                   if (this.txtNivel3.Text != "0")
+                   if (this.txtNivel4.Text != "0")
                        this.chkAcumulador.Enabled = false;
                    else
                        this.chkAcumulador.Enabled = true;

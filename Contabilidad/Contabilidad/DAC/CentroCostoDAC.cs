@@ -16,7 +16,7 @@ namespace CG
 
         private static SqlDataAdapter InicializarAdaptador()
         {
-            String getSQL = "SELECT A.IDCentro,A.Nivel1,A.Nivel2,A.Nivel3,A.Centro,A.Descr,A.IDCentroAnterior,A.Acumulador,A.IDCentroAcumulador,B.Descr DescrCentroAcumulador,A.ReadOnlySys,A.Activo  FROM dbo.cntCentroCosto  A LEFT  JOIN dbo.cntCentroCosto B ON A.IDCentroAcumulador=B.IDCentro WHERE (A.IDCentro=@IDCentro OR @IDCentro=-1) AND (A.Nivel1=@Nivel1 OR @Nivel1='*') AND (A.Nivel2=@Nivel2 OR @Nivel2='*') AND (A.Nivel3=@Nivel3 OR @Nivel3='*') AND (A.Descr = @Descr OR @Descr='*')  AND (A.Acumulador=@Acumulador OR @Acumulador =-1) order by Cast(A.Nivel1 as int), Cast(A.Nivel2 as int), cast(A.Nivel3 as int)";
+            String getSQL = "SELECT A.IDCentro,A.Nivel1,A.Nivel2,A.Nivel3,A.Nivel4,A.Centro,A.Descr,A.IDCentroAnterior,A.Acumulador,A.IDCentroAcumulador,B.Descr DescrCentroAcumulador,A.ReadOnlySys,A.Activo  FROM dbo.cntCentroCosto  A LEFT  JOIN dbo.cntCentroCosto B ON A.IDCentroAcumulador=B.IDCentro WHERE (A.IDCentro=@IDCentro OR @IDCentro=-1) AND (A.Nivel1=@Nivel1 OR @Nivel1='*') AND (A.Nivel2=@Nivel2 OR @Nivel2='*') AND (A.Nivel3=@Nivel3 OR @Nivel3='*')  AND (A.Nivel4=@Nivel4 OR @Nivel4='*') AND (A.Descr = @Descr OR @Descr='*')  AND (A.Acumulador=@Acumulador OR @Acumulador =-1) order by Cast(A.Nivel1 as int), Cast(A.Nivel2 as int), cast(A.Nivel3 as int)";
             String InsertSQL = "[dbo].[cntUpdateCentroCosto]";
             String UpdateSQL = "[dbo].[cntUpdateCentroCosto]";
             String DeleteSQL = "[dbo].[cntUpdateCentroCosto]";
@@ -36,6 +36,7 @@ namespace CG
                 oAdaptador.SelectCommand.Parameters.Add("@Nivel1", SqlDbType.NChar).SourceColumn = "Nivel1";
                 oAdaptador.SelectCommand.Parameters.Add("@Nivel2", SqlDbType.NChar).SourceColumn = "Nivel2";
                 oAdaptador.SelectCommand.Parameters.Add("@Nivel3", SqlDbType.NChar).SourceColumn = "Nivel3";
+                oAdaptador.SelectCommand.Parameters.Add("@Nivel4", SqlDbType.NChar).SourceColumn = "Nivel4";
                 oAdaptador.SelectCommand.Parameters.Add("@Descr", SqlDbType.NChar).SourceColumn = "Descr";
                 oAdaptador.SelectCommand.Parameters.Add("@Acumulador", SqlDbType.Int).SourceColumn = "Acumulador";
 
@@ -48,6 +49,7 @@ namespace CG
                 oAdaptador.InsertCommand.Parameters.Add("@Nivel1", SqlDbType.NChar).SourceColumn = "Nivel1";
                 oAdaptador.InsertCommand.Parameters.Add("@Nivel2", SqlDbType.NChar).SourceColumn = "Nivel2";
                 oAdaptador.InsertCommand.Parameters.Add("@Nivel3", SqlDbType.NChar).SourceColumn = "Nivel3";
+                oAdaptador.InsertCommand.Parameters.Add("@Nivel4", SqlDbType.NChar).SourceColumn = "Nivel4";
                 oAdaptador.InsertCommand.Parameters.Add("@Descr", SqlDbType.NChar).SourceColumn = "Descr";
                 oAdaptador.InsertCommand.Parameters.Add("@IDCentroAnterior", SqlDbType.Int).SourceColumn = "IDCentroAnterior";
                 oAdaptador.InsertCommand.Parameters.Add("@Acumulador", SqlDbType.Bit).SourceColumn = "Acumulador";
@@ -62,6 +64,7 @@ namespace CG
                 oAdaptador.UpdateCommand.Parameters.Add("@Nivel1", SqlDbType.NChar).SourceColumn = "Nivel1";
                 oAdaptador.UpdateCommand.Parameters.Add("@Nivel2", SqlDbType.NChar).SourceColumn = "Nivel2";
                 oAdaptador.UpdateCommand.Parameters.Add("@Nivel3", SqlDbType.NChar).SourceColumn = "Nivel3";
+                oAdaptador.UpdateCommand.Parameters.Add("@Nivel4", SqlDbType.NChar).SourceColumn = "Nivel4";
                 oAdaptador.UpdateCommand.Parameters.Add("@Descr", SqlDbType.NChar).SourceColumn = "Descr";
                 oAdaptador.UpdateCommand.Parameters.Add("@IDCentroAnterior", SqlDbType.Int).SourceColumn = "IDCentroAnterior";
                 oAdaptador.UpdateCommand.Parameters.Add("@Acumulador", SqlDbType.Bit).SourceColumn = "Acumulador";
@@ -77,6 +80,7 @@ namespace CG
                 oAdaptador.DeleteCommand.Parameters.Add("@Nivel1", SqlDbType.NChar).SourceColumn = "Nivel1";
                 oAdaptador.DeleteCommand.Parameters.Add("@Nivel2", SqlDbType.NChar).SourceColumn = "Nivel2";
                 oAdaptador.DeleteCommand.Parameters.Add("@Nivel3", SqlDbType.NChar).SourceColumn = "Nivel3";
+                oAdaptador.DeleteCommand.Parameters.Add("@Nivel4", SqlDbType.NChar).SourceColumn = "Nivel4";
                 oAdaptador.DeleteCommand.Parameters.Add("@Descr", SqlDbType.NChar).SourceColumn = "Descr";
                 oAdaptador.DeleteCommand.Parameters.Add("@IDCentroAnterior", SqlDbType.Int).SourceColumn = "IDCentroAnterior";
                 oAdaptador.DeleteCommand.Parameters.Add("@Acumulador", SqlDbType.Bit).SourceColumn = "Acumulador";
@@ -106,13 +110,14 @@ namespace CG
             return DS;
         }
 
-        public static DataSet GetData(int IDCentro, String Nivel1,String Nivel2,String Nivel3,String Descr, int Acumulador)
+        public static DataSet GetData(int IDCentro, String Nivel1,String Nivel2,String Nivel3, String Nivel4, String Descr, int Acumulador)
         {
             DataSet DS = CreateDataSet();
             oAdaptador.SelectCommand.Parameters["@IDCentro"].Value = IDCentro;
             oAdaptador.SelectCommand.Parameters["@Nivel1"].Value = Nivel1;
             oAdaptador.SelectCommand.Parameters["@Nivel2"].Value = Nivel2;
             oAdaptador.SelectCommand.Parameters["@Nivel3"].Value = Nivel3;
+            oAdaptador.SelectCommand.Parameters["@Nivel4"].Value = Nivel4;
             oAdaptador.SelectCommand.Parameters["@Descr"].Value = Descr;
             oAdaptador.SelectCommand.Parameters["@Acumulador"].Value = Acumulador;
 
@@ -195,7 +200,7 @@ namespace CG
         //}
 
 
-        public static int GetNextConsecutivo(int Nivel1, int Nivel2, int Nivel3)
+        public static int GetNextConsecutivo(int Nivel1, int Nivel2, int Nivel3, int Nivel4)
         {
             int ID = 0;
             DataSet DS = new DataSet();
@@ -210,6 +215,7 @@ namespace CG
                 oCmd.Parameters.Add("@iNivel1", SqlDbType.Int).Value = Nivel1;
                 oCmd.Parameters.Add("@iNivel2", SqlDbType.Int).Value = Nivel2;
                 oCmd.Parameters.Add("@iNivel3", SqlDbType.Int).Value = Nivel3;
+                oCmd.Parameters.Add("@iNivel4", SqlDbType.Int).Value = Nivel4;
                 oCmd.Parameters.Add("@NextCentro", SqlDbType.Int).Value = 0;
                 oCmd.Parameters["@NextCentro"].Direction = ParameterDirection.Output;
 

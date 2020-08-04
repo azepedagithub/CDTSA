@@ -81,7 +81,7 @@ namespace CG
 
         void frmPopPupCentroCosto_Load(object sender, EventArgs e)
         {
-            _dtCentros = CentroCostoDAC.GetData(-1, "*", "*", "*", "*", -1).Tables[0];
+            _dtCentros = CentroCostoDAC.GetData(-1, "*", "*", "*", "*","*", -1).Tables[0];
             // _dtCuentasConstante = _dtCuentas.Clone();
 
             this.gridCentroCosto.DataSource = _dtCentros;

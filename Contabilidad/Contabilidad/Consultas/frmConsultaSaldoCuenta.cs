@@ -41,7 +41,7 @@ namespace CG
 
 
 
-                _dtCentroCosto = CentroCostoDAC.GetData(-1, "*", "*", "*", "*", 0).Tables[0]; //No estamos tomando los acumuladores
+                _dtCentroCosto = CentroCostoDAC.GetData(-1, "*", "*", "*", "*","*", 0).Tables[0]; //No estamos tomando los acumuladores
 
                 Util.Util.ConfigLookupEdit(this.slkupCentroCosto, _dtCentroCosto, "Descr", "IDCentro");
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupCentroCosto, "[{'ColumnCaption':'Centro','ColumnField':'Centro','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");

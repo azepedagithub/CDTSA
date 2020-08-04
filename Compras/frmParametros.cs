@@ -89,11 +89,11 @@ namespace CO
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupCuentaTransLoc, "[{'ColumnCaption':'Cuenta','ColumnField':'Cuenta','width':20},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':90}]");
             this.slkupCuentaTransLoc.EditValueChanged += slkupCuentaTransLoc_EditValueChanged;
 
-            Util.Util.ConfigLookupEdit(this.slkupCentroTransitoExt, CG.CentroCostoDAC.GetData(-1,"*","*","*","*",0).Tables[0], "Centro", "IDCentro", 350);
+            Util.Util.ConfigLookupEdit(this.slkupCentroTransitoExt, CG.CentroCostoDAC.GetData(-1,"*","*","*","*","*",0).Tables[0], "Centro", "IDCentro", 350);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupCentroTransitoExt, "[{'ColumnCaption':'Centro','ColumnField':'Centro','width':20},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':90}]");
             this.slkupCentroTransitoExt.EditValueChanged += slkupCentroTransitoExt_EditValueChanged;
 
-            Util.Util.ConfigLookupEdit(this.slkupCentroTransitoLoc, CG.CentroCostoDAC.GetData(-1, "*", "*", "*", "*", 0).Tables[0], "Centro", "IDCentro", 350);
+            Util.Util.ConfigLookupEdit(this.slkupCentroTransitoLoc, CG.CentroCostoDAC.GetData(-1, "*", "*", "*", "*","*", 0).Tables[0], "Centro", "IDCentro", 350);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupCentroTransitoLoc, "[{'ColumnCaption':'Centro','ColumnField':'Centro','width':20},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':90}]");
             this.slkupCentroTransitoLoc.EditValueChanged += slkupCentroTransitoLoc_EditValueChanged;
 

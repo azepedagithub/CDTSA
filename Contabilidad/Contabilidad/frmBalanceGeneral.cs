@@ -35,7 +35,7 @@ namespace CG
             { this.dtpFechaFinal.EditValue = new DateTime(fechatemp.Year + 1, 1, 1).AddDays(-1); }
 
 
-            _dtCentroCosto = CentroCostoDAC.GetData(-1, "*", "*", "*", "*", 0).Tables[0]; //No estamos tomando los acumuladores
+            _dtCentroCosto = CentroCostoDAC.GetData(-1, "*", "*", "*", "*","*", 0).Tables[0]; //No estamos tomando los acumuladores
 
             Util.Util.ConfigLookupEdit(this.slkupCentroCostoDesde, _dtCentroCosto, "Descr", "IDCentro");
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupCentroCostoDesde, "[{'ColumnCaption':'Centro','ColumnField':'Centro','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");

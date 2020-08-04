@@ -32,7 +32,7 @@ namespace CG
                 this.StartPosition = FormStartPosition.CenterScreen;
 
                 //Obtener los datos
-                _dtCentro = CentroCostoDAC.GetData(-1, "*", "*", "*", "*", 0).Tables[0]; //No estamos tomando los acumuladores
+                _dtCentro = CentroCostoDAC.GetData(-1, "*", "*", "*", "*","*", 0).Tables[0]; //No estamos tomando los acumuladores
                 _dtCuenta = CuentaContableDAC.GetData(-1, -1, -1, "*", "*", "*","*", "*", "*", "*", -1, -1, -1, 1, -1, -1).Tables[0];
                 _dtTipoAsiento = TipoAsientoDAC.GetData().Tables[0];
 

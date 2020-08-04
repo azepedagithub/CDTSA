@@ -109,7 +109,7 @@ namespace CI
                 EnlazarEventos();
 
                 _dtCuentasContables = CuentaContableDAC.GetData(-1, -1, -1, "*", "*", "*", "*", "*", "*", "*", -1, 0, 1, 1, -1, -1).Tables[0];
-                _dtCentrosCosto = CentroCostoDAC.GetData(-1, "*", "*", "*", "*", -1).Tables[0];
+                _dtCentrosCosto = CentroCostoDAC.GetData(-1, "*", "*", "*", "*","*", -1).Tables[0];
 
                 PopulateGrid();
                 PopulateData();
@@ -395,7 +395,7 @@ namespace CI
 
             //Agregar  los consecutivos
 
-            int iProximoConsecutivo = CentroCostoDAC.GetNextConsecutivo(-1, 0, 0);
+            int iProximoConsecutivo = CentroCostoDAC.GetNextConsecutivo(-1, 0, 0,0);
             //iProximoConsecutivo++;
 
           

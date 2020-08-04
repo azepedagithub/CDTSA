@@ -81,6 +81,7 @@ CREATE     TABLE  [dbo].[invProducto](
 	[IDCuentaContable] [BigInt]  ,
 	[CodigoBarra] [nvarchar](50) NULL,
 	[IDUnidad] [int] NOT NULL,
+	[FactorEmpaque] DECIMAL(28,4) NULL,
 	[TipoImpuesto] INT NOT NULL,
 	[EsMuestra] BIT DEFAULT 0,
 	[EsControlado] BIT DEFAULT 0,
@@ -140,14 +141,6 @@ GO
 
 ALTER TABLE [dbo].[invProducto] CHECK CONSTRAINT [fkinvProductoclas6]
 GO
-
-ALTER TABLE [dbo].[invProducto]  WITH CHECK ADD  CONSTRAINT [fkinvProveedorProducto] FOREIGN KEY([IDProveedor])
-REFERENCES [dbo].[cppProveedor] ([IDProveedor])
-GO
-
-ALTER TABLE [dbo].[invProducto] CHECK CONSTRAINT [fkinvProveedorProducto]
-GO
-
 
 
 ALTER TABLE [dbo].[invProducto]  WITH CHECK ADD  CONSTRAINT [fkinvProductoUnd] FOREIGN KEY([IDUnidad])
@@ -911,6 +904,15 @@ CREATE TABLE [dbo].[cppProveedor](
 
 GO
 
+ALTER TABLE [dbo].[invProducto]  WITH CHECK ADD  CONSTRAINT [fkinvProveedorProducto] FOREIGN KEY([IDProveedor])
+REFERENCES [dbo].[cppProveedor] ([IDProveedor])
+GO
+
+ALTER TABLE [dbo].[invProducto] CHECK CONSTRAINT [fkinvProveedorProducto]
+GO
+
+GO
+
 CREATE TABLE [dbo].[invHistCostoPromedio](
 	[IDCostoProm] [bigint] IDENTITY(1,1) NOT NULL,
 	[IDProducto] [bigint] NOT NULL,
@@ -1671,8 +1673,6 @@ SELECT  IDLote ,
         P.Descr DescrProducto,  
         LoteInterno ,
         LoteProveedor ,
-	
-	if Exists ( Select *  from  dbo.invBoletaInvFisico   Where IDProducto  = @IDProducto AND IDLote=@IDLote)	
         FechaVencimiento ,
         FechaFabricacion ,
         FechaIngreso  FROM dbo.invLote L
@@ -3471,7 +3471,7 @@ DROP TABLE  #Movimientos
 GO
 
 
-PROCEDURE dbo.validaCuentasCentrosInventario @IDProducto AS INT ,@Result BIT OUTPUT , @Mensaje NVARCHAR(250) OUTPUT
+CREATE PROCEDURE dbo.validaCuentasCentrosInventario @IDProducto AS INT ,@Result BIT OUTPUT , @Mensaje NVARCHAR(250) OUTPUT
 AS 
 
 --SET @IDProducto = 334

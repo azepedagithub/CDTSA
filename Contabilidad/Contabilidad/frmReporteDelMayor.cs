@@ -31,7 +31,7 @@ namespace CG
                 this.StartPosition = FormStartPosition.CenterScreen;
 
                 //Obtener los datos
-                _dtCentroCosto = CentroCostoDAC.GetData(-1, "*", "*", "*", "*", 0).Tables[0]; //No estamos tomando los acumuladores
+                _dtCentroCosto = CentroCostoDAC.GetData(-1, "*", "*", "*", "*", "*", 0).Tables[0]; //No estamos tomando los acumuladores
                 _dtCuentaContable = CuentaContableDAC.GetData(-1, -1, -1, "*", "*", "*", "*", "*","*", "*", -1, -1, -1, 1, -1, -1).Tables[0];
 
                 Util.Util.ConfigLookupEdit(this.slkupCentoCostoDesde, _dtCentroCosto, "Descr", "IDCentro");
