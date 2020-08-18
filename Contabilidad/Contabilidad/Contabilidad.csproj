@@ -141,6 +141,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Consultas\frmConsultaAsientoDiario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Consultas\frmConsultaAsientoDiario.Designer.cs">
+      <DependentUpon>frmConsultaAsientoDiario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Consultas\frmConsultaDetalleDiario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Consultas\frmConsultaDetalleDiario.Designer.cs">
+      <DependentUpon>frmConsultaDetalleDiario.cs</DependentUpon>
+    </Compile>
     <Compile Include="Consultas\frmConsultaLibroMayor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -382,6 +394,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Consultas\frmConsultaAsientoDiario.resx">
+      <DependentUpon>frmConsultaAsientoDiario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Consultas\frmConsultaDetalleDiario.resx">
+      <DependentUpon>frmConsultaDetalleDiario.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Consultas\frmConsultaLibroMayor.resx">
       <DependentUpon>frmConsultaLibroMayor.cs</DependentUpon>
     </EmbeddedResource>

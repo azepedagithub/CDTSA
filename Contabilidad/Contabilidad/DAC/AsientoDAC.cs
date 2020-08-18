@@ -116,7 +116,7 @@ namespace CG
             return DS;
         }
 
-        public static DataSet GetConsultaDetalleAsientoMayor(String Asiento, String TipoAsiento, String CuentaContable, String CentroCosto, String ModuloFuente, DateTime FechaInicial, DateTime FechaFinal, String Usuario)
+        public static DataSet GetConsultaDetalleAsientoMayor(String Asiento, String TipoAsiento, String CuentaContable, String CentroCosto, String ModuloFuente, DateTime FechaInicial, DateTime FechaFinal, String Usuario, bool Mayorizado = true)
         {
             String strSQL = "dbo.cntConsultaDetalleAsientosMayor";
 
@@ -129,6 +129,7 @@ namespace CG
             oCmd.Parameters.Add(new SqlParameter("@TipoAsiento", TipoAsiento));
             oCmd.Parameters.Add(new SqlParameter("@ModuloFuente", ModuloFuente));
             oCmd.Parameters.Add(new SqlParameter("@Usuario", Usuario));
+            oCmd.Parameters.Add(new SqlParameter("@Mayorizado", Mayorizado));
             oCmd.CommandType = CommandType.StoredProcedure;
 
             SqlDataAdapter oAdap = new SqlDataAdapter(oCmd);
@@ -139,7 +140,7 @@ namespace CG
         }
 
 
-        public static DataSet GetConsultaAsientosMayor(String Asiento, String TipoAsiento, String ModuloFuente, DateTime FechaInicial, DateTime FechaFinal, String Usuario)
+        public static DataSet GetConsultaAsientosMayor(String Asiento, String TipoAsiento, String ModuloFuente, DateTime FechaInicial, DateTime FechaFinal, String Usuario, bool Mayorizado =true)
         {
             String strSQL = "dbo.cntConsultaAsientosMayor";
 
@@ -151,6 +152,7 @@ namespace CG
             oCmd.Parameters.Add(new SqlParameter("@TipoAsiento", TipoAsiento));
             oCmd.Parameters.Add(new SqlParameter("@ModuloFuente", ModuloFuente));
             oCmd.Parameters.Add(new SqlParameter("@Usuario", Usuario));
+            oCmd.Parameters.Add(new SqlParameter("@Mayorizado", Mayorizado));
             oCmd.CommandType = CommandType.StoredProcedure;
 
             SqlDataAdapter oAdap = new SqlDataAdapter(oCmd);
