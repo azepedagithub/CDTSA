@@ -153,6 +153,18 @@
     <Compile Include="Consultas\frmConsultaPeriodoContable.Designer.cs">
       <DependentUpon>frmConsultaPeriodoContable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Consultas\frmConsultasAsientosMayor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Consultas\frmConsultasAsientosMayor.Designer.cs">
+      <DependentUpon>frmConsultasAsientosMayor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Consultas\frmConsultasDetalleMayor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Consultas\frmConsultasDetalleMayor.Designer.cs">
+      <DependentUpon>frmConsultasDetalleMayor.cs</DependentUpon>
+    </Compile>
     <Compile Include="DAC\AsientoDetalleDAC.cs" />
     <Compile Include="DAC\ConsultasDAC.cs" />
     <Compile Include="DAC\Cuenta_GrupoEstadosFinancierosDAC.cs" />
@@ -375,6 +387,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Consultas\frmConsultaPeriodoContable.resx">
       <DependentUpon>frmConsultaPeriodoContable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Consultas\frmConsultasAsientosMayor.resx">
+      <DependentUpon>frmConsultasAsientosMayor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Consultas\frmConsultasDetalleMayor.resx">
+      <DependentUpon>frmConsultasDetalleMayor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmCerrarPeriodo.resx">
       <DependentUpon>frmCerrarPeriodo.cs</DependentUpon>

@@ -19,7 +19,9 @@ namespace CG
         public String TipoAsiento { get; set; }
         public bool Mayorizado { get; set; }
         public bool Anulado { get; set; }
+        public String Asiento { get; set; }
         public bool CuadreTemporal { get; set; }
+        bool showAsiento = false;
 
         char sCaracterConcatenacion = '~';
 
@@ -29,9 +31,10 @@ namespace CG
             this.Load += FrmParametrosFiltroAsiento_Load;
         }
 
-        public frmParametrosFiltroAsiento(DateTime FechaInicial,DateTime FechaFinal,String ModuloFuente,String TipoAsiento,bool Mayorizado,bool Anulado, bool CuadreTemporal)
+        public frmParametrosFiltroAsiento(bool showAsiento,DateTime FechaInicial,DateTime FechaFinal,String ModuloFuente,String TipoAsiento,bool Mayorizado,bool Anulado, bool CuadreTemporal,String Asiento="")
         {
             InitializeComponent();
+            this.Asiento = Asiento;
             this.FechaInicial = FechaInicial;
             this.FechaFinal = FechaFinal;
             this.ModuloFuente = ModuloFuente;
@@ -39,13 +42,14 @@ namespace CG
             this.Mayorizado = Mayorizado;
             this.Anulado = Anulado;
             this.CuadreTemporal = CuadreTemporal;
-            
+            this.showAsiento = showAsiento;            
             this.Load += FrmParametrosFiltroAsiento_Load;
         }
 
         private void ActualizarEstados()
         {
             this.dtpDesde.EditValue = this.FechaInicial;
+            this.txtAsiento.EditValue = this.Asiento;
             this.dtpHasta.EditValue = this.FechaFinal;
             this.chkAnulado.EditValue = this.Anulado;
             this.chkCuadreTemporal.EditValue = this.CuadreTemporal;
@@ -96,6 +100,15 @@ namespace CG
 
             ActualizarEstados();
 
+            if (showAsiento)
+            {
+                this.chkMayorizado.EditValue = true;
+                this.chkMayorizado.Enabled = false;
+                this.chkCuadreTemporal.EditValue = false;
+                this.chkCuadreTemporal.Enabled = false;
+                this.layoutAsiento.Enabled = true;
+            }
+
         }
 
         private void CargarTipoAsiento()
@@ -133,6 +146,7 @@ namespace CG
             this.Anulado = (bool)this.chkAnulado.EditValue;
             this.CuadreTemporal = (bool)this.chkCuadreTemporal.EditValue;
             this.Mayorizado = (bool)this.chkMayorizado.EditValue;
+            this.Asiento = this.txtAsiento.EditValue.ToString();
 
             String sTiposAsiento = "";
             String sModuloFuente = "";

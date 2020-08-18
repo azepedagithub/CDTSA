@@ -19,6 +19,7 @@ namespace CG
         DataTable _dtCuentas = new DataTable();
         private List<int> selectedRows = new List<int>();
         public String sCuentasSelected = "";
+        public bool IsAllSelected = true;
 
         public frmPopPupCuentaContable()
         {
@@ -98,12 +99,14 @@ namespace CG
         private void simpleButton1_Click(object sender, EventArgs e)
         {
             this.gridView1.SelectAll();
+            this.IsAllSelected = true;
 
         }
 
         private void btnLimpiarSeleccion_Click(object sender, EventArgs e)
         {
             this.gridView1.ClearSelection();
+            this.IsAllSelected = false;
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -120,7 +123,7 @@ namespace CG
                 int rowHandle = gridView1.LocateByValue("IDCuenta", Lista[i]);
                 if (rowHandle != DevExpress.XtraGrid.GridControl.InvalidRowHandle)
                     gridView1.SelectRow(rowHandle);
-
+               
             }
         }
 
@@ -136,6 +139,12 @@ namespace CG
             }
             if (sCuentasSelected != "")
                 sCuentasSelected = sCuentasSelected.Substring(0, sCuentasSelected.Length - 1);
+            if (this.selectedRows.Count == _dtCuentas.Rows.Count || sCuentasSelected == "*")
+            {
+                IsAllSelected = true;
+            }
+            else
+                IsAllSelected = false;
             this.Close();
         }
 
@@ -146,7 +155,7 @@ namespace CG
 
             this.gridCuentas.DataSource = _dtCuentas;
 
-            if (sCuentasSelected != "")
+            if (sCuentasSelected != "" || sCuentasSelected !="*")
             {
                 CheckElements();
             }

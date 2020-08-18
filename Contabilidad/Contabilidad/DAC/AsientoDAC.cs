@@ -116,6 +116,52 @@ namespace CG
             return DS;
         }
 
+        public static DataSet GetConsultaDetalleAsientoMayor(String Asiento, String TipoAsiento, String CuentaContable, String CentroCosto, String ModuloFuente, DateTime FechaInicial, DateTime FechaFinal, String Usuario)
+        {
+            String strSQL = "dbo.cntConsultaDetalleAsientosMayor";
+
+            SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
+            oCmd.Parameters.Add(new SqlParameter("@Asiento", FechaInicial));
+            oCmd.Parameters.Add(new SqlParameter("@CuentaContable", CuentaContable));
+            oCmd.Parameters.Add(new SqlParameter("@CentroCosto", CentroCosto));
+            oCmd.Parameters.Add(new SqlParameter("@FechaInicial", FechaInicial));
+            oCmd.Parameters.Add(new SqlParameter("@FechaFinal", FechaFinal));
+            oCmd.Parameters.Add(new SqlParameter("@TipoAsiento", TipoAsiento));
+            oCmd.Parameters.Add(new SqlParameter("@ModuloFuente", ModuloFuente));
+            oCmd.Parameters.Add(new SqlParameter("@Usuario", Usuario));
+            oCmd.CommandType = CommandType.StoredProcedure;
+
+            SqlDataAdapter oAdap = new SqlDataAdapter(oCmd);
+            DataSet DS = CreateDataSet();
+
+            oAdap.Fill(DS.Tables["Data"]);
+            return DS;
+        }
+
+
+        public static DataSet GetConsultaAsientosMayor(String Asiento, String TipoAsiento, String ModuloFuente, DateTime FechaInicial, DateTime FechaFinal, String Usuario)
+        {
+            String strSQL = "dbo.cntConsultaAsientosMayor";
+
+            SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
+
+            oCmd.Parameters.Add(new SqlParameter("@Asiento", FechaInicial));
+            oCmd.Parameters.Add(new SqlParameter("@FechaInicial", FechaInicial));
+            oCmd.Parameters.Add(new SqlParameter("@FechaFinal", FechaFinal));
+            oCmd.Parameters.Add(new SqlParameter("@TipoAsiento", TipoAsiento));
+            oCmd.Parameters.Add(new SqlParameter("@ModuloFuente", ModuloFuente));
+            oCmd.Parameters.Add(new SqlParameter("@Usuario", Usuario));
+            oCmd.CommandType = CommandType.StoredProcedure;
+
+            SqlDataAdapter oAdap = new SqlDataAdapter(oCmd);
+            DataSet DS = CreateDataSet();
+
+            oAdap.Fill(DS.Tables["Data"]);
+            return DS;
+        }
+
+
+        
         public static bool Mayorizar(int IdEjercicio,String Periodo,String Asiento,String Usuario)
         {
             String strSQL = "dbo.cntMayorizarAsiento";

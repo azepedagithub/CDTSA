@@ -21,6 +21,7 @@ namespace CG
         DataTable _dtCentros = new DataTable();
         private List<int> selectedRows = new List<int>();
         public String sCostosSelected = "";
+        public bool IsAllSelected = true;
 
         public frmPopPupCentroCosto()
         {
@@ -85,7 +86,7 @@ namespace CG
             // _dtCuentasConstante = _dtCuentas.Clone();
 
             this.gridCentroCosto.DataSource = _dtCentros;
-            if (sCostosSelected != "") {
+            if (sCostosSelected != "" || sCostosSelected !="*") {
                 CheckElements();
             }
 
@@ -124,11 +125,13 @@ namespace CG
         private void btnClearSeleccion_Click(object sender, EventArgs e)
         {
             this.gridView1.ClearSelection();
+            IsAllSelected = false;
         }
 
         private void btnSeleccionarTodos_Click(object sender, EventArgs e)
         {
             this.gridView1.SelectAll();
+            IsAllSelected = true;
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -142,9 +145,10 @@ namespace CG
             for (int i=0 ;i<=Lista.Count();i++)
             {
                 int rowHandle = gridView1.LocateByValue("IDCentro", Lista[i]);
-                if(rowHandle != DevExpress.XtraGrid.GridControl.InvalidRowHandle)
-                gridView1.SelectRow(rowHandle);
-                 
+                if (rowHandle != DevExpress.XtraGrid.GridControl.InvalidRowHandle)
+                    gridView1.SelectRow(rowHandle);
+                else
+                    IsAllSelected = false;
             }
         }
 
@@ -159,6 +163,12 @@ namespace CG
             }
             if (sCostosSelected!="")
                 sCostosSelected = sCostosSelected.Substring(0, sCostosSelected.Length - 1);
+            if (this.selectedRows.Count == _dtCentros.Rows.Count || sCostosSelected == "*")
+            {
+                IsAllSelected = true;
+            }
+            else
+                IsAllSelected = false;
 
             this.Close();
         }

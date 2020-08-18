@@ -587,6 +587,20 @@ namespace MainMenu
                     ShowPagesRibbonMan(false);
                     ofrmLibroMayor.Show();
                     break;
+                case "frmConsultaAsientoMayor":
+                    CG.Consultas.frmConsultasAsientosMayor ofrmConsultasAsientoMayor = new CG.Consultas.frmConsultasAsientosMayor();
+                    ofrmConsultasAsientoMayor.MdiParent = this;
+                    ofrmConsultasAsientoMayor.WindowState = FormWindowState.Maximized;
+                    ShowPagesRibbonMan(false);
+                    ofrmConsultasAsientoMayor.Show();
+                    break;
+                case "frmConsultaDetalleMayor":
+                    CG.Consultas.frmConsultasDetalleMayor ofrmConsultaDetalleMayor = new CG.Consultas.frmConsultasDetalleMayor();
+                    ofrmConsultaDetalleMayor.MdiParent = this;
+                    ofrmConsultaDetalleMayor.WindowState = FormWindowState.Maximized;
+                    ShowPagesRibbonMan(false);
+                    ofrmConsultaDetalleMayor.Show();
+                    break;
                 case "frmParametrosContables":
                     frmParametrosContables ofrmParametrosContabilidad = new frmParametrosContables();
                     ofrmParametrosContabilidad.MdiParent = this;
@@ -812,6 +826,13 @@ namespace MainMenu
                     //nodeConsultasPorPeriodoContable.Tag = "optConsultasPorPeriodoContable";
                     TreeListNode nodeConsultasLibroMayor = tl.AppendNode(new object[] { "Libro Mayor" }, nodeConsultasContabilidad.Id, 11, 11, 11);
                     nodeConsultasLibroMayor.Tag = "frmConsultaLibroMayor";
+
+                    TreeListNode nodeConsultasContabilidadMayor = tl.AppendNode(new object[] { "del Mayor" }, nodeConsultasContabilidad.Id, 9, 10, 9);
+                    TreeListNode nodeConsultasAsientosMayor = tl.AppendNode(new object[] { "Asientos" }, nodeConsultasContabilidadMayor.Id, 11, 11, 11);
+                    nodeConsultasAsientosMayor.Tag = "frmConsultaAsientoMayor";
+                    TreeListNode nodeConsultasDetalleMayor = tl.AppendNode(new object[] { "Detalle" }, nodeConsultasContabilidadMayor.Id, 11, 11, 11);
+                    nodeConsultasDetalleMayor.Tag = "frmConsultaDetalleMayor";
+                    
                     //Carpeta
                     //TreeListNode nodeConsultasDelMayor = tl.AppendNode(new object[] { "Del Mayor" }, nodeConsultasContabilidad.Id, 9, 10, 9);
                     ////Items
