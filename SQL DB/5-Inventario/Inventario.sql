@@ -163,6 +163,8 @@ CREATE  TABLE [dbo].[invCuentaContable](
 	[Descr][nvarchar](250)  NOT NULL,
 	[CtrInventario][int],
 	[CtaInventario][bigint],
+	[CtrVariacionCosto][int],
+	[CtaVariacionCosto][bigint],
 	[CtrVenta] [int], 
 	[CtaVenta] [bigint], 
 	[CtrCompra] [int], 
@@ -171,22 +173,10 @@ CREATE  TABLE [dbo].[invCuentaContable](
 	[CtaDescVenta] [bigint], 
     [CtrCostoVenta] [int],     
     [CtaCostoVenta] [bigint], 
-    [CtrComisionVenta] [int], 
-    [CtaComisionVenta] [bigint], 
-    [CtrComisionCobro] [int], 
-    [CtaComisionCobro] [bigint], 
-    [CtrDescLinea] [int],
-    [CtaDescLinea] [bigint],  
-    [CtrCostoDesc] [int], 
-    [CtaCostoDesc] [bigint], 
     [CtrSobranteInvFisico] [int], 
     [CtaSobranteInvFisico] [bigint], 
     [CtrFaltanteInvFisico] [int], 
     [CtaFaltanteInvFisico] [bigint], 
-    [CtrVariacionCosto] [int],   
-    [CtaVariacionCosto] [bigint],  
-    [CtrVencimiento] [int], 
-    [CtaVencimiento] [bigint], 
     [CtrDescBonificacion] [int], 
     [CtaDescBonificacion] [bigint], 
     [CtrDevVentas] [int], 
@@ -238,35 +228,6 @@ GO
 ALTER TABLE [dbo].[invCuentaContable] CHECK CONSTRAINT [fkinvCuentaContable_CtrCostoVenta]
 GO
 
-ALTER TABLE [dbo].[invCuentaContable]  WITH CHECK ADD  CONSTRAINT [fkinvCuentaContable_CtrComisionVenta] FOREIGN KEY([CtrComisionVenta])
-REFERENCES dbo.cntCentroCosto ([IDCentro])
-GO
-
-ALTER TABLE [dbo].[invCuentaContable] CHECK CONSTRAINT [fkinvCuentaContable_CtrComisionVenta]
-GO
-
-
-ALTER TABLE [dbo].[invCuentaContable]  WITH CHECK ADD  CONSTRAINT [fkinvCuentaContable_CtrComisionCobro] FOREIGN KEY([CtrComisionCobro])
-REFERENCES dbo.cntCentroCosto ([IDCentro])
-GO
-
-ALTER TABLE [dbo].[invCuentaContable] CHECK CONSTRAINT [fkinvCuentaContable_CtrComisionCobro]
-GO
-
-ALTER TABLE [dbo].[invCuentaContable]  WITH CHECK ADD  CONSTRAINT [fkinvCuentaContable_CtrDescLinea] FOREIGN KEY([CtrDescLinea])
-REFERENCES dbo.cntCentroCosto ([IDCentro])
-GO
-
-ALTER TABLE [dbo].[invCuentaContable] CHECK CONSTRAINT [fkinvCuentaContable_CtrDescLinea]
-GO
-
-
-ALTER TABLE [dbo].[invCuentaContable]  WITH CHECK ADD  CONSTRAINT [fkinvCuentaContable_CtrCostoDesc] FOREIGN KEY([CtrCostoDesc])
-REFERENCES dbo.cntCentroCosto ([IDCentro])
-GO
-
-ALTER TABLE [dbo].[invCuentaContable] CHECK CONSTRAINT [fkinvCuentaContable_CtrCostoDesc]
-GO
 
 ALTER TABLE [dbo].[invCuentaContable]  WITH CHECK ADD  CONSTRAINT [fkinvCuentaContable_CtrFaltanteInvFisico] FOREIGN KEY([CtrFaltanteInvFisico])
 REFERENCES dbo.cntCentroCosto ([IDCentro])
@@ -283,12 +244,6 @@ ALTER TABLE [dbo].[invCuentaContable] CHECK CONSTRAINT [fkinvCuentaContable_CtrV
 GO
 
 
-ALTER TABLE [dbo].[invCuentaContable]  WITH CHECK ADD  CONSTRAINT [fkinvCuentaContable_CtrVencimiento] FOREIGN KEY(CtrVencimiento)
-REFERENCES dbo.cntCentroCosto ([IDCentro])
-GO
-
-ALTER TABLE [dbo].[invCuentaContable] CHECK CONSTRAINT [fkinvCuentaContable_CtrVencimiento]
-GO
 
 ALTER TABLE [dbo].[invCuentaContable]  WITH CHECK ADD  CONSTRAINT [fkinvCuentaContable_CtrDescBonificacion] FOREIGN KEY(CtrDescBonificacion)
 REFERENCES dbo.cntCentroCosto ([IDCentro])
@@ -361,35 +316,7 @@ GO
 ALTER TABLE [dbo].[invCuentaContable] CHECK CONSTRAINT [fkinvCuentaContable_CtaCostoVenta]
 GO
 
-ALTER TABLE [dbo].[invCuentaContable]  WITH CHECK ADD  CONSTRAINT [fkinvCuentaContable_CtaComisionVenta] FOREIGN KEY([CtaComisionVenta])
-REFERENCES dbo.cntCuenta (IDCuenta)
-GO
 
-ALTER TABLE [dbo].[invCuentaContable] CHECK CONSTRAINT [fkinvCuentaContable_CtaComisionVenta]
-GO
-
-
-ALTER TABLE [dbo].[invCuentaContable]  WITH CHECK ADD  CONSTRAINT [fkinvCuentaContable_CtaComisionCobro] FOREIGN KEY([CtaComisionCobro])
-REFERENCES dbo.cntCuenta (IDCuenta)
-GO
-
-ALTER TABLE [dbo].[invCuentaContable] CHECK CONSTRAINT [fkinvCuentaContable_CtaComisionCobro]
-GO
-
-ALTER TABLE [dbo].[invCuentaContable]  WITH CHECK ADD  CONSTRAINT [fkinvCuentaContable_CtaDescLinea] FOREIGN KEY([CtaDescLinea])
-REFERENCES dbo.cntCuenta (IDCuenta)
-GO
-
-ALTER TABLE [dbo].[invCuentaContable] CHECK CONSTRAINT [fkinvCuentaContable_CtaDescLinea]
-GO
-
-
-ALTER TABLE [dbo].[invCuentaContable]  WITH CHECK ADD  CONSTRAINT [fkinvCuentaContable_CtaCostoDesc] FOREIGN KEY([CtaCostoDesc])
-REFERENCES dbo.cntCuenta (IDCuenta)
-GO
-
-ALTER TABLE [dbo].[invCuentaContable] CHECK CONSTRAINT [fkinvCuentaContable_CtaCostoDesc]
-GO
 
 ALTER TABLE [dbo].[invCuentaContable]  WITH CHECK ADD  CONSTRAINT [fkinvCuentaContable_CtaFaltanteInvFisico] FOREIGN KEY([CtaFaltanteInvFisico])
 REFERENCES dbo.cntCuenta (IDCuenta)
@@ -405,13 +332,6 @@ GO
 ALTER TABLE [dbo].[invCuentaContable] CHECK CONSTRAINT [fkinvCuentaContable_CtaVariacionCosto]
 GO
 
-
-ALTER TABLE [dbo].[invCuentaContable]  WITH CHECK ADD  CONSTRAINT [fkinvCuentaContable_CtaVencimiento] FOREIGN KEY(CtaVencimiento)
-REFERENCES dbo.cntCuenta (IDCuenta)
-GO
-
-ALTER TABLE [dbo].[invCuentaContable] CHECK CONSTRAINT [fkinvCuentaContable_CtaVencimiento]
-GO
 
 ALTER TABLE [dbo].[invCuentaContable]  WITH CHECK ADD  CONSTRAINT [fkinvCuentaContable_CtaDescBonificacion] FOREIGN KEY(CtaDescBonificacion)
 REFERENCES dbo.cntCuenta (IDCuenta)
@@ -1684,9 +1604,8 @@ GO
 
 
 CREATE   PROCEDURE dbo.invUpdateCuentaContableInv(@Operacion NVARCHAR(1),@IDCuenta AS INT OUTPUT,@Descr NVARCHAR(250),@CtrInventario AS INT,@CtaInventario AS BIGINT,  @CtrVenta AS INT,
-											@CtaVenta AS BIGINT,@CtrCompra as INT,@CtaCompra AS BIGINT,@CtrDescVenta AS INT,@CtaDescVenta AS BIGINT, @CtrCostoVenta AS INT,@CtaCostoVenta AS BIGINT,@CtrComisionVenta AS INT,
-											@CtaComisionVenta AS BIGINT,@CtrComisionCobro AS INT,@CtaComisionCobro AS BIGINT,@CtrDescLinea AS INT,@CtaDescLinea AS BIGINT,@CtrCostoDesc AS INT,@CtaCostoDesc AS BIGINT,@CtrSobranteInvFisico AS INT,
-											@CtaSobranteInvFisico AS BIGINT,@CtrFaltanteInvFisico AS INT,@CtaFaltanteInvFisico AS BIGINT,@CtrVariacionCosto AS int,@CtaVariacionCosto AS BIGINT, @CtrVencimiento AS int, @CtaVencimiento AS BIGINT	,
+											@CtaVenta AS BIGINT,@CtrCompra as INT,@CtaCompra AS BIGINT,@CtrDescVenta AS INT,@CtaDescVenta AS BIGINT, @CtrCostoVenta AS INT,@CtaCostoVenta AS BIGINT,@CtrVariacionCosto AS INT, @CtaVariacionCosto AS BIGINT,
+											@CtrSobranteInvFisico AS INT,@CtaSobranteInvFisico AS BIGINT,@CtrFaltanteInvFisico AS INT,@CtaFaltanteInvFisico AS BIGINT,
 											@CtrDescBonificacion AS int	,@CtaDescBonificacion AS BIGINT	,@CtrDevVentas AS int	,@CtaDevVentas AS BIGINT,@CtrConsumo AS INT,@CtaConsumo AS BIGINT	)
 AS 
 if upper(@Operacion) = 'I'
@@ -1700,9 +1619,8 @@ BEGIN
 	SET @IDCuenta = @IDConsecutivo
 
 	INSERT INTO dbo.invCuentaContable(IDCuenta ,Descr ,CtrInventario ,CtaInventario ,CtrVenta , CtaVenta ,CtrCompra ,CtaCompra ,
-	          CtrDescVenta ,CtaDescVenta ,CtrCostoVenta ,CtaCostoVenta ,CtrComisionVenta ,CtaComisionVenta ,CtrComisionCobro ,
-	          CtaComisionCobro ,CtrDescLinea ,CtaDescLinea ,CtrCostoDesc ,CtaCostoDesc ,CtrSobranteInvFisico ,CtaSobranteInvFisico ,
-	          CtrFaltanteInvFisico ,CtaFaltanteInvFisico ,CtrVariacionCosto ,CtaVariacionCosto ,CtrVencimiento ,CtaVencimiento ,CtrDescBonificacion ,
+	          CtrDescVenta ,CtaDescVenta ,CtrCostoVenta ,CtaCostoVenta, CtrVariacionCosto,CtaVariacionCosto ,CtrSobranteInvFisico ,CtaSobranteInvFisico ,
+	          CtrFaltanteInvFisico ,CtaFaltanteInvFisico ,CtrDescBonificacion ,
 	          CtaDescBonificacion ,CtrDevVentas ,CtaDevVentas,CtrConsumo,CtaConsumo)
 	VALUES  ( @IDCuenta , -- IDCuenta - bigint
 	          @Descr , -- Descr - nvarchar(250)
@@ -1716,22 +1634,12 @@ BEGIN
 	          @CtaDescVenta , -- CtaDescVenta - int
 	          @CtrCostoVenta , -- CtrCostoVenta - int
 	          @CtaCostoVenta , -- CtaCostoVenta - int
-	          @CtrComisionVenta , -- CtrComisionVenta - int
-	          @CtaComisionVenta , -- CtaComisionVenta - int
-	          @CtrComisionCobro , -- CtrComisionCobro - int
-	          @CtaComisionCobro , -- CtaComisionCobro - int
-	          @CtrDescLinea , -- CtrDescrLinea - int
-	          @CtaDescLinea , -- CtaDescLinea - int
-	          @CtrCostoDesc , -- CtrCostoDesc - int
-	          @CtaCostoDesc , -- CtaCostoDesc - int
+	          @CtrVariacionCosto,
+	          @CtaVariacionCosto,
 	          @CtrSobranteInvFisico , -- CtrSobranteInvFisico - int
 	          @CtaSobranteInvFisico , -- CtaSobranteInvFisico - int
 	          @CtrFaltanteInvFisico , -- CtrFaltanteInvFisico - int
 	          @CtaFaltanteInvFisico , -- CtaFaltanteInvFisico - int
-	          @CtrVariacionCosto , -- CtrVariacionCosto - int
-	          @CtaVariacionCosto , -- CtaVariacionCosto - int
-	          @CtrVencimiento , -- CtrVencimiento - int
-	          @CtaVencimiento , -- CtaVencimiento - int
 	          @CtrDescBonificacion , -- CtrDescBonificacion - int
 	          @CtaDescBonificacion , -- CtaDescBonificacion - int
 	          @CtrDevVentas , -- CtrDevVentas - int
@@ -1760,22 +1668,12 @@ BEGIN
 		CtaDescVenta=@CtaDescVenta,
 		CtrCostoVenta = @CtrCostoVenta,
 		CtaCostoVenta = @CtaCostoVenta,
-		CtrComisionVenta =@CtrComisionVenta,
-		CtaComisionVenta = @CtaComisionVenta,
-		CtrComisionCobro =@CtrComisionCobro,
-		CtaComisionCobro = @CtaComisionCobro,
-		CtrDescLinea = @CtrDescLinea,
-		CtaDescLinea = @CtaDescLinea,
-		CtrCostoDesc= @CtrCostoDesc,
-		CtaCostoDesc = @CtaCostoDesc,
+		CtrVariacionCosto = @CtrVariacionCosto,
+		CtaVariacionCosto=@CtaVariacionCosto,
 		CtrSobranteInvFisico = @CtrSobranteInvFisico,
 		CtaSobranteInvFisico = @CtaSobranteInvFisico,
 		CtrFaltanteInvFisico = @CtrFaltanteInvFisico,
 		CtaFaltanteInvFisico= @CtaFaltanteInvFisico,
-		CtrVariacionCosto = @CtrVariacionCosto,
-		CtaVariacionCosto = @CtaVariacionCosto,
-		CtrVencimiento = @CtrVencimiento,
-		CtaVencimiento = @CtaVencimiento,
 		CtrDescBonificacion = @CtrDescBonificacion,
 		CtaDescBonificacion= @CtaDescBonificacion,
 		CtrDevVentas = @CtrDevVentas,
@@ -1788,7 +1686,7 @@ END
 
 GO 
 
-CREATE  PROCEDURE dbo.invGetCuentaContableInv (@IDCuentaContable AS BIGINT,@Descr AS NVARCHAR(250))
+CREATE   PROCEDURE dbo.invGetCuentaContableInv (@IDCuentaContable AS BIGINT,@Descr AS NVARCHAR(250))
 AS 
 SELECT  IDCuenta ,
         Descr ,
@@ -1802,22 +1700,12 @@ SELECT  IDCuenta ,
         CtaDescVenta ,
         CtrCostoVenta ,
         CtaCostoVenta ,
-        CtrComisionVenta ,
-        CtaComisionVenta ,
-        CtrComisionCobro ,
-        CtaComisionCobro ,
-        CtrDescLinea ,
-        CtaDescLinea ,
-        CtrCostoDesc ,
-        CtaCostoDesc ,
+        CtrVariacionCosto,
+        CtaVariacionCosto,
         CtrSobranteInvFisico ,
         CtaSobranteInvFisico ,
         CtrFaltanteInvFisico ,
         CtaFaltanteInvFisico ,
-        CtrVariacionCosto ,
-        CtaVariacionCosto ,
-        CtrVencimiento ,
-        CtaVencimiento ,
         CtrDescBonificacion ,
         CtaDescBonificacion ,
         CtrDevVentas ,
