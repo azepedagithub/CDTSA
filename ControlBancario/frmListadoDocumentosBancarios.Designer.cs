@@ -311,7 +311,7 @@
             // 
             this.emptySpaceItem1.AllowHotTrack = false;
             this.emptySpaceItem1.AppearanceItemCaption.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.emptySpaceItem1.AppearanceItemCaption.ForeColor = System.Drawing.Color.DeepPink;
+            this.emptySpaceItem1.AppearanceItemCaption.ForeColor = System.Drawing.Color.Black;
             this.emptySpaceItem1.AppearanceItemCaption.Options.UseFont = true;
             this.emptySpaceItem1.AppearanceItemCaption.Options.UseForeColor = true;
             this.emptySpaceItem1.AppearanceItemCaption.Options.UseTextOptions = true;

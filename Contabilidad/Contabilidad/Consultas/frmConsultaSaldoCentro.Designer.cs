@@ -659,7 +659,7 @@
             // 
             this.emptySpaceItem5.AllowHotTrack = false;
             this.emptySpaceItem5.AppearanceItemCaption.FontStyleDelta = System.Drawing.FontStyle.Bold;
-            this.emptySpaceItem5.AppearanceItemCaption.ForeColor = System.Drawing.Color.DeepPink;
+            this.emptySpaceItem5.AppearanceItemCaption.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.emptySpaceItem5.AppearanceItemCaption.Options.UseFont = true;
             this.emptySpaceItem5.AppearanceItemCaption.Options.UseForeColor = true;
             this.emptySpaceItem5.AppearanceItemCaption.Options.UseTextOptions = true;

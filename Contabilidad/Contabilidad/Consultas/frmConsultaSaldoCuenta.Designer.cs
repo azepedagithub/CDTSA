@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmConsultaSaldoCuenta));
-            DevExpress.XtraGrid.GridFormatRule gridFormatRule2 = new DevExpress.XtraGrid.GridFormatRule();
-            DevExpress.XtraEditors.FormatConditionRuleValue formatConditionRuleValue2 = new DevExpress.XtraEditors.FormatConditionRuleValue();
+            DevExpress.XtraGrid.GridFormatRule gridFormatRule1 = new DevExpress.XtraGrid.GridFormatRule();
+            DevExpress.XtraEditors.FormatConditionRuleValue formatConditionRuleValue1 = new DevExpress.XtraEditors.FormatConditionRuleValue();
             this.SaldoFinal = new DevExpress.XtraGrid.Columns.GridColumn();
             this.txtGridSaldoFinal = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
             this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
-            this.txtTasaCambio = new DevExpress.XtraEditors.TextEdit();
+            this.dtHasta = new DevExpress.XtraEditors.DateEdit();
             this.ribbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.btnCancelar = new DevExpress.XtraBars.BarButtonItem();
             this.lblStatus = new DevExpress.XtraBars.BarStaticItem();
@@ -46,6 +46,7 @@
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.btnRefrescar = new DevExpress.XtraBars.BarButtonItem();
+            this.txtTasaCambio = new DevExpress.XtraEditors.TextEdit();
             this.grid = new DevExpress.XtraGrid.GridControl();
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.CentroCosto = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -77,14 +78,15 @@
             this.layoutControlItem10 = new DevExpress.XtraLayout.LayoutControlItem();
             this.emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
             this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.dtHasta = new DevExpress.XtraEditors.DateEdit();
             this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
             this.emptySpaceItem3 = new DevExpress.XtraLayout.EmptySpaceItem();
             ((System.ComponentModel.ISupportInitialize)(this.txtGridSaldoFinal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtTasaCambio.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtHasta.Properties.CalendarTimeProperties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtHasta.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtTasaCambio.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtGridSaldoInicial)).BeginInit();
@@ -110,8 +112,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dtHasta.Properties.CalendarTimeProperties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dtHasta.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).BeginInit();
             this.SuspendLayout();
@@ -151,20 +151,20 @@
             this.layoutControl1.TabIndex = 0;
             this.layoutControl1.Text = "layoutControl1";
             // 
-            // txtTasaCambio
+            // dtHasta
             // 
-            this.txtTasaCambio.Location = new System.Drawing.Point(766, 64);
-            this.txtTasaCambio.MenuManager = this.ribbonControl;
-            this.txtTasaCambio.Name = "txtTasaCambio";
-            this.txtTasaCambio.Properties.DisplayFormat.FormatString = "#,###,###,###.00$";
-            this.txtTasaCambio.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.txtTasaCambio.Properties.Mask.BeepOnError = true;
-            this.txtTasaCambio.Properties.Mask.EditMask = "#,###,###,###.00$";
-            this.txtTasaCambio.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
-            this.txtTasaCambio.Properties.ReadOnly = true;
-            this.txtTasaCambio.Size = new System.Drawing.Size(86, 20);
-            this.txtTasaCambio.StyleController = this.layoutControl1;
-            this.txtTasaCambio.TabIndex = 14;
+            this.dtHasta.EditValue = null;
+            this.dtHasta.Location = new System.Drawing.Point(336, 64);
+            this.dtHasta.MenuManager = this.ribbonControl;
+            this.dtHasta.Name = "dtHasta";
+            this.dtHasta.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.dtHasta.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.dtHasta.Size = new System.Drawing.Size(141, 20);
+            this.dtHasta.StyleController = this.layoutControl1;
+            this.dtHasta.TabIndex = 15;
+            this.dtHasta.EditValueChanged += new System.EventHandler(this.dtHasta_EditValueChanged);
             // 
             // ribbonControl
             // 
@@ -268,6 +268,21 @@
             this.btnRefrescar.Name = "btnRefrescar";
             this.btnRefrescar.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnRefrescar_ItemClick);
             // 
+            // txtTasaCambio
+            // 
+            this.txtTasaCambio.Location = new System.Drawing.Point(766, 64);
+            this.txtTasaCambio.MenuManager = this.ribbonControl;
+            this.txtTasaCambio.Name = "txtTasaCambio";
+            this.txtTasaCambio.Properties.DisplayFormat.FormatString = "#,###,###,###.00$";
+            this.txtTasaCambio.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.txtTasaCambio.Properties.Mask.BeepOnError = true;
+            this.txtTasaCambio.Properties.Mask.EditMask = "#,###,###,###.00$";
+            this.txtTasaCambio.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
+            this.txtTasaCambio.Properties.ReadOnly = true;
+            this.txtTasaCambio.Size = new System.Drawing.Size(86, 20);
+            this.txtTasaCambio.StyleController = this.layoutControl1;
+            this.txtTasaCambio.TabIndex = 14;
+            // 
             // grid
             // 
             this.grid.Location = new System.Drawing.Point(12, 147);
@@ -294,15 +309,15 @@
             this.Debitos,
             this.Creditos,
             this.SaldoFinal});
-            gridFormatRule2.Column = this.SaldoFinal;
-            gridFormatRule2.ColumnApplyTo = this.SaldoFinal;
-            gridFormatRule2.Name = "SaldoFinalNegativo";
-            formatConditionRuleValue2.Appearance.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            formatConditionRuleValue2.Appearance.Options.UseForeColor = true;
-            formatConditionRuleValue2.Condition = DevExpress.XtraEditors.FormatCondition.Less;
-            formatConditionRuleValue2.Value1 = 0D;
-            gridFormatRule2.Rule = formatConditionRuleValue2;
-            this.gridView1.FormatRules.Add(gridFormatRule2);
+            gridFormatRule1.Column = this.SaldoFinal;
+            gridFormatRule1.ColumnApplyTo = this.SaldoFinal;
+            gridFormatRule1.Name = "SaldoFinalNegativo";
+            formatConditionRuleValue1.Appearance.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            formatConditionRuleValue1.Appearance.Options.UseForeColor = true;
+            formatConditionRuleValue1.Condition = DevExpress.XtraEditors.FormatCondition.Less;
+            formatConditionRuleValue1.Value1 = 0D;
+            gridFormatRule1.Rule = formatConditionRuleValue1;
+            this.gridView1.FormatRules.Add(gridFormatRule1);
             this.gridView1.GridControl = this.grid;
             this.gridView1.Name = "gridView1";
             this.gridView1.OptionsBehavior.ReadOnly = true;
@@ -610,21 +625,6 @@
             this.layoutControlItem4.Text = "T/C:";
             this.layoutControlItem4.TextSize = new System.Drawing.Size(67, 13);
             // 
-            // dtHasta
-            // 
-            this.dtHasta.EditValue = null;
-            this.dtHasta.Location = new System.Drawing.Point(336, 64);
-            this.dtHasta.MenuManager = this.ribbonControl;
-            this.dtHasta.Name = "dtHasta";
-            this.dtHasta.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.dtHasta.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.dtHasta.Size = new System.Drawing.Size(141, 20);
-            this.dtHasta.StyleController = this.layoutControl1;
-            this.dtHasta.TabIndex = 15;
-            this.dtHasta.EditValueChanged += new System.EventHandler(this.dtHasta_EditValueChanged);
-            // 
             // layoutControlItem3
             // 
             this.layoutControlItem3.Control = this.dtHasta;
@@ -638,7 +638,7 @@
             // 
             this.emptySpaceItem3.AllowHotTrack = false;
             this.emptySpaceItem3.AppearanceItemCaption.FontStyleDelta = System.Drawing.FontStyle.Bold;
-            this.emptySpaceItem3.AppearanceItemCaption.ForeColor = System.Drawing.Color.DeepPink;
+            this.emptySpaceItem3.AppearanceItemCaption.ForeColor = System.Drawing.Color.Black;
             this.emptySpaceItem3.AppearanceItemCaption.Options.UseFont = true;
             this.emptySpaceItem3.AppearanceItemCaption.Options.UseForeColor = true;
             this.emptySpaceItem3.AppearanceItemCaption.Options.UseTextOptions = true;
@@ -664,8 +664,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtGridSaldoFinal)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
             this.layoutControl1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.txtTasaCambio.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtHasta.Properties.CalendarTimeProperties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtHasta.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtTasaCambio.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtGridSaldoInicial)).EndInit();
@@ -691,8 +693,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dtHasta.Properties.CalendarTimeProperties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dtHasta.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).EndInit();
             this.ResumeLayout(false);

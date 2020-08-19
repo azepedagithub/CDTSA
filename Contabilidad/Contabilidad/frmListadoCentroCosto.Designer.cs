@@ -42,6 +42,7 @@
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
+            this.txtNivel4 = new DevExpress.XtraEditors.TextEdit();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.txtCentro = new DevExpress.XtraEditors.TextEdit();
             this.chkActivo = new DevExpress.XtraEditors.CheckEdit();
@@ -75,13 +76,13 @@
             this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem12 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
             this.emptySpaceItem3 = new DevExpress.XtraLayout.EmptySpaceItem();
             this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.txtNivel4 = new DevExpress.XtraEditors.TextEdit();
-            this.layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtNivel4.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCentro.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkActivo.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkReadSystemOnly.Properties)).BeginInit();
@@ -108,10 +109,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem12)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtNivel4.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).BeginInit();
             this.SuspendLayout();
             // 
             // ribbonControl
@@ -248,6 +248,15 @@
             this.layoutControl1.Size = new System.Drawing.Size(804, 443);
             this.layoutControl1.TabIndex = 1;
             this.layoutControl1.Text = "layoutControl1";
+            // 
+            // txtNivel4
+            // 
+            this.txtNivel4.Location = new System.Drawing.Point(123, 382);
+            this.txtNivel4.MenuManager = this.ribbonControl;
+            this.txtNivel4.Name = "txtNivel4";
+            this.txtNivel4.Size = new System.Drawing.Size(206, 20);
+            this.txtNivel4.StyleController = this.layoutControl1;
+            this.txtNivel4.TabIndex = 15;
             // 
             // labelControl1
             // 
@@ -596,11 +605,20 @@
             this.layoutControlItem7.Text = "Centro Acumulador:";
             this.layoutControlItem7.TextSize = new System.Drawing.Size(96, 13);
             // 
+            // layoutControlItem9
+            // 
+            this.layoutControlItem9.Control = this.txtNivel4;
+            this.layoutControlItem9.Location = new System.Drawing.Point(0, 96);
+            this.layoutControlItem9.Name = "layoutControlItem9";
+            this.layoutControlItem9.Size = new System.Drawing.Size(309, 24);
+            this.layoutControlItem9.Text = "Nivel 4:";
+            this.layoutControlItem9.TextSize = new System.Drawing.Size(96, 13);
+            // 
             // emptySpaceItem3
             // 
             this.emptySpaceItem3.AllowHotTrack = false;
             this.emptySpaceItem3.AppearanceItemCaption.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.emptySpaceItem3.AppearanceItemCaption.ForeColor = System.Drawing.Color.DeepPink;
+            this.emptySpaceItem3.AppearanceItemCaption.ForeColor = System.Drawing.Color.Black;
             this.emptySpaceItem3.AppearanceItemCaption.Options.UseFont = true;
             this.emptySpaceItem3.AppearanceItemCaption.Options.UseForeColor = true;
             this.emptySpaceItem3.AppearanceItemCaption.Options.UseTextOptions = true;
@@ -624,24 +642,6 @@
             this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem1.TextVisible = false;
             // 
-            // txtNivel4
-            // 
-            this.txtNivel4.Location = new System.Drawing.Point(123, 382);
-            this.txtNivel4.MenuManager = this.ribbonControl;
-            this.txtNivel4.Name = "txtNivel4";
-            this.txtNivel4.Size = new System.Drawing.Size(206, 20);
-            this.txtNivel4.StyleController = this.layoutControl1;
-            this.txtNivel4.TabIndex = 15;
-            // 
-            // layoutControlItem9
-            // 
-            this.layoutControlItem9.Control = this.txtNivel4;
-            this.layoutControlItem9.Location = new System.Drawing.Point(0, 96);
-            this.layoutControlItem9.Name = "layoutControlItem9";
-            this.layoutControlItem9.Size = new System.Drawing.Size(309, 24);
-            this.layoutControlItem9.Text = "Nivel 4:";
-            this.layoutControlItem9.TextSize = new System.Drawing.Size(96, 13);
-            // 
             // frmListadoCentroCosto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -660,6 +660,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
             this.layoutControl1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.txtNivel4.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCentro.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkActivo.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkReadSystemOnly.Properties)).EndInit();
@@ -686,10 +687,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem12)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtNivel4.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
