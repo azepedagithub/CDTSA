@@ -1001,6 +1001,29 @@ VALUES  ( 9 ,N'VENTA (-)' , N'VT' , N'S' , -1 , 7 , 1 , 0 , 0 ,0 , 0 ,1 , 0 ,0 ,
 
 GO
 
+
+INSERT INTO DBO.globalConsecutivos( Descr ,Prefijo ,Consecutivo ,Documento ,Activo)
+VALUES ('CONSECUTIVO FACTURA','FAC',1,'FAC00000001',1)
+GO
+INSERT INTO DBO.globalConsecutivos( Descr ,Prefijo ,Consecutivo ,Documento ,Activo)
+VALUES ('CONSECUTIVO COMPRA','COM',1,'COM00000001',1)
+GO
+INSERT INTO DBO.globalConsecutivos( Descr ,Prefijo ,Consecutivo ,Documento ,Activo)
+VALUES ('CONSECUTIVO AJUSTE','AJU',1,'AJU00000001',1)
+
+GO
+
+INSERT INTO DBO.invPaquete( PAQUETE ,Descr ,IDConsecutivo ,Transaccion ,Activo)
+VALUES ('COM','COMPRAS',2,'CO',1)
+GO
+INSERT INTO DBO.invPaquete( PAQUETE ,Descr ,IDConsecutivo ,Transaccion ,Activo)
+VALUES ('FAC','FACTURACION',1,'VT',1)
+GO
+INSERT INTO DBO.invPaquete( PAQUETE ,Descr ,IDConsecutivo ,Transaccion ,Activo)
+VALUES ('AJU','AJUSTES',3,'AJ',1)
+
+GO
+
 INSERT INTO dbo.globalTipoTran( IDTipoTran ,Descr ,Transaccion ,Naturaleza ,Factor ,Orden ,SystemReadOnly ,EsTraslado ,
           EsFisico ,EsConsumo ,EsCompra ,EsVenta ,EsAjuste ,EsCosto ,EsRequisable ,DobleMovimiento)
 VALUES  ( 10 ,N'DEVOLUCIONES SOBRE VENTA (+)' , N'DV' , N'E' , 1 , 8, 1 , 0 , 0 ,0 , 0 ,1 , 0 ,0 , 0, 0 )
@@ -2659,7 +2682,6 @@ DECLARE @IDProducto AS BIGINT,@IDBodega AS INT,@IDLote AS INT,@Cantidad AS DECIM
 @CtaSobranteInvFisico AS BIGINT, @CtrSobranteInvFisico AS INT,
 @CtaFaltanteInvFisico AS BIGINT, @CtrFaltanteInvFisico AS INT,
 @CtaVariacionCosto AS BIGINT, @CtrVariacionCosto AS INT,
-@CtaVencimiento AS BIGINT, @CtrVencimiento AS INT,
 @CtaCompra AS BIGINT,@CtrCompra AS INT,
 @CtaConsumo AS BIGINT ,@CtrConsumo AS INT,
 @IDTipoTran AS INT
@@ -2680,7 +2702,6 @@ BEGIN
 	@CtaSobranteInvFisico = CtaSobranteInvFisico,@CtrSobranteInvFisico = CtrSobranteInvFisico,
 	@CtaFaltanteInvFisico = CtaFaltanteInvFisico, @CtrFaltanteInvFisico =CtrFaltanteInvFisico,
 	@CtaVariacionCosto = CtaVariacionCosto, @CtrVariacionCosto = CtrVariacionCosto,
-	@CtaVencimiento = CtaVencimiento, @CtrVencimiento = CtrVencimiento,
 	@CtaCompra = CtaCompra,@CtrCompra = CtrCompra,
 	@CtaConsumo =  CtaConsumo,@CtrConsumo = CtrConsumo,
 	@IDTipoTran = IDTipoTran
@@ -2692,7 +2713,6 @@ BEGIN
 											@CtaSobranteInvFisico + @CtrSobranteInvFisico + 
 											@CtaFaltanteInvFisico + @CtrFaltanteInvFisico +
 											@CtaVariacionCosto + @CtrVariacionCosto +
-											@CtaVencimiento + @CtrVencimiento +
 											@CtaCompra + @CtrCompra +
 											@CtaConsumo + @CtrConsumo 
 											
@@ -3370,10 +3390,10 @@ DECLARE @DescrCuenta AS NVARCHAR(250)
 
 SET @Mensaje=''
 SELECT  @Descr = Descr ,
-         @Centros =CtrInventario +CtrVenta + CtrCompra +CtrDescVenta +CtrCostoVenta +CtrComisionVenta +CtrComisionCobro +CtrDescLinea +  CtrCostoDesc +CtrSobranteInvFisico +CtrFaltanteInvFisico +CtrVariacionCosto +
-        CtrVencimiento +CtrDescBonificacion +CtrDevVentas +CtrConsumo ,
-        @Cuentas = CtaInventario +CtaVenta +CtaCompra+ CtaDescVenta +CtaCostoVenta +CtaComisionVenta +CtaComisionCobro +CtaDescLinea +CtaCostoDesc +CtaSobranteInvFisico +CtaFaltanteInvFisico +CtaVariacionCosto +
-        CtaVencimiento +CtaDescBonificacion +CtaDevVentas +CtaConsumo
+         @Centros =CtrInventario +CtrVenta + CtrCompra +CtrDescVenta +CtrCostoVenta   +CtrSobranteInvFisico +CtrFaltanteInvFisico +CtrVariacionCosto +
+         CtrDescBonificacion +CtrDevVentas +CtrConsumo ,
+        @Cuentas = CtaInventario +CtaVenta +CtaCompra+ CtaDescVenta +CtaCostoVenta  +CtaSobranteInvFisico +CtaFaltanteInvFisico +CtaVariacionCosto +
+        CtaDescBonificacion +CtaDevVentas +CtaConsumo
 FROM dbo.invCuentaContable WHERE IDCuenta = (SELECT TOP 1 IDCuentaContable  FROM dbo.invProducto WHERE IDProducto=@IDProducto)
 
 IF @Centros IS NULL
