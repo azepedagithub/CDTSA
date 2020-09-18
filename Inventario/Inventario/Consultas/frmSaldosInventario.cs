@@ -101,8 +101,8 @@ namespace CI.Consultas
             DataTable DTExistencias  = new DataTable();
 
             Fecha = Convert.ToDateTime(this.dtpFecha.EditValue);
-            FechaInicial = Convert.ToDateTime(this.dtpFechaInicio.EditValue);
-            FechaFinal = Convert.ToDateTime(this.dtpFechaFinal.EditValue);
+            FechaInicial = Convert.ToDateTime(this.dtpFechaInicio.EditValue).Date;
+            FechaFinal = Convert.ToDateTime(this.dtpFechaFinal.EditValue).Date.AddDays(1).AddTicks(-1);
 
             if (this.cmbReporte.SelectedIndex == 0)
             {

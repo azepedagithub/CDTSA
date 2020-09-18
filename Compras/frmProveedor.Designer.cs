@@ -450,6 +450,7 @@
             // 
             // txtNIT
             // 
+            this.txtNIT.EditValue = "";
             this.txtNIT.Location = new System.Drawing.Point(88, 84);
             this.txtNIT.MenuManager = this.ribbonControl1;
             this.txtNIT.Name = "txtNIT";

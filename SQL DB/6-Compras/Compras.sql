@@ -397,6 +397,12 @@ CREATE TABLE dbo.invParametrosCompra(
 
 GO
 
+INSERT INTO dbo.invParametrosCompra( IDParametro ,IDConsecSolicitud ,IDConsecOrdenCompra ,IDConsecEmbarque ,IDConsecDevolucion ,CantLineasOrdenCompra ,IDBodegaDefault ,
+          IDTipoCambio ,CantDecimalesPrecio ,CantDecimalesCantidad ,IDTipoAsientoContable ,IDPaquete ,CtaTransitoLocal ,CtrTransitoLocal ,CtaTransitoExterior ,CtrTransitoExterior ,AplicaAutomaticamenteAsiento ,CanEditAsiento ,CanViewAsiento)
+VALUES (1,NULL,NULL,NULL,NULL,20,0,NULL,4,4,NULL,NULL,NULL,NULL,NULL,NULL,0,1,1)
+
+GO
+
 CREATE   PROCEDURE dbo.invUpdateSolicitudCompra(@Operacion NVARCHAR(1), @IDSolicitud AS INT OUTPUT,@Consecutivo NVARCHAR(20) OUTPUT, @Fecha date, @FechaRequerida  AS date, @IDEstado AS int ,@Comentario nvarchar(20)
 , @UsuarioSolicitud nvarchar(50),@Usuario nvarchar(50),@CreatedDate datetime,@CreatedBy nvarchar(50),@RecordDate datetime,@UpdateBy nvarchar(50))
 AS 
@@ -505,7 +511,7 @@ INNER JOIN dbo.cppCondicionPago F ON A.IDCondicionPago = F.IDCondicionPago
 LEFT  JOIN dbo.invTipoProrrateoRubrosCompra G ON A.IDTipoProrrateo = G.IDTipoProrrateo
 LEFT JOIN dbo.invEmbarque H ON A.IDEmbarque = H.IDEmbarque
 WHERE (A.IDOrdenCompra = @IDOrdenCompra OR @IDOrdenCompra = -1) AND A.Fecha  BETWEEN @FechaInicial  AND @FechaFinal  AND FechaRequerida  BETWEEN @FechaRequeridaInicial AND @FechaRequeridaFinal
-AND (a.IDProveedor = (SELECT Value FROM [dbo].[ConvertListToTable](@Proveedor,@Separador)) OR @Proveedor = '*')  AND (A.IDEstado = (SELECT Value FROM [dbo].[ConvertListToTable](@Estado,@Separador) ) OR @Estado ='*' )
+AND (a.IDProveedor IN (SELECT Value FROM [dbo].[ConvertListToTable](@Proveedor,@Separador)) OR @Proveedor = '*')  AND (A.IDEstado IN (SELECT Value FROM [dbo].[ConvertListToTable](@Estado,@Separador) ) OR @Estado ='*' )
 
 
 go 
@@ -926,10 +932,10 @@ AS
 IF (@Operacion ='I') 
 BEGIN
 	SET @IDProveedor = (SELECT  ISNULL(MAX(IDProveedor),0) + 1 FROM dbo.cppProveedor )
-	INSERT INTO dbo.cppProveedor(IDProveedor, Nombre ,RUC ,Activo ,Alias ,IDPais ,IDMoneda ,FechaIngreso ,Contacto ,Telefono  ,IDCategoria ,IDCondicionPago ,
+	INSERT INTO dbo.cppProveedor( Nombre ,RUC ,Activo ,Alias ,IDPais ,IDMoneda ,FechaIngreso ,Contacto ,Telefono  ,IDCategoria ,IDCondicionPago ,
 	          PorcDesc ,PorcInteresMora ,email ,Direccion,MultiMoneda,PagosCongelados,IsLocal)
-	VALUES  (@IDProveedor, @Nombre ,@RUC,@Activo,@Alias,@IDPais,@IDMoneda,@FechaIngreso,@Contacto,@Telefono,@IDCategoria,@IDCondicionPago,@PorcDescuento,@PorcInteresMora,@Email, @Direccion,@MultiMoneda,@PagosCongelados,@IsLocal)
-
+	VALUES  ( @Nombre ,@RUC,@Activo,@Alias,@IDPais,@IDMoneda,@FechaIngreso,@Contacto,@Telefono,@IDCategoria,@IDCondicionPago,@PorcDescuento,@PorcInteresMora,@Email, @Direccion,@MultiMoneda,@PagosCongelados,@IsLocal)
+	SET @IDProveedor = @@IDENTITY
 END
 IF (@Operacion='U')
 BEGIN

@@ -1010,6 +1010,10 @@ VALUES ('CONSECUTIVO COMPRA','COM',1,'COM00000001',1)
 GO
 INSERT INTO DBO.globalConsecutivos( Descr ,Prefijo ,Consecutivo ,Documento ,Activo)
 VALUES ('CONSECUTIVO AJUSTE','AJU',1,'AJU00000001',1)
+GO
+INSERT INTO DBO.globalConsecutivos( Descr ,Prefijo ,Consecutivo ,Documento ,Activo)
+VALUES ('CONSECUTIVO FISICO','FIS',1,'FIS00000001',1)
+
 
 GO
 
@@ -1021,6 +1025,9 @@ VALUES ('FAC','FACTURACION',1,'VT',1)
 GO
 INSERT INTO DBO.invPaquete( PAQUETE ,Descr ,IDConsecutivo ,Transaccion ,Activo)
 VALUES ('AJU','AJUSTES',3,'AJ',1)
+GO
+INSERT INTO DBO.invPaquete( PAQUETE ,Descr ,IDConsecutivo ,Transaccion ,Activo)
+VALUES ('FIS','FISICO',4,'FI',1)
 
 GO
 
@@ -1755,14 +1762,14 @@ AND (A.IDLote = @IDLote  OR @IDLote=-1)
 GO
 
 
-CREATE  PROCEDURE dbo.invGetExistenciaBodegabyClasificacion (@Bodega AS NVARCHAR(4000), @Producto AS NVARCHAR(250),
+CREATE   PROCEDURE [dbo].[invGetExistenciaBodegabyClasificacion] (@Bodega AS NVARCHAR(4000), @Producto AS NVARCHAR(250),
 							@Lote AS  NVARCHAR(4000),@Clasif1 AS NVARCHAR(4000),@Clasif2 NVARCHAR(4000), @Clasif3 NVARCHAR(4000),
-							@Clasif4 NVARCHAR(4000), @Clasif5 NVARCHAR(4000), @Clasif6 NVARCHAR(4000))
+							@Clasif4 NVARCHAR(4000), @Clasif5 NVARCHAR(4000), @Clasif6 NVARCHAR(4000),@DetallaLote AS BIT)
 AS 
 DECLARE @Separador AS NVARCHAR(1)
 SET @Separador =','
 
-SELECT A.IDBodega,B.Descr DescrBodega,A.IDProducto,P.Descr DescrProducto,A.IDLote, L.LoteInterno , L.LoteProveedor,L.FechaVencimiento,L.FechaIngreso,A.Existencia,A.Reservada  
+SELECT A.IDBodega,B.Descr DescrBodega,A.IDProducto,P.Descr DescrProducto,A.IDLote, L.LoteInterno , L.LoteProveedor,L.FechaVencimiento,L.FechaIngreso,A.Existencia,A.Reservada  INTO #tmpExistencias
 FROM dbo.invExistenciaBodega A
 INNER JOIN dbo.invProducto P ON A.IDProducto = P.IDProducto
 INNER JOIN dbo.invLote L ON P.IDProducto = L.IDProducto AND A.IDLote=L.IDLote
@@ -1772,6 +1779,14 @@ AND (A.IDLote  IN (SELECT Value FROM [dbo].[ConvertListToTable](@Lote,@Separador
 AND (P.Clasif2  IN (SELECT Value FROM [dbo].[ConvertListToTable](@Clasif2,@Separador)) or @Clasif2='*') AND ( P.Clasif3 IN (SELECT Value FROM [dbo].[ConvertListToTable](@Producto,@Separador)) or @Clasif3='*')
 AND ( P.Clasif3 IN (SELECT Value FROM [dbo].[ConvertListToTable](@Clasif3,@Separador)) or @Clasif3='*') AND (P.Clasif4  IN (SELECT Value FROM [dbo].[ConvertListToTable](@Clasif4,@Separador) ) or @Clasif4='*')
 AND (P.Clasif5  IN (SELECT Value FROM [dbo].[ConvertListToTable](@Clasif5,@Separador)) or @Clasif5='*')  AND (P.Clasif6 IN (SELECT Value FROM [dbo].[ConvertListToTable](@clasif6,@Separador)) or @Clasif6='*')
+
+IF (@DetallaLote=1) 
+	SELECT  IDBodega ,DescrBodega ,IDProducto ,DescrProducto ,IDLote ,LoteInterno ,LoteProveedor ,FechaVencimiento ,FechaIngreso ,Existencia ,Reservada  FROM #tmpExistencias
+ELSE
+	BEGIN
+	SELECT  IDBodega ,DescrBodega ,IDProducto ,DescrProducto ,SUM(Existencia) Existencia ,SUM(Reservada)Reservada  FROM #tmpExistencias
+	GROUP BY IDBodega ,DescrBodega ,IDProducto ,DescrProducto
+END
 
 
 GO
@@ -3320,7 +3335,6 @@ SET @FechaInicial = DATEADD(DAY,-1,@FechaInicial)
 INSERT @ResultSaldoInicial( IDProducto ,IDLote ,IDBodega ,Saldo)
 EXEC dbo.invGetExistenciaProductoCorte @FechaInicial ,  @IDBodega , @IDProducto ,@IDLote,  @DetallaLote
 
-SELECT @FechaFin
 INSERT @ResultSaldoFinal( IDProducto ,IDLote ,IDBodega ,Saldo)
 EXEC dbo.invGetExistenciaProductoCorte @FechaFin ,  @IDBodega , @IDProducto ,@IDLote,  @DetallaLote
 
@@ -3390,10 +3404,9 @@ DECLARE @DescrCuenta AS NVARCHAR(250)
 
 SET @Mensaje=''
 SELECT  @Descr = Descr ,
-         @Centros =CtrInventario +CtrVenta + CtrCompra +CtrDescVenta +CtrCostoVenta   +CtrSobranteInvFisico +CtrFaltanteInvFisico +CtrVariacionCosto +
-         CtrDescBonificacion +CtrDevVentas +CtrConsumo ,
-        @Cuentas = CtaInventario +CtaVenta +CtaCompra+ CtaDescVenta +CtaCostoVenta  +CtaSobranteInvFisico +CtaFaltanteInvFisico +CtaVariacionCosto +
-        CtaDescBonificacion +CtaDevVentas +CtaConsumo
+         @Centros =CtrInventario +CtrVenta + CtrCompra +CtrDescVenta +CtrCostoVenta +CtrSobranteInvFisico +CtrFaltanteInvFisico +CtrVariacionCosto +
+        CtrDescBonificacion +CtrDevVentas +CtrConsumo ,
+        @Cuentas = CtaInventario +CtaVenta +CtaCompra+ CtaDescVenta +CtaCostoVenta +CtaSobranteInvFisico +CtaFaltanteInvFisico +CtaVariacionCosto +CtaDescBonificacion +CtaDevVentas +CtaConsumo
 FROM dbo.invCuentaContable WHERE IDCuenta = (SELECT TOP 1 IDCuentaContable  FROM dbo.invProducto WHERE IDProducto=@IDProducto)
 
 IF @Centros IS NULL
@@ -3401,11 +3414,122 @@ IF @Centros IS NULL
 IF @Cuentas IS NULL
 	SET @Mensaje = @Mensaje + '  (Cuentas Contables)'
 
-IF @Mensaje IS NOT null
+IF @Mensaje <> ''
 	SET @Mensaje = @Descr + @Mensaje
 IF  @Mensaje = ''
 	SET @Result =1
 ELSE 
 	SET @Result= 0
 	
+
+	
 GO
+
+
+
+CREATE  PROCEDURE [dbo].[invGetCorteInventario] ( @Fecha DATE,@Bodega AS NVARCHAR(4000), @Producto AS NVARCHAR(250),
+							@Lote AS  NVARCHAR(4000),@Clasif1 AS NVARCHAR(4000),@Clasif2 NVARCHAR(4000), @Clasif3 NVARCHAR(4000),
+							@Clasif4 NVARCHAR(4000), @Clasif5 NVARCHAR(4000), @Clasif6 NVARCHAR(4000),@DetallaLote AS BIT)
+AS
+
+--SET @Fecha='20181126'
+--SET @Bodega='*'
+--SET @Producto='26003,26004'
+--SET @Lote ='*'
+--SET @Clasif1='*'
+--SET @Clasif2='*'
+--SET @Clasif3='*'
+--SET @Clasif4='*'
+--SET @Clasif5='*'
+--SET @Clasif6='*'
+
+DECLARE @Separador NVARCHAR(1)
+SET @Separador =','
+
+--//Obtener los movimiento desde la fecha anterior al dia del corte
+DECLARE @FechaInicial AS DATETIME
+DECLARE @FechaFinal AS DATETIME
+set @FechaInicial = CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(@Fecha)-1),@Fecha),101) 
+set @FechaFinal = CAST(SUBSTRING(CAST(@Fecha AS CHAR),1,11) + ' 23:59:59.998' AS DATETIME)
+
+SELECT A.IDProducto,IDLote,IDBodega,C.Naturaleza, SUM(a.Cantidad * C.Factor )  Cantidad INTO #Movimientos  FROM dbo.invTransaccionLinea A
+INNER JOIN dbo.invTransaccion B ON A.IDTransaccion = B.IDTransaccion
+INNER JOIN dbo.globalTipoTran C ON A.IDTipoTran = C.IDTipoTran
+INNER JOIN dbo.invProducto P ON A.IDProducto=P.IDProducto
+WHERE Fecha BETWEEN @FechaInicial AND @FechaFinal
+AND  (A.IDBodega  IN (SELECT Value FROM [dbo].[ConvertListToTable](@Bodega,@Separador) )or @Bodega ='*') 
+AND (A.IDProducto IN (SELECT Value FROM [dbo].[ConvertListToTable](@Producto,@Separador)) OR @Producto='*')
+AND (A.IDLote  IN (SELECT Value FROM [dbo].[ConvertListToTable](@Lote,@Separador)) OR @Lote='*') 
+AND (P.Clasif1   IN (SELECT Value FROM [dbo].[ConvertListToTable](@Clasif1,@Separador)) or @Clasif1='*') 
+AND (P.Clasif2  IN (SELECT Value FROM [dbo].[ConvertListToTable](@Clasif2,@Separador)) or @Clasif2='*') 
+AND ( P.Clasif3 IN (SELECT Value FROM [dbo].[ConvertListToTable](@Producto,@Separador)) or @Clasif3='*')
+AND ( P.Clasif3 IN (SELECT Value FROM [dbo].[ConvertListToTable](@Clasif3,@Separador)) or @Clasif3='*') 
+AND (P.Clasif4  IN (SELECT Value FROM [dbo].[ConvertListToTable](@Clasif4,@Separador) ) or @Clasif4='*')
+AND (P.Clasif5  IN (SELECT Value FROM [dbo].[ConvertListToTable](@Clasif5,@Separador)) or @Clasif5='*')  
+AND (P.Clasif6 IN (SELECT Value FROM [dbo].[ConvertListToTable](@clasif6,@Separador)) or @Clasif6='*')
+GROUP BY A.IDProducto,IDLote,IDBodega,C.Naturaleza
+
+--//Obtener el cierre del mes anterior
+DECLARE @FechaSaldoAnterior  AS DATETIME
+
+SET @Fecha=  CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(DATEADD(mm,1,@Fecha))),DATEADD(mm,1,@Fecha)),101)
+SET @FechaSaldoAnterior = DATEADD(MONTH,-1, @Fecha)
+SET @FechaSaldoAnterior  = CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(DATEADD(mm,1,@FechaSaldoAnterior))),DATEADD(mm,1,@FechaSaldoAnterior)),101)
+
+--//Seleccionar todos los productos (fuente principal)
+SELECT P.IDProducto,P.IDLote,P.IDBodega,@Fecha Fecha,P.SaldoMesAnt,0 Entradas,0 Salidas,0 Saldo,GETDATE() CreateDate INTO #tmpSaldos
+FROM 
+(SELECT  IDProducto ,IDLote ,IDBodega,0 SaldoMesAnt  FROM #Movimientos
+UNION 
+SELECT S.IDProducto,S.IDLote,S.IDBodega,S.SaldoMesAnt  FROM  dbo.invSaldos S
+INNER JOIN dbo.invProducto P ON S.IDProducto = P.IDProducto
+WHERE Fecha = @FechaSaldoAnterior  
+AND  (S.IDBodega  IN (SELECT Value FROM [dbo].[ConvertListToTable](@Bodega,@Separador) )or @Bodega ='*') 
+AND (S.IDProducto IN (SELECT Value FROM [dbo].[ConvertListToTable](@Producto,@Separador)) OR @Producto='*')
+AND (S.IDLote  IN (SELECT Value FROM [dbo].[ConvertListToTable](@Lote,@Separador)) OR @Lote='*') 
+AND (P.Clasif1   IN (SELECT Value FROM [dbo].[ConvertListToTable](@Clasif1,@Separador)) or @Clasif1='*') 
+AND (P.Clasif2  IN (SELECT Value FROM [dbo].[ConvertListToTable](@Clasif2,@Separador)) or @Clasif2='*') 
+AND ( P.Clasif3 IN (SELECT Value FROM [dbo].[ConvertListToTable](@Producto,@Separador)) or @Clasif3='*')
+AND ( P.Clasif3 IN (SELECT Value FROM [dbo].[ConvertListToTable](@Clasif3,@Separador)) or @Clasif3='*') 
+AND (P.Clasif4  IN (SELECT Value FROM [dbo].[ConvertListToTable](@Clasif4,@Separador) ) or @Clasif4='*')
+AND (P.Clasif5  IN (SELECT Value FROM [dbo].[ConvertListToTable](@Clasif5,@Separador)) or @Clasif5='*')  
+AND (P.Clasif6 IN (SELECT Value FROM [dbo].[ConvertListToTable](@clasif6,@Separador)) or @Clasif6='*')
+) P
+
+--Actualizamos las entradas
+UPDATE A SET A.Entradas =  Cantidad FROM #tmpSaldos A
+INNER JOIN #Movimientos B ON A.IDProducto=B.IDProducto AND A.IDLote=B.IDLote AND A.IDBodega=B.IDBodega
+WHERE Naturaleza='E' 
+
+--Actualizamos las Salidas
+UPDATE A SET A.Salidas =  Cantidad FROM #tmpSaldos A
+INNER JOIN #Movimientos B ON A.IDProducto=B.IDProducto AND A.IDLote=B.IDLote AND A.IDBodega=B.IDBodega
+WHERE Naturaleza='S' 
+
+-- Actualizamos Saldos
+UPDATE #tmpSaldos SET Saldo = SaldoMesAnt + Entradas + Salidas
+WHERE Entradas + Salidas >0
+
+IF (@DetallaLote=1)
+BEGIN
+	SELECT  A.IDProducto, P.Descr DescrProducto ,A.IDLote , L.LoteProveedor,L.FechaVencimiento,L.FechaIngreso,A.IDBodega,B.Descr DescrBodega  ,Saldo   FROM #tmpSaldos A
+	INNER JOIN dbo.invProducto P ON A.IDProducto = P.IDProducto
+	INNER JOIN dbo.invBodega B ON A.IDBodega =B.IDBodega
+	INNER JOIN dbo.invLote L ON a.IDProducto =L.IDProducto AND a.IDLote =L.IDLote
+END	
+ELSE 
+BEGIN
+	SELECT  A.IDProducto, P.Descr DescrProducto ,A.IDBodega,B.Descr DescrBodega ,SUM(Saldo) Saldo  FROM #tmpSaldos A
+	INNER JOIN dbo.invProducto P ON A.IDProducto = P.IDProducto
+	INNER JOIN dbo.invBodega B ON A.IDBodega =B.IDBodega
+	GROUP BY A.IDProducto,P.Descr,A.IDBodega,B.Descr,A.Fecha
+	
+END
+
+DROP TABLE  #Movimientos
+DROP TABLE  #tmpSaldos
+
+
+GO
+
+

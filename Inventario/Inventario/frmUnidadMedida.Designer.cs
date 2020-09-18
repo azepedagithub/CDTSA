@@ -199,20 +199,20 @@
             // 
             // txtDescripcion
             // 
-            this.txtDescripcion.Location = new System.Drawing.Point(103, 252);
+            this.txtDescripcion.Location = new System.Drawing.Point(73, 252);
             this.txtDescripcion.MenuManager = this.ribbonControl;
             this.txtDescripcion.Name = "txtDescripcion";
-            this.txtDescripcion.Size = new System.Drawing.Size(621, 20);
+            this.txtDescripcion.Size = new System.Drawing.Size(651, 20);
             this.txtDescripcion.StyleController = this.layoutControl1;
             this.txtDescripcion.TabIndex = 6;
             // 
             // txtIDUnidadMedida
             // 
-            this.txtIDUnidadMedida.Location = new System.Drawing.Point(103, 228);
+            this.txtIDUnidadMedida.Location = new System.Drawing.Point(73, 228);
             this.txtIDUnidadMedida.MenuManager = this.ribbonControl;
             this.txtIDUnidadMedida.Name = "txtIDUnidadMedida";
             this.txtIDUnidadMedida.Properties.ReadOnly = true;
-            this.txtIDUnidadMedida.Size = new System.Drawing.Size(263, 20);
+            this.txtIDUnidadMedida.Size = new System.Drawing.Size(293, 20);
             this.txtIDUnidadMedida.StyleController = this.layoutControl1;
             this.txtIDUnidadMedida.TabIndex = 5;
             // 
@@ -263,8 +263,8 @@
             this.layoutControlItem2.Location = new System.Drawing.Point(0, 216);
             this.layoutControlItem2.Name = "layoutControlItem2";
             this.layoutControlItem2.Size = new System.Drawing.Size(358, 24);
-            this.layoutControlItem2.Text = "ID Unidad Medida:";
-            this.layoutControlItem2.TextSize = new System.Drawing.Size(88, 13);
+            this.layoutControlItem2.Text = "ID";
+            this.layoutControlItem2.TextSize = new System.Drawing.Size(58, 13);
             // 
             // layoutControlItem3
             // 
@@ -273,7 +273,7 @@
             this.layoutControlItem3.Name = "layoutControlItem3";
             this.layoutControlItem3.Size = new System.Drawing.Size(716, 24);
             this.layoutControlItem3.Text = "Descripción:";
-            this.layoutControlItem3.TextSize = new System.Drawing.Size(88, 13);
+            this.layoutControlItem3.TextSize = new System.Drawing.Size(58, 13);
             // 
             // layoutControlItem4
             // 
@@ -288,7 +288,7 @@
             // 
             this.emptySpaceItem1.AllowHotTrack = false;
             this.emptySpaceItem1.AppearanceItemCaption.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.emptySpaceItem1.AppearanceItemCaption.ForeColor = System.Drawing.Color.DeepPink;
+            this.emptySpaceItem1.AppearanceItemCaption.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.emptySpaceItem1.AppearanceItemCaption.Options.UseFont = true;
             this.emptySpaceItem1.AppearanceItemCaption.Options.UseForeColor = true;
             this.emptySpaceItem1.AppearanceItemCaption.Options.UseTextOptions = true;
@@ -297,7 +297,7 @@
             this.emptySpaceItem1.Location = new System.Drawing.Point(0, 0);
             this.emptySpaceItem1.Name = "emptySpaceItem1";
             this.emptySpaceItem1.Size = new System.Drawing.Size(716, 23);
-            this.emptySpaceItem1.Text = "Listado de Unidad de Medida";
+            this.emptySpaceItem1.Text = "Listado de Presentaciones";
             this.emptySpaceItem1.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
             this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
             this.emptySpaceItem1.TextVisible = true;
@@ -319,7 +319,7 @@
             this.Controls.Add(this.ribbonControl);
             this.Name = "frmUnidadMedida";
             this.Ribbon = this.ribbonControl;
-            this.Text = "frmUnidadMedidad";
+            this.Text = "Listado de Presentaciones";
             this.Load += new System.EventHandler(this.frmUnidadMedidad_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();

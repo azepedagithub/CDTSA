@@ -179,8 +179,8 @@ namespace CO
                 sMensaje = sMensaje + "     • Seleccione la moneda del proveedor \n\r";
             if (this.slkupCondicionPago.EditValue == null || this.slkupCondicionPago.EditValue.ToString() == "")
                 sMensaje = sMensaje + "     • Seleccione la Condición de Pago del proveedor \n\r";
-            if (this.txtDireccion.EditValue == null || this.txtDireccion.EditValue.ToString() == "")
-                sMensaje = sMensaje + "     • Seleccione la Dirección del proveedor \n\r";
+            //if (this.txtDireccion.EditValue == null || this.txtDireccion.EditValue.ToString() == "")
+            //    sMensaje = sMensaje + "     • Seleccione la Dirección del proveedor \n\r";
 
             if (sMensaje != "")
             {

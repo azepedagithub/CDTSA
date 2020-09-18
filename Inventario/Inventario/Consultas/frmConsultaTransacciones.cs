@@ -30,7 +30,7 @@ namespace CI
         {
             sProductos = sLotes = sBodegas = sClasif1 = sClasif2 = sClasif3 = sClasif4 = sClasif5 = sClasif6 =sAplicacion=sReferencia=sTransaccion=sPaquete = "*";
             bDetallaLote = true;
-            FechaFinal = DateTime.Now;
+            FechaFinal = DateTime.Today.AddDays(1).AddTicks(-1);
             FechaInicial = DateTime.Now.AddMonths(-1);
         }
 

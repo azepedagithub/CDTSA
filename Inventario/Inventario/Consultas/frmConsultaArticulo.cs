@@ -100,7 +100,6 @@ namespace CI.Consultas
             this.txtTipoImpuesto.Text = dr["DescrTipoImpuesto"].ToString();
             this.txtUnidadMedida.Text = dr["DescrUnidadMedida"].ToString();
             this.txtCodigoBarra.Text = dr["CodigoBarra"].ToString();
-            this.txtFactorEmpaque.Text = dr["FactorEmpaque"].ToString();
             this.chkControlado.Checked = Convert.ToBoolean(dr["EsControlado"]);
             this.chkEtico.Checked = Convert.ToBoolean(dr["EsEtico"]);
             this.chkMuestra.Checked = Convert.ToBoolean(dr["EsMuestra"]);

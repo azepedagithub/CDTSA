@@ -54,9 +54,9 @@ namespace CO
                 FechaRequeridaFinal = FechaFinal;
 
                 this.dtpFechaInicial.EditValue = FechaInicial;
-                this.dtpFechaFinal.EditValue = FechaFinal;
+                this.dtpFechaFinal.EditValue = FechaFinal.AddMonths(2);
                 this.dtpFechaRequeridaInicial.EditValue= FechaRequeridaInicial;
-                this.dtpFechaRequeridaFinal.EditValue = FechaRequeridaFinal;
+                this.dtpFechaRequeridaFinal.EditValue = FechaRequeridaFinal.AddMonths(2);
 
 
                 DTProveedores = clsProveedorDAC.Get(-1,"*",-1).Tables[0];
@@ -129,7 +129,7 @@ namespace CO
         {
             if (sLst != "*")
             {
-                String[] valores = sLst.Split(',');
+                String[] valores = sLst.Split('|');
                 GridView view = crt.Properties.View;
                 SetSelection(valores, GetFieldFind(crt.Name), view);
             }
@@ -274,12 +274,12 @@ namespace CO
             switch (sCampo)
             {
                 case "IDProveedor":
-                    Result = String.Join(",", valuesProveedor);
+                    Result = String.Join("|", valuesProveedor);
                     if (Result == "")
                         Result = "*";
                     break;
                 case "IDEstadoOrden":
-                    Result = String.Join(",", valuesEstados);
+                    Result = String.Join("|", valuesEstados);
                     if (Result == "")
                         Result = "*";
                     break;

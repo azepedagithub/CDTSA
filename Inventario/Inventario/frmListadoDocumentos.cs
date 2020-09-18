@@ -122,7 +122,7 @@ namespace CI
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupPaquete, "[{'ColumnCaption':'IDPaquete','ColumnField':'IDPaquete','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");
 
                 this.dtpFechaInicial.EditValue = DateTime.Now.AddMonths(-1);
-                this.dtpFechaFinal.EditValue = DateTime.Now;
+                this.dtpFechaFinal.EditValue = DateTime.Today.AddDays(1).AddTicks(-1);
 
                 PopulateGrid();
                // CargarPrivilegios();

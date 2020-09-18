@@ -852,7 +852,7 @@ namespace CO
         private void btnCancelarSolicitud_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             if (this.Accion == "Add")
-                this.Accion = "Add";
+                this.Close();
             else
                 this.Accion = "View";
             LoadData();

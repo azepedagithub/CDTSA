@@ -15,6 +15,8 @@ using DevExpress.DataAccess.Sql;
 using DevExpress.DataAccess.ConnectionParameters;
 
 
+
+
 namespace CI
 {
     public partial class frmProducto : DevExpress.XtraBars.Ribbon.RibbonForm
@@ -697,6 +699,11 @@ namespace CI
                     this.txtIDProducto.ErrorText = "";
                 }
             }
+        }
+
+        private void btnAddProveedor_Click(object sender, EventArgs e)
+        {
+            
         }
 
        

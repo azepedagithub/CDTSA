@@ -23,25 +23,28 @@ namespace CO
             try
             {
                 DataTable dt = DAC.clsParametrosDAC.Get().Tables[0];
-                this.slkupSolicitud.EditValue = dt.Rows[0]["IDConsecSolicitud"] == DBNull.Value ? null : dt.Rows[0]["IDConsecSolicitud"] ;
-                this.slkupOrdenCompra.EditValue = dt.Rows[0]["IDConsecOrdenCompra"] == DBNull.Value ? null : dt.Rows[0]["IDConsecOrdenCompra"];
-                this.slkupEmbarque.EditValue = dt.Rows[0]["IDConsecEmbarque"] == DBNull.Value ? null : dt.Rows[0]["IDConsecEmbarque"];
-                this.slkupDevolucion.EditValue = dt.Rows[0]["IDConsecDevolucion"] == DBNull.Value ? null : dt.Rows[0]["IDConsecDevolucion"];
-                this.txtCantDecimalesCantidad.EditValue = Convert.ToInt32(dt.Rows[0]["CantLineasOrdenCompra"]);
-                this.slkupBodegaDefault.EditValue = dt.Rows[0]["IDBodegaDefault"] == DBNull.Value ?  null : dt.Rows[0]["IDBodegaDefault"];
-                this.slkupTipoCambio.EditValue = dt.Rows[0]["IDTipoCambio"] == DBNull.Value ? null : dt.Rows[0]["IDTipoCambio"];
-                this.slkupTipoAsientoContable.EditValue = dt.Rows[0]["IDTipoAsientoContable"] == DBNull.Value ? null : dt.Rows[0]["IDTipoAsientoContable"];
-                this.slkupPaquete.EditValue = dt.Rows[0]["IDPaquete"] == DBNull.Value ? null : dt.Rows[0]["IDPaquete"];
-                this.slkupCuentaTransLoc.EditValue = dt.Rows[0]["CtaTransitoLocal"] == DBNull.Value ? null : dt.Rows[0]["CtaTransitoLocal"];
-                this.slkupCentroTransitoLoc.EditValue = dt.Rows[0]["CtrTransitoLocal"] == DBNull.Value ? null : dt.Rows[0]["CtrTransitoLocal"];
-                this.slkupCuentaTransExt.EditValue = dt.Rows[0]["CtaTransitoExterior"] == DBNull.Value ? null : dt.Rows[0]["CtaTransitoExterior"];
-                this.slkupCentroTransitoExt.EditValue = dt.Rows[0]["CtrTransitoExterior"] == DBNull.Value ? null : dt.Rows[0]["CtrTransitoExterior"];
-                this.chkAplicaAutomatico.EditValue = Convert.ToBoolean(dt.Rows[0]["AplicaAutomaticamenteAsiento"]);
-                this.chkModificar.EditValue = Convert.ToBoolean(dt.Rows[0]["CanEditAsiento"]);
-                this.chkVisualizar.EditValue = Convert.ToBoolean(dt.Rows[0]["CanViewAsiento"]);
-                this.txtCantDecimalesCantidad.EditValue = Convert.ToInt32(dt.Rows[0]["CantDecimalesCantidad"]);
-                this.txtCantDecimalesPrecio.EditValue = Convert.ToInt32(dt.Rows[0]["CantDecimalesPrecio"]);
-                this.txtNumMaxLineasOrden.EditValue = Convert.ToInt32(dt.Rows[0]["CantLineasOrdenCompra"]);
+                if (dt.Rows.Count > 0)
+                {
+                    this.slkupSolicitud.EditValue = dt.Rows[0]["IDConsecSolicitud"] == DBNull.Value ? null : dt.Rows[0]["IDConsecSolicitud"];
+                    this.slkupOrdenCompra.EditValue = dt.Rows[0]["IDConsecOrdenCompra"] == DBNull.Value ? null : dt.Rows[0]["IDConsecOrdenCompra"];
+                    this.slkupEmbarque.EditValue = dt.Rows[0]["IDConsecEmbarque"] == DBNull.Value ? null : dt.Rows[0]["IDConsecEmbarque"];
+                    this.slkupDevolucion.EditValue = dt.Rows[0]["IDConsecDevolucion"] == DBNull.Value ? null : dt.Rows[0]["IDConsecDevolucion"];
+                    this.txtCantDecimalesCantidad.EditValue = Convert.ToInt32(dt.Rows[0]["CantLineasOrdenCompra"]);
+                    this.slkupBodegaDefault.EditValue = dt.Rows[0]["IDBodegaDefault"] == DBNull.Value ? null : dt.Rows[0]["IDBodegaDefault"];
+                    this.slkupTipoCambio.EditValue = dt.Rows[0]["IDTipoCambio"] == DBNull.Value ? null : dt.Rows[0]["IDTipoCambio"];
+                    this.slkupTipoAsientoContable.EditValue = dt.Rows[0]["IDTipoAsientoContable"] == DBNull.Value ? null : dt.Rows[0]["IDTipoAsientoContable"];
+                    this.slkupPaquete.EditValue = dt.Rows[0]["IDPaquete"] == DBNull.Value ? null : dt.Rows[0]["IDPaquete"];
+                    this.slkupCuentaTransLoc.EditValue = dt.Rows[0]["CtaTransitoLocal"] == DBNull.Value ? null : dt.Rows[0]["CtaTransitoLocal"];
+                    this.slkupCentroTransitoLoc.EditValue = dt.Rows[0]["CtrTransitoLocal"] == DBNull.Value ? null : dt.Rows[0]["CtrTransitoLocal"];
+                    this.slkupCuentaTransExt.EditValue = dt.Rows[0]["CtaTransitoExterior"] == DBNull.Value ? null : dt.Rows[0]["CtaTransitoExterior"];
+                    this.slkupCentroTransitoExt.EditValue = dt.Rows[0]["CtrTransitoExterior"] == DBNull.Value ? null : dt.Rows[0]["CtrTransitoExterior"];
+                    this.chkAplicaAutomatico.EditValue = Convert.ToBoolean(dt.Rows[0]["AplicaAutomaticamenteAsiento"]);
+                    this.chkModificar.EditValue = Convert.ToBoolean(dt.Rows[0]["CanEditAsiento"]);
+                    this.chkVisualizar.EditValue = Convert.ToBoolean(dt.Rows[0]["CanViewAsiento"]);
+                    this.txtCantDecimalesCantidad.EditValue = Convert.ToInt32(dt.Rows[0]["CantDecimalesCantidad"]);
+                    this.txtCantDecimalesPrecio.EditValue = Convert.ToInt32(dt.Rows[0]["CantDecimalesPrecio"]);
+                    this.txtNumMaxLineasOrden.EditValue = Convert.ToInt32(dt.Rows[0]["CantLineasOrdenCompra"]);
+                }
             }
             catch (Exception ex) {
                 MessageBox.Show("Ha ocurrido un error" + ex.Message);
@@ -199,6 +202,11 @@ namespace CO
             String IDTipoCambio, IDTipoAsientoContable;
             bool AplicaAutomaticamenteAsiento, CanEditAsiento, CanViewAsiento;
 
+            if (this.slkupTipoCambio.EditValue == null) {
+                MessageBox.Show("Por favor establezca el tipo de cambio para el modulo de compras");
+                return;
+            }
+
             try
             {
                 IDSolicitud = (int?)this.slkupSolicitud.EditValue;
@@ -208,9 +216,9 @@ namespace CO
                 CantLineasOrdenCompra = Convert.ToInt32(this.txtNumMaxLineasOrden.EditValue);
                 IDBodegaDefault = (int?)this.slkupBodegaDefault.EditValue;
                 IDTipoCambio = this.slkupTipoCambio.EditValue.ToString();
-                CantDecimalesPrecio = Convert.ToInt32(this.txtCantDecimalesPrecio.EditValue);
-                CantDecimalesCantidad = Convert.ToInt32(this.txtCantDecimalesCantidad.EditValue);
-                IDTipoAsientoContable = this.slkupTipoAsientoContable.EditValue.ToString();
+                CantDecimalesPrecio = (int)(this.txtCantDecimalesPrecio.EditValue==null ? 4 : this.txtCantDecimalesPrecio.EditValue);
+                CantDecimalesCantidad = Convert.ToInt32(this.txtCantDecimalesCantidad.EditValue==null ? 4: this.txtCantDecimalesCantidad.EditValue);
+                IDTipoAsientoContable =  (this.slkupTipoAsientoContable.EditValue == null ? null : this.slkupTipoAsientoContable.EditValue.ToString());
                 IDPaquete = (int?)this.slkupPaquete.EditValue;
                 CtaTransitoLocal = (this.slkupCuentaTransLoc.EditValue == null ? -1 : Convert.ToInt64(this.slkupCuentaTransLoc.EditValue));
                 CtrTransitoLocal = (this.slkupCentroTransitoLoc.EditValue == null ? -1 : Convert.ToInt64(this.slkupCentroTransitoLoc.EditValue));

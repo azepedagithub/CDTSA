@@ -37,7 +37,6 @@
             this.chkEtico = new System.Windows.Forms.CheckBox();
             this.chkMuestra = new System.Windows.Forms.CheckBox();
             this.chkControlado = new System.Windows.Forms.CheckBox();
-            this.txtFactorEmpaque = new System.Windows.Forms.TextBox();
             this.txtUnidadMedida = new System.Windows.Forms.TextBox();
             this.txtCodigoBarra = new System.Windows.Forms.TextBox();
             this.txtTipoImpuesto = new System.Windows.Forms.TextBox();
@@ -47,7 +46,6 @@
             this.layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem10 = new DevExpress.XtraLayout.LayoutControlItem();
             this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
             this.emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
@@ -147,7 +145,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).BeginInit();
@@ -246,7 +243,6 @@
             // layoutControl2
             // 
             this.layoutControl2.Controls.Add(this.groupBox1);
-            this.layoutControl2.Controls.Add(this.txtFactorEmpaque);
             this.layoutControl2.Controls.Add(this.txtUnidadMedida);
             this.layoutControl2.Controls.Add(this.txtCodigoBarra);
             this.layoutControl2.Controls.Add(this.txtTipoImpuesto);
@@ -305,44 +301,36 @@
             this.chkControlado.Text = "Controlado";
             this.chkControlado.UseVisualStyleBackColor = true;
             // 
-            // txtFactorEmpaque
-            // 
-            this.txtFactorEmpaque.Location = new System.Drawing.Point(472, 65);
-            this.txtFactorEmpaque.Name = "txtFactorEmpaque";
-            this.txtFactorEmpaque.ReadOnly = true;
-            this.txtFactorEmpaque.Size = new System.Drawing.Size(221, 20);
-            this.txtFactorEmpaque.TabIndex = 8;
-            // 
             // txtUnidadMedida
             // 
-            this.txtUnidadMedida.Location = new System.Drawing.Point(98, 65);
+            this.txtUnidadMedida.Location = new System.Drawing.Point(97, 65);
             this.txtUnidadMedida.Name = "txtUnidadMedida";
             this.txtUnidadMedida.ReadOnly = true;
-            this.txtUnidadMedida.Size = new System.Drawing.Size(164, 20);
+            this.txtUnidadMedida.Size = new System.Drawing.Size(165, 20);
             this.txtUnidadMedida.TabIndex = 7;
             // 
             // txtCodigoBarra
             // 
-            this.txtCodigoBarra.Location = new System.Drawing.Point(472, 39);
+            this.txtCodigoBarra.Location = new System.Drawing.Point(471, 39);
             this.txtCodigoBarra.Name = "txtCodigoBarra";
             this.txtCodigoBarra.ReadOnly = true;
-            this.txtCodigoBarra.Size = new System.Drawing.Size(221, 20);
+            this.txtCodigoBarra.Size = new System.Drawing.Size(222, 20);
             this.txtCodigoBarra.TabIndex = 6;
             // 
             // txtTipoImpuesto
             // 
-            this.txtTipoImpuesto.Location = new System.Drawing.Point(98, 39);
+            this.txtTipoImpuesto.Location = new System.Drawing.Point(97, 39);
             this.txtTipoImpuesto.Name = "txtTipoImpuesto";
             this.txtTipoImpuesto.ReadOnly = true;
-            this.txtTipoImpuesto.Size = new System.Drawing.Size(164, 20);
+            this.txtTipoImpuesto.Size = new System.Drawing.Size(165, 20);
             this.txtTipoImpuesto.TabIndex = 5;
             // 
             // txtAlias
             // 
-            this.txtAlias.Location = new System.Drawing.Point(98, 13);
+            this.txtAlias.Location = new System.Drawing.Point(97, 13);
             this.txtAlias.Name = "txtAlias";
             this.txtAlias.ReadOnly = true;
-            this.txtAlias.Size = new System.Drawing.Size(595, 20);
+            this.txtAlias.Size = new System.Drawing.Size(596, 20);
             this.txtAlias.TabIndex = 4;
             // 
             // layoutControlGroup2
@@ -354,7 +342,6 @@
             this.layoutControlItem6,
             this.layoutControlItem7,
             this.layoutControlItem8,
-            this.layoutControlItem9,
             this.layoutControlItem10,
             this.emptySpaceItem1,
             this.emptySpaceItem2});
@@ -371,7 +358,7 @@
             this.layoutControlItem5.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
             this.layoutControlItem5.Size = new System.Drawing.Size(686, 26);
             this.layoutControlItem5.Text = "Alias:";
-            this.layoutControlItem5.TextSize = new System.Drawing.Size(82, 13);
+            this.layoutControlItem5.TextSize = new System.Drawing.Size(81, 13);
             // 
             // layoutControlItem6
             // 
@@ -381,7 +368,7 @@
             this.layoutControlItem6.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
             this.layoutControlItem6.Size = new System.Drawing.Size(255, 26);
             this.layoutControlItem6.Text = "Tipo Impuesto:";
-            this.layoutControlItem6.TextSize = new System.Drawing.Size(82, 13);
+            this.layoutControlItem6.TextSize = new System.Drawing.Size(81, 13);
             // 
             // layoutControlItem7
             // 
@@ -389,9 +376,9 @@
             this.layoutControlItem7.Location = new System.Drawing.Point(374, 26);
             this.layoutControlItem7.Name = "layoutControlItem7";
             this.layoutControlItem7.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
-            this.layoutControlItem7.Size = new System.Drawing.Size(312, 26);
+            this.layoutControlItem7.Size = new System.Drawing.Size(312, 234);
             this.layoutControlItem7.Text = "Codigo de Barra:";
-            this.layoutControlItem7.TextSize = new System.Drawing.Size(82, 13);
+            this.layoutControlItem7.TextSize = new System.Drawing.Size(81, 13);
             // 
             // layoutControlItem8
             // 
@@ -400,18 +387,8 @@
             this.layoutControlItem8.Name = "layoutControlItem8";
             this.layoutControlItem8.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
             this.layoutControlItem8.Size = new System.Drawing.Size(255, 26);
-            this.layoutControlItem8.Text = "Unidad Medida:";
-            this.layoutControlItem8.TextSize = new System.Drawing.Size(82, 13);
-            // 
-            // layoutControlItem9
-            // 
-            this.layoutControlItem9.Control = this.txtFactorEmpaque;
-            this.layoutControlItem9.Location = new System.Drawing.Point(374, 52);
-            this.layoutControlItem9.Name = "layoutControlItem9";
-            this.layoutControlItem9.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
-            this.layoutControlItem9.Size = new System.Drawing.Size(312, 208);
-            this.layoutControlItem9.Text = "Factor Empaque:";
-            this.layoutControlItem9.TextSize = new System.Drawing.Size(82, 13);
+            this.layoutControlItem8.Text = "Presentación:";
+            this.layoutControlItem8.TextSize = new System.Drawing.Size(81, 13);
             // 
             // layoutControlItem10
             // 
@@ -1310,7 +1287,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).EndInit();
@@ -1400,8 +1376,6 @@
         private System.Windows.Forms.TextBox txtCodigoBarra;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem7;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem8;
-        private System.Windows.Forms.TextBox txtFactorEmpaque;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem9;
         private System.Windows.Forms.GroupBox groupBox1;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem10;
         private System.Windows.Forms.CheckBox chkEtico;

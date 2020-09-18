@@ -965,6 +965,7 @@ namespace CI
 
                     Accion = "View";
                     HabilitarControlesCabecera(false);
+                    HabilitarControlesDetalle(false);
                     AplicarPrivilegios();
                     BotoneriaSuperior();
 

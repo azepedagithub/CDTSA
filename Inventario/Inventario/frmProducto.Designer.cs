@@ -598,7 +598,7 @@
             this.slkupTipoImpuesto.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.slkupTipoImpuesto.Properties.View = this.gridView7;
-            this.slkupTipoImpuesto.Size = new System.Drawing.Size(151, 20);
+            this.slkupTipoImpuesto.Size = new System.Drawing.Size(150, 20);
             this.slkupTipoImpuesto.StyleController = this.layoutControl1;
             this.slkupTipoImpuesto.TabIndex = 5;
             // 
@@ -611,10 +611,10 @@
             // 
             // txtCodigoBarra
             // 
-            this.txtCodigoBarra.Location = new System.Drawing.Point(424, 177);
+            this.txtCodigoBarra.Location = new System.Drawing.Point(449, 177);
             this.txtCodigoBarra.MenuManager = this.ribbonControl;
             this.txtCodigoBarra.Name = "txtCodigoBarra";
-            this.txtCodigoBarra.Size = new System.Drawing.Size(273, 20);
+            this.txtCodigoBarra.Size = new System.Drawing.Size(248, 20);
             this.txtCodigoBarra.StyleController = this.layoutControl1;
             this.txtCodigoBarra.TabIndex = 2;
             // 
@@ -1338,8 +1338,8 @@
             // 
             this.tabbedControlGroup1.Location = new System.Drawing.Point(0, 50);
             this.tabbedControlGroup1.Name = "tabbedControlGroup1";
-            this.tabbedControlGroup1.SelectedTabPage = this.layoutControlGroup2;
-            this.tabbedControlGroup1.SelectedTabPageIndex = 0;
+            this.tabbedControlGroup1.SelectedTabPage = this.tabAuditoria;
+            this.tabbedControlGroup1.SelectedTabPageIndex = 3;
             this.tabbedControlGroup1.Size = new System.Drawing.Size(701, 371);
             this.tabbedControlGroup1.TabPages.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlGroup2,
@@ -1396,9 +1396,9 @@
             // layoutControlItem5
             // 
             this.layoutControlItem5.Control = this.txtCodigoBarra;
-            this.layoutControlItem5.Location = new System.Drawing.Point(299, 80);
+            this.layoutControlItem5.Location = new System.Drawing.Point(324, 80);
             this.layoutControlItem5.Name = "layoutControlItem5";
-            this.layoutControlItem5.Size = new System.Drawing.Size(378, 24);
+            this.layoutControlItem5.Size = new System.Drawing.Size(353, 24);
             this.layoutControlItem5.Text = "Codigo Barra:";
             this.layoutControlItem5.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
             this.layoutControlItem5.TextSize = new System.Drawing.Size(66, 13);
@@ -1521,7 +1521,7 @@
             this.layoutControlItem11.Control = this.slkupTipoImpuesto;
             this.layoutControlItem11.Location = new System.Drawing.Point(10, 80);
             this.layoutControlItem11.Name = "layoutControlItem11";
-            this.layoutControlItem11.Size = new System.Drawing.Size(259, 24);
+            this.layoutControlItem11.Size = new System.Drawing.Size(258, 24);
             this.layoutControlItem11.Text = "Tipo Impuesto:";
             this.layoutControlItem11.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
             this.layoutControlItem11.TextSize = new System.Drawing.Size(72, 13);
@@ -1541,9 +1541,9 @@
             // emptySpaceItem17
             // 
             this.emptySpaceItem17.AllowHotTrack = false;
-            this.emptySpaceItem17.Location = new System.Drawing.Point(269, 80);
+            this.emptySpaceItem17.Location = new System.Drawing.Point(268, 80);
             this.emptySpaceItem17.Name = "emptySpaceItem17";
-            this.emptySpaceItem17.Size = new System.Drawing.Size(30, 24);
+            this.emptySpaceItem17.Size = new System.Drawing.Size(56, 24);
             this.emptySpaceItem17.TextSize = new System.Drawing.Size(0, 0);
             // 
             // emptySpaceItem18

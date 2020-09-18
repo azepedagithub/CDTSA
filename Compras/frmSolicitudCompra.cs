@@ -207,7 +207,12 @@ namespace CO
             try
             {
                 //Validar que el consecutivo de Solicitud de Compra este asociado 
-                String Consec = clsUtilDAC.GetParametroCompra("IDConsecSolicitud").Tables[0].Rows[0][0].ToString();
+                DataTable dt = clsUtilDAC.GetParametroCompra("IDConsecSolicitud").Tables[0];
+                if (dt.Rows.Count == 0) {
+                    MessageBox.Show("Por favor establezca el consecutivo a utilizar en la solicitud de Compra");
+                    this.Close();
+                }
+                String Consec = dt.Rows[0][0].ToString();
                 if (Consec == null || Consec.Trim() == "")
                 {
                     MessageBox.Show("Por favor establezca el consecutivo a utilizar en la solicitud de Compra");
@@ -515,7 +520,7 @@ namespace CO
         private void btnCancelarSolicitud_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             if (this.Accion == "Add")
-                this.Accion = "Add";
+                this.Close();
             else
                 this.Accion = "View";
             LoadData();
@@ -525,9 +530,14 @@ namespace CO
         {
             try
             {
+                if (IDEstado > 0)
+                {
+                    MessageBox.Show("No puede eliminar solicitudes cuyos estados sean aprobados o anulados", "Listado de Solicitudes");
+                    return;
+                }
                 if (MessageBox.Show("Esta seguro que desea eliminar la solicitud seleccionada ? ", "Listado de Solicitudes", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
                 {
-                    if (IDSolicitud >-1)
+                    if (IDSolicitud > -1 && IDEstado == 0 )
                     {
                         ConnectionManager.BeginTran();
                         clsSolicitudCompraDAC.InsertUpdate("D", IDSolicitud,"", DateTime.Now, DateTime.Now, -1, "", "", "", DateTime.Now, "", DateTime.Now, "", ConnectionManager.Tran);
