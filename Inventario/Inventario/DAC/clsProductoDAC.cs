@@ -263,6 +263,25 @@ namespace CI.DAC
         }
 
 
+        public static bool ValidaProveedorArticulo(long IDProducto, long IDProveedor)
+        {
+            bool ok = false;
+            String strSQL = "SELECT IDProducto  FROM dbo.invProducto WHERE IDProducto =  @IDProducto AND IDProveedor=@IDProveedor";
+            SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
+
+            oCmd.Parameters.Add(new SqlParameter("@IDProducto", IDProducto));
+            oCmd.Parameters.Add(new SqlParameter("@IDProveedor", IDProveedor));
+            oCmd.CommandType = CommandType.Text;
+            if (oCmd.Connection.State == ConnectionState.Closed)
+                oCmd.Connection.Open();
+            SqlDataAdapter oAdaptador = new SqlDataAdapter(oCmd);
+            DataSet ds = new DataSet();
+            oAdaptador.Fill(ds);
+            ok = ds.Tables[0].Rows[0].ToString() != "" ? true : false;
+
+            return ok;
+        }
+
         public static bool ValidaCuentasInventario(long IDProducto, ref String Mensaje)
         {
             bool bOk = false;

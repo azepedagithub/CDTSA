@@ -502,7 +502,7 @@ namespace CO
                     }
 
                     ConnectionManager.CommitTran();
-                    this.Accion = "Edit";
+                    this.Accion = "View";
                     HabilitarControles();
                     HabilitarBotoneriaPrincipal();
                     HabilitarComandosAccion();

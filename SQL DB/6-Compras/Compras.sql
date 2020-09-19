@@ -394,6 +394,107 @@ CREATE TABLE dbo.invParametrosCompra(
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
+GO
+
+
+CREATE TABLE dbo.invGastosCompra (
+	IDGasto INT NOT NULL IDENTITY(1,1),
+	Descripcion nvarchar(250) NOT NULL,
+	Activo BIT	 ,
+CONSTRAINT [pkinvGastoCompra] PRIMARY KEY CLUSTERED 
+(
+	IDGasto ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+CREATE  TABLE dbo.invLiquidacionCompra (
+	IDLiquidacion INT NOT NULL IDENTITY(1,1),
+	IDEmbarque INT NOT NULL,
+	IDOrdenCompra INT NOT NULL,
+	Fecha DATETIME NOT NULL,
+	FechaVence DATE,
+	FechaPoliza DATE,
+	NumPoliza NVARCHAR(250),
+	NumFactura NVARCHAR(250),
+	Guia_BL NVARCHAR(250),
+	TipoCambio DECIMAL(28,8) DEFAULT 0, 
+	ValorMercaderia DECIMAL(28,8) DEFAULT 0,
+	MontoFlete DECIMAL(28,8) DEFAULT 0,
+	MontoSeguro DECIMAL(28,8) DEFAULT 0,
+	Otros DECIMAL(28,8) DEFAULT 0, 
+	MontoTotal DECIMAL(28,8) DEFAULT 0,
+CONSTRAINT [pkinvLiquidacionCompra] PRIMARY KEY CLUSTERED 
+(
+	IDLiquidacion ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+
+
+CREATE TABLE dbo.invGastoLiquidacion (
+	IDLiquidacion INT NOT NULL,	
+	IDGasto INT NOT NULL ,
+	Monto decimal(28,8) DEFAULT 0,
+CONSTRAINT [pkinvGastoLiquidacion] PRIMARY KEY CLUSTERED 
+(
+	IDLiquidacion ASC	,
+	IDGasto ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].invGastoLiquidacion  WITH CHECK ADD  CONSTRAINT [fkinvGastoLiquidacion_GastoCompra] FOREIGN KEY(IDGasto)
+REFERENCES [dbo].invGastosCompra (IDGasto)
+
+GO
+
+
+ALTER TABLE [dbo].invGastoLiquidacion  WITH CHECK ADD  CONSTRAINT [fkinvGastoLiquidacion_Liquidacion] FOREIGN KEY(IDLiquidacion)
+REFERENCES [dbo].invLiquidacionCompra (IDLiquidacion)
+
+GO
+
+ALTER TABLE [dbo].[invSolicitudCompraDetalle]  WITH CHECK ADD  CONSTRAINT [fkinvSolicitudCompraDetalle_Producto] FOREIGN KEY([IDProducto])
+REFERENCES [dbo].invProducto (IDProducto)
+
+
+GO
+
+
+CREATE TABLE dbo.invGastoLiquidacionDetallado (
+	IDLiquidacion INT NOT NULL,	
+	IDGasto INT NOT NULL ,
+	IDProducto BIGINT NOT NULL,
+	Monto decimal(28,8) DEFAULT 0,
+CONSTRAINT [pkinvGastoLiquidacionDetallado] PRIMARY KEY CLUSTERED 
+(
+	IDLiquidacion ASC	,
+	IDProducto ASC,
+	IDGasto ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].invGastoLiquidacionDetallado  WITH CHECK ADD  CONSTRAINT [fkinvGastoLiquidacionDetallado_GastoCompra] FOREIGN KEY(IDGasto)
+REFERENCES [dbo].invGastosCompra (IDGasto)
+
+GO
+
+
+ALTER TABLE [dbo].invGastoLiquidacionDetallado  WITH CHECK ADD  CONSTRAINT [fkinvGastoLiquidacionDetallado_Liquidacion] FOREIGN KEY(IDLiquidacion)
+REFERENCES [dbo].invLiquidacionCompra (IDLiquidacion)
+
+GO
+
+ALTER TABLE [dbo].invGastoLiquidacionDetallado  WITH CHECK ADD  CONSTRAINT [fkinvGastoLiquidacionDetallado_Articulo] FOREIGN KEY(IDProducto)
+REFERENCES [dbo].invProducto (IDProducto)
+
 
 GO
 
@@ -586,7 +687,7 @@ GO
 
 CREATE   PROCEDURE dbo.invGetOrdenCompraDetalleEmptyExcel
 AS 
-SELECT A.IDOrdenCompra,A.IDProducto,P.Descr DescrProducto,A.Estado,E.Descr DescrEstado,A.Cantidad,A.CantidadAceptada,A.CantidadRechazada,A.Impuesto,A.MontoDesc,A.PorcDesc,A.PrecioUnitario,A.Comentario,CASE WHEN (F.IDOrdenCompra IS NOT NULL ) THEN 1 ELSE 0 END IsLoadFromSolicitud,A.Estado Status,P.Descr DescrStatus
+SELECT A.IDOrdenCompra,A.IDProducto,P.Descr DescrProducto,A.Estado,E.Descr DescrEstado,A.Cantidad,A.CantidadAceptada,A.CantidadRechazada,A.Impuesto,A.MontoDesc,A.PorcDesc,A.PrecioUnitario,((A.Cantidad*A.PrecioUnitario)+ Impuesto)-MontoDesc Monto,A.Comentario,CASE WHEN (F.IDOrdenCompra IS NOT NULL ) THEN 1 ELSE 0 END IsLoadFromSolicitud,A.Estado Status,P.Descr DescrStatus
   FROM dbo.invOrdenCompraDetalle A
 INNER JOIN dbo.invProducto P ON		A.IDProducto = P.IDProducto
 INNER JOIN dbo.invEstadoOrdenCompra E ON A.Estado=E.IDEstadoOrden
@@ -701,7 +802,7 @@ SELECT A.IDEmbarque,A.IDProducto,P.Descr DescrProducto,A.IDLote,L.LoteProveedor,
  FROM dbo.invEmbarqueDetalle A
 INNER JOIN dbo.invProducto P ON A.IDProducto = P.IDProducto
 INNER JOIN dbo.invLote L ON a.IDProducto=L.IDProducto AND A.IDLote=L.IDLote
-WHERE (A.IDEmbarque =@IDEmbarque AND @IDEmbarque =-1)
+WHERE (A.IDEmbarque =@IDEmbarque or @IDEmbarque =-1)
 
 GO
 

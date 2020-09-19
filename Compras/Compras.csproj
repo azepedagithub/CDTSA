@@ -111,7 +111,6 @@
     <Compile Include="DAC\clsGlobalImpuestoDAC.cs" />
     <Compile Include="DAC\clsParametrosDAC.cs" />
     <Compile Include="DAC\clsSolicitudCompra_OrdenCompra.cs" />
-    <Compile Include="DAC\clsArticuloProveedorDAC.cs" />
     <Compile Include="DAC\clsCondicionPagoDAC.cs" />
     <Compile Include="DAC\clsEmbarqueDAC.cs" />
     <Compile Include="DAC\clsEmbarqueDetalleDAC.cs" />
@@ -147,6 +146,12 @@
     </Compile>
     <Compile Include="frmImportarSolicitudCompra.Designer.cs">
       <DependentUpon>frmImportarSolicitudCompra.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmLiquidacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLiquidacion.Designer.cs">
+      <DependentUpon>frmLiquidacion.cs</DependentUpon>
     </Compile>
     <Compile Include="frmListadoEmbarque.cs">
       <SubType>Form</SubType>
@@ -215,6 +220,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmImportarSolicitudCompra.resx">
       <DependentUpon>frmImportarSolicitudCompra.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLiquidacion.resx">
+      <DependentUpon>frmLiquidacion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmListadoEmbarque.resx">
       <DependentUpon>frmListadoEmbarque.cs</DependentUpon>

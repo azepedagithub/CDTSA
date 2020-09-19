@@ -176,7 +176,7 @@ namespace CO
             
             UpdateControlsFromData(dtEmbarque);
 
-            if (IDEmbarque == -1)
+            if (IDEmbarque == -1 || this.dtDetalleEmbarque.Rows.Count == 0)
             {
                 this.dtDetalleEmbarque.Clear();
                 foreach (DataRow row in dtDetalleOrden.Rows)
@@ -547,6 +547,30 @@ namespace CO
                     
                 }
             }
+
+            DataTable dtDetalle = ((DataTable)this.dtgLineasEmbarque.DataSource);
+
+            DataTable _dtImportacionConsolidada = dtDetalle.AsEnumerable().
+                      GroupBy(r => new { IDProdcuto = r["IDProducto"] }).
+                      Select(g =>
+                      {
+                          var row = dtDetalle.NewRow();
+                          row["Cantidad"] = g.Sum(r => Convert.ToDecimal(r["Cantidad"]));
+                          row["IDProducto"] = g.Key.IDProdcuto;
+                          return row;
+                      }
+                      ).CopyToDataTable();
+            foreach (DataRow dr in _dtImportacionConsolidada.Rows) {
+                DataView dv = dtDetalleOrden.DefaultView;
+                dv.RowFilter = "IDProducto =" + dr["IDProducto"].ToString();
+                DataTable dtTemp = dv.ToTable();
+                if (Convert.ToDecimal(dr["Cantidad"]) != Convert.ToDecimal(dtTemp.Rows[0]["Cantidad"]))
+                {
+                    MessageBox.Show("Por favor verifique las cantidades del embarque deben de ser iguales a la orden de compra.");
+                    Resultado = false;
+                }
+            }
+            
             if (sMensaje != "")
             {
                 MessageBox.Show("Han ocurrido los siguientes errores por favor verifique los campos: \n\r " + sMensaje);
@@ -603,7 +627,7 @@ namespace CO
                         {
                             if (row.RowState != DataRowState.Deleted)
                             {
-                                DAC.clsEmbarqueDetalleDAC.InsertUpdate("I", IDEmbarque, (long)row["IDProducto"], (int)row["IDLote"], (decimal)row["Cantidad"], 0, 0, "", ConnectionManager.Tran);
+                                DAC.clsEmbarqueDetalleDAC.InsertUpdate("I", IDEmbarque, (long)row["IDProducto"], (int)row["IDLote"], (decimal)row["Cantidad"], (decimal)row["Cantidad"], 0, "", ConnectionManager.Tran);
                             }
                         }
 
@@ -700,8 +724,11 @@ namespace CO
 
         private void linkAsiento_Click(object sender, EventArgs e)
         {
-            CG.frmAsiento ofrmAsiento = new CG.frmAsiento(this.linkAsiento.Text);
-            ofrmAsiento.ShowDialog();
+            if (this.linkAsiento.Text != "")
+            {
+                CG.frmAsiento ofrmAsiento = new CG.frmAsiento(this.linkAsiento.Text);
+                ofrmAsiento.ShowDialog();
+            }
         }
 
        

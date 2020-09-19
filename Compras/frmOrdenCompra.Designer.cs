@@ -71,6 +71,7 @@
             this.colImpuesto = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colPorcDesc = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.Monto = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colComentario = new DevExpress.XtraGrid.Columns.GridColumn();
             this.ribbonControl2 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.barButtonItem8 = new DevExpress.XtraBars.BarButtonItem();
@@ -562,6 +563,7 @@
             this.colImpuesto,
             this.colDesc,
             this.colPorcDesc,
+            this.Monto,
             this.colComentario});
             this.gridView1.GridControl = this.dtgDetalle;
             this.gridView1.Name = "gridView1";
@@ -713,13 +715,22 @@
             this.colPorcDesc.VisibleIndex = 6;
             this.colPorcDesc.Width = 68;
             // 
+            // Monto
+            // 
+            this.Monto.Caption = "Monto";
+            this.Monto.FieldName = "Monto";
+            this.Monto.Name = "Monto";
+            this.Monto.OptionsColumn.ReadOnly = true;
+            this.Monto.Visible = true;
+            this.Monto.VisibleIndex = 7;
+            // 
             // colComentario
             // 
             this.colComentario.Caption = "Comentario";
             this.colComentario.FieldName = "Comentario";
             this.colComentario.Name = "colComentario";
             this.colComentario.Visible = true;
-            this.colComentario.VisibleIndex = 7;
+            this.colComentario.VisibleIndex = 8;
             this.colComentario.Width = 287;
             // 
             // ribbonControl2
@@ -2028,5 +2039,6 @@
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem5;
         private DevExpress.XtraEditors.SimpleButton btnOpenTemplate;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem12;
+        private DevExpress.XtraGrid.Columns.GridColumn Monto;
     }
 }

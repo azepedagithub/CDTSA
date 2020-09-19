@@ -529,27 +529,28 @@ namespace CO
 
             decimal MontoDesc = Convert.ToDecimal((dtDetalleOrden.Compute("Sum(MontoDesc)", "[MontoDesc] IS NOT NULL") != DBNull.Value) ? dtDetalleOrden.Compute("Sum(MontoDesc)", "[MontoDesc] IS NOT NULL") : 0);
 
-            decimal dTotalMercaderia = dtDetalleOrden.AsEnumerable().Sum(r => r.Field<decimal?>("Cantidad") * r.Field<decimal?>("PrecioUnitario")) == null ? 0 : dtDetalleOrden.AsEnumerable().Sum(r => r.Field<decimal>("Cantidad") * r.Field<decimal>("PrecioUnitario")) - MontoDesc;
-            decimal dDescuento = (this.txtPorcDescuento.EditValue == null || this.txtPorcDescuento.EditValue.ToString() == "") ? 0 : Convert.ToDecimal(this.txtPorcDescuento.EditValue) * dTotalMercaderia;
+            decimal? dTotalMercaderia = dtDetalleOrden.AsEnumerable().Sum(
+                r => r.Field<decimal?>("Cantidad") * (r.Field<decimal?>("PrecioUnitario") == null ? (decimal?)0 : r.Field<decimal?>("PrecioUnitario")) - MontoDesc);
+            decimal? dDescuento = (this.txtPorcDescuento.EditValue == null || this.txtPorcDescuento.EditValue.ToString() == "") ? 0 : (Convert.ToDecimal(this.txtPorcDescuento.EditValue)/100) * dTotalMercaderia;
             decimal dFlete = (this.txtFlete.EditValue == null || this.txtFlete.EditValue.ToString() == "") ? 0 : Convert.ToDecimal(this.txtFlete.EditValue);
             decimal dSeguro = (this.txtSeguro.EditValue == null || this.txtSeguro.EditValue.ToString() == "") ? 0 : Convert.ToDecimal(this.txtSeguro.EditValue);
             decimal dDocumentacion = (this.txtDocumentacion.EditValue == null || this.txtDocumentacion.EditValue.ToString() == "") ? 0 : Convert.ToDecimal(this.txtDocumentacion.EditValue);
             decimal dAnticipos = (this.txtAnticipos.EditValue == null || this.txtAnticipos.EditValue.ToString() == "") ? 0 : Convert.ToDecimal(this.txtAnticipos.EditValue);
             decimal dImpuestoConsumo = 0;
             decimal dImpuestoVenta = Convert.ToDecimal(dtDetalleOrden.AsEnumerable().Sum(r => r.Field<decimal?>("Impuesto")));
-            decimal dSubTotal = (dTotalMercaderia - dDescuento + dImpuestoVenta + dImpuestoConsumo + dFlete + dSeguro + dDocumentacion);
-            decimal dSaldo = dSubTotal - dAnticipos;
+            decimal? dSubTotal = (dTotalMercaderia - dDescuento + dImpuestoVenta + dImpuestoConsumo + dFlete + dSeguro + dDocumentacion);
+            decimal? dSaldo = dSubTotal - dAnticipos;
 
-            this.txtTotalMercaderia.EditValue = dTotalMercaderia.ToString("N" + Util.Util.DecimalLenght);
-            this.txtDescuentoTotal.EditValue = dDescuento.ToString("N" + Util.Util.DecimalLenght);
+            this.txtTotalMercaderia.EditValue = Convert.ToDecimal(dTotalMercaderia).ToString("N" + Util.Util.DecimalLenght);
+            this.txtDescuentoTotal.EditValue = Convert.ToDecimal(dDescuento).ToString("N" + Util.Util.DecimalLenght);
             this.txtFleteTotal.EditValue = dFlete.ToString("N" + Util.Util.DecimalLenght);
             this.txtTotalDocumentacion.EditValue = dFlete.ToString("N" + Util.Util.DecimalLenght);
             this.txtSeguroTotal.EditValue = dSeguro.ToString("N" + Util.Util.DecimalLenght);
             this.txtAnticipoTotal.EditValue = dAnticipos.ToString("N" + Util.Util.DecimalLenght);
             this.txtImpuestoConsumo.EditValue = dImpuestoConsumo.ToString("N" + Util.Util.DecimalLenght);
             this.txtImpuestoVenta.EditValue = dImpuestoVenta.ToString("N" + Util.Util.DecimalLenght);
-            this.txtSubtotal.EditValue = dSubTotal.ToString("N" + Util.Util.DecimalLenght);
-            this.txtSaldo.EditValue = dSaldo.ToString("N" + Util.Util.DecimalLenght);
+            this.txtSubtotal.EditValue = Convert.ToDecimal(dSubTotal).ToString("N" + Util.Util.DecimalLenght);
+            this.txtSaldo.EditValue = Convert.ToDecimal(dSaldo).ToString("N" + Util.Util.DecimalLenght);
 
         }
 
@@ -580,12 +581,14 @@ namespace CO
                 GridColumn PrecioUnitario = view.Columns["PrecioUnitario"];
                 GridColumn PorcDesc = view.Columns["PorcDesc"];
                 GridColumn MontoDesc = view.Columns["MontoDesc"];
-
+                GridColumn Monto = view.Columns["Monto"];
+                
                 object vIDProducto = (object)(view.GetRowCellValue(e.RowHandle, IDProducto));
                 object vCantidad = (object)(view.GetRowCellValue(e.RowHandle, Cantidad));
                 object vPrecioUnitario = (object)(view.GetRowCellValue(e.RowHandle, PrecioUnitario));
                 object vPorcDesc = (object)(view.GetRowCellValue(e.RowHandle, PorcDesc));
                 object vMontoDesc = (object)(view.GetRowCellValue(e.RowHandle, MontoDesc));
+                object vMonto = (object)(view.GetRowCellValue(e.RowHandle, Monto));
 
                 if (Convert.IsDBNull(vIDProducto))
                 {
@@ -833,7 +836,7 @@ namespace CO
                     }
 
                     ConnectionManager.CommitTran();
-                    this.Accion = "Edit";
+                    this.Accion = "View";
                     HabilitarControles();
                     HabilitarBotoneriaPrincipal();
                     
@@ -1040,17 +1043,25 @@ namespace CO
                 //3 => PrecioUnitario
                 //6 => Porc Desc
                 //5 => Descuento
-                if (view.GetRowCellValue(e.RowHandle, view.Columns[3]).ToString() == "" || view.GetRowCellValue(e.RowHandle, view.Columns[6]).ToString() == "" || view.GetRowCellValue(e.RowHandle, view.Columns[5]).ToString() == "") return;
-                
-                if (Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[6])) > 0)
-                {
-                    decimal cellValue = (e.Value.ToString() == "") ? 0 : Convert.ToDecimal(e.Value);
 
-                    decimal Precio = Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[3]));
-                    decimal Porc = Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[6]));
-                    decimal MontoDesc = (Precio * cellValue) * (Porc / 100);
-                    view.SetRowCellValue(e.RowHandle, "MontoDesc", MontoDesc);
-                }
+
+                //Piloto
+                decimal cellValue = (e.Value.ToString() == "") ? 0 : Convert.ToDecimal(e.Value); //Cantidad
+                decimal Precio = (view.GetRowCellValue(e.RowHandle, view.Columns[3]).ToString() =="" ) ? 0 : Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[3]));
+                decimal Impuesto = (view.GetRowCellValue(e.RowHandle, view.Columns[4]).ToString() == "") ? 0 : Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[4]));
+                decimal MontoDesc = (view.GetRowCellValue(e.RowHandle, view.Columns[5]).ToString() == "") ? 0 : Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[5]));
+                decimal PorcDesc = (view.GetRowCellValue(e.RowHandle, view.Columns[6]).ToString() == "") ? 0 : Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[6]));
+                if (MontoDesc == 0)
+                    if (PorcDesc != 0)
+                    {
+                        MontoDesc = (cellValue * Precio) * (PorcDesc / 100);
+                        view.SetRowCellValue(e.RowHandle, "MontoDesc", MontoDesc);
+                    }
+                decimal Monto = ((Precio * cellValue) + Impuesto) - MontoDesc;
+                view.SetRowCellValue(e.RowHandle, "Monto", Monto);
+
+
+                
             }
             
             if (e.Column.FieldName == "PrecioUnitario")
@@ -1058,45 +1069,142 @@ namespace CO
                 //2 => Cantidad
                 //6 => Porc Desc
                 //5 => Descuento
-                if (view.GetRowCellValue(e.RowHandle, view.Columns[2]).ToString() == "" || view.GetRowCellValue(e.RowHandle, view.Columns[6]).ToString() == "" || view.GetRowCellValue(e.RowHandle, view.Columns[5]).ToString() == "") return;
-                if (Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[6])) > 0)
-                {
-                    decimal cellValue = (e.Value.ToString() == "") ? 0 : Convert.ToDecimal(e.Value);
 
-                    decimal Cantidad = Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[2]));
-                    decimal Porc = Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[6]));
-                    decimal MontoDesc = (Cantidad * cellValue) * (Porc / 100);
-                    view.SetRowCellValue(e.RowHandle, "MontoDesc", MontoDesc);
-                }
+                decimal cellValue = (e.Value.ToString() == "") ? 0 : Convert.ToDecimal(e.Value); //Precio
+                decimal Cantidad = (view.GetRowCellValue(e.RowHandle, view.Columns[2]).ToString() =="" ) ? 0 : Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[2]));
+                decimal Impuesto = (view.GetRowCellValue(e.RowHandle, view.Columns[4]).ToString() == "") ? 0 : Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[4]));
+                decimal MontoDesc = (view.GetRowCellValue(e.RowHandle, view.Columns[5]).ToString() == "") ? 0 : Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[5]));
+                decimal PorcDesc = (view.GetRowCellValue(e.RowHandle, view.Columns[6]).ToString() == "") ? 0 : Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[6]));
+                if (MontoDesc == 0)
+                    if (PorcDesc != 0)
+                    {
+                        MontoDesc = (Cantidad * cellValue) * (PorcDesc / 100);
+                        view.SetRowCellValue(e.RowHandle, "MontoDesc", MontoDesc);
+                    }
+                decimal Monto = ((Cantidad * cellValue) + Impuesto) - MontoDesc;
+                view.SetRowCellValue(e.RowHandle, "Monto", Monto);
+
+
+
+                //if (view.GetRowCellValue(e.RowHandle, view.Columns[2]).ToString() == "") return;
+
+                //decimal cellValue = (e.Value.ToString() == "") ? 0 : Convert.ToDecimal(e.Value);
+                //decimal Cantidad = Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[2]));
+                //decimal Monto = (cellValue * Cantidad);
+                //view.SetRowCellValue(e.RowHandle, "Monto", Monto);
+
+
+                //if ( view.GetRowCellValue(e.RowHandle, view.Columns[6]).ToString() == "" || view.GetRowCellValue(e.RowHandle, view.Columns[5]).ToString() == "") return;
+                //if (Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[6])) > 0)
+                //{
+                //    decimal Porc = Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[6]));
+                //    decimal MontoDesc = (Cantidad * cellValue) * (Porc / 100);
+                //    Monto = Monto - MontoDesc;
+                //    view.SetRowCellValue(e.RowHandle, "MontoDesc", MontoDesc);
+                //    view.SetRowCellValue(e.RowHandle, "Monto", Monto);
+                //}
             }
+
+
+            if (e.Column.FieldName == "Impuesto")
+            {
+                //2 => Cantidad
+                //6 => Porc Desc
+                //5 => Descuento
+
+                decimal cellValue = (e.Value.ToString() == "") ? 0 : Convert.ToDecimal(e.Value); //Impuesto
+                decimal Cantidad = (view.GetRowCellValue(e.RowHandle, view.Columns[2]).ToString() == "") ? 0 : Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[2]));
+                decimal Precio = (view.GetRowCellValue(e.RowHandle, view.Columns[3]).ToString() == "") ? 0 : Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[3]));
+                decimal MontoDesc = (view.GetRowCellValue(e.RowHandle, view.Columns[5]).ToString() == "") ? 0 : Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[5]));
+                decimal PorcDesc = (view.GetRowCellValue(e.RowHandle, view.Columns[6]).ToString() == "") ? 0 : Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[6]));
+                if (MontoDesc == 0)
+                    if (PorcDesc != 0)
+                    {
+                        MontoDesc = (Cantidad * cellValue) * (PorcDesc / 100);
+                        view.SetRowCellValue(e.RowHandle, "MontoDesc", MontoDesc);
+                    }
+                decimal Monto = ((Cantidad * cellValue) + cellValue) - MontoDesc;
+                view.SetRowCellValue(e.RowHandle, "Monto", Monto);
+
+                
+
+
+                //if (view.GetRowCellValue(e.RowHandle, view.Columns[2]).ToString() == "" || view.GetRowCellValue(e.RowHandle, view.Columns[3]).ToString() == "") return;
+
+                //decimal cellValue = (e.Value.ToString() == "") ? 0 : Convert.ToDecimal(e.Value);
+                //decimal Cantidad = Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[2]));
+                //decimal Precio = Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[3]));
+                //decimal Monto = (cellValue * Cantidad);
+                //view.SetRowCellValue(e.RowHandle, "Monto", Monto);
+
+
+                //if (view.GetRowCellValue(e.RowHandle, view.Columns[6]).ToString() == "" || view.GetRowCellValue(e.RowHandle, view.Columns[5]).ToString() == "") return;
+                //if (Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[6])) > 0)
+                //{
+                //    decimal Porc = Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[6]));
+                //    decimal MontoDesc = (Cantidad * cellValue) * (Porc / 100);
+                //    Monto = Monto - MontoDesc;
+                //    view.SetRowCellValue(e.RowHandle, "MontoDesc", MontoDesc);
+                //    view.SetRowCellValue(e.RowHandle, "Monto", Monto);
+                //}
+            }
+
 
             if (e.Column.FieldName == "PorcDesc" && bEditPorcDesc ) //|| view.GetRowCellValue(e.RowHandle, view.Columns[5]).ToString() == "")
             {
                 //3 => PrecioUnitario
                 //2 => Cantidad
-                if (view.GetRowCellValue(e.RowHandle, view.Columns[3]).ToString() == "" || view.GetRowCellValue(e.RowHandle, view.Columns[2]).ToString() == "") return;
-                decimal cellValue = (e.Value.ToString() == "") ? 0 : Convert.ToDecimal(e.Value);
 
-                decimal Precio = Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[3]));
-                decimal Cantidad = Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[2]));
-
-                decimal MontoDesc = (cellValue / 100) * (Precio * Cantidad);
+                decimal cellValue = (e.Value.ToString() == "") ? 0 : Convert.ToDecimal(e.Value); //PorcDesc
+                decimal Cantidad = (view.GetRowCellValue(e.RowHandle, view.Columns[2]).ToString() == "") ? 0 : Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[2]));
+                decimal Precio = (view.GetRowCellValue(e.RowHandle, view.Columns[3]).ToString() == "") ? 0 : Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[3]));
+                decimal MontoDesc = 0;
+                decimal Impuesto = (view.GetRowCellValue(e.RowHandle, view.Columns[4]).ToString() == "") ? 0 : Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[4]));
+           
+                MontoDesc = (Cantidad * Precio) * (cellValue / 100);
                 view.SetRowCellValue(e.RowHandle, "MontoDesc", MontoDesc);
+                   
+                decimal Monto = ((Cantidad * Precio) + Impuesto) - MontoDesc;
+                view.SetRowCellValue(e.RowHandle, "Monto", Monto);
 
+
+
+                //if (view.GetRowCellValue(e.RowHandle, view.Columns[3]).ToString() == "" || view.GetRowCellValue(e.RowHandle, view.Columns[2]).ToString() == "") return;
+                //decimal cellValue = (e.Value.ToString() == "") ? 0 : Convert.ToDecimal(e.Value);
+
+                //decimal Precio = Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[3]));
+                //decimal Cantidad = Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[2]));
+                //decimal MontoDesc = (cellValue / 100) * (Precio * Cantidad);
+                //decimal Monto = (Cantidad * Precio) - MontoDesc;
+                //view.SetRowCellValue(e.RowHandle, "MontoDesc", MontoDesc);
+                //view.SetRowCellValue(e.RowHandle, "Monto", Monto);
 
             }
             if (e.Column.FieldName == "MontoDesc" && bEditMontoDesc) // || view.GetRowCellValue(e.RowHandle, view.Columns[6]).ToString() == "")
             {
-                if (view.GetRowCellValue(e.RowHandle, view.Columns[3]).ToString() == "" || view.GetRowCellValue(e.RowHandle, view.Columns[2]).ToString() == "") return;
-                decimal cellValue = (e.Value.ToString() == "") ? 0 : Convert.ToDecimal(e.Value);
 
-                decimal Precio = Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[3]));
-                decimal Cantidad = Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[2]));
+                decimal cellValue = (e.Value.ToString() == "") ? 0 : Convert.ToDecimal(e.Value); //MontoDesc
+                decimal Cantidad = (view.GetRowCellValue(e.RowHandle, view.Columns[2]).ToString() == "") ? 0 : Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[2]));
+                decimal Precio = (view.GetRowCellValue(e.RowHandle, view.Columns[3]).ToString() == "") ? 0 : Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[3]));
+                decimal Impuesto = (view.GetRowCellValue(e.RowHandle, view.Columns[4]).ToString() == "") ? 0 : Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[4]));
+                decimal PorcDesc = (view.GetRowCellValue(e.RowHandle, view.Columns[6]).ToString() == "") ? 0 : Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[6]));
 
-                decimal PorcDesc = (cellValue / (Precio * Cantidad)) * 100;
-
+                PorcDesc = (cellValue / (Precio * Cantidad)) * 100;
                 view.SetRowCellValue(e.RowHandle, "PorcDesc", PorcDesc);
 
+                decimal Monto = ((Cantidad * Precio) + Impuesto) - cellValue;
+                view.SetRowCellValue(e.RowHandle, "Monto", Monto);
+
+                //if (view.GetRowCellValue(e.RowHandle, view.Columns[3]).ToString() == "" || view.GetRowCellValue(e.RowHandle, view.Columns[2]).ToString() == "") return;
+                //decimal cellValue = (e.Value.ToString() == "") ? 0 : Convert.ToDecimal(e.Value);
+
+                //decimal Precio = Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[3]));
+                //decimal Cantidad = Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[2]));
+
+                //decimal PorcDesc = (cellValue / (Precio * Cantidad)) * 100;
+                //decimal Monto = (Precio * Cantidad) - cellValue;
+                //view.SetRowCellValue(e.RowHandle, "PorcDesc", PorcDesc);
+                //view.SetRowCellValue(e.RowHandle, "Monto", Monto);
 
 
             }
@@ -1310,6 +1418,7 @@ namespace CO
                     nuevaFila["PorcDesc"] = fila["PorcDesc"];
                     nuevaFila["Comentario"] = fila["Comentario"];
                     nuevaFila["Impuesto"] = fila["Impuesto"];
+                    nuevaFila["Monto"] = fila["Monto"];
                     nuevaFila["IsLoadFromSolicitud"] = 0;
                     this.dtDetalleOrden.Rows.InsertAt(nuevaFila, 0);
                     

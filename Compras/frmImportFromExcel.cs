@@ -11,6 +11,7 @@ using Excel = Microsoft.Office.Interop.Excel;
 using System.Runtime.InteropServices;
 using DevExpress.XtraGrid.Views.Grid;
 using CO.DAC;
+using CI.DAC;
 
 namespace CO
 {
@@ -180,6 +181,7 @@ namespace CO
                     nuevaFila["PrecioUnitario"] = fila.Precio;
                     nuevaFila["MontoDesc"] = fila.Descuento;
                     nuevaFila["PorcDesc"] = fila.PorcDesc;
+                    nuevaFila["Monto"] = ((fila.Cantidad * fila.Precio) + fila.Impuesto) - fila.Descuento;
                     nuevaFila["Comentario"] = fila.Comentario;
                     this.dtDetalleOrden.Rows.InsertAt(nuevaFila, 0);
                     //this.dtDetalleOrden.Rows.Add(fila);
@@ -211,9 +213,9 @@ namespace CO
                 //Validar si el producto esta asociado 
                 long IDProducto = Convert.ToInt64(fila["IDProducto"]);
 
-                DataTable dt = clsArticuloProveedorDAC.Get(IDProducto, IDProveedor).Tables[0];
+                bool bProveedor = CI.DAC.clsProductoDAC.ValidaProveedorArticulo(IDProducto, IDProveedor);
 
-                if (dt.Rows.Count == 0)
+                if (!bProveedor)
                 {
                     ////mostrar el mensaje de asocicion
                     //frmArticuloProveedor ofrmArticuloProveedor = new frmArticuloProveedor(IDProveedor, IDProducto, "Add", true);
@@ -334,6 +336,7 @@ namespace CO
         public decimal Impuesto { get; set; }
         public decimal Descuento { get; set; }
         public decimal PorcDesc { get; set; }
+        public decimal Monto { get; set; }
         public String Comentario { get; set; }
 
         public clsDetalleOrden()
@@ -344,6 +347,7 @@ namespace CO
             Impuesto = 0.0m;
             Descuento = 0.0m;
             PorcDesc = 0.0m;
+            Monto = 0.0m;
             Comentario = "";
         }
     }
