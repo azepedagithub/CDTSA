@@ -107,8 +107,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAC\clsCategoriaProveedorDAC.cs" />
+    <Compile Include="DAC\clsGastosCompraDAC.cs" />
+    <Compile Include="DAC\clsGastosLiquidacionCompraDAC.cs" />
+    <Compile Include="DAC\clsGastosLiquidacionDetalladoDAC.cs" />
     <Compile Include="DAC\clsGlobalConsecutivosDAC.cs" />
     <Compile Include="DAC\clsGlobalImpuestoDAC.cs" />
+    <Compile Include="DAC\clsLiquidacionCompraDAC.cs" />
     <Compile Include="DAC\clsParametrosDAC.cs" />
     <Compile Include="DAC\clsSolicitudCompra_OrdenCompra.cs" />
     <Compile Include="DAC\clsCondicionPagoDAC.cs" />
