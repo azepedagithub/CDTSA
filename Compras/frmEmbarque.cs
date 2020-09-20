@@ -34,6 +34,8 @@ namespace CO
         DataTable dtProductos = new DataTable();
         DataTable dtLotes = new DataTable();
         DataTable dtOrdenCompra = new DataTable();
+
+
         double TipoCambio;
 
         private string Accion = "Add";
@@ -147,6 +149,7 @@ namespace CO
             this.txtOrdenCompra.Tag = this.IDOrdenCompra;
             OrdenCompra = cabecera["OrdenCompra"].ToString();
             this.txtEmbarque.EditValue = cabecera["Embarque"].ToString();
+            Embarque = cabecera["Embarque"].ToString();
             this.txtEmbarque.Tag = cabecera["IDEmbarque"].ToString();
             this.dtpFecha.EditValue = Convert.ToDateTime(cabecera["Fecha"]);
             this.dtpFechaEmbarque.EditValue = Convert.ToDateTime(cabecera["FechaEmbarque"]);
@@ -705,6 +708,9 @@ namespace CO
 
         private void btnAplicar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+            
+            //Apliar el producto a inventario
+            /*
             try
             {
                 long IDTan = -1;
@@ -720,6 +726,10 @@ namespace CO
             catch (Exception Ex) {
                 MessageBox.Show("Han ocurrido los siguientes errores : " + Ex.Message);
             }
+            */
+
+            frmLiquidacion ofrmLiquidacion = new frmLiquidacion(-1, this.IDEmbarque, this.IDOrdenCompra,this.OrdenCompra,this.Embarque, "Add");
+            ofrmLiquidacion.ShowDialog();
         }
 
         private void linkAsiento_Click(object sender, EventArgs e)

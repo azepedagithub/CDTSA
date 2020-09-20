@@ -1428,17 +1428,20 @@ END
 
 GO
 
-CREATE PROCEDURE dbo.invGetLiquidacionCompra (@IDLiquidacion INT,@IDEmbarque INT, @IDOrdenCompra INT) 
+CREATE  PROCEDURE dbo.invGetLiquidacionCompra (@IDLiquidacion INT,@IDEmbarque INT, @IDOrdenCompra INT) 
 AS 
-SELECT  IDLiquidacion ,IDEmbarque ,IDOrdenCompra ,Fecha ,FechaVence ,FechaPoliza ,NumPoliza ,NumFactura ,Guia_BL ,TipoCambio ,ValorMercaderia ,
-        MontoFlete ,MontoSeguro ,Otros ,MontoTotal  
-FROM dbo.invLiquidacionCompra WHERE (IDLiquidacion=@IDLiquidacion OR @IDLiquidacion='*')  AND (IDEmbarque=@IDEmbarque OR @IDEmbarque='*') AND (IDOrdenCompra=@IDOrdenCompra OR @IDOrdenCompra='*')
+SELECT  A.IDLiquidacion ,A.IDEmbarque , EM.Embarque ,A.IDOrdenCompra , OC.OrdenCompra ,A.Fecha ,A.FechaVence ,a.FechaPoliza ,A.NumPoliza ,A.NumFactura ,
+A.Guia_BL ,A.TipoCambio ,a.ValorMercaderia ,A.MontoFlete ,A.MontoSeguro ,A.Otros ,A.MontoTotal  
+FROM dbo.invLiquidacionCompra A
+LEFT  JOIN dbo.invOrdenCompra OC ON A.IDOrdenCompra=OC.OrdenCompra
+LEFT  JOIN dbo.invEmbarque EM ON A.IDEmbarque=EM.IDEmbarque AND EM.IDOrdenCompra=OC.IDEmbarque
+WHERE (A.IDLiquidacion=@IDLiquidacion OR @IDLiquidacion=-1)  AND (A.IDEmbarque=@IDEmbarque OR @IDEmbarque=-1) AND (A.IDOrdenCompra=@IDOrdenCompra OR @IDOrdenCompra=-1)
 
 
 GO
 
 
-CREATE   PROCEDURE dbo.invUpdateGastoLiquidacionCompra(@Operacion NVARCHAR(1), @IDLiquidacion AS INT OUTPUT,@IDGasto AS INT ,@Monto DECIMAL(28,8))
+CREATE  PROCEDURE dbo.invUpdateGastoLiquidacionCompra(@Operacion NVARCHAR(1), @IDLiquidacion AS INT OUTPUT,@IDGasto AS INT ,@Monto DECIMAL(28,8))
 AS 
 IF (@Operacion='I')  
 BEGIN
@@ -1452,7 +1455,7 @@ BEGIN
 END
 IF (@Operacion ='D')
 BEGIN
-	DELETE dbo.invGastoLiquidacion WHERE IDLiquidacion=@IDLiquidacion AND (IDGasto=@IDGasto OR @IDGasto='*')
+	DELETE dbo.invGastoLiquidacion WHERE IDLiquidacion=@IDLiquidacion AND (IDGasto=@IDGasto OR @IDGasto=-1)
 END
 
 
@@ -1463,12 +1466,12 @@ CREATE  PROCEDURE dbo.invGetGastoLiquidacion(@IDLiquidacion AS INT, @IDGasto AS 
 AS 
 SELECT  IDLiquidacion ,A.IDGasto ,GC.Descripcion DescrGasto ,Monto  FROM dbo.invGastoLiquidacion A
 INNER JOIN dbo.invGastosCompra GC ON A.IDGasto=GC.IDGasto
- WHERE IDLiquidacion=@IDLiquidacion OR (A.IDGasto = @IDGasto OR @IDGasto='*')
+ WHERE IDLiquidacion=@IDLiquidacion OR (A.IDGasto = @IDGasto OR @IDGasto=-1)
 
 
 GO
 
-CREATE PROCEDURE dbo.invUpdateGastoLiquidacionDetallado (@Operacion AS NVARCHAR(1), @IDLiquidacion AS INT,@IDGasto AS INT,@IDProducto AS BIGINT,@Monto AS DECIMAL(28,8))
+CREATE  PROCEDURE dbo.invUpdateGastoLiquidacionDetallado (@Operacion AS NVARCHAR(1), @IDLiquidacion AS INT,@IDGasto AS INT,@IDProducto AS BIGINT,@Monto AS DECIMAL(28,8))
 AS 
 IF @Operacion ='I'
 BEGIN
@@ -1481,18 +1484,18 @@ BEGIN
 END
 IF @Operacion ='D'
 BEGIN
-	DELETE dbo.invGastoLiquidacionDetallado WHERE IDLiquidacion=IDLiquidacion AND (IDGasto=@IDGasto OR @IDGasto='*') AND (IDProducto=@IDProducto OR @IDProducto='*')
+	DELETE dbo.invGastoLiquidacionDetallado WHERE IDLiquidacion=IDLiquidacion AND (IDGasto=@IDGasto OR @IDGasto=-1) AND (IDProducto=@IDProducto OR @IDProducto=-1)
 END
 
 
 GO
 
-CREATE PROCEDURE dbo.invGetGastoLiquidacionDetallado(@IDLiquidacion AS INT,@IDGasto AS INT,@IDProducto AS BIGINT)
+CREATE  PROCEDURE dbo.invGetGastoLiquidacionDetallado(@IDLiquidacion AS INT,@IDGasto AS INT,@IDProducto AS BIGINT)
 AS 
 SELECT  A.IDLiquidacion ,A.IDGasto ,GC.Descripcion DescrGasto,A.IDProducto, P.Descr DescrProducto ,A.Monto 
  FROM dbo.invGastoLiquidacionDetallado A
 INNER JOIN dbo.invGastosCompra GC ON A.IDGasto=GC.IDGasto
 INNER JOIN dbo.invProducto P ON A.IDProducto= P.IDProducto
-WHERE IDLiquidacion=@IDLiquidacion AND (A.IDGasto = @IDGasto OR @IDGasto='*') AND (a.IDProducto=@IDProducto OR @IDProducto='*')
+WHERE IDLiquidacion=@IDLiquidacion AND (A.IDGasto = @IDGasto OR @IDGasto=-1) AND (a.IDProducto=@IDProducto OR @IDProducto=-1)
 
 GO

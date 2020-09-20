@@ -202,7 +202,7 @@
             // 
             // btnAplicar
             // 
-            this.btnAplicar.Caption = "Aplicar al Inventario";
+            this.btnAplicar.Caption = "Liquidar";
             this.btnAplicar.Glyph = ((System.Drawing.Image)(resources.GetObject("btnAplicar.Glyph")));
             this.btnAplicar.Id = 1;
             this.btnAplicar.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnAplicar.LargeGlyph")));
