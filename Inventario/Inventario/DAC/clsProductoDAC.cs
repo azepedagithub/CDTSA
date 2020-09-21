@@ -72,6 +72,7 @@ namespace CI.DAC
                 oAdaptador.InsertCommand.Parameters.Add("@EsControlado", SqlDbType.Bit).SourceColumn = "EsControlado";
                 oAdaptador.InsertCommand.Parameters.Add("@EsEtico", SqlDbType.Bit).SourceColumn = "EsEtico";
                 oAdaptador.InsertCommand.Parameters.Add("@Activo", SqlDbType.Bit).SourceColumn = "Activo";
+                oAdaptador.InsertCommand.Parameters.Add("@Bonifica", SqlDbType.Bit).SourceColumn = "Bonifica";
                 oAdaptador.InsertCommand.Parameters.Add("@UserInsert", SqlDbType.NChar).SourceColumn = "UserInsert";
                 oAdaptador.InsertCommand.Parameters.Add("@UserUpdate", SqlDbType.NChar).SourceColumn = "UserUpdate";
                 oAdaptador.InsertCommand.Parameters.Add("@UpdateDate", SqlDbType.Date).SourceColumn = "UpdateDate";
@@ -98,6 +99,7 @@ namespace CI.DAC
                 oAdaptador.UpdateCommand.Parameters.Add("@EsControlado", SqlDbType.Bit).SourceColumn = "EsControlado";
                 oAdaptador.UpdateCommand.Parameters.Add("@EsEtico", SqlDbType.Bit).SourceColumn = "EsEtico";
                 oAdaptador.UpdateCommand.Parameters.Add("@Activo", SqlDbType.Bit).SourceColumn = "Activo";
+                oAdaptador.UpdateCommand.Parameters.Add("@Bonifica", SqlDbType.Bit).SourceColumn = "Bonifica";
                 oAdaptador.UpdateCommand.Parameters.Add("@UserInsert", SqlDbType.NChar).SourceColumn = "UserInsert";
                 oAdaptador.UpdateCommand.Parameters.Add("@UserUpdate", SqlDbType.NChar).SourceColumn = "UserUpdate";
                 oAdaptador.UpdateCommand.Parameters.Add("@UpdateDate", SqlDbType.Date).SourceColumn = "UpdateDate";
@@ -126,6 +128,7 @@ namespace CI.DAC
                 oAdaptador.DeleteCommand.Parameters.Add("@EsControlado", SqlDbType.Bit).SourceColumn = "EsControlado";
                 oAdaptador.DeleteCommand.Parameters.Add("@EsEtico", SqlDbType.Bit).SourceColumn = "EsEtico";
                 oAdaptador.DeleteCommand.Parameters.Add("@Activo", SqlDbType.Bit).SourceColumn = "Activo";
+                oAdaptador.DeleteCommand.Parameters.Add("@Bonifica", SqlDbType.Bit).SourceColumn = "Bonifica";
                 oAdaptador.DeleteCommand.Parameters.Add("@UserInsert", SqlDbType.NChar).SourceColumn = "UserInsert";
                 oAdaptador.DeleteCommand.Parameters.Add("@UserUpdate", SqlDbType.NChar).SourceColumn = "UserUpdate";
                 oAdaptador.DeleteCommand.Parameters.Add("@UpdateDate", SqlDbType.Date).SourceColumn = "UpdateDate";
@@ -152,7 +155,7 @@ namespace CI.DAC
             String strSQL = "SELECT  IDProducto ,Descr ,Alias ,CostoUltLocal ,CostoUltDolar ,CostoPromLocal ,CostoPromDolar ,PrecioPublicoLocal ,PrecioFarmaciaLocal ,PrecioCIFLocal ," +
                             "PrecioFOBLocal ,PrecioDolar ,Clasif1 ,Clasif2 ,Clasif3 ,Clasif4 ,Clasif5 ,Clasif6,IDProveedor ,IDCuentaContable,CodigoBarra ,IDUnidad ,FactorEmpaque ,TipoImpuesto ,EsMuestra , " +
                             "EsControlado ,EsEtico ," +
-                            "Activo ,UserInsert ,UserUpdate ,CreateDate ,UpdateDate  FROM dbo.invProducto WHERE 1=2";
+                            "Activo,Bonifica ,UserInsert ,UserUpdate ,CreateDate ,UpdateDate  FROM dbo.invProducto WHERE 1=2";
 
             SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
             SqlDataAdapter oAdaptador = new SqlDataAdapter(oCmd);

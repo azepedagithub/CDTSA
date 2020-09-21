@@ -119,6 +119,8 @@
             this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
             this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
+            this.chkBonifica = new DevExpress.XtraEditors.CheckEdit();
+            this.layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
@@ -208,6 +210,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkBonifica.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).BeginInit();
             this.SuspendLayout();
             // 
             // ribbonControl1
@@ -326,6 +330,7 @@
             // 
             // layoutControl2
             // 
+            this.layoutControl2.Controls.Add(this.chkBonifica);
             this.layoutControl2.Controls.Add(this.rdgOrigen);
             this.layoutControl2.Controls.Add(this.chkMultimoneda);
             this.layoutControl2.Controls.Add(this.chkActivo);
@@ -476,6 +481,7 @@
             this.layoutControlItem10,
             this.emptySpaceItem5,
             this.layoutControlGroup5,
+            this.layoutControlItem9,
             this.emptySpaceItem17});
             this.layoutControlGroup2.Location = new System.Drawing.Point(0, 0);
             this.layoutControlGroup2.Name = "Root";
@@ -627,9 +633,11 @@
             // emptySpaceItem17
             // 
             this.emptySpaceItem17.AllowHotTrack = false;
-            this.emptySpaceItem17.Location = new System.Drawing.Point(514, 182);
+            this.emptySpaceItem17.Location = new System.Drawing.Point(514, 205);
+            this.emptySpaceItem17.MinSize = new System.Drawing.Size(104, 24);
             this.emptySpaceItem17.Name = "emptySpaceItem17";
-            this.emptySpaceItem17.Size = new System.Drawing.Size(195, 103);
+            this.emptySpaceItem17.Size = new System.Drawing.Size(195, 80);
+            this.emptySpaceItem17.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             this.emptySpaceItem17.TextSize = new System.Drawing.Size(0, 0);
             // 
             // tabOtros
@@ -1101,6 +1109,24 @@
             this.emptySpaceItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
             // 
+            // chkBonifica
+            // 
+            this.chkBonifica.Location = new System.Drawing.Point(526, 194);
+            this.chkBonifica.Name = "chkBonifica";
+            this.chkBonifica.Properties.Caption = "Bonifica";
+            this.chkBonifica.Size = new System.Drawing.Size(191, 19);
+            this.chkBonifica.StyleController = this.layoutControl2;
+            this.chkBonifica.TabIndex = 12;
+            // 
+            // layoutControlItem9
+            // 
+            this.layoutControlItem9.Control = this.chkBonifica;
+            this.layoutControlItem9.Location = new System.Drawing.Point(514, 182);
+            this.layoutControlItem9.Name = "layoutControlItem9";
+            this.layoutControlItem9.Size = new System.Drawing.Size(195, 23);
+            this.layoutControlItem9.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItem9.TextVisible = false;
+            // 
             // frmProveedor
             // 
             this.AllowFormGlass = DevExpress.Utils.DefaultBoolean.True;
@@ -1202,6 +1228,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkBonifica.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1298,5 +1326,7 @@
         private DevExpress.XtraGrid.Views.Grid.GridView gridView6;
         private DevExpress.XtraEditors.TextEdit txtNIT;
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem17;
+        private DevExpress.XtraEditors.CheckEdit chkBonifica;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem9;
     }
 }

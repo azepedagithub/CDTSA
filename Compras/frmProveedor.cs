@@ -28,7 +28,7 @@ namespace CO
         private DateTime FechaIngreso;
         private string NombreProveedor,Alias,Contacto,Telefono,email,Direccion;
         private decimal Descuento, InteresMora;
-        private bool Inactivo, MultiMoneda, PagosCongelados,isLocal;
+        private bool Inactivo, MultiMoneda, PagosCongelados,isLocal,Bonifica;
         
 
 
@@ -80,6 +80,7 @@ namespace CO
         {
             this.txtNombreProveedor.ReadOnly = !Activo;
             this.chkActivo.ReadOnly = !Activo;
+            this.chkBonifica.ReadOnly = !Activo;
             this.dtpFechaIngreso.ReadOnly = !Activo;
             this.txtAlias.ReadOnly = !Activo;
             this.txtContacto.ReadOnly = !Activo;
@@ -109,6 +110,7 @@ namespace CO
         {
             this.txtNombreProveedor.EditValue = null;
             this.chkActivo.Checked = false;
+            this.chkBonifica.Checked = false;   
             this.dtpFechaIngreso.EditValue = null;
             this.txtAlias.EditValue = null;
             this.txtContacto.EditValue = null;
@@ -211,6 +213,7 @@ namespace CO
             this.MultiMoneda = this.chkMultimoneda.Checked;
             this.PagosCongelados = this.chkPagosCongelados.Checked;
             this.isLocal =  (Convert.ToInt32(this.rdgOrigen.EditValue) == 1) ? true : false;
+            this.Bonifica = this.chkBonifica.Checked;
         }
 
         private void btnGuardar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -239,7 +242,7 @@ namespace CO
                     IDProveedor, NombreProveedor, RUC, !Inactivo,
                     Alias, IDPais, IDMoneda,FechaIngreso, Contacto,
                    Telefono, IDCategoria, IDCondicionPago, Descuento,
-                    InteresMora, email, Direccion,MultiMoneda,PagosCongelados,isLocal, ConnectionManager.Tran);
+                    InteresMora, email, Direccion,MultiMoneda,PagosCongelados,isLocal,Bonifica, ConnectionManager.Tran);
 
                  ConnectionManager.CommitTran();
 
@@ -309,6 +312,7 @@ namespace CO
             this.txtInteresMora.EditValue = Convert.ToDecimal(dt.Rows[0]["PorcInteresMora"]);
             this.txtEmail.EditValue = dt.Rows[0]["Email"].ToString();
             this.txtDireccion.EditValue = dt.Rows[0]["Direccion"].ToString();
+            this.chkBonifica.EditValue = Convert.ToBoolean(dt.Rows[0]["Bonifica"]);
             
 
         }

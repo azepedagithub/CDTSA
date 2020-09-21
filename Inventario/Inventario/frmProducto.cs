@@ -119,6 +119,7 @@ namespace CI
             _currentRow["EsControlado"] = false;
             _currentRow["EsEtico"] = false;
             _currentRow["Activo"] = true;
+            _currentRow["Bonifica"] = false;
             _currentRow["UserInsert"] = sUsuario;
             _currentRow["UserUpdate"] = DateTime.Now;
             _currentRow["UpdateDate"] = DateTime.Now;
@@ -147,6 +148,7 @@ namespace CI
             //this.dtpFecha.Text = Convert.ToDateTime(_currentRow["Fecha"]).ToShortDateString();
             this.slkupTipoImpuesto.EditValue = _currentRow["TipoImpuesto"].ToString();
             this.chkActivo.EditValue = _currentRow["Activo"];
+            this.chkBonifica.EditValue = _currentRow["Bonifica"];
             this.chkEsMuestra.EditValue = _currentRow["EsMuestra"];
             this.chkEsControlado.EditValue = _currentRow["EsControlado"];
             this.chkEsEtico.EditValue = _currentRow["EsEtico"];
@@ -191,6 +193,7 @@ namespace CI
             //this.dtpFecha.Text = Convert.ToDateTime(_currentRow["Fecha"]).ToShortDateString();
             this.slkupTipoImpuesto.ReadOnly = !Activo;
             this.chkActivo.ReadOnly = !Activo;
+            this.chkBonifica.ReadOnly = !Activo;
             this.chkEsControlado.ReadOnly = !Activo;
             this.chkEsEtico.ReadOnly = !Activo;
             this.chkEsMuestra.ReadOnly = !Activo;
@@ -353,6 +356,7 @@ namespace CI
                     _currentRow["EsControlado"] = this.chkEsControlado.EditValue;
                     _currentRow["EsEtico"] = this.chkEsEtico.EditValue;
                     _currentRow["Activo"] = this.chkActivo.EditValue;
+                    _currentRow["Bonifica"] = this.chkBonifica.EditValue;
                     _currentRow["UserInsert"] = sUsuario;
                     _currentRow["UserUpdate"] = sUsuario;
                     _currentRow["UpdateDate"] = DateTime.Now;
@@ -426,7 +430,8 @@ namespace CI
                     _currentRow["EsMuestra"] = this.chkEsMuestra.EditValue;
                     _currentRow["EsControlado"] = this.chkEsControlado.EditValue;
                     _currentRow["EsEtico"] = this.chkEsEtico.EditValue;
-                    _currentRow["Activo"] = this.chkActivo.EditValue;
+                    _currentRow["Activo"] = this.chkActivo.EditValue; 
+                    _currentRow["Bonifica"] = this.chkBonifica.EditValue;
                     _currentRow["UserInsert"] = sUsuario;
                     _currentRow["UserUpdate"] = sUsuario;
                     _currentRow["UpdateDate"] = DateTime.Now;
@@ -505,6 +510,7 @@ namespace CI
             this.slkupUnidadMedida.EditValue = null;
             this.slkupTipoImpuesto.EditValue = null;
             this.chkActivo.EditValue = true;
+            this.chkBonifica.EditValue = true;
             this.chkEsControlado.EditValue = false;
             this.chkEsMuestra.EditValue = false;
             this.chkEsEtico.EditValue = false;
@@ -704,6 +710,14 @@ namespace CI
         private void btnAddProveedor_Click(object sender, EventArgs e)
         {
             
+        }
+
+        private void slkupProveedor_EditValueChanged(object sender, EventArgs e)
+        {
+            if (this.Accion == "Edit" || this.Accion=="New") {
+                DataRowView dr = this.slkupProveedor.GetSelectedDataRow() as DataRowView;
+
+            }
         }
 
        

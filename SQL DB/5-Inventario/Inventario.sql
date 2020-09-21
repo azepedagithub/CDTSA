@@ -87,6 +87,7 @@ CREATE     TABLE  [dbo].[invProducto](
 	[EsControlado] BIT DEFAULT 0,
 	[EsEtico] BIT DEFAULT 0,
 	[Activo] [bit] NOT NULL DEFAULT 1,
+	[Bonifica][bit] NOT NULL DEFAULT 0,
 	[UserInsert] NVARCHAR(50) NULL,
 	[UserUpdate] NVARCHAR(50) NULL,
 	[CreateDate] [datetime] NOT NULL DEFAULT (GETDATE()),
@@ -1040,7 +1041,7 @@ GO
 
 CREATE  Procedure  [dbo].[invUpdateProducto] @Operacion nvarchar(1), @IDProducto BIGINT , @Descr nvarchar(250), @Alias nvarchar(20),
 @Clasif1 int, @Clasif2 INT, @Clasif3 INT ,@Clasif4 INT , @Clasif5 INT, @Clasif6 INT,@IDProveedor AS INT,@IDCuentaContable AS BIGINT, @CodigoBarra NVARCHAR(50),@IDUnidad INT,
-@FactorEmpaque DECIMAL(28,4), @TipoImpuesto INT, @EsMuestra BIT, @EsControlado BIT, @EsEtico BIT, @Activo BIT,@UserInsert NVARCHAR(50),@UserUpdate NVARCHAR(50),@UpdateDate DATETIME
+@FactorEmpaque DECIMAL(28,4), @TipoImpuesto INT, @EsMuestra BIT, @EsControlado BIT, @EsEtico BIT, @Activo BIT,@Bonifica BIT,@UserInsert NVARCHAR(50),@UserUpdate NVARCHAR(50),@UpdateDate DATETIME
 as
 set nocount on 
 
@@ -1054,9 +1055,9 @@ BEGIN
 	END
 
 	INSERT INTO dbo.invProducto( IDProducto, Descr ,Alias ,Clasif1 ,Clasif2 ,Clasif3 ,Clasif4 ,Clasif5 ,Clasif6 ,IDProveedor,IDCuentaContable,CodigoBarra ,IDUnidad ,FactorEmpaque ,TipoImpuesto ,
-	          EsMuestra ,EsControlado ,EsEtico ,Activo ,UserInsert ,UserUpdate  ,UpdateDate)
+	          EsMuestra ,EsControlado ,EsEtico ,Activo,Bonifica ,UserInsert ,UserUpdate  ,UpdateDate)
 	VALUES (@IDProducto, @Descr,@Alias,@Clasif1,@Clasif2,@Clasif3,@Clasif4,@Clasif5,@Clasif6,@IDProveedor,@IDCuentaContable,@CodigoBarra,@IDUnidad,@FactorEmpaque,@TipoImpuesto,
-		@EsMuestra,@EsControlado,@EsEtico,	@Activo,@UserInsert,@UserUpdate,@UpdateDate)
+		@EsMuestra,@EsControlado,@EsEtico,	@Activo,@Bonifica,@UserInsert,@UserUpdate,@UpdateDate)
 	
 		
 		INSERT INTO dbo.invLote( IDLote ,IDProducto ,LoteInterno ,LoteProveedor ,FechaVencimiento ,FechaFabricacion )
@@ -1099,7 +1100,7 @@ if upper(@Operacion) = 'U'
 BEGIN
 	UPDATE dbo.invProducto SET Descr=@Descr, Alias = @Alias,Clasif1=@Clasif1,Clasif2=@Clasif2,Clasif3=@Clasif3,Clasif4=@Clasif4,Clasif5=@Clasif5,Clasif6=@Clasif6,
 	IDProveedor=@IDProveedor,IDCuentaContable = @IDCuentaContable,CodigoBarra =@CodigoBarra,IDUnidad=@IDUnidad,FactorEmpaque=@FactorEmpaque,TipoImpuesto=@TipoImpuesto,EsMuestra=@EsMuestra,EsControlado=@EsControlado,
-	EsEtico=@EsEtico,Activo=@Activo,UserUpdate=@UserUpdate,UpdateDate=@UpdateDate
+	EsEtico=@EsEtico,Activo=@Activo,Bonifica =@Bonifica,UserUpdate=@UserUpdate,UpdateDate=@UpdateDate
 	WHERE IDProducto=@IDProducto
 	
 end
@@ -1112,7 +1113,7 @@ CREATE   PROCEDURE [dbo].[invGetProducto] @IDProducto BIgint	,@Descr AS NVARCHAR
 															@EsMuestra INT,@EsControlado INT,@EsEtico INT
 AS 
 	SELECT IDProducto,Descr ,Alias ,Clasif1 ,Clasif2 ,Clasif3 ,Clasif4 ,Clasif5 ,Clasif6 ,CodigoBarra,IDProveedor,IDCuentaContable ,IDUnidad ,FactorEmpaque ,TipoImpuesto ,
-	          EsMuestra ,EsControlado ,EsEtico , CostoUltLocal,CostoUltDolar,CostoPromLocal,CostoPromDolar,Activo ,UserInsert ,UserUpdate  ,UpdateDate,CreateDate 
+	          EsMuestra ,EsControlado ,EsEtico , CostoUltLocal,CostoUltDolar,CostoPromLocal,CostoPromDolar,Activo,Bonifica ,UserInsert ,UserUpdate  ,UpdateDate,CreateDate 
 	          FROM dbo.invProducto 
 	          WHERE (IDProducto=@IDProducto OR  @IDProducto=-1)
 	          AND (Clasif1 =@Clasif1 OR @Clasif1=-1) AND (Clasif2 =@Clasif2 OR @Clasif2=-1) AND (Clasif3 =@Clasif3 OR @Clasif3=-1)

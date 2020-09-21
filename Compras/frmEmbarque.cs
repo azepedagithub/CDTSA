@@ -188,7 +188,7 @@ namespace CO
                     fila["IDEmbarque"] = 0;
                     fila["IDProducto"] = row["IDProducto"];
                     fila["DescrProducto"] = row["DescrProducto"];
-                    //fila["Cantidad"] = row["Cantidad"];
+                    fila["Cantidad"] = row["Cantidad"];
                     this.dtDetalleEmbarque.Rows.Add(fila);
 
                 }

@@ -32,7 +32,7 @@ namespace CO.DAC
 
         public static long UpdateProveedor(String Operacion, long IDProveedor,String Nombre,String Ruc,bool Activo,String Alias,int IDPais,int IDMoneda,
             DateTime FechaIngreso,String Contacto,String Telefono,int IDCategoria,int IDCondicionPago,decimal PorcDescuento,decimal PorcInteresMora, 
-            string Email,string Direccion, bool Multimoneda, bool PagosCongelados, bool IsLocal,  SqlTransaction    oTran ){
+            string Email,string Direccion, bool Multimoneda, bool PagosCongelados, bool IsLocal, bool Bonifica, SqlTransaction    oTran ){
             long result = -1;
             String strSQL = "dbo.invUpdateProveedor";
 
@@ -59,6 +59,7 @@ namespace CO.DAC
             oCmd.Parameters.Add(new SqlParameter("@MultiMoneda", Multimoneda));
             oCmd.Parameters.Add(new SqlParameter("@PagosCongelados", PagosCongelados));
             oCmd.Parameters.Add(new SqlParameter("@IsLocal", IsLocal));
+            oCmd.Parameters.Add(new SqlParameter("@Bonifica", Bonifica));
             oCmd.CommandType = CommandType.StoredProcedure;
 
             oCmd.Transaction = oTran;
