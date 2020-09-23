@@ -47,11 +47,13 @@
             this.xtraTabControl1 = new DevExpress.XtraTab.XtraTabControl();
             this.tabLineas = new DevExpress.XtraTab.XtraTabPage();
             this.dtgLineasOrden = new DevExpress.XtraGrid.GridControl();
-            this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridViewEmbarque = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colIDProducto = new DevExpress.XtraGrid.Columns.GridColumn();
             this.DescrProd = new DevExpress.XtraGrid.Columns.GridColumn();
             this.Cantidad = new DevExpress.XtraGrid.Columns.GridColumn();
             this.tabDetalle = new DevExpress.XtraTab.XtraTabPage();
+            this.layoutControl2 = new DevExpress.XtraLayout.LayoutControl();
+            this.btnRellenar = new DevExpress.XtraEditors.SimpleButton();
             this.dtgDetalleEmbarque = new DevExpress.XtraGrid.GridControl();
             this.gridViewDetalleEmbarque = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -61,6 +63,11 @@
             this.slkupDescrProducto = new DevExpress.XtraEditors.Repository.RepositoryItemSearchLookUpEdit();
             this.gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.gridColumn3 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colCantAceptada = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.layoutControlGroup2 = new DevExpress.XtraLayout.LayoutControlGroup();
+            this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
             this.txtProveedor = new DevExpress.XtraEditors.TextEdit();
             this.txtEmbarque = new DevExpress.XtraEditors.TextEdit();
             this.txtOrdenCompra = new DevExpress.XtraEditors.TextEdit();
@@ -77,13 +84,6 @@
             this.emptySpaceItem4 = new DevExpress.XtraLayout.EmptySpaceItem();
             this.layoutControlItem13 = new DevExpress.XtraLayout.LayoutControlItem();
             this.emptySpaceItem7 = new DevExpress.XtraLayout.EmptySpaceItem();
-            this.colCantAceptada = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.btnRellenar = new DevExpress.XtraEditors.SimpleButton();
-            this.layoutControl2 = new DevExpress.XtraLayout.LayoutControl();
-            this.layoutControlGroup2 = new DevExpress.XtraLayout.LayoutControlGroup();
-            this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
@@ -96,14 +96,20 @@
             this.xtraTabControl1.SuspendLayout();
             this.tabLineas.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtgLineasOrden)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewEmbarque)).BeginInit();
             this.tabDetalle.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControl2)).BeginInit();
+            this.layoutControl2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtgDetalleEmbarque)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridViewDetalleEmbarque)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.slkupIDProducto)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSearchLookUpEdit1View)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.slkupDescrProducto)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtProveedor.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEmbarque.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtOrdenCompra.Properties)).BeginInit();
@@ -120,12 +126,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem13)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControl2)).BeginInit();
-            this.layoutControl2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).BeginInit();
             this.SuspendLayout();
             // 
             // ribbonControl1
@@ -308,23 +308,23 @@
             // 
             this.dtgLineasOrden.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dtgLineasOrden.Location = new System.Drawing.Point(0, 0);
-            this.dtgLineasOrden.MainView = this.gridView1;
+            this.dtgLineasOrden.MainView = this.gridViewEmbarque;
             this.dtgLineasOrden.MenuManager = this.ribbonControl1;
             this.dtgLineasOrden.Name = "dtgLineasOrden";
             this.dtgLineasOrden.Size = new System.Drawing.Size(810, 285);
             this.dtgLineasOrden.TabIndex = 0;
             this.dtgLineasOrden.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.gridView1});
+            this.gridViewEmbarque});
             // 
-            // gridView1
+            // gridViewEmbarque
             // 
-            this.gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.gridViewEmbarque.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colIDProducto,
             this.DescrProd,
             this.Cantidad});
-            this.gridView1.GridControl = this.dtgLineasOrden;
-            this.gridView1.Name = "gridView1";
-            this.gridView1.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.True;
+            this.gridViewEmbarque.GridControl = this.dtgLineasOrden;
+            this.gridViewEmbarque.Name = "gridViewEmbarque";
+            this.gridViewEmbarque.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.True;
             // 
             // colIDProducto
             // 
@@ -359,6 +359,29 @@
             this.tabDetalle.Name = "tabDetalle";
             this.tabDetalle.Size = new System.Drawing.Size(810, 285);
             this.tabDetalle.Text = "Detalle del Embarque";
+            // 
+            // layoutControl2
+            // 
+            this.layoutControl2.Controls.Add(this.btnRellenar);
+            this.layoutControl2.Controls.Add(this.dtgDetalleEmbarque);
+            this.layoutControl2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.layoutControl2.Location = new System.Drawing.Point(0, 0);
+            this.layoutControl2.Name = "layoutControl2";
+            this.layoutControl2.Root = this.layoutControlGroup2;
+            this.layoutControl2.Size = new System.Drawing.Size(810, 285);
+            this.layoutControl2.TabIndex = 3;
+            this.layoutControl2.Text = "layoutControl2";
+            // 
+            // btnRellenar
+            // 
+            this.btnRellenar.Image = ((System.Drawing.Image)(resources.GetObject("btnRellenar.Image")));
+            this.btnRellenar.Location = new System.Drawing.Point(12, 12);
+            this.btnRellenar.Name = "btnRellenar";
+            this.btnRellenar.Size = new System.Drawing.Size(76, 22);
+            this.btnRellenar.StyleController = this.layoutControl2;
+            this.btnRellenar.TabIndex = 2;
+            this.btnRellenar.Text = "Rellenar";
+            this.btnRellenar.Click += new System.EventHandler(this.btnRellenar_Click);
             // 
             // dtgDetalleEmbarque
             // 
@@ -446,6 +469,54 @@
             this.gridColumn3.Visible = true;
             this.gridColumn3.VisibleIndex = 2;
             this.gridColumn3.Width = 131;
+            // 
+            // colCantAceptada
+            // 
+            this.colCantAceptada.Caption = "Cant Aceptada";
+            this.colCantAceptada.FieldName = "CantidadAceptada";
+            this.colCantAceptada.Name = "colCantAceptada";
+            this.colCantAceptada.Visible = true;
+            this.colCantAceptada.VisibleIndex = 3;
+            this.colCantAceptada.Width = 167;
+            // 
+            // layoutControlGroup2
+            // 
+            this.layoutControlGroup2.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
+            this.layoutControlGroup2.GroupBordersVisible = false;
+            this.layoutControlGroup2.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.layoutControlItem3,
+            this.layoutControlItem8,
+            this.emptySpaceItem2});
+            this.layoutControlGroup2.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlGroup2.Name = "layoutControlGroup2";
+            this.layoutControlGroup2.Size = new System.Drawing.Size(810, 285);
+            this.layoutControlGroup2.TextVisible = false;
+            // 
+            // layoutControlItem3
+            // 
+            this.layoutControlItem3.Control = this.dtgDetalleEmbarque;
+            this.layoutControlItem3.Location = new System.Drawing.Point(0, 26);
+            this.layoutControlItem3.Name = "layoutControlItem3";
+            this.layoutControlItem3.Size = new System.Drawing.Size(790, 239);
+            this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItem3.TextVisible = false;
+            // 
+            // layoutControlItem8
+            // 
+            this.layoutControlItem8.Control = this.btnRellenar;
+            this.layoutControlItem8.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlItem8.Name = "layoutControlItem8";
+            this.layoutControlItem8.Size = new System.Drawing.Size(80, 26);
+            this.layoutControlItem8.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItem8.TextVisible = false;
+            // 
+            // emptySpaceItem2
+            // 
+            this.emptySpaceItem2.AllowHotTrack = false;
+            this.emptySpaceItem2.Location = new System.Drawing.Point(80, 0);
+            this.emptySpaceItem2.Name = "emptySpaceItem2";
+            this.emptySpaceItem2.Size = new System.Drawing.Size(710, 26);
+            this.emptySpaceItem2.TextSize = new System.Drawing.Size(0, 0);
             // 
             // txtProveedor
             // 
@@ -605,77 +676,6 @@
             this.emptySpaceItem7.Size = new System.Drawing.Size(356, 17);
             this.emptySpaceItem7.TextSize = new System.Drawing.Size(0, 0);
             // 
-            // colCantAceptada
-            // 
-            this.colCantAceptada.Caption = "Cant Aceptada";
-            this.colCantAceptada.FieldName = "CantidadAceptada";
-            this.colCantAceptada.Name = "colCantAceptada";
-            this.colCantAceptada.Visible = true;
-            this.colCantAceptada.VisibleIndex = 3;
-            this.colCantAceptada.Width = 167;
-            // 
-            // btnRellenar
-            // 
-            this.btnRellenar.Image = ((System.Drawing.Image)(resources.GetObject("btnRellenar.Image")));
-            this.btnRellenar.Location = new System.Drawing.Point(12, 12);
-            this.btnRellenar.Name = "btnRellenar";
-            this.btnRellenar.Size = new System.Drawing.Size(76, 22);
-            this.btnRellenar.StyleController = this.layoutControl2;
-            this.btnRellenar.TabIndex = 2;
-            this.btnRellenar.Text = "Rellenar";
-            this.btnRellenar.Click += new System.EventHandler(this.btnRellenar_Click);
-            // 
-            // layoutControl2
-            // 
-            this.layoutControl2.Controls.Add(this.btnRellenar);
-            this.layoutControl2.Controls.Add(this.dtgDetalleEmbarque);
-            this.layoutControl2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layoutControl2.Location = new System.Drawing.Point(0, 0);
-            this.layoutControl2.Name = "layoutControl2";
-            this.layoutControl2.Root = this.layoutControlGroup2;
-            this.layoutControl2.Size = new System.Drawing.Size(810, 285);
-            this.layoutControl2.TabIndex = 3;
-            this.layoutControl2.Text = "layoutControl2";
-            // 
-            // layoutControlGroup2
-            // 
-            this.layoutControlGroup2.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
-            this.layoutControlGroup2.GroupBordersVisible = false;
-            this.layoutControlGroup2.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.layoutControlItem3,
-            this.layoutControlItem8,
-            this.emptySpaceItem2});
-            this.layoutControlGroup2.Location = new System.Drawing.Point(0, 0);
-            this.layoutControlGroup2.Name = "layoutControlGroup2";
-            this.layoutControlGroup2.Size = new System.Drawing.Size(810, 285);
-            this.layoutControlGroup2.TextVisible = false;
-            // 
-            // layoutControlItem3
-            // 
-            this.layoutControlItem3.Control = this.dtgDetalleEmbarque;
-            this.layoutControlItem3.Location = new System.Drawing.Point(0, 26);
-            this.layoutControlItem3.Name = "layoutControlItem3";
-            this.layoutControlItem3.Size = new System.Drawing.Size(790, 239);
-            this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem3.TextVisible = false;
-            // 
-            // layoutControlItem8
-            // 
-            this.layoutControlItem8.Control = this.btnRellenar;
-            this.layoutControlItem8.Location = new System.Drawing.Point(0, 0);
-            this.layoutControlItem8.Name = "layoutControlItem8";
-            this.layoutControlItem8.Size = new System.Drawing.Size(80, 26);
-            this.layoutControlItem8.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem8.TextVisible = false;
-            // 
-            // emptySpaceItem2
-            // 
-            this.emptySpaceItem2.AllowHotTrack = false;
-            this.emptySpaceItem2.Location = new System.Drawing.Point(80, 0);
-            this.emptySpaceItem2.Name = "emptySpaceItem2";
-            this.emptySpaceItem2.Size = new System.Drawing.Size(710, 26);
-            this.emptySpaceItem2.TextSize = new System.Drawing.Size(0, 0);
-            // 
             // frmEmbarque
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -700,14 +700,20 @@
             this.xtraTabControl1.ResumeLayout(false);
             this.tabLineas.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dtgLineasOrden)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewEmbarque)).EndInit();
             this.tabDetalle.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControl2)).EndInit();
+            this.layoutControl2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dtgDetalleEmbarque)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridViewDetalleEmbarque)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.slkupIDProducto)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSearchLookUpEdit1View)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.slkupDescrProducto)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtProveedor.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEmbarque.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtOrdenCompra.Properties)).EndInit();
@@ -724,12 +730,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem13)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControl2)).EndInit();
-            this.layoutControl2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -750,7 +750,7 @@
         private DevExpress.XtraTab.XtraTabControl xtraTabControl1;
         private DevExpress.XtraTab.XtraTabPage tabLineas;
         private DevExpress.XtraGrid.GridControl dtgLineasOrden;
-        private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridViewEmbarque;
         private DevExpress.XtraEditors.TextEdit txtProveedor;
         private DevExpress.XtraEditors.TextEdit txtEmbarque;
         private DevExpress.XtraEditors.TextEdit txtOrdenCompra;

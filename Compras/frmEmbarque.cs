@@ -116,9 +116,9 @@ namespace CO
                 this.dtpFechaEmbarque.ReadOnly = false;
                 
                 
-                this.gridView1.OptionsBehavior.ReadOnly = false;
-                this.gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
-                this.gridView1.OptionsBehavior.AllowDeleteRows =  DevExpress.Utils.DefaultBoolean.True;
+                this.gridViewEmbarque.OptionsBehavior.ReadOnly = false;
+                this.gridViewEmbarque.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
+                this.gridViewEmbarque.OptionsBehavior.AllowDeleteRows =  DevExpress.Utils.DefaultBoolean.True;
 
                 
                 this.gridViewDetalleEmbarque.OptionsBehavior.ReadOnly = false;
@@ -131,9 +131,9 @@ namespace CO
                 this.dtpFechaEmbarque.ReadOnly = true;
                 
 
-                this.gridView1.OptionsBehavior.ReadOnly = true;
-                this.gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
-                this.gridView1.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False;
+                this.gridViewEmbarque.OptionsBehavior.ReadOnly = true;
+                this.gridViewEmbarque.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
+                this.gridViewEmbarque.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False;
 
                 this.gridView2.OptionsBehavior.ReadOnly = true;
                 this.gridView2.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
@@ -504,6 +504,10 @@ namespace CO
         {
             try
             {
+                //Aceptar los cambios de la grid
+                
+                this.gridViewDetalleEmbarque.PostEditor();
+                
                 if (ValidarDatos())
                 {
                     Fecha = Convert.ToDateTime(this.dtpFecha.EditValue);

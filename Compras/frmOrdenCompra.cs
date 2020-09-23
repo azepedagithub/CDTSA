@@ -31,14 +31,14 @@ namespace CO
         DateTime FechaOrden, FechaRequerida, FechaRequeridaEmbarque, FechaCotizacion, FechaEmision, FechaFactura;
         int IDEstado, IDProveedor, IDBodega, IDCondicionPago, IDMoneda;
         Decimal Descuento, Flete, Seguro, Documentacion, Anticipos, ImpuestoVenta, ImpuestoConsumo, MontoFactura;
-        String NumFactura, Notas, OrdenCompra;
+        String  OrdenCompra;
         String sUsuario = (UsuarioDAC._DS.Tables.Count > 0) ? UsuarioDAC._DS.Tables[0].Rows[0]["Usuario"].ToString() : "azepeda";
         DataTable dtDetalleOrden = new DataTable();
         DataTable dtProductos = new DataTable();
         DataTable dtOrdenCompra = new DataTable();
         private string Accion = "Add";
         bool bEditPorcDesc, bEditMontoDesc;
-        int? IDSolicitud;
+        
 
         DataTable _dtImportacionDetallada = new DataTable();
         DataTable _dtImportacionConsolidada = new DataTable();
@@ -163,7 +163,6 @@ namespace CO
                 this.txtSeguro.ReadOnly = false;
                 this.txtDocumentacion.ReadOnly = false;
                 this.txtAnticipos.ReadOnly = false;
-                //this.cmbTipoProrrateo.ReadOnly = false;
                 this.txtFactura.ReadOnly = false;
                 this.slkupSubTipo.ReadOnly = false;
                 this.dtpFechaFactura.ReadOnly = false;
@@ -195,7 +194,6 @@ namespace CO
                 this.txtSeguro.ReadOnly = true;
                 this.txtDocumentacion.ReadOnly = true;
                 this.txtAnticipos.ReadOnly = true;
-                //this.cmbTipoProrrateo.ReadOnly = true;
                 this.txtFactura.ReadOnly = true;
                 this.slkupSubTipo.ReadOnly = true;
                 this.dtpFechaFactura.ReadOnly = true;
@@ -223,7 +221,6 @@ namespace CO
             {
                 this.btnConfirmar.Enabled = true;
                 this.btnDesconfirmar.Enabled = false;
-                //this.btnImportarSolicitudes.Enabled = true;
                 this.btnAnular.Enabled = false;
                 this.btnEmbarque.Enabled = false;
             }
@@ -232,7 +229,6 @@ namespace CO
             {
                 this.btnConfirmar.Enabled = false;
                 this.btnDesconfirmar.Enabled = true;
-               // this.btnImportarSolicitudes.Enabled = false;
                 this.btnAnular.Enabled = true;
                 this.btnEmbarque.Enabled = true;
             }
@@ -463,19 +459,17 @@ namespace CO
 
         void gridView1_InitNewRow(object sender, DevExpress.XtraGrid.Views.Grid.InitNewRowEventArgs e)
         {
-            DevExpress.XtraGrid.Views.Grid.GridView view = sender as DevExpress.XtraGrid.Views.Grid.GridView;
-            try
-            {
-                if (view == null) return;
-                DataRow fila = view.GetDataRow(e.RowHandle);
-                fila["IsLoadFromSolicitud"] = false;
-
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            //DevExpress.XtraGrid.Views.Grid.GridView view = sender as DevExpress.XtraGrid.Views.Grid.GridView;
+            //try
+            //{
+            //    if (view == null) return;
+            //    DataRow fila = view.GetDataRow(e.RowHandle);
+                
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
         }
 
 
@@ -702,6 +696,8 @@ namespace CO
         {
             try
             {
+                
+                
                 if (ValidarDatos())
                 {
                     FechaOrden = Convert.ToDateTime(this.dtpFechaOrden.EditValue);
@@ -734,7 +730,7 @@ namespace CO
 
                         //Ingresar la cabecera de la solicitud
                         IDOrdenCompra = DAC.clsOrdenCompraDAC.InsertUpdate("I", IDOrdenCompra, ref OrdenCompra, FechaOrden, FechaRequerida, FechaEmision,
-                                                                        FechaRequeridaEmbarque, FechaCotizacion, IDEstado,IDSolicitud, IDBodega,
+                                                                        FechaRequeridaEmbarque, FechaCotizacion, IDEstado, IDBodega,
                                                                         IDProveedor, IDMoneda, IDCondicionPago, Descuento, Flete, Seguro,
                                                                         Documentacion, Anticipos, -1, -1, 33, sUsuario, "", Convert.ToDateTime("1981/08/21"), "", Convert.ToDateTime("1981/08/21"), DateTime.Now, sUsuario, DateTime.Now, sUsuario, ConnectionManager.Tran);
                         this.txtOrdenCompra.Text = OrdenCompra;
@@ -754,7 +750,7 @@ namespace CO
                     if (Accion == "Edit")
                     {
                         DAC.clsOrdenCompraDAC.InsertUpdate("U", IDOrdenCompra, ref OrdenCompra, FechaOrden, FechaRequerida, FechaEmision,
-                                                                        FechaRequeridaEmbarque, FechaCotizacion, IDEstado,IDSolicitud, IDBodega,
+                                                                        FechaRequeridaEmbarque, FechaCotizacion, IDEstado, IDBodega,
                                                                         IDProveedor, IDMoneda, IDCondicionPago, Descuento, Flete, Seguro,
                                                                         Documentacion, Anticipos, -1, -1, 33, sUsuario, "", Convert.ToDateTime("1981/08/21"), "", Convert.ToDateTime("1981/08/21"), DateTime.Now, sUsuario, DateTime.Now, sUsuario, ConnectionManager.Tran);
                         //Eliminamos el detalle y lo volvemos a insertar
@@ -811,7 +807,7 @@ namespace CO
                     if (IDOrdenCompra > -1)
                     {
                         ConnectionManager.BeginTran();
-                        clsOrdenCompraDAC.InsertUpdate("D", IDOrdenCompra, ref OrdenCompra, DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now, -1,null, -1, -1, -1, -1, 0, 0, 0, 0, 0, -1, -1, 0, "", "", DateTime.Now, "", DateTime.Now, DateTime.Now, "", DateTime.Now, "", ConnectionManager.Tran);
+                        clsOrdenCompraDAC.InsertUpdate("D", IDOrdenCompra, ref OrdenCompra, DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, -1, -1, 0, "", "", DateTime.Now, "", DateTime.Now, DateTime.Now, "", DateTime.Now, "", ConnectionManager.Tran);
                         clsOrdenCompraDetalleDAC.InsertUpdate("D", IDOrdenCompra, -1, 0, 0, 0, 0, 0, 0,
                                                         0, 0, "", ConnectionManager.Tran);
                         ConnectionManager.CommitTran();
@@ -1020,7 +1016,7 @@ namespace CO
                         MontoDesc = (Cantidad * cellValue) * (PorcDesc / 100);
                         view.SetRowCellValue(e.RowHandle, "MontoDesc", MontoDesc);
                     }
-                decimal Monto = ((Cantidad * cellValue) + cellValue) - MontoDesc;
+                decimal Monto = ((Cantidad * Precio) + cellValue) - MontoDesc;
                 view.SetRowCellValue(e.RowHandle, "Monto", Monto);
 
              
@@ -1045,17 +1041,6 @@ namespace CO
                 view.SetRowCellValue(e.RowHandle, "Monto", Monto);
 
 
-
-                //if (view.GetRowCellValue(e.RowHandle, view.Columns[3]).ToString() == "" || view.GetRowCellValue(e.RowHandle, view.Columns[2]).ToString() == "") return;
-                //decimal cellValue = (e.Value.ToString() == "") ? 0 : Convert.ToDecimal(e.Value);
-
-                //decimal Precio = Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[3]));
-                //decimal Cantidad = Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[2]));
-                //decimal MontoDesc = (cellValue / 100) * (Precio * Cantidad);
-                //decimal Monto = (Cantidad * Precio) - MontoDesc;
-                //view.SetRowCellValue(e.RowHandle, "MontoDesc", MontoDesc);
-                //view.SetRowCellValue(e.RowHandle, "Monto", Monto);
-
             }
             if (e.Column.FieldName == "MontoDesc" && bEditMontoDesc) // || view.GetRowCellValue(e.RowHandle, view.Columns[6]).ToString() == "")
             {
@@ -1072,17 +1057,7 @@ namespace CO
                 decimal Monto = ((Cantidad * Precio) + Impuesto) - cellValue;
                 view.SetRowCellValue(e.RowHandle, "Monto", Monto);
 
-                //if (view.GetRowCellValue(e.RowHandle, view.Columns[3]).ToString() == "" || view.GetRowCellValue(e.RowHandle, view.Columns[2]).ToString() == "") return;
-                //decimal cellValue = (e.Value.ToString() == "") ? 0 : Convert.ToDecimal(e.Value);
-
-                //decimal Precio = Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[3]));
-                //decimal Cantidad = Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[2]));
-
-                //decimal PorcDesc = (cellValue / (Precio * Cantidad)) * 100;
-                //decimal Monto = (Precio * Cantidad) - cellValue;
-                //view.SetRowCellValue(e.RowHandle, "PorcDesc", PorcDesc);
-                //view.SetRowCellValue(e.RowHandle, "Monto", Monto);
-
+                
 
             }
 
@@ -1109,63 +1084,7 @@ namespace CO
 
         }
 
-        //private void simpleButton1_Click(object sender, EventArgs e)
-        //{
-        //    if (this.slkupProveedor.EditValue != null)
-        //    {
-        //        frmImportarSolicitudCompra ofrmImportarSolicitud = new frmImportarSolicitudCompra(Convert.ToInt32(this.slkupProveedor.EditValue));
-        //        ofrmImportarSolicitud.FormClosed += ofrmImportarSolicitud_FormClosed;
-        //        ofrmImportarSolicitud.ShowDialog();
-        //    }
-        //    else {
-        //        MessageBox.Show("Por favor seleccione el proveedor para poder importar una solicitud de Compra");
-        //    }
-        //}
-
-
-
-        //void ofrmImportarSolicitud_FormClosed(object sender, FormClosedEventArgs e)
-        //{
-        //    //consolidar las lineas de productos.
-        //    frmImportarSolicitudCompra ofrmImport = (frmImportarSolicitudCompra)sender;
-        //    if (ofrmImport.DialogResult == System.Windows.Forms.DialogResult.OK)
-        //    {
-
-               
-
-        //            _dtImportacionDetallada = ofrmImport.GetSolicitudesSeleccionadas().AsEnumerable().Where(a => Convert.ToDecimal(a["CantOrdenada"]) > 0).CopyToDataTable();
-
-        //            _dtImportacionConsolidada = _dtImportacionDetallada.AsEnumerable().
-        //                     Where(a => Convert.ToDecimal(a["CantOrdenada"]) > 0).
-        //                     GroupBy(r => new { IDProdcuto = r["IDProducto"], DescrProducto = r["DescrProducto"] }).
-        //                     Select(g =>
-        //                        {
-        //                            var row = _dtImportacionDetallada.NewRow();
-        //                            row["Cantidad"] = g.Sum(r => Convert.ToDecimal(r["CantOrdenada"]));
-        //                            row["IDProducto"] = g.Key.IDProdcuto;
-        //                            row["DescrProducto"] = g.Key.DescrProducto;
-
-        //                            return row;
-        //                        }
-        //                     ).CopyToDataTable();
-
-        //            foreach (DataRow fila in _dtImportacionConsolidada.Rows)
-        //            {
-        //                DataRow nuevaFila = this.dtDetalleOrden.NewRow();
-        //                nuevaFila["IDProducto"] = fila["IDProducto"];
-        //                nuevaFila["DescrProducto"] = fila["DescrProducto"];
-        //                nuevaFila["Cantidad"] = fila["Cantidad"];
-        //                //nuevaFila["IsLoadFromSolicitud"] = 1;
-        //                this.dtDetalleOrden.Rows.InsertAt(nuevaFila, 0);
-        //                //this.dtDetalleOrden.Rows.Add(fila);
-        //            }
-        //            CalcularMontosOrden();
-               
-        //    }
-
-        //}
-
-
+        
 
         private void btnEliminarLinea_Click(object sender, EventArgs e)
         {
@@ -1182,11 +1101,7 @@ namespace CO
                 if (MessageBox.Show("Esta seguro que desea eliminar el elemento seleccionado?", "Asiento de Diario", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
                 {
                     DataRow dr = view.GetDataRow(view.GetSelectedRows().First());
-                    if (Convert.ToBoolean(dr["IsLoadFromSolicitud"]))
-                    {
-                        _dtImportacionDetallada.AsEnumerable().Where(a => a.Field<long>("IDProducto") == Convert.ToInt64(dr["IDProducto"])).LastOrDefault().Delete();
-                        _dtImportacionConsolidada.AsEnumerable().Where(a => a.Field<long>("IDProducto") == Convert.ToInt64(dr["IDProducto"])).ToList().ForEach(a => a.Delete());
-                    }
+                    
                     view.DeleteSelectedRows();
                     //dtDetalleOrden.AcceptChanges();
                     e.Handled = true;
@@ -1296,7 +1211,6 @@ namespace CO
                     nuevaFila["Comentario"] = fila["Comentario"];
                     nuevaFila["Impuesto"] = fila["Impuesto"];
                     nuevaFila["Monto"] = fila["Monto"];
-                    nuevaFila["IsLoadFromSolicitud"] = 0;
                     this.dtDetalleOrden.Rows.InsertAt(nuevaFila, 0);
                     
                 }

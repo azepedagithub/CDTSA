@@ -810,7 +810,7 @@ GO
 CREATE   PROCEDURE dbo.coGetOrdenCompraDetalle(@IDOrdenCompra AS int	)
 AS 
 SELECT A.IDOrdenCompra,A.IDProducto,P.Descr DescrProducto,A.Estado,E.Descr DescrEstado,A.Cantidad,A.CantidadAceptada,A.CantidadRechazada,
-A.Impuesto,A.MontoDesc,A.PorcDesc,A.PrecioUnitario,A.Comentario
+A.Impuesto,A.MontoDesc,A.PorcDesc,A.PrecioUnitario,((A.Cantidad*A.PrecioUnitario)+ Impuesto)-MontoDesc Monto,A.Comentario
   FROM dbo.coOrdenCompraDetalle A
 INNER JOIN dbo.invProducto P ON		A.IDProducto = P.IDProducto
 INNER JOIN dbo.coEstadoOrdenCompra E ON A.Estado=E.IDEstadoOrden
