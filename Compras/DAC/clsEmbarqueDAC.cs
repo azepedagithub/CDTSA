@@ -16,7 +16,7 @@ namespace CO.DAC
               DateTime CreateDate, String CreatedBy, DateTime RecordDate, String UpdateBy, SqlTransaction tran)
         {
             long result = -1;
-            String strSQL = "dbo.invUpdateEmbaque";
+            String strSQL = "dbo.coUpdateEmbaque";
 
             SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
 
@@ -60,7 +60,7 @@ namespace CO.DAC
         public static long CrearPaqueteInventario(string Modulo, long IDDocumento, String Usuario,ref long IDTransaccion , SqlTransaction tran)
         {
             long result = -1;
-            String strSQL = "dbo.invCreaPaqueteEmbarque";
+            String strSQL = "dbo.coCreaPaqueteEmbarque";
 
             SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
 
@@ -87,7 +87,7 @@ namespace CO.DAC
         public static long GeneraAsientoContable(string Modulo, long IDDocumento, String Usuario, ref string Asiento, SqlTransaction tran)
         {
             long result = -1;
-            String strSQL = "dbo.invGeneraAsientoContableEmbarque";
+            String strSQL = "dbo.coGeneraAsientoContableEmbarque";
 
             SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
 
@@ -115,7 +115,7 @@ namespace CO.DAC
         public static DataSet Get(int IDEmbarque, DateTime FechaInicial, DateTime FechaFinal, int IDProveedor,
                                 int IDSolicitud, string OrdenCompra,string Embarque ,int IDDocumentoCP)
         {
-            String strSQL = "dbo.invGetEmbarque";
+            String strSQL = "dbo.coGetEmbarque";
 
             SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
 
@@ -138,7 +138,7 @@ namespace CO.DAC
 
         public static DataSet GetByID(long IDEmbarque, long IDOrdenCompra)
         {
-            String strSQL = "dbo.invGetEmbarqueByID";
+            String strSQL = "dbo.coGetEmbarqueByID";
 
             SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
 
@@ -151,6 +151,40 @@ namespace CO.DAC
 
             oAdap.Fill(DS, "Data");
             return DS;
+        }
+
+
+        public static long SetEmbarqueToTransito(int IDEmbarque, SqlTransaction tran)
+        {
+            long result = -1;
+            String strSQL = "dbo.coSetEmbarqueToTransito";
+
+            SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
+
+            oCmd.Parameters.Add(new SqlParameter("@IDEmbarque", IDEmbarque));
+            oCmd.CommandType = CommandType.StoredProcedure;
+            oCmd.Transaction = tran;
+            result = oCmd.ExecuteNonQuery();
+
+            return result;
+
+        }
+
+
+        public static long UnSetEmbarqueToTransito(int IDEmbarque, SqlTransaction tran)
+        {
+            long result = -1;
+            String strSQL = "dbo.coUnSetEmbarqueToTransito";
+
+            SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
+
+            oCmd.Parameters.Add(new SqlParameter("@IDEmbarque", IDEmbarque));
+            oCmd.CommandType = CommandType.StoredProcedure;
+            oCmd.Transaction = tran;
+            result = oCmd.ExecuteNonQuery();
+
+            return result;
+
         }
     }
 }

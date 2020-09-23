@@ -19,7 +19,7 @@ namespace CO.DAC
                         bool CanViewAsiento , SqlTransaction tran)
         {
             long result = -1;
-            String strSQL = "dbo.invUpdateParametrosCompra";
+            String strSQL = "dbo.coUpdateParametrosCompra";
 
             SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
 
@@ -53,7 +53,7 @@ namespace CO.DAC
 
         public static DataSet Get()
         {
-            String strSQL = "dbo.invGetParametrosCompra";
+            String strSQL = "dbo.coGetParametrosCompra";
 
             SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
 

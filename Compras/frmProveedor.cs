@@ -279,7 +279,7 @@ namespace CO
                     try
                     {
                         ConnectionManager.BeginTran();
-                        DAC.clsProveedorDAC.UpdateProveedor("D",(long)this.txtIDProveedor.EditValue,"","",false,"",-1,-1,DateTime.Now,"","",-1,-1,0,0,"","",false,false,false,ConnectionManager.Tran);
+                        DAC.clsProveedorDAC.UpdateProveedor("D",(long)this.txtIDProveedor.EditValue,"","",false,"",-1,-1,DateTime.Now,"","",-1,-1,0,0,"","",false,false,false,false,ConnectionManager.Tran);
                         ConnectionManager.CommitTran();
                     }
                             

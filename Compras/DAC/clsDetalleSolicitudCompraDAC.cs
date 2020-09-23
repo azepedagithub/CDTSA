@@ -15,7 +15,7 @@ namespace CO.DAC
         public static long InsertUpdate(string Operacion, int IDSolicitud, long IDProducto,decimal Cantidad,String Comentario, SqlTransaction tran)
         {
             long result = -1;
-            String strSQL = "dbo.invUpdateDetalleSolicitud";
+            String strSQL = "dbo.coUpdateDetalleSolicitud";
 
             SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
 
@@ -35,7 +35,7 @@ namespace CO.DAC
         
         public static DataSet Get(int IDSolicitud)
         {
-                String strSQL = "dbo.invGetSolicitudCompraDetalle";
+                String strSQL = "dbo.coGetSolicitudCompraDetalle";
 
                 SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
 

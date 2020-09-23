@@ -13,7 +13,7 @@ namespace CO.DAC
     {
         public static DataSet Get()
         {
-            String strSQL = "SELECT IDEstadoOrden,Descr  FROM dbo.invEstadoOrdenCompra WHERE Activo=1";
+            String strSQL = "SELECT IDEstadoOrden,Descr  FROM dbo.coEstadoOrdenCompra WHERE Activo=1";
 
             SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
 

@@ -16,7 +16,7 @@ namespace CO.DAC
                         int IDEstado,String Comentario,SqlTransaction tran)
         {
             long result = -1;
-            String strSQL = "dbo.invUpdateOrdenCompraDetalle";
+            String strSQL = "dbo.coUpdateOrdenCompraDetalle";
 
             SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
 
@@ -46,7 +46,7 @@ namespace CO.DAC
         public static bool UpdateCantidadRecibida(long IDOrdenCompra, long IDProducto, decimal Cantidad, SqlTransaction tran)
         {
             bool result = false ;
-            String strSQL = "dbo.invUpdateCantRecibidaOrdenCompra";
+            String strSQL = "dbo.coUpdateCantRecibidaOrdenCompra";
 
             SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
 
@@ -66,7 +66,7 @@ namespace CO.DAC
 
         public static DataSet Get(long IDOrdenCompra)
         {
-            String strSQL = "dbo.invGetOrdenCompraDetalle";
+            String strSQL = "dbo.coGetOrdenCompraDetalle";
 
             SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
 
@@ -84,7 +84,7 @@ namespace CO.DAC
 
         public static DataSet GetEmptyImportExcel()
         {
-            String strSQL = "dbo.invGetOrdenCompraDetalleEmptyExcel";
+            String strSQL = "dbo.coGetOrdenCompraDetalleEmptyExcel";
 
             SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
 

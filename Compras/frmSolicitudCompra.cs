@@ -652,8 +652,8 @@ namespace CO
         private void btnRevertir_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             //Validar si la solicitud tiene ordenes asociadas
-            DataTable dt = DAC.clsSolicitudCompraDAC.GetSolicitudCompra_OrdenCompra(IDSolicitud, -1, -1).Tables[0];
-            if (dt.Rows.Count == 0)
+            bool bSolicitudesAsociadas = DAC.clsSolicitudCompraDAC.SolicitudTieneOrdenesAsociadas(IDSolicitud);
+            if (!bSolicitudesAsociadas)
             {
                 int Estado = 0;
                 FechaRequerida = Convert.ToDateTime(this.dtpFechaRequerida.EditValue);

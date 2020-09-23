@@ -25,7 +25,7 @@ namespace CO
 
         public long IDOrdenCompra,IDEmbarque;
         DateTime  FechaEmbarque, Fecha;
-        int IDEstado, IDProveedor,IDBodega;
+        int IDProveedor,IDBodega;
         String OrdenCompra,Embarque;
         String sUsuario = (UsuarioDAC._DS.Tables.Count > 0) ? UsuarioDAC._DS.Tables[0].Rows[0]["Usuario"].ToString() : "azepeda";
         DataTable dtDetalleOrden = new DataTable();
@@ -120,9 +120,10 @@ namespace CO
                 this.gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
                 this.gridView1.OptionsBehavior.AllowDeleteRows =  DevExpress.Utils.DefaultBoolean.True;
 
-                this.gridView2.OptionsBehavior.ReadOnly = false;
-                this.gridView2.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
-                this.gridView2.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.True;
+                
+                this.gridViewDetalleEmbarque.OptionsBehavior.ReadOnly = false;
+                this.gridViewDetalleEmbarque.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
+                this.gridViewDetalleEmbarque.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.True;
             }
             else
             {
@@ -137,6 +138,10 @@ namespace CO
                 this.gridView2.OptionsBehavior.ReadOnly = true;
                 this.gridView2.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
                 this.gridView2.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False;
+
+                this.gridViewDetalleEmbarque.OptionsBehavior.ReadOnly = true;
+                this.gridViewDetalleEmbarque.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
+                this.gridViewDetalleEmbarque.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False;
             }
 
             
@@ -177,6 +182,7 @@ namespace CO
             this.dtEmbarque = DAC.clsEmbarqueDAC.GetByID(IDEmbarque, IDOrdenCompra).Tables[0];
             
             
+            
             UpdateControlsFromData(dtEmbarque);
 
             if (IDEmbarque == -1 || this.dtDetalleEmbarque.Rows.Count == 0)
@@ -189,14 +195,16 @@ namespace CO
                     fila["IDProducto"] = row["IDProducto"];
                     fila["DescrProducto"] = row["DescrProducto"];
                     fila["Cantidad"] = row["Cantidad"];
+                    fila["CantidadAceptada"] = 0;
+
                     this.dtDetalleEmbarque.Rows.Add(fila);
 
                 }
                 dtDetalleEmbarque.AcceptChanges();
-                this.dtgLineasEmbarque.DataSource = dtDetalleEmbarque;
+                this.dtgDetalleEmbarque.DataSource = dtDetalleEmbarque;
             }
             else
-                this.dtgLineasEmbarque.DataSource = dtDetalleEmbarque;
+                this.dtgDetalleEmbarque.DataSource = dtDetalleEmbarque;
                                                                
             this.dtgLineasOrden.DataSource = dtDetalleOrden;
         }
@@ -219,7 +227,8 @@ namespace CO
                  
                   
                     this.dtgLineasOrden.DataSource = dtDetalleOrden;
-                    this.dtgLineasEmbarque.DataSource =dtDetalleEmbarque;
+                    //this.dtgLineasEmbarque.DataSource =dtDetalleEmbarque;
+                    this.dtgDetalleEmbarque.DataSource = dtDetalleEmbarque;
                 }
                 else
                 {
@@ -274,18 +283,7 @@ namespace CO
                 this.slkupIDProducto.EditValueChanged += slkup_EditValueProductoChanged;
                 this.slkupIDProducto.Popup += slkup_Popup;
                 //this.slkupIDProducto.PopulateViewColumns();
-            
-
-                
-                this.slkupLote.DisplayMember = "LoteProveedor";
-                this.slkupLote.ValueMember = "IDLote";
-                this.slkupLote.NullText = " --- ---";
-                this.slkupLote.DataSource = dtLotes;
-                this.slkupLote.BeforePopup += slkupLote_BeforePopup;
-                this.slkupLote.EditValueChanged += slkup_EditValueChanged;
-                this.slkupLote.Popup += slkup_Popup;
-
-
+    
                 this.slkupDescrProducto.DataSource = dtProductos;
                 this.slkupDescrProducto.DisplayMember = "Descr";
                 this.slkupDescrProducto.ValueMember = "IDProducto";
@@ -328,46 +326,9 @@ namespace CO
         }
 
 
-        private void slkup_EditValueChanged(object sender, EventArgs e)
-        {
-            SearchLookUpEdit editor = sender as SearchLookUpEdit;
-            DataRowView dr = (DataRowView)editor.GetSelectedDataRow();
+    
 
-            this.gridView2.PostEditor();
-            Fecha = Convert.ToDateTime(dr["FechaVencimiento"]);
-            this.gridView2.SetFocusedRowCellValue("FechaVencimiento", Fecha);
-
-            SendKeys.Send("{TAB}");
-        }
-
-
-        void gridView1_ValidatingEditor(object sender, DevExpress.XtraEditors.Controls.BaseContainerValidateEditorEventArgs e)
-        {
-            //if (this.gridView1.FocusedRowHandle == DevExpress.XtraGrid.GridControl.AutoFilterRowHandle)
-            //    return;
-
-            //DevExpress.XtraGrid.Views.Grid.GridView view = sender as DevExpress.XtraGrid.Views.Grid.GridView;
-            //DataView dataView = view.DataSource as DataView;
-            //System.Collections.IEnumerator en = dataView.GetEnumerator();
-
-            //en.Reset();
-
-            //string currentCode = e.Value.ToString();
-
-
-            //while (en.MoveNext())
-            //{
-            //    DataRowView row = en.Current as DataRowView;
-            //    object colValue = row["IDCentro"] + " " + row["IDCuenta"];
-            //    if (colValue.ToString() == currentCode)
-            //    {
-            //        e.ErrorText = "El elemento ya existe.";
-            //        e.Valid = false;
-            //        break;
-            //    }
-            //}
-        }
-
+       
         void dtgDetalleSolicitud_ProcessGridKey(object sender, KeyEventArgs e)
         {
             var grid = sender as GridControl;
@@ -452,18 +413,7 @@ namespace CO
 
 
 
-        private void gridView2_ShownEditor(object sender, EventArgs e)
-        {
-            ColumnView view = (ColumnView)sender;
-
-            if (view.FocusedColumn.FieldName == "IDLote" && view.ActiveEditor is SearchLookUpEdit && view.FocusedRowHandle >= 0)
-            {
-                SearchLookUpEdit edit = (SearchLookUpEdit)view.ActiveEditor;
-                long IDProducto = (long)view.GetFocusedRowCellValue("IDProducto");
-             
-                edit.Properties.DataSource = CI.DAC.clsLoteDAC.GetData(-1, IDProducto, "*", "*").Tables[0];
-            }
-        }
+      
 
 
         private void dtgDetalle_ProcessGridKey(object sender, KeyEventArgs e)
@@ -483,39 +433,7 @@ namespace CO
         }
 
 
-        private void gridView1_CellValueChanged(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
-        {
-            //GridView view = (GridView)sender;
-            //if (view == null) return;
-            //if (e.Column.FieldName == "IDLote")
-            //{
-                
-            //    view.SetRowCellValue(e.RowHandle, view.Columns[4], e.Value);
-            //    //long IDProducto = Convert.ToInt64(view.GetRowCellValue(e.RowHandle, view.Columns[0]));
-
-            //    //dtLotes= CI.DAC.clsLoteDAC.GetData(-1,IDProducto,"*","*").Tables[0];
-            //    //this.slkupLote.DataSource = dtLotes;
-            //    //this.slkupLote.DisplayMember = "IDLote";
-            //    //this.slkupLote.ValueMember = "LoteProveedor";
-            //    //this.slkupLote.NullText = " --- ---";
-            //    //this.slkupLote.EditValueChanged += slkup_EditValueChanged;
-            //    //this.slkupLote.Popup += slkup_Popup;
-            //    //this.slkupLote.PopulateViewColumns();
-
-            //    //DataTable dt = clsArticuloProveedorDAC.Get(IDProducto, IDProveedor).Tables[0];
-
-            //    //validar si el producto 
-            //}
-        }
-
-        private void gridView1_CellValueChanging(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
-        {
-            //if (e.Column.FieldName == "PorcDesc")
-            //{
-            //    bEditMontoDesc = false;
-            //    bEditPorcDesc = true;
-            //}
-        }
+     
 
         private void btnAddSolicitud_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
@@ -538,10 +456,10 @@ namespace CO
                 sMensaje = "   • Fecha \r\n";
             if (this.dtpFechaEmbarque.EditValue == null || this.dtpFechaEmbarque.EditValue.ToString() == "")
                 sMensaje = "   • Fecha Embarque \r\n";
-            
-            if (((DataTable)this.dtgLineasEmbarque.DataSource).Rows.Count == 0)
+
+            if (((DataTable)this.dtgDetalleEmbarque.DataSource).Rows.Count == 0)
                 sMensaje = sMensaje = "   • Por favor agrege al menos un elemento al detalle del embarque \r\n";
-            foreach (DataRow fila in ((DataTable)this.dtgLineasEmbarque.DataSource).Rows)
+            foreach (DataRow fila in ((DataTable)this.dtgDetalleEmbarque.DataSource).Rows)
             {
                 if (fila.RowState != DataRowState.Deleted)
                 {
@@ -551,28 +469,28 @@ namespace CO
                 }
             }
 
-            DataTable dtDetalle = ((DataTable)this.dtgLineasEmbarque.DataSource);
+            DataTable dtDetalle = ((DataTable)this.dtgDetalleEmbarque.DataSource);
 
-            DataTable _dtImportacionConsolidada = dtDetalle.AsEnumerable().
-                      GroupBy(r => new { IDProdcuto = r["IDProducto"] }).
-                      Select(g =>
-                      {
-                          var row = dtDetalle.NewRow();
-                          row["Cantidad"] = g.Sum(r => Convert.ToDecimal(r["Cantidad"]));
-                          row["IDProducto"] = g.Key.IDProdcuto;
-                          return row;
-                      }
-                      ).CopyToDataTable();
-            foreach (DataRow dr in _dtImportacionConsolidada.Rows) {
-                DataView dv = dtDetalleOrden.DefaultView;
-                dv.RowFilter = "IDProducto =" + dr["IDProducto"].ToString();
-                DataTable dtTemp = dv.ToTable();
-                if (Convert.ToDecimal(dr["Cantidad"]) != Convert.ToDecimal(dtTemp.Rows[0]["Cantidad"]))
-                {
-                    MessageBox.Show("Por favor verifique las cantidades del embarque deben de ser iguales a la orden de compra.");
-                    Resultado = false;
-                }
-            }
+            //DataTable _dtImportacionConsolidada = dtDetalle.AsEnumerable().
+            //          GroupBy(r => new { IDProdcuto = r["IDProducto"] }).
+            //          Select(g =>
+            //          {
+            //              var row = dtDetalle.NewRow();
+            //              row["Cantidad"] = g.Sum(r => Convert.ToDecimal(r["Cantidad"]));
+            //              row["IDProducto"] = g.Key.IDProdcuto;
+            //              return row;
+            //          }
+            //          ).CopyToDataTable();
+            //foreach (DataRow dr in _dtImportacionConsolidada.Rows) {
+            //    DataView dv = dtDetalleOrden.DefaultView;
+            //    dv.RowFilter = "IDProducto =" + dr["IDProducto"].ToString();
+            //    DataTable dtTemp = dv.ToTable();
+            //    if (Convert.ToDecimal(dr["Cantidad"]) != Convert.ToDecimal(dtTemp.Rows[0]["Cantidad"]))
+            //    {
+            //        MessageBox.Show("Por favor verifique las cantidades del embarque deben de ser iguales a la orden de compra.");
+            //        Resultado = false;
+            //    }
+            //}
             
             if (sMensaje != "")
             {
@@ -593,9 +511,9 @@ namespace CO
                     IDProveedor = Convert.ToInt32(this.txtProveedor.Tag);
                     //IDOrdenCompra = Convert.ToInt64(this.txtOrdenCompra.Tag);
                     Embarque = this.txtEmbarque.EditValue.ToString().Trim();
-                    IDBodega = Convert.ToInt32(this.txtBodega.Tag);                 
-                    
-                    DataTable dt = (DataTable)this.dtgLineasEmbarque.DataSource;
+                    IDBodega = Convert.ToInt32(this.txtBodega.Tag);
+
+                    DataTable dt = (DataTable)this.dtgDetalleEmbarque.DataSource;
 
                     ConnectionManager.BeginTran();
                     
@@ -612,7 +530,8 @@ namespace CO
                         {
                             if (row.RowState != DataRowState.Deleted)
                             {
-                                DAC.clsEmbarqueDetalleDAC.InsertUpdate("I", IDEmbarque, (long)row["IDProducto"], (int)row["IDLote"], (decimal)row["Cantidad"], 0, 0, "", ConnectionManager.Tran);
+                                decimal CantidadRechazada = (decimal)row["Cantidad"] - (decimal)row["CantidadAceptada"];
+                                DAC.clsEmbarqueDetalleDAC.InsertUpdate("I", IDEmbarque, (long)row["IDProducto"], (decimal)row["Cantidad"], (decimal)row["CantidadAceptada"], CantidadRechazada, "", ConnectionManager.Tran);
                                 DAC.clsOrdenCompraDetalleDAC.UpdateCantidadRecibida(IDOrdenCompra, (long)row["IDProducto"], (decimal)row["Cantidad"],ConnectionManager.Tran);
                             }
                         }
@@ -624,13 +543,16 @@ namespace CO
                         IDEmbarque = DAC.clsEmbarqueDAC.InsertUpdate("U", IDEmbarque,ref Embarque, Fecha, FechaEmbarque, null, IDBodega, IDProveedor, IDOrdenCompra, -1, 0, sUsuario, DateTime.Now, sUsuario, DateTime.Now, sUsuario, ConnectionManager.Tran);
                         
                          //Eliminamos el detalle y lo volvemos a insertar
-                        DAC.clsEmbarqueDetalleDAC.InsertUpdate("D", IDEmbarque,-1,-1,0,0,0,"", ConnectionManager.Tran);
+                        DAC.clsEmbarqueDetalleDAC.InsertUpdate("D", IDEmbarque,-1,0,0,0,"", ConnectionManager.Tran);
                         DAC.clsOrdenCompraDetalleDAC.UpdateCantidadRecibida(IDOrdenCompra, -1,0, ConnectionManager.Tran);
                         foreach (DataRow row in dt.Rows)
                         {
                             if (row.RowState != DataRowState.Deleted)
                             {
-                                DAC.clsEmbarqueDetalleDAC.InsertUpdate("I", IDEmbarque, (long)row["IDProducto"], (int)row["IDLote"], (decimal)row["Cantidad"], (decimal)row["Cantidad"], 0, "", ConnectionManager.Tran);
+                                decimal CantidadRechazada = (decimal)row["Cantidad"] - (decimal)row["CantidadAceptada"];
+                                CantidadRechazada = (CantidadRechazada > 0) ? CantidadRechazada : 0;
+                                DAC.clsEmbarqueDetalleDAC.InsertUpdate("I", IDEmbarque, (long)row["IDProducto"], (decimal)row["Cantidad"], (decimal)row["CantidadAceptada"], CantidadRechazada, "", ConnectionManager.Tran);
+                                DAC.clsOrdenCompraDetalleDAC.UpdateCantidadRecibida(IDOrdenCompra, (long)row["IDProducto"], (decimal)row["Cantidad"], ConnectionManager.Tran);
                             }
                         }
 
@@ -638,7 +560,7 @@ namespace CO
                     }
 
                     ConnectionManager.CommitTran();
-                    this.Accion = "Edit";
+                    this.Accion = "View";
                     HabilitarControles();
                     HabilitarBotoneriaPrincipal();
                     MessageBox.Show("La Orden de Compra se ha guardado correctamente");
@@ -669,7 +591,7 @@ namespace CO
                         ConnectionManager.BeginTran();
 
                         DAC.clsEmbarqueDAC.InsertUpdate("D", IDEmbarque, ref Embarque ,DateTime.Now, DateTime.Now,"",-1,-1,-1,-1,0,"",DateTime.Now,"",DateTime.Now,"", ConnectionManager.Tran);                            
-                        DAC.clsEmbarqueDetalleDAC.InsertUpdate("D",IDEmbarque,-1,-1,0,0,0,"", ConnectionManager.Tran);
+                        DAC.clsEmbarqueDetalleDAC.InsertUpdate("D",IDEmbarque,-1,0,0,0,"", ConnectionManager.Tran);
                         ConnectionManager.CommitTran();
                         MessageBox.Show("El embarque ha sido eliminado correctamente");
                     }
@@ -739,6 +661,23 @@ namespace CO
                 CG.frmAsiento ofrmAsiento = new CG.frmAsiento(this.linkAsiento.Text);
                 ofrmAsiento.ShowDialog();
             }
+        }
+
+        private void btnRellenar_Click(object sender, EventArgs e)
+        {
+            dtDetalleEmbarque.Clear();
+            foreach (DataRow row in dtDetalleOrden.Rows)
+            {
+                DataRow fila = this.dtDetalleEmbarque.NewRow();
+                fila["IDEmbarque"] = 0;
+                fila["IDProducto"] = row["IDProducto"];
+                fila["DescrProducto"] = row["DescrProducto"];
+                fila["Cantidad"] = row["Cantidad"];
+                fila["CantidadAceptada"] = row["Cantidad"];
+                this.dtDetalleEmbarque.Rows.Add(fila);
+            }
+            this.dtgDetalleEmbarque.DataSource = null;
+            this.dtgDetalleEmbarque.DataSource = dtDetalleEmbarque;
         }
 
        

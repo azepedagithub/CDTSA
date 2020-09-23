@@ -38,6 +38,7 @@ namespace CO
         DataTable dtOrdenCompra = new DataTable();
         private string Accion = "Add";
         bool bEditPorcDesc, bEditMontoDesc;
+        int? IDSolicitud;
 
         DataTable _dtImportacionDetallada = new DataTable();
         DataTable _dtImportacionConsolidada = new DataTable();
@@ -222,7 +223,7 @@ namespace CO
             {
                 this.btnConfirmar.Enabled = true;
                 this.btnDesconfirmar.Enabled = false;
-                this.btnImportarSolicitudes.Enabled = true;
+                //this.btnImportarSolicitudes.Enabled = true;
                 this.btnAnular.Enabled = false;
                 this.btnEmbarque.Enabled = false;
             }
@@ -231,19 +232,12 @@ namespace CO
             {
                 this.btnConfirmar.Enabled = false;
                 this.btnDesconfirmar.Enabled = true;
-                this.btnImportarSolicitudes.Enabled = false;
+               // this.btnImportarSolicitudes.Enabled = false;
                 this.btnAnular.Enabled = true;
                 this.btnEmbarque.Enabled = true;
             }
 
-            //DataTable dtOrden_Solicitud = DAC.clsSolicitudCompra_OrdenCompra.Get(Convert.ToInt64(cabecera["IDOrdenCompra"]), -1, -1).Tables[0];
-            //if (dtOrden_Solicitud.Rows.Count > 0)
-            //{
-            //    this.btnSolicitudes.Enabled = true;
-            //}
-            //else {
-            //    this.btnSolicitudes.Enabled = false;
-            //}
+       
 
         }
 
@@ -267,22 +261,12 @@ namespace CO
             this.txtSeguro.EditValue = Convert.ToDecimal((cabecera["Seguro"] == System.DBNull.Value) ? 0 : cabecera["Seguro"]);
             this.txtDocumentacion.EditValue = Convert.ToDecimal((cabecera["Documentacion"] == System.DBNull.Value) ? 0 : cabecera["Documentacion"]);
             this.txtAnticipos.EditValue = Convert.ToDecimal((cabecera["Anticipos"] == System.DBNull.Value) ? 0 : cabecera["Anticipos"]);
-            // this.cmbTipoProrrateo.EditValue = Convert.ToInt32(cabecera["IDTipoProrrateo"]);
             this.txtEstado.EditValue = cabecera["DescrEstado"].ToString();
             this.txtEstado.Tag = Convert.ToInt32(cabecera["IDEstado"]);
 
             HabilitarBotones(dt);
 
-            // Datos de Credito
-            //this.txtFactura.ReadOnly = true;
-            //this.slkupSubTipo.ReadOnly = true;
-            //this.dtpFechaFactura.ReadOnly = true;
-            //this.slkupMonedaFactura.ReadOnly = true;
-            //this.slkupCondicionPagoFactura.ReadOnly = true;
-            //this.txtImpuestoVentaFactura.ReadOnly = true;
-            //this.txtImpuestoConsumoFactura.ReadOnly = true;
-            //this.txtMontoFactura.ReadOnly = true;
-            //this.txtNotas.ReadOnly = true;
+      
 
         }
 
@@ -292,24 +276,10 @@ namespace CO
             this.dtDetalleOrden = DAC.clsOrdenCompraDetalleDAC.Get(IDOrdenCompra).Tables[0];
             UpdateControlsFromData(dtOrdenCompra);
             this.dtgDetalle.DataSource = dtDetalleOrden;
-            _dtImportacionDetallada = clsSolicitudCompra_OrdenCompra.Get(IDOrdenCompra, -1, -1).Tables[0];
-            if (_dtImportacionDetallada.Rows.Count > 0)
-            {
-                _dtImportacionConsolidada = _dtImportacionDetallada.AsEnumerable().
-                         GroupBy(r => new { IDProdcuto = r["IDProducto"] }).
-                         Select(g =>
-                         {
-                             var row = _dtImportacionDetallada.NewRow();
-                             row["CantOrdenada"] = g.Sum(r => Convert.ToDecimal(r["CantOrdenada"]));
-                             row["IDProducto"] = g.Key.IDProdcuto;
-                             return row;
-                         }
-                         ).CopyToDataTable();
-            }
+            
 
             CalcularMontosOrden();
-            //this.btnAprobar.Enabled = (Convert.ToInt32(this.txtEstado.Tag) == 0) ? true : false;
-
+            
         }
 
         private void HabilitarComandosAccion()
@@ -384,22 +354,13 @@ namespace CO
 
                 this.gridView1.EditFormPrepared += gridView1_EditFormPrepared;
                 this.gridView1.NewItemRowText = Util.Util.constNewItemTextGrid;
-                //this.gridView1.ValidatingEditor += GridView1_ValidatingEditor;
                 this.gridView1.ValidateRow += gridView1_ValidateRow;
                 this.gridView1.InvalidRowException += gridView1_InvalidRowException;
                 this.gridView1.RowUpdated += gridView1_RowUpdated;
-                //this.gridView1.ShownEditor += gridView1_ShownEditor;
-                //this.dtgDetalle.ProcessGridKey += dtgDetalleSolicitud_ProcessGridKey;
-                //this.gridView1.ValidatingEditor += gridView1_ValidatingEditor;
-
-
+                
 
                 this.gridView1.InitNewRow += gridView1_InitNewRow;
-                //this.gridView1.CustomColumnDisplayText += gridView1_CustomColumnDisplayText;
-
                 Util.Util.SetDefaultBehaviorControls(this.gridView1, true, null, "Orden de Compra", this);
-                //slkupIDProducto
-
                 dtProductos = CI.DAC.clsProductoDAC.GetData(-1, "*", "*", -1, -1, -1, -1, -1, -1, "*", -1, -1, -1).Tables[0];
 
                 this.slkupIDProducto.DataSource = dtProductos;
@@ -409,10 +370,6 @@ namespace CO
                 this.slkupIDProducto.EditValueChanged += slkup_EditValueChanged;
                 this.slkupIDProducto.Popup += slkup_Popup;
                 this.slkupIDProducto.PopulateViewColumns();
-
-
-                //Util.Util.ConfigLookupEdit(this.slkupIDProducto, clsGlobalTipoTransaccionDAC.Get(-1, "*", "*", _dtPaquete.Rows[0]["Transaccion"].ToString()).Tables[0], "Descr", "IDTipoTran");
-                //Util.Util.ConfigRepositoryLookupEditSetViewColumns(this.slkupIDProducto, "[{'ColumnCaption':'IDProducto','ColumnField':'IDProducto','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");
 
                 this.slkupDescrProducto.DataSource = dtProductos;
                 this.slkupDescrProducto.DisplayMember = "Descr";
@@ -719,9 +676,7 @@ namespace CO
                 sMensaje = "   • Fecha Requerida de Embarque \r\n";
             if (this.dtpFechaCotizacion.EditValue == null || this.dtpFechaCotizacion.EditValue.ToString() == "" )
                 sMensaje = "   • Fecha de Cotizacion \r\n";
-            //if (this.cmbTipoProrrateo.EditValue == null || this.cmbTipoProrrateo.EditValue.ToString() == "")
-            //    sMensaje = "   • Tipo Prorrateo \r\n";
-
+            
 
             if (((DataTable)this.dtgDetalle.DataSource).Rows.Count == 0)
                 sMensaje = sMensaje = "   • Por favor agrege al menos un elemento al detalle de la solicitud \r\n";
@@ -766,7 +721,7 @@ namespace CO
                     //IDTipoProrrateo = Convert.ToInt32(this.cmbTipoProrrateo.SelectedIndex);
                     IDEstado = Convert.ToInt32(this.txtEstado.Tag);
 
-
+                     //TODO Asociar el IDSolicitud a las importadas
 
                     DataTable dt = (DataTable)this.dtgDetalle.DataSource;
 
@@ -779,7 +734,7 @@ namespace CO
 
                         //Ingresar la cabecera de la solicitud
                         IDOrdenCompra = DAC.clsOrdenCompraDAC.InsertUpdate("I", IDOrdenCompra, ref OrdenCompra, FechaOrden, FechaRequerida, FechaEmision,
-                                                                        FechaRequeridaEmbarque, FechaCotizacion, IDEstado, IDBodega,
+                                                                        FechaRequeridaEmbarque, FechaCotizacion, IDEstado,IDSolicitud, IDBodega,
                                                                         IDProveedor, IDMoneda, IDCondicionPago, Descuento, Flete, Seguro,
                                                                         Documentacion, Anticipos, -1, -1, 33, sUsuario, "", Convert.ToDateTime("1981/08/21"), "", Convert.ToDateTime("1981/08/21"), DateTime.Now, sUsuario, DateTime.Now, sUsuario, ConnectionManager.Tran);
                         this.txtOrdenCompra.Text = OrdenCompra;
@@ -793,21 +748,13 @@ namespace CO
                             }
                         }
 
-                        foreach (DataRow row in this._dtImportacionDetallada.Rows)
-                        {
-                            if (row.RowState != DataRowState.Deleted)
-                            {
-                                DAC.clsSolicitudCompra_OrdenCompra.InsertUpdate("I", Convert.ToInt32(row["IDSolicitud"]), IDOrdenCompra,
-                                                Convert.ToInt64(row["IDProducto"]), Convert.ToDecimal(row["CantOrdenada"]), sUsuario, DateTime.Now,
-                                                ConnectionManager.Tran);
-                            }
-                        }
+                        
                     }
 
                     if (Accion == "Edit")
                     {
                         DAC.clsOrdenCompraDAC.InsertUpdate("U", IDOrdenCompra, ref OrdenCompra, FechaOrden, FechaRequerida, FechaEmision,
-                                                                        FechaRequeridaEmbarque, FechaCotizacion, IDEstado, IDBodega,
+                                                                        FechaRequeridaEmbarque, FechaCotizacion, IDEstado,IDSolicitud, IDBodega,
                                                                         IDProveedor, IDMoneda, IDCondicionPago, Descuento, Flete, Seguro,
                                                                         Documentacion, Anticipos, -1, -1, 33, sUsuario, "", Convert.ToDateTime("1981/08/21"), "", Convert.ToDateTime("1981/08/21"), DateTime.Now, sUsuario, DateTime.Now, sUsuario, ConnectionManager.Tran);
                         //Eliminamos el detalle y lo volvemos a insertar
@@ -823,16 +770,6 @@ namespace CO
                             }
                         }
 
-                        DAC.clsSolicitudCompra_OrdenCompra.InsertUpdate("D", -1, IDOrdenCompra, -1, 0, "", DateTime.Now, ConnectionManager.Tran);
-                        foreach (DataRow row in this._dtImportacionDetallada.Rows)
-                        {
-                            if (row.RowState != DataRowState.Deleted)
-                            {
-                                DAC.clsSolicitudCompra_OrdenCompra.InsertUpdate("I", Convert.ToInt32(row["IDSolicitud"]), IDOrdenCompra,
-                                                Convert.ToInt64(row["IDProducto"]), Convert.ToDecimal(row["CantOrdenada"]), sUsuario, DateTime.Now,
-                                                ConnectionManager.Tran);
-                            }
-                        }
                     }
 
                     ConnectionManager.CommitTran();
@@ -874,7 +811,7 @@ namespace CO
                     if (IDOrdenCompra > -1)
                     {
                         ConnectionManager.BeginTran();
-                        clsOrdenCompraDAC.InsertUpdate("D", IDOrdenCompra, ref OrdenCompra, DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, -1, -1, 0, "", "", DateTime.Now, "", DateTime.Now, DateTime.Now, "", DateTime.Now, "", ConnectionManager.Tran);
+                        clsOrdenCompraDAC.InsertUpdate("D", IDOrdenCompra, ref OrdenCompra, DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now, -1,null, -1, -1, -1, -1, 0, 0, 0, 0, 0, -1, -1, 0, "", "", DateTime.Now, "", DateTime.Now, DateTime.Now, "", DateTime.Now, "", ConnectionManager.Tran);
                         clsOrdenCompraDetalleDAC.InsertUpdate("D", IDOrdenCompra, -1, 0, 0, 0, 0, 0, 0,
                                                         0, 0, "", ConnectionManager.Tran);
                         ConnectionManager.CommitTran();
@@ -988,31 +925,7 @@ namespace CO
             }
         }
 
-        private void btnRevertir_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
-        {
-            ////Validar si la solicitud tiene ordenes asociadas
-            //DataTable dt = DAC.clsSolicitudCompraDAC.GetSolicitudCompra_OrdenCompra(IDSolicitud, -1, -1).Tables[0];
-            //if (dt.Rows.Count == 0)
-            //{
-            //    int Estado = 0;
-            //    FechaRequerida = Convert.ToDateTime(this.dtpFechaRequerida.EditValue);
-            //    Fecha = Convert.ToDateTime(this.dtpFechaSolicitud.EditValue);
-            //    Comentarios = this.txtComentarios.Text.Trim();
-            //    DAC.clsSolicitudCompraDAC.InsertUpdate("U", IDSolicitud, Fecha, FechaRequerida, Estado, Comentarios, sUsuario, sUsuario, DateTime.Now, sUsuario, DateTime.Now, sUsuario, ConnectionManager.Tran);
-            //    this.txtEstado.Text = "INICIALIZADA";
-            //    this.txtEstado.Tag = 0;
-            //    this.txtEstado.ForeColor = Color.Black;
-            //    this.Accion = "Edit";
-            //    HabilitarControles();
-            //    HabilitarBotoneriaPrincipal();
-            //    HabilitarComandosAccion();
-            //    MessageBox.Show("La solicitud se ha revertido correctamente");
-            //}
-            //else {
-            //    MessageBox.Show("La solicitud no puede ser revertida, posee ordenes de compra asociadas");
-            //}
 
-        }
 
         private void txtPorcDescuento_Validated(object sender, EventArgs e)
         {
@@ -1086,23 +999,7 @@ namespace CO
 
 
 
-                //if (view.GetRowCellValue(e.RowHandle, view.Columns[2]).ToString() == "") return;
-
-                //decimal cellValue = (e.Value.ToString() == "") ? 0 : Convert.ToDecimal(e.Value);
-                //decimal Cantidad = Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[2]));
-                //decimal Monto = (cellValue * Cantidad);
-                //view.SetRowCellValue(e.RowHandle, "Monto", Monto);
-
-
-                //if ( view.GetRowCellValue(e.RowHandle, view.Columns[6]).ToString() == "" || view.GetRowCellValue(e.RowHandle, view.Columns[5]).ToString() == "") return;
-                //if (Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[6])) > 0)
-                //{
-                //    decimal Porc = Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[6]));
-                //    decimal MontoDesc = (Cantidad * cellValue) * (Porc / 100);
-                //    Monto = Monto - MontoDesc;
-                //    view.SetRowCellValue(e.RowHandle, "MontoDesc", MontoDesc);
-                //    view.SetRowCellValue(e.RowHandle, "Monto", Monto);
-                //}
+         
             }
 
 
@@ -1126,27 +1023,7 @@ namespace CO
                 decimal Monto = ((Cantidad * cellValue) + cellValue) - MontoDesc;
                 view.SetRowCellValue(e.RowHandle, "Monto", Monto);
 
-                
-
-
-                //if (view.GetRowCellValue(e.RowHandle, view.Columns[2]).ToString() == "" || view.GetRowCellValue(e.RowHandle, view.Columns[3]).ToString() == "") return;
-
-                //decimal cellValue = (e.Value.ToString() == "") ? 0 : Convert.ToDecimal(e.Value);
-                //decimal Cantidad = Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[2]));
-                //decimal Precio = Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[3]));
-                //decimal Monto = (cellValue * Cantidad);
-                //view.SetRowCellValue(e.RowHandle, "Monto", Monto);
-
-
-                //if (view.GetRowCellValue(e.RowHandle, view.Columns[6]).ToString() == "" || view.GetRowCellValue(e.RowHandle, view.Columns[5]).ToString() == "") return;
-                //if (Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[6])) > 0)
-                //{
-                //    decimal Porc = Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, view.Columns[6]));
-                //    decimal MontoDesc = (Cantidad * cellValue) * (Porc / 100);
-                //    Monto = Monto - MontoDesc;
-                //    view.SetRowCellValue(e.RowHandle, "MontoDesc", MontoDesc);
-                //    view.SetRowCellValue(e.RowHandle, "Monto", Monto);
-                //}
+             
             }
 
 
@@ -1232,61 +1109,61 @@ namespace CO
 
         }
 
-        private void simpleButton1_Click(object sender, EventArgs e)
-        {
-            if (this.slkupProveedor.EditValue != null)
-            {
-                frmImportarSolicitudCompra ofrmImportarSolicitud = new frmImportarSolicitudCompra(Convert.ToInt32(this.slkupProveedor.EditValue));
-                ofrmImportarSolicitud.FormClosed += ofrmImportarSolicitud_FormClosed;
-                ofrmImportarSolicitud.ShowDialog();
-            }
-            else {
-                MessageBox.Show("Por favor seleccione el proveedor para poder importar una solicitud de Compra");
-            }
-        }
+        //private void simpleButton1_Click(object sender, EventArgs e)
+        //{
+        //    if (this.slkupProveedor.EditValue != null)
+        //    {
+        //        frmImportarSolicitudCompra ofrmImportarSolicitud = new frmImportarSolicitudCompra(Convert.ToInt32(this.slkupProveedor.EditValue));
+        //        ofrmImportarSolicitud.FormClosed += ofrmImportarSolicitud_FormClosed;
+        //        ofrmImportarSolicitud.ShowDialog();
+        //    }
+        //    else {
+        //        MessageBox.Show("Por favor seleccione el proveedor para poder importar una solicitud de Compra");
+        //    }
+        //}
 
 
 
-        void ofrmImportarSolicitud_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            //consolidar las lineas de productos.
-            frmImportarSolicitudCompra ofrmImport = (frmImportarSolicitudCompra)sender;
-            if (ofrmImport.DialogResult == System.Windows.Forms.DialogResult.OK)
-            {
+        //void ofrmImportarSolicitud_FormClosed(object sender, FormClosedEventArgs e)
+        //{
+        //    //consolidar las lineas de productos.
+        //    frmImportarSolicitudCompra ofrmImport = (frmImportarSolicitudCompra)sender;
+        //    if (ofrmImport.DialogResult == System.Windows.Forms.DialogResult.OK)
+        //    {
 
                
 
-                    _dtImportacionDetallada = ofrmImport.GetSolicitudesSeleccionadas().AsEnumerable().Where(a => Convert.ToDecimal(a["CantOrdenada"]) > 0).CopyToDataTable();
+        //            _dtImportacionDetallada = ofrmImport.GetSolicitudesSeleccionadas().AsEnumerable().Where(a => Convert.ToDecimal(a["CantOrdenada"]) > 0).CopyToDataTable();
 
-                    _dtImportacionConsolidada = _dtImportacionDetallada.AsEnumerable().
-                             Where(a => Convert.ToDecimal(a["CantOrdenada"]) > 0).
-                             GroupBy(r => new { IDProdcuto = r["IDProducto"], DescrProducto = r["DescrProducto"] }).
-                             Select(g =>
-                                {
-                                    var row = _dtImportacionDetallada.NewRow();
-                                    row["Cantidad"] = g.Sum(r => Convert.ToDecimal(r["CantOrdenada"]));
-                                    row["IDProducto"] = g.Key.IDProdcuto;
-                                    row["DescrProducto"] = g.Key.DescrProducto;
+        //            _dtImportacionConsolidada = _dtImportacionDetallada.AsEnumerable().
+        //                     Where(a => Convert.ToDecimal(a["CantOrdenada"]) > 0).
+        //                     GroupBy(r => new { IDProdcuto = r["IDProducto"], DescrProducto = r["DescrProducto"] }).
+        //                     Select(g =>
+        //                        {
+        //                            var row = _dtImportacionDetallada.NewRow();
+        //                            row["Cantidad"] = g.Sum(r => Convert.ToDecimal(r["CantOrdenada"]));
+        //                            row["IDProducto"] = g.Key.IDProdcuto;
+        //                            row["DescrProducto"] = g.Key.DescrProducto;
 
-                                    return row;
-                                }
-                             ).CopyToDataTable();
+        //                            return row;
+        //                        }
+        //                     ).CopyToDataTable();
 
-                    foreach (DataRow fila in _dtImportacionConsolidada.Rows)
-                    {
-                        DataRow nuevaFila = this.dtDetalleOrden.NewRow();
-                        nuevaFila["IDProducto"] = fila["IDProducto"];
-                        nuevaFila["DescrProducto"] = fila["DescrProducto"];
-                        nuevaFila["Cantidad"] = fila["Cantidad"];
-                        nuevaFila["IsLoadFromSolicitud"] = 1;
-                        this.dtDetalleOrden.Rows.InsertAt(nuevaFila, 0);
-                        //this.dtDetalleOrden.Rows.Add(fila);
-                    }
-                    CalcularMontosOrden();
+        //            foreach (DataRow fila in _dtImportacionConsolidada.Rows)
+        //            {
+        //                DataRow nuevaFila = this.dtDetalleOrden.NewRow();
+        //                nuevaFila["IDProducto"] = fila["IDProducto"];
+        //                nuevaFila["DescrProducto"] = fila["DescrProducto"];
+        //                nuevaFila["Cantidad"] = fila["Cantidad"];
+        //                //nuevaFila["IsLoadFromSolicitud"] = 1;
+        //                this.dtDetalleOrden.Rows.InsertAt(nuevaFila, 0);
+        //                //this.dtDetalleOrden.Rows.Add(fila);
+        //            }
+        //            CalcularMontosOrden();
                
-            }
+        //    }
 
-        }
+        //}
 
 
 

@@ -21,7 +21,7 @@ namespace CO.DAC
                                         String UsuarioSolicitud, string Usuario,DateTime createdDate,String createdBy, DateTime recordDate, String updatedBy, SqlTransaction tran)
         {
             resultInsert result = new resultInsert();
-            String strSQL = "dbo.invUpdateSolicitudCompra";
+            String strSQL = "dbo.coUpdateSolicitudCompra";
 
             SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
 
@@ -45,6 +45,8 @@ namespace CO.DAC
 
             oCmd.CommandType = CommandType.StoredProcedure;
             oCmd.Transaction = tran;
+            if (oCmd.Connection.State != ConnectionState.Open)
+                oCmd.Connection.Open();
             oCmd.ExecuteNonQuery();
             if (Operacion == "I")
             {
@@ -63,7 +65,7 @@ namespace CO.DAC
 
         public static DataSet Get(int IDSolicitud, DateTime FechaInicial, DateTime FechaFinal, int IDEstado)
         {
-            String strSQL = "dbo.invGetSolicitudCompra";
+            String strSQL = "dbo.coGetSolicitudCompra";
 
             SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
 
@@ -83,7 +85,7 @@ namespace CO.DAC
         
         public static DataSet GetByID(int IDSolicitud)
         {
-            String strSQL = "dbo.invGetSolicitudCompraByID";
+            String strSQL = "dbo.coGetSolicitudCompraByID";
 
             SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
 
@@ -99,30 +101,28 @@ namespace CO.DAC
         }
 
 
-        public static DataSet GetSolicitudCompra_OrdenCompra(int IDSolicitud, int IDOrdenCompra, long IDProducto)
+        public static bool SolicitudTieneOrdenesAsociadas(int IDSolicitud)
         {
-            String strSQL = "dbo.invGetSolicitudCompra_OrdenCompra";
+            String strSQL = "dbo.coSolicitudTieneOrdenesAsociadas";
 
             SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
 
             oCmd.Parameters.Add(new SqlParameter("@IDSolicitud", IDSolicitud));
-            oCmd.Parameters.Add(new SqlParameter("@IDOrdenCompra", IDOrdenCompra));
-            oCmd.Parameters.Add(new SqlParameter("@IDProducto", IDProducto));
-            
             oCmd.CommandType = CommandType.StoredProcedure;
 
             SqlDataAdapter oAdap = new SqlDataAdapter(oCmd);
             DataSet DS = new DataSet();
 
-            oAdap.Fill(DS, "Data");
-            return DS;
-        }
 
+            oAdap.Fill(DS, "Data");
+            return DS.Tables[0].Rows.Count> 0;
+        }
+      
         public static DataSet GetSolicitudCompraByProveedor(int IDProveedor, int IDSolicitudDesde,int IDSolicitudHasta,
                         DateTime FechaSolicitudDesde,DateTime FechaSolicitudHasta,DateTime FechaRequeridaDesde,
                         DateTime FechaRequeridaHasta,int IDClas1,int IDClas2,int IDClas3,int IDClas4, int IDClas5, int IDClas6,long IDProducto)
         {
-            String strSQL = "dbo.invGetSolicitudesByProveedor";
+            String strSQL = "dbo.coGetSolicitudesByProveedor";
 
             SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
 

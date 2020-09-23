@@ -113,9 +113,10 @@
     <Compile Include="DAC\clsGlobalConsecutivosDAC.cs" />
     <Compile Include="DAC\clsGlobalImpuestoDAC.cs" />
     <Compile Include="DAC\clsLiquidacionCompraDAC.cs" />
+    <Compile Include="DAC\clsObligacionDetalleDAC.cs" />
+    <Compile Include="DAC\clsObligacionProveedorDAC.cs" />
     <Compile Include="DAC\clsParametrosDAC.cs" />
     <Compile Include="DAC\clsRecepcionMercaderiaDAC.cs" />
-    <Compile Include="DAC\clsSolicitudCompra_OrdenCompra.cs" />
     <Compile Include="DAC\clsCondicionPagoDAC.cs" />
     <Compile Include="DAC\clsEmbarqueDAC.cs" />
     <Compile Include="DAC\clsEmbarqueDetalleDAC.cs" />

@@ -10,18 +10,17 @@ namespace CO.DAC
 {
     public static class clsEmbarqueDetalleDAC
     {
-        public static long InsertUpdate(string Operacion, long IDEmbarque, long IDProducto , int IDLote,decimal Cantidad,
+        public static long InsertUpdate(string Operacion, long IDEmbarque, long IDProducto,decimal Cantidad,
             decimal CantidadAceptada,decimal CantidadRechazada,String Comentario,SqlTransaction tran)
         {
             long result = -1;
-            String strSQL = "dbo.invUpdateEmbarqueDetalle";
+            String strSQL = "dbo.coUpdateEmbarqueDetalle";
 
             SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
 
             oCmd.Parameters.Add(new SqlParameter("@Operacion", Operacion));
             oCmd.Parameters.Add(new SqlParameter("@IDEmbarque", IDEmbarque));
             oCmd.Parameters.Add(new SqlParameter("@IDProducto", IDProducto));
-            oCmd.Parameters.Add(new SqlParameter("@IDLote", IDLote));
             oCmd.Parameters.Add(new SqlParameter("@Cantidad", Cantidad));
             oCmd.Parameters.Add(new SqlParameter("@CantidadAceptada", CantidadAceptada));
             oCmd.Parameters.Add(new SqlParameter("@CantidadRechazada", CantidadRechazada));
@@ -40,7 +39,7 @@ namespace CO.DAC
 
         public static DataSet Get(long IDEmbarque)
         {
-            String strSQL = "dbo.invGetEmbarqueDetalle";
+            String strSQL = "dbo.coGetEmbarqueDetalle";
 
             SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
 

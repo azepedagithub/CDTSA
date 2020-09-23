@@ -12,12 +12,12 @@ namespace CO.DAC
     public static class clsOrdenCompraDAC {
     
         public static long InsertUpdate(string Operacion,long IDOrdenCompra,ref String OrdenCompra,DateTime Fecha,DateTime FechaRequerida,DateTime FechaEmision,DateTime FechaRequeridaEmbarque,DateTime FechaCotizacion,
-                        int IDEstado, int IDBodega,int IDProveedor,int IDMoneda, int IDCondicionPago,Decimal Descuento, Decimal Flete,Decimal Seguro, Decimal Documentacion, Decimal Anticipos,
+                        int IDEstado, int? IDSolicitud, int IDBodega,int IDProveedor,int IDMoneda, int IDCondicionPago,Decimal Descuento, Decimal Flete,Decimal Seguro, Decimal Documentacion, Decimal Anticipos,
                         int  IDEmbarque , int IDDocumentoCP,Decimal TipoCambio, string Usuario,string UsuarioEmbarque,DateTime FechaCreaEmbarque,
                         String UsuarioAprobacion,DateTime FechaAprobacion,DateTime createdDate,String createdBy, DateTime recordDate, String updatedBy, SqlTransaction tran)
         {
             long result = -1;
-            String strSQL = "dbo.invUpdateOrdenCompra";
+            String strSQL = "dbo.coUpdateOrdenCompra";
 
             SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
 
@@ -33,6 +33,7 @@ namespace CO.DAC
                oCmd.Parameters.Add(new SqlParameter("@FechaRequeridaEmbarque", FechaRequeridaEmbarque));
                oCmd.Parameters.Add(new SqlParameter("@FechaCotizacion", FechaCotizacion));
                oCmd.Parameters.Add(new SqlParameter("@IDEstado", IDEstado));
+               oCmd.Parameters.Add(new SqlParameter("@IDSolicitud", IDSolicitud));
                oCmd.Parameters.Add(new SqlParameter("@IDBodega", IDBodega));
                oCmd.Parameters.Add(new SqlParameter("@IDProveedor",IDProveedor));
                oCmd.Parameters.Add(new SqlParameter("@IDMoneda", IDMoneda));
@@ -76,7 +77,7 @@ namespace CO.DAC
         public static long ConfirmarOrdenCompra(long IDOrdenCompra, SqlTransaction tran)
         {
             long result = -1;
-            String strSQL = "dbo.invConfirmarOrdenCompra";
+            String strSQL = "dbo.coConfirmarOrdenCompra";
 
             SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
 
@@ -93,7 +94,7 @@ namespace CO.DAC
         public static long DesConfirmarOrdenCompra(long IDOrdenCompra, SqlTransaction tran)
         {
             long result = -1;
-            String strSQL = "dbo.invDesConfirmarOrdenCompra";
+            String strSQL = "dbo.coDesConfirmarOrdenCompra";
 
             SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
 
@@ -111,7 +112,7 @@ namespace CO.DAC
         public static long CancelarOrdenCompra(long IDOrdenCompra, SqlTransaction tran)
         {
             long result = -1;
-            String strSQL = "dbo.invCancelarOrdenCompra";
+            String strSQL = "dbo.coCancelarOrdenCompra";
 
             SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
 
@@ -127,7 +128,7 @@ namespace CO.DAC
 
         public static DataSet Get(int IDOrdenCompra, DateTime FechaInicial, DateTime FechaFinal,String Proveedor, String Estado,DateTime FechaRequeridaInicial, DateTime FechaRequeridaFinal )
         {
-            String strSQL = "dbo.invGetOrdenCompra";
+            String strSQL = "dbo.coGetOrdenCompra";
                                  
             SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
 
@@ -151,7 +152,7 @@ namespace CO.DAC
 
         public static DataSet GetByID(long IDOrdenCompra)
         {
-            String strSQL = "dbo.invGetOrdenCompraByID";
+            String strSQL = "dbo.coGetOrdenCompraByID";
 
             SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
 

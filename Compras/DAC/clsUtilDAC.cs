@@ -13,7 +13,7 @@ namespace CO.DAC
     {
         public static DataSet GetParametroCompra(String Parametro)
         {
-            String strSQL = "dbo.invGetParametroCompra";
+            String strSQL = "dbo.coGetParametroCompra";
 
             SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
 
