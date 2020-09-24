@@ -312,7 +312,7 @@ namespace CO
             this.txtInteresMora.EditValue = Convert.ToDecimal(dt.Rows[0]["PorcInteresMora"]);
             this.txtEmail.EditValue = dt.Rows[0]["Email"].ToString();
             this.txtDireccion.EditValue = dt.Rows[0]["Direccion"].ToString();
-            this.chkBonifica.EditValue = Convert.ToBoolean(dt.Rows[0]["Bonifica"]);
+            this.chkBonifica.EditValue = Convert.ToBoolean(dt.Rows[0]["Bonifica"] == DBNull.Value ? false : dt.Rows[0]["Bonifica"]);
             
 
         }

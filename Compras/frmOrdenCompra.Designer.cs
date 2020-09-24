@@ -1553,6 +1553,7 @@
             this.slkupProveedor.Size = new System.Drawing.Size(262, 20);
             this.slkupProveedor.StyleController = this.layoutControl1;
             this.slkupProveedor.TabIndex = 6;
+            this.slkupProveedor.EditValueChanged += new System.EventHandler(this.slkupProveedor_EditValueChanged);
             // 
             // searchLookUpEdit1View
             // 
@@ -1576,6 +1577,8 @@
             this.txtOrdenCompra.Location = new System.Drawing.Point(151, 12);
             this.txtOrdenCompra.MenuManager = this.ribbonControl1;
             this.txtOrdenCompra.Name = "txtOrdenCompra";
+            this.txtOrdenCompra.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtOrdenCompra.Properties.Appearance.Options.UseFont = true;
             this.txtOrdenCompra.Properties.ReadOnly = true;
             this.txtOrdenCompra.Size = new System.Drawing.Size(262, 20);
             this.txtOrdenCompra.StyleController = this.layoutControl1;

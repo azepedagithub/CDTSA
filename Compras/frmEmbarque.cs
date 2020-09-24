@@ -17,6 +17,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ControlBancario;
 
 namespace CO
 {
@@ -28,13 +29,32 @@ namespace CO
         int IDProveedor,IDBodega;
         String OrdenCompra,Embarque;
         String sUsuario = (UsuarioDAC._DS.Tables.Count > 0) ? UsuarioDAC._DS.Tables[0].Rows[0]["Usuario"].ToString() : "azepeda";
+        bool Confirmada = false;
         DataTable dtDetalleOrden = new DataTable();
         DataTable dtDetalleEmbarque = new DataTable();
         DataTable dtEmbarque = new DataTable();
         DataTable dtProductos = new DataTable();
-        DataTable dtLotes = new DataTable();
         DataTable dtOrdenCompra = new DataTable();
+       
 
+        //Datos de la Factura
+        int IDObligacionProveedor =-1;
+        DateTime FechaVence, FechaPoliza, FechaFactura;
+        String Factura, Poliza, GuiaBL,AsientoFactura;
+        double TipoCambioPoliza, ValorMercaderia, MontoFlete, MontoSeguro, MontoTotal;
+        DataTable dtObligacionProveedor = new DataTable();
+        
+        //Datos de OtrosGastos
+        DataTable dtObligacionDetalle = new DataTable();
+        DataTable dtMoneda = new DataTable();
+        DataTable dtProveedor = new DataTable();
+        DataTable dtGastos = new DataTable();
+        String AccionOtrosPagos = "View";
+        int IDObligacionDetalle = -1;
+
+        DataRow currentRowOtrosPagos;
+
+       
 
         double TipoCambio;
 
@@ -85,14 +105,28 @@ namespace CO
                 this.btnGuardar.Enabled = true;
                 this.btnCancelar.Enabled = true;
                 this.btnEliminar.Enabled = false;
+                this.tabFactura.PageVisible = false;    
                
             }
             else if (Accion == "View") {
-                this.btnEditar.Enabled = true;
-                this.btnGuardar.Enabled = false;
-                this.btnCancelar.Enabled = false;
+                if (this.Confirmada)
+                {
+                    this.btnEditar.Enabled = false;
+                    this.btnGuardar.Enabled = false;
+                    this.btnCancelar.Enabled = false;
+                    this.btnEliminar.Enabled = false;
+                    this.btnConfirmar.Enabled = false;
+                    this.tabFactura.PageVisible = true;
+                }
+                else
+                {
+                    this.btnEditar.Enabled = true;
+                    this.btnGuardar.Enabled = false;
+                    this.btnCancelar.Enabled = false;
+                    this.tabFactura.PageVisible = false;
+                    this.btnEliminar.Enabled = true;
+                }
                 
-                this.btnEliminar.Enabled = true;
             }
             else if (Accion == "ReadOnly")
             {
@@ -100,6 +134,11 @@ namespace CO
                 this.btnGuardar.Enabled = false;
                 this.btnCancelar.Enabled = false;
                 this.btnEliminar.Enabled = false;
+                if (this.Confirmada)
+                {
+                    this.tabFactura.PageVisible = true;
+                }
+               
             }
         }
 
@@ -107,6 +146,7 @@ namespace CO
             this.txtOrdenCompra.ReadOnly = true;
             this.txtEmbarque.ReadOnly = true;
             this.txtProveedor.ReadOnly = true;
+            this.txtBodega.ReadOnly = true;
             
 
             if (Accion == "Add" || Accion == "Edit")
@@ -163,16 +203,19 @@ namespace CO
             this.txtBodega.Tag = cabecera["IDBodega"].ToString();
             this.txtProveedor.Text = cabecera["NombreProveedor"].ToString();
             this.txtProveedor.Tag = cabecera["IDProveedor"].ToString();
+            this.Confirmada = Convert.ToBoolean(cabecera["Confirmado"]);
             if (this.linkAsiento.Text != "")
             {
                 this.btnAplicar.Enabled = false;
                 this.btnEliminar.Enabled = false;
-                this.btnEditar.Enabled = false; 
+                this.btnEditar.Enabled = false;
+                this.btnRellenar.Enabled = false;
             }
             else
             {
                 this.btnAplicar.Enabled = true;
-                this.btnEliminar.Enabled = true;
+                this.btnEliminar.Enabled = (this.Confirmada) ? false : true;
+                this.btnRellenar.Enabled = (this.Confirmada) ? false : true;
             }
         }
 
@@ -180,9 +223,7 @@ namespace CO
             dtDetalleOrden = DAC.clsOrdenCompraDetalleDAC.Get(IDOrdenCompra).Tables[0];                                                              
             this.dtDetalleEmbarque = DAC.clsEmbarqueDetalleDAC.Get(IDEmbarque).Tables[0];
             this.dtEmbarque = DAC.clsEmbarqueDAC.GetByID(IDEmbarque, IDOrdenCompra).Tables[0];
-            
-            
-            
+    
             UpdateControlsFromData(dtEmbarque);
 
             if (IDEmbarque == -1 || this.dtDetalleEmbarque.Rows.Count == 0)
@@ -194,7 +235,8 @@ namespace CO
                     fila["IDEmbarque"] = 0;
                     fila["IDProducto"] = row["IDProducto"];
                     fila["DescrProducto"] = row["DescrProducto"];
-                    fila["Cantidad"] = row["Cantidad"];
+                    fila["PrecioUnitario"] = row["PrecioUnitario"];
+                    fila["CantidadOrdenada"] = row["Cantidad"];
                     fila["CantidadAceptada"] = 0;
 
                     this.dtDetalleEmbarque.Rows.Add(fila);
@@ -215,8 +257,7 @@ namespace CO
             {
 
                 TipoCambio = CG.TipoCambioDetalleDAC.GetLastTipoCambioFecha(DateTime.Now);
-                HabilitarControles();
-                HabilitarBotoneriaPrincipal();
+            
                 if (Accion == "Add")
                 {
                     
@@ -224,8 +265,6 @@ namespace CO
                     IDEmbarque = -1;
                     CargarEmbarque(IDOrdenCompra, IDEmbarque);
 
-                 
-                  
                     this.dtgLineasOrden.DataSource = dtDetalleOrden;
                     //this.dtgLineasEmbarque.DataSource =dtDetalleEmbarque;
                     this.dtgDetalleEmbarque.DataSource = dtDetalleEmbarque;
@@ -233,7 +272,9 @@ namespace CO
                 else
                 {
                     CargarEmbarque(this.IDOrdenCompra,this.IDEmbarque);
-                }    
+                }
+                HabilitarControles();
+                HabilitarBotoneriaPrincipal();
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.Message);
@@ -241,30 +282,102 @@ namespace CO
         }
 
 
+        private void CalcularTotalesEmbarque()
+        {
+            DataTable dtOdenCompra = clsOrdenCompraDAC.GetByID(this.IDOrdenCompra).Tables[0];
+            double MontoMercaderia = 0;
+            foreach (DataRow row in dtDetalleEmbarque.Rows)
+            {
+                MontoMercaderia = MontoMercaderia + Convert.ToDouble(((decimal)row["CantidadAceptada"] * (decimal)row["PrecioUnitario"]));
+            }
+
+            DataRow rowOrden = dtOrdenCompra.Rows.Count>0 ? dtOrdenCompra.Rows[0]: null;
+              Double MontoFlete,MontoSeguro;
+            if (rowOrden != null) {
+                MontoFlete = Convert.ToDouble((rowOrden["MontoFlete"] == DBNull.Value || rowOrden["MontoFlete"].ToString() == "") ? 0 : rowOrden["MontoFlete"]);
+                MontoSeguro = Convert.ToDouble((rowOrden["MontoSeguro"] == DBNull.Value || rowOrden["MontoSeguro"].ToString() == "") ? 0 : rowOrden["MontoSeguro"]);
+            }  else {
+                MontoFlete=0;
+                MontoSeguro=0;
+            }
+            MontoMercaderia += MontoSeguro + MontoFlete;
+            this.txtTotalMercaderia.EditValue = MontoMercaderia;
+            this.txtTotal.EditValue = MontoMercaderia + MontoFlete + MontoSeguro;
+        }
+
+        private void LoadObligacionProveedor()
+        {
+            if (dtEmbarque != null && dtEmbarque.Rows.Count > 0)
+            {
+                dtObligacionProveedor = clsObligacionProveedorDAC.Get(Convert.ToInt32(dtEmbarque.Rows[0]["IDEmbarque"]), -1).Tables[0];
+
+                if (dtObligacionProveedor.Rows.Count > 0)
+                {
+                    DataRow drObl = dtObligacionProveedor.Rows[0];
+                    this.IDObligacionProveedor = Convert.ToInt32(drObl["IDObligacion"]);
+                    this.txtFactura.Text = drObl["NumFactura"].ToString();
+                    this.txtPoliza.Text = drObl["NumPoliza"].ToString();
+                    this.txtGuiaBL.Text = drObl["Guia_BL"].ToString();
+                    this.dtpFechaFactura.EditValue = Convert.ToDateTime(drObl["Fecha"]);
+                    this.dtpFechaPoliza.EditValue = Convert.ToDateTime(drObl["FechaPoliza"]);
+                    this.dtpFechaVence.EditValue = Convert.ToDateTime(drObl["FechaVence"]);
+                    this.txtTipoCambio.EditValue = Convert.ToDecimal(drObl["TipoCambio"]);
+                    this.txtMontoFlete.EditValue = Convert.ToDecimal(drObl["MontoFlete"]);
+                    this.txtMontoSeguro.EditValue = Convert.ToDecimal(drObl["MontoSeguro"]);
+
+                    //Validar si tiene documento CP asociado
+                    string sDocCP = clsObligacionProveedorDAC.getDocumentoCP((int)this.ID_Embarque);
+
+                    if (sDocCP != "ND")
+                    {
+                        this.btnGenerarDocCPFactura.Enabled = false;
+                        this.txtAsiento.Text = sDocCP;
+                        this.btnGuardarFactura.Enabled = false;
+                        InactivarControles(true);
+                    }
+                    else
+                    {
+                        this.btnGenerarDocCPFactura.Enabled = true;
+                        this.txtAsiento.Text = "";
+                        this.btnGuardarFactura.Enabled = true;
+                        InactivarControles(false);
+                    }
+
+                }
+                else
+                {
+                    this.btnGenerarDocCPFactura.Enabled = true;
+                    this.txtAsiento.Text = "";
+                    InactivarControles(false);
+                }
+
+
+                CalcularTotalesEmbarque();
+
+            }
+            else
+            {
+                this.btnGenerarDocCPFactura.Enabled = false;
+            }
+        }
+
+
+        private void InactivarControles(bool flag)
+        {
+            this.txtFactura.ReadOnly = flag;
+            this.txtPoliza.ReadOnly = flag;
+            this.txtGuiaBL.ReadOnly = flag;
+            this.dtpFechaFactura.ReadOnly = flag;
+            this.dtpFechaPoliza.ReadOnly = flag;
+            this.dtpFechaVence.ReadOnly = flag;
+            this.txtTipoCambio.ReadOnly = flag;
+            
+        }
+
         private void frmEmbarque_Load(object sender, EventArgs e)
         {
             try
             {
-               
-                //this.gridView2.EditFormPrepared += gridView1_EditFormPrepared;
-                //this.gridView2.NewItemRowText = Util.Util.constNewItemTextGrid;
-                ////this.gridView1.ValidatingEditor += GridView1_ValidatingEditor;
-                //this.gridView2.ValidateRow += gridView1_ValidateRow;
-                //this.gridView2.InvalidRowException += gridView1_InvalidRowException;
-                //this.gridView2.RowUpdated += gridView1_RowUpdated;
-                ////this.gridView1.ShownEditor += gridView1_ShownEditor;
-                ////this.dtgDetalle.ProcessGridKey += dtgDetalleSolicitud_ProcessGridKey;
-                ////this.gridView1.ValidatingEditor += gridView1_ValidatingEditor;
-
-
-
-                //this.gridView2.InitNewRow += gridView1_InitNewRow;
-                ////this.gridView1.CustomColumnDisplayText += gridView1_CustomColumnDisplayText;
-
-                ////Util.Util.SetDefaultBehaviorControls(this.gridView1, true, null, "Embarque", this);
-                ////Util.Util.SetDefaultBehaviorControls(this.gridView2, true, null, "Embarque", this);
-                ////slkupIDProducto
-
                 //Validar que el consecutivo de Solicitud de Compra este asociado 
                 String Consec = clsUtilDAC.GetParametroCompra("IDConsecEmbarque").Tables[0].Rows[0][0].ToString();
                 if (Consec == null || Consec.Trim() == "")
@@ -274,7 +387,21 @@ namespace CO
                 }
 
                 dtProductos = CI.DAC.clsProductoDAC.GetData(-1, "*", "*", -1, -1, -1, -1, -1, -1, "*", -1, -1, -1).Tables[0];
-                dtLotes = CI.DAC.clsLoteDAC.GetData(-1, -1, "*", "*").Tables[0];
+                
+                
+                dtMoneda = ControlBancario.DAC.MonedaDAC.GetMoneda(-1).Tables[0];
+                dtProveedor = DAC.clsProveedorDAC.Get(-1, "*", -1).Tables[0];
+                dtGastos = DAC.clsGastosCompraDAC.Get(-1, "*").Tables[0];
+
+                Util.Util.ConfigLookupEdit(this.slkupMonedaOtrosPagos, dtMoneda, "Descr", "IDMoneda");
+                Util.Util.ConfigLookupEditSetViewColumns(this.slkupMonedaOtrosPagos, "[{'ColumnCaption':'ID','ColumnField':'IDMoneda','width':30},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':70}]");
+               
+                Util.Util.ConfigLookupEdit(this.slkupProveedorOtrosPagos, dtProveedor, "Nombre", "IDProveedor");
+                Util.Util.ConfigLookupEditSetViewColumns(this.slkupProveedorOtrosPagos, "[{'ColumnCaption':'ID','ColumnField':'IDProveedor','width':30},{'ColumnCaption':'Nombre','ColumnField':'Nombre','width':70}]");
+
+                Util.Util.ConfigLookupEdit(this.slkupGastosOtrosPagos, dtGastos, "Descripcion", "IDGasto");
+                Util.Util.ConfigLookupEditSetViewColumns(this.slkupGastosOtrosPagos, "[{'ColumnCaption':'ID','ColumnField':'IDGasto','width':30},{'ColumnCaption':'Descripción','ColumnField':'Descripcion','width':70}]");
+
 
                 this.slkupIDProducto.DataSource = dtProductos;
                 this.slkupIDProducto.DisplayMember = "IDProducto";
@@ -291,8 +418,15 @@ namespace CO
                 this.slkupDescrProducto.EditValueChanged += slkup_EditValueProductoChanged;
                 this.slkupDescrProducto.Popup += slkup_Popup;
 
+                this.gridViewOtrosPagos.FocusedRowChanged += gridViewOtrosPagos_FocusedRowChanged;
 
                 LoadData();
+
+                LoadObligacionProveedor();
+
+                LoadOtrosGastos();
+                HabilitarBotonesOtrosPagos();
+                HabilitarControlesOtrosPagos(false);
             }
             catch (Exception ex)
             {
@@ -301,12 +435,27 @@ namespace CO
 
         }
 
-        void slkupLote_BeforePopup(object sender, EventArgs e)
+        void gridViewOtrosPagos_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
         {
-            MessageBox.Show("Se muestra antes de asociar el lote");
+            SetCurrentRowOtrosPagos();
         }
 
-   
+        void LoadOtrosGastos()
+        {
+            if (IDObligacionProveedor != -1)
+            {
+                dtObligacionDetalle = DAC.clsObligacionDetalleDAC.Get(-1, IDObligacionProveedor).Tables[0];
+                this.dtgOtrosPagos.DataSource = dtObligacionDetalle;
+                this.tabOtros.PageVisible = true;
+            }
+            else
+            {
+                this.tabOtros.PageVisible = false;
+            }
+
+        }
+
+        
 
         private void slkup_Popup(object sender, EventArgs e)
         {
@@ -463,7 +612,7 @@ namespace CO
             {
                 if (fila.RowState != DataRowState.Deleted)
                 {
-                    if (fila["Cantidad"] == DBNull.Value || Convert.ToDecimal(fila["Cantidad"]) == 0)
+                    if (fila["CantidadAceptada"] == DBNull.Value || Convert.ToDecimal(fila["CantidadAceptada"]) == 0)
                         sMensaje = "  • El producto " + fila["DescrProducto"].ToString() + " debe de tener la cantidad recibida\r\n";
                     
                 }
@@ -471,26 +620,6 @@ namespace CO
 
             DataTable dtDetalle = ((DataTable)this.dtgDetalleEmbarque.DataSource);
 
-            //DataTable _dtImportacionConsolidada = dtDetalle.AsEnumerable().
-            //          GroupBy(r => new { IDProdcuto = r["IDProducto"] }).
-            //          Select(g =>
-            //          {
-            //              var row = dtDetalle.NewRow();
-            //              row["Cantidad"] = g.Sum(r => Convert.ToDecimal(r["Cantidad"]));
-            //              row["IDProducto"] = g.Key.IDProdcuto;
-            //              return row;
-            //          }
-            //          ).CopyToDataTable();
-            //foreach (DataRow dr in _dtImportacionConsolidada.Rows) {
-            //    DataView dv = dtDetalleOrden.DefaultView;
-            //    dv.RowFilter = "IDProducto =" + dr["IDProducto"].ToString();
-            //    DataTable dtTemp = dv.ToTable();
-            //    if (Convert.ToDecimal(dr["Cantidad"]) != Convert.ToDecimal(dtTemp.Rows[0]["Cantidad"]))
-            //    {
-            //        MessageBox.Show("Por favor verifique las cantidades del embarque deben de ser iguales a la orden de compra.");
-            //        Resultado = false;
-            //    }
-            //}
             
             if (sMensaje != "")
             {
@@ -513,7 +642,6 @@ namespace CO
                     Fecha = Convert.ToDateTime(this.dtpFecha.EditValue);
                     FechaEmbarque = Convert.ToDateTime(this.dtpFechaEmbarque.EditValue);
                     IDProveedor = Convert.ToInt32(this.txtProveedor.Tag);
-                    //IDOrdenCompra = Convert.ToInt64(this.txtOrdenCompra.Tag);
                     Embarque = this.txtEmbarque.EditValue.ToString().Trim();
                     IDBodega = Convert.ToInt32(this.txtBodega.Tag);
 
@@ -534,9 +662,9 @@ namespace CO
                         {
                             if (row.RowState != DataRowState.Deleted)
                             {
-                                decimal CantidadRechazada = (decimal)row["Cantidad"] - (decimal)row["CantidadAceptada"];
-                                DAC.clsEmbarqueDetalleDAC.InsertUpdate("I", IDEmbarque, (long)row["IDProducto"], (decimal)row["Cantidad"], (decimal)row["CantidadAceptada"], CantidadRechazada, "", ConnectionManager.Tran);
-                                DAC.clsOrdenCompraDetalleDAC.UpdateCantidadRecibida(IDOrdenCompra, (long)row["IDProducto"], (decimal)row["Cantidad"],ConnectionManager.Tran);
+                                decimal CantidadRechazada = (decimal)row["CantidadOrdenada"] - (decimal)row["CantidadAceptada"];
+                                DAC.clsEmbarqueDetalleDAC.InsertUpdate("I", IDEmbarque, (long)row["IDProducto"],(decimal) row["PrecioUnitario"], (decimal)row["CantidadOrdenada"], (decimal)row["CantidadAceptada"], CantidadRechazada, "", ConnectionManager.Tran);
+                                DAC.clsOrdenCompraDetalleDAC.UpdateCantidadRecibida(IDOrdenCompra, (long)row["IDProducto"], (decimal)row["CantidadAceptada"],ConnectionManager.Tran);
                             }
                         }
 
@@ -547,16 +675,16 @@ namespace CO
                         IDEmbarque = DAC.clsEmbarqueDAC.InsertUpdate("U", IDEmbarque,ref Embarque, Fecha, FechaEmbarque, null, IDBodega, IDProveedor, IDOrdenCompra, -1, 0, sUsuario, DateTime.Now, sUsuario, DateTime.Now, sUsuario, ConnectionManager.Tran);
                         
                          //Eliminamos el detalle y lo volvemos a insertar
-                        DAC.clsEmbarqueDetalleDAC.InsertUpdate("D", IDEmbarque,-1,0,0,0,"", ConnectionManager.Tran);
+                        DAC.clsEmbarqueDetalleDAC.InsertUpdate("D", IDEmbarque,-1,0,0,0,0,"", ConnectionManager.Tran);
                         DAC.clsOrdenCompraDetalleDAC.UpdateCantidadRecibida(IDOrdenCompra, -1,0, ConnectionManager.Tran);
                         foreach (DataRow row in dt.Rows)
                         {
                             if (row.RowState != DataRowState.Deleted)
                             {
-                                decimal CantidadRechazada = (decimal)row["Cantidad"] - (decimal)row["CantidadAceptada"];
+                                decimal CantidadRechazada = (decimal)row["CantidadOrdenada"] - (decimal)row["CantidadAceptada"];
                                 CantidadRechazada = (CantidadRechazada > 0) ? CantidadRechazada : 0;
-                                DAC.clsEmbarqueDetalleDAC.InsertUpdate("I", IDEmbarque, (long)row["IDProducto"], (decimal)row["Cantidad"], (decimal)row["CantidadAceptada"], CantidadRechazada, "", ConnectionManager.Tran);
-                                DAC.clsOrdenCompraDetalleDAC.UpdateCantidadRecibida(IDOrdenCompra, (long)row["IDProducto"], (decimal)row["Cantidad"], ConnectionManager.Tran);
+                                DAC.clsEmbarqueDetalleDAC.InsertUpdate("I", IDEmbarque, (long)row["IDProducto"], (decimal)row["PrecioUnitario"], (decimal)row["CantidadOrdenada"], (decimal)row["CantidadAceptada"], CantidadRechazada, "", ConnectionManager.Tran);
+                                DAC.clsOrdenCompraDetalleDAC.UpdateCantidadRecibida(IDOrdenCompra, (long)row["IDProducto"], (decimal)row["CantidadAceptada"], ConnectionManager.Tran);
                             }
                         }
 
@@ -595,7 +723,7 @@ namespace CO
                         ConnectionManager.BeginTran();
 
                         DAC.clsEmbarqueDAC.InsertUpdate("D", IDEmbarque, ref Embarque ,DateTime.Now, DateTime.Now,"",-1,-1,-1,-1,0,"",DateTime.Now,"",DateTime.Now,"", ConnectionManager.Tran);                            
-                        DAC.clsEmbarqueDetalleDAC.InsertUpdate("D",IDEmbarque,-1,0,0,0,"", ConnectionManager.Tran);
+                        DAC.clsEmbarqueDetalleDAC.InsertUpdate("D",IDEmbarque,-1,0,0,0,0,"", ConnectionManager.Tran);
                         ConnectionManager.CommitTran();
                         MessageBox.Show("El embarque ha sido eliminado correctamente");
                     }
@@ -676,13 +804,283 @@ namespace CO
                 fila["IDEmbarque"] = 0;
                 fila["IDProducto"] = row["IDProducto"];
                 fila["DescrProducto"] = row["DescrProducto"];
-                fila["Cantidad"] = row["Cantidad"];
+                fila["CantidadOrdenada"] = row["Cantidad"];
                 fila["CantidadAceptada"] = row["Cantidad"];
                 this.dtDetalleEmbarque.Rows.Add(fila);
             }
             this.dtgDetalleEmbarque.DataSource = null;
             this.dtgDetalleEmbarque.DataSource = dtDetalleEmbarque;
         }
+
+        private void btnConfirmar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            bool result = clsEmbarqueDAC.ConfirmarEmbarque((int)this.ID_Embarque, true, null);
+            if (result) { 
+                MessageBox.Show("El Embarque ha sido confirmado");
+                this.tabFactura.PageVisible = true;
+                this.xtraTabControl1.SelectedTabPage = this.tabFactura;
+                CalcularTotalesEmbarque();
+            }
+        }
+
+
+        private void ObtenerDatosFactura() {
+            this.Factura = this.txtFactura.Text.Trim();
+            this.GuiaBL = this.txtGuiaBL.Text.Trim();
+            this.Poliza = this.txtPoliza.Text.Trim();
+            this.FechaFactura = Convert.ToDateTime(this.dtpFechaFactura.EditValue);
+            this.FechaVence = Convert.ToDateTime(this.dtpFechaVence.EditValue);
+            this.FechaPoliza = Convert.ToDateTime(this.dtpFechaPoliza.EditValue);
+            this.TipoCambioPoliza = Convert.ToDouble(this.txtTipoCambio.EditValue);
+            this.ValorMercaderia = Convert.ToDouble(this.txtTotalMercaderia.EditValue);
+            this.MontoSeguro = Convert.ToDouble(this.txtMontoSeguro.EditValue);
+            this.MontoFlete = Convert.ToDouble(this.txtMontoFlete.EditValue);
+            this.MontoTotal = Convert.ToDouble(this.txtTotal.EditValue);
+        }
+
+        private bool ValidarDatosFactura()
+        {
+            String sMensaje = "";
+            if (this.txtFactura.Text.Trim() == "")
+                sMensaje = sMensaje + " • Factura. \n\r";
+            if (this.txtPoliza.Text.Trim() == "")
+                sMensaje = sMensaje + " • Poliza \n\r";
+            if (this.txtTipoCambio.Text.Trim() == "")
+                sMensaje = sMensaje + " • Tipo de Cambio \n\r";
+            if (Convert.ToDateTime(this.dtpFechaVence.EditValue) < Convert.ToDateTime(this.dtpFechaFactura.EditValue))
+                sMensaje = sMensaje + " • La fecha de vencimiento no puede ser menor a la fecha de factura";
+            if (sMensaje != "")
+            {
+                MessageBox.Show("Por favor verifique los siguientes campos: \n\r" + sMensaje);
+                return false;
+            }
+            
+            else
+            {
+                return true;
+            }
+        }
+
+        private void GuardarDatosFactura()
+        {
+
+            try
+            {
+                String AccionDatosFactura = "";
+                if (IDObligacionProveedor == -1)
+                    AccionDatosFactura = "I";
+                else
+                    AccionDatosFactura = "U";
+                ConnectionManager.BeginTran();
+                clsObligacionProveedorDAC.InsertUpdate(AccionDatosFactura, ref IDObligacionProveedor, (int)IDEmbarque, false, FechaFactura, FechaVence, FechaPoliza, Poliza, Factura, GuiaBL, (decimal)TipoCambio, (decimal)ValorMercaderia, (decimal)MontoFlete, (decimal)MontoSeguro, (decimal)MontoTotal, ConnectionManager.Tran);
+                ConnectionManager.CommitTran();
+            }
+            catch (Exception ex)
+            {
+                ConnectionManager.RollBackTran();
+                MessageBox.Show("Ha ocurrido un error tratando de actualizar los datos de compra");
+            }
+        }
+
+        private void btnGuardarFactura_Click(object sender, EventArgs e)
+        {
+            if (ValidarDatosFactura()) {
+                ObtenerDatosFactura();
+                GuardarDatosFactura();
+            }
+        }
+
+        private void dtpFechaFactura_EditValueChanged(object sender, EventArgs e)
+        {
+            String sTipoCambio = CG.ParametrosContabilidadDAC.GetTipoCambioModulo();
+            DataSet DS = CG.TipoCambioDetalleDAC.GetData(sTipoCambio, Convert.ToDateTime(this.dtpFechaFactura.EditValue));
+            this.TipoCambioPoliza = Convert.ToDouble((DS.Tables[0].Rows.Count == 0) ? 0 : DS.Tables[0].Rows[0]["Monto"]);
+            this.txtTipoCambio.EditValue = this.TipoCambioPoliza;
+
+        }
+
+        private void btnGenerarDocCPFactura_Click(object sender, EventArgs e)
+        {
+            //GenerarDocumento CP
+
+            InactivarControles(false);
+        }
+        private void HabilitarControlesOtrosPagos(bool Flag)
+        {
+            this.dtpFechaOtrosPagos.ReadOnly = !Flag;
+            this.txtDocumentoOtrosPagos.ReadOnly = !Flag;
+            this.slkupProveedorOtrosPagos.ReadOnly = !Flag;
+            this.slkupMonedaOtrosPagos.ReadOnly = !Flag;
+            this.slkupMonedaOtrosPagos.ReadOnly = !Flag;
+            this.txtMontoOtrosPagos.ReadOnly = !Flag;
+            this.slkupGastosOtrosPagos.ReadOnly = !Flag;
+            this.dtgOtrosPagos.Enabled = !Flag;
+        }
+        private void HabilitarBotonesOtrosPagos()
+        {
+            if (AccionOtrosPagos == "New" ||  AccionOtrosPagos=="Edit")
+            {
+                this.btnAgregarOtrosPagos.Enabled = false;
+                this.btnEditarOtrosPagos.Enabled = false;
+                this.btnCancelarOtrosPagos.Enabled = true;
+                this.btnGuardarOtrosPagos.Enabled = true;
+                this.btnEliminarOtrosGastos.Enabled = false;
+            }
+            else  
+            {
+                this.btnAgregarOtrosPagos.Enabled = true;
+                this.btnEditarOtrosPagos.Enabled = true;
+                this.btnCancelarOtrosPagos.Enabled = false;
+                this.btnGuardarOtrosPagos.Enabled = false;
+                this.btnEliminarOtrosGastos.Enabled = true;
+            }
+        }
+
+        private void btnAgregarOtrosPagos_Click(object sender, EventArgs e)
+        {
+            AccionOtrosPagos = "New";
+            HabilitarControlesOtrosPagos(true);
+            HabilitarBotonesOtrosPagos();
+            this.dtpFechaOtrosPagos.Focus();
+           // this.dtgOtrosPagos.Enabled = false;
+        }
+
+
+        private void UpdateControlsFromCurrentRow(DataRow Row)
+        {
+            this.dtpFechaOtrosPagos.EditValue = Convert.ToDateTime(Row["FechaDocumento"]);
+            this.txtDocumentoOtrosPagos.EditValue = Row["Documento"].ToString();
+            this.txtMontoOtrosPagos.EditValue = Convert.ToDecimal(Row["Monto"]);
+            this.slkupGastosOtrosPagos.EditValue = Convert.ToInt32(Row["IDGasto"]);
+            this.slkupProveedorOtrosPagos.EditValue = Convert.ToInt32(Row["IDProveedor"]);
+            this.slkupMonedaOtrosPagos.EditValue = Convert.ToInt32(Row["IDMoneda"]);
+        }
+
+
+        private void LimpiarControles()
+        {
+            this.dtpFechaOtrosPagos.EditValue=  null;
+            this.txtDocumentoOtrosPagos.EditValue = null;
+            this.txtMontoOtrosPagos.EditValue = null;
+            this.slkupGastosOtrosPagos.EditValue = null;
+            this.slkupProveedorOtrosPagos.EditValue = null;
+            this.slkupMonedaOtrosPagos.EditValue = null;
+            this.dtgOtrosPagos.Refresh();
+            this.gridViewOtrosPagos.ClearSelection();
+            this.gridViewOtrosPagos.UnselectRow(this.gridViewOtrosPagos.);
+            this.gridViewOtrosPagos.FocusedRowHandle = -1;
+        }
+
+        private void SetCurrentRowOtrosPagos()
+        {
+            int index = (int)this.gridViewOtrosPagos.FocusedRowHandle;
+            if (index > -1)
+            {
+                currentRowOtrosPagos= gridViewOtrosPagos.GetDataRow(index);
+                UpdateControlsFromCurrentRow(currentRowOtrosPagos);
+            }
+        }
+
+        private void btnEditarOtrosPagos_Click(object sender, EventArgs e)
+        {
+            if (this.currentRowOtrosPagos != null)
+            {
+                AccionOtrosPagos = "Edit";
+                HabilitarControlesOtrosPagos(true);
+                HabilitarBotonesOtrosPagos();
+                this.dtpFechaOtrosPagos.Focus();
+                //this.dtgOtrosPagos.Enabled = false;
+            }
+        }
+
+        private void btnCancelarOtrosPagos_Click(object sender, EventArgs e)
+        {
+            AccionOtrosPagos = "View";
+            LimpiarControles();
+            HabilitarControlesOtrosPagos(true);
+            HabilitarBotonesOtrosPagos();
+            this.dtgOtrosPagos.Enabled = true;
+                
+        }
+
+        private bool ValidarDatosOtrosPagos()
+        {
+            String sMsg = "";
+            if (this.dtpFechaOtrosPagos.EditValue == null)
+                sMsg = sMsg + " • Seleccion la fecha del documento \n\r";
+            if (this.txtDocumentoOtrosPagos.EditValue == null) 
+                sMsg = sMsg + " • Digite el numero del documento \n\r";
+            if (this.txtMontoOtrosPagos.EditValue == null)
+                sMsg = sMsg + " • Digite el Monto del documento \n\r";
+            if (this.slkupGastosOtrosPagos.EditValue == null)
+                sMsg = sMsg + " • Seleccione el gasto al que pertenece el documento \n\r";
+            if (this.slkupProveedorOtrosPagos.EditValue == null)
+                sMsg = sMsg + " • Seleccione el proveedor al que pertenece el documento \n\r";
+            if (sMsg != "")
+            {
+                MessageBox.Show("Por favor revise los datos \n\r" + sMsg);
+                return false;
+            }
+            else
+                return true;
+        }
+
+        private void btnGuardarOtrosPagos_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (ValidarDatosOtrosPagos())
+                {
+                    String sAccion = "";
+                    if (AccionOtrosPagos == "New")
+                        sAccion = "I";
+                    else
+                        sAccion = "U";
+
+                    ConnectionManager.BeginTran();
+                    DAC.clsObligacionDetalleDAC.InsertUpdate(sAccion,ref IDObligacionDetalle, IDObligacionProveedor, Convert.ToInt32(this.slkupProveedorOtrosPagos.EditValue), this.txtDocumentoOtrosPagos.Text.Trim(), false, Convert.ToDateTime(this.dtpFechaOtrosPagos.EditValue), Convert.ToDecimal(this.txtMontoOtrosPagos.EditValue), Convert.ToInt32(this.slkupMonedaOtrosPagos.EditValue),Convert.ToInt32(this.slkupGastosOtrosPagos.EditValue), ConnectionManager.Tran);
+                    ConnectionManager.CommitTran();
+
+                    //dtObligacionDetalle = DAC.clsObligacionDetalleDAC.Get(-1, this.IDObligacionProveedor).Tables[0];
+                    //this.dtgOtrosPagos.DataSource = dtObligacionDetalle;
+                    LimpiarControles();
+                    this.AccionOtrosPagos = "View";
+                    HabilitarBotonesOtrosPagos();
+                    HabilitarControlesOtrosPagos(false);
+                    this.dtgOtrosPagos.Enabled = true;
+                    this.LoadOtrosGastos();
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                ConnectionManager.RollBackTran();
+                MessageBox.Show("Ha ocurrido errores, al momento de guardar el documento");
+            }
+        }
+
+        private void btnEliminarOtrosGastos_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (this.currentRowOtrosPagos != null)
+                {
+                    ConnectionManager.BeginTran();
+                    this.IDObligacionDetalle =Convert.ToInt32(this.currentRowOtrosPagos["IDObligacionDetalle"]);
+                    DAC.clsObligacionDetalleDAC.InsertUpdate("D", ref IDObligacionDetalle, -1, -1, "", false, DateTime.Now, 0, -1, -1, ConnectionManager.Tran);
+                    ConnectionManager.CommitTran();
+                    LimpiarControles();
+                    LoadOtrosGastos();
+                }
+            }
+            catch (Exception ex) {
+                ConnectionManager.RollBackTran();
+                MessageBox.Show("Ha ocurrido errores al momento de eliminar el documento");
+            }
+        }
+
+        
 
        
 

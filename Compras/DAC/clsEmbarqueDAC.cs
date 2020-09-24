@@ -111,6 +111,28 @@ namespace CO.DAC
         }
 
 
+        public static bool ConfirmarEmbarque(int IDEmbarque, bool Confirmado, SqlTransaction tran)
+        {
+            bool bresult = false;
+            long result;
+            String strSQL = "dbo.coConfirmarEmbarque";
+
+            SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
+
+            oCmd.Parameters.Add(new SqlParameter("@IDEmbarque", IDEmbarque));
+            oCmd.Parameters.Add(new SqlParameter("@Confirmado", Confirmado));
+            
+            oCmd.CommandType = CommandType.StoredProcedure;
+            oCmd.Transaction = tran;
+            if (oCmd.Connection.State != ConnectionState.Open)
+                oCmd.Connection.Open();
+            result = oCmd.ExecuteNonQuery();
+              bresult = (result!=0) ? true : false;
+            return bresult;
+
+        }
+
+
 
         public static DataSet Get(int IDEmbarque, DateTime FechaInicial, DateTime FechaFinal, int IDProveedor,
                                 int IDSolicitud, string OrdenCompra,string Embarque ,int IDDocumentoCP)

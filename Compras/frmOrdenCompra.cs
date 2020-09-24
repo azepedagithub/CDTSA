@@ -348,6 +348,12 @@ namespace CO
                     this.Close();
                 }
 
+
+                this.dtpFechaCotizacion.EditValue = DateTime.Now;
+                this.dtpFechaOrden.EditValue = DateTime.Now;
+                this.dtpFechaEmision.EditValue = DateTime.Now;
+
+
                 this.gridView1.EditFormPrepared += gridView1_EditFormPrepared;
                 this.gridView1.NewItemRowText = Util.Util.constNewItemTextGrid;
                 this.gridView1.ValidateRow += gridView1_ValidateRow;
@@ -670,8 +676,19 @@ namespace CO
                 sMensaje = "   • Fecha Requerida de Embarque \r\n";
             if (this.dtpFechaCotizacion.EditValue == null || this.dtpFechaCotizacion.EditValue.ToString() == "" )
                 sMensaje = "   • Fecha de Cotizacion \r\n";
-            
+            if (Convert.ToDateTime(this.dtpFechaCotizacion.EditValue) < Convert.ToDateTime(this.dtpFechaRequerida.EditValue)) 
+                sMensaje = "   • Fecha de Cotizacion debe de ser menor a la fecha Requerida \r\n";
+            if (Convert.ToDateTime(this.dtpFechaCotizacion.EditValue) < Convert.ToDateTime(this.dtpFechaRequeridaEmbarque.EditValue))
+                sMensaje = "   • Fecha de Cotizacion debe de ser menor a la fecha Requerida de Embarque \r\n";
+            if (Convert.ToDateTime(this.dtpFechaEmision.EditValue) < Convert.ToDateTime(this.dtpFechaRequerida.EditValue))
+                sMensaje = "   • Fecha de Emision debe de ser menor a la fecha Requerida \r\n";
 
+            if (Convert.ToDateTime(this.dtpFechaEmision.EditValue) < Convert.ToDateTime(this.dtpFechaRequeridaEmbarque.EditValue))
+                sMensaje = "   • Fecha de Emision debe de ser menor a la fecha Requerida de Embarque \r\n";
+
+            if (Convert.ToDateTime(this.dtpFechaFactura.EditValue) < Convert.ToDateTime(this.dtpFechaRequerida.EditValue))
+                sMensaje = "   • Fecha de Factura debe de ser menor a la fecha Requerida de Embarque \r\n";
+            
             if (((DataTable)this.dtgDetalle.DataSource).Rows.Count == 0)
                 sMensaje = sMensaje = "   • Por favor agrege al menos un elemento al detalle de la solicitud \r\n";
             foreach (DataRow fila in ((DataTable)this.dtgDetalle.DataSource).Rows)
@@ -1124,6 +1141,12 @@ namespace CO
 
         private void btnDesconfirmar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+            //Validar
+            DataTable dt = clsEmbarqueDAC.GetByID(-1, this.IDOrdenCompra).Tables[0];
+            if (dt.Rows.Count > 0) {
+                MessageBox.Show("No se puede desconfirmar, posee embarques asociados");
+                return;
+            }
             ConnectionManager.BeginTran();
             clsOrdenCompraDAC.DesConfirmarOrdenCompra(this.IDOrdenCompra, ConnectionManager.Tran);
             dtOrdenCompra.Rows[0]["IDEstado"] = 1;
@@ -1135,6 +1158,14 @@ namespace CO
 
         private void btnAnular_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+
+            //Validar
+            DataTable dt = clsEmbarqueDAC.GetByID(-1, this.IDOrdenCompra).Tables[0];
+            if (dt.Rows.Count > 0)
+            {
+                MessageBox.Show("No se puede Anular, posee embarques asociados");
+                return;
+            }
             ConnectionManager.BeginTran();
             clsOrdenCompraDAC.CancelarOrdenCompra(this.IDOrdenCompra, ConnectionManager.Tran);
             dtOrdenCompra.Rows[0]["IDEstado"] = 4;
@@ -1223,6 +1254,16 @@ namespace CO
         {
             String Ruta = Path.Combine(Directory.GetCurrentDirectory(), "FilesTemplate/import_Orden.xlsx"); 
             System.Diagnostics.Process.Start(@Ruta);
+        }
+
+        private void slkupProveedor_EditValueChanged(object sender, EventArgs e)
+        {
+            DataRowView drProveedor = this.slkupProveedor.GetSelectedDataRow() as DataRowView;
+            if (drProveedor.Row != null)
+            {
+                this.slkupMoneda.EditValue = Convert.ToInt32(drProveedor["IDMoneda"]);
+                this.slkupMoneda.Enabled = (Convert.ToBoolean(drProveedor["MultiMoneda"]) == true) ? true : false;
+            }
         }                                       
 
 
