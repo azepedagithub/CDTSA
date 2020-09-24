@@ -967,7 +967,6 @@ namespace CO
             this.slkupMonedaOtrosPagos.EditValue = null;
             this.dtgOtrosPagos.Refresh();
             this.gridViewOtrosPagos.ClearSelection();
-            this.gridViewOtrosPagos.UnselectRow(this.gridViewOtrosPagos.);
             this.gridViewOtrosPagos.FocusedRowHandle = -1;
         }
 
