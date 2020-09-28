@@ -327,10 +327,13 @@ GO
 
 
 
-CREATE   TABLE dbo.coEmbarqueDetalle (
+CREATE TABLE dbo.coEmbarqueDetalle (
 	IDEmbarque INT NOT NULL,
 	IDProducto BIGINT NOT NULL,
 	PrecioUnitario DECIMAL(28,8) DEFAULT 0,
+	Impuesto DECIMAL(28,8) DEFAULT 0,
+	PorcDesc DECIMAL(28,8) DEFAULT 0,
+	MontoDesc DECIMAL(28,8) DEFAULT 0,
 	CantidadOrdenada DECIMAL(28,4) DEFAULT  0,
 	CantidadAceptada DECIMAL(28,4) DEFAULT 0,
 	CantidadRechazada  DECIMAL(28,4) DEFAULT 0,
@@ -385,14 +388,17 @@ REFERENCES [dbo].coEmbarque (IDEmbarque)
 GO
 
 
-CREATE TABLE dbo.coObligacionDetalle (
+CREATE TABLE  dbo.coObligacionDetalle (
 	IDObligacionDetalle INT NOT NULL,
 	IDObligacion INT NOT NULL,
 	IDProveedor INT NOT NULL,
 	Documento NVARCHAR(100) NOT NULL,
 	flgDocCPGenerado BIT DEFAULT 0,
 	FechaDocumento DATE,
-	Monto DECIMAL(28,8) DEFAULT 0,
+	SubTotal DECIMAL(28,8) DEFAULT 0,
+	PorcImpuesto DECIMAL(28,8) DEFAULT 0,
+	Impuesto DECIMAL(28,8) DEFAULT 0,
+	MontoTotal DECIMAL(28,8) DEFAULT 0,
 	IDMoneda INT,
 	IDGasto INT
 CONSTRAINT [pkcoObligacionDetalle] PRIMARY KEY CLUSTERED 
@@ -473,6 +479,7 @@ CREATE TABLE dbo.coParametrosCompra(
 	IDConsecOrdenCompra int,
 	IDConsecEmbarque int,
 	IDConsecDevolucion int,
+	IDConsecLiquidacion int,
 	CantLineasOrdenCompra int,
 	IDBodegaDefault int,
 	IDTipoCambio NVARCHAR(20),
@@ -496,9 +503,11 @@ CREATE TABLE dbo.coParametrosCompra(
 GO
 
 
-CREATE TABLE dbo.coGastosCompra (
+CREATE TABLE  dbo.coGastosCompra (
 	IDGasto INT NOT NULL IDENTITY(1,1),
 	Descripcion nvarchar(250) NOT NULL,
+	flgReadOnly BIT DEFAULT 0,
+	flgIsFactura BIT DEFAULT 0,
 	Activo BIT	 ,
 CONSTRAINT [pkcoGastoCompra] PRIMARY KEY CLUSTERED 
 (
@@ -508,16 +517,14 @@ CONSTRAINT [pkcoGastoCompra] PRIMARY KEY CLUSTERED
 
 GO
 
-CREATE  TABLE dbo.coLiquidacionCompra (
+
+
+CREATE TABLE dbo.coLiquidacionCompra (
 	IDLiquidacion INT NOT NULL IDENTITY(1,1),
+	Liquidacion NVARCHAR(20) NOT NULL,
 	IDEmbarque INT NOT NULL,
 	IDOrdenCompra INT NOT NULL,
 	Fecha DATETIME NOT NULL,
-	FechaVence DATE,
-	FechaPoliza DATE,
-	NumPoliza NVARCHAR(250),
-	NumFactura NVARCHAR(250),
-	Guia_BL NVARCHAR(250),
 	TipoCambio DECIMAL(28,8) DEFAULT 0, 
 	ValorMercaderia DECIMAL(28,8) DEFAULT 0,
 	MontoFlete DECIMAL(28,8) DEFAULT 0,
@@ -560,7 +567,7 @@ GO
 
 
 
-CREATE TABLE dbo.coGastoLiquidacionDetallado (
+CREATE  TABLE dbo.coGastoLiquidacionDetallado (
 	IDLiquidacion INT NOT NULL,	
 	IDGasto INT NOT NULL ,
 	IDProducto BIGINT NOT NULL,
@@ -594,9 +601,9 @@ GO
 
 --INICIALIZACION DE TABLAS
 
-INSERT INTO dbo.coParametrosCompra( IDParametro ,IDConsecSolicitud ,IDConsecOrdenCompra ,IDConsecEmbarque ,IDConsecDevolucion ,CantLineasOrdenCompra ,IDBodegaDefault ,
+INSERT INTO dbo.coParametrosCompra( IDParametro ,IDConsecSolicitud ,IDConsecOrdenCompra ,IDConsecEmbarque ,IDConsecDevolucion,IDConsecLiquidacion ,CantLineasOrdenCompra ,IDBodegaDefault ,
           IDTipoCambio ,CantDecimalesPrecio ,CantDecimalesCantidad ,IDTipoAsientoContable ,IDPaquete ,CtaTransitoLocal ,CtrTransitoLocal ,CtaTransitoExterior ,CtrTransitoExterior ,AplicaAutomaticamenteAsiento ,CanEditAsiento ,CanViewAsiento)
-VALUES (1,NULL,NULL,NULL,NULL,20,NULL,NULL,4,4,NULL,NULL,NULL,NULL,NULL,NULL,0,1,1)
+VALUES (1,NULL,NULL,NULL,NULL,7,20,NULL,NULL,4,4,NULL,NULL,NULL,NULL,NULL,NULL,0,1,1)
 
 GO
 
@@ -644,6 +651,11 @@ VALUES  (5,'RECIBIDA',1)
 
 
 GO
+
+INSERT INTO dbo.coGastosCompra( Descripcion,flgReadOnly,flgIsFactura, Activo )
+VALUES  ('FACTURA',1,1,1)
+
+
 
 
 --// CREACION DE PROCEDIMIENTOS ALMACENADOS
@@ -817,10 +829,10 @@ END
 
 GO
 --TODO: Revisar is load from Solicitud
-CREATE   PROCEDURE dbo.coGetOrdenCompraDetalle(@IDOrdenCompra AS int	)
+CREATE PROCEDURE dbo.coGetOrdenCompraDetalle(@IDOrdenCompra AS int	)
 AS 
-SELECT A.IDOrdenCompra,A.IDProducto,P.Descr DescrProducto,A.Estado,E.Descr DescrEstado,A.Cantidad,A.CantidadAceptada,A.CantidadRechazada,
-A.Impuesto,A.MontoDesc,A.PorcDesc,A.PrecioUnitario,((A.Cantidad*A.PrecioUnitario)+ Impuesto)-MontoDesc Monto,A.Comentario
+SELECT A.IDOrdenCompra,A.IDProducto,P.Descr DescrProducto,p.IDUnidad,A.Estado,E.Descr DescrEstado,A.Cantidad,A.CantidadAceptada,A.CantidadRechazada,
+A.Impuesto,A.MontoDesc,A.PorcDesc,A.PrecioUnitario,((A.Cantidad*A.PrecioUnitario)-MontoDesc) * (A.Impuesto/100) + ((A.Cantidad*A.PrecioUnitario)-MontoDesc)  Monto,A.Comentario
   FROM dbo.coOrdenCompraDetalle A
 INNER JOIN dbo.invProducto P ON		A.IDProducto = P.IDProducto
 INNER JOIN dbo.coEstadoOrdenCompra E ON A.Estado=E.IDEstadoOrden
@@ -829,10 +841,10 @@ WHERE A.IDOrdenCompra=@IDOrdenCompra
 GO
 
 --TODO: Revisar is load from Solicitud
-CREATE   PROCEDURE dbo.coGetOrdenCompraDetalleEmptyExcel
+CREATE PROCEDURE dbo.coGetOrdenCompraDetalleEmptyExcel
 AS 
 SELECT A.IDOrdenCompra,A.IDProducto,P.Descr DescrProducto,A.Estado,E.Descr DescrEstado,A.Cantidad,A.CantidadAceptada,A.CantidadRechazada,A.Impuesto,
-A.MontoDesc,A.PorcDesc,A.PrecioUnitario,((A.Cantidad*A.PrecioUnitario)+ Impuesto)-MontoDesc Monto,A.Comentario
+A.MontoDesc,A.PorcDesc,A.PrecioUnitario,((A.Cantidad*A.PrecioUnitario)-MontoDesc) * (A.Impuesto/100) + ((A.Cantidad*A.PrecioUnitario)-MontoDesc) Monto,A.Comentario
 ,A.Estado Status,P.Descr DescrStatus
   FROM dbo.coOrdenCompraDetalle A
 INNER JOIN dbo.invProducto P ON		A.IDProducto = P.IDProducto
@@ -880,7 +892,6 @@ BEGIN
 	DECLARE @IDConsecutivo  AS INT
 	DECLARE @CodigoConsecutivo AS NVARCHAR(4)
 	
-	SELECT *  FROM dbo.globalConsecutivos
 	SET @IDConsecutivo = (SELECT IDConsecEmbarque  FROM dbo.coParametrosCompra WHERE IDParametro=1)
 	EXEC [dbo].[invGetNextGlobalConsecutivo] @IDConsecutivo,@Embarque OUTPUT
 	
@@ -889,7 +900,7 @@ BEGIN
 	 
 	 UPDATE dbo.coOrdenCompra SET IDEmbarque=@IDEmbarque WHERE IDOrdenCompra =@IDOrdenCompra
 	 
-	 UPDATE dbo.globalConsecMask SET  Consecutivo=@Embarque WHERE Codigo='EM'
+	 UPDATE dbo.globalConsecMask SET  Consecutivo=@Embarque WHERE Codigo='EMB'
 	 
 END
 IF (@Operacion='U')
@@ -925,12 +936,12 @@ AND (A.Embarque LIKE '%' + @Embarque + '%')
 
 GO 
 
-CREATE PROCEDURE dbo.coUpdateEmbarqueDetalle(@Operacion AS NVARCHAR(1),@IDEmbarque AS INT,@IDProducto AS bigint, @PrecioUnitario AS DECIMAL(28,8), @CantidadOrdenada AS decimal(28,4), @CantidadAceptada AS decimal(28,4),@CantidadRechazada AS decimal(28,4),@Comentario AS nvarchar(20))
+CREATE PROCEDURE dbo.coUpdateEmbarqueDetalle(@Operacion AS NVARCHAR(1),@IDEmbarque AS INT,@IDProducto AS bigint, @PrecioUnitario AS DECIMAL(28,8),@Impuesto DECIMAL(28,8),@PorcDesc DECIMAL(28,8),@MontoDesc DECIMAL(28,8), @CantidadOrdenada AS decimal(28,4), @CantidadAceptada AS decimal(28,4),@CantidadRechazada AS decimal(28,4),@Comentario AS nvarchar(20))
 AS 
 IF (@Operacion='I')
 BEGIN
-	INSERT INTO dbo.coEmbarqueDetalle( IDEmbarque ,IDProducto  ,PrecioUnitario,CantidadOrdenada ,CantidadAceptada ,CantidadRechazada ,Comentario)
-	VALUES (@IDEmbarque,@IDProducto,@PrecioUnitario,@CantidadOrdenada,@CantidadAceptada,@CantidadRechazada,@Comentario)
+	INSERT INTO dbo.coEmbarqueDetalle( IDEmbarque ,IDProducto  ,PrecioUnitario,Impuesto,PorcDesc,MontoDesc,CantidadOrdenada ,CantidadAceptada ,CantidadRechazada ,Comentario)
+	VALUES (@IDEmbarque,@IDProducto,@PrecioUnitario,@Impuesto,@PorcDesc,@MontoDesc,@CantidadOrdenada,@CantidadAceptada,@CantidadRechazada,@Comentario)
 END
 IF (@Operacion='U')
 BEGIN
@@ -947,7 +958,7 @@ GO
 
 CREATE PROCEDURE dbo.coGetEmbarqueDetalle(@IDEmbarque AS INT)
 AS 
-SELECT A.IDEmbarque,A.IDProducto,P.Descr DescrProducto,A.PrecioUnitario,A.CantidadOrdenada,A.CantidadAceptada,A.CantidadRechazada 
+SELECT A.IDEmbarque,A.IDProducto,P.Descr DescrProducto,A.PrecioUnitario,A.Impuesto,A.PorcDesc,A.MontoDesc,A.CantidadOrdenada,A.CantidadAceptada,A.CantidadRechazada 
  FROM dbo.coEmbarqueDetalle A
 INNER JOIN dbo.invProducto P ON A.IDProducto = P.IDProducto
 WHERE (A.IDEmbarque =@IDEmbarque or @IDEmbarque =-1)
@@ -976,7 +987,7 @@ GO
 
 CREATE  PROCEDURE dbo.coGetRecepcionMercaderia(@IDEmbarque AS INT)
 AS 
-SELECT A.IDEmbarque,A.IDProducto,P.Descr DescrProducto,A.Cantidad
+SELECT A.IDEmbarque,A.IDProducto,A.IDLote,P.Descr DescrProducto,A.Cantidad
  FROM dbo.coRecepcionMercaderia A
 INNER JOIN dbo.invProducto P ON A.IDProducto = P.IDProducto 
 LEFT  JOIN dbo.invLote L ON A.IDProducto=L.IDProducto AND A.IDLote=L.IDLote
@@ -1110,7 +1121,7 @@ GO
 --SELECT  @IDEmbarque ,IDProducto ,Cantidad ,CantidadAceptada ,CantidadRechazada ,PrecioUnitario ,Impuesto ,PorcDesc ,MontoDesc ,Estado ,Comentario  
 --FROM dbo.coOrdenCompraDetalle WHERE IDOrdenCompra=@IDOrdenCompra
 
-CREATE    PROCEDURE dbo.coGetEmbarqueByID(@IDEmbarque AS INT,@IDOrdenCompra AS INT)
+CREATE PROCEDURE dbo.coGetEmbarqueByID(@IDEmbarque AS INT,@IDOrdenCompra AS INT)
 AS 
 IF (@IDEmbarque =-1)
 BEGIN
@@ -1131,7 +1142,7 @@ BEGIN
 	LEFT  JOIN dbo.coOrdenCompra B ON A.IDOrdenCompra = B.IDOrdenCompra
 	LEFT  JOIN dbo.cppProveedor C ON B.IDProveedor=C.IDProveedor
 	LEFT  JOIN dbo.invBodega D ON A.IDBodega=D.IDBodega
-	WHERE (A.IDEmbarque =@IDEmbarque OR @IDEmbarque=-1) AND (a.IDOrdenCompra=@IDOrdenCompra or @IDOrdenCompra=-1)
+	WHERE (A.IDEmbarque =@IDEmbarque OR @IDEmbarque=-7) AND (a.IDOrdenCompra=@IDOrdenCompra or @IDOrdenCompra=-7)
 END
 
 GO
@@ -1234,6 +1245,7 @@ SELECT  IDParametro ,
         IDConsecOrdenCompra ,
         IDConsecEmbarque ,
         IDConsecDevolucion ,
+        IDConsecLiquidacion,
         CantLineasOrdenCompra ,
         IDBodegaDefault ,
         IDTipoCambio ,
@@ -1253,11 +1265,11 @@ SELECT  IDParametro ,
         GO
         
         
-CREATE  PROCEDURE dbo.coUpdateParametrosCompra ( @IDConsecSolicitud INT, @IDConsecOrdeCompra INT, @IDConsecEmbarque INT, @IDConsecDevolucion INT, @CantLineasOrdenCompra INT, @IDBodegaDefault int,
+CREATE  PROCEDURE dbo.coUpdateParametrosCompra ( @IDConsecSolicitud INT, @IDConsecOrdeCompra INT, @IDConsecEmbarque INT, @IDConsecDevolucion INT, @IDConsecLiquidacion INT, @CantLineasOrdenCompra INT, @IDBodegaDefault int,
 	@IDTipoCambio NVARCHAR(20), @CantDecimalesPrecio int, @CantDecimalesCantidad int, @IDTipoAsientoContable NVARCHAR(2), @IDPaquete INT, @CtaTransitoLocal bigint, @CtrTransitoLocal bigint, @CtaTransitoExterior bigint, @CtrTransitoExterior bigint,
 	@AplicaAutomaticamenteAsiento bit, @CanEditAsiento bit, @CanViewAsiento bit )
 AS 
-UPDATE dbo.coParametrosCompra SET IDConsecSolicitud = @IDConsecSolicitud,IDConsecOrdenCompra=@IDConsecOrdeCompra , IDConsecEmbarque=@IDConsecEmbarque,IDConsecDevolucion= @IDConsecDevolucion,CantLineasOrdenCompra = @CantLineasOrdenCompra, 
+UPDATE dbo.coParametrosCompra SET IDConsecSolicitud = @IDConsecSolicitud,IDConsecOrdenCompra=@IDConsecOrdeCompra , IDConsecEmbarque=@IDConsecEmbarque,IDConsecDevolucion= @IDConsecDevolucion,IDConsecLiquidacion=@IDConsecLiquidacion,CantLineasOrdenCompra = @CantLineasOrdenCompra, 
 	IDBodegaDefault  = @IDBodegaDefault, IDTipoCambio= @IDTipoCambio, CantDecimalesPrecio= @CantDecimalesPrecio,CantDecimalesCantidad= @CantDecimalesCantidad, IDTipoAsientoContable = @IDTipoAsientoContable, IDPaquete = @IDPaquete,  CtaTransitoLocal = @CtaTransitoLocal,
 	CtrTransitoLocal  = @CtrTransitoLocal, CtaTransitoExterior = @CtaTransitoExterior, AplicaAutomaticamenteAsiento =@AplicaAutomaticamenteAsiento, CanEditAsiento = @CanEditAsiento, CanViewAsiento=@CanViewAsiento
 	WHERE IDParametro=1
@@ -1489,7 +1501,7 @@ DROP TABLE #tmpEmbarque
 GO
 
 
-CREATE   PROCEDURE dbo.coUpdateGastosCompra(@Operacion NVARCHAR(1), @IDGasto AS INT OUTPUT,@Descripcion NVARCHAR(250) , @Activo BIT)
+CREATE PROCEDURE dbo.coUpdateGastosCompra(@Operacion NVARCHAR(1), @IDGasto AS INT OUTPUT,@Descripcion NVARCHAR(250) , @Activo BIT)
 AS 
 IF (@Operacion='I')  
 BEGIN
@@ -1499,37 +1511,47 @@ END
 IF (@Operacion='U')
 BEGIN
 	UPDATE dbo.coGastosCompra  SET Descripcion = @Descripcion, Activo = @Activo
-	WHERE IDGasto=@IDGasto
+	WHERE IDGasto=@IDGasto AND flgReadOnly=0
 END
 IF (@Operacion ='D')
 BEGIN
-	DELETE dbo.invGastoCompra WHERE IDGasto=@IDGasto
+	DELETE dbo.invGastoCompra WHERE IDGasto=@IDGasto AND flgReadOnly=0
 END
 
 
 GO
 
 
-CREATE  PROCEDURE dbo.coGetGastosCompra(@IDGasto INT, @Descripcion NVARCHAR(250))
+CREATE PROCEDURE dbo.coGetGastosCompra(@IDGasto INT, @Descripcion NVARCHAR(250))
 AS 
-SELECT   IDGasto ,Descripcion ,Activo
+SELECT   IDGasto ,Descripcion ,flgReadOnly,Activo
 FROM dbo.coGastosCompra
-WHERE (IDGasto = @IDGasto OR @IDGasto =-1) AND (Descripcion = @Descripcion OR @Descripcion = '*') AND Activo=1
+WHERE (IDGasto = @IDGasto OR @IDGasto =-1) AND (Descripcion = @Descripcion OR @Descripcion = '*') AND Activo=1 AND flgReadOnly=0
 
 
 GO
 
-CREATE   PROCEDURE dbo.coUpdateLiquidacionCompra(@Operacion NVARCHAR(1), @IDLiquidacion AS INT OUTPUT,@IDEmbarque AS INT , @IDOrdenCompra AS int,@Fecha DateTime, @FechaVence Date, @FechaPoliza AS DATE,@NumPoliza nvarchar(250), @NumFactura nvarchar(250), @Guia_BL nvarchar,@TipoCambio decimal(28,8), @ValorMercaderia Decimal(28,8),@MontoFlete decimal(28,8), @MontoSeguro decimal(28,8), @Otros AS Decimal(28,8), @MontoTotal AS Decimal(28,8))
+CREATE PROCEDURE dbo.coUpdateLiquidacionCompra(@Operacion NVARCHAR(1), @IDLiquidacion AS INT OUTPUT,@IDEmbarque AS INT , @IDOrdenCompra AS int,@Fecha DateTime,@TipoCambio decimal(28,8), @ValorMercaderia Decimal(28,8),@MontoFlete decimal(28,8), @MontoSeguro decimal(28,8), @Otros AS Decimal(28,8), @MontoTotal AS Decimal(28,8))
 AS 
 IF (@Operacion='I')  
 BEGIN
-	INSERT INTO dbo.coLiquidacionCompra( IDEmbarque ,IDOrdenCompra ,Fecha ,FechaVence ,FechaPoliza ,NumPoliza ,NumFactura ,Guia_BL ,TipoCambio ,ValorMercaderia ,MontoFlete ,MontoSeguro ,Otros ,MontoTotal)
-	VALUES (@IDEmbarque,@IDOrdenCompra,@Fecha,@FechaVence,@FechaPoliza,@NumPoliza,@NumFactura,@Guia_BL,@TipoCambio,@ValorMercaderia,@MontoFlete, @MontoSeguro,@Otros,@MontoTotal)
+	
+	DECLARE @IDConsecutivo  AS INT
+	DECLARE @Liquidacion AS NVARCHAR(20)
+	
+	SET @IDConsecutivo = (SELECT IDConsecLiquidacion  FROM dbo.coParametrosCompra WHERE IDParametro=1)
+	EXEC [dbo].[invGetNextGlobalConsecutivo] @IDConsecutivo,@Liquidacion OUTPUT
+	
+	INSERT INTO dbo.coLiquidacionCompra( Liquidacion, IDEmbarque ,IDOrdenCompra ,Fecha,TipoCambio ,ValorMercaderia ,MontoFlete ,MontoSeguro ,Otros ,MontoTotal)
+	VALUES (@Liquidacion,@IDEmbarque,@IDOrdenCompra,@Fecha,@TipoCambio,@ValorMercaderia,@MontoFlete, @MontoSeguro,@Otros,@MontoTotal)
+	 
+	UPDATE dbo.globalConsecMask SET  Consecutivo=@Liquidacion WHERE Codigo='LIQ'
+	
 	SET @IDLiquidacion = @@identity	
 END
 IF (@Operacion='U')
 BEGIN
-	UPDATE dbo.coLiquidacionCompra  SET Fecha=@Fecha,FechaPoliza=@FechaPoliza,FechaVence=@FechaVence,NumPoliza=@NumPoliza,NumFactura=@NumFactura,Guia_BL=@Guia_BL,TipoCambio=@TipoCambio,ValorMercaderia=@ValorMercaderia,MontoFlete=@MontoFlete,MontoSeguro=@MontoSeguro,Otros=@Otros,MontoTotal=@MontoTotal
+	UPDATE dbo.coLiquidacionCompra  SET Fecha=@Fecha,TipoCambio=@TipoCambio,ValorMercaderia=@ValorMercaderia,MontoFlete=@MontoFlete,MontoSeguro=@MontoSeguro,Otros=@Otros,MontoTotal=@MontoTotal
 	WHERE IDLiquidacion=@IDLiquidacion
 END
 IF (@Operacion ='D')
@@ -1539,10 +1561,9 @@ END
 
 GO
 
-CREATE  PROCEDURE dbo.coGetLiquidacionCompra (@IDLiquidacion INT,@IDEmbarque INT, @IDOrdenCompra INT) 
+CREATE ALTER  PROCEDURE dbo.coGetLiquidacionCompra (@IDLiquidacion INT,@IDEmbarque INT, @IDOrdenCompra INT) 
 AS 
-SELECT  A.IDLiquidacion ,A.IDEmbarque , EM.Embarque ,A.IDOrdenCompra , OC.OrdenCompra ,A.Fecha ,A.FechaVence ,a.FechaPoliza ,A.NumPoliza ,A.NumFactura ,
-A.Guia_BL ,A.TipoCambio ,a.ValorMercaderia ,A.MontoFlete ,A.MontoSeguro ,A.Otros ,A.MontoTotal  
+SELECT  A.IDLiquidacion,A.Liquidacion ,A.IDEmbarque , EM.Embarque ,A.IDOrdenCompra , OC.OrdenCompra ,A.Fecha,A.TipoCambio ,a.ValorMercaderia ,A.MontoFlete ,A.MontoSeguro ,A.Otros ,A.MontoTotal  
 FROM dbo.coLiquidacionCompra A
 LEFT  JOIN dbo.coOrdenCompra OC ON A.IDOrdenCompra=OC.IDOrdenCompra
 LEFT  JOIN dbo.coEmbarque EM ON A.IDEmbarque=EM.IDEmbarque AND EM.IDOrdenCompra=OC.IDEmbarque
@@ -1573,13 +1594,14 @@ END
 GO
 
 
+
 CREATE  PROCEDURE dbo.coGetGastoLiquidacion(@IDLiquidacion AS INT, @IDGasto AS INT)
 AS 
 SELECT  IDLiquidacion ,A.IDGasto ,GC.Descripcion DescrGasto ,Monto  FROM dbo.coGastoLiquidacion A
 INNER JOIN dbo.coGastosCompra GC ON A.IDGasto=GC.IDGasto
  WHERE IDLiquidacion=@IDLiquidacion OR (A.IDGasto = @IDGasto OR @IDGasto=-1)
 
-
+SELECT *  FROM  dbo.coGastosCompra
 GO
 
 CREATE  PROCEDURE dbo.coUpdateGastoLiquidacionDetallado (@Operacion AS NVARCHAR(1), @IDLiquidacion AS INT,@IDGasto AS INT,@IDProducto AS BIGINT,@Monto AS DECIMAL(28,8))
@@ -1650,19 +1672,19 @@ WHERE IDEmbarque = @IDEmbarque AND (IDObligacion=@IDObligacion OR @IDObligacion 
 GO
 
 
-CREATE  PROCEDURE dbo.coUpdateObligacionDetalle (@Operacion AS NVARCHAR(1), @IDObligacionDetalle AS INT OUTPUT, @IDObligacion AS INT ,@IDProveedor AS INT,@Documento AS NVARCHAR(100),@flgDocCPGenerado AS BIT,
-		@FechaDocumento DATETIME,@Monto DECIMAL(28,8), @IdMoneda INT, @IDGasto AS INT )
+CREATE PROCEDURE dbo.coUpdateObligacionDetalle (@Operacion AS NVARCHAR(1), @IDObligacionDetalle AS INT OUTPUT, @IDObligacion AS INT ,@IDProveedor AS INT,@Documento AS NVARCHAR(100),@flgDocCPGenerado AS BIT,
+		@FechaDocumento DATETIME,@SubTotal DECIMAL(28,8),@PorcImpuesto DECIMAL(28,8),@Impuesto DECIMAL(28,8),@MontoTotal DECIMAL(28,8), @IdMoneda INT, @IDGasto AS INT )
 AS 
 IF @Operacion ='I'
 BEGIN
 	SELECT @IDObligacionDetalle =  isnull(MAX(IDObligacionDetalle) ,0)FROM dbo.coObligacionDetalle 
 	SET @IDObligacionDetalle = @IDObligacionDetalle +1 
-	INSERT INTO dbo.coObligacionDetalle( IDObligacionDetalle ,IDObligacion ,IDProveedor ,Documento ,flgDocCPGenerado ,FechaDocumento ,Monto ,IDMoneda, IDGasto)
-	VALUES(@IDObligacionDetalle,@IDObligacion, @IDProveedor, @Documento,@flgDocCPGenerado,@FechaDocumento,@Monto,@IdMoneda, @IDGasto)
+	INSERT INTO dbo.coObligacionDetalle( IDObligacionDetalle ,IDObligacion ,IDProveedor ,Documento ,flgDocCPGenerado ,FechaDocumento ,SubTotal,PorcImpuesto,Impuesto,MontoTotal ,IDMoneda, IDGasto)
+	VALUES(@IDObligacionDetalle,@IDObligacion, @IDProveedor, @Documento,@flgDocCPGenerado,@FechaDocumento,@SubTotal,@PorcImpuesto,@Impuesto,@MontoTotal,@IdMoneda, @IDGasto)
 END
 IF @Operacion ='U'
 BEGIN
-	UPDATE dbo.coObligacionDetalle SET IDProveedor=@IDProveedor, Documento = @Documento, FechaDocumento= @FechaDocumento,Monto=@Monto,IDMoneda=@IdMoneda, IDGasto=@IDGasto WHERE IDObligacionDetalle=@IDObligacion
+	UPDATE dbo.coObligacionDetalle SET IDProveedor=@IDProveedor, Documento = @Documento, FechaDocumento= @FechaDocumento,SubTotal=@SubTotal,PorcImpuesto =@PorcImpuesto,Impuesto =@Impuesto,MontoTotal=@MontoTotal,IDMoneda=@IdMoneda, IDGasto=@IDGasto WHERE IDObligacionDetalle=@IDObligacionDetalle
 END
 IF @Operacion ='D'
 BEGIN
@@ -1673,9 +1695,9 @@ END
 GO, 
 
 
-CREATE  PROCEDURE dbo.coGetObligacionDetalle(@IDObligacionDetalle  AS INT, @IDObligacion AS INT)
+CREATE ALTER PROCEDURE dbo.coGetObligacionDetalle(@IDObligacionDetalle  AS INT, @IDObligacion AS INT)
 AS 
-SELECT   IDObligacionDetalle ,IDObligacion ,A.IDProveedor, P.Nombre ,Documento ,flgDocCPGenerado ,FechaDocumento ,Monto ,A.IDMoneda, M.Descr DescrMoneda,G.IDGasto,G.Descripcion DescrGasto
+SELECT   IDObligacionDetalle ,IDObligacion ,A.IDProveedor, P.Nombre ,Documento ,flgDocCPGenerado ,FechaDocumento ,SubTotal,PorcImpuesto,Impuesto,MontoTotal ,A.IDMoneda, M.Descr DescrMoneda,G.IDGasto,G.Descripcion DescrGasto
 FROM dbo.coObligacionDetalle A
 INNER JOIN dbo.cppProveedor P ON  A.IDProveedor = P.IDProveedor
 INNER JOIN dbo.globalMoneda M ON a.IDMoneda=M.IDMoneda
@@ -1705,3 +1727,69 @@ SELECT 'CP00001' Asiento
 
 GO
 
+
+CREATE PROCEDURE dbo.GetConsolidadoObligacionDetalle ( @IDEmbarque AS INT)
+AS
+
+DECLARE @IDObligacionProveedor AS INT
+
+SELECT @IDObligacionProveedor= IDObligacion FROM dbo.coObligacionProveedor WHERE IDEmbarque=@IDEmbarque
+
+
+SELECT A.IDGasto,G.Descripcion,A.SubTotal  FROM dbo.coObligacionDetalle A
+INNER JOIN dbo.coGastosCompra G ON A.IDGasto = G.IDGasto
+WHERE IDObligacion=@IDObligacionProveedor
+
+
+GO
+
+
+CREATE PROCEDURE dbo.coCalculaProrrateoGastosCompra @IDLiquidacion AS INT
+AS 
+--SET @IDLiquidacion =11
+
+
+DECLARE @IDEmbarque AS INT,@MontoFlete AS DECIMAL(28,8), @MontoSeguro AS DECIMAL(28,8),@MontoTotalGasto AS DECIMAL(28,8),@IDGastoFactura AS int
+
+SELECT @IDGastoFactura = IDGasto  FROM dbo.coGastosCompra WHERE flgIsFactura=1 AND flgReadOnly=1
+
+SELECT @IDEmbarque = IDEmbarque, @MontoFlete = MontoFlete,@MontoSeguro=MontoSeguro  FROM dbo.coLiquidacionCompra WHERE IDLiquidacion=@IDLiquidacion
+SET @MontoTotalGasto = @MontoFlete + @MontoSeguro
+
+SELECT IDGasto,Monto INTO #Gastos FROM dbo.coGastoLiquidacion WHERE IDLiquidacion=@IdLiquidacion
+SELECT IDProducto,((CantidadAceptada * PrecioUnitario) - MontoDesc) + (((CantidadAceptada * PrecioUnitario) - MontoDesc) * (Impuesto/100)) MontoMercaderia, 
+0 Porc INTO #tmpProductos FROM dbo.coEmbarqueDetalle  WHERE IDEmbarque=@IDEmbarque
+
+DECLARE @MontoTotalMercaderia AS DECIMAL(28,8)
+
+SELECT @MontoTotalMercaderia = SUM(MontoMercaderia) FROM #tmpProductos
+
+UPDATE #tmpProductos SET Porc = @MontoTotalMercaderia / MontoMercaderia
+
+SELECT A.IDLiquidacion,A.IDProducto,P.Descr DescrProducto,A.IDGasto,G.Descripcion DescrGasto,A.Monto  FROM 
+(
+	SELECT @IDLiquidacion IDLiquidacion, IDProducto,IDGasto,B.Monto * Porc Monto,1 Prioridad
+	FROM #tmpProductos A
+	CROSS JOIN	#Gastos B 
+	UNION ALL
+	SELECT @IDLiquidacion IDLiquidacion,IDProducto,@IDGastoFactura IDGasto, MontoMercaderia + (@MontoTotalGasto * Porc)  Monto, 0 Prioridad
+	FROM #tmpProductos
+) A
+INNER JOIN dbo.coGastosCompra G ON A.IDGasto=G.IDGasto
+INNER JOIN dbo.invProducto P ON A.IDProducto=P.IDProducto
+ORDER BY A.IDProducto,Prioridad,A.IDGasto
+
+DROP TABLE #Gastos
+DROP TABLE #tmpProductos
+
+
+GO
+
+
+CREATE PROCEDURE dbo.GetDatosGeneralesRecepcionMercaderia(@IDEmbarque AS int)
+AS 
+SELECT A.Embarque,Oc.OrdenCompra,A.IDProveedor,P.Nombre,OP.NumFactura  FROM dbo.coEmbarque A
+LEFT JOIN dbo.cppProveedor P ON A.IDProveedor = P.IDProveedor
+LEFT  JOIN dbo.coOrdenCompra OC ON A.IDOrdenCompra = OC.IDOrdenCompra
+LEFT  JOIN dbo.coObligacionProveedor OP ON a.IDEmbarque= OP.IDEmbarque
+WHERE A.IDEmbarque = @IDEmbarque

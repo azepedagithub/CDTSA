@@ -488,7 +488,7 @@
             this.ClientSize = new System.Drawing.Size(944, 467);
             this.Controls.Add(this.layoutControl1);
             this.Name = "frmImportFromExcel";
-            this.Text = "fmrImportFromExcel";
+            this.Text = "Importar Solicitud desde Excel";
             this.Load += new System.EventHandler(this.fmrImportFromExcel_Load);
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
             this.layoutControl1.ResumeLayout(false);

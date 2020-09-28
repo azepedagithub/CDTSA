@@ -116,6 +116,7 @@ namespace CO
                     this.btnCancelar.Enabled = false;
                     this.btnEliminar.Enabled = false;
                     this.btnConfirmar.Enabled = false;
+                    this.btnAplicar.Enabled = true;
                     this.tabFactura.PageVisible = true;
                 }
                 else
@@ -124,6 +125,7 @@ namespace CO
                     this.btnGuardar.Enabled = false;
                     this.btnCancelar.Enabled = false;
                     this.tabFactura.PageVisible = false;
+                    this.btnAplicar.Enabled = false;
                     this.btnEliminar.Enabled = true;
                 }
                 
@@ -134,6 +136,7 @@ namespace CO
                 this.btnGuardar.Enabled = false;
                 this.btnCancelar.Enabled = false;
                 this.btnEliminar.Enabled = false;
+                this.btnAplicar.Enabled = false;
                 if (this.Confirmada)
                 {
                     this.tabFactura.PageVisible = true;
@@ -236,6 +239,9 @@ namespace CO
                     fila["IDProducto"] = row["IDProducto"];
                     fila["DescrProducto"] = row["DescrProducto"];
                     fila["PrecioUnitario"] = row["PrecioUnitario"];
+                    fila["Impuesto"] = row["Impuesto"];
+                    fila["PorcDesc"] = row["PorcDesc"];
+                    fila["MontoDesc"] = row["MontoDesc"];
                     fila["CantidadOrdenada"] = row["Cantidad"];
                     fila["CantidadAceptada"] = 0;
 
@@ -288,7 +294,9 @@ namespace CO
             double MontoMercaderia = 0;
             foreach (DataRow row in dtDetalleEmbarque.Rows)
             {
-                MontoMercaderia = MontoMercaderia + Convert.ToDouble(((decimal)row["CantidadAceptada"] * (decimal)row["PrecioUnitario"]));
+                double SubTotal =    Convert.ToDouble(((decimal)row["CantidadAceptada"] * (decimal)row["PrecioUnitario"]) - (decimal)row["MontoDesc"]);
+                double Impuesto =   Convert.ToDouble((decimal)row["Impuesto"])/100;
+                MontoMercaderia = MontoMercaderia + (SubTotal + (SubTotal * Impuesto));
             }
 
             DataRow rowOrden = dtOrdenCompra.Rows.Count>0 ? dtOrdenCompra.Rows[0]: null;
@@ -303,6 +311,21 @@ namespace CO
             MontoMercaderia += MontoSeguro + MontoFlete;
             this.txtTotalMercaderia.EditValue = MontoMercaderia;
             this.txtTotal.EditValue = MontoMercaderia + MontoFlete + MontoSeguro;
+        }
+
+        private void AlertaFacturaSinGuardar() {
+            if (this.IDObligacionProveedor > 0)
+            {
+                this.tabFactura.Text = "Factura Mercadería";
+                this.tabFactura.Appearance.Header.BackColor = Color.Transparent;
+                this.tabFactura.ImageIndex = -1; 
+            }
+            else
+            {
+                this.tabFactura.Text = "Factura Mercadería **PENDIENTE!!**";
+                this.tabFactura.Appearance.Header.BackColor = Color.Red;
+                this.tabFactura.ImageIndex = 0; 
+            }
         }
 
         private void LoadObligacionProveedor()
@@ -324,7 +347,7 @@ namespace CO
                     this.txtTipoCambio.EditValue = Convert.ToDecimal(drObl["TipoCambio"]);
                     this.txtMontoFlete.EditValue = Convert.ToDecimal(drObl["MontoFlete"]);
                     this.txtMontoSeguro.EditValue = Convert.ToDecimal(drObl["MontoSeguro"]);
-
+                    
                     //Validar si tiene documento CP asociado
                     string sDocCP = clsObligacionProveedorDAC.getDocumentoCP((int)this.ID_Embarque);
 
@@ -341,6 +364,7 @@ namespace CO
                         this.txtAsiento.Text = "";
                         this.btnGuardarFactura.Enabled = true;
                         InactivarControles(false);
+                        
                     }
 
                 }
@@ -349,8 +373,9 @@ namespace CO
                     this.btnGenerarDocCPFactura.Enabled = true;
                     this.txtAsiento.Text = "";
                     InactivarControles(false);
+                    
                 }
-
+                AlertaFacturaSinGuardar();
 
                 CalcularTotalesEmbarque();
 
@@ -418,7 +443,8 @@ namespace CO
                 this.slkupDescrProducto.EditValueChanged += slkup_EditValueProductoChanged;
                 this.slkupDescrProducto.Popup += slkup_Popup;
 
-                this.gridViewOtrosPagos.FocusedRowChanged += gridViewOtrosPagos_FocusedRowChanged;
+                //this.gridViewOtrosPagos.FocusedRowChanged += gridViewOtrosPagos_FocusedRowChanged;
+                this.gridViewObligaciones.FocusedRowChanged += gridViewOtrosPagos_FocusedRowChanged;
 
                 LoadData();
 
@@ -445,7 +471,7 @@ namespace CO
             if (IDObligacionProveedor != -1)
             {
                 dtObligacionDetalle = DAC.clsObligacionDetalleDAC.Get(-1, IDObligacionProveedor).Tables[0];
-                this.dtgOtrosPagos.DataSource = dtObligacionDetalle;
+                this.dtgObligaciones.DataSource = dtObligacionDetalle;
                 this.tabOtros.PageVisible = true;
             }
             else
@@ -663,7 +689,7 @@ namespace CO
                             if (row.RowState != DataRowState.Deleted)
                             {
                                 decimal CantidadRechazada = (decimal)row["CantidadOrdenada"] - (decimal)row["CantidadAceptada"];
-                                DAC.clsEmbarqueDetalleDAC.InsertUpdate("I", IDEmbarque, (long)row["IDProducto"],(decimal) row["PrecioUnitario"], (decimal)row["CantidadOrdenada"], (decimal)row["CantidadAceptada"], CantidadRechazada, "", ConnectionManager.Tran);
+                                DAC.clsEmbarqueDetalleDAC.InsertUpdate("I", IDEmbarque, (long)row["IDProducto"], (decimal)row["PrecioUnitario"], (decimal)row["Impuesto"], (decimal)row["PorcDesc"], (decimal)row["MontoDesc"], (decimal)row["CantidadOrdenada"], (decimal)row["CantidadAceptada"], CantidadRechazada, "", ConnectionManager.Tran);
                                 DAC.clsOrdenCompraDetalleDAC.UpdateCantidadRecibida(IDOrdenCompra, (long)row["IDProducto"], (decimal)row["CantidadAceptada"],ConnectionManager.Tran);
                             }
                         }
@@ -675,7 +701,7 @@ namespace CO
                         IDEmbarque = DAC.clsEmbarqueDAC.InsertUpdate("U", IDEmbarque,ref Embarque, Fecha, FechaEmbarque, null, IDBodega, IDProveedor, IDOrdenCompra, -1, 0, sUsuario, DateTime.Now, sUsuario, DateTime.Now, sUsuario, ConnectionManager.Tran);
                         
                          //Eliminamos el detalle y lo volvemos a insertar
-                        DAC.clsEmbarqueDetalleDAC.InsertUpdate("D", IDEmbarque,-1,0,0,0,0,"", ConnectionManager.Tran);
+                        DAC.clsEmbarqueDetalleDAC.InsertUpdate("D", IDEmbarque,-1,0,0,0,0,0,0,0,"", ConnectionManager.Tran);
                         DAC.clsOrdenCompraDetalleDAC.UpdateCantidadRecibida(IDOrdenCompra, -1,0, ConnectionManager.Tran);
                         foreach (DataRow row in dt.Rows)
                         {
@@ -683,7 +709,7 @@ namespace CO
                             {
                                 decimal CantidadRechazada = (decimal)row["CantidadOrdenada"] - (decimal)row["CantidadAceptada"];
                                 CantidadRechazada = (CantidadRechazada > 0) ? CantidadRechazada : 0;
-                                DAC.clsEmbarqueDetalleDAC.InsertUpdate("I", IDEmbarque, (long)row["IDProducto"], (decimal)row["PrecioUnitario"], (decimal)row["CantidadOrdenada"], (decimal)row["CantidadAceptada"], CantidadRechazada, "", ConnectionManager.Tran);
+                                DAC.clsEmbarqueDetalleDAC.InsertUpdate("I", IDEmbarque, (long)row["IDProducto"], (decimal)row["PrecioUnitario"], (decimal)row["Impuesto"], (decimal)row["PorcDesc"], (decimal)row["MontoDesc"], (decimal)row["CantidadOrdenada"], (decimal)row["CantidadAceptada"], CantidadRechazada, "", ConnectionManager.Tran);
                                 DAC.clsOrdenCompraDetalleDAC.UpdateCantidadRecibida(IDOrdenCompra, (long)row["IDProducto"], (decimal)row["CantidadAceptada"], ConnectionManager.Tran);
                             }
                         }
@@ -695,7 +721,7 @@ namespace CO
                     this.Accion = "View";
                     HabilitarControles();
                     HabilitarBotoneriaPrincipal();
-                    MessageBox.Show("La Orden de Compra se ha guardado correctamente");
+                    MessageBox.Show("El embarque se ha guardado correctamente");
                     
                 }
             } catch (Exception ex)
@@ -723,7 +749,7 @@ namespace CO
                         ConnectionManager.BeginTran();
 
                         DAC.clsEmbarqueDAC.InsertUpdate("D", IDEmbarque, ref Embarque ,DateTime.Now, DateTime.Now,"",-1,-1,-1,-1,0,"",DateTime.Now,"",DateTime.Now,"", ConnectionManager.Tran);                            
-                        DAC.clsEmbarqueDetalleDAC.InsertUpdate("D",IDEmbarque,-1,0,0,0,0,"", ConnectionManager.Tran);
+                        DAC.clsEmbarqueDetalleDAC.InsertUpdate("D",IDEmbarque,-1,0,9,0,0,0,0,0,"", ConnectionManager.Tran);
                         ConnectionManager.CommitTran();
                         MessageBox.Show("El embarque ha sido eliminado correctamente");
                     }
@@ -781,7 +807,7 @@ namespace CO
                 MessageBox.Show("Han ocurrido los siguientes errores : " + Ex.Message);
             }
             */
-
+            //DAC.clsLiquidacionCompraDAC.Get(-1, this.ID_Embarque, this.IDOrdenCompra);
             frmLiquidacion ofrmLiquidacion = new frmLiquidacion(-1, this.IDEmbarque, this.IDOrdenCompra,this.OrdenCompra,this.Embarque, "Add");
             ofrmLiquidacion.ShowDialog();
         }
@@ -801,9 +827,12 @@ namespace CO
             foreach (DataRow row in dtDetalleOrden.Rows)
             {
                 DataRow fila = this.dtDetalleEmbarque.NewRow();
-                fila["IDEmbarque"] = 0;
                 fila["IDProducto"] = row["IDProducto"];
                 fila["DescrProducto"] = row["DescrProducto"];
+                fila["PrecioUnitario"] = row["PrecioUnitario"];
+                fila["Impuesto"] = row["Impuesto"];
+                fila["PorcDesc"] = row["PorcDesc"];
+                fila["MontoDesc"] = row["MontoDesc"];
                 fila["CantidadOrdenada"] = row["Cantidad"];
                 fila["CantidadAceptada"] = row["Cantidad"];
                 this.dtDetalleEmbarque.Rows.Add(fila);
@@ -874,6 +903,7 @@ namespace CO
                 ConnectionManager.BeginTran();
                 clsObligacionProveedorDAC.InsertUpdate(AccionDatosFactura, ref IDObligacionProveedor, (int)IDEmbarque, false, FechaFactura, FechaVence, FechaPoliza, Poliza, Factura, GuiaBL, (decimal)TipoCambio, (decimal)ValorMercaderia, (decimal)MontoFlete, (decimal)MontoSeguro, (decimal)MontoTotal, ConnectionManager.Tran);
                 ConnectionManager.CommitTran();
+                MessageBox.Show("Los datos de Factura se han guardado correctamente");
             }
             catch (Exception ex)
             {
@@ -887,6 +917,7 @@ namespace CO
             if (ValidarDatosFactura()) {
                 ObtenerDatosFactura();
                 GuardarDatosFactura();
+                AlertaFacturaSinGuardar();
             }
         }
 
@@ -913,8 +944,9 @@ namespace CO
             this.slkupMonedaOtrosPagos.ReadOnly = !Flag;
             this.slkupMonedaOtrosPagos.ReadOnly = !Flag;
             this.txtMontoOtrosPagos.ReadOnly = !Flag;
+            this.txtImpuesto.ReadOnly = !Flag;
             this.slkupGastosOtrosPagos.ReadOnly = !Flag;
-            this.dtgOtrosPagos.Enabled = !Flag;
+            this.dtgObligaciones.Enabled = !Flag;
         }
         private void HabilitarBotonesOtrosPagos()
         {
@@ -941,6 +973,7 @@ namespace CO
             AccionOtrosPagos = "New";
             HabilitarControlesOtrosPagos(true);
             HabilitarBotonesOtrosPagos();
+            LimpiarControles();
             this.dtpFechaOtrosPagos.Focus();
            // this.dtgOtrosPagos.Enabled = false;
         }
@@ -950,10 +983,12 @@ namespace CO
         {
             this.dtpFechaOtrosPagos.EditValue = Convert.ToDateTime(Row["FechaDocumento"]);
             this.txtDocumentoOtrosPagos.EditValue = Row["Documento"].ToString();
-            this.txtMontoOtrosPagos.EditValue = Convert.ToDecimal(Row["Monto"]);
+            this.txtMontoOtrosPagos.EditValue = Convert.ToDecimal(Row["SubTotal"]);
             this.slkupGastosOtrosPagos.EditValue = Convert.ToInt32(Row["IDGasto"]);
             this.slkupProveedorOtrosPagos.EditValue = Convert.ToInt32(Row["IDProveedor"]);
             this.slkupMonedaOtrosPagos.EditValue = Convert.ToInt32(Row["IDMoneda"]);
+            this.txtImpuesto.EditValue = Convert.ToDecimal(Row["PorcImpuesto"]);
+            IDObligacionDetalle = Convert.ToInt32(Row["IDObligacionDetalle"]);
         }
 
 
@@ -965,17 +1000,16 @@ namespace CO
             this.slkupGastosOtrosPagos.EditValue = null;
             this.slkupProveedorOtrosPagos.EditValue = null;
             this.slkupMonedaOtrosPagos.EditValue = null;
-            this.dtgOtrosPagos.Refresh();
-            this.gridViewOtrosPagos.ClearSelection();
-            this.gridViewOtrosPagos.FocusedRowHandle = -1;
+            this.txtImpuesto.EditValue = null;
+           
         }
 
         private void SetCurrentRowOtrosPagos()
         {
-            int index = (int)this.gridViewOtrosPagos.FocusedRowHandle;
+            int index = (int)this.gridViewObligaciones.FocusedRowHandle;
             if (index > -1)
             {
-                currentRowOtrosPagos= gridViewOtrosPagos.GetDataRow(index);
+                currentRowOtrosPagos = gridViewObligaciones.GetDataRow(index);
                 UpdateControlsFromCurrentRow(currentRowOtrosPagos);
             }
         }
@@ -998,7 +1032,10 @@ namespace CO
             LimpiarControles();
             HabilitarControlesOtrosPagos(true);
             HabilitarBotonesOtrosPagos();
-            this.dtgOtrosPagos.Enabled = true;
+            this.dtgObligaciones.Enabled = true;
+            if (this.dtObligacionDetalle.Rows.Count == 1) {
+                UpdateControlsFromCurrentRow(currentRowOtrosPagos);
+            }
                 
         }
 
@@ -1037,7 +1074,11 @@ namespace CO
                         sAccion = "U";
 
                     ConnectionManager.BeginTran();
-                    DAC.clsObligacionDetalleDAC.InsertUpdate(sAccion,ref IDObligacionDetalle, IDObligacionProveedor, Convert.ToInt32(this.slkupProveedorOtrosPagos.EditValue), this.txtDocumentoOtrosPagos.Text.Trim(), false, Convert.ToDateTime(this.dtpFechaOtrosPagos.EditValue), Convert.ToDecimal(this.txtMontoOtrosPagos.EditValue), Convert.ToInt32(this.slkupMonedaOtrosPagos.EditValue),Convert.ToInt32(this.slkupGastosOtrosPagos.EditValue), ConnectionManager.Tran);
+                    decimal subtotal= Convert.ToDecimal(this.txtMontoOtrosPagos.EditValue);
+                    decimal PorcImpuesto = Convert.ToDecimal(this.txtImpuesto.EditValue);
+                    decimal MontoImpuesto = subtotal * (PorcImpuesto / 100);
+                    decimal MontoTotal = subtotal + MontoImpuesto;
+                    DAC.clsObligacionDetalleDAC.InsertUpdate(sAccion,ref IDObligacionDetalle, IDObligacionProveedor, Convert.ToInt32(this.slkupProveedorOtrosPagos.EditValue), this.txtDocumentoOtrosPagos.Text.Trim(), false, Convert.ToDateTime(this.dtpFechaOtrosPagos.EditValue),subtotal,PorcImpuesto,MontoImpuesto,MontoTotal,  Convert.ToInt32(this.slkupMonedaOtrosPagos.EditValue),Convert.ToInt32(this.slkupGastosOtrosPagos.EditValue), ConnectionManager.Tran);
                     ConnectionManager.CommitTran();
 
                     //dtObligacionDetalle = DAC.clsObligacionDetalleDAC.Get(-1, this.IDObligacionProveedor).Tables[0];
@@ -1046,7 +1087,7 @@ namespace CO
                     this.AccionOtrosPagos = "View";
                     HabilitarBotonesOtrosPagos();
                     HabilitarControlesOtrosPagos(false);
-                    this.dtgOtrosPagos.Enabled = true;
+                    this.dtgObligaciones.Enabled = true;
                     this.LoadOtrosGastos();
 
 
@@ -1067,7 +1108,7 @@ namespace CO
                 {
                     ConnectionManager.BeginTran();
                     this.IDObligacionDetalle =Convert.ToInt32(this.currentRowOtrosPagos["IDObligacionDetalle"]);
-                    DAC.clsObligacionDetalleDAC.InsertUpdate("D", ref IDObligacionDetalle, -1, -1, "", false, DateTime.Now, 0, -1, -1, ConnectionManager.Tran);
+                    DAC.clsObligacionDetalleDAC.InsertUpdate("D", ref IDObligacionDetalle, -1, -1, "", false, DateTime.Now, 0, -1,0,0,0,-1, ConnectionManager.Tran);
                     ConnectionManager.CommitTran();
                     LimpiarControles();
                     LoadOtrosGastos();
@@ -1077,6 +1118,12 @@ namespace CO
                 ConnectionManager.RollBackTran();
                 MessageBox.Show("Ha ocurrido errores al momento de eliminar el documento");
             }
+        }
+
+        private void btnRecepcionMercaderia_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            frmRecepcionMeraderia oRecepcion = new frmRecepcionMeraderia(this.ID_Embarque);
+            oRecepcion.ShowDialog();
         }
 
         

@@ -636,7 +636,7 @@
             this.Controls.Add(this.ribbonControl);
             this.Name = "frmListadoOrdenCompra";
             this.Ribbon = this.ribbonControl;
-            this.Text = "frmListadoOrdenCompra";
+            this.Text = "Listado de Ordenes de Compra";
             this.Load += new System.EventHandler(this.frmListadoOrdenCompra_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();

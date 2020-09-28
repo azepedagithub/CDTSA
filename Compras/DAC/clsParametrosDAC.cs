@@ -12,7 +12,7 @@ namespace CO.DAC
     public static class clsParametrosDAC
     {
         public static long InsertUpdate(int? IDConsecSolicitud,int? IDConsecOrdenCompra, int? IDConsecEmbarque,
-                        int? IDConsecDevolucion, int CantLineasOrdenCompra, int? IDBodegaDefault, string IDTipoCambio, 
+                        int? IDConsecDevolucion, int? IDConsecLiquidacion, int CantLineasOrdenCompra, int? IDBodegaDefault, string IDTipoCambio, 
                         int CantDecimalesPrecio, int CantDecimalesCantidad, String IDTipoAsientoContable, int? IDPaquete,
                         long? CtaTransitoLocal, long? CtrTransitoLocal, long? CtaTransitoExterior, 
                         long? CtrTransitoExterior, bool AplicaAutomaticamenteAsiento, bool CanEditASiento, 
@@ -28,6 +28,7 @@ namespace CO.DAC
             oCmd.Parameters.Add(new SqlParameter("@IDConsecOrdeCompra", IDConsecOrdenCompra==null ? DBNull.Value : (Object) IDConsecOrdenCompra));
             oCmd.Parameters.Add(new SqlParameter("@IDConsecEmbarque", IDConsecEmbarque==null ? DBNull.Value : (Object)IDConsecEmbarque));
             oCmd.Parameters.Add(new SqlParameter("@IDConsecDevolucion", IDConsecDevolucion==null ? DBNull.Value : (Object)IDConsecDevolucion));
+            oCmd.Parameters.Add(new SqlParameter("@IDConsecLiquidacion", IDConsecLiquidacion == null ? DBNull.Value : (Object)IDConsecLiquidacion));
             oCmd.Parameters.Add(new SqlParameter("@CantLineasOrdenCompra",  CantLineasOrdenCompra));
             oCmd.Parameters.Add(new SqlParameter("@IDBodegaDefault", IDBodegaDefault==null? DBNull.Value : (Object) IDBodegaDefault));
             oCmd.Parameters.Add(new SqlParameter("@IDTipoCambio", IDTipoCambio ==null ? DBNull.Value : (Object) IDTipoCambio));

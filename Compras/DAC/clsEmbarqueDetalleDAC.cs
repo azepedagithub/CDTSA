@@ -10,7 +10,7 @@ namespace CO.DAC
 {
     public static class clsEmbarqueDetalleDAC
     {
-        public static long InsertUpdate(string Operacion, long IDEmbarque, long IDProducto,decimal Precio,decimal Cantidad,
+        public static long InsertUpdate(string Operacion, long IDEmbarque, long IDProducto,decimal Precio,decimal Impuesto,decimal PorcDesc,decimal MontoDesc,decimal Cantidad,
             decimal CantidadAceptada,decimal CantidadRechazada,String Comentario,SqlTransaction tran)
         {
             long result = -1;
@@ -22,6 +22,9 @@ namespace CO.DAC
             oCmd.Parameters.Add(new SqlParameter("@IDEmbarque", IDEmbarque));
             oCmd.Parameters.Add(new SqlParameter("@IDProducto", IDProducto));
             oCmd.Parameters.Add(new SqlParameter("@PrecioUnitario", Precio));
+            oCmd.Parameters.Add(new SqlParameter("@Impuesto", Impuesto));
+            oCmd.Parameters.Add(new SqlParameter("@PorcDesc", PorcDesc));
+            oCmd.Parameters.Add(new SqlParameter("@MontoDesc", MontoDesc));
             oCmd.Parameters.Add(new SqlParameter("@CantidadOrdenada", Cantidad));
             oCmd.Parameters.Add(new SqlParameter("@CantidadAceptada", CantidadAceptada));
             oCmd.Parameters.Add(new SqlParameter("@CantidadRechazada", CantidadRechazada));

@@ -29,6 +29,7 @@ namespace CO
                     this.slkupOrdenCompra.EditValue = dt.Rows[0]["IDConsecOrdenCompra"] == DBNull.Value ? null : dt.Rows[0]["IDConsecOrdenCompra"];
                     this.slkupEmbarque.EditValue = dt.Rows[0]["IDConsecEmbarque"] == DBNull.Value ? null : dt.Rows[0]["IDConsecEmbarque"];
                     this.slkupDevolucion.EditValue = dt.Rows[0]["IDConsecDevolucion"] == DBNull.Value ? null : dt.Rows[0]["IDConsecDevolucion"];
+                    this.slkupLiquidacion.EditValue = dt.Rows[0]["IDConsecLiquidacion"] == DBNull.Value ? null : dt.Rows[0]["IDConsecLiquidacion"];
                     this.txtCantDecimalesCantidad.EditValue = Convert.ToInt32(dt.Rows[0]["CantLineasOrdenCompra"]);
                     this.slkupBodegaDefault.EditValue = dt.Rows[0]["IDBodegaDefault"] == DBNull.Value ? null : dt.Rows[0]["IDBodegaDefault"];
                     this.slkupTipoCambio.EditValue = dt.Rows[0]["IDTipoCambio"] == DBNull.Value ? null : dt.Rows[0]["IDTipoCambio"];
@@ -69,6 +70,10 @@ namespace CO
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupDevolucion, "[{'ColumnCaption':'IDConsecutivo','ColumnField':'IDConsecutivo','width':20},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':90}]");
             this.slkupDevolucion.EditValueChanged += slkupDevolucion_EditValueChanged;
 
+            Util.Util.ConfigLookupEdit(this.slkupLiquidacion, DAC.clsGlobalConsecutivosDAC.Get(-1, "*").Tables[0], "Descr", "IDConsecutivo", 350);
+            Util.Util.ConfigLookupEditSetViewColumns(this.slkupLiquidacion, "[{'ColumnCaption':'IDConsecutivo','ColumnField':'IDConsecutivo','width':20},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':90}]");
+            this.slkupLiquidacion.EditValueChanged += slkupLiquidacion_EditValueChanged;
+
             Util.Util.ConfigLookupEdit(this.slkupBodegaDefault, CI.DAC.clsBodegaDAC.GetData(-1,"*",-1).Tables[0], "Descr", "IDBodega", 350);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupBodegaDefault, "[{'ColumnCaption':'IDBodega','ColumnField':'IDBodega','width':20},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':90}]");
             this.slkupBodegaDefault.EditValueChanged += slkupBodegaDefault_EditValueChanged;
@@ -103,6 +108,7 @@ namespace CO
             CargarParametros();
         }
 
+        
         void slkupCentroTransitoLoc_EditValueChanged(object sender, EventArgs e)
         {
              DataTable dt = (DataTable)this.slkupCentroTransitoLoc.Properties.DataSource;
@@ -159,6 +165,15 @@ namespace CO
             this.txtConsecutivoEmbarque.Text = dv.ToTable().Rows[0]["Consecutivo"].ToString();
         }
 
+        void slkupLiquidacion_EditValueChanged(object sender, EventArgs e)
+        {
+            DataTable dt = (DataTable)this.slkupLiquidacion.Properties.DataSource;
+            DataView dv = new DataView(dt);
+            dv.RowFilter = "IDConsecutivo='" + this.slkupLiquidacion.EditValue + "'";
+            this.txtConsecutivoLiquidacion.Text = dv.ToTable().Rows[0]["Consecutivo"].ToString();
+        }
+
+
         void slkupPaquete_EditValueChanged(object sender, EventArgs e)
         {
             DataTable dt = (DataTable)this.slkupPaquete.Properties.DataSource;
@@ -196,7 +211,7 @@ namespace CO
 
         private void btnGuardar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            int? IDSolicitud, IdOrdenCompra, IDEmbarque, IDDevolucion, IDBodegaDefault,IDPaquete;
+            int? IDSolicitud, IdOrdenCompra, IDEmbarque, IDDevolucion, IDLiquidacion,IDBodegaDefault,IDPaquete;
             int CantLineasOrdenCompra,CantDecimalesPrecio, CantDecimalesCantidad;
             long? CtaTransitoLocal, CtaTransitoDol, CtrTransitoLocal, CtrTransitoDol;
             String IDTipoCambio, IDTipoAsientoContable;
@@ -213,6 +228,7 @@ namespace CO
                 IdOrdenCompra = (int?)this.slkupOrdenCompra.EditValue;
                 IDDevolucion = (int?) this.slkupDevolucion.EditValue;
                 IDEmbarque = (int?)this.slkupEmbarque.EditValue;
+                IDLiquidacion = (int?)this.slkupLiquidacion.EditValue;
                 CantLineasOrdenCompra = Convert.ToInt32(this.txtNumMaxLineasOrden.EditValue);
                 IDBodegaDefault = (int?)this.slkupBodegaDefault.EditValue;
                 IDTipoCambio = this.slkupTipoCambio.EditValue.ToString();
@@ -228,7 +244,7 @@ namespace CO
                 CanEditAsiento = Convert.ToBoolean(this.chkModificar.EditValue);
                 CanViewAsiento = Convert.ToBoolean(this.chkVisualizar.EditValue);
                 ConnectionManager.BeginTran();
-                DAC.clsParametrosDAC.InsertUpdate(IDSolicitud, IdOrdenCompra, IDEmbarque, IDDevolucion, CantLineasOrdenCompra, IDBodegaDefault, IDTipoCambio, CantDecimalesPrecio, CantDecimalesCantidad, IDTipoAsientoContable, IDPaquete, CtaTransitoLocal, CtrTransitoLocal, CtaTransitoDol, CtrTransitoDol, AplicaAutomaticamenteAsiento, CanEditAsiento, CanViewAsiento, ConnectionManager.Tran);
+                DAC.clsParametrosDAC.InsertUpdate(IDSolicitud, IdOrdenCompra, IDEmbarque, IDDevolucion,IDLiquidacion, CantLineasOrdenCompra, IDBodegaDefault, IDTipoCambio, CantDecimalesPrecio, CantDecimalesCantidad, IDTipoAsientoContable, IDPaquete, CtaTransitoLocal, CtrTransitoLocal, CtaTransitoDol, CtrTransitoDol, AplicaAutomaticamenteAsiento, CanEditAsiento, CanViewAsiento, ConnectionManager.Tran);
                 ConnectionManager.CommitTran();
             }
             catch (Exception ex) {

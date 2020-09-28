@@ -298,7 +298,7 @@ namespace CO
 
         private void btnAgregar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            frmOrdenCompra ofrmOrden = new frmOrdenCompra("New");
+            frmOrdenCompra ofrmOrden = new frmOrdenCompra("Add");
             ofrmOrden.FormClosed += ofrmSolicitud_FormClosed;
             ofrmOrden.ShowDialog();
         }
@@ -329,21 +329,34 @@ namespace CO
         {
             try
             {
+                if (Convert.ToInt32(currentRow["IDEstado"]) > 2)
+                {
+                    MessageBox.Show("Solo puede eliminar ordenes cuyo estdo sea el inicial");
+                    return;
+                }
                 if (MessageBox.Show("Esta seguro que desea eliminar la Orden de Compra seleccionada ? " ,"Listado de Ordenes de Compra", MessageBoxButtons.YesNo)== System.Windows.Forms.DialogResult.Yes) {
                     if (currentRow != null)
                     {
+                        String OrdenCompra = "";
+                        int IDOrdenCompra = Convert.ToInt32(currentRow["IDOrdenCompra"]);
                         ConnectionManager.BeginTran();
-                        clsSolicitudCompraDAC.InsertUpdate("D", Convert.ToInt32(currentRow["IDOrdenCompra"]),"", DateTime.Now, DateTime.Now, -1, "", "", "", DateTime.Now, "", DateTime.Now, "", ConnectionManager.Tran);
-                        clsDetalleSolicitudCompraDAC.InsertUpdate("D", Convert.ToInt32(currentRow["IDSolicitud"]), -1, 0, "", ConnectionManager.Tran);
+                        
+                        clsOrdenCompraDetalleDAC.InsertUpdate("D", IDOrdenCompra, -1, 0, 0, 0, 0, 0, 0,
+                                                        0, 0, "", ConnectionManager.Tran);
+                        clsOrdenCompraDAC.InsertUpdate("D", IDOrdenCompra, ref OrdenCompra, DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, -1, -1, 0, "", "", DateTime.Now, "", DateTime.Now, DateTime.Now, "", DateTime.Now, "", ConnectionManager.Tran);
+                        
                         ConnectionManager.CommitTran();
+                        MessageBox.Show("La orden de compra se ha eliminado correctamente");
                     }
                     PopulateGrid();
                 }
             }
             catch (Exception ex) {
-                MessageBox.Show("Han ocurrido los siguientes errores: \n\r"+ ex.Message);
                 ConnectionManager.RollBackTran();
+                MessageBox.Show("Han ocurrido los siguientes errores: \n\r"+ ex.Message);
             }
+
+
         }
 
         private void btnRefres_Click(object sender, EventArgs e)

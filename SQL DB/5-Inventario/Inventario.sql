@@ -1013,6 +1013,15 @@ INSERT INTO DBO.globalConsecutivos( Descr ,Prefijo ,Consecutivo ,Documento ,Acti
 VALUES ('CONSECUTIVO AJUSTE','AJU',1,'AJU00000001',1)
 GO
 INSERT INTO DBO.globalConsecutivos( Descr ,Prefijo ,Consecutivo ,Documento ,Activo)
+VALUES ('CONSECUTIVO SOLICITUD COMPRA','SCO',1,'SCO00000001',1)
+GO
+INSERT INTO DBO.globalConsecutivos( Descr ,Prefijo ,Consecutivo ,Documento ,Activo)
+VALUES ('CONSECUTIVO EMBARQUE','EMB',1,'EMB00000001',1)
+GO
+INSERT INTO DBO.globalConsecutivos( Descr ,Prefijo ,Consecutivo ,Documento ,Activo)
+VALUES ('CONSECUTIVO LIQUIDACION','LIQ',1,'LIQ00000001',1)
+GO
+INSERT INTO DBO.globalConsecutivos( Descr ,Prefijo ,Consecutivo ,Documento ,Activo)
 VALUES ('CONSECUTIVO FISICO','FIS',1,'FIS00000001',1)
 
 

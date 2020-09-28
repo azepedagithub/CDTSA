@@ -44,7 +44,7 @@
             this.txtOrdenCompra = new DevExpress.XtraEditors.TextEdit();
             this.dtgEmbarques = new DevExpress.XtraGrid.GridControl();
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
-            
+            this.colIDEmbarque = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colEmbarque = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colFecha = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colAsiento = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -56,10 +56,6 @@
             this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.colIDEmbarque = new DevExpress.XtraGrid.Columns.GridColumn();
-            
-            
-
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
@@ -73,7 +69,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
-
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
@@ -306,9 +301,6 @@
             this.emptySpaceItem1.AppearanceItemCaption.Options.UseFont = true;
             this.emptySpaceItem1.AppearanceItemCaption.Options.UseTextOptions = true;
             this.emptySpaceItem1.AppearanceItemCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.emptySpaceItem1.Location = new System.Drawing.Point(151, 0);
-            this.emptySpaceItem1.Name = "emptySpaceItem1";
-            this.emptySpaceItem1.Size = new System.Drawing.Size(468, 27);
             this.emptySpaceItem1.Location = new System.Drawing.Point(0, 0);
             this.emptySpaceItem1.MaxSize = new System.Drawing.Size(0, 27);
             this.emptySpaceItem1.MinSize = new System.Drawing.Size(10, 27);
@@ -364,46 +356,6 @@
             this.layoutControlItem3.Text = "Embarque:";
             this.layoutControlItem3.TextSize = new System.Drawing.Size(74, 13);
             // 
-            // colIDEmbarque
-            // 
-            this.colIDEmbarque.Caption = "ID Embarque";
-            this.colIDEmbarque.FieldName = "IDEmbarque";
-            this.colIDEmbarque.Name = "colIDEmbarque";
-            this.colIDEmbarque.Visible = true;
-            this.colIDEmbarque.VisibleIndex = 0;
-            // 
-            // colEmbarque
-            // 
-            this.colEmbarque.Caption = "Embarque";
-            this.colEmbarque.FieldName = "Embarque";
-            this.colEmbarque.Name = "colEmbarque";
-            this.colEmbarque.Visible = true;
-            this.colEmbarque.VisibleIndex = 1;
-            // 
-            // colFecha
-            // 
-            this.colFecha.Caption = "Fecha";
-            this.colFecha.FieldName = "Fecha";
-            this.colFecha.Name = "colFecha";
-            this.colFecha.Visible = true;
-            this.colFecha.VisibleIndex = 2;
-            // 
-            // colAsiento
-            // 
-            this.colAsiento.Caption = "Asiento";
-            this.colAsiento.FieldName = "Asiento";
-            this.colAsiento.Name = "colAsiento";
-            this.colAsiento.Visible = true;
-            this.colAsiento.VisibleIndex = 3;
-            // 
-            // colUsuario
-            // 
-            this.colUsuario.Caption = "Usuario";
-            this.colUsuario.FieldName = "Usuario";
-            this.colUsuario.Name = "colUsuario";
-            this.colUsuario.Visible = true;
-            this.colUsuario.VisibleIndex = 4;
-            // 
             // frmListadoEmbarque
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -413,7 +365,7 @@
             this.Controls.Add(this.ribbonControl);
             this.Name = "frmListadoEmbarque";
             this.Ribbon = this.ribbonControl;
-            this.Text = "frmListadoEmbarque";
+            this.Text = "Listado de Embarques";
             this.Load += new System.EventHandler(this.frmListadoEmbarque_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
