@@ -13,6 +13,7 @@ using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraLayout;
+using DevExpress.XtraGrid;
 
 namespace CO
 {
@@ -21,6 +22,9 @@ namespace CO
         private int _IDLiquidacion;
         private long _IDOrdenCompra;
         private long _IDEmbarque;
+        private String _Liquidacion="";
+        private bool _GroupedGastos = false;
+        private bool _isMonedaNacional = false;
 
         private String OrdenCompra, Embarque;
 
@@ -34,6 +38,7 @@ namespace CO
         private DataTable dtLiquidacionGastoDetalle = new DataTable();
         private DataTable dtObligacionDetalle = new DataTable();
         private DataTable dtObligacionProveedor = new DataTable();
+        private DataTable dtMoneda = new DataTable();
         
         private String _Accion;
         
@@ -42,6 +47,8 @@ namespace CO
         {
             InitializeComponent();
             this._IDLiquidacion = IDLiquidacion;
+            this._IDOrdenCompra = -1;
+            this._IDEmbarque = -1;
         }
 
         public frmLiquidacion(long IDLiquidacion,long IDEmbarque, long IDOrdenCompra, String OrdenCompra,String Embarque, String Accion)
@@ -61,16 +68,34 @@ namespace CO
             this.dtLiquidacion = clsLiquidacionCompraDAC.Get(_IDLiquidacion, _IDEmbarque, _IDOrdenCompra).Tables[0];
             if (this.dtLiquidacion.Rows.Count > 0)
             {
-               
                 this._IDLiquidacion = Convert.ToInt32(this.dtLiquidacion.Rows[0]["IDLiquidacion"]);
+                this._IDEmbarque = Convert.ToInt32(this.dtLiquidacion.Rows[0]["IDEmbarque"]);
+                this._IDOrdenCompra = Convert.ToInt32(this.dtLiquidacion.Rows[0]["IDOrdenCompra"]);
+               
             }
+            
             this.dtLiquidacionGasto = clsGastosLiquidacionCompraDAC.Get(_IDLiquidacion, -1).Tables[0];
-            this.dtLiquidacionGastoDetalle = clsGastosLiquidacionDetalladoDAC.Get(_IDLiquidacion, -1, -1).Tables[0];
+            this.dtLiquidacionGastoDetalle = clsGastosLiquidacionDetalladoDAC.Get(_IDLiquidacion, -1, -1, null).Tables[0];
+            
             this.dtObligacionProveedor = clsObligacionProveedorDAC.Get((int)this._IDEmbarque, -1).Tables[0];
 
             //Cargar los gastos generados en embarque
             dtObligacionDetalle = DAC.clsObligacionDetalleDAC.GetConsolidadoObligacionDetalle((int)this._IDEmbarque).Tables[0];
-                
+           
+            this.dtMoneda = ControlBancario.DAC.MonedaDAC.GetMoneda(-1).Tables[0];
+            DataTable dtOrdenCompra = clsOrdenCompraDAC.GetByID(_IDOrdenCompra).Tables[0];
+
+            DataView dv = dtMoneda.AsDataView();
+            dv.RowFilter = "IDMoneda=" + dtOrdenCompra.Rows[0]["IDMoneda"].ToString();
+            DataRow dtMonedaDoc = dv.ToTable().Rows[0];
+            this.lblMoneda.Text = dtMonedaDoc["Descr"].ToString();
+
+            if (Convert.ToBoolean(dtMonedaDoc["Nacional"]) == true)
+                this._isMonedaNacional = true;
+            else 
+                this._isMonedaNacional = false;
+
+
             UpdateControlsFromData(this.dtLiquidacion, this.dtObligacionProveedor);
             
             if (dtLiquidacionGasto.Rows.Count > 0)
@@ -81,7 +106,7 @@ namespace CO
                     DataRow newRow = dtLiquidacionGasto.NewRow();
                     newRow["IDLiquidacion"] = this._IDLiquidacion;
                     newRow["IDGasto"] = fila["IDGasto"];
-                    newRow["Monto"] = fila["Monto"];
+                    newRow["Monto"] = fila["SubTotal"];
                     dtLiquidacionGasto.Rows.Add(newRow);
                 }
 
@@ -186,16 +211,39 @@ namespace CO
                 this.hypOrdenCompra.Tag = cabecera["IDOrdenCompra"].ToString();
                 this.hypOrdenCompra.Text = cabecera["OrdenCompra"].ToString();
 
-                this.txtMontoDolar.EditValue = cabecera["MontoTotal"].ToString();
                 this.txtMontoFlete.EditValue = cabecera["MontoFlete"].ToString();
                 this.txtMontoSeguro.EditValue = cabecera["MontoSeguro"].ToString();
                 this.txtTipoCambio.EditValue = cabecera["TipoCambio"].ToString();
+                this.txtValorMercaderia.EditValue = cabecera["ValorMercaderia"].ToString();
+
+                if (_isMonedaNacional)
+                {
+                    this.txtMontoLocal.EditValue = cabecera["MontoTotal"].ToString();
+                    this.txtMontoDolar.EditValue = (Convert.ToDouble(cabecera["MontoTotal"]) / TipoCambio).ToString();
+                }
+                else
+                {
+                    this.txtMontoDolar.EditValue = cabecera["MontoTotal"].ToString();
+                    this.txtMontoLocal.EditValue = (Convert.ToDouble(cabecera["MontoTotal"]) * TipoCambio).ToString();
+                }
+                    
 
             }   else {
                 this.txtValorMercaderia.EditValue = dtObligacion.Rows[0]["ValorMercaderia"].ToString();
-                this.txtMontoDolar.EditValue = dtObligacion.Rows[0]["MontoTotal"].ToString();
                 this.txtMontoFlete.EditValue = dtObligacion.Rows[0]["MontoFlete"].ToString();
                 this.txtMontoSeguro.EditValue = dtObligacion.Rows[0]["MontoSeguro"].ToString();
+
+                if (_isMonedaNacional)
+                {
+                    this.txtMontoLocal.EditValue = dtObligacion.Rows[0]["MontoTotal"].ToString();
+                    this.txtMontoDolar.EditValue = (Convert.ToDouble(dtObligacion.Rows[0]["MontoTotal"]) / TipoCambio).ToString();
+                }
+                else
+                {
+                    this.txtMontoDolar.EditValue = dtObligacion.Rows[0]["MontoTotal"].ToString();
+                    this.txtMontoLocal.EditValue = (Convert.ToDouble(dtObligacion.Rows[0]["MontoTotal"]) * TipoCambio).ToString();
+                }
+                  
             }
             
         }
@@ -238,8 +286,6 @@ namespace CO
                 dtGastos = CO.DAC.clsGastosCompraDAC.Get(-1,"*").Tables[0];
                 
                 LoadData();
-
-                                                                                       
 
                 this.slkupIDGasto.DataSource = dtGastos;
                 this.slkupIDGasto.DisplayMember = "IDGasto";
@@ -373,16 +419,32 @@ namespace CO
                     sAccion = "I";
                 else
                     sAccion ="U";
-                ConnectionManager.BeginTran();
-                DAC.clsLiquidacionCompraDAC.InsertUpdate(sAccion, ref _IDLiquidacion, (int)this._IDEmbarque, (int)this._IDOrdenCompra, Convert.ToDateTime(this.dtpFechaLiquidacion.EditValue), Convert.ToDecimal(this.txtTipoCambio.EditValue), Convert.ToDecimal(txtValorMercaderia.EditValue), Convert.ToDecimal(txtMontoFlete.EditValue), Convert.ToDecimal(this.txtMontoSeguro.EditValue), 0, Convert.ToDecimal(this.txtMontoDolar.EditValue), ConnectionManager.Tran);
+                Decimal? value = (Decimal?)DAC.clsLiquidacionCompraDAC.Get(this._IDLiquidacion,-1,-1).Tables[0].Rows[0]["MontoTotal"];
+                Decimal MontoAnterior = Convert.ToDecimal(value == null ? 0 : value);
+                
+                ConnectionManager.BeginTran();          
+                DAC.clsLiquidacionCompraDAC.InsertUpdate(sAccion, ref _Liquidacion, ref _IDLiquidacion, (int)this._IDEmbarque, (int)this._IDOrdenCompra, Convert.ToDateTime(this.dtpFechaLiquidacion.EditValue), Convert.ToDecimal(this.txtTipoCambio.EditValue), Convert.ToDecimal(txtValorMercaderia.EditValue), Convert.ToDecimal(txtMontoFlete.EditValue), Convert.ToDecimal(this.txtMontoSeguro.EditValue), 0, _isMonedaNacional ? Convert.ToDecimal(this.txtMontoLocal.EditValue) : Convert.ToDecimal(this.txtMontoDolar.EditValue), ConnectionManager.Tran);
+                this.lblLiquidacion.Text = _Liquidacion;
                 DAC.clsGastosLiquidacionCompraDAC.InsertUpdate("D",this._IDLiquidacion,-1,0,ConnectionManager.Tran);
                 foreach(DataRow row in dtLiquidacionGasto.Rows) {
                     DAC.clsGastosLiquidacionCompraDAC.InsertUpdate("I", this._IDLiquidacion,Convert.ToInt32(row["IDGasto"]),Convert.ToDecimal(row["Monto"]),ConnectionManager.Tran);
                 }
-                DAC.clsGastosLiquidacionDetalladoDAC.InsertUpdate("D",this._IDLiquidacion,-1,-1,0,ConnectionManager.Tran);
                 
-                foreach(DataRow row in dtLiquidacionGastoDetalle.Rows) {
-                    DAC.clsGastosLiquidacionDetalladoDAC.InsertUpdate("I", this._IDLiquidacion,Convert.ToInt32(row["IDGasto"]),Convert.ToInt64(row["IDProducto"]),Convert.ToDecimal(row["Monto"]),ConnectionManager.Tran);
+                Decimal MontoActual = _isMonedaNacional ? Convert.ToDecimal(this.txtMontoLocal.EditValue) : Convert.ToDecimal(this.txtMontoDolar.EditValue);
+
+                if (MontoAnterior != MontoActual)
+                {
+                    this.dtLiquidacionGastoDetalle.Clear();
+                    this.tbProrrateo.Text = "Prorrateo **PENDIENTE!!**";
+                    this.tbProrrateo.Appearance.Header.BackColor = Color.Red;
+
+                } else {
+                    this.tbProrrateo.Text = "Prorrateo";
+                    this.tbProrrateo.Appearance.Header.BackColor = Color.Transparent;
+                    DAC.clsGastosLiquidacionDetalladoDAC.InsertUpdate("D", this._IDLiquidacion, -1, -1, 0, ConnectionManager.Tran);
+                    foreach(DataRow row in dtLiquidacionGastoDetalle.Rows) {
+                        DAC.clsGastosLiquidacionDetalladoDAC.InsertUpdate("I", this._IDLiquidacion,Convert.ToInt32(row["IDGasto"]),Convert.ToInt64(row["IDProducto"]),Convert.ToDecimal(row["Monto"]),ConnectionManager.Tran);
+                    }       
                 }
                 
                 ConnectionManager.CommitTran();
@@ -396,8 +458,66 @@ namespace CO
 
         private void btnCalculaProrratoGastos_Click(object sender, EventArgs e)
         {
-            dtLiquidacionGastoDetalle = clsGastosLiquidacionDetalladoDAC.GetProrrateoGastosCompra(this._IDLiquidacion).Tables[0];
-            this.dgProrrateo.DataSource = dtLiquidacionGastoDetalle;
+            try
+            {
+                this.tbProrrateo.Text = "Prorrateo";
+                this.tbProrrateo.Appearance.Header.BackColor = Color.Transparent;
+                dtLiquidacionGastoDetalle = clsGastosLiquidacionDetalladoDAC.GetProrrateoGastosCompra(this._IDLiquidacion).Tables[0];
+                this.dgProrrateo.DataSource = dtLiquidacionGastoDetalle;
+            }
+            catch (Exception ex) {
+                MessageBox.Show("Ha ocurrido un error trantando de prorratear la liquidación");
+            }
+        }
+
+        private void btnAgrupar_Click(object sender, EventArgs e)
+        {
+            
+            GridColumn colGasto = gridViewProrrateo.Columns["DescrGasto"];
+            GridColumn colProd = gridViewProrrateo.Columns["DescrProducto"];
+            gridViewProrrateo.BeginSort();
+            try
+            {
+                gridViewProrrateo.ClearGrouping();
+                if (!_GroupedGastos)
+                {
+                    colGasto.GroupIndex = 1;
+                    colProd.GroupIndex = 0;
+                    
+                    _GroupedGastos= true;
+                } else
+                    _GroupedGastos = false;
+
+            }
+            finally
+            {
+                gridViewProrrateo.EndSort();
+            }      
+        }
+
+        private void CalcularTotales()
+        {
+            Double ValorTotal = Convert.ToDouble(this.txtMontoFlete.EditValue) + Convert.ToDouble(this.txtMontoSeguro.EditValue) + Convert.ToDouble(this.txtValorMercaderia.EditValue);
+            if (_isMonedaNacional)
+            {
+                this.txtMontoLocal.EditValue = ValorTotal;
+                this.txtMontoDolar.EditValue = ValorTotal / TipoCambio;
+            }
+            else
+            {
+                this.txtMontoDolar.EditValue = ValorTotal;
+                this.txtMontoLocal.EditValue = ValorTotal * TipoCambio;
+            }
+        }
+
+        private void txtMontoFlete_EditValueChanged(object sender, EventArgs e)
+        {
+            CalcularTotales();    
+        }
+
+        private void txtMontoSeguro_EditValueChanged(object sender, EventArgs e)
+        {
+            CalcularTotales();
         }
 
      

@@ -11,7 +11,7 @@ namespace CO.DAC
 {
     public static class clsLiquidacionCompraDAC
     {
-        public static int InsertUpdate(string Operacion,ref int IDLiquidacion, int IDEmbarque, int IDOrdenCompra,
+        public static int InsertUpdate(string Operacion,ref String Consecutivo, ref int IDLiquidacion, int IDEmbarque, int IDOrdenCompra,
                                         DateTime Fecha, decimal TipoCambio, decimal ValorMercaderia, decimal MontoFlete, decimal MontoSeguro,
                                         decimal Otros, decimal Total,SqlTransaction tran)
         {
@@ -23,6 +23,10 @@ namespace CO.DAC
             oCmd.Parameters.Add(new SqlParameter("@Operacion", Operacion));
             oCmd.Parameters.Add(new SqlParameter("@IDLiquidacion", IDLiquidacion));
             oCmd.Parameters["@IDLiquidacion"].Direction = ParameterDirection.InputOutput;
+            oCmd.Parameters.Add(new SqlParameter("@Consecutivo", Consecutivo));
+            oCmd.Parameters["@Consecutivo"].Direction = ParameterDirection.InputOutput;
+            oCmd.Parameters["@Consecutivo"].SqlDbType = SqlDbType.NVarChar;
+            oCmd.Parameters["@Consecutivo"].Size = 20;
             oCmd.Parameters.Add(new SqlParameter("@IDEmbarque", IDEmbarque));
             oCmd.Parameters.Add(new SqlParameter("@IDOrdenCompra", IDOrdenCompra));
             oCmd.Parameters.Add(new SqlParameter("@Fecha", Fecha));
@@ -40,6 +44,7 @@ namespace CO.DAC
             if (Operacion == "I")
             {
                 IDLiquidacion = Convert.ToInt32(oCmd.Parameters["@IDLiquidacion"].Value);
+                Consecutivo = oCmd.Parameters["@Consecutivo"].Value.ToString();
             }
 
 
@@ -48,7 +53,7 @@ namespace CO.DAC
         }
 
 
-        public static DataSet Get(long IDLiquidacion,long IDEmbarque,long IDOrdenCompra)
+        public static DataSet Get(long IDLiquidacion,long IDEmbarque,long IDOrdenCompra, SqlTransaction oTran = null)
         {
             String strSQL = "dbo.coGetLiquidacionCompra";
 
@@ -59,6 +64,7 @@ namespace CO.DAC
             oCmd.Parameters.Add(new SqlParameter("@IDOrdenCompra", IDOrdenCompra));
 
             oCmd.CommandType = CommandType.StoredProcedure;
+            oCmd.Transaction = oTran;
 
             SqlDataAdapter oAdap = new SqlDataAdapter(oCmd);
             DataSet DS = new DataSet();

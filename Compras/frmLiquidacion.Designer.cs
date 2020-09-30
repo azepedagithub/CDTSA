@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmLiquidacion));
-            DevExpress.XtraBars.Ribbon.ReduceOperation reduceOperation1 = new DevExpress.XtraBars.Ribbon.ReduceOperation();
-            DevExpress.XtraBars.Ribbon.ReduceOperation reduceOperation2 = new DevExpress.XtraBars.Ribbon.ReduceOperation();
+            DevExpress.XtraBars.Ribbon.ReduceOperation reduceOperation3 = new DevExpress.XtraBars.Ribbon.ReduceOperation();
+            DevExpress.XtraBars.Ribbon.ReduceOperation reduceOperation4 = new DevExpress.XtraBars.Ribbon.ReduceOperation();
             this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.btnEditar = new DevExpress.XtraBars.BarButtonItem();
             this.btnGuardar = new DevExpress.XtraBars.BarButtonItem();
@@ -63,6 +63,7 @@
             this.colDescrdg2 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colMonto = new DevExpress.XtraGrid.Columns.GridColumn();
             this.tbProrrateo = new DevExpress.XtraTab.XtraTabPage();
+            this.btnAgrupar = new DevExpress.XtraEditors.SimpleButton();
             this.btnCalculaProrratoGastos = new DevExpress.XtraEditors.SimpleButton();
             this.dgProrrateo = new DevExpress.XtraGrid.GridControl();
             this.gridViewProrrateo = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -82,6 +83,8 @@
             this.txtTipoCambio = new DevExpress.XtraEditors.TextEdit();
             this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
             this.txtValorMercaderia = new DevExpress.XtraEditors.TextEdit();
+            this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
+            this.lblMoneda = new DevExpress.XtraEditors.LabelControl();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMontoFlete.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMontoSeguro.Properties)).BeginInit();
@@ -169,18 +172,18 @@
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.ribbonPageGroup1});
             this.ribbonPage1.Name = "ribbonPage1";
-            reduceOperation1.Behavior = DevExpress.XtraBars.Ribbon.ReduceOperationBehavior.Single;
-            reduceOperation1.Group = null;
-            reduceOperation1.ItemLinkIndex = 0;
-            reduceOperation1.ItemLinksCount = 0;
-            reduceOperation1.Operation = DevExpress.XtraBars.Ribbon.ReduceOperationType.LargeButtons;
-            reduceOperation2.Behavior = DevExpress.XtraBars.Ribbon.ReduceOperationBehavior.Single;
-            reduceOperation2.Group = null;
-            reduceOperation2.ItemLinkIndex = 0;
-            reduceOperation2.ItemLinksCount = 0;
-            reduceOperation2.Operation = DevExpress.XtraBars.Ribbon.ReduceOperationType.Gallery;
-            this.ribbonPage1.ReduceOperations.Add(reduceOperation1);
-            this.ribbonPage1.ReduceOperations.Add(reduceOperation2);
+            reduceOperation3.Behavior = DevExpress.XtraBars.Ribbon.ReduceOperationBehavior.Single;
+            reduceOperation3.Group = null;
+            reduceOperation3.ItemLinkIndex = 0;
+            reduceOperation3.ItemLinksCount = 0;
+            reduceOperation3.Operation = DevExpress.XtraBars.Ribbon.ReduceOperationType.LargeButtons;
+            reduceOperation4.Behavior = DevExpress.XtraBars.Ribbon.ReduceOperationBehavior.Single;
+            reduceOperation4.Group = null;
+            reduceOperation4.ItemLinkIndex = 0;
+            reduceOperation4.ItemLinksCount = 0;
+            reduceOperation4.Operation = DevExpress.XtraBars.Ribbon.ReduceOperationType.Gallery;
+            this.ribbonPage1.ReduceOperations.Add(reduceOperation3);
+            this.ribbonPage1.ReduceOperations.Add(reduceOperation4);
             this.ribbonPage1.Text = "Opciones Generales";
             // 
             // ribbonPageGroup1
@@ -194,7 +197,7 @@
             // 
             // labelControl5
             // 
-            this.labelControl5.Location = new System.Drawing.Point(225, 186);
+            this.labelControl5.Location = new System.Drawing.Point(281, 160);
             this.labelControl5.Name = "labelControl5";
             this.labelControl5.Size = new System.Drawing.Size(28, 13);
             this.labelControl5.TabIndex = 1;
@@ -202,7 +205,7 @@
             // 
             // labelControl6
             // 
-            this.labelControl6.Location = new System.Drawing.Point(215, 212);
+            this.labelControl6.Location = new System.Drawing.Point(271, 186);
             this.labelControl6.Name = "labelControl6";
             this.labelControl6.Size = new System.Drawing.Size(38, 13);
             this.labelControl6.TabIndex = 1;
@@ -210,7 +213,7 @@
             // 
             // labelControl7
             // 
-            this.labelControl7.Location = new System.Drawing.Point(164, 236);
+            this.labelControl7.Location = new System.Drawing.Point(220, 236);
             this.labelControl7.Name = "labelControl7";
             this.labelControl7.Size = new System.Drawing.Size(89, 13);
             this.labelControl7.TabIndex = 1;
@@ -218,7 +221,7 @@
             // 
             // labelControl8
             // 
-            this.labelControl8.Location = new System.Drawing.Point(165, 262);
+            this.labelControl8.Location = new System.Drawing.Point(221, 262);
             this.labelControl8.Name = "labelControl8";
             this.labelControl8.Size = new System.Drawing.Size(88, 13);
             this.labelControl8.TabIndex = 1;
@@ -226,23 +229,25 @@
             // 
             // txtMontoFlete
             // 
-            this.txtMontoFlete.Location = new System.Drawing.Point(259, 183);
+            this.txtMontoFlete.Location = new System.Drawing.Point(315, 157);
             this.txtMontoFlete.Name = "txtMontoFlete";
             this.txtMontoFlete.Properties.ReadOnly = true;
             this.txtMontoFlete.Size = new System.Drawing.Size(100, 20);
             this.txtMontoFlete.TabIndex = 6;
+            this.txtMontoFlete.EditValueChanged += new System.EventHandler(this.txtMontoFlete_EditValueChanged);
             // 
             // txtMontoSeguro
             // 
-            this.txtMontoSeguro.Location = new System.Drawing.Point(259, 209);
+            this.txtMontoSeguro.Location = new System.Drawing.Point(315, 183);
             this.txtMontoSeguro.Name = "txtMontoSeguro";
             this.txtMontoSeguro.Properties.ReadOnly = true;
             this.txtMontoSeguro.Size = new System.Drawing.Size(100, 20);
             this.txtMontoSeguro.TabIndex = 7;
+            this.txtMontoSeguro.EditValueChanged += new System.EventHandler(this.txtMontoSeguro_EditValueChanged);
             // 
             // txtMontoDolar
             // 
-            this.txtMontoDolar.Location = new System.Drawing.Point(259, 233);
+            this.txtMontoDolar.Location = new System.Drawing.Point(315, 233);
             this.txtMontoDolar.Name = "txtMontoDolar";
             this.txtMontoDolar.Properties.ReadOnly = true;
             this.txtMontoDolar.Size = new System.Drawing.Size(100, 20);
@@ -250,7 +255,7 @@
             // 
             // txtMontoLocal
             // 
-            this.txtMontoLocal.Location = new System.Drawing.Point(259, 259);
+            this.txtMontoLocal.Location = new System.Drawing.Point(315, 259);
             this.txtMontoLocal.Name = "txtMontoLocal";
             this.txtMontoLocal.Properties.ReadOnly = true;
             this.txtMontoLocal.Size = new System.Drawing.Size(100, 20);
@@ -276,14 +281,14 @@
             // 
             // dtgGastosInternacion
             // 
-            this.dtgGastosInternacion.Location = new System.Drawing.Point(3, 34);
+            this.dtgGastosInternacion.Location = new System.Drawing.Point(3, 13);
             this.dtgGastosInternacion.MainView = this.gridViewGastosInternacion;
             this.dtgGastosInternacion.MenuManager = this.ribbonControl1;
             this.dtgGastosInternacion.Name = "dtgGastosInternacion";
             this.dtgGastosInternacion.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.slkupIDGasto,
             this.slkupDescGasto});
-            this.dtgGastosInternacion.Size = new System.Drawing.Size(714, 234);
+            this.dtgGastosInternacion.Size = new System.Drawing.Size(714, 255);
             this.dtgGastosInternacion.TabIndex = 9;
             this.dtgGastosInternacion.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridViewGastosInternacion});
@@ -298,6 +303,7 @@
             this.gridViewGastosInternacion.Name = "gridViewGastosInternacion";
             this.gridViewGastosInternacion.OptionsBehavior.AutoPopulateColumns = false;
             this.gridViewGastosInternacion.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Top;
+            this.gridViewGastosInternacion.OptionsView.ShowFooter = true;
             this.gridViewGastosInternacion.OptionsView.ShowGroupPanel = false;
             // 
             // colIDGasto
@@ -391,16 +397,29 @@
             this.colMonto.Caption = "Monto";
             this.colMonto.FieldName = "Monto";
             this.colMonto.Name = "colMonto";
+            this.colMonto.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Monto", "TOTAL={0:0.##}")});
             this.colMonto.Visible = true;
             this.colMonto.VisibleIndex = 2;
             // 
             // tbProrrateo
             // 
+            this.tbProrrateo.Controls.Add(this.btnAgrupar);
             this.tbProrrateo.Controls.Add(this.btnCalculaProrratoGastos);
             this.tbProrrateo.Controls.Add(this.dgProrrateo);
             this.tbProrrateo.Name = "tbProrrateo";
             this.tbProrrateo.Size = new System.Drawing.Size(720, 271);
             this.tbProrrateo.Text = "Prorrateo";
+            // 
+            // btnAgrupar
+            // 
+            this.btnAgrupar.Image = ((System.Drawing.Image)(resources.GetObject("btnAgrupar.Image")));
+            this.btnAgrupar.Location = new System.Drawing.Point(80, 3);
+            this.btnAgrupar.Name = "btnAgrupar";
+            this.btnAgrupar.Size = new System.Drawing.Size(71, 23);
+            this.btnAgrupar.TabIndex = 11;
+            this.btnAgrupar.Text = "Agrupar";
+            this.btnAgrupar.Click += new System.EventHandler(this.btnAgrupar_Click);
             // 
             // btnCalculaProrratoGastos
             // 
@@ -431,16 +450,24 @@
             this.colGasto,
             this.colMontoGastoDet});
             this.gridViewProrrateo.GridControl = this.dgProrrateo;
+            this.gridViewProrrateo.GroupSummary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Monto", null, "(Monto: ={0:0.##})"),
+            new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Monto", this.colGasto, "(Monto: SUM={0:0.##})")});
             this.gridViewProrrateo.Name = "gridViewProrrateo";
             this.gridViewProrrateo.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
             this.gridViewProrrateo.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.True;
+            this.gridViewProrrateo.OptionsMenu.EnableGroupPanelMenu = false;
+            this.gridViewProrrateo.OptionsMenu.ShowDateTimeGroupIntervalItems = false;
+            this.gridViewProrrateo.OptionsView.ShowFooter = true;
             this.gridViewProrrateo.OptionsView.ShowGroupPanel = false;
+            this.gridViewProrrateo.OptionsView.ShowGroupPanelColumnsAsSingleRow = true;
             // 
             // colIDProd
             // 
             this.colIDProd.Caption = "ID Producto";
             this.colIDProd.FieldName = "IDProducto";
             this.colIDProd.Name = "colIDProd";
+            this.colIDProd.OptionsColumn.AllowMerge = DevExpress.Utils.DefaultBoolean.True;
             this.colIDProd.Visible = true;
             this.colIDProd.VisibleIndex = 0;
             // 
@@ -449,6 +476,7 @@
             this.colDescrProd.Caption = "Descr Producto";
             this.colDescrProd.FieldName = "DescrProducto";
             this.colDescrProd.Name = "colDescrProd";
+            this.colDescrProd.OptionsColumn.AllowMerge = DevExpress.Utils.DefaultBoolean.True;
             this.colDescrProd.Visible = true;
             this.colDescrProd.VisibleIndex = 1;
             // 
@@ -457,6 +485,7 @@
             this.colGasto.Caption = "Gasto";
             this.colGasto.FieldName = "DescrGasto";
             this.colGasto.Name = "colGasto";
+            this.colGasto.OptionsColumn.AllowMerge = DevExpress.Utils.DefaultBoolean.True;
             this.colGasto.Visible = true;
             this.colGasto.VisibleIndex = 2;
             // 
@@ -464,7 +493,10 @@
             // 
             this.colMontoGastoDet.Caption = "Monto";
             this.colMontoGastoDet.FieldName = "Monto";
+            this.colMontoGastoDet.GroupFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.colMontoGastoDet.Name = "colMontoGastoDet";
+            this.colMontoGastoDet.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Monto", "{0:0.##}")});
             this.colMontoGastoDet.Visible = true;
             this.colMontoGastoDet.VisibleIndex = 3;
             // 
@@ -478,7 +510,7 @@
             // 
             // labelControl12
             // 
-            this.labelControl12.Location = new System.Drawing.Point(225, 154);
+            this.labelControl12.Location = new System.Drawing.Point(16, 236);
             this.labelControl12.Name = "labelControl12";
             this.labelControl12.Size = new System.Drawing.Size(48, 13);
             this.labelControl12.TabIndex = 1;
@@ -486,7 +518,7 @@
             // 
             // labelControl13
             // 
-            this.labelControl13.Location = new System.Drawing.Point(437, 154);
+            this.labelControl13.Location = new System.Drawing.Point(16, 262);
             this.labelControl13.Name = "labelControl13";
             this.labelControl13.Size = new System.Drawing.Size(74, 13);
             this.labelControl13.TabIndex = 1;
@@ -495,16 +527,16 @@
             // lblLiquidacion
             // 
             this.lblLiquidacion.Appearance.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLiquidacion.Location = new System.Drawing.Point(74, 150);
+            this.lblLiquidacion.Location = new System.Drawing.Point(99, 152);
             this.lblLiquidacion.Name = "lblLiquidacion";
-            this.lblLiquidacion.Size = new System.Drawing.Size(76, 16);
+            this.lblLiquidacion.Size = new System.Drawing.Size(28, 16);
             this.lblLiquidacion.TabIndex = 1;
-            this.lblLiquidacion.Text = "LI00000001";
+            this.lblLiquidacion.Text = "-- --";
             // 
             // hypEmbarque
             // 
             this.hypEmbarque.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.hypEmbarque.Location = new System.Drawing.Point(295, 154);
+            this.hypEmbarque.Location = new System.Drawing.Point(99, 234);
             this.hypEmbarque.Name = "hypEmbarque";
             this.hypEmbarque.Size = new System.Drawing.Size(32, 13);
             this.hypEmbarque.TabIndex = 6;
@@ -513,7 +545,7 @@
             // hypOrdenCompra
             // 
             this.hypOrdenCompra.Cursor = System.Windows.Forms.Cursors.Default;
-            this.hypOrdenCompra.Location = new System.Drawing.Point(532, 152);
+            this.hypOrdenCompra.Location = new System.Drawing.Point(99, 260);
             this.hypOrdenCompra.Name = "hypOrdenCompra";
             this.hypOrdenCompra.Size = new System.Drawing.Size(32, 13);
             this.hypOrdenCompra.TabIndex = 6;
@@ -522,7 +554,7 @@
             // dtpFechaLiquidacion
             // 
             this.dtpFechaLiquidacion.EditValue = null;
-            this.dtpFechaLiquidacion.Location = new System.Drawing.Point(74, 183);
+            this.dtpFechaLiquidacion.Location = new System.Drawing.Point(99, 183);
             this.dtpFechaLiquidacion.MenuManager = this.ribbonControl1;
             this.dtpFechaLiquidacion.Name = "dtpFechaLiquidacion";
             this.dtpFechaLiquidacion.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -543,7 +575,7 @@
             // 
             // labelControl2
             // 
-            this.labelControl2.Location = new System.Drawing.Point(390, 186);
+            this.labelControl2.Location = new System.Drawing.Point(16, 210);
             this.labelControl2.Name = "labelControl2";
             this.labelControl2.Size = new System.Drawing.Size(77, 13);
             this.labelControl2.TabIndex = 1;
@@ -551,14 +583,14 @@
             // 
             // txtTipoCambio
             // 
-            this.txtTipoCambio.Location = new System.Drawing.Point(473, 183);
+            this.txtTipoCambio.Location = new System.Drawing.Point(99, 207);
             this.txtTipoCambio.Name = "txtTipoCambio";
-            this.txtTipoCambio.Size = new System.Drawing.Size(100, 20);
+            this.txtTipoCambio.Size = new System.Drawing.Size(97, 20);
             this.txtTipoCambio.TabIndex = 6;
             // 
             // labelControl3
             // 
-            this.labelControl3.Location = new System.Drawing.Point(390, 236);
+            this.labelControl3.Location = new System.Drawing.Point(225, 210);
             this.labelControl3.Name = "labelControl3";
             this.labelControl3.Size = new System.Drawing.Size(84, 13);
             this.labelControl3.TabIndex = 1;
@@ -566,11 +598,28 @@
             // 
             // txtValorMercaderia
             // 
-            this.txtValorMercaderia.Location = new System.Drawing.Point(473, 233);
+            this.txtValorMercaderia.Location = new System.Drawing.Point(315, 207);
             this.txtValorMercaderia.Name = "txtValorMercaderia";
             this.txtValorMercaderia.Properties.ReadOnly = true;
             this.txtValorMercaderia.Size = new System.Drawing.Size(100, 20);
             this.txtValorMercaderia.TabIndex = 6;
+            // 
+            // labelControl4
+            // 
+            this.labelControl4.Location = new System.Drawing.Point(601, 158);
+            this.labelControl4.Name = "labelControl4";
+            this.labelControl4.Size = new System.Drawing.Size(42, 13);
+            this.labelControl4.TabIndex = 1;
+            this.labelControl4.Text = "Moneda:";
+            // 
+            // lblMoneda
+            // 
+            this.lblMoneda.Appearance.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMoneda.Location = new System.Drawing.Point(649, 158);
+            this.lblMoneda.Name = "lblMoneda";
+            this.lblMoneda.Size = new System.Drawing.Size(28, 16);
+            this.lblMoneda.TabIndex = 1;
+            this.lblMoneda.Text = "-- --";
             // 
             // frmLiquidacion
             // 
@@ -594,6 +643,8 @@
             this.Controls.Add(this.labelControl2);
             this.Controls.Add(this.labelControl1);
             this.Controls.Add(this.labelControl5);
+            this.Controls.Add(this.lblMoneda);
+            this.Controls.Add(this.labelControl4);
             this.Controls.Add(this.labelControl13);
             this.Controls.Add(this.labelControl12);
             this.Controls.Add(this.lblLiquidacion);
@@ -683,5 +734,8 @@
         private DevExpress.XtraGrid.Columns.GridColumn colDescrProd;
         private DevExpress.XtraGrid.Columns.GridColumn colGasto;
         private DevExpress.XtraGrid.Columns.GridColumn colMontoGastoDet;
+        private DevExpress.XtraEditors.SimpleButton btnAgrupar;
+        private DevExpress.XtraEditors.LabelControl labelControl4;
+        private DevExpress.XtraEditors.LabelControl lblMoneda;
     }
 }

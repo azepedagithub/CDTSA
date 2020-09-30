@@ -34,7 +34,7 @@ namespace CO.DAC
         }
 
 
-        public static DataSet Get(long IDLiquidacion, int IDGasto, long IDProducto)
+        public static DataSet Get(long IDLiquidacion, int IDGasto, long IDProducto,SqlTransaction tran)
         {
             String strSQL = "dbo.coGetGastoLiquidacionDetallado";
 
@@ -45,8 +45,11 @@ namespace CO.DAC
             oCmd.Parameters.Add(new SqlParameter("@IDProducto", IDProducto));
 
             oCmd.CommandType = CommandType.StoredProcedure;
-
+            if (tran != null)
+                oCmd.Transaction = tran;
             SqlDataAdapter oAdap = new SqlDataAdapter(oCmd);
+            
+
             DataSet DS = new DataSet();
 
             oAdap.Fill(DS, "Data");

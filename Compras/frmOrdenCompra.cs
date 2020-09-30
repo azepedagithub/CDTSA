@@ -388,7 +388,7 @@ namespace CO
                 this.slkupPresentacion.DisplayMember = "Descr";
                 this.slkupPresentacion.ValueMember = "IDUnidad";
                 this.slkupPresentacion.NullText = " --- ---";
-                this.slkupPresentacion.EditValueChanged += slkup_EditValueChanged;
+                //this.slkupPresentacion.EditValueChanged += slkup_EditValueChanged;
                 this.slkupPresentacion.Popup += slkup_Popup;
 
                 Util.Util.ConfigLookupEdit(this.slkupProveedor, clsProveedorDAC.Get(-1,"*",-1).Tables[0], "Nombre", "IDProveedor");

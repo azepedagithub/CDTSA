@@ -35,6 +35,7 @@ namespace CO
         DataTable dtEmbarque = new DataTable();
         DataTable dtProductos = new DataTable();
         DataTable dtOrdenCompra = new DataTable();
+        DataTable dtPresentacion = new DataTable();
        
 
         //Datos de la Factura
@@ -309,6 +310,10 @@ namespace CO
                 MontoSeguro=0;
             }
             MontoMercaderia += MontoSeguro + MontoFlete;
+            DataView dv = dtMoneda.AsDataView();
+            dv.RowFilter = "IDMoneda=" + dtOdenCompra.Rows[0]["IDMoneda"].ToString();
+
+            this.lblMoneda.Text = dv.ToTable().Rows[0]["Descr"].ToString();
             this.txtTotalMercaderia.EditValue = MontoMercaderia;
             this.txtTotal.EditValue = MontoMercaderia + MontoFlete + MontoSeguro;
         }
@@ -417,6 +422,7 @@ namespace CO
                 dtMoneda = ControlBancario.DAC.MonedaDAC.GetMoneda(-1).Tables[0];
                 dtProveedor = DAC.clsProveedorDAC.Get(-1, "*", -1).Tables[0];
                 dtGastos = DAC.clsGastosCompraDAC.Get(-1, "*").Tables[0];
+                dtPresentacion = CI.DAC.clsUnidadMedidaDAC.GetData(-1, "*").Tables[0];
 
                 Util.Util.ConfigLookupEdit(this.slkupMonedaOtrosPagos, dtMoneda, "Descr", "IDMoneda");
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupMonedaOtrosPagos, "[{'ColumnCaption':'ID','ColumnField':'IDMoneda','width':30},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':70}]");
@@ -427,6 +433,12 @@ namespace CO
                 Util.Util.ConfigLookupEdit(this.slkupGastosOtrosPagos, dtGastos, "Descripcion", "IDGasto");
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupGastosOtrosPagos, "[{'ColumnCaption':'ID','ColumnField':'IDGasto','width':30},{'ColumnCaption':'Descripción','ColumnField':'Descripcion','width':70}]");
 
+                this.slkupPresentacion.DataSource = dtPresentacion;
+                this.slkupPresentacion.DisplayMember = "Descr";
+                this.slkupPresentacion.ValueMember = "IDUnidad";
+                this.slkupPresentacion.NullText = " --- ---";
+               // this.slkupPresentacion.EditValueChanged += slkup_EditValueChanged;
+                this.slkupPresentacion.Popup += slkup_Popup;
 
                 this.slkupIDProducto.DataSource = dtProductos;
                 this.slkupIDProducto.DisplayMember = "IDProducto";
@@ -497,6 +509,14 @@ namespace CO
 
         private void slkup_EditValueProductoChanged(object sender, EventArgs e)
         {
+            SearchLookUpEdit editor = sender as SearchLookUpEdit;
+            DataRowView dr = (DataRowView)editor.GetSelectedDataRow();
+            if (dr != null)
+            {
+                this.gridView1.PostEditor();
+                int IDUnidad = Convert.ToInt32(dr["IDUnidad"]);
+                this.gridView1.SetFocusedRowCellValue("IDUnidad", IDUnidad);
+            }
             SendKeys.Send("{TAB}");
         }
 

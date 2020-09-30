@@ -400,7 +400,8 @@ CREATE TABLE  dbo.coObligacionDetalle (
 	Impuesto DECIMAL(28,8) DEFAULT 0,
 	MontoTotal DECIMAL(28,8) DEFAULT 0,
 	IDMoneda INT,
-	IDGasto INT
+	IDGasto INT,
+	TipoCambio DECIMAL(28,8) DEFAULT 0 ,
 CONSTRAINT [pkcoObligacionDetalle] PRIMARY KEY CLUSTERED 
 (
 	IDObligacionDetalle ASC
@@ -1531,7 +1532,7 @@ WHERE (IDGasto = @IDGasto OR @IDGasto =-1) AND (Descripcion = @Descripcion OR @D
 
 GO
 
-CREATE PROCEDURE dbo.coUpdateLiquidacionCompra(@Operacion NVARCHAR(1), @IDLiquidacion AS INT OUTPUT,@IDEmbarque AS INT , @IDOrdenCompra AS int,@Fecha DateTime,@TipoCambio decimal(28,8), @ValorMercaderia Decimal(28,8),@MontoFlete decimal(28,8), @MontoSeguro decimal(28,8), @Otros AS Decimal(28,8), @MontoTotal AS Decimal(28,8))
+CREATE  PROCEDURE dbo.coUpdateLiquidacionCompra(@Operacion NVARCHAR(1), @Consecutivo NVARCHAR(20) OUTPUT, @IDLiquidacion AS INT OUTPUT,@IDEmbarque AS INT , @IDOrdenCompra AS int,@Fecha DateTime,@TipoCambio decimal(28,8), @ValorMercaderia Decimal(28,8),@MontoFlete decimal(28,8), @MontoSeguro decimal(28,8), @Otros AS Decimal(28,8), @MontoTotal AS Decimal(28,8))
 AS 
 IF (@Operacion='I')  
 BEGIN
@@ -1548,9 +1549,19 @@ BEGIN
 	UPDATE dbo.globalConsecMask SET  Consecutivo=@Liquidacion WHERE Codigo='LIQ'
 	
 	SET @IDLiquidacion = @@identity	
+	SET @Consecutivo = @Liquidacion 
 END
 IF (@Operacion='U')
 BEGIN
+	DECLARE @MontoTotalPrev AS decimal(28,8)
+	SET @MontoTotalPrev = (SELECT MontoTotal  FROM dbo.coLiquidacionCompra WHERE IDLiquidacion=@IDLiquidacion)
+	
+	IF (@MontoTotalPrev <> @MontoTotal)
+	BEGIN
+		--Eliminar el prorrato por detallado
+		DELETE FROM dbo.coGastoLiquidacionDetallado WHERE IDLiquidacion=@IDLiquidacion
+	END
+	
 	UPDATE dbo.coLiquidacionCompra  SET Fecha=@Fecha,TipoCambio=@TipoCambio,ValorMercaderia=@ValorMercaderia,MontoFlete=@MontoFlete,MontoSeguro=@MontoSeguro,Otros=@Otros,MontoTotal=@MontoTotal
 	WHERE IDLiquidacion=@IDLiquidacion
 END
@@ -1561,14 +1572,13 @@ END
 
 GO
 
-CREATE ALTER  PROCEDURE dbo.coGetLiquidacionCompra (@IDLiquidacion INT,@IDEmbarque INT, @IDOrdenCompra INT) 
+CREATE PROCEDURE dbo.coGetLiquidacionCompra (@IDLiquidacion INT,@IDEmbarque INT, @IDOrdenCompra INT) 
 AS 
 SELECT  A.IDLiquidacion,A.Liquidacion ,A.IDEmbarque , EM.Embarque ,A.IDOrdenCompra , OC.OrdenCompra ,A.Fecha,A.TipoCambio ,a.ValorMercaderia ,A.MontoFlete ,A.MontoSeguro ,A.Otros ,A.MontoTotal  
 FROM dbo.coLiquidacionCompra A
 LEFT  JOIN dbo.coOrdenCompra OC ON A.IDOrdenCompra=OC.IDOrdenCompra
-LEFT  JOIN dbo.coEmbarque EM ON A.IDEmbarque=EM.IDEmbarque AND EM.IDOrdenCompra=OC.IDEmbarque
+LEFT  JOIN dbo.coEmbarque EM ON A.IDEmbarque=EM.IDEmbarque AND EM.IDOrdenCompra=OC.IDOrdenCompra
 WHERE (A.IDLiquidacion=@IDLiquidacion OR @IDLiquidacion=-1)  AND (A.IDEmbarque=@IDEmbarque OR @IDEmbarque=-1) AND (A.IDOrdenCompra=@IDOrdenCompra OR @IDOrdenCompra=-1)
-
 
 GO
 
@@ -1599,7 +1609,7 @@ CREATE  PROCEDURE dbo.coGetGastoLiquidacion(@IDLiquidacion AS INT, @IDGasto AS I
 AS 
 SELECT  IDLiquidacion ,A.IDGasto ,GC.Descripcion DescrGasto ,Monto  FROM dbo.coGastoLiquidacion A
 INNER JOIN dbo.coGastosCompra GC ON A.IDGasto=GC.IDGasto
- WHERE IDLiquidacion=@IDLiquidacion OR (A.IDGasto = @IDGasto OR @IDGasto=-1)
+ WHERE IDLiquidacion=@IDLiquidacion and (A.IDGasto = @IDGasto OR @IDGasto=-1)
 
 SELECT *  FROM  dbo.coGastosCompra
 GO
@@ -1675,16 +1685,25 @@ GO
 CREATE PROCEDURE dbo.coUpdateObligacionDetalle (@Operacion AS NVARCHAR(1), @IDObligacionDetalle AS INT OUTPUT, @IDObligacion AS INT ,@IDProveedor AS INT,@Documento AS NVARCHAR(100),@flgDocCPGenerado AS BIT,
 		@FechaDocumento DATETIME,@SubTotal DECIMAL(28,8),@PorcImpuesto DECIMAL(28,8),@Impuesto DECIMAL(28,8),@MontoTotal DECIMAL(28,8), @IdMoneda INT, @IDGasto AS INT )
 AS 
+DECLARE @IDTipoCambio AS NVARCHAR(4)
+SET @IDTipoCambio = (SELECT TOP 1 ISNULL(IDTipoCambio,'ND')  FROM dbo.coParametrosCompra WHERE IDParametro=1)
+
+IF (@IDTipoCambio = 'ND') 
+BEGIN
+	RAISERROR('El Tipo de Cambio no esta definido',16,1);
+	return
+END
+
 IF @Operacion ='I'
 BEGIN
 	SELECT @IDObligacionDetalle =  isnull(MAX(IDObligacionDetalle) ,0)FROM dbo.coObligacionDetalle 
 	SET @IDObligacionDetalle = @IDObligacionDetalle +1 
-	INSERT INTO dbo.coObligacionDetalle( IDObligacionDetalle ,IDObligacion ,IDProveedor ,Documento ,flgDocCPGenerado ,FechaDocumento ,SubTotal,PorcImpuesto,Impuesto,MontoTotal ,IDMoneda, IDGasto)
-	VALUES(@IDObligacionDetalle,@IDObligacion, @IDProveedor, @Documento,@flgDocCPGenerado,@FechaDocumento,@SubTotal,@PorcImpuesto,@Impuesto,@MontoTotal,@IdMoneda, @IDGasto)
+	INSERT INTO dbo.coObligacionDetalle( IDObligacionDetalle ,IDObligacion ,IDProveedor ,Documento ,flgDocCPGenerado ,FechaDocumento ,SubTotal,PorcImpuesto,Impuesto,MontoTotal ,IDMoneda,TipoCambio, IDGasto)
+	VALUES(@IDObligacionDetalle,@IDObligacion, @IDProveedor, @Documento,@flgDocCPGenerado,@FechaDocumento,@SubTotal,@PorcImpuesto,@Impuesto,@MontoTotal,@IdMoneda, dbo.globalGetLastTipoCambio(@FechaDocumento,@IDTipoCambio), @IDGasto)
 END
 IF @Operacion ='U'
 BEGIN
-	UPDATE dbo.coObligacionDetalle SET IDProveedor=@IDProveedor, Documento = @Documento, FechaDocumento= @FechaDocumento,SubTotal=@SubTotal,PorcImpuesto =@PorcImpuesto,Impuesto =@Impuesto,MontoTotal=@MontoTotal,IDMoneda=@IdMoneda, IDGasto=@IDGasto WHERE IDObligacionDetalle=@IDObligacionDetalle
+	UPDATE dbo.coObligacionDetalle SET IDProveedor=@IDProveedor, Documento = @Documento, FechaDocumento= @FechaDocumento,SubTotal=@SubTotal,PorcImpuesto =@PorcImpuesto,Impuesto =@Impuesto,MontoTotal=@MontoTotal,IDMoneda=@IdMoneda, TipoCambio = dbo.globalGetLastTipoCambio(@FechaDocumento,@IDTipoCambio), IDGasto=@IDGasto WHERE IDObligacionDetalle=@IDObligacionDetalle
 END
 IF @Operacion ='D'
 BEGIN
@@ -1692,10 +1711,10 @@ BEGIN
 END
 
 
-GO, 
+GO
 
 
-CREATE ALTER PROCEDURE dbo.coGetObligacionDetalle(@IDObligacionDetalle  AS INT, @IDObligacion AS INT)
+CREATE PROCEDURE dbo.coGetObligacionDetalle(@IDObligacionDetalle  AS INT, @IDObligacion AS INT)
 AS 
 SELECT   IDObligacionDetalle ,IDObligacion ,A.IDProveedor, P.Nombre ,Documento ,flgDocCPGenerado ,FechaDocumento ,SubTotal,PorcImpuesto,Impuesto,MontoTotal ,A.IDMoneda, M.Descr DescrMoneda,G.IDGasto,G.Descripcion DescrGasto
 FROM dbo.coObligacionDetalle A
@@ -1731,23 +1750,36 @@ GO
 CREATE PROCEDURE dbo.GetConsolidadoObligacionDetalle ( @IDEmbarque AS INT)
 AS
 
-DECLARE @IDObligacionProveedor AS INT
+--declare @IDEmbarque AS INT
+
+--SET @IDEmbarque =4
+
+DECLARE @IDObligacionProveedor AS INT, @IDMonedaNacional AS INT
+DECLARE @MonedaCompra AS int	
+SET @MonedaCompra = (SELECT TOP 1 IDMoneda  FROM dbo.coOrdenCompra WHERE IDEmbarque = @IDEmbarque)
 
 SELECT @IDObligacionProveedor= IDObligacion FROM dbo.coObligacionProveedor WHERE IDEmbarque=@IDEmbarque
+SELECT TOP 1 @IDMonedaNacional = IDMoneda  FROM dbo.globalMoneda WHERE Nacional=1
 
-
-SELECT A.IDGasto,G.Descripcion,A.SubTotal  FROM dbo.coObligacionDetalle A
+SELECT A.IDGasto,G.Descripcion,
+	CASE WHEN @MonedaCompra = @IDMonedaNacional THEN	
+		CASE WHEN A.IDMoneda = @IDMonedaNacional THEN A.SubTotal ELSE A.SubTotal * A.TipoCambio END	
+	WHEN A.IDMoneda = @IDMonedaNacional THEN  A.SubTotal / A.TipoCambio ELSE A.SubTotal END SubTotal  
+FROM dbo.coObligacionDetalle A
 INNER JOIN dbo.coGastosCompra G ON A.IDGasto = G.IDGasto
 WHERE IDObligacion=@IDObligacionProveedor
+
 
 
 GO
 
 
-CREATE PROCEDURE dbo.coCalculaProrrateoGastosCompra @IDLiquidacion AS INT
+CREATE  PROCEDURE dbo.coCalculaProrrateoGastosCompra @IDLiquidacion AS INT
 AS 
 --SET @IDLiquidacion =11
 
+DECLARE @IDMoneda AS INT
+SELECT @IDMoneda=IDMoneda  FROM dbo.globalMoneda WHERE Nacional =1 
 
 DECLARE @IDEmbarque AS INT,@MontoFlete AS DECIMAL(28,8), @MontoSeguro AS DECIMAL(28,8),@MontoTotalGasto AS DECIMAL(28,8),@IDGastoFactura AS int
 
@@ -1756,7 +1788,8 @@ SELECT @IDGastoFactura = IDGasto  FROM dbo.coGastosCompra WHERE flgIsFactura=1 A
 SELECT @IDEmbarque = IDEmbarque, @MontoFlete = MontoFlete,@MontoSeguro=MontoSeguro  FROM dbo.coLiquidacionCompra WHERE IDLiquidacion=@IDLiquidacion
 SET @MontoTotalGasto = @MontoFlete + @MontoSeguro
 
-SELECT IDGasto,Monto INTO #Gastos FROM dbo.coGastoLiquidacion WHERE IDLiquidacion=@IdLiquidacion
+
+SELECT IDGasto, Monto INTO #Gastos FROM dbo.coGastoLiquidacion WHERE IDLiquidacion=@IdLiquidacion
 SELECT IDProducto,((CantidadAceptada * PrecioUnitario) - MontoDesc) + (((CantidadAceptada * PrecioUnitario) - MontoDesc) * (Impuesto/100)) MontoMercaderia, 
 0 Porc INTO #tmpProductos FROM dbo.coEmbarqueDetalle  WHERE IDEmbarque=@IDEmbarque
 
@@ -1793,3 +1826,61 @@ LEFT JOIN dbo.cppProveedor P ON A.IDProveedor = P.IDProveedor
 LEFT  JOIN dbo.coOrdenCompra OC ON A.IDOrdenCompra = OC.IDOrdenCompra
 LEFT  JOIN dbo.coObligacionProveedor OP ON a.IDEmbarque= OP.IDEmbarque
 WHERE A.IDEmbarque = @IDEmbarque
+
+
+GO
+
+CREATE PROCEDURE [dbo].[coRptLiquidacion] @IDLiquidacion AS INT
+AS
+
+DECLARE @IDMoneda AS INT
+SELECT @IDMoneda=IDMoneda  FROM dbo.globalMoneda WHERE Nacional =1 
+
+DECLARE @IDEmbarque AS INT,@MontoFlete AS DECIMAL(28,8), @MontoSeguro AS DECIMAL(28,8),@MontoTotalGasto AS DECIMAL(28,8),@IDGastoFactura AS int
+
+SELECT @IDGastoFactura = IDGasto  FROM dbo.coGastosCompra WHERE flgIsFactura=1 AND flgReadOnly=1
+
+SELECT @IDEmbarque = IDEmbarque, @MontoFlete = MontoFlete,@MontoSeguro=MontoSeguro  FROM dbo.coLiquidacionCompra WHERE IDLiquidacion=@IDLiquidacion
+SET @MontoTotalGasto = @MontoFlete + @MontoSeguro
+
+DECLARE @tmpProductos AS TABLE(
+	IDProducto BIGINT ,Cantidad decimal(28,8),
+	MontoMercaderia  decimal(28,8),
+	MontoFlete decimal(28,8),
+	MontoSeguro decimal(28,8),
+	Porc decimal(28,8),
+	MontoTotalGasto decimal(28,8),
+	MontoTotalOrden decimal(28,8),
+	MontoTotalOrdenRubros decimal(28,8),
+	PrecioUnitario decimal(28,8)
+)
+
+DECLARE @Gastos AS TABLE(IDGasto INT,Monto DECIMAL(28,8))
+	
+INSERT INTO @Gastos( IDGasto, Monto )
+SELECT IDGasto, Monto FROM dbo.coGastoLiquidacion WHERE IDLiquidacion=@IdLiquidacion
+
+
+INSERT INTO @tmpProductos(IDProducto,Cantidad,MontoMercaderia,MontoFlete,MontoSeguro,Porc,MontoTotalGasto,MontoTotalOrden,MontoTotalOrdenRubros,PrecioUnitario)
+SELECT IDProducto,CantidadAceptada Cantidad,((CantidadAceptada * PrecioUnitario) - MontoDesc) + (((CantidadAceptada * PrecioUnitario) - MontoDesc) * (Impuesto/100)) MontoMercaderia,0  MontoFlete, 0 MontoSeguro,
+0 Porc ,0 MontoTotalGasto,0 MontoTotalOrden,0 MontoTotalOrdenRubros,0 PrecioUnitario  FROM dbo.coEmbarqueDetalle  WHERE IDEmbarque=@IDEmbarque
+
+
+DECLARE @MontoTotalMercaderia AS DECIMAL(28,8)
+
+SELECT @MontoTotalMercaderia = SUM(MontoMercaderia) FROM @tmpProductos
+
+UPDATE @tmpProductos SET Porc = @MontoTotalMercaderia / MontoMercaderia
+UPDATE @tmpProductos SET MontoFlete = @MontoFlete * Porc, MontoSeguro = @MontoSeguro * Porc
+
+
+SELECT IDLiquidacion,A.IDProducto,P.Descr DescrProducto,A.Cantidad,A.Porc Peso,A.MontoMercaderia,A.MontoFlete,A.MontoSeguro,A.MontoGasto, (A.MontoMercaderia + A.MontoFlete + A.MontoSEguro) MontoTotalOrden, (A.MontoMercaderia + A.MontoFlete + A.MontoSEguro + A.MontoGasto) Total, (A.MontoMercaderia + A.MontoFlete + A.MontoSEguro + A.MontoGasto) / A.Cantidad PrecioUnitario  FROM
+(SELECT @IDLiquidacion IDLiquidacion, IDProducto,MontoMercaderia,MontoFlete,MontoSeguro,A.Cantidad,Porc,B.Monto * Porc MontoGasto,1 Prioridad
+FROM @tmpProductos A
+CROSS JOIN (SELECT sum(Monto) Monto FROM 	@Gastos) B ) A
+INNER JOIN dbo.invProducto P ON A.IDProducto=P.IDProducto
+
+
+GO
+
+

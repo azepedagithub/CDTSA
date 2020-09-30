@@ -251,7 +251,7 @@ GO
 
 
 --drop table dbo.globalMoneda
-Create Table dbo.globalMoneda ( IDMoneda int not null, Moneda nvarchar(20) not null, Simbolo nvarchar(10), Descr nvarchar(100), Activo bit default 1 )
+Create Table dbo.globalMoneda ( IDMoneda int not null, Moneda nvarchar(20) not null, Simbolo nvarchar(10), Descr nvarchar(100), Activo bit default 1 , Nacional BIT DEFAULT 0)
 go
 
 Alter Table dbo.globalMoneda add constraint pkglobalMoneda primary key (IDMoneda)
@@ -260,10 +260,10 @@ go
 Alter Table dbo.globalMoneda add constraint ukglobalMoneda unique (Moneda)
 go
 
-INSERT dbo.globalMoneda (IDMoneda, Moneda , Descr, Simbolo )
+INSERT dbo.globalMoneda (IDMoneda, Moneda , Descr, Simbolo ,1 )
 VALUES (1, 'CORDOBAS', 'CORDOBAS', 'C$' )
 GO
-INSERT dbo.globalMoneda (IDMoneda, Moneda , Descr, Simbolo )
+INSERT dbo.globalMoneda (IDMoneda, Moneda , Descr, Simbolo,0 )
 VALUES (2, 'DOLAR', 'DOLAR', '$' )
 GO
 

@@ -67,6 +67,8 @@
             this.IDProductoDes = new DevExpress.XtraGrid.Columns.GridColumn();
             this.DescrProdDescr = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colPresentacion = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.slkupPresentacion = new DevExpress.XtraEditors.Repository.RepositoryItemSearchLookUpEdit();
+            this.gridView6 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colCantidad = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colPrecio = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colImpuesto = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -74,8 +76,6 @@
             this.colPorcDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             this.Monto = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colComentario = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.slkupPresentacion = new DevExpress.XtraEditors.Repository.RepositoryItemSearchLookUpEdit();
-            this.gridView6 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.ribbonControl2 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.barButtonItem8 = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem9 = new DevExpress.XtraBars.BarButtonItem();
@@ -575,6 +575,7 @@
             this.gridView1.OptionsBehavior.AllowIncrementalSearch = true;
             this.gridView1.OptionsBehavior.EditingMode = DevExpress.XtraGrid.Views.Grid.GridEditingMode.Inplace;
             this.gridView1.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Top;
+            this.gridView1.OptionsView.ShowFooter = true;
             this.gridView1.OptionsView.ShowGroupPanel = false;
             this.gridView1.OptionsView.ShowHorizontalLines = DevExpress.Utils.DefaultBoolean.True;
             this.gridView1.OptionsView.ShowVerticalLines = DevExpress.Utils.DefaultBoolean.True;
@@ -590,7 +591,7 @@
             this.colIDProducto.UnboundType = DevExpress.Data.UnboundColumnType.String;
             this.colIDProducto.Visible = true;
             this.colIDProducto.VisibleIndex = 0;
-            this.colIDProducto.Width = 91;
+            this.colIDProducto.Width = 68;
             // 
             // slkupIDProducto
             // 
@@ -634,7 +635,7 @@
             this.colDescrProduto.Name = "colDescrProduto";
             this.colDescrProduto.Visible = true;
             this.colDescrProduto.VisibleIndex = 1;
-            this.colDescrProduto.Width = 235;
+            this.colDescrProduto.Width = 188;
             // 
             // slkupDescrProducto
             // 
@@ -678,6 +679,23 @@
             this.colPresentacion.Name = "colPresentacion";
             this.colPresentacion.Visible = true;
             this.colPresentacion.VisibleIndex = 2;
+            this.colPresentacion.Width = 76;
+            // 
+            // slkupPresentacion
+            // 
+            this.slkupPresentacion.AutoHeight = false;
+            this.slkupPresentacion.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.slkupPresentacion.Name = "slkupPresentacion";
+            this.slkupPresentacion.ReadOnly = true;
+            this.slkupPresentacion.View = this.gridView6;
+            // 
+            // gridView6
+            // 
+            this.gridView6.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.gridView6.Name = "gridView6";
+            this.gridView6.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.gridView6.OptionsView.ShowGroupPanel = false;
             // 
             // colCantidad
             // 
@@ -734,6 +752,8 @@
             this.Monto.FieldName = "Monto";
             this.Monto.Name = "Monto";
             this.Monto.OptionsColumn.ReadOnly = true;
+            this.Monto.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Monto", "{0:0.##}")});
             this.Monto.Visible = true;
             this.Monto.VisibleIndex = 8;
             // 
@@ -745,22 +765,6 @@
             this.colComentario.Visible = true;
             this.colComentario.VisibleIndex = 9;
             this.colComentario.Width = 287;
-            // 
-            // slkupPresentacion
-            // 
-            this.slkupPresentacion.AutoHeight = false;
-            this.slkupPresentacion.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.slkupPresentacion.Name = "slkupPresentacion";
-            this.slkupPresentacion.ReadOnly = true;
-            this.slkupPresentacion.View = this.gridView6;
-            // 
-            // gridView6
-            // 
-            this.gridView6.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
-            this.gridView6.Name = "gridView6";
-            this.gridView6.OptionsSelection.EnableAppearanceFocusedCell = false;
-            this.gridView6.OptionsView.ShowGroupPanel = false;
             // 
             // ribbonControl2
             // 

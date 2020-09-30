@@ -16,7 +16,7 @@ namespace ControlBancario.DAC
 
             DataSet DS = new DataSet();
 
-            SqlCommand oCmd = new SqlCommand("SELECT IDMoneda,Moneda,Simbolo,Descr,Activo  FROM dbo.globalMoneda WHERE (IDMoneda=@IDMoneda OR @IDMoneda =-1)", ConnectionManager.GetConnection());
+            SqlCommand oCmd = new SqlCommand("SELECT IDMoneda,Moneda,Simbolo,Descr,Activo,Nacional  FROM dbo.globalMoneda WHERE (IDMoneda=@IDMoneda OR @IDMoneda =-1)", ConnectionManager.GetConnection());
             SqlConnection oConn = oCmd.Connection;
             try
             {
