@@ -1774,30 +1774,44 @@ WHERE IDObligacion=@IDObligacionProveedor
 GO
 
 
-CREATE  PROCEDURE dbo.coCalculaProrrateoGastosCompra @IDLiquidacion AS INT
+CREATE ALTER  PROCEDURE dbo.coCalculaProrrateoGastosCompra @IDLiquidacion AS INT
 AS 
---SET @IDLiquidacion =11
 
 DECLARE @IDMoneda AS INT
 SELECT @IDMoneda=IDMoneda  FROM dbo.globalMoneda WHERE Nacional =1 
+
+CREATE TABLE #tmpProductos(
+	[IDProducto] [bigint] NOT NULL,
+	[MontoMercaderia] [decimal](28, 8) DEFAULT 0,
+	[Porc] [decimal](28, 8) DEFAULT 0
+) ON [PRIMARY]
+
+
+CREATE TABLE #Gastos(
+	[IDGasto] [int] NOT NULL,
+	[Monto] [decimal](28, 8) NULL
+) ON [PRIMARY]
 
 DECLARE @IDEmbarque AS INT,@MontoFlete AS DECIMAL(28,8), @MontoSeguro AS DECIMAL(28,8),@MontoTotalGasto AS DECIMAL(28,8),@IDGastoFactura AS int
 
 SELECT @IDGastoFactura = IDGasto  FROM dbo.coGastosCompra WHERE flgIsFactura=1 AND flgReadOnly=1
 
-SELECT @IDEmbarque = IDEmbarque, @MontoFlete = MontoFlete,@MontoSeguro=MontoSeguro  FROM dbo.coLiquidacionCompra WHERE IDLiquidacion=@IDLiquidacion
+SELECT @IDEmbarque = IDEmbarque, @MontoFlete = MontoFlete,@MontoSeguro=MontoSeguro FROM dbo.coLiquidacionCompra WHERE IDLiquidacion=@IDLiquidacion
 SET @MontoTotalGasto = @MontoFlete + @MontoSeguro
 
+INSERT INTO #Gastos(IDGasto,Monto)
+SELECT IDGasto, Monto FROM dbo.coGastoLiquidacion WHERE IDLiquidacion=@IdLiquidacion
 
-SELECT IDGasto, Monto INTO #Gastos FROM dbo.coGastoLiquidacion WHERE IDLiquidacion=@IdLiquidacion
-SELECT IDProducto,((CantidadAceptada * PrecioUnitario) - MontoDesc) + (((CantidadAceptada * PrecioUnitario) - MontoDesc) * (Impuesto/100)) MontoMercaderia, 
-0 Porc INTO #tmpProductos FROM dbo.coEmbarqueDetalle  WHERE IDEmbarque=@IDEmbarque
+INSERT INTO #tmpProductos( IDProducto, MontoMercaderia )
+SELECT IDProducto,((CantidadAceptada * PrecioUnitario) - MontoDesc) + (((CantidadAceptada * PrecioUnitario) - MontoDesc) * (Impuesto/100)) MontoMercaderia FROM dbo.coEmbarqueDetalle  WHERE IDEmbarque=@IDEmbarque
+
 
 DECLARE @MontoTotalMercaderia AS DECIMAL(28,8)
 
 SELECT @MontoTotalMercaderia = SUM(MontoMercaderia) FROM #tmpProductos
 
-UPDATE #tmpProductos SET Porc = @MontoTotalMercaderia / MontoMercaderia
+UPDATE #tmpProductos SET Porc =  CAST(MontoMercaderia / @MontoTotalMercaderia AS DECIMAL (28,8))
+
 
 SELECT A.IDLiquidacion,A.IDProducto,P.Descr DescrProducto,A.IDGasto,G.Descripcion DescrGasto,A.Monto  FROM 
 (
@@ -1870,7 +1884,7 @@ DECLARE @MontoTotalMercaderia AS DECIMAL(28,8)
 
 SELECT @MontoTotalMercaderia = SUM(MontoMercaderia) FROM @tmpProductos
 
-UPDATE @tmpProductos SET Porc = @MontoTotalMercaderia / MontoMercaderia
+UPDATE @tmpProductos SET Porc =  MontoMercaderia / @MontoTotalMercaderia
 UPDATE @tmpProductos SET MontoFlete = @MontoFlete * Porc, MontoSeguro = @MontoSeguro * Porc
 
 
