@@ -159,8 +159,9 @@ namespace CO.DAC
             
 
             oCmd.CommandType = CommandType.StoredProcedure;
-
+            oCmd.Transaction = ConnectionManager.Tran!= null ? ConnectionManager.Tran : null;
             SqlDataAdapter oAdap = new SqlDataAdapter(oCmd);
+            
             DataSet DS = new DataSet();
 
             oAdap.Fill(DS, "Data");

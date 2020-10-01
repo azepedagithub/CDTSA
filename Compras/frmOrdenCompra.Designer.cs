@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmOrdenCompra));
-            DevExpress.XtraBars.Ribbon.ReduceOperation reduceOperation1 = new DevExpress.XtraBars.Ribbon.ReduceOperation();
-            DevExpress.XtraBars.Ribbon.ReduceOperation reduceOperation2 = new DevExpress.XtraBars.Ribbon.ReduceOperation();
+            DevExpress.XtraBars.Ribbon.ReduceOperation reduceOperation3 = new DevExpress.XtraBars.Ribbon.ReduceOperation();
+            DevExpress.XtraBars.Ribbon.ReduceOperation reduceOperation4 = new DevExpress.XtraBars.Ribbon.ReduceOperation();
             this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.btnAgregar = new DevExpress.XtraBars.BarButtonItem();
             this.btnEditar = new DevExpress.XtraBars.BarButtonItem();
@@ -396,12 +396,12 @@
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.ribbonPageGroup1});
             this.ribbonPage1.Name = "ribbonPage1";
-            reduceOperation1.Behavior = DevExpress.XtraBars.Ribbon.ReduceOperationBehavior.Single;
-            reduceOperation1.Group = null;
-            reduceOperation1.ItemLinkIndex = 0;
-            reduceOperation1.ItemLinksCount = 0;
-            reduceOperation1.Operation = DevExpress.XtraBars.Ribbon.ReduceOperationType.Gallery;
-            this.ribbonPage1.ReduceOperations.Add(reduceOperation1);
+            reduceOperation3.Behavior = DevExpress.XtraBars.Ribbon.ReduceOperationBehavior.Single;
+            reduceOperation3.Group = null;
+            reduceOperation3.ItemLinkIndex = 0;
+            reduceOperation3.ItemLinksCount = 0;
+            reduceOperation3.Operation = DevExpress.XtraBars.Ribbon.ReduceOperationType.Gallery;
+            this.ribbonPage1.ReduceOperations.Add(reduceOperation3);
             this.ribbonPage1.Text = "Opciones Generales";
             // 
             // ribbonPageGroup1
@@ -591,7 +591,7 @@
             this.colIDProducto.UnboundType = DevExpress.Data.UnboundColumnType.String;
             this.colIDProducto.Visible = true;
             this.colIDProducto.VisibleIndex = 0;
-            this.colIDProducto.Width = 68;
+            this.colIDProducto.Width = 65;
             // 
             // slkupIDProducto
             // 
@@ -618,6 +618,7 @@
             this.IDProducto.Name = "IDProducto";
             this.IDProducto.Visible = true;
             this.IDProducto.VisibleIndex = 0;
+            this.IDProducto.Width = 118;
             // 
             // DescrProd
             // 
@@ -626,6 +627,7 @@
             this.DescrProd.Name = "DescrProd";
             this.DescrProd.Visible = true;
             this.DescrProd.VisibleIndex = 1;
+            this.DescrProd.Width = 1018;
             // 
             // colDescrProduto
             // 
@@ -635,7 +637,7 @@
             this.colDescrProduto.Name = "colDescrProduto";
             this.colDescrProduto.Visible = true;
             this.colDescrProduto.VisibleIndex = 1;
-            this.colDescrProduto.Width = 188;
+            this.colDescrProduto.Width = 209;
             // 
             // slkupDescrProducto
             // 
@@ -662,6 +664,7 @@
             this.IDProductoDes.Name = "IDProductoDes";
             this.IDProductoDes.Visible = true;
             this.IDProductoDes.VisibleIndex = 0;
+            this.IDProductoDes.Width = 169;
             // 
             // DescrProdDescr
             // 
@@ -670,6 +673,7 @@
             this.DescrProdDescr.Name = "DescrProdDescr";
             this.DescrProdDescr.Visible = true;
             this.DescrProdDescr.VisibleIndex = 1;
+            this.DescrProdDescr.Width = 967;
             // 
             // colPresentacion
             // 
@@ -679,7 +683,7 @@
             this.colPresentacion.Name = "colPresentacion";
             this.colPresentacion.Visible = true;
             this.colPresentacion.VisibleIndex = 2;
-            this.colPresentacion.Width = 76;
+            this.colPresentacion.Width = 97;
             // 
             // slkupPresentacion
             // 
@@ -704,7 +708,7 @@
             this.colCantidad.Name = "colCantidad";
             this.colCantidad.Visible = true;
             this.colCantidad.VisibleIndex = 3;
-            this.colCantidad.Width = 83;
+            this.colCantidad.Width = 67;
             // 
             // colPrecio
             // 
@@ -713,7 +717,7 @@
             this.colPrecio.Name = "colPrecio";
             this.colPrecio.Visible = true;
             this.colPrecio.VisibleIndex = 4;
-            this.colPrecio.Width = 96;
+            this.colPrecio.Width = 89;
             // 
             // colImpuesto
             // 
@@ -722,7 +726,7 @@
             this.colImpuesto.Name = "colImpuesto";
             this.colImpuesto.Visible = true;
             this.colImpuesto.VisibleIndex = 5;
-            this.colImpuesto.Width = 74;
+            this.colImpuesto.Width = 56;
             // 
             // colDesc
             // 
@@ -733,7 +737,7 @@
             this.colDesc.Name = "colDesc";
             this.colDesc.Visible = true;
             this.colDesc.VisibleIndex = 6;
-            this.colDesc.Width = 79;
+            this.colDesc.Width = 62;
             // 
             // colPorcDesc
             // 
@@ -744,7 +748,7 @@
             this.colPorcDesc.Name = "colPorcDesc";
             this.colPorcDesc.Visible = true;
             this.colPorcDesc.VisibleIndex = 7;
-            this.colPorcDesc.Width = 68;
+            this.colPorcDesc.Width = 64;
             // 
             // Monto
             // 
@@ -756,6 +760,7 @@
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Monto", "{0:0.##}")});
             this.Monto.Visible = true;
             this.Monto.VisibleIndex = 8;
+            this.Monto.Width = 88;
             // 
             // colComentario
             // 
@@ -764,7 +769,7 @@
             this.colComentario.Name = "colComentario";
             this.colComentario.Visible = true;
             this.colComentario.VisibleIndex = 9;
-            this.colComentario.Width = 287;
+            this.colComentario.Width = 80;
             // 
             // ribbonControl2
             // 
@@ -847,12 +852,12 @@
             this.ribbonPage2.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.ribbonPageGroup2});
             this.ribbonPage2.Name = "ribbonPage2";
-            reduceOperation2.Behavior = DevExpress.XtraBars.Ribbon.ReduceOperationBehavior.Single;
-            reduceOperation2.Group = null;
-            reduceOperation2.ItemLinkIndex = 0;
-            reduceOperation2.ItemLinksCount = 0;
-            reduceOperation2.Operation = DevExpress.XtraBars.Ribbon.ReduceOperationType.Gallery;
-            this.ribbonPage2.ReduceOperations.Add(reduceOperation2);
+            reduceOperation4.Behavior = DevExpress.XtraBars.Ribbon.ReduceOperationBehavior.Single;
+            reduceOperation4.Group = null;
+            reduceOperation4.ItemLinkIndex = 0;
+            reduceOperation4.ItemLinksCount = 0;
+            reduceOperation4.Operation = DevExpress.XtraBars.Ribbon.ReduceOperationType.Gallery;
+            this.ribbonPage2.ReduceOperations.Add(reduceOperation4);
             this.ribbonPage2.Text = "Opciones Generales";
             // 
             // ribbonPageGroup2

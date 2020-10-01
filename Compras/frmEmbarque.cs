@@ -291,7 +291,7 @@ namespace CO
 
         private void CalcularTotalesEmbarque()
         {
-            DataTable dtOdenCompra = clsOrdenCompraDAC.GetByID(this.IDOrdenCompra).Tables[0];
+            DataTable dtOrdenCompra = clsOrdenCompraDAC.GetByID(this.IDOrdenCompra).Tables[0];
             double MontoMercaderia = 0;
             foreach (DataRow row in dtDetalleEmbarque.Rows)
             {
@@ -303,15 +303,17 @@ namespace CO
             DataRow rowOrden = dtOrdenCompra.Rows.Count>0 ? dtOrdenCompra.Rows[0]: null;
               Double MontoFlete,MontoSeguro;
             if (rowOrden != null) {
-                MontoFlete = Convert.ToDouble((rowOrden["MontoFlete"] == DBNull.Value || rowOrden["MontoFlete"].ToString() == "") ? 0 : rowOrden["MontoFlete"]);
-                MontoSeguro = Convert.ToDouble((rowOrden["MontoSeguro"] == DBNull.Value || rowOrden["MontoSeguro"].ToString() == "") ? 0 : rowOrden["MontoSeguro"]);
+                MontoFlete = Convert.ToDouble((rowOrden["Flete"] == DBNull.Value || rowOrden["Flete"].ToString() == "") ? 0 : rowOrden["Flete"]);
+                MontoSeguro = Convert.ToDouble((rowOrden["Seguro"] == DBNull.Value || rowOrden["Seguro"].ToString() == "") ? 0 : rowOrden["Seguro"]);
+                this.txtMontoFlete.EditValue = MontoFlete;
+                this.txtMontoSeguro.EditValue = MontoSeguro;
             }  else {
                 MontoFlete=0;
                 MontoSeguro=0;
             }
-            MontoMercaderia += MontoSeguro + MontoFlete;
+            
             DataView dv = dtMoneda.AsDataView();
-            dv.RowFilter = "IDMoneda=" + dtOdenCompra.Rows[0]["IDMoneda"].ToString();
+            dv.RowFilter = "IDMoneda=" + dtOrdenCompra.Rows[0]["IDMoneda"].ToString();
 
             this.lblMoneda.Text = dv.ToTable().Rows[0]["Descr"].ToString();
             this.txtTotalMercaderia.EditValue = MontoMercaderia;
@@ -922,6 +924,7 @@ namespace CO
                     AccionDatosFactura = "U";
                 ConnectionManager.BeginTran();
                 clsObligacionProveedorDAC.InsertUpdate(AccionDatosFactura, ref IDObligacionProveedor, (int)IDEmbarque, false, FechaFactura, FechaVence, FechaPoliza, Poliza, Factura, GuiaBL, (decimal)TipoCambio, (decimal)ValorMercaderia, (decimal)MontoFlete, (decimal)MontoSeguro, (decimal)MontoTotal, ConnectionManager.Tran);
+                this.tabOtros.PageVisible = true;
                 ConnectionManager.CommitTran();
                 MessageBox.Show("Los datos de Factura se han guardado correctamente");
             }
@@ -954,7 +957,7 @@ namespace CO
         {
             //GenerarDocumento CP
 
-            InactivarControles(false);
+            InactivarControles(true);
         }
         private void HabilitarControlesOtrosPagos(bool Flag)
         {

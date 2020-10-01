@@ -39,7 +39,8 @@ namespace CO.DAC
             result = oCmd.ExecuteNonQuery();
             if (Operacion == "I")
             {
-                result = Convert.ToInt64(oCmd.Parameters["@IDObligacion"].Value);
+                IDObligacion = Convert.ToInt32(oCmd.Parameters["@IDObligacion"].Value);
+                result = IDObligacion;
             }
 
             return result;

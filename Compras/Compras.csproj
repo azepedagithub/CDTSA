@@ -228,6 +228,12 @@
     <Compile Include="Reportes\rptSolicitudCompra.Designer.cs">
       <DependentUpon>rptSolicitudCompra.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\rptSubRptGastos.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\rptSubRptGastos.Designer.cs">
+      <DependentUpon>rptSubRptGastos.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="frmImportFromExcel.resx">
       <DependentUpon>frmImportFromExcel.cs</DependentUpon>
     </EmbeddedResource>
@@ -286,6 +292,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\rptSolicitudCompra.resx">
       <DependentUpon>rptSolicitudCompra.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\rptSubRptGastos.resx">
+      <DependentUpon>rptSubRptGastos.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="FilesTemplate\import_Orden.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

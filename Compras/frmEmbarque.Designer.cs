@@ -87,6 +87,8 @@
             this.labelControl11 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl10 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl9 = new DevExpress.XtraEditors.LabelControl();
+            this.lblMoneda = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl13 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl8 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl7 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl12 = new DevExpress.XtraEditors.LabelControl();
@@ -166,8 +168,6 @@
             this.layoutControlItem13 = new DevExpress.XtraLayout.LayoutControlItem();
             this.emptySpaceItem7 = new DevExpress.XtraLayout.EmptySpaceItem();
             this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.labelControl13 = new DevExpress.XtraEditors.LabelControl();
-            this.lblMoneda = new DevExpress.XtraEditors.LabelControl();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
@@ -510,6 +510,7 @@
             this.colIDProducto.OptionsColumn.ReadOnly = true;
             this.colIDProducto.Visible = true;
             this.colIDProducto.VisibleIndex = 0;
+            this.colIDProducto.Width = 68;
             // 
             // DescrProd
             // 
@@ -519,7 +520,7 @@
             this.DescrProd.OptionsColumn.ReadOnly = true;
             this.DescrProd.Visible = true;
             this.DescrProd.VisibleIndex = 1;
-            this.DescrProd.Width = 608;
+            this.DescrProd.Width = 452;
             // 
             // Presentacion
             // 
@@ -529,6 +530,7 @@
             this.Presentacion.Name = "Presentacion";
             this.Presentacion.Visible = true;
             this.Presentacion.VisibleIndex = 2;
+            this.Presentacion.Width = 149;
             // 
             // slkupPresentacion
             // 
@@ -553,7 +555,7 @@
             this.Cantidad.OptionsColumn.ReadOnly = true;
             this.Cantidad.Visible = true;
             this.Cantidad.VisibleIndex = 3;
-            this.Cantidad.Width = 109;
+            this.Cantidad.Width = 123;
             // 
             // tabDetalle
             // 
@@ -858,6 +860,23 @@
             this.labelControl9.Size = new System.Drawing.Size(61, 13);
             this.labelControl9.TabIndex = 2;
             this.labelControl9.Text = "Monto Flete:";
+            // 
+            // lblMoneda
+            // 
+            this.lblMoneda.Appearance.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMoneda.Location = new System.Drawing.Point(647, 9);
+            this.lblMoneda.Name = "lblMoneda";
+            this.lblMoneda.Size = new System.Drawing.Size(12, 16);
+            this.lblMoneda.TabIndex = 2;
+            this.lblMoneda.Text = "--";
+            // 
+            // labelControl13
+            // 
+            this.labelControl13.Location = new System.Drawing.Point(595, 11);
+            this.labelControl13.Name = "labelControl13";
+            this.labelControl13.Size = new System.Drawing.Size(42, 13);
+            this.labelControl13.TabIndex = 2;
+            this.labelControl13.Text = "Moneda:";
             // 
             // labelControl8
             // 
@@ -1649,23 +1668,6 @@
             this.layoutControlItem2.Size = new System.Drawing.Size(356, 24);
             this.layoutControlItem2.Text = "Embarque:";
             this.layoutControlItem2.TextSize = new System.Drawing.Size(84, 13);
-            // 
-            // labelControl13
-            // 
-            this.labelControl13.Location = new System.Drawing.Point(595, 11);
-            this.labelControl13.Name = "labelControl13";
-            this.labelControl13.Size = new System.Drawing.Size(42, 13);
-            this.labelControl13.TabIndex = 2;
-            this.labelControl13.Text = "Moneda:";
-            // 
-            // lblMoneda
-            // 
-            this.lblMoneda.Appearance.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMoneda.Location = new System.Drawing.Point(647, 9);
-            this.lblMoneda.Name = "lblMoneda";
-            this.lblMoneda.Size = new System.Drawing.Size(12, 16);
-            this.lblMoneda.TabIndex = 2;
-            this.lblMoneda.Text = "--";
             // 
             // frmEmbarque
             // 

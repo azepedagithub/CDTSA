@@ -769,6 +769,7 @@ namespace CO
                                                                         IDProveedor, IDMoneda, IDCondicionPago, Descuento, Flete, Seguro,
                                                                         Documentacion, Anticipos, -1, -1, 33, sUsuario, "", Convert.ToDateTime("1981/08/21"), "", Convert.ToDateTime("1981/08/21"), DateTime.Now, sUsuario, DateTime.Now, sUsuario, ConnectionManager.Tran);
                         this.txtOrdenCompra.Text = OrdenCompra;
+                        dtOrdenCompra = DAC.clsOrdenCompraDAC.GetByID(IDOrdenCompra).Tables[0];
                         foreach (DataRow row in dt.Rows)
                         {
                             if (row.RowState != DataRowState.Deleted)

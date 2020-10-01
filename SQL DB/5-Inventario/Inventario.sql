@@ -61,7 +61,7 @@ GO
 CREATE     TABLE  [dbo].[invProducto](
 	[IDProducto] [bigint]  NOT NULL,
 	[Descr] [nvarchar](250) NOT NULL,
-	[Alias] [nvarchar](20) NULL,
+	[Alias] [nvarchar](250) NULL,
 	[CostoUltLocal] [decimal](28, 4) NOT NULL DEFAULT 0,
 	[CostoUltDolar] [decimal](28, 4) NOT NULL DEFAULT 0,
 	[CostoPromLocal] [decimal](28, 4) NOT NULL DEFAULT 0,
@@ -1048,7 +1048,7 @@ VALUES  ( 10 ,N'DEVOLUCIONES SOBRE VENTA (+)' , N'DV' , N'E' , 1 , 8, 1 , 0 , 0 
 --PENDIENTE AJUSTE AL COSTO
 GO
 
-CREATE  Procedure  [dbo].[invUpdateProducto] @Operacion nvarchar(1), @IDProducto BIGINT , @Descr nvarchar(250), @Alias nvarchar(20),
+CREATE  Procedure  [dbo].[invUpdateProducto] @Operacion nvarchar(1), @IDProducto BIGINT , @Descr nvarchar(250), @Alias nvarchar(250),
 @Clasif1 int, @Clasif2 INT, @Clasif3 INT ,@Clasif4 INT , @Clasif5 INT, @Clasif6 INT,@IDProveedor AS INT,@IDCuentaContable AS BIGINT, @CodigoBarra NVARCHAR(50),@IDUnidad INT,
 @FactorEmpaque DECIMAL(28,4), @TipoImpuesto INT, @EsMuestra BIT, @EsControlado BIT, @EsEtico BIT, @Activo BIT,@Bonifica BIT,@UserInsert NVARCHAR(50),@UserUpdate NVARCHAR(50),@UpdateDate DATETIME
 as
@@ -1118,7 +1118,7 @@ end
 
 GO
 
-CREATE   PROCEDURE [dbo].[invGetProducto] @IDProducto BIgint	,@Descr AS NVARCHAR(250),@Alias NVARCHAR(20),@Clasif1 int, @Clasif2 INT, @Clasif3 INT ,@Clasif4 INT , @Clasif5 INT, @Clasif6 INT, @CodigoBarra NVARCHAR(50),
+CREATE   PROCEDURE [dbo].[invGetProducto] @IDProducto BIgint	,@Descr AS NVARCHAR(250),@Alias NVARCHAR(250),@Clasif1 int, @Clasif2 INT, @Clasif3 INT ,@Clasif4 INT , @Clasif5 INT, @Clasif6 INT, @CodigoBarra NVARCHAR(50),
 															@EsMuestra INT,@EsControlado INT,@EsEtico INT
 AS 
 	SELECT IDProducto,Descr ,Alias ,Clasif1 ,Clasif2 ,Clasif3 ,Clasif4 ,Clasif5 ,Clasif6 ,CodigoBarra,IDProveedor,IDCuentaContable ,IDUnidad ,FactorEmpaque ,TipoImpuesto ,

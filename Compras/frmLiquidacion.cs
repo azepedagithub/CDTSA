@@ -415,13 +415,15 @@ namespace CO
             if (ValidarDatos())
             {
                 String sAccion = "";
+                Decimal MontoAnterior = 0;
                 if (this._IDLiquidacion == -1)
                     sAccion = "I";
                 else
-                    sAccion ="U";
-                Decimal? value = (Decimal?)DAC.clsLiquidacionCompraDAC.Get(this._IDLiquidacion,-1,-1).Tables[0].Rows[0]["MontoTotal"];
-                Decimal MontoAnterior = Convert.ToDecimal(value == null ? 0 : value);
-                
+                {
+                    sAccion = "U";
+                    Decimal? value = (Decimal?)DAC.clsLiquidacionCompraDAC.Get(this._IDLiquidacion, -1, -1).Tables[0].Rows[0]["MontoTotal"];
+                    MontoAnterior = Convert.ToDecimal(value == null ? 0 : value);
+                }
                 ConnectionManager.BeginTran();          
                 DAC.clsLiquidacionCompraDAC.InsertUpdate(sAccion, ref _Liquidacion, ref _IDLiquidacion, (int)this._IDEmbarque, (int)this._IDOrdenCompra, Convert.ToDateTime(this.dtpFechaLiquidacion.EditValue), Convert.ToDecimal(this.txtTipoCambio.EditValue), Convert.ToDecimal(txtValorMercaderia.EditValue), Convert.ToDecimal(txtMontoFlete.EditValue), Convert.ToDecimal(this.txtMontoSeguro.EditValue), 0, _isMonedaNacional ? Convert.ToDecimal(this.txtMontoLocal.EditValue) : Convert.ToDecimal(this.txtMontoDolar.EditValue), ConnectionManager.Tran);
                 this.lblLiquidacion.Text = _Liquidacion;
