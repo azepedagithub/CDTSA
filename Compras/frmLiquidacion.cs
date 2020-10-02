@@ -14,6 +14,9 @@ using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraLayout;
 using DevExpress.XtraGrid;
+using DevExpress.DataAccess.Sql;
+using DevExpress.DataAccess.ConnectionParameters;
+using DevExpress.XtraReports.UI;
 
 namespace CO
 {
@@ -520,6 +523,42 @@ namespace CO
         private void txtMontoSeguro_EditValueChanged(object sender, EventArgs e)
         {
             CalcularTotales();
+        }
+
+        private void btnImpresion_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            if (this._IDLiquidacion != null && this._IDLiquidacion != -1)
+            {
+                DevExpress.XtraReports.UI.XtraReport report = DevExpress.XtraReports.UI.XtraReport.FromFile("./Reportes/Plantillas/rptLiquidacionCompra.repx", true);
+
+
+                SqlDataSource sqlDataSource = report.DataSource as SqlDataSource;
+
+                SqlDataSource ds = report.DataSource as SqlDataSource;
+                ds.ConnectionName = "oDataSource";
+                String sNameConexion = (Security.Esquema.Compania == "CEDETSA") ? "StringConCedetsa" : "StringConDasa";
+                System.Data.SqlClient.SqlConnectionStringBuilder builder = new System.Data.SqlClient.SqlConnectionStringBuilder(System.Configuration.ConfigurationManager.ConnectionStrings[sNameConexion].ConnectionString);
+                ds.ConnectionParameters = new DevExpress.DataAccess.ConnectionParameters.MsSqlConnectionParameters(builder.DataSource, builder.InitialCatalog, builder.UserID, builder.Password, MsSqlAuthorizationType.SqlServer);
+
+                //SqlDataSource ds1 = report.DataSource as SqlDataSource;
+
+                //ds1.ConnectionName = "sqlDataSource1";
+                //ds1.ConnectionParameters = new DevExpress.DataAccess.ConnectionParameters.MsSqlConnectionParameters(builder.DataSource, builder.InitialCatalog, builder.UserID, builder.Password, MsSqlAuthorizationType.SqlServer);
+                XRSubreport subReporte = report.AllControls<XRSubreport>().First();
+                XtraReport subReportSource = subReporte.ReportSource as XtraReport;
+                SqlDataSource ds2 = subReportSource.DataSource as SqlDataSource;
+                ds2.ConnectionName = "sqlDataSource1";
+                ds2.ConnectionParameters = new DevExpress.DataAccess.ConnectionParameters.MsSqlConnectionParameters(builder.DataSource, builder.InitialCatalog, builder.UserID, builder.Password, MsSqlAuthorizationType.SqlServer);
+                // Obtain a parameter, and set its value.
+                report.Parameters["IDLiquidacion"].Value = this._IDLiquidacion;
+
+                // Show the report's print preview.
+                DevExpress.XtraReports.UI.ReportPrintTool tool = new DevExpress.XtraReports.UI.ReportPrintTool(report);
+
+                tool.ShowPreview();
+
+
+            }
         }
 
      

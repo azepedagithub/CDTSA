@@ -16,7 +16,7 @@ namespace CO.DAC
                         int CantDecimalesPrecio, int CantDecimalesCantidad, String IDTipoAsientoContable, int? IDPaquete,
                         long? CtaTransitoLocal, long? CtrTransitoLocal, long? CtaTransitoExterior, 
                         long? CtrTransitoExterior, bool AplicaAutomaticamenteAsiento, bool CanEditASiento, 
-                        bool CanViewAsiento , SqlTransaction tran)
+                        bool CanViewAsiento, String NombreAutorizaOrdenCompra , SqlTransaction tran)
         {
             long result = -1;
             String strSQL = "dbo.coUpdateParametrosCompra";
@@ -43,6 +43,7 @@ namespace CO.DAC
             oCmd.Parameters.Add(new SqlParameter("@AplicaAutomaticamenteAsiento", AplicaAutomaticamenteAsiento));
             oCmd.Parameters.Add(new SqlParameter("@CanEditAsiento", CanViewAsiento));
             oCmd.Parameters.Add(new SqlParameter("@CanViewAsiento", CanViewAsiento));
+            oCmd.Parameters.Add(new SqlParameter("@NombreAutorizaOrdenCompra", NombreAutorizaOrdenCompra));
 
             oCmd.CommandType = CommandType.StoredProcedure;
             oCmd.Transaction = tran;

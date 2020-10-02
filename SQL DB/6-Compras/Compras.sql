@@ -495,6 +495,7 @@ CREATE TABLE dbo.coParametrosCompra(
 	AplicaAutomaticamenteAsiento bit DEFAULT 0,
 	CanEditAsiento bit DEFAULT 1,
 	CanViewAsiento bit DEFAULT 1,
+	NombreAutorizaOrdenCompra NVARCHAR(250) DEFAULT '',
 	CONSTRAINT [pkcoParametrosCompra] PRIMARY KEY CLUSTERED 
 (
 	IDParametro ASC
@@ -502,6 +503,8 @@ CREATE TABLE dbo.coParametrosCompra(
 ) ON [PRIMARY]
 
 GO
+
+
 
 
 CREATE TABLE  dbo.coGastosCompra (
@@ -775,10 +778,10 @@ AND (a.IDProveedor IN (SELECT Value FROM [dbo].[ConvertListToTable](@Proveedor,@
 go 
 
 
-CREATE   PROCEDURE dbo.coGetOrdenCompraByID( @IDOrdenCompra AS INT)
+CREATE  PROCEDURE dbo.coGetOrdenCompraByID( @IDOrdenCompra AS INT)
 AS 
 SELECT  A.IDOrdenCompra ,OrdenCompra ,A.Fecha ,FechaRequerida ,FechaEmision ,FechaRequeridaEmbarque ,FechaCotizacion ,IDEstado, B.Descr DescrEstado,A.IDBodega, C.Descr DescrBodega, 
-		A.IDProveedor ,C.Descr DescrProveedor,A.IDMoneda, E.Descr DescrMoneda,A.IDCondicionPago , F.Descr DescrCondicionPago,F.Dias DiasCondicionPago,
+		A.IDProveedor ,D.Nombre DescrProveedor,A.IDMoneda, E.Descr DescrMoneda,A.IDCondicionPago , F.Descr DescrCondicionPago,F.Dias DiasCondicionPago,
         Descuento ,Flete,Seguro ,Documentacion ,Anticipos ,A.IDEmbarque, H.Embarque ,A.IDDocumentoCP ,A.TipoCambio ,A.Usuario ,UsuarioCreaEmbarque ,FechaCreaEmbarque ,UsuarioAprobacion ,
         FechaAprobacion ,A.CreateDate ,A.CreatedBy ,A.RecordDate ,A.UpdateBy  
 FROM dbo.coOrdenCompra A INNER JOIN dbo.coEstadoOrdenCompra B ON A.IDEstado = B.IDEstadoOrden
@@ -832,10 +835,11 @@ GO
 --TODO: Revisar is load from Solicitud
 CREATE PROCEDURE dbo.coGetOrdenCompraDetalle(@IDOrdenCompra AS int	)
 AS 
-SELECT A.IDOrdenCompra,A.IDProducto,P.Descr DescrProducto,p.IDUnidad,A.Estado,E.Descr DescrEstado,A.Cantidad,A.CantidadAceptada,A.CantidadRechazada,
+SELECT A.IDOrdenCompra,A.IDProducto,P.Descr DescrProducto,p.IDUnidad,U.Descr DescrUnidad,A.Estado,E.Descr DescrEstado,A.Cantidad,A.CantidadAceptada,A.CantidadRechazada,
 A.Impuesto,A.MontoDesc,A.PorcDesc,A.PrecioUnitario,((A.Cantidad*A.PrecioUnitario)-MontoDesc) * (A.Impuesto/100) + ((A.Cantidad*A.PrecioUnitario)-MontoDesc)  Monto,A.Comentario
   FROM dbo.coOrdenCompraDetalle A
 INNER JOIN dbo.invProducto P ON		A.IDProducto = P.IDProducto
+INNER join dbo.invUnidadMedida U ON P.IDUnidad = U.IDUnidad
 INNER JOIN dbo.coEstadoOrdenCompra E ON A.Estado=E.IDEstadoOrden
 WHERE A.IDOrdenCompra=@IDOrdenCompra
 
@@ -1260,7 +1264,7 @@ SELECT  IDParametro ,
         CtrTransitoExterior ,
         AplicaAutomaticamenteAsiento ,
         CanEditAsiento ,
-        CanViewAsiento  FROM dbo.coParametrosCompra
+        CanViewAsiento,NombreAutorizaOrdenCompra  FROM dbo.coParametrosCompra
         
         
         GO
@@ -1268,11 +1272,11 @@ SELECT  IDParametro ,
         
 CREATE  PROCEDURE dbo.coUpdateParametrosCompra ( @IDConsecSolicitud INT, @IDConsecOrdeCompra INT, @IDConsecEmbarque INT, @IDConsecDevolucion INT, @IDConsecLiquidacion INT, @CantLineasOrdenCompra INT, @IDBodegaDefault int,
 	@IDTipoCambio NVARCHAR(20), @CantDecimalesPrecio int, @CantDecimalesCantidad int, @IDTipoAsientoContable NVARCHAR(2), @IDPaquete INT, @CtaTransitoLocal bigint, @CtrTransitoLocal bigint, @CtaTransitoExterior bigint, @CtrTransitoExterior bigint,
-	@AplicaAutomaticamenteAsiento bit, @CanEditAsiento bit, @CanViewAsiento bit )
+	@AplicaAutomaticamenteAsiento bit, @CanEditAsiento bit, @CanViewAsiento BIT,@NombreAutorizaOrdenCompra AS NVARCHAR(250) )
 AS 
 UPDATE dbo.coParametrosCompra SET IDConsecSolicitud = @IDConsecSolicitud,IDConsecOrdenCompra=@IDConsecOrdeCompra , IDConsecEmbarque=@IDConsecEmbarque,IDConsecDevolucion= @IDConsecDevolucion,IDConsecLiquidacion=@IDConsecLiquidacion,CantLineasOrdenCompra = @CantLineasOrdenCompra, 
 	IDBodegaDefault  = @IDBodegaDefault, IDTipoCambio= @IDTipoCambio, CantDecimalesPrecio= @CantDecimalesPrecio,CantDecimalesCantidad= @CantDecimalesCantidad, IDTipoAsientoContable = @IDTipoAsientoContable, IDPaquete = @IDPaquete,  CtaTransitoLocal = @CtaTransitoLocal,
-	CtrTransitoLocal  = @CtrTransitoLocal, CtaTransitoExterior = @CtaTransitoExterior, AplicaAutomaticamenteAsiento =@AplicaAutomaticamenteAsiento, CanEditAsiento = @CanEditAsiento, CanViewAsiento=@CanViewAsiento
+	CtrTransitoLocal  = @CtrTransitoLocal, CtaTransitoExterior = @CtaTransitoExterior, AplicaAutomaticamenteAsiento =@AplicaAutomaticamenteAsiento, CanEditAsiento = @CanEditAsiento, CanViewAsiento=@CanViewAsiento, NombreAutorizaOrdenCompra=@NombreAutorizaOrdenCompra
 	WHERE IDParametro=1
 	
 GO
@@ -1896,5 +1900,18 @@ INNER JOIN dbo.invProducto P ON A.IDProducto=P.IDProducto
 
 
 GO
+
+
+
+CREATE PROCEDURE dbo.coGetGeneralesOrdenCompra(@IDOrdenCompra AS INT)
+AS 
+
+DECLARE @Monto_FleteSeguro AS DECIMAL(28,8), @MontoMercaderia AS Decimal(28,8)
+
+SET @Monto_FleteSeguro = (SELECT  Flete + Seguro  FROM dbo.coOrdenCompra WHERE IDOrdenCompra=@IDOrdenCompra)
+SET @MontoMercaderia = (SELECT SUM(((PrecioUnitario * Cantidad)-MontoDesc) + ((PrecioUnitario * Cantidad)-MontoDesc) * (Impuesto/100))   FROM dbo.coOrdenCompraDetalle WHERE IDOrdenCompra=@IDOrdenCompra)
+
+SELECT CantDecimalesCantidad,CantDecimalesPrecio,NombreAutorizaOrdenCompra,dbo.globalNumberToLetter(@MontoMercaderia + @Monto_FleteSeguro) MontoOrdenLetras, @MontoMercaderia + @Monto_FleteSeguro MontoOrden  FROM dbo.coParametrosCompra
+WHERE IDParametro=1
 
 

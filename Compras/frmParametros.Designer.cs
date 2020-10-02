@@ -34,6 +34,17 @@
             this.xtraTabControl1 = new DevExpress.XtraTab.XtraTabControl();
             this.tabGeneral = new DevExpress.XtraTab.XtraTabPage();
             this.layoutControl2 = new DevExpress.XtraLayout.LayoutControl();
+            this.txtConsecutivoLiquidacion = new DevExpress.XtraEditors.TextEdit();
+            this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
+            this.bar1 = new DevExpress.XtraBars.Bar();
+            this.btnGuardar = new DevExpress.XtraBars.BarButtonItem();
+            this.bar3 = new DevExpress.XtraBars.Bar();
+            this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
+            this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
+            this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
+            this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
+            this.slkupLiquidacion = new DevExpress.XtraEditors.SearchLookUpEdit();
+            this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.slkupDevolucion = new DevExpress.XtraEditors.SearchLookUpEdit();
             this.searchLookUpEdit4View = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.slkupEmbarque = new DevExpress.XtraEditors.SearchLookUpEdit();
@@ -56,12 +67,14 @@
             this.emptySpaceItem3 = new DevExpress.XtraLayout.EmptySpaceItem();
             this.layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem22 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem23 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem24 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem31 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem32 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem10 = new DevExpress.XtraLayout.LayoutControlItem();
             this.emptySpaceItem6 = new DevExpress.XtraLayout.EmptySpaceItem();
             this.tabVarios = new DevExpress.XtraTab.XtraTabPage();
@@ -86,14 +99,6 @@
             this.tabContable = new DevExpress.XtraTab.XtraTabPage();
             this.layoutControl4 = new DevExpress.XtraLayout.LayoutControl();
             this.chkVisualizar = new DevExpress.XtraEditors.CheckEdit();
-            this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
-            this.bar1 = new DevExpress.XtraBars.Bar();
-            this.btnGuardar = new DevExpress.XtraBars.BarButtonItem();
-            this.bar3 = new DevExpress.XtraBars.Bar();
-            this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
-            this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
-            this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
-            this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
             this.txtDescrCuentaTransExt = new DevExpress.XtraEditors.TextEdit();
             this.txtDescrCuentaTransLoc = new DevExpress.XtraEditors.TextEdit();
             this.slkupCuentaTransExt = new DevExpress.XtraEditors.SearchLookUpEdit();
@@ -141,11 +146,8 @@
             this.emptySpaceItem17 = new DevExpress.XtraLayout.EmptySpaceItem();
             this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.slkupLiquidacion = new DevExpress.XtraEditors.SearchLookUpEdit();
-            this.layoutControlItem31 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.txtConsecutivoLiquidacion = new DevExpress.XtraEditors.TextEdit();
-            this.layoutControlItem32 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.txtNombreAutorizaOrdenCompra = new DevExpress.XtraEditors.TextEdit();
+            this.layoutControlItem33 = new DevExpress.XtraLayout.LayoutControlItem();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
@@ -153,6 +155,10 @@
             this.tabGeneral.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl2)).BeginInit();
             this.layoutControl2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtConsecutivoLiquidacion.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.slkupLiquidacion.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.slkupDevolucion.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit4View)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.slkupEmbarque.Properties)).BeginInit();
@@ -175,12 +181,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem22)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem23)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem24)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem31)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem32)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem6)).BeginInit();
             this.tabVarios.SuspendLayout();
@@ -207,7 +215,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl4)).BeginInit();
             this.layoutControl4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chkVisualizar.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDescrCuentaTransExt.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDescrCuentaTransLoc.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.slkupCuentaTransExt.Properties)).BeginInit();
@@ -255,11 +262,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem17)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.slkupLiquidacion.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem31)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtConsecutivoLiquidacion.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem32)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtNombreAutorizaOrdenCompra.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem33)).BeginInit();
             this.SuspendLayout();
             // 
             // layoutControl1
@@ -294,6 +298,7 @@
             // 
             // layoutControl2
             // 
+            this.layoutControl2.Controls.Add(this.txtNombreAutorizaOrdenCompra);
             this.layoutControl2.Controls.Add(this.txtConsecutivoLiquidacion);
             this.layoutControl2.Controls.Add(this.slkupLiquidacion);
             this.layoutControl2.Controls.Add(this.slkupDevolucion);
@@ -313,6 +318,108 @@
             this.layoutControl2.Size = new System.Drawing.Size(715, 296);
             this.layoutControl2.TabIndex = 0;
             this.layoutControl2.Text = "layoutControl2";
+            // 
+            // txtConsecutivoLiquidacion
+            // 
+            this.txtConsecutivoLiquidacion.Location = new System.Drawing.Point(415, 162);
+            this.txtConsecutivoLiquidacion.MenuManager = this.barManager1;
+            this.txtConsecutivoLiquidacion.Name = "txtConsecutivoLiquidacion";
+            this.txtConsecutivoLiquidacion.Size = new System.Drawing.Size(265, 20);
+            this.txtConsecutivoLiquidacion.StyleController = this.layoutControl2;
+            this.txtConsecutivoLiquidacion.TabIndex = 17;
+            // 
+            // barManager1
+            // 
+            this.barManager1.Bars.AddRange(new DevExpress.XtraBars.Bar[] {
+            this.bar1,
+            this.bar3});
+            this.barManager1.DockControls.Add(this.barDockControlTop);
+            this.barManager1.DockControls.Add(this.barDockControlBottom);
+            this.barManager1.DockControls.Add(this.barDockControlLeft);
+            this.barManager1.DockControls.Add(this.barDockControlRight);
+            this.barManager1.Form = this;
+            this.barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
+            this.btnGuardar});
+            this.barManager1.MaxItemId = 1;
+            this.barManager1.StatusBar = this.bar3;
+            // 
+            // bar1
+            // 
+            this.bar1.BarName = "Tools";
+            this.bar1.DockCol = 0;
+            this.bar1.DockRow = 0;
+            this.bar1.DockStyle = DevExpress.XtraBars.BarDockStyle.Top;
+            this.bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.btnGuardar)});
+            this.bar1.Text = "Tools";
+            // 
+            // btnGuardar
+            // 
+            this.btnGuardar.Caption = "Guardar";
+            this.btnGuardar.Glyph = ((System.Drawing.Image)(resources.GetObject("btnGuardar.Glyph")));
+            this.btnGuardar.Id = 0;
+            this.btnGuardar.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnGuardar.LargeGlyph")));
+            this.btnGuardar.Name = "btnGuardar";
+            this.btnGuardar.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnGuardar_ItemClick);
+            // 
+            // bar3
+            // 
+            this.bar3.BarName = "Status bar";
+            this.bar3.CanDockStyle = DevExpress.XtraBars.BarCanDockStyle.Bottom;
+            this.bar3.DockCol = 0;
+            this.bar3.DockRow = 0;
+            this.bar3.DockStyle = DevExpress.XtraBars.BarDockStyle.Bottom;
+            this.bar3.OptionsBar.AllowQuickCustomization = false;
+            this.bar3.OptionsBar.DrawDragBorder = false;
+            this.bar3.OptionsBar.UseWholeRow = true;
+            this.bar3.Text = "Status bar";
+            // 
+            // barDockControlTop
+            // 
+            this.barDockControlTop.CausesValidation = false;
+            this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
+            this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
+            this.barDockControlTop.Size = new System.Drawing.Size(745, 31);
+            // 
+            // barDockControlBottom
+            // 
+            this.barDockControlBottom.CausesValidation = false;
+            this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.barDockControlBottom.Location = new System.Drawing.Point(0, 379);
+            this.barDockControlBottom.Size = new System.Drawing.Size(745, 23);
+            // 
+            // barDockControlLeft
+            // 
+            this.barDockControlLeft.CausesValidation = false;
+            this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
+            this.barDockControlLeft.Location = new System.Drawing.Point(0, 31);
+            this.barDockControlLeft.Size = new System.Drawing.Size(0, 348);
+            // 
+            // barDockControlRight
+            // 
+            this.barDockControlRight.CausesValidation = false;
+            this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
+            this.barDockControlRight.Location = new System.Drawing.Point(745, 31);
+            this.barDockControlRight.Size = new System.Drawing.Size(0, 348);
+            // 
+            // slkupLiquidacion
+            // 
+            this.slkupLiquidacion.Location = new System.Drawing.Point(103, 162);
+            this.slkupLiquidacion.MenuManager = this.barManager1;
+            this.slkupLiquidacion.Name = "slkupLiquidacion";
+            this.slkupLiquidacion.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.slkupLiquidacion.Properties.View = this.gridView1;
+            this.slkupLiquidacion.Size = new System.Drawing.Size(289, 20);
+            this.slkupLiquidacion.StyleController = this.layoutControl2;
+            this.slkupLiquidacion.TabIndex = 16;
+            // 
+            // gridView1
+            // 
+            this.gridView1.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.gridView1.Name = "gridView1";
+            this.gridView1.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.gridView1.OptionsView.ShowGroupPanel = false;
             // 
             // slkupDevolucion
             // 
@@ -420,9 +527,9 @@
             // 
             // txtNumMaxLineasOrden
             // 
-            this.txtNumMaxLineasOrden.Location = new System.Drawing.Point(200, 208);
+            this.txtNumMaxLineasOrden.Location = new System.Drawing.Point(210, 208);
             this.txtNumMaxLineasOrden.Name = "txtNumMaxLineasOrden";
-            this.txtNumMaxLineasOrden.Size = new System.Drawing.Size(503, 20);
+            this.txtNumMaxLineasOrden.Size = new System.Drawing.Size(493, 20);
             this.txtNumMaxLineasOrden.StyleController = this.layoutControl2;
             this.txtNumMaxLineasOrden.TabIndex = 4;
             // 
@@ -434,7 +541,8 @@
             this.emptySpaceItem1,
             this.layoutControlGroup4,
             this.layoutControlItem10,
-            this.emptySpaceItem6});
+            this.emptySpaceItem6,
+            this.layoutControlItem33});
             this.layoutControlGroup2.Location = new System.Drawing.Point(0, 0);
             this.layoutControlGroup2.Name = "Root";
             this.layoutControlGroup2.Size = new System.Drawing.Size(715, 296);
@@ -443,9 +551,9 @@
             // emptySpaceItem1
             // 
             this.emptySpaceItem1.AllowHotTrack = false;
-            this.emptySpaceItem1.Location = new System.Drawing.Point(0, 220);
+            this.emptySpaceItem1.Location = new System.Drawing.Point(0, 244);
             this.emptySpaceItem1.Name = "emptySpaceItem1";
-            this.emptySpaceItem1.Size = new System.Drawing.Size(695, 56);
+            this.emptySpaceItem1.Size = new System.Drawing.Size(695, 32);
             this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
             // 
             // layoutControlGroup4
@@ -535,15 +643,6 @@
             this.layoutControlItem7.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem7.TextVisible = false;
             // 
-            // layoutControlItem8
-            // 
-            this.layoutControlItem8.Control = this.txtConsecutivoEmbarque;
-            this.layoutControlItem8.Location = new System.Drawing.Point(391, 96);
-            this.layoutControlItem8.Name = "layoutControlItem8";
-            this.layoutControlItem8.Size = new System.Drawing.Size(269, 24);
-            this.layoutControlItem8.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem8.TextVisible = false;
-            // 
             // layoutControlItem9
             // 
             this.layoutControlItem9.Control = this.txtConsecutivoDev;
@@ -601,6 +700,36 @@
             this.layoutControlItem24.TextSize = new System.Drawing.Size(70, 20);
             this.layoutControlItem24.TextToControlDistance = 10;
             // 
+            // layoutControlItem31
+            // 
+            this.layoutControlItem31.Control = this.slkupLiquidacion;
+            this.layoutControlItem31.Location = new System.Drawing.Point(0, 120);
+            this.layoutControlItem31.Name = "layoutControlItem31";
+            this.layoutControlItem31.Size = new System.Drawing.Size(372, 24);
+            this.layoutControlItem31.Text = "Liquidación:";
+            this.layoutControlItem31.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.CustomSize;
+            this.layoutControlItem31.TextLocation = DevExpress.Utils.Locations.Left;
+            this.layoutControlItem31.TextSize = new System.Drawing.Size(70, 20);
+            this.layoutControlItem31.TextToControlDistance = 9;
+            // 
+            // layoutControlItem32
+            // 
+            this.layoutControlItem32.Control = this.txtConsecutivoLiquidacion;
+            this.layoutControlItem32.Location = new System.Drawing.Point(391, 120);
+            this.layoutControlItem32.Name = "layoutControlItem32";
+            this.layoutControlItem32.Size = new System.Drawing.Size(269, 24);
+            this.layoutControlItem32.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItem32.TextVisible = false;
+            // 
+            // layoutControlItem8
+            // 
+            this.layoutControlItem8.Control = this.txtConsecutivoEmbarque;
+            this.layoutControlItem8.Location = new System.Drawing.Point(391, 96);
+            this.layoutControlItem8.Name = "layoutControlItem8";
+            this.layoutControlItem8.Size = new System.Drawing.Size(269, 24);
+            this.layoutControlItem8.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItem8.TextVisible = false;
+            // 
             // layoutControlItem10
             // 
             this.layoutControlItem10.Control = this.txtNumMaxLineasOrden;
@@ -609,7 +738,7 @@
             this.layoutControlItem10.Name = "layoutControlItem10";
             this.layoutControlItem10.Size = new System.Drawing.Size(695, 24);
             this.layoutControlItem10.Text = "Número Máximo de Lineas de la orden:";
-            this.layoutControlItem10.TextSize = new System.Drawing.Size(185, 13);
+            this.layoutControlItem10.TextSize = new System.Drawing.Size(195, 13);
             // 
             // emptySpaceItem6
             // 
@@ -843,80 +972,6 @@
             this.chkVisualizar.Size = new System.Drawing.Size(265, 19);
             this.chkVisualizar.StyleController = this.layoutControl4;
             this.chkVisualizar.TabIndex = 19;
-            // 
-            // barManager1
-            // 
-            this.barManager1.Bars.AddRange(new DevExpress.XtraBars.Bar[] {
-            this.bar1,
-            this.bar3});
-            this.barManager1.DockControls.Add(this.barDockControlTop);
-            this.barManager1.DockControls.Add(this.barDockControlBottom);
-            this.barManager1.DockControls.Add(this.barDockControlLeft);
-            this.barManager1.DockControls.Add(this.barDockControlRight);
-            this.barManager1.Form = this;
-            this.barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
-            this.btnGuardar});
-            this.barManager1.MaxItemId = 1;
-            this.barManager1.StatusBar = this.bar3;
-            // 
-            // bar1
-            // 
-            this.bar1.BarName = "Tools";
-            this.bar1.DockCol = 0;
-            this.bar1.DockRow = 0;
-            this.bar1.DockStyle = DevExpress.XtraBars.BarDockStyle.Top;
-            this.bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.btnGuardar)});
-            this.bar1.Text = "Tools";
-            // 
-            // btnGuardar
-            // 
-            this.btnGuardar.Caption = "Guardar";
-            this.btnGuardar.Glyph = ((System.Drawing.Image)(resources.GetObject("btnGuardar.Glyph")));
-            this.btnGuardar.Id = 0;
-            this.btnGuardar.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnGuardar.LargeGlyph")));
-            this.btnGuardar.Name = "btnGuardar";
-            this.btnGuardar.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnGuardar_ItemClick);
-            // 
-            // bar3
-            // 
-            this.bar3.BarName = "Status bar";
-            this.bar3.CanDockStyle = DevExpress.XtraBars.BarCanDockStyle.Bottom;
-            this.bar3.DockCol = 0;
-            this.bar3.DockRow = 0;
-            this.bar3.DockStyle = DevExpress.XtraBars.BarDockStyle.Bottom;
-            this.bar3.OptionsBar.AllowQuickCustomization = false;
-            this.bar3.OptionsBar.DrawDragBorder = false;
-            this.bar3.OptionsBar.UseWholeRow = true;
-            this.bar3.Text = "Status bar";
-            // 
-            // barDockControlTop
-            // 
-            this.barDockControlTop.CausesValidation = false;
-            this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
-            this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
-            this.barDockControlTop.Size = new System.Drawing.Size(745, 31);
-            // 
-            // barDockControlBottom
-            // 
-            this.barDockControlBottom.CausesValidation = false;
-            this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.barDockControlBottom.Location = new System.Drawing.Point(0, 379);
-            this.barDockControlBottom.Size = new System.Drawing.Size(745, 23);
-            // 
-            // barDockControlLeft
-            // 
-            this.barDockControlLeft.CausesValidation = false;
-            this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
-            this.barDockControlLeft.Location = new System.Drawing.Point(0, 31);
-            this.barDockControlLeft.Size = new System.Drawing.Size(0, 348);
-            // 
-            // barDockControlRight
-            // 
-            this.barDockControlRight.CausesValidation = false;
-            this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.barDockControlRight.Location = new System.Drawing.Point(745, 31);
-            this.barDockControlRight.Size = new System.Drawing.Size(0, 348);
             // 
             // txtDescrCuentaTransExt
             // 
@@ -1374,54 +1429,23 @@
             this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem1.TextVisible = false;
             // 
-            // slkupLiquidacion
+            // txtNombreAutorizaOrdenCompra
             // 
-            this.slkupLiquidacion.Location = new System.Drawing.Point(103, 162);
-            this.slkupLiquidacion.MenuManager = this.barManager1;
-            this.slkupLiquidacion.Name = "slkupLiquidacion";
-            this.slkupLiquidacion.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.slkupLiquidacion.Properties.View = this.gridView1;
-            this.slkupLiquidacion.Size = new System.Drawing.Size(289, 20);
-            this.slkupLiquidacion.StyleController = this.layoutControl2;
-            this.slkupLiquidacion.TabIndex = 16;
+            this.txtNombreAutorizaOrdenCompra.Location = new System.Drawing.Point(210, 232);
+            this.txtNombreAutorizaOrdenCompra.MenuManager = this.barManager1;
+            this.txtNombreAutorizaOrdenCompra.Name = "txtNombreAutorizaOrdenCompra";
+            this.txtNombreAutorizaOrdenCompra.Size = new System.Drawing.Size(493, 20);
+            this.txtNombreAutorizaOrdenCompra.StyleController = this.layoutControl2;
+            this.txtNombreAutorizaOrdenCompra.TabIndex = 18;
             // 
-            // layoutControlItem31
+            // layoutControlItem33
             // 
-            this.layoutControlItem31.Control = this.slkupLiquidacion;
-            this.layoutControlItem31.Location = new System.Drawing.Point(0, 120);
-            this.layoutControlItem31.Name = "layoutControlItem31";
-            this.layoutControlItem31.Size = new System.Drawing.Size(372, 24);
-            this.layoutControlItem31.Text = "Liquidación:";
-            this.layoutControlItem31.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.CustomSize;
-            this.layoutControlItem31.TextLocation = DevExpress.Utils.Locations.Left;
-            this.layoutControlItem31.TextSize = new System.Drawing.Size(70, 20);
-            this.layoutControlItem31.TextToControlDistance = 9;
-            // 
-            // gridView1
-            // 
-            this.gridView1.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
-            this.gridView1.Name = "gridView1";
-            this.gridView1.OptionsSelection.EnableAppearanceFocusedCell = false;
-            this.gridView1.OptionsView.ShowGroupPanel = false;
-            // 
-            // txtConsecutivoLiquidacion
-            // 
-            this.txtConsecutivoLiquidacion.Location = new System.Drawing.Point(415, 162);
-            this.txtConsecutivoLiquidacion.MenuManager = this.barManager1;
-            this.txtConsecutivoLiquidacion.Name = "txtConsecutivoLiquidacion";
-            this.txtConsecutivoLiquidacion.Size = new System.Drawing.Size(265, 20);
-            this.txtConsecutivoLiquidacion.StyleController = this.layoutControl2;
-            this.txtConsecutivoLiquidacion.TabIndex = 17;
-            // 
-            // layoutControlItem32
-            // 
-            this.layoutControlItem32.Control = this.txtConsecutivoLiquidacion;
-            this.layoutControlItem32.Location = new System.Drawing.Point(391, 120);
-            this.layoutControlItem32.Name = "layoutControlItem32";
-            this.layoutControlItem32.Size = new System.Drawing.Size(269, 24);
-            this.layoutControlItem32.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem32.TextVisible = false;
+            this.layoutControlItem33.Control = this.txtNombreAutorizaOrdenCompra;
+            this.layoutControlItem33.Location = new System.Drawing.Point(0, 220);
+            this.layoutControlItem33.Name = "layoutControlItem33";
+            this.layoutControlItem33.Size = new System.Drawing.Size(695, 24);
+            this.layoutControlItem33.Text = "Persona que Autoriza Orden de Compra:";
+            this.layoutControlItem33.TextSize = new System.Drawing.Size(195, 13);
             // 
             // frmParametros
             // 
@@ -1444,6 +1468,10 @@
             this.tabGeneral.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl2)).EndInit();
             this.layoutControl2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.txtConsecutivoLiquidacion.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.slkupLiquidacion.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.slkupDevolucion.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit4View)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.slkupEmbarque.Properties)).EndInit();
@@ -1466,12 +1494,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem22)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem23)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem24)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem31)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem32)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem6)).EndInit();
             this.tabVarios.ResumeLayout(false);
@@ -1498,7 +1528,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl4)).EndInit();
             this.layoutControl4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chkVisualizar.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDescrCuentaTransExt.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDescrCuentaTransLoc.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.slkupCuentaTransExt.Properties)).EndInit();
@@ -1546,11 +1575,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem17)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.slkupLiquidacion.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem31)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtConsecutivoLiquidacion.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem32)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtNombreAutorizaOrdenCompra.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem33)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1674,6 +1700,8 @@
         private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem31;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem32;
+        private DevExpress.XtraEditors.TextEdit txtNombreAutorizaOrdenCompra;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem33;
 
     }
 }

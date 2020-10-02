@@ -67,6 +67,7 @@
     <Reference Include="DevExpress.Charts.v15.2.Core, Version=15.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Data.v15.2, Version=15.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.DataAccess.v15.2, Version=15.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Docs.v15.2, Version=15.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Images.v15.2, Version=15.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Office.v15.2.Core, Version=15.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.PivotGrid.v15.2.Core, Version=15.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
@@ -222,6 +223,12 @@
     <Compile Include="Reportes\rptLiquidacionCompra.Designer.cs">
       <DependentUpon>rptLiquidacionCompra.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\rptOrdenCompra.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\rptOrdenCompra.Designer.cs">
+      <DependentUpon>rptOrdenCompra.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\rptSolicitudCompra.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -290,6 +297,9 @@
     <EmbeddedResource Include="Reportes\rptLiquidacionCompra.resx">
       <DependentUpon>rptLiquidacionCompra.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\rptOrdenCompra.resx">
+      <DependentUpon>rptOrdenCompra.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reportes\rptSolicitudCompra.resx">
       <DependentUpon>rptSolicitudCompra.cs</DependentUpon>
     </EmbeddedResource>
@@ -309,6 +319,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Reportes\Plantillas\rptLiquidacionCompra.repx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Reportes\Plantillas\rptOrdenCompra.repx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Reportes\rptSolicitudCompra.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -384,6 +400,7 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

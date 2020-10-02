@@ -45,6 +45,7 @@ namespace CO
                     this.txtCantDecimalesCantidad.EditValue = Convert.ToInt32(dt.Rows[0]["CantDecimalesCantidad"]);
                     this.txtCantDecimalesPrecio.EditValue = Convert.ToInt32(dt.Rows[0]["CantDecimalesPrecio"]);
                     this.txtNumMaxLineasOrden.EditValue = Convert.ToInt32(dt.Rows[0]["CantLineasOrdenCompra"]);
+                    this.txtNombreAutorizaOrdenCompra.EditValue = Convert.ToInt32(dt.Rows[0]["NombreAutorizaOrdenCompra"]);
                 }
             }
             catch (Exception ex) {
@@ -214,7 +215,7 @@ namespace CO
             int? IDSolicitud, IdOrdenCompra, IDEmbarque, IDDevolucion, IDLiquidacion,IDBodegaDefault,IDPaquete;
             int CantLineasOrdenCompra,CantDecimalesPrecio, CantDecimalesCantidad;
             long? CtaTransitoLocal, CtaTransitoDol, CtrTransitoLocal, CtrTransitoDol;
-            String IDTipoCambio, IDTipoAsientoContable;
+            String IDTipoCambio, IDTipoAsientoContable,sNombreAutorizaOrdenCompra ;
             bool AplicaAutomaticamenteAsiento, CanEditAsiento, CanViewAsiento;
 
             if (this.slkupTipoCambio.EditValue == null) {
@@ -243,8 +244,9 @@ namespace CO
                 AplicaAutomaticamenteAsiento = Convert.ToBoolean(this.chkAplicaAutomatico.EditValue);
                 CanEditAsiento = Convert.ToBoolean(this.chkModificar.EditValue);
                 CanViewAsiento = Convert.ToBoolean(this.chkVisualizar.EditValue);
+                sNombreAutorizaOrdenCompra = this.txtNombreAutorizaOrdenCompra.EditValue.ToString();
                 ConnectionManager.BeginTran();
-                DAC.clsParametrosDAC.InsertUpdate(IDSolicitud, IdOrdenCompra, IDEmbarque, IDDevolucion,IDLiquidacion, CantLineasOrdenCompra, IDBodegaDefault, IDTipoCambio, CantDecimalesPrecio, CantDecimalesCantidad, IDTipoAsientoContable, IDPaquete, CtaTransitoLocal, CtrTransitoLocal, CtaTransitoDol, CtrTransitoDol, AplicaAutomaticamenteAsiento, CanEditAsiento, CanViewAsiento, ConnectionManager.Tran);
+                DAC.clsParametrosDAC.InsertUpdate(IDSolicitud, IdOrdenCompra, IDEmbarque, IDDevolucion,IDLiquidacion, CantLineasOrdenCompra, IDBodegaDefault, IDTipoCambio, CantDecimalesPrecio, CantDecimalesCantidad, IDTipoAsientoContable, IDPaquete, CtaTransitoLocal, CtrTransitoLocal, CtaTransitoDol, CtrTransitoDol, AplicaAutomaticamenteAsiento, CanEditAsiento, CanViewAsiento,sNombreAutorizaOrdenCompra, ConnectionManager.Tran);
                 ConnectionManager.CommitTran();
             }
             catch (Exception ex) {

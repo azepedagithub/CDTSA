@@ -1283,6 +1283,34 @@ namespace CO
                 this.slkupMoneda.EditValue = Convert.ToInt32(drProveedor["IDMoneda"]);
                 this.slkupMoneda.Enabled = (Convert.ToBoolean(drProveedor["MultiMoneda"]) == true) ? true : false;
             }
+        }
+
+        private void btnImprimir_ItemClick_1(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            if (this.IDOrdenCompra != null && this.IDOrdenCompra != -1)
+            {
+                DevExpress.XtraReports.UI.XtraReport report = DevExpress.XtraReports.UI.XtraReport.FromFile("./Reportes/Plantillas/rptOrdenCompra.repx", true);
+
+
+                SqlDataSource sqlDataSource = report.DataSource as SqlDataSource;
+
+                SqlDataSource ds = report.DataSource as SqlDataSource;
+                ds.ConnectionName = "sqlDataSource1";
+                String sNameConexion = (Security.Esquema.Compania == "CEDETSA") ? "StringConCedetsa" : "StringConDasa";
+                System.Data.SqlClient.SqlConnectionStringBuilder builder = new System.Data.SqlClient.SqlConnectionStringBuilder(System.Configuration.ConfigurationManager.ConnectionStrings[sNameConexion].ConnectionString);
+                ds.ConnectionParameters = new DevExpress.DataAccess.ConnectionParameters.MsSqlConnectionParameters(builder.DataSource, builder.InitialCatalog, builder.UserID, builder.Password, MsSqlAuthorizationType.SqlServer);
+
+                // Obtain a parameter, and set its value.
+                report.Parameters["IDOrdenCompra"].Value = this.IDOrdenCompra;
+                report.Parameters["UserImpresion"].Value = this.sUsuario;
+
+                // Show the report's print preview.
+                DevExpress.XtraReports.UI.ReportPrintTool tool = new DevExpress.XtraReports.UI.ReportPrintTool(report);
+
+                tool.ShowPreview();
+
+
+            }
         }                                       
 
 
