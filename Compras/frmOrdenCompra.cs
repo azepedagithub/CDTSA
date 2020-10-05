@@ -30,7 +30,7 @@ namespace CO
         long IDOrdenCompra;
         DateTime FechaOrden, FechaRequerida, FechaRequeridaEmbarque, FechaCotizacion, FechaEmision;
         int IDEstado, IDProveedor, IDBodega, IDCondicionPago, IDMoneda;
-        Decimal Descuento, Flete, Seguro, Documentacion, Anticipos, Impuesto;
+        Decimal Descuento, Flete, Seguro, Anticipos, Impuesto;
         String  OrdenCompra;
         String sUsuario = (UsuarioDAC._DS.Tables.Count > 0) ? UsuarioDAC._DS.Tables[0].Rows[0]["Usuario"].ToString() : "azepeda";
         DataTable dtDetalleOrden = new DataTable();
@@ -86,15 +86,14 @@ namespace CO
             this.txtMontoFactura.Text = "";
             this.txtPorcDescuento.Text = "";
             this.txtSeguro.Text = "";
-            this.txtDocumentacion.Text = "";
+            
             this.txtAnticipos.Text = "";
 
             this.txtTotalMercaderia.Text = "";
-            this.txtTotalDocumentacion.Text = "";
+            
             this.txtSaldo.Text = "";
             this.txtDescuentoTotal.Text = "";
             this.txtImpuestoVenta.Text = "";
-            this.txtImpuestoConsumo.Text = "";
             this.txtFleteTotal.Text = "";
             this.txtAnticipoTotal.Text = "";
 
@@ -126,7 +125,6 @@ namespace CO
                 this.btnGuardar.Enabled = false;
                 this.btnCancelar.Enabled = false;
                 this.btnEliminar.Enabled = true;
-                this.btnDesconfirmar.Enabled = true;
                 this.btnAnular.Enabled = true;
                 this.btnEmbarque.Enabled = false;
             }
@@ -164,7 +162,6 @@ namespace CO
                 this.txtPorcDescuento.ReadOnly = false;
                 this.txtFlete.ReadOnly = false;
                 this.txtSeguro.ReadOnly = false;
-                this.txtDocumentacion.ReadOnly = false;
                 this.txtAnticipos.ReadOnly = false;
                 this.txtFactura.ReadOnly = false;
                 this.slkupSubTipo.ReadOnly = false;
@@ -195,7 +192,6 @@ namespace CO
                 this.txtPorcDescuento.ReadOnly = true;
                 this.txtFlete.ReadOnly = true;
                 this.txtSeguro.ReadOnly = true;
-                this.txtDocumentacion.ReadOnly = true;
                 this.txtAnticipos.ReadOnly = true;
                 this.txtFactura.ReadOnly = true;
                 this.slkupSubTipo.ReadOnly = true;
@@ -258,7 +254,6 @@ namespace CO
             this.txtPorcDescuento.EditValue = Convert.ToDecimal((cabecera["Descuento"] == System.DBNull.Value) ? 0 : cabecera["Descuento"]);
             this.txtFlete.EditValue = Convert.ToDecimal((cabecera["Flete"] == System.DBNull.Value) ? 0 : cabecera["Flete"]);
             this.txtSeguro.EditValue = Convert.ToDecimal((cabecera["Seguro"] == System.DBNull.Value) ? 0 : cabecera["Seguro"]);
-            this.txtDocumentacion.EditValue = Convert.ToDecimal((cabecera["Documentacion"] == System.DBNull.Value) ? 0 : cabecera["Documentacion"]);
             this.txtAnticipos.EditValue = Convert.ToDecimal((cabecera["Anticipos"] == System.DBNull.Value) ? 0 : cabecera["Anticipos"]);
             this.txtEstado.EditValue = cabecera["DescrEstado"].ToString();
             this.txtEstado.Tag = Convert.ToInt32(cabecera["IDEstado"]);
@@ -512,20 +507,17 @@ namespace CO
             decimal? dDescuento = (this.txtPorcDescuento.EditValue == null || this.txtPorcDescuento.EditValue.ToString() == "") ? 0 : (Convert.ToDecimal(this.txtPorcDescuento.EditValue)/100) * dTotalMercaderia;
             decimal dFlete = (this.txtFlete.EditValue == null || this.txtFlete.EditValue.ToString() == "") ? 0 : Convert.ToDecimal(this.txtFlete.EditValue);
             decimal dSeguro = (this.txtSeguro.EditValue == null || this.txtSeguro.EditValue.ToString() == "") ? 0 : Convert.ToDecimal(this.txtSeguro.EditValue);
-            decimal dDocumentacion = (this.txtDocumentacion.EditValue == null || this.txtDocumentacion.EditValue.ToString() == "") ? 0 : Convert.ToDecimal(this.txtDocumentacion.EditValue);
             decimal dAnticipos = (this.txtAnticipos.EditValue == null || this.txtAnticipos.EditValue.ToString() == "") ? 0 : Convert.ToDecimal(this.txtAnticipos.EditValue);
             decimal dImpuestoConsumo = 0;
             decimal dImpuestoVenta = Convert.ToDecimal(dtDetalleOrden.AsEnumerable().Sum(r => (r.Field<decimal?>("Impuesto")/100) * (r.Field<decimal?>("Cantidad") * (r.Field<decimal?>("PrecioUnitario") == null ? (decimal?)0 : r.Field<decimal?>("PrecioUnitario")) - MontoDesc)));
-            decimal? dSubTotal = (dTotalMercaderia - dDescuento + dImpuestoVenta + dImpuestoConsumo + dFlete + dSeguro + dDocumentacion);
+            decimal? dSubTotal = (dTotalMercaderia - dDescuento + dImpuestoVenta + dImpuestoConsumo + dFlete + dSeguro );
             decimal? dSaldo = dSubTotal - dAnticipos;
 
             this.txtTotalMercaderia.EditValue = Convert.ToDecimal(dTotalMercaderia).ToString("N" + Util.Util.DecimalLenght);
             this.txtDescuentoTotal.EditValue = Convert.ToDecimal(dDescuento).ToString("N" + Util.Util.DecimalLenght);
             this.txtFleteTotal.EditValue = dFlete.ToString("N" + Util.Util.DecimalLenght);
-            this.txtTotalDocumentacion.EditValue = dFlete.ToString("N" + Util.Util.DecimalLenght);
             this.txtSeguroTotal.EditValue = dSeguro.ToString("N" + Util.Util.DecimalLenght);
             this.txtAnticipoTotal.EditValue = dAnticipos.ToString("N" + Util.Util.DecimalLenght);
-            this.txtImpuestoConsumo.EditValue = dImpuestoConsumo.ToString("N" + Util.Util.DecimalLenght);
             this.txtImpuestoVenta.EditValue = dImpuestoVenta.ToString("N" + Util.Util.DecimalLenght);
             this.txtSubtotal.EditValue = Convert.ToDecimal(dSubTotal).ToString("N" + Util.Util.DecimalLenght);
             this.txtSaldo.EditValue = Convert.ToDecimal(dSaldo).ToString("N" + Util.Util.DecimalLenght);
@@ -670,6 +662,9 @@ namespace CO
 
         private void btnEditarSolicitud_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+            if (this.IDEstado == 2) {
+                return;
+            }
             this.Accion = "Edit";
             HabilitarControles();
             HabilitarBotoneriaPrincipal();
@@ -747,7 +742,6 @@ namespace CO
                     Descuento = (this.txtPorcDescuento.EditValue != null && this.txtPorcDescuento.EditValue.ToString() != "") ? Convert.ToDecimal(this.txtPorcDescuento.EditValue) : 0;
                     Flete = (this.txtFlete.EditValue != null && this.txtFlete.EditValue.ToString() != "") ? Convert.ToDecimal(this.txtFlete.EditValue) : 0;
                     Seguro = (this.txtSeguro.EditValue != null && this.txtSeguro.EditValue.ToString() != "") ? Convert.ToDecimal(this.txtSeguro.EditValue) : 0;
-                    Documentacion = (this.txtDocumentacion.EditValue != null && this.txtDocumentacion.EditValue.ToString() != "") ? Convert.ToDecimal(this.txtDocumentacion.EditValue) : 0;
                     Anticipos = (this.txtAnticipos.EditValue != null && this.txtAnticipos.EditValue.ToString() != "") ? Convert.ToDecimal(this.txtAnticipos.EditValue) : 0;
                     //IDTipoProrrateo = Convert.ToInt32(this.cmbTipoProrrateo.SelectedIndex);
                     IDEstado = Convert.ToInt32(this.txtEstado.Tag);
@@ -767,7 +761,7 @@ namespace CO
                         IDOrdenCompra = DAC.clsOrdenCompraDAC.InsertUpdate("I", IDOrdenCompra, ref OrdenCompra, FechaOrden, FechaRequerida, FechaEmision,
                                                                         FechaRequeridaEmbarque, FechaCotizacion, IDEstado, IDBodega,
                                                                         IDProveedor, IDMoneda, IDCondicionPago, Descuento, Flete, Seguro,
-                                                                        Documentacion, Anticipos, -1, -1, 33, sUsuario, "", Convert.ToDateTime("1981/08/21"), "", Convert.ToDateTime("1981/08/21"), DateTime.Now, sUsuario, DateTime.Now, sUsuario, ConnectionManager.Tran);
+                                                                        Anticipos, -1, -1, 33, sUsuario, "", Convert.ToDateTime("1981/08/21"), "", Convert.ToDateTime("1981/08/21"), DateTime.Now, sUsuario, DateTime.Now, sUsuario, ConnectionManager.Tran);
                         this.txtOrdenCompra.Text = OrdenCompra;
                         dtOrdenCompra = DAC.clsOrdenCompraDAC.GetByID(IDOrdenCompra).Tables[0];
                         foreach (DataRow row in dt.Rows)
@@ -788,7 +782,7 @@ namespace CO
                         DAC.clsOrdenCompraDAC.InsertUpdate("U", IDOrdenCompra, ref OrdenCompra, FechaOrden, FechaRequerida, FechaEmision,
                                                                         FechaRequeridaEmbarque, FechaCotizacion, IDEstado, IDBodega,
                                                                         IDProveedor, IDMoneda, IDCondicionPago, Descuento, Flete, Seguro,
-                                                                        Documentacion, Anticipos, -1, -1, 33, sUsuario, "", Convert.ToDateTime("1981/08/21"), "", Convert.ToDateTime("1981/08/21"), DateTime.Now, sUsuario, DateTime.Now, sUsuario, ConnectionManager.Tran);
+                                                                        Anticipos, -1, -1, 33, sUsuario, "", Convert.ToDateTime("1981/08/21"), "", Convert.ToDateTime("1981/08/21"), DateTime.Now, sUsuario, DateTime.Now, sUsuario, ConnectionManager.Tran);
                         //Eliminamos el detalle y lo volvemos a insertar
                         DAC.clsOrdenCompraDetalleDAC.InsertUpdate("D", IDOrdenCompra, -1, 0, 0, 0, 0, 0, 0,
                                                         0, 0, "", ConnectionManager.Tran);
@@ -833,9 +827,10 @@ namespace CO
 
         private void btnEliminarSolicitud_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+            
             try
             {
-                if (Convert.ToInt32(dtOrdenCompra.Rows[0]["IDEstado"]) > 2) {
+                if (Convert.ToInt32(dtOrdenCompra.Rows[0]["IDEstado"]) >= 2) {
                     MessageBox.Show("Solo puede eliminar ordenes cuyo estdo sea el inicial");
                     return;
                 }
@@ -846,7 +841,7 @@ namespace CO
                         ConnectionManager.BeginTran();
                         clsOrdenCompraDetalleDAC.InsertUpdate("D", IDOrdenCompra, -1, 0, 0, 0, 0, 0, 0,
                                                         0, 0, "", ConnectionManager.Tran);
-                        clsOrdenCompraDAC.InsertUpdate("D", IDOrdenCompra, ref OrdenCompra, DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, -1, -1, 0, "", "", DateTime.Now, "", DateTime.Now, DateTime.Now, "", DateTime.Now, "", ConnectionManager.Tran);
+                        clsOrdenCompraDAC.InsertUpdate("D", IDOrdenCompra, ref OrdenCompra, DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now, -1, -1, -1, -1, -1, 0, 0, 0, 0, -1, -1, 0, "", "", DateTime.Now, "", DateTime.Now, DateTime.Now, "", DateTime.Now, "", ConnectionManager.Tran);
                         ConnectionManager.CommitTran();
                         MessageBox.Show("La orden de compra se ha eliminado correctamente");
                     }
@@ -1155,6 +1150,7 @@ namespace CO
             dtOrdenCompra.Rows[0]["IDEstado"] = 2;
             dtOrdenCompra.Rows[0]["DescrEstado"] = "CONFIRMADA";
             ConnectionManager.CommitTran();
+            this.IDEstado = 2;
             HabilitarBotones(this.dtOrdenCompra);
             MessageBox.Show("La Orden ha sido Confirmada correctamente");
         }
@@ -1169,9 +1165,10 @@ namespace CO
             }
             ConnectionManager.BeginTran();
             clsOrdenCompraDAC.DesConfirmarOrdenCompra(this.IDOrdenCompra, ConnectionManager.Tran);
-            dtOrdenCompra.Rows[0]["IDEstado"] = 1;
-            dtOrdenCompra.Rows[0]["DescrEstado"] = "APROBADO";
+            dtOrdenCompra.Rows[0]["IDEstado"] = 0;
+            dtOrdenCompra.Rows[0]["DescrEstado"] = "INICIAl";
             ConnectionManager.CommitTran();
+            this.IDEstado = 0;
             HabilitarBotones(this.dtOrdenCompra);
             MessageBox.Show("La Orden ha sido Des-Confirmada correctamente");
         }

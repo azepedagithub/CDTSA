@@ -41,6 +41,7 @@
             this.btnAnular = new DevExpress.XtraBars.BarButtonItem();
             this.btnEmbarque = new DevExpress.XtraBars.BarButtonItem();
             this.btnDesconfirmar = new DevExpress.XtraBars.BarButtonItem();
+            this.btnImprimir = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
@@ -97,35 +98,29 @@
             this.txtSaldo = new DevExpress.XtraEditors.TextEdit();
             this.txtAnticipoTotal = new DevExpress.XtraEditors.TextEdit();
             this.txtSubtotal = new DevExpress.XtraEditors.TextEdit();
-            this.txtTotalDocumentacion = new DevExpress.XtraEditors.TextEdit();
             this.txtSeguroTotal = new DevExpress.XtraEditors.TextEdit();
             this.txtFleteTotal = new DevExpress.XtraEditors.TextEdit();
-            this.txtImpuestoConsumo = new DevExpress.XtraEditors.TextEdit();
             this.txtImpuestoVenta = new DevExpress.XtraEditors.TextEdit();
             this.txtDescuentoTotal = new DevExpress.XtraEditors.TextEdit();
             this.txtTotalMercaderia = new DevExpress.XtraEditors.TextEdit();
             this.txtAnticipos = new DevExpress.XtraEditors.TextEdit();
-            this.txtDocumentacion = new DevExpress.XtraEditors.TextEdit();
             this.txtSeguro = new DevExpress.XtraEditors.TextEdit();
             this.txtFlete = new DevExpress.XtraEditors.TextEdit();
             this.txtPorcDescuento = new DevExpress.XtraEditors.TextEdit();
             this.layoutControlGroup4 = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem26 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem28 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem29 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem30 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem31 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem33 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem34 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem35 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem36 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem37 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem38 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem39 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem40 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem27 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem32 = new DevExpress.XtraLayout.LayoutControlItem();
             this.emptySpaceItem5 = new DevExpress.XtraLayout.EmptySpaceItem();
+            this.layoutControlItem30 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem33 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem28 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem35 = new DevExpress.XtraLayout.LayoutControlItem();
             this.tabFactura = new DevExpress.XtraTab.XtraTabPage();
             this.layoutControl3 = new DevExpress.XtraLayout.LayoutControl();
             this.txtNotas = new DevExpress.XtraEditors.MemoEdit();
@@ -172,7 +167,6 @@
             this.layoutControlItem42 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem16 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.btnImprimir = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
@@ -207,35 +201,29 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtSaldo.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtAnticipoTotal.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSubtotal.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtTotalDocumentacion.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSeguroTotal.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtFleteTotal.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtImpuestoConsumo.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtImpuestoVenta.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDescuentoTotal.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtTotalMercaderia.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtAnticipos.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtDocumentacion.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSeguro.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtFlete.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPorcDescuento.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem26)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem28)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem29)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem30)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem31)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem33)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem34)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem35)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem36)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem37)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem38)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem39)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem40)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem27)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem32)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem30)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem33)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem28)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem35)).BeginInit();
             this.tabFactura.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl3)).BeginInit();
             this.layoutControl3.SuspendLayout();
@@ -392,6 +380,15 @@
             this.btnDesconfirmar.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnDesconfirmar.LargeGlyph")));
             this.btnDesconfirmar.Name = "btnDesconfirmar";
             this.btnDesconfirmar.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnDesconfirmar_ItemClick);
+            // 
+            // btnImprimir
+            // 
+            this.btnImprimir.Caption = "Imprimir";
+            this.btnImprimir.Glyph = ((System.Drawing.Image)(resources.GetObject("btnImprimir.Glyph")));
+            this.btnImprimir.Id = 6;
+            this.btnImprimir.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnImprimir.LargeGlyph")));
+            this.btnImprimir.Name = "btnImprimir";
+            this.btnImprimir.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnImprimir_ItemClick_1);
             // 
             // ribbonPage1
             // 
@@ -947,15 +944,12 @@
             this.layoutControl4.Controls.Add(this.txtSaldo);
             this.layoutControl4.Controls.Add(this.txtAnticipoTotal);
             this.layoutControl4.Controls.Add(this.txtSubtotal);
-            this.layoutControl4.Controls.Add(this.txtTotalDocumentacion);
             this.layoutControl4.Controls.Add(this.txtSeguroTotal);
             this.layoutControl4.Controls.Add(this.txtFleteTotal);
-            this.layoutControl4.Controls.Add(this.txtImpuestoConsumo);
             this.layoutControl4.Controls.Add(this.txtImpuestoVenta);
             this.layoutControl4.Controls.Add(this.txtDescuentoTotal);
             this.layoutControl4.Controls.Add(this.txtTotalMercaderia);
             this.layoutControl4.Controls.Add(this.txtAnticipos);
-            this.layoutControl4.Controls.Add(this.txtDocumentacion);
             this.layoutControl4.Controls.Add(this.txtSeguro);
             this.layoutControl4.Controls.Add(this.txtFlete);
             this.layoutControl4.Controls.Add(this.txtPorcDescuento);
@@ -969,160 +963,128 @@
             // 
             // txtSaldo
             // 
-            this.txtSaldo.Location = new System.Drawing.Point(577, 228);
+            this.txtSaldo.Location = new System.Drawing.Point(561, 180);
             this.txtSaldo.MenuManager = this.ribbonControl1;
             this.txtSaldo.Name = "txtSaldo";
             this.txtSaldo.Properties.ReadOnly = true;
-            this.txtSaldo.Size = new System.Drawing.Size(330, 20);
+            this.txtSaldo.Size = new System.Drawing.Size(346, 20);
             this.txtSaldo.StyleController = this.layoutControl4;
             this.txtSaldo.TabIndex = 18;
             // 
             // txtAnticipoTotal
             // 
-            this.txtAnticipoTotal.Location = new System.Drawing.Point(577, 204);
+            this.txtAnticipoTotal.Location = new System.Drawing.Point(561, 156);
             this.txtAnticipoTotal.MenuManager = this.ribbonControl1;
             this.txtAnticipoTotal.Name = "txtAnticipoTotal";
             this.txtAnticipoTotal.Properties.ReadOnly = true;
-            this.txtAnticipoTotal.Size = new System.Drawing.Size(330, 20);
+            this.txtAnticipoTotal.Size = new System.Drawing.Size(346, 20);
             this.txtAnticipoTotal.StyleController = this.layoutControl4;
             this.txtAnticipoTotal.TabIndex = 17;
             // 
             // txtSubtotal
             // 
-            this.txtSubtotal.Location = new System.Drawing.Point(577, 180);
+            this.txtSubtotal.Location = new System.Drawing.Point(561, 132);
             this.txtSubtotal.MenuManager = this.ribbonControl1;
             this.txtSubtotal.Name = "txtSubtotal";
             this.txtSubtotal.Properties.ReadOnly = true;
-            this.txtSubtotal.Size = new System.Drawing.Size(330, 20);
+            this.txtSubtotal.Size = new System.Drawing.Size(346, 20);
             this.txtSubtotal.StyleController = this.layoutControl4;
             this.txtSubtotal.TabIndex = 16;
             // 
-            // txtTotalDocumentacion
-            // 
-            this.txtTotalDocumentacion.Location = new System.Drawing.Point(577, 156);
-            this.txtTotalDocumentacion.MenuManager = this.ribbonControl1;
-            this.txtTotalDocumentacion.Name = "txtTotalDocumentacion";
-            this.txtTotalDocumentacion.Properties.ReadOnly = true;
-            this.txtTotalDocumentacion.Size = new System.Drawing.Size(330, 20);
-            this.txtTotalDocumentacion.StyleController = this.layoutControl4;
-            this.txtTotalDocumentacion.TabIndex = 15;
-            // 
             // txtSeguroTotal
             // 
-            this.txtSeguroTotal.Location = new System.Drawing.Point(577, 132);
+            this.txtSeguroTotal.Location = new System.Drawing.Point(561, 108);
             this.txtSeguroTotal.MenuManager = this.ribbonControl1;
             this.txtSeguroTotal.Name = "txtSeguroTotal";
             this.txtSeguroTotal.Properties.ReadOnly = true;
-            this.txtSeguroTotal.Size = new System.Drawing.Size(330, 20);
+            this.txtSeguroTotal.Size = new System.Drawing.Size(346, 20);
             this.txtSeguroTotal.StyleController = this.layoutControl4;
             this.txtSeguroTotal.TabIndex = 14;
             // 
             // txtFleteTotal
             // 
-            this.txtFleteTotal.Location = new System.Drawing.Point(577, 108);
+            this.txtFleteTotal.Location = new System.Drawing.Point(561, 84);
             this.txtFleteTotal.MenuManager = this.ribbonControl1;
             this.txtFleteTotal.Name = "txtFleteTotal";
             this.txtFleteTotal.Properties.ReadOnly = true;
-            this.txtFleteTotal.Size = new System.Drawing.Size(330, 20);
+            this.txtFleteTotal.Size = new System.Drawing.Size(346, 20);
             this.txtFleteTotal.StyleController = this.layoutControl4;
             this.txtFleteTotal.TabIndex = 13;
             // 
-            // txtImpuestoConsumo
-            // 
-            this.txtImpuestoConsumo.Location = new System.Drawing.Point(577, 84);
-            this.txtImpuestoConsumo.MenuManager = this.ribbonControl1;
-            this.txtImpuestoConsumo.Name = "txtImpuestoConsumo";
-            this.txtImpuestoConsumo.Properties.ReadOnly = true;
-            this.txtImpuestoConsumo.Size = new System.Drawing.Size(330, 20);
-            this.txtImpuestoConsumo.StyleController = this.layoutControl4;
-            this.txtImpuestoConsumo.TabIndex = 12;
-            // 
             // txtImpuestoVenta
             // 
-            this.txtImpuestoVenta.Location = new System.Drawing.Point(577, 60);
+            this.txtImpuestoVenta.Location = new System.Drawing.Point(561, 60);
             this.txtImpuestoVenta.MenuManager = this.ribbonControl1;
             this.txtImpuestoVenta.Name = "txtImpuestoVenta";
             this.txtImpuestoVenta.Properties.ReadOnly = true;
-            this.txtImpuestoVenta.Size = new System.Drawing.Size(330, 20);
+            this.txtImpuestoVenta.Size = new System.Drawing.Size(346, 20);
             this.txtImpuestoVenta.StyleController = this.layoutControl4;
             this.txtImpuestoVenta.TabIndex = 11;
             // 
             // txtDescuentoTotal
             // 
-            this.txtDescuentoTotal.Location = new System.Drawing.Point(577, 36);
+            this.txtDescuentoTotal.Location = new System.Drawing.Point(561, 36);
             this.txtDescuentoTotal.MenuManager = this.ribbonControl1;
             this.txtDescuentoTotal.Name = "txtDescuentoTotal";
             this.txtDescuentoTotal.Properties.ReadOnly = true;
-            this.txtDescuentoTotal.Size = new System.Drawing.Size(330, 20);
+            this.txtDescuentoTotal.Size = new System.Drawing.Size(346, 20);
             this.txtDescuentoTotal.StyleController = this.layoutControl4;
             this.txtDescuentoTotal.TabIndex = 10;
             // 
             // txtTotalMercaderia
             // 
-            this.txtTotalMercaderia.Location = new System.Drawing.Point(577, 12);
+            this.txtTotalMercaderia.Location = new System.Drawing.Point(561, 12);
             this.txtTotalMercaderia.MenuManager = this.ribbonControl1;
             this.txtTotalMercaderia.Name = "txtTotalMercaderia";
             this.txtTotalMercaderia.Properties.ReadOnly = true;
-            this.txtTotalMercaderia.Size = new System.Drawing.Size(330, 20);
+            this.txtTotalMercaderia.Size = new System.Drawing.Size(346, 20);
             this.txtTotalMercaderia.StyleController = this.layoutControl4;
             this.txtTotalMercaderia.TabIndex = 9;
             // 
             // txtAnticipos
             // 
-            this.txtAnticipos.Location = new System.Drawing.Point(119, 108);
+            this.txtAnticipos.Location = new System.Drawing.Point(103, 84);
             this.txtAnticipos.MenuManager = this.ribbonControl1;
             this.txtAnticipos.Name = "txtAnticipos";
             this.txtAnticipos.Properties.Mask.EditMask = "n";
             this.txtAnticipos.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
-            this.txtAnticipos.Size = new System.Drawing.Size(347, 20);
+            this.txtAnticipos.Size = new System.Drawing.Size(363, 20);
             this.txtAnticipos.StyleController = this.layoutControl4;
             this.txtAnticipos.TabIndex = 8;
             this.txtAnticipos.Validated += new System.EventHandler(this.txtPorcDescuento_Validated);
             // 
-            // txtDocumentacion
-            // 
-            this.txtDocumentacion.Location = new System.Drawing.Point(119, 84);
-            this.txtDocumentacion.MenuManager = this.ribbonControl1;
-            this.txtDocumentacion.Name = "txtDocumentacion";
-            this.txtDocumentacion.Properties.Mask.EditMask = "n";
-            this.txtDocumentacion.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
-            this.txtDocumentacion.Size = new System.Drawing.Size(347, 20);
-            this.txtDocumentacion.StyleController = this.layoutControl4;
-            this.txtDocumentacion.TabIndex = 7;
-            this.txtDocumentacion.Validated += new System.EventHandler(this.txtPorcDescuento_Validated);
-            // 
             // txtSeguro
             // 
-            this.txtSeguro.Location = new System.Drawing.Point(119, 60);
+            this.txtSeguro.Location = new System.Drawing.Point(103, 60);
             this.txtSeguro.MenuManager = this.ribbonControl1;
             this.txtSeguro.Name = "txtSeguro";
             this.txtSeguro.Properties.Mask.EditMask = "n";
             this.txtSeguro.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
-            this.txtSeguro.Size = new System.Drawing.Size(347, 20);
+            this.txtSeguro.Size = new System.Drawing.Size(363, 20);
             this.txtSeguro.StyleController = this.layoutControl4;
             this.txtSeguro.TabIndex = 6;
             this.txtSeguro.Validated += new System.EventHandler(this.txtPorcDescuento_Validated);
             // 
             // txtFlete
             // 
-            this.txtFlete.Location = new System.Drawing.Point(119, 36);
+            this.txtFlete.Location = new System.Drawing.Point(103, 36);
             this.txtFlete.MenuManager = this.ribbonControl1;
             this.txtFlete.Name = "txtFlete";
             this.txtFlete.Properties.Mask.EditMask = "n";
             this.txtFlete.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
-            this.txtFlete.Size = new System.Drawing.Size(347, 20);
+            this.txtFlete.Size = new System.Drawing.Size(363, 20);
             this.txtFlete.StyleController = this.layoutControl4;
             this.txtFlete.TabIndex = 5;
             this.txtFlete.Validated += new System.EventHandler(this.txtPorcDescuento_Validated);
             // 
             // txtPorcDescuento
             // 
-            this.txtPorcDescuento.Location = new System.Drawing.Point(119, 12);
+            this.txtPorcDescuento.Location = new System.Drawing.Point(103, 12);
             this.txtPorcDescuento.MenuManager = this.ribbonControl1;
             this.txtPorcDescuento.Name = "txtPorcDescuento";
             this.txtPorcDescuento.Properties.Mask.EditMask = "P";
             this.txtPorcDescuento.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
-            this.txtPorcDescuento.Size = new System.Drawing.Size(347, 20);
+            this.txtPorcDescuento.Size = new System.Drawing.Size(363, 20);
             this.txtPorcDescuento.StyleController = this.layoutControl4;
             this.txtPorcDescuento.TabIndex = 4;
             this.txtPorcDescuento.Validated += new System.EventHandler(this.txtPorcDescuento_Validated);
@@ -1133,21 +1095,18 @@
             this.layoutControlGroup4.GroupBordersVisible = false;
             this.layoutControlGroup4.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlItem26,
-            this.layoutControlItem28,
-            this.layoutControlItem29,
-            this.layoutControlItem30,
             this.layoutControlItem31,
-            this.layoutControlItem33,
-            this.layoutControlItem34,
-            this.layoutControlItem35,
             this.layoutControlItem36,
-            this.layoutControlItem37,
             this.layoutControlItem38,
             this.layoutControlItem39,
             this.layoutControlItem40,
             this.layoutControlItem27,
             this.layoutControlItem32,
-            this.emptySpaceItem5});
+            this.emptySpaceItem5,
+            this.layoutControlItem30,
+            this.layoutControlItem33,
+            this.layoutControlItem28,
+            this.layoutControlItem35});
             this.layoutControlGroup4.Location = new System.Drawing.Point(0, 0);
             this.layoutControlGroup4.Name = "layoutControlGroup4";
             this.layoutControlGroup4.Size = new System.Drawing.Size(919, 319);
@@ -1160,34 +1119,7 @@
             this.layoutControlItem26.Name = "layoutControlItem26";
             this.layoutControlItem26.Size = new System.Drawing.Size(458, 24);
             this.layoutControlItem26.Text = "% Descuento:";
-            this.layoutControlItem26.TextSize = new System.Drawing.Size(104, 13);
-            // 
-            // layoutControlItem28
-            // 
-            this.layoutControlItem28.Control = this.txtSeguro;
-            this.layoutControlItem28.Location = new System.Drawing.Point(0, 48);
-            this.layoutControlItem28.Name = "layoutControlItem28";
-            this.layoutControlItem28.Size = new System.Drawing.Size(458, 24);
-            this.layoutControlItem28.Text = "Seguro:";
-            this.layoutControlItem28.TextSize = new System.Drawing.Size(104, 13);
-            // 
-            // layoutControlItem29
-            // 
-            this.layoutControlItem29.Control = this.txtDocumentacion;
-            this.layoutControlItem29.Location = new System.Drawing.Point(0, 72);
-            this.layoutControlItem29.Name = "layoutControlItem29";
-            this.layoutControlItem29.Size = new System.Drawing.Size(458, 24);
-            this.layoutControlItem29.Text = "Documentación:";
-            this.layoutControlItem29.TextSize = new System.Drawing.Size(104, 13);
-            // 
-            // layoutControlItem30
-            // 
-            this.layoutControlItem30.Control = this.txtAnticipos;
-            this.layoutControlItem30.Location = new System.Drawing.Point(0, 96);
-            this.layoutControlItem30.Name = "layoutControlItem30";
-            this.layoutControlItem30.Size = new System.Drawing.Size(458, 24);
-            this.layoutControlItem30.Text = "Anticipos:";
-            this.layoutControlItem30.TextSize = new System.Drawing.Size(104, 13);
+            this.layoutControlItem26.TextSize = new System.Drawing.Size(88, 13);
             // 
             // layoutControlItem31
             // 
@@ -1196,79 +1128,43 @@
             this.layoutControlItem31.Name = "layoutControlItem31";
             this.layoutControlItem31.Size = new System.Drawing.Size(441, 24);
             this.layoutControlItem31.Text = "Total Mercaderia:";
-            this.layoutControlItem31.TextSize = new System.Drawing.Size(104, 13);
-            // 
-            // layoutControlItem33
-            // 
-            this.layoutControlItem33.Control = this.txtImpuestoVenta;
-            this.layoutControlItem33.Location = new System.Drawing.Point(458, 48);
-            this.layoutControlItem33.Name = "layoutControlItem33";
-            this.layoutControlItem33.Size = new System.Drawing.Size(441, 24);
-            this.layoutControlItem33.Text = "+ Imp. de Ventas:";
-            this.layoutControlItem33.TextSize = new System.Drawing.Size(104, 13);
-            // 
-            // layoutControlItem34
-            // 
-            this.layoutControlItem34.Control = this.txtImpuestoConsumo;
-            this.layoutControlItem34.Location = new System.Drawing.Point(458, 72);
-            this.layoutControlItem34.Name = "layoutControlItem34";
-            this.layoutControlItem34.Size = new System.Drawing.Size(441, 24);
-            this.layoutControlItem34.Text = "+ Imp. de Consumos:";
-            this.layoutControlItem34.TextSize = new System.Drawing.Size(104, 13);
-            // 
-            // layoutControlItem35
-            // 
-            this.layoutControlItem35.Control = this.txtFleteTotal;
-            this.layoutControlItem35.Location = new System.Drawing.Point(458, 96);
-            this.layoutControlItem35.Name = "layoutControlItem35";
-            this.layoutControlItem35.Size = new System.Drawing.Size(441, 24);
-            this.layoutControlItem35.Text = "+ Flete:";
-            this.layoutControlItem35.TextSize = new System.Drawing.Size(104, 13);
+            this.layoutControlItem31.TextSize = new System.Drawing.Size(88, 13);
             // 
             // layoutControlItem36
             // 
             this.layoutControlItem36.Control = this.txtSeguroTotal;
-            this.layoutControlItem36.Location = new System.Drawing.Point(458, 120);
+            this.layoutControlItem36.Location = new System.Drawing.Point(458, 96);
             this.layoutControlItem36.Name = "layoutControlItem36";
             this.layoutControlItem36.Size = new System.Drawing.Size(441, 24);
             this.layoutControlItem36.Text = "+ Seguro:";
-            this.layoutControlItem36.TextSize = new System.Drawing.Size(104, 13);
-            // 
-            // layoutControlItem37
-            // 
-            this.layoutControlItem37.Control = this.txtTotalDocumentacion;
-            this.layoutControlItem37.Location = new System.Drawing.Point(458, 144);
-            this.layoutControlItem37.Name = "layoutControlItem37";
-            this.layoutControlItem37.Size = new System.Drawing.Size(441, 24);
-            this.layoutControlItem37.Text = "+ Documentación:";
-            this.layoutControlItem37.TextSize = new System.Drawing.Size(104, 13);
+            this.layoutControlItem36.TextSize = new System.Drawing.Size(88, 13);
             // 
             // layoutControlItem38
             // 
             this.layoutControlItem38.Control = this.txtSubtotal;
-            this.layoutControlItem38.Location = new System.Drawing.Point(458, 168);
+            this.layoutControlItem38.Location = new System.Drawing.Point(458, 120);
             this.layoutControlItem38.Name = "layoutControlItem38";
             this.layoutControlItem38.Size = new System.Drawing.Size(441, 24);
             this.layoutControlItem38.Text = "=";
-            this.layoutControlItem38.TextSize = new System.Drawing.Size(104, 13);
+            this.layoutControlItem38.TextSize = new System.Drawing.Size(88, 13);
             // 
             // layoutControlItem39
             // 
             this.layoutControlItem39.Control = this.txtAnticipoTotal;
-            this.layoutControlItem39.Location = new System.Drawing.Point(458, 192);
+            this.layoutControlItem39.Location = new System.Drawing.Point(458, 144);
             this.layoutControlItem39.Name = "layoutControlItem39";
             this.layoutControlItem39.Size = new System.Drawing.Size(441, 24);
             this.layoutControlItem39.Text = "- Anticipo:";
-            this.layoutControlItem39.TextSize = new System.Drawing.Size(104, 13);
+            this.layoutControlItem39.TextSize = new System.Drawing.Size(88, 13);
             // 
             // layoutControlItem40
             // 
             this.layoutControlItem40.Control = this.txtSaldo;
-            this.layoutControlItem40.Location = new System.Drawing.Point(458, 216);
+            this.layoutControlItem40.Location = new System.Drawing.Point(458, 168);
             this.layoutControlItem40.Name = "layoutControlItem40";
-            this.layoutControlItem40.Size = new System.Drawing.Size(441, 83);
+            this.layoutControlItem40.Size = new System.Drawing.Size(441, 131);
             this.layoutControlItem40.Text = "= Saldo:";
-            this.layoutControlItem40.TextSize = new System.Drawing.Size(104, 13);
+            this.layoutControlItem40.TextSize = new System.Drawing.Size(88, 13);
             // 
             // layoutControlItem27
             // 
@@ -1277,7 +1173,7 @@
             this.layoutControlItem27.Name = "layoutControlItem27";
             this.layoutControlItem27.Size = new System.Drawing.Size(458, 24);
             this.layoutControlItem27.Text = "Flete:";
-            this.layoutControlItem27.TextSize = new System.Drawing.Size(104, 13);
+            this.layoutControlItem27.TextSize = new System.Drawing.Size(88, 13);
             // 
             // layoutControlItem32
             // 
@@ -1286,15 +1182,51 @@
             this.layoutControlItem32.Name = "layoutControlItem32";
             this.layoutControlItem32.Size = new System.Drawing.Size(441, 24);
             this.layoutControlItem32.Text = "- Descuento:";
-            this.layoutControlItem32.TextSize = new System.Drawing.Size(104, 13);
+            this.layoutControlItem32.TextSize = new System.Drawing.Size(88, 13);
             // 
             // emptySpaceItem5
             // 
             this.emptySpaceItem5.AllowHotTrack = false;
-            this.emptySpaceItem5.Location = new System.Drawing.Point(0, 120);
+            this.emptySpaceItem5.Location = new System.Drawing.Point(0, 96);
             this.emptySpaceItem5.Name = "emptySpaceItem5";
-            this.emptySpaceItem5.Size = new System.Drawing.Size(458, 179);
+            this.emptySpaceItem5.Size = new System.Drawing.Size(458, 203);
             this.emptySpaceItem5.TextSize = new System.Drawing.Size(0, 0);
+            // 
+            // layoutControlItem30
+            // 
+            this.layoutControlItem30.Control = this.txtAnticipos;
+            this.layoutControlItem30.Location = new System.Drawing.Point(0, 72);
+            this.layoutControlItem30.Name = "layoutControlItem30";
+            this.layoutControlItem30.Size = new System.Drawing.Size(458, 24);
+            this.layoutControlItem30.Text = "Anticipos:";
+            this.layoutControlItem30.TextSize = new System.Drawing.Size(88, 13);
+            // 
+            // layoutControlItem33
+            // 
+            this.layoutControlItem33.Control = this.txtImpuestoVenta;
+            this.layoutControlItem33.Location = new System.Drawing.Point(458, 48);
+            this.layoutControlItem33.Name = "layoutControlItem33";
+            this.layoutControlItem33.Size = new System.Drawing.Size(441, 24);
+            this.layoutControlItem33.Text = "+ Imp. de Ventas:";
+            this.layoutControlItem33.TextSize = new System.Drawing.Size(88, 13);
+            // 
+            // layoutControlItem28
+            // 
+            this.layoutControlItem28.Control = this.txtSeguro;
+            this.layoutControlItem28.Location = new System.Drawing.Point(0, 48);
+            this.layoutControlItem28.Name = "layoutControlItem28";
+            this.layoutControlItem28.Size = new System.Drawing.Size(458, 24);
+            this.layoutControlItem28.Text = "Seguro:";
+            this.layoutControlItem28.TextSize = new System.Drawing.Size(88, 13);
+            // 
+            // layoutControlItem35
+            // 
+            this.layoutControlItem35.Control = this.txtFleteTotal;
+            this.layoutControlItem35.Location = new System.Drawing.Point(458, 72);
+            this.layoutControlItem35.Name = "layoutControlItem35";
+            this.layoutControlItem35.Size = new System.Drawing.Size(441, 24);
+            this.layoutControlItem35.Text = "+ Flete:";
+            this.layoutControlItem35.TextSize = new System.Drawing.Size(88, 13);
             // 
             // tabFactura
             // 
@@ -1789,15 +1721,6 @@
             this.layoutControlItem4.Text = "Condición de Pago:";
             this.layoutControlItem4.TextSize = new System.Drawing.Size(136, 13);
             // 
-            // btnImprimir
-            // 
-            this.btnImprimir.Caption = "Imprimir";
-            this.btnImprimir.Glyph = ((System.Drawing.Image)(resources.GetObject("btnImprimir.Glyph")));
-            this.btnImprimir.Id = 6;
-            this.btnImprimir.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnImprimir.LargeGlyph")));
-            this.btnImprimir.Name = "btnImprimir";
-            this.btnImprimir.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnImprimir_ItemClick_1);
-            // 
             // frmOrdenCompra
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1844,35 +1767,29 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtSaldo.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtAnticipoTotal.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSubtotal.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtTotalDocumentacion.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSeguroTotal.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtFleteTotal.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtImpuestoConsumo.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtImpuestoVenta.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDescuentoTotal.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtTotalMercaderia.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtAnticipos.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtDocumentacion.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSeguro.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtFlete.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPorcDescuento.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem26)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem28)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem29)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem30)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem31)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem33)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem34)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem35)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem36)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem37)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem38)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem39)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem40)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem27)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem32)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem30)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem33)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem28)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem35)).EndInit();
             this.tabFactura.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl3)).EndInit();
             this.layoutControl3.ResumeLayout(false);
@@ -2009,15 +1926,12 @@
         private DevExpress.XtraEditors.TextEdit txtSaldo;
         private DevExpress.XtraEditors.TextEdit txtAnticipoTotal;
         private DevExpress.XtraEditors.TextEdit txtSubtotal;
-        private DevExpress.XtraEditors.TextEdit txtTotalDocumentacion;
         private DevExpress.XtraEditors.TextEdit txtSeguroTotal;
         private DevExpress.XtraEditors.TextEdit txtFleteTotal;
-        private DevExpress.XtraEditors.TextEdit txtImpuestoConsumo;
         private DevExpress.XtraEditors.TextEdit txtImpuestoVenta;
         private DevExpress.XtraEditors.TextEdit txtDescuentoTotal;
         private DevExpress.XtraEditors.TextEdit txtTotalMercaderia;
         private DevExpress.XtraEditors.TextEdit txtAnticipos;
-        private DevExpress.XtraEditors.TextEdit txtDocumentacion;
         private DevExpress.XtraEditors.TextEdit txtSeguro;
         private DevExpress.XtraEditors.TextEdit txtFlete;
         private DevExpress.XtraEditors.TextEdit txtPorcDescuento;
@@ -2025,15 +1939,12 @@
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem26;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem27;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem28;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem29;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem30;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem31;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem32;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem33;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem34;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem35;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem36;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem37;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem38;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem39;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem40;

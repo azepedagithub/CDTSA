@@ -188,7 +188,6 @@ CREATE TABLE [dbo].[coOrdenCompra](
 	Descuento DECIMAL(28,4),
 	Flete DECIMAL(28,4),
 	Seguro DECIMAL(28,4),
-	Documentacion DECIMAL(28,4),
 	Anticipos decimal(28,4),
 	IDTipoProrrateo INt,
 	IDEmbarque INT,
@@ -288,8 +287,8 @@ CREATE TABLE [dbo].[coEmbarque](
 	[Embarque] nvarchar(20) NOT NULL,
 	Fecha [datetime] ,
 	FechaEmbarque DATE,
-	Asiento nvarchar(20),
-	DocumentoInv NVARCHAR(20),
+	[DocumentoInv] NVARCHAR(250),
+	[AsientoInv] NVARCHAR(20),
 	[IDBodega] INT,
 	[IDProveedor] INT,
 	[IDOrdenCompra] int,
@@ -357,8 +356,7 @@ REFERENCES [dbo].invProducto (IDProducto)
 
 GO
 
-
-CREATE   TABLE dbo.coObligacionProveedor (
+CREATE TABLE dbo.coObligacionProveedor (
 	IDObligacion INT NOT NULL,
 	IDEmbarque INT NOT NULL,
 	flgDocCPGenerado BIT DEFAULT 0,
@@ -373,6 +371,8 @@ CREATE   TABLE dbo.coObligacionProveedor (
 	MontoFlete DECIMAL(28,8) DEFAULT 0,
 	MontoSeguro DECIMAL(28,8) DEFAULT 0,
 	MontoTotal DECIMAL(28,8) DEFAULT 0,
+	Asiento NVARCHAR(20),
+	IDDocumentoCP INT,
 CONSTRAINT [pkcoObligacionProveedor] PRIMARY KEY CLUSTERED 
 (
 	IDObligacion ASC
@@ -533,7 +533,6 @@ CREATE TABLE dbo.coLiquidacionCompra (
 	ValorMercaderia DECIMAL(28,8) DEFAULT 0,
 	MontoFlete DECIMAL(28,8) DEFAULT 0,
 	MontoSeguro DECIMAL(28,8) DEFAULT 0,
-	Otros DECIMAL(28,8) DEFAULT 0, 
 	MontoTotal DECIMAL(28,8) DEFAULT 0,
 CONSTRAINT [pkcoLiquidacionCompra] PRIMARY KEY CLUSTERED 
 (
@@ -743,7 +742,7 @@ INNER JOIN dbo.invProducto P ON A.IDProducto = P.IDProducto
 WHERE (IDSolicitud =@IDSolicitud OR (@IDSolicitud=-1 AND 1=3))
 go 
 
-CREATE   PROCEDURE dbo.coGetOrdenCompra(  @IDOrdenCompra AS INT, @FechaInicial AS DATETIME,@FechaFinal AS DATETIME, @Proveedor AS NVARCHAR(1000),@Estado AS NVARCHAR(1000),@FechaRequeridaInicial AS DATETIME ,
+CREATE PROCEDURE dbo.coGetOrdenCompra(  @IDOrdenCompra AS INT, @FechaInicial AS DATETIME,@FechaFinal AS DATETIME, @Proveedor AS NVARCHAR(1000),@Estado AS NVARCHAR(1000),@FechaRequeridaInicial AS DATETIME ,
 																			@FechaRequeridaFinal AS DATETIME)
 AS 
 DECLARE @Separador AS NVARCHAR(1)
@@ -762,7 +761,7 @@ set @FechaFinal = CAST(SUBSTRING(CAST(@FechaFinal AS CHAR),1,11) + ' 23:59:59.99
 
 SELECT  A.IDOrdenCompra ,OrdenCompra ,A.Fecha ,FechaRequerida ,FechaEmision ,FechaRequeridaEmbarque ,FechaCotizacion ,IDEstado, B.Descr DescrEstado,A.IDBodega, C.Descr DescrBodega, 
 		A.IDProveedor ,C.Descr DescrProveedor,A.IDMoneda, E.Descr DescrMoneda,A.IDCondicionPago , F.Descr DescrCondicionPago,F.Dias DiasCondicionPago,
-        Descuento ,Seguro	,Flete ,Documentacion ,Anticipos ,A.IDEmbarque, H.Embarque ,A.IDDocumentoCP ,A.TipoCambio ,A.Usuario ,UsuarioCreaEmbarque ,FechaCreaEmbarque ,UsuarioAprobacion ,
+        Descuento ,Seguro	,Flete ,Anticipos ,A.IDEmbarque, H.Embarque ,A.IDDocumentoCP ,A.TipoCambio ,A.Usuario ,UsuarioCreaEmbarque ,FechaCreaEmbarque ,UsuarioAprobacion ,
         FechaAprobacion ,A.CreateDate ,A.CreatedBy ,A.RecordDate ,A.UpdateBy  
 FROM dbo.coOrdenCompra A INNER JOIN dbo.coEstadoOrdenCompra B ON A.IDEstado = B.IDEstadoOrden
 INNER JOIN dbo.invBodega C ON A.IDBodega= C.IDBodega 
@@ -778,11 +777,11 @@ AND (a.IDProveedor IN (SELECT Value FROM [dbo].[ConvertListToTable](@Proveedor,@
 go 
 
 
-CREATE  PROCEDURE dbo.coGetOrdenCompraByID( @IDOrdenCompra AS INT)
+CREATE PROCEDURE dbo.coGetOrdenCompraByID( @IDOrdenCompra AS INT)
 AS 
 SELECT  A.IDOrdenCompra ,OrdenCompra ,A.Fecha ,FechaRequerida ,FechaEmision ,FechaRequeridaEmbarque ,FechaCotizacion ,IDEstado, B.Descr DescrEstado,A.IDBodega, C.Descr DescrBodega, 
 		A.IDProveedor ,D.Nombre DescrProveedor,A.IDMoneda, E.Descr DescrMoneda,A.IDCondicionPago , F.Descr DescrCondicionPago,F.Dias DiasCondicionPago,
-        Descuento ,Flete,Seguro ,Documentacion ,Anticipos ,A.IDEmbarque, H.Embarque ,A.IDDocumentoCP ,A.TipoCambio ,A.Usuario ,UsuarioCreaEmbarque ,FechaCreaEmbarque ,UsuarioAprobacion ,
+        Descuento ,Flete,Seguro ,Anticipos ,A.IDEmbarque, H.Embarque ,A.IDDocumentoCP ,A.TipoCambio ,A.Usuario ,UsuarioCreaEmbarque ,FechaCreaEmbarque ,UsuarioAprobacion ,
         FechaAprobacion ,A.CreateDate ,A.CreatedBy ,A.RecordDate ,A.UpdateBy  
 FROM dbo.coOrdenCompra A INNER JOIN dbo.coEstadoOrdenCompra B ON A.IDEstado = B.IDEstadoOrden
 INNER JOIN dbo.invBodega C ON A.IDBodega= C.IDBodega 
@@ -796,10 +795,10 @@ WHERE (A.IDOrdenCompra = @IDOrdenCompra )
 
 GO
 
-CREATE   PROCEDURE dbo.coUpdateOrdenCompra (@Operacion nvarchar(1),@IDOrdenCompra INT OUTPUT,@OrdenCompra NVARCHAR(20) OUTPUT,@Fecha DATETIME, 
+CREATE  PROCEDURE dbo.coUpdateOrdenCompra (@Operacion nvarchar(1),@IDOrdenCompra INT OUTPUT,@OrdenCompra NVARCHAR(20) OUTPUT,@Fecha DATETIME, 
 										@FechaRequerida DATE, @FechaEmision DATE,@FechaRequeridaEmbarque DATE,@FechaCotizacion DATE,
 										@IDEstado AS INT, @IDBodega AS INT, @IDProveedor AS INT, @IDMoneda AS INT, @IDCondicionPago AS INT, 
-										@Descuento AS DECIMAL(28,4), @Flete AS DECIMAL(28,4),@Seguro AS DECIMAL(28,4),@Documentacion AS DECIMAL(28,4),@Anticipos AS DECIMAL(28,4),
+										@Descuento AS DECIMAL(28,4), @Flete AS DECIMAL(28,4),@Seguro AS DECIMAL(28,4),@Anticipos AS DECIMAL(28,4),
 									    @IDEmbarque AS INT,  @IDDocumentoCP AS INT, @TipoCambio AS DECIMAL(28,4),
 										 @Usuario AS NVARCHAR(50),@UsuarioEmbarque AS NVARCHAR(50),@FechaCreaEmbarque AS DATETIME, 
 										 @UsuarioAprobacion AS NVARCHAR(50),@FechaAprobacion AS DATETIME, @CreateDate AS DATETIME, 
@@ -818,12 +817,12 @@ BEGIN
 	EXEC [dbo].[invGetNextGlobalConsecutivo] @IDConsecutivo,@Documento OUTPUT
 	SET @OrdenCompra = @Documento
 	
-	INSERT INTO dbo.coOrdenCompra(IDOrdenCompra,OrdenCompra,Fecha,FechaRequerida,FechaEmision,FechaRequeridaEmbarque,FechaCotizacion,IdEstado, IDBodega,IDProveedor,IDMoneda,IDCondicionPago,Descuento,Flete,Seguro,Documentacion,Anticipos,IDEmbarque,IdDocumentoCP,TipoCambio,Usuario,UsuarioCreaEmbarque,FechaCreaEmbarque,UsuarioAprobacion,FechaAprobacion,CreateDate,Createdby,RecordDate,UpdateBy)
-	VALUES (@IDOrdenCompra, @OrdenCompra, @Fecha,@FechaRequerida,@FechaEmision,@FechaRequeridaEmbarque,@FechaCotizacion,@IDEstado,@IDBodega,@IDProveedor,@IDMoneda,@IDCondicionPago,@Descuento,@Flete,@Seguro,@Documentacion,@Anticipos,@IDEmbarque,@IDDocumentoCP,@TipoCambio,@Usuario,@UsuarioEmbarque,@FechaCreaEmbarque,@UsuarioAprobacion,@FechaAprobacion, @CreateDate,@CreatedBy,@RecordDate,@UpdatedBy)
+	INSERT INTO dbo.coOrdenCompra(IDOrdenCompra,OrdenCompra,Fecha,FechaRequerida,FechaEmision,FechaRequeridaEmbarque,FechaCotizacion,IdEstado, IDBodega,IDProveedor,IDMoneda,IDCondicionPago,Descuento,Flete,Seguro,Anticipos,IDEmbarque,IdDocumentoCP,TipoCambio,Usuario,UsuarioCreaEmbarque,FechaCreaEmbarque,UsuarioAprobacion,FechaAprobacion,CreateDate,Createdby,RecordDate,UpdateBy)
+	VALUES (@IDOrdenCompra, @OrdenCompra, @Fecha,@FechaRequerida,@FechaEmision,@FechaRequeridaEmbarque,@FechaCotizacion,@IDEstado,@IDBodega,@IDProveedor,@IDMoneda,@IDCondicionPago,@Descuento,@Flete,@Seguro,@Anticipos,@IDEmbarque,@IDDocumentoCP,@TipoCambio,@Usuario,@UsuarioEmbarque,@FechaCreaEmbarque,@UsuarioAprobacion,@FechaAprobacion, @CreateDate,@CreatedBy,@RecordDate,@UpdatedBy)
 END										 
 IF (@Operacion='U')
 BEGIN
-	UPDATE dbo.coOrdenCompra SET FechaRequerida= @FechaRequerida ,FechaRequeridaEmbarque = @FechaRequeridaEmbarque, FechaCotizacion = @FechaCotizacion,IDEstado = @IDEstado,IDBodega=@IDBodega, IDCondicionPago = @IDCondicionPago, Descuento= @Descuento ,Flete=@Flete,Seguro=@Seguro,Documentacion = @Documentacion,Anticipos= @Anticipos,IDEmbarque = @IDEmbarque,IDDocumentoCP = @IDDocumentoCP, 
+	UPDATE dbo.coOrdenCompra SET FechaRequerida= @FechaRequerida ,FechaRequeridaEmbarque = @FechaRequeridaEmbarque, FechaCotizacion = @FechaCotizacion,IDEstado = @IDEstado,IDBodega=@IDBodega, IDCondicionPago = @IDCondicionPago, Descuento= @Descuento ,Flete=@Flete,Seguro=@Seguro,Anticipos= @Anticipos,IDEmbarque = @IDEmbarque,IDDocumentoCP = @IDDocumentoCP, 
 																																																																																																																						TipoCambio = @TipoCambio,UsuarioCreaEmbarque = @UsuarioEmbarque,UsuarioAprobacion =@UsuarioAprobacion, FechaAprobacion=@FechaAprobacion,RecordDate=@RecordDate,UpdateBy=@UpdatedBy
 END
 IF (@Operacion='D')
@@ -929,7 +928,7 @@ AS
 set @FechaInicial = CONVERT(VARCHAR(25),@FechaInicial,101) 
 set @FechaFinal = CAST(SUBSTRING(CAST(@FechaFinal AS CHAR),1,11) + ' 23:59:59.998' AS DATETIME)
 
-SELECT A.IDEmbarque,A.Embarque,A.Fecha,A.FechaEmbarque,A.Asiento,A.IDBodega,B.Descr DescrBodega,A.IDProveedor,P.Nombre NombreProveedor,A.IDOrdenCompra,
+SELECT A.IDEmbarque,A.Embarque,A.Fecha,A.FechaEmbarque,A.AsientoInv,A.DocumentoInv,A.IDBodega,B.Descr DescrBodega,A.IDProveedor,P.Nombre NombreProveedor,A.IDOrdenCompra,
 			O.OrdenCompra,A.IDDocumentoCP,A.TipoCambio,A.Usuario,A.CreateDate,A.CreatedBy,A.RecordDate,A.UpdateBy
   FROM dbo.coEmbarque A
 LEFT JOIN dbo.coOrdenCompra O ON A.IDOrdenCompra=O.IDOrdenCompra
@@ -992,7 +991,7 @@ GO
 
 CREATE  PROCEDURE dbo.coGetRecepcionMercaderia(@IDEmbarque AS INT)
 AS 
-SELECT A.IDEmbarque,A.IDProducto,A.IDLote,P.Descr DescrProducto,A.Cantidad
+SELECT A.IDEmbarque,A.IDProducto,A.IDLote,L.FechaVencimiento,P.Descr DescrProducto,A.Cantidad
  FROM dbo.coRecepcionMercaderia A
 INNER JOIN dbo.invProducto P ON A.IDProducto = P.IDProducto 
 LEFT  JOIN dbo.invLote L ON A.IDProducto=L.IDProducto AND A.IDLote=L.IDLote
@@ -1089,10 +1088,10 @@ DROP TABLE #tmpProducto
 
 GO
 
-CREATE PROCEDURE dbo.coDesConfirmarOrdenCompra @IDOrdenCompra  AS INT
+CREATE ALTER PROCEDURE dbo.coDesConfirmarOrdenCompra @IDOrdenCompra  AS INT
 AS
 
-UPDATE dbo.coOrdenCompra SET IDEstado=1
+UPDATE dbo.coOrdenCompra SET IDEstado=0
 WHERE IDOrdenCompra = @IDOrdenCompra
 
 
@@ -1130,7 +1129,7 @@ CREATE PROCEDURE dbo.coGetEmbarqueByID(@IDEmbarque AS INT,@IDOrdenCompra AS INT)
 AS 
 IF (@IDEmbarque =-1)
 BEGIN
-SELECT  -1 IDEmbarque ,'--' Embarque ,GETDATE() Fecha ,B.FechaRequerida FechaEmbarque ,NULL Asiento ,B.IDBodega ,D.Descr DescrBodega,B.IDProveedor ,C.Nombre NombreProveedor,B.IDOrdenCompra,B.OrdenCompra ,-1 IDDocumentoCP ,
+SELECT  -1 IDEmbarque ,'--' Embarque ,GETDATE() Fecha ,B.FechaRequerida FechaEmbarque ,NULL AsientoInv, NULL DocumentoInv ,B.IDBodega ,D.Descr DescrBodega,B.IDProveedor ,C.Nombre NombreProveedor,B.IDOrdenCompra,B.OrdenCompra ,-1 IDDocumentoCP ,
 			0 TipoCambio, 0 Confirmado
 	FROM dbo.coEmbarque A
 	RIGHT  JOIN dbo.coOrdenCompra B ON A.IDOrdenCompra = B.IDOrdenCompra
@@ -1141,7 +1140,7 @@ SELECT  -1 IDEmbarque ,'--' Embarque ,GETDATE() Fecha ,B.FechaRequerida FechaEmb
 END 
 ELSE	
 BEGIN	
-	SELECT  A.IDEmbarque ,A.Embarque ,A.Fecha ,A.FechaEmbarque ,A.Asiento ,A.IDBodega ,D.Descr DescrBodega,B.IDProveedor ,C.Nombre NombreProveedor,A.IDOrdenCompra,B.OrdenCompra ,A.IDDocumentoCP ,
+	SELECT  A.IDEmbarque ,A.Embarque ,A.Fecha ,A.FechaEmbarque ,A.AsientoInv, A.DocumentoInv ,A.IDBodega ,D.Descr DescrBodega,B.IDProveedor ,C.Nombre NombreProveedor,A.IDOrdenCompra,B.OrdenCompra ,A.IDDocumentoCP ,
 			A.TipoCambio ,A.Usuario , A.Confirmado ,A.CreateDate ,A.CreatedBy ,A.RecordDate ,A.UpdateBy  
 	FROM dbo.coEmbarque A
 	LEFT  JOIN dbo.coOrdenCompra B ON A.IDOrdenCompra = B.IDOrdenCompra
@@ -1243,7 +1242,7 @@ WHERE (IDImpuesto = @IDImpuesto OR @IDImpuesto=-1)
 
 GO
 
-CREATE PROCEDURE dbo.coGetParametrosCompra
+CREATE  PROCEDURE dbo.coGetParametrosCompra
 AS 
 SELECT  IDParametro ,
         IDConsecSolicitud ,
@@ -1267,7 +1266,7 @@ SELECT  IDParametro ,
         CanViewAsiento,NombreAutorizaOrdenCompra  FROM dbo.coParametrosCompra
         
         
-        GO
+GO
         
         
 CREATE  PROCEDURE dbo.coUpdateParametrosCompra ( @IDConsecSolicitud INT, @IDConsecOrdeCompra INT, @IDConsecEmbarque INT, @IDConsecDevolucion INT, @IDConsecLiquidacion INT, @CantLineasOrdenCompra INT, @IDBodegaDefault int,
@@ -1276,7 +1275,7 @@ CREATE  PROCEDURE dbo.coUpdateParametrosCompra ( @IDConsecSolicitud INT, @IDCons
 AS 
 UPDATE dbo.coParametrosCompra SET IDConsecSolicitud = @IDConsecSolicitud,IDConsecOrdenCompra=@IDConsecOrdeCompra , IDConsecEmbarque=@IDConsecEmbarque,IDConsecDevolucion= @IDConsecDevolucion,IDConsecLiquidacion=@IDConsecLiquidacion,CantLineasOrdenCompra = @CantLineasOrdenCompra, 
 	IDBodegaDefault  = @IDBodegaDefault, IDTipoCambio= @IDTipoCambio, CantDecimalesPrecio= @CantDecimalesPrecio,CantDecimalesCantidad= @CantDecimalesCantidad, IDTipoAsientoContable = @IDTipoAsientoContable, IDPaquete = @IDPaquete,  CtaTransitoLocal = @CtaTransitoLocal,
-	CtrTransitoLocal  = @CtrTransitoLocal, CtaTransitoExterior = @CtaTransitoExterior, AplicaAutomaticamenteAsiento =@AplicaAutomaticamenteAsiento, CanEditAsiento = @CanEditAsiento, CanViewAsiento=@CanViewAsiento, NombreAutorizaOrdenCompra=@NombreAutorizaOrdenCompra
+	CtrTransitoLocal  = @CtrTransitoLocal, CtaTransitoExterior = @CtaTransitoExterior,CtrTransitoExterior = @CtrTransitoExterior, AplicaAutomaticamenteAsiento =@AplicaAutomaticamenteAsiento, CanEditAsiento = @CanEditAsiento, CanViewAsiento=@CanViewAsiento, NombreAutorizaOrdenCompra=@NombreAutorizaOrdenCompra
 	WHERE IDParametro=1
 	
 GO
@@ -1303,7 +1302,7 @@ EXEC (@SQL)
 GO
 
 
-CREATE  PROCEDURE dbo.coUpdateCantRecibidaOrdenCompra(@IDOrdenCompra INT,@IDProducto AS INT, @Cantidad AS  DECIMAL(28,4))
+CREATE   PROCEDURE dbo.coUpdateCantRecibidaOrdenCompra(@IDOrdenCompra INT,@IDProducto AS INT, @Cantidad AS  DECIMAL(28,4))
 AS 
 UPDATE dbo.coOrdenCompraDetalle SET CantidadAceptada = @Cantidad 
 WHERE IDOrdenCompra =@IDOrdenCompra AND (IDProducto = @IDProducto OR @IDProducto=-1)
@@ -1312,88 +1311,118 @@ GO
 
 
 
-CREATE  PROCEDURE dbo.coCreaPaqueteEmbarque(@Modulo AS NVARCHAR(4),@IDDocumento AS INT,@Usuario AS NVARCHAR(50),@IDTransaccion AS BIGINT OUTPUT )
-AS 
-/*SET @Modulo = 'COM'
-SET @IDDocumento= 1
+CREATE alter  PROCEDURE dbo.coCreaPaqueteInventarioEmbarque @IDEmbarque AS INT,@FechaDocumento DATE, @IDTransaccion INT OUTPUT ,@Usuario NVARCHAR(50)
+AS
+/*DECLARE @IDEmbarque AS INT,@FechaDocumento DATE, @IDTransaccion INT,@Usuario NVARCHAR(50)
+
+SET @IDEmbarque = 1
+SET @FechaDocumento = '20201003'
 SET @Usuario= 'jespinoza'
 */
+
 DECLARE @IDConsecutivo  AS INT
 DECLARE @DocumentoInv AS NVARCHAR(20)
-DECLARE @FechaDocumento DATE
 DECLARE @Referencia AS NVARCHAR(250)
-DECLARE @Documento AS NVARCHAR(20) --//Numero del documento Fisico
+DECLARE @Documento AS NVARCHAR(20) 
 DECLARE @Transaccion AS NVARCHAR(2)
 DECLARE @IDTipoTran AS INT
 DECLARE @Factor AS INT
 DECLARE @IDPaquete AS INT 
-DECLARE @TipoCambioCont AS NVARCHAR(4)
+DECLARE @CodigoTipoCambio AS NVARCHAR(4)
 DECLARE @TipoCambio AS DECIMAL(28,4)	
 DECLARE @Naturaleza AS NVARCHAR(1)
+DECLARE @AplicaAutomatico AS BIT
+DECLARE @Modulo NVARCHAR(4)
+DECLARE @IDBodega INT 
+
+SET @Modulo = 'COM'
 
 
-IF (@Modulo = 'CO')
-BEGIN
-	--//Leer parametros de configuración
-	SELECT TOP	1 @IDPaquete = IDPaquete, @TipoCambioCont= IDTipoCambio  FROM dbo.coParametrosCompra
-	
+--//Leer parametros de configuración
+SELECT TOP 1 @IDPaquete = IDPaquete,@AplicaAutomatico = AplicaAutomaticamenteAsiento ,@CodigoTipoCambio = IDTipoCambio FROM dbo.coParametrosCompra
+	 
 	IF (@IDPaquete IS NULL)
 	BEGIN
 		RAISERROR ( 'GENERACIÓN DEL DOCUMENTO: Revise los parametros de Compra, si el paquete de inventario se encuentra establecido', 16, 1) ;
 		return		
 	END
+	DECLARE @OrdenCompra NVARCHAR(20),@MonedaOrden INT,@IDMonedaLocal AS INT
 	
-	SELECT @FechaDocumento = A.Fecha, @Referencia = 'Emabarque: ' + A.Embarque  + ', Orden de Compra: ' + B.OrdenCompra, @Documento = a.Embarque
-	 FROM dbo.coEmbarque A
-	 INNER JOIN dbo.coOrdenCompra B ON  A.IDOrdenCompra = B.IDOrdenCompra
-	  WHERE A.IDEmbarque =@IDDocumento 
-	 
+	SELECT @OrdenCompra = OrdenCompra, @MonedaOrden = IDMoneda   FROM dbo.coOrdenCompra WHERE IDEmbarque = @IDEmbarque
+	SELECT @IDMonedaLocal = IDMoneda  FROM dbo.globalMoneda WHERE Nacional=1
+	
+	SELECT  @Referencia = 'Embarque: ' + Embarque + ' corresponidente a la orden : ' + @OrdenCompra , @Documento = Embarque,@IDBodega = IDBodega
+	FROM dbo.coEmbarque WHERE IDEmbarque =@IDEmbarque 
+	
+	
 	--//Cargar el Tipo de Cambio Contabilidad
-	SELECT @TipoCambio = dbo.globalGetTipoCambio(@FechaDocumento,@TipoCambioCont) 
+	SELECT @TipoCambio = dbo.globalGetTipoCambio(@FechaDocumento,@CodigoTipoCambio) 
 	  
 	--//Crear la cabecera del Documento  
 	EXEC  dbo.invUpdateDocumentoInv  @Operacion = N'I', -- nvarchar(1)
 	    @IDTransaccion = @IDTransaccion OUTPUT, -- int
-	    @ModuloOrigen = N'CO', -- nvarchar(4)
+	    @ModuloOrigen = @Modulo, -- nvarchar(4)
 	    @IDPaquete =@IDPaquete, -- int
 	    @Fecha = @FechaDocumento, -- datetime
 	    @Usuario =@Usuario, -- nvarchar(20)
 	    @Referencia = @Referencia, -- nvarchar(250)
 	    @Documento = @Documento OUTPUT, -- nvarchar(250)
-	    @Aplicado = 1, -- bit
+	    @Aplicado = 0, -- bit
 	    @EsTraslado = 0, -- bit
 	    @IDTraslado = -1 -- int
 	
 	--//Obtener las transacciones asociadas al Paquete.
-	SELECT @IDTipoTran =IDTipoTran, @Factor = Factor,@Naturaleza = Naturaleza, @Transaccion=Transaccion  
-	FROM dbo.globalTipoTran WHERE  Transaccion = (SELECT Transaccion  FROM dbo.invPaquete WHERE IDPaquete=@IDPaquete) 
+	SELECT @IDTipoTran =IDTipoTran, @Factor = Factor,@Naturaleza = Naturaleza, @Transaccion=Transaccion  FROM dbo.globalTipoTran WHERE  Transaccion = (SELECT Transaccion  FROM dbo.invPaquete WHERE IDPaquete=@IDPaquete) 
+	
+	--Calcular el costo del producto 
+	DECLARE @IDLiquidacion AS INT
+	SET @IDLiquidacion =(SELECT TOP 1 IDLiquidacion  FROM dbo.coLiquidacionCompra WHERE IDEmbarque=@IDEmbarque)
+	
+	CREATE TABLE #tmpCostos(
+		[IDLiquidacion] [int] NULL,
+		[IDProducto] [bigint] NULL,
+		[DescrProducto] [nvarchar](250) NOT NULL,
+		[Cantidad] [decimal](28, 8) NULL,
+		[Peso] [decimal](28, 8) NULL,
+		[MontoMercaderia] [decimal](28, 8) NULL,
+		[MontoFlete] [decimal](28, 8) NULL,
+		[MontoSeguro] [decimal](28, 8) NULL,
+		[MontoGasto] [decimal](38, 6) NULL,
+		[MontoTotalOrden] [decimal](30, 8) NULL,
+		[Total] [decimal](38, 6) NULL,
+		[PrecioUnitario] [decimal](38, 6) NULL
+	) ON [PRIMARY]
 
+
+	INSERT  #tmpCostos EXEC [coRptLiquidacion] @IDLiquidacion
+	
+	
 	--//Insertar el detalle del documento
-	
-	
-	INSERT INTO dbo.invTransaccionLinea( IDTransaccion ,IDProducto ,IDLote ,IDTipoTran ,IDBodega ,IDTraslado , Naturaleza ,Factor ,Cantidad ,CostoUntLocal ,CostoUntDolar ,PrecioUntLocal ,PrecioUntDolar ,Transaccion ,TipoCambio ,Aplicado)
-	SELECT @IDTransaccion, A.IDProducto,A.IDLote,@IDTipoTran,O.IDBodega,-1 IDTranslado,@Naturaleza,@Factor ,A.Cantidad, P.CostoPromLocal,CostoPromDolar,CASE WHEN O.IDMoneda=1 THEN OD.PrecioUnitario ELSE OD.PrecioUnitario * @TipoCambio END PrecioUnitarioLocal, CASE WHEN O.IDMoneda=1 THEN OD.PrecioUnitario / @TipoCambio ELSE Od.PrecioUnitario END PrecioUnitarioDolar,@Transaccion, @TipoCambio, 0 Aplicado
-	FROM dbo.coRecepcionMercaderia A
+	INSERT INTO dbo.invTransaccionLinea( IDTransaccion ,IDProducto ,IDLote ,IDTipoTran ,IDBodega ,IDTraslado , Naturaleza ,Factor ,
+							Cantidad ,CostoUntLocal ,CostoUntDolar ,PrecioUntLocal ,PrecioUntDolar ,Transaccion ,TipoCambio ,Aplicado)
+	SELECT @IDTransaccion, A.IDProducto,A.IDLote,@IDTipoTran,@IDBodega,-1 IDTranslado,@Naturaleza,@Factor,A.Cantidad,
+		   CASE WHEN @IDMonedaLocal = @MonedaOrden THEN C.PrecioUnitario ELSE C.PrecioUnitario * @TipoCambio END CostoPromLocal,
+		   CASE WHEN @IDMonedaLocal = @MonedaOrden THEN C.PrecioUnitario/@TipoCambio ELSE  C.PrecioUnitario END CostoPromDolar,
+		   0 PrecioLocal,0 PrecioDolar,@Transaccion, @TipoCambio, 0 Aplicado
+	 FROM dbo.coRecepcionMercaderia A
 	INNER JOIN dbo.invProducto P ON A.IDProducto=P.IDProducto
-	INNER JOIN dbo.coOrdenCompra O ON A.IDEmbarque=O.IDEmbarque
-	INNER JOIN dbo.coOrdenCompraDetalle OD ON O.IDOrdenCompra = OD.IDOrdenCompra AND OD.IDProducto=A.IDProducto
-	WHERE A.IDEmbarque=@IDDocumento
+	INNER JOIN #tmpCostos C ON A.IDProducto= C.IDProducto
+	WHERE A.IDEmbarque=@IDEmbarque
 
 	UPDATE dbo.coEmbarque SET DocumentoInv =  @Documento
 
-END  
+
 
 GO
 
-
-
-
-CREATE  PROCEDURE dbo.coGeneraAsientoContableEmbarque @Modulo AS NVARCHAR(4), @IDDocumento AS INT,@Usuario AS NVARCHAR(50),@Asiento AS NVARCHAR(20) OUTPUT 
+CREATE  PROCEDURE dbo.coGeneraAsientoContableEmbarque  @IDEmbarque AS INT,@Asiento AS NVARCHAR(20) OUTPUT,@Usuario AS NVARCHAR(50) 
 AS
---BEGIN TRAN
 /*
-SET @Modulo = 'FAC'
-SET @IDDocumento= 2
+BEGIN TRAN
+
+ DECLARE @IDEmbarque AS INT,@Asiento AS NVARCHAR(20) ,@Usuario AS NVARCHAR(50) 
+
+SET @IDEmbarque= 2
 SET @Usuario= 'jespinoza'
 */
 
@@ -1402,21 +1431,33 @@ DECLARE @FechaDocumento AS NVARCHAR(20)
 DECLARE @TipoCambio AS DECIMAL(28,4)
 DECLARE @TipoFactura AS INT
 DECLARE @CodCliente AS INT
-DECLARE @CtrTransitoExterior AS  BIGINT
-DECLARE @CtaTransitoExterior AS BIGINT
+DECLARE @CtrTransito AS  BIGINT
+DECLARE @CtaTransito AS BIGINT
+declare @Modulo AS NVARCHAR(4)
+DECLARE @IDMonedaOrden INT
+DECLARE @OrdenCompra NVARCHAR(20)
+DECLARE @IDMonedaLocal AS INT
+DECLARE @DocumentoInv nvarchar(20)
 
-SELECT @CtrTransitoExterior = CtrTransitoExterior, @CtaTransitoExterior = CtaTransitoExterior  
-FROM dbo.coParametrosCompra WHERE IDParametro=1
-
+SET @Modulo = 'COM'
 
 
 --//Seleccionar el documento y Fechas
-SELECT @Documento = Embarque,@FechaDocumento = Fecha,@TipoCambio = TipoCambio
-FROM dbo.coEmbarque WHERE IDEmbarque=@IDDocumento
+SELECT @Documento = Embarque, @DocumentoInv = DocumentoInv
+FROM dbo.coEmbarque WHERE IDEmbarque=@IDEmbarque
+
+SELECT @IDMonedaLocal = IDMoneda  FROM dbo.globalMoneda WHERE Nacional=1
+SELECT @IDMonedaOrden = IDMoneda, @OrdenCompra = OrdenCompra  FROM dbo.coOrdenCompra WHERE IDEmbarque=@IDEmbarque
 
 
-DECLARE @Rows AS INT
+SELECT @CtrTransito = CASE WHEN @IDMonedaLocal = @IDMonedaOrden THEN CtrTransitoLocal ELSE  CtrTransitoExterior END, 
+	   @CtaTransito = CASE WHEN @IDMonedaLocal = @IDMonedaOrden THEN CtaTransitoLocal ELSE  CtaTransitoExterior  END
+FROM dbo.coParametrosCompra WHERE IDParametro=1
+
 DECLARE @Fecha AS DATE
+
+SELECT @FechaDocumento = Fecha  FROM dbo.invTransaccion WHERE Documento=@DocumentoInv
+
 
 SET @Fecha =  DATEADD(s,-1,DATEADD(mm, DATEDIFF(m,0,@FechaDocumento)+1,0))
 DECLARE @IDEjercicio AS INT,@Periodo NVARCHAR(10), @Cerrado AS BIT,@Activo AS BIT
@@ -1433,44 +1474,50 @@ BEGIN
 	return		
 END
 
-IF ( @CtaTransitoExterior IS NULL )
+IF ( @CtrTransito IS NULL )
 BEGIN
 	RAISERROR('VERIFIQUE LOS PARAMETROS DE FACTURA:  La cuenta de transito no es definida',16,1);
 	RETURN
 END
 
-if (@CtrTransitoExterior IS NULL)
+if (@CtaTransito IS NULL)
 BEGIN	
 	RAISERROR('VERIFIQUE LOS PARAMETROS DE FACTURA: El centro de costo de transito no es definida',16,1);
 	RETURN
 END
 
- EXEC [dbo].[globalGetNextConsecutivo] 'CO', @Asiento OUTPUT
-	
+
+DECLARE @Rows AS INT
+
+
+
+EXEC [dbo].[globalGetNextConsecutivo] 'CO', @Asiento OUTPUT
+ 
+SET @TipoCambio = (SELECT TOP 1 A.TipoCambio  FROM dbo.invTransaccionLinea A
+INNER JOIN dbo.invTransaccion B ON	A.IDTransaccion = B.IDTransaccion WHERE B.Documento=@DocumentoInv)
+
+ 
 INSERT INTO dbo.cntAsiento( IDEjercicio ,Periodo ,Asiento ,Tipo ,Fecha ,FechaHora ,Createdby ,CreateDate ,
 						Mayorizadoby ,MayorizadoDate ,Anuladoby ,AnuladoDate ,Concepto ,Mayorizado ,Anulado ,TipoCambio ,ModuloFuente ,CuadreTemporal)
-VALUES (	@IDEjercicio,@Periodo	,@Asiento,'CO',@FechaDocumento,GETDATE(),@Usuario,GETDATE(),NULL,NULL,NULL,NULL,'Embarque: ' + @Documento,0,0,@TipoCambio,'CO',0)		
+VALUES (@IDEjercicio,@Periodo	,@Asiento,'CO',@FechaDocumento,GETDATE(),@Usuario,GETDATE(),NULL,NULL,NULL,NULL,'Embarque: ' + @Documento + ' de la Orden de Compra: ' + @OrdenCompra,0,0,@TipoCambio,'CO',0)		
 						
 
-SELECT B.IDProducto,A.IDBodega,SUM(B.Cantidad) Cantidad,CASE WHEN C.IDMoneda=1 THEN  D.PrecioUnitario ELSE D.PrecioUnitario * @TipoCambio END PrecioLocal, 
-			CASE WHEN C.IDMoneda=1 THEN  D.PrecioUnitario / @TipoCambio ELSE d.PrecioUnitario END PrecioDolar ,P.CostoPromLocal,P.CostoPromDolar,CC.CtaInventario, CC.CtrInventario  INTO #tmpEmbarque
-FROM dbo.coEmbarque A
-INNER JOIN dbo.coEmbarqueDetalle B ON A.IDEmbarque = B.IDEmbarque
-INNER JOIN dbo.coOrdenCompra C ON A.IDEmbarque = C.IDEmbarque
-INNER JOIN dbo.coOrdenCompraDetalle D ON C.IDOrdenCompra = D.IDOrdenCompra AND B.IDProducto = D.IDProducto 
-INNER JOIN dbo.invProducto P ON B.IDProducto = P.IDProducto
-INNER JOIN dbo.invCuentaContable CC ON P.IDCuentaContable = CC.IDCuenta
-WHERE A.IDEmbarque = @IDDocumento
-GROUP BY B.IDProducto,A.IDBodega,C.IDMoneda,PrecioUnitario,CostoPromDolar,CostoPromLocal,CC.CtaInventario, CC.CtrInventario 
+SELECT A.IDProducto,P.Descr,A.IDBodega,SUM(A.Cantidad) Cantidad, A.CostoUntLocal,A.CostoUntDolar,C.CtaInventario,c.CtrInventario, A.TipoCambio INTO #tmpEmbarque
+FROM dbo.invTransaccionLinea A
+INNER JOIN dbo.invTransaccion B ON A.IDTransaccion = B.IDTransaccion
+INNER JOIN dbo.invProducto P ON A.IDProducto=P.IDProducto
+INNER JOIN dbo.invCuentaContable C ON P.IDCuentaContable = C.IDCuenta
+WHERE B.Documento = @DocumentoInv
+GROUP BY  A.IDProducto,P.Descr,A.IDBodega, A.CostoUntLocal,A.CostoUntDolar,C.CtaInventario,c.CtrInventario,A.TipoCambio
 
 SET @Rows = @@ROWCOUNT
 
 
 
-DECLARE @IDProducto AS INT,@IDBodega AS INT,@IDLote AS INT,@Cantidad AS DECIMAL(28,4),@PrecioLocal AS DECIMAL(28,4),@PrecioDolar AS DECIMAL(28,4),
+DECLARE @IDProducto AS INT,@Descr NVARCHAR(250),@IDBodega AS INT,@IDLote AS INT,@Cantidad AS DECIMAL(28,4),
 @CostoPromDolar AS DECIMAL(28,4),@CostoPromLocal AS DECIMAL(28,4),@CtrInventario AS BIGINT, @CtaInventario AS BIGINT
 
-ALTER TABLE #tmpEmbarque ADD	 ID INT IDENTITY(1,1)
+ALTER TABLE #tmpEmbarque ADD ID INT IDENTITY(1,1)
 
 DECLARE @i AS INT
 DECLARE @Linea AS INT
@@ -1479,29 +1526,31 @@ SET @Linea = 0
 
 WHILE (@Rows>=@i)
 BEGIN
-	SELECT @IDProducto = IDProducto, @IDBodega = IDBodega, @Cantidad = Cantidad, @PrecioLocal = PrecioLocal, @PrecioDolar = PrecioDolar,
-	@CostoPromDolar = CostoPromDolar,@CostoPromLocal = CostoPromLocal,
-	@CtaInventario = CtaInventario,@CtrInventario = CtrInventario
-	  FROM #tmpEmbarque WHERE ID =@Rows
+	SELECT @IDProducto = IDProducto, @Descr = Descr, @IDBodega = IDBodega, @Cantidad = Cantidad,@CostoPromDolar = CostoUntDolar,
+		   @CostoPromLocal = CostoUntLocal,@CtaInventario = CtaInventario,@CtrInventario = CtrInventario
+	FROM #tmpEmbarque WHERE ID =@Rows
 	  
 	 
 	 --//cuenta de Transito
 	SET @Linea = @Linea + 1 
 	INSERT INTO dbo.cntAsientoDetalle( Asiento ,Linea ,IDCentro ,IDCuenta ,Referencia ,Debito ,Credito ,Documento ,daterecord)
-	VALUES (@Asiento,@Linea,@CtrTransitoExterior,@CtaTransitoExterior,'Transito: Compra de ' + CAST(@IDProducto AS NVARCHAR(20)) + 'CI-' + @Documento, 0,@CostoPromLocal * @Cantidad,@Documento,GETDATE())
+	VALUES (@Asiento,@Linea,@CtrTransito,@CtaTransito,'Transito: Compra de ' + CAST(@IDProducto AS NVARCHAR(20)) + ' ' + @Descr + ' CI-' + @Documento, 0,@CostoPromLocal * @Cantidad,@Documento,GETDATE())
 	
 	 --//Inventario
 	SET @Linea = @Linea + 1 
 	INSERT INTO dbo.cntAsientoDetalle( Asiento ,Linea ,IDCentro ,IDCuenta ,Referencia ,Debito ,Credito ,Documento ,daterecord)
-	VALUES (@Asiento,@Linea,@CtrInventario,@CtaInventario,'Inventario: compra de ' + CAST(@IDProducto AS NVARCHAR(20)) + 'CI-' + @Documento, @CostoPromLocal * @Cantidad,0,@Documento,GETDATE())
+	VALUES (@Asiento,@Linea,@CtrInventario,@CtaInventario,'Inventario: compra de ' + CAST(@IDProducto AS NVARCHAR(20)) + ' ' + @Descr+ ' CI-' + @Documento, @CostoPromLocal * @Cantidad,0,@Documento,GETDATE())
 
 	
 	SET @i = @i +1
 END
 
-UPDATE dbo.coEmbarque SET  Asiento = @Asiento WHERE IDEmbarque = @IDDocumento
+UPDATE dbo.coEmbarque SET  AsientoInv = @Asiento WHERE IDEmbarque = @IDEmbarque
 
 DROP TABLE #tmpEmbarque
+
+
+
 
 GO
 
@@ -1536,7 +1585,7 @@ WHERE (IDGasto = @IDGasto OR @IDGasto =-1) AND (Descripcion = @Descripcion OR @D
 
 GO
 
-CREATE  PROCEDURE dbo.coUpdateLiquidacionCompra(@Operacion NVARCHAR(1), @Consecutivo NVARCHAR(20) OUTPUT, @IDLiquidacion AS INT OUTPUT,@IDEmbarque AS INT , @IDOrdenCompra AS int,@Fecha DateTime,@TipoCambio decimal(28,8), @ValorMercaderia Decimal(28,8),@MontoFlete decimal(28,8), @MontoSeguro decimal(28,8), @Otros AS Decimal(28,8), @MontoTotal AS Decimal(28,8))
+CREATE PROCEDURE dbo.coUpdateLiquidacionCompra(@Operacion NVARCHAR(1), @Consecutivo NVARCHAR(20) OUTPUT, @IDLiquidacion AS INT OUTPUT,@IDEmbarque AS INT , @IDOrdenCompra AS int,@Fecha DateTime,@TipoCambio decimal(28,8), @ValorMercaderia Decimal(28,8),@MontoFlete decimal(28,8), @MontoSeguro decimal(28,8), @MontoTotal AS Decimal(28,8))
 AS 
 IF (@Operacion='I')  
 BEGIN
@@ -1547,8 +1596,8 @@ BEGIN
 	SET @IDConsecutivo = (SELECT IDConsecLiquidacion  FROM dbo.coParametrosCompra WHERE IDParametro=1)
 	EXEC [dbo].[invGetNextGlobalConsecutivo] @IDConsecutivo,@Liquidacion OUTPUT
 	
-	INSERT INTO dbo.coLiquidacionCompra( Liquidacion, IDEmbarque ,IDOrdenCompra ,Fecha,TipoCambio ,ValorMercaderia ,MontoFlete ,MontoSeguro ,Otros ,MontoTotal)
-	VALUES (@Liquidacion,@IDEmbarque,@IDOrdenCompra,@Fecha,@TipoCambio,@ValorMercaderia,@MontoFlete, @MontoSeguro,@Otros,@MontoTotal)
+	INSERT INTO dbo.coLiquidacionCompra( Liquidacion, IDEmbarque ,IDOrdenCompra ,Fecha,TipoCambio ,ValorMercaderia ,MontoFlete ,MontoSeguro ,MontoTotal)
+	VALUES (@Liquidacion,@IDEmbarque,@IDOrdenCompra,@Fecha,@TipoCambio,@ValorMercaderia,@MontoFlete, @MontoSeguro,@MontoTotal)
 	 
 	UPDATE dbo.globalConsecMask SET  Consecutivo=@Liquidacion WHERE Codigo='LIQ'
 	
@@ -1566,7 +1615,7 @@ BEGIN
 		DELETE FROM dbo.coGastoLiquidacionDetallado WHERE IDLiquidacion=@IDLiquidacion
 	END
 	
-	UPDATE dbo.coLiquidacionCompra  SET Fecha=@Fecha,TipoCambio=@TipoCambio,ValorMercaderia=@ValorMercaderia,MontoFlete=@MontoFlete,MontoSeguro=@MontoSeguro,Otros=@Otros,MontoTotal=@MontoTotal
+	UPDATE dbo.coLiquidacionCompra  SET Fecha=@Fecha,TipoCambio=@TipoCambio,ValorMercaderia=@ValorMercaderia,MontoFlete=@MontoFlete,MontoSeguro=@MontoSeguro,MontoTotal=@MontoTotal
 	WHERE IDLiquidacion=@IDLiquidacion
 END
 IF (@Operacion ='D')
@@ -1578,7 +1627,7 @@ GO
 
 CREATE PROCEDURE dbo.coGetLiquidacionCompra (@IDLiquidacion INT,@IDEmbarque INT, @IDOrdenCompra INT) 
 AS 
-SELECT  A.IDLiquidacion,A.Liquidacion ,A.IDEmbarque , EM.Embarque ,A.IDOrdenCompra , OC.OrdenCompra ,A.Fecha,A.TipoCambio ,a.ValorMercaderia ,A.MontoFlete ,A.MontoSeguro ,A.Otros ,A.MontoTotal  
+SELECT  A.IDLiquidacion,A.Liquidacion ,A.IDEmbarque , EM.Embarque ,A.IDOrdenCompra , OC.OrdenCompra ,A.Fecha,A.TipoCambio ,a.ValorMercaderia ,A.MontoFlete ,A.MontoSeguro ,A.MontoTotal  
 FROM dbo.coLiquidacionCompra A
 LEFT  JOIN dbo.coOrdenCompra OC ON A.IDOrdenCompra=OC.IDOrdenCompra
 LEFT  JOIN dbo.coEmbarque EM ON A.IDEmbarque=EM.IDEmbarque AND EM.IDOrdenCompra=OC.IDOrdenCompra
@@ -1680,7 +1729,7 @@ GO
 
 CREATE PROCEDURE dbo.coGetObligacionProveedor(@IDEmbarque AS INT, @IDObligacion AS INT)
 AS 
-SELECT  IDObligacion ,IDEmbarque ,flgDocCPGenerado ,Fecha ,FechaVence ,FechaPoliza ,NumPoliza ,NumFactura ,Guia_BL ,TipoCambio ,ValorMercaderia ,MontoFlete ,MontoSeguro ,MontoTotal  FROM dbo.coObligacionProveedor
+SELECT  IDObligacion ,IDEmbarque ,flgDocCPGenerado ,Fecha ,FechaVence ,FechaPoliza ,NumPoliza ,NumFactura ,Guia_BL ,TipoCambio ,ValorMercaderia ,MontoFlete ,MontoSeguro ,MontoTotal, Asiento  FROM dbo.coObligacionProveedor
 WHERE IDEmbarque = @IDEmbarque AND (IDObligacion=@IDObligacion OR @IDObligacion = -1)
 
 GO
@@ -1733,7 +1782,10 @@ go
 CREATE PROCEDURE  dbo.coConfirmarEmbarque(@IDEmbarque AS INT, @Confirmado AS BIT)
 AS 
 UPDATE dbo.coEmbarque SET  Confirmado = @Confirmado WHERE IDEmbarque=@IDEmbarque
-
+IF (@Confirmado =1 )
+	EXEC dbo.coUnSetEmbarqueToTransito @IDEmbarque
+ELSE
+	EXEC dbo.coUnSetEmbarqueToTransito @IDEmbarque 
 
 GO
 
@@ -1848,7 +1900,7 @@ WHERE A.IDEmbarque = @IDEmbarque
 
 GO
 
-CREATE PROCEDURE [dbo].[coRptLiquidacion] @IDLiquidacion AS INT
+CREATE alter PROCEDURE [dbo].[coRptLiquidacion] @IDLiquidacion AS INT
 AS
 
 DECLARE @IDMoneda AS INT
@@ -1913,5 +1965,126 @@ SET @MontoMercaderia = (SELECT SUM(((PrecioUnitario * Cantidad)-MontoDesc) + ((P
 
 SELECT CantDecimalesCantidad,CantDecimalesPrecio,NombreAutorizaOrdenCompra,dbo.globalNumberToLetter(@MontoMercaderia + @Monto_FleteSeguro) MontoOrdenLetras, @MontoMercaderia + @Monto_FleteSeguro MontoOrden  FROM dbo.coParametrosCompra
 WHERE IDParametro=1
+
+
+GO
+
+
+CREATE PROCEDURE dbo.coGeneraAsientoObligacionProveedor @IDEmbarque AS INT,@Usuario NVARCHAR(250),@Asiento AS nvarchar(20) OUTPUT
+AS 
+--DECLARE	 @IDEmbarque AS INT,@Usuario NVARCHAR(250)
+--SET @IDEmbarque =1
+--SET @Usuario ='demo'
+--BEGIN TRY
+--	BEGIN TRAN 
+
+	DECLARE @Documento AS NVARCHAR(20)
+	DECLARE @FechaDocumento AS NVARCHAR(20)
+	DECLARE @IDProveedor AS int
+	DECLARE @TipoCambio AS DECIMAL(28,4)
+	DECLARE @Monto AS DECIMAL(28,8)
+	DECLARE @TipoAsiento NVARCHAR(2)
+	DECLARE @OrdenCompra AS NVARCHAR(20)
+	DECLARE @IDMoneda AS int	
+	DECLARE @Fecha AS DATE
+	DECLARE @IDMonedaLocal AS INT
+	DECLARE @NombreProveedor AS NVARCHAR(255)
+	DECLARE @IDCategoria INT
+	DECLARE @IsLocal bit
+
+
+	SELECT @IDMonedaLocal = IDMoneda  FROM dbo.globalMoneda (NOLOCK) WHERE Nacional=1
+
+	SET @TipoAsiento='CO'
+
+	SELECT @Documento = NumFactura,@FechaDocumento = Fecha,@TipoCambio = TipoCambio, @Monto = MontoTotal   FROM dbo.coObligacionProveedor (NOLOCK)
+	WHERE IDEmbarque = @IDEmbarque
+
+	SELECT @OrdenCompra = OrdenCompra, @IDMoneda= IDMoneda, @IDProveedor =IDProveedor  FROM DBO.coOrdenCompra (NOLOCK) WHERE IDEmbarque=@IDEmbarque
+
+	SELECT TOP 1 @IDCategoria = IDCategoria, @IsLocal =IsLocal,  @NombreProveedor = Nombre  FROM dbo.cppProveedor (NOLOCK) WHERE IDProveedor=@IDProveedor
+
+	SET @Fecha =  DATEADD(s,-1,DATEADD(mm, DATEDIFF(m,0,@FechaDocumento)+1,0))
+	DECLARE @IDEjercicio AS INT,@Periodo NVARCHAR(10), @Cerrado AS BIT,@Activo AS BIT
+
+	SELECT  @IDEjercicio =IDEjercicio ,
+			@Periodo = Periodo ,
+			@Cerrado =Cerrado,
+			@Activo = Activo
+	FROM dbo.cntPeriodoContable (NOLOCK) WHERE FechaFinal=@Fecha
+	  
+	  
+	IF (@Cerrado =1 OR @Activo=0) 
+	BEGIN
+		RAISERROR ('GENERACIÓN DEL ASIENTO CONTABLE: La fecha del documento que desea generar esta fuera del periodo de trabajo', 16, 1) ;
+		return		
+	END
+
+
+
+	--Se define el modulo para obterner el próximo asiento
+	EXEC [dbo].globalGetNextConsecutivo @TipoAsiento, @Asiento OUTPUT
+
+	--Guardar la Cabecera del Asiento
+	DECLARE @Concepto NVARCHAR(255)
+
+	SET @Concepto = 'FACTURA: FAC - ' + @Documento  + ' • PROVEEDOR: ' + CAST(@Documento  AS NVARCHAR(20)) + ' - ' + @NombreProveedor + ' • ORIGEN: COMPRAS' 
+
+	INSERT INTO dbo.cntAsiento( IDEjercicio ,Periodo ,Asiento ,Tipo ,Fecha ,FechaHora ,Createdby ,CreateDate ,
+							Mayorizadoby ,MayorizadoDate ,Anuladoby ,AnuladoDate ,Concepto ,Mayorizado ,Anulado ,TipoCambio ,ModuloFuente ,CuadreTemporal)
+	VALUES ( @IDEjercicio,@Periodo,@Asiento,@TipoAsiento,@FechaDocumento,GETDATE(),@Usuario,GETDATE(),NULL,NULL,NULL,NULL,@Concepto,0,0,@TipoCambio,'CO',0)					
+
+
+	--Guardar Detalle del Asiento  
+	-- Debitar CtaCompra
+	-- Acreditar CtxPagar
+	DECLARE @CtrTransitoExterior AS INT,@CtaTransitoExterior BIGINT,@CtrTransitoLocal AS INT,@CtaTransitoLocal BIGINT,
+		@Cta_CXP BIGINT,@Ctr_CXP int
+
+	-- Inventario Transito 	
+	SELECT @CtrTransitoExterior= CtrTransitoExterior,@CtaTransitoExterior = CtaTransitoExterior,@CtrTransitoLocal=CtrTransitoLocal,
+		   @CtaTransitoLocal=CtaTransitoLocal  FROM dbo.coParametrosCompra (NOLOCK)	 WHERE IDParametro=1
+		   
+
+	-- CXP
+	SELECT @Cta_CXP = Cta_CXP,@Ctr_CXP = Ctr_CXP  FROM dbo.cppCategoriaProveedor (NOLOCK) WHERE IDCategoria = @IDCategoria
+
+	DECLARE @Linea AS INT,@MontoAsiento AS DECIMAL(28,8)
+
+	SET @Linea = 1
+	SET @MontoAsiento = CASE WHEN @IDMoneda = @IDMonedaLocal THEN @Monto ELSE @Monto * @TipoCambio END
+	SET @Concepto = 'IMPORTACION ORDEN COMPRA: ' + @OrdenCompra
+
+	INSERT INTO dbo.cntAsientoDetalle( Asiento ,Linea ,IDCentro ,IDCuenta ,Referencia ,Debito ,Credito ,Documento ,daterecord)
+	VALUES (@Asiento,@Linea,
+			CASE WHEN @IsLocal = 1 THEN @CtrTransitoLocal ELSE @CtrTransitoExterior END ,
+			CASE WHEN @IsLocal = 1 THEN @CtaTransitoLocal ELSE @CtaTransitoExterior END,
+			@Concepto, @MontoAsiento,0,@Documento,GETDATE())
+
+	SET @Linea = 2
+
+	INSERT INTO dbo.cntAsientoDetalle( Asiento ,Linea ,IDCentro ,IDCuenta ,Referencia ,Debito ,Credito ,Documento ,daterecord)
+	VALUES (@Asiento,@Linea,@Ctr_CXP,@Cta_CXP,@Concepto, 0,@MontoAsiento,@Documento,GETDATE())
+
+	UPDATE  dbo.coObligacionProveedor SET Asiento=@Asiento WHERE IDEmbarque = @IDEmbarque
+	
+	--//TODO: Asociar asiento contable a documento de CP
+--	COMMIT TRAN
+--END TRY
+--BEGIN CATCH 
+--	ROLLBACK TRAN
+--END CATCH
+
+
+GO
+
+
+CREATE PROCEDURE dbo.coGetProductosFromEmbarque (@IDEmbarque AS INT)
+AS 
+SELECT IDProducto,Descr  FROM dbo.invProducto WHERE IDProducto in (
+SELECT IDProducto  FROM dbo.coEmbarqueDetalle
+WHERE IDEmbarque=@IDEmbarque)
+
+GO
 
 

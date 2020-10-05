@@ -12,7 +12,7 @@ namespace CO.DAC
     public static class clsOrdenCompraDAC {
     
         public static long InsertUpdate(string Operacion,long IDOrdenCompra,ref String OrdenCompra,DateTime Fecha,DateTime FechaRequerida,DateTime FechaEmision,DateTime FechaRequeridaEmbarque,DateTime FechaCotizacion,
-                        int IDEstado, int IDBodega,int IDProveedor,int IDMoneda, int IDCondicionPago,Decimal Descuento, Decimal Flete,Decimal Seguro, Decimal Documentacion, Decimal Anticipos,
+                        int IDEstado, int IDBodega,int IDProveedor,int IDMoneda, int IDCondicionPago,Decimal Descuento, Decimal Flete,Decimal Seguro, Decimal Anticipos,
                         int  IDEmbarque , int IDDocumentoCP,Decimal TipoCambio, string Usuario,string UsuarioEmbarque,DateTime FechaCreaEmbarque,
                         String UsuarioAprobacion,DateTime FechaAprobacion,DateTime createdDate,String createdBy, DateTime recordDate, String updatedBy, SqlTransaction tran)
         {
@@ -40,7 +40,6 @@ namespace CO.DAC
                oCmd.Parameters.Add(new SqlParameter("@Descuento", Descuento));
                oCmd.Parameters.Add(new SqlParameter("@Flete", Flete));
                oCmd.Parameters.Add(new SqlParameter("@Seguro", Seguro));
-               oCmd.Parameters.Add(new SqlParameter("@Documentacion", Documentacion));
             oCmd.Parameters.Add(new SqlParameter("@Anticipos", Anticipos));
             //oCmd.Parameters.Add(new SqlParameter("@IDTipoProrrateo", IDTipoProrrateo));
             oCmd.Parameters.Add(new SqlParameter("@IDEmbarque", IDEmbarque));

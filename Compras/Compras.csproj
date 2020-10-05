@@ -203,11 +203,11 @@
     <Compile Include="frmProveedor.Designer.cs">
       <DependentUpon>frmProveedor.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmRecepcionMeraderia.cs">
+    <Compile Include="frmRecepcionMercaderia.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmRecepcionMeraderia.Designer.cs">
-      <DependentUpon>frmRecepcionMeraderia.cs</DependentUpon>
+    <Compile Include="frmRecepcionMercaderia.Designer.cs">
+      <DependentUpon>frmRecepcionMercaderia.cs</DependentUpon>
     </Compile>
     <Compile Include="frmSolicitudCompra.cs">
       <SubType>Form</SubType>
@@ -277,8 +277,8 @@
     <EmbeddedResource Include="frmProveedor.resx">
       <DependentUpon>frmProveedor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmRecepcionMeraderia.resx">
-      <DependentUpon>frmRecepcionMeraderia.cs</DependentUpon>
+    <EmbeddedResource Include="frmRecepcionMercaderia.resx">
+      <DependentUpon>frmRecepcionMercaderia.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmSolicitudCompra.resx">
       <DependentUpon>frmSolicitudCompra.cs</DependentUpon>

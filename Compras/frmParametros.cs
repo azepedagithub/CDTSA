@@ -45,7 +45,7 @@ namespace CO
                     this.txtCantDecimalesCantidad.EditValue = Convert.ToInt32(dt.Rows[0]["CantDecimalesCantidad"]);
                     this.txtCantDecimalesPrecio.EditValue = Convert.ToInt32(dt.Rows[0]["CantDecimalesPrecio"]);
                     this.txtNumMaxLineasOrden.EditValue = Convert.ToInt32(dt.Rows[0]["CantLineasOrdenCompra"]);
-                    this.txtNombreAutorizaOrdenCompra.EditValue = Convert.ToInt32(dt.Rows[0]["NombreAutorizaOrdenCompra"]);
+                    this.txtNombreAutorizaOrdenCompra.EditValue = dt.Rows[0]["NombreAutorizaOrdenCompra"] == DBNull.Value ? null : dt.Rows[0]["NombreAutorizaOrdenCompra"];
                 }
             }
             catch (Exception ex) {
@@ -90,11 +90,11 @@ namespace CO
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupPaquete, "[{'ColumnCaption':'Paquete','ColumnField':'PAQUETE','width':20},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':90}]");
             this.slkupPaquete.EditValueChanged += slkupPaquete_EditValueChanged;
 
-            Util.Util.ConfigLookupEdit(this.slkupCuentaTransExt, CG.CuentaContableDAC.GetData(-1,-1,-1,"*","*","*","*","*","*","*",-1,-1,-1,1,-1,1).Tables[0], "Cuenta", "IDCuenta", 350);
+            Util.Util.ConfigLookupEdit(this.slkupCuentaTransExt, CG.CuentaContableDAC.GetData(-1,-1,-1,"*","*","*","*","*","*","*",-1,0,1,1,-1,1).Tables[0], "Cuenta", "IDCuenta", 350);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupCuentaTransExt, "[{'ColumnCaption':'Cuenta','ColumnField':'Cuenta','width':20},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':90}]");
             this.slkupCuentaTransExt.EditValueChanged += slkupCuentaTransExt_EditValueChanged;
 
-            Util.Util.ConfigLookupEdit(this.slkupCuentaTransLoc, CG.CuentaContableDAC.GetData(-1, -1, -1, "*", "*", "*", "*", "*", "*", "*", -1, -1, -1, 1, -1, 1).Tables[0], "Cuenta", "IDCuenta", 350);
+            Util.Util.ConfigLookupEdit(this.slkupCuentaTransLoc, CG.CuentaContableDAC.GetData(-1, -1, -1, "*", "*", "*", "*", "*", "*", "*", -1, 0, 1, 1, -1, 1).Tables[0], "Cuenta", "IDCuenta", 350);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupCuentaTransLoc, "[{'ColumnCaption':'Cuenta','ColumnField':'Cuenta','width':20},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':90}]");
             this.slkupCuentaTransLoc.EditValueChanged += slkupCuentaTransLoc_EditValueChanged;
 
@@ -246,7 +246,7 @@ namespace CO
                 CanViewAsiento = Convert.ToBoolean(this.chkVisualizar.EditValue);
                 sNombreAutorizaOrdenCompra = this.txtNombreAutorizaOrdenCompra.EditValue.ToString();
                 ConnectionManager.BeginTran();
-                DAC.clsParametrosDAC.InsertUpdate(IDSolicitud, IdOrdenCompra, IDEmbarque, IDDevolucion,IDLiquidacion, CantLineasOrdenCompra, IDBodegaDefault, IDTipoCambio, CantDecimalesPrecio, CantDecimalesCantidad, IDTipoAsientoContable, IDPaquete, CtaTransitoLocal, CtrTransitoLocal, CtaTransitoDol, CtrTransitoDol, AplicaAutomaticamenteAsiento, CanEditAsiento, CanViewAsiento,sNombreAutorizaOrdenCompra, ConnectionManager.Tran);
+                DAC.clsParametrosDAC.InsertUpdate(IDSolicitud, IdOrdenCompra, IDEmbarque, IDDevolucion,IDLiquidacion, CantLineasOrdenCompra, IDBodegaDefault, IDTipoCambio, CantDecimalesPrecio, CantDecimalesCantidad, IDTipoAsientoContable, IDPaquete, CtaTransitoLocal, CtrTransitoLocal,CtaTransitoDol, CtrTransitoDol, AplicaAutomaticamenteAsiento, CanEditAsiento, CanViewAsiento,sNombreAutorizaOrdenCompra, ConnectionManager.Tran);
                 ConnectionManager.CommitTran();
             }
             catch (Exception ex) {

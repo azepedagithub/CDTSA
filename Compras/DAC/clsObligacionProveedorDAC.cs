@@ -90,5 +90,27 @@ namespace CO.DAC
 
         }
 
+        public static bool GeneraAsientoContable(int IDEmbarque, String Usuario, ref String Asiento, SqlTransaction tran)
+        {
+            String strSql = "dbo.coGeneraAsientoObligacionProveedor";
+            bool bResult = false;
+            int result;
+            SqlCommand oCmd = new SqlCommand(strSql, Security.ConnectionManager.GetConnection());
+            oCmd.Parameters.Add(new SqlParameter("@IDEmbarque", IDEmbarque));
+            oCmd.Parameters.Add(new SqlParameter("@Usuario", Usuario));
+            oCmd.Parameters.Add(new SqlParameter("@Asiento", Asiento));
+            oCmd.Parameters["@Asiento"].Direction = ParameterDirection.Output;
+            oCmd.Parameters["@Asiento"].Size = 20;
+            oCmd.Parameters["@Asiento"].DbType = DbType.String;
+            oCmd.CommandType = CommandType.StoredProcedure;
+            oCmd.Transaction = tran;
+
+            result = oCmd.ExecuteNonQuery();
+            
+            Asiento = oCmd.Parameters["@Asiento"].Value.ToString();
+            bResult = true;
+            return bResult;
+
+        }
     }
 }

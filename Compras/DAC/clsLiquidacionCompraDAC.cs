@@ -13,7 +13,7 @@ namespace CO.DAC
     {
         public static int InsertUpdate(string Operacion,ref String Consecutivo, ref int IDLiquidacion, int IDEmbarque, int IDOrdenCompra,
                                         DateTime Fecha, decimal TipoCambio, decimal ValorMercaderia, decimal MontoFlete, decimal MontoSeguro,
-                                        decimal Otros, decimal Total,SqlTransaction tran)
+                                        decimal Total,SqlTransaction tran)
         {
             long result = -1;
             String strSQL = "dbo.coUpdateLiquidacionCompra";
@@ -34,7 +34,6 @@ namespace CO.DAC
             oCmd.Parameters.Add(new SqlParameter("@ValorMercaderia", ValorMercaderia));
             oCmd.Parameters.Add(new SqlParameter("@MontoFlete", MontoFlete));
             oCmd.Parameters.Add(new SqlParameter("@MontoSeguro", MontoSeguro));
-            oCmd.Parameters.Add(new SqlParameter("@Otros", Otros));
             oCmd.Parameters.Add(new SqlParameter("@MontoTotal", Total));
 
 

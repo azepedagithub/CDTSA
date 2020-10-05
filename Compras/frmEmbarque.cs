@@ -202,7 +202,7 @@ namespace CO
             this.txtEmbarque.Tag = cabecera["IDEmbarque"].ToString();
             this.dtpFecha.EditValue = Convert.ToDateTime(cabecera["Fecha"]);
             this.dtpFechaEmbarque.EditValue = Convert.ToDateTime(cabecera["FechaEmbarque"]);
-            this.linkAsiento.Text = cabecera["Asiento"].ToString();
+            this.linkAsiento.Text = cabecera["AsientoInv"].ToString();
             this.txtBodega.Text = cabecera["DescrBodega"].ToString();
             this.txtBodega.Tag = cabecera["IDBodega"].ToString();
             this.txtProveedor.Text = cabecera["NombreProveedor"].ToString();
@@ -354,25 +354,24 @@ namespace CO
                     this.txtTipoCambio.EditValue = Convert.ToDecimal(drObl["TipoCambio"]);
                     this.txtMontoFlete.EditValue = Convert.ToDecimal(drObl["MontoFlete"]);
                     this.txtMontoSeguro.EditValue = Convert.ToDecimal(drObl["MontoSeguro"]);
-                    
+                    this.txtAsiento.EditValue = drObl["Asiento"].ToString();                    
                     //Validar si tiene documento CP asociado
-                    string sDocCP = clsObligacionProveedorDAC.getDocumentoCP((int)this.ID_Embarque);
-
-                    if (sDocCP != "ND")
+                    //string sDocCP = clsObligacionProveedorDAC.getDocumentoCP((int)this.ID_Embarque);
+                     if (drObl["Asiento"] != null && drObl["Asiento"].ToString()!="")
+                    //if (sDocCP != "ND")
                     {
                         this.btnGenerarDocCPFactura.Enabled = false;
-                        this.txtAsiento.Text = sDocCP;
                         this.btnGuardarFactura.Enabled = false;
                         InactivarControles(true);
                     }
-                    else
-                    {
-                        this.btnGenerarDocCPFactura.Enabled = true;
-                        this.txtAsiento.Text = "";
-                        this.btnGuardarFactura.Enabled = true;
-                        InactivarControles(false);
-                        
-                    }
+                     else
+                     {
+                         this.btnGenerarDocCPFactura.Enabled = true;
+                         //this.txtAsiento.Text = "";
+                         this.btnGuardarFactura.Enabled = true;
+                         InactivarControles(false);
+
+                     }
 
                 }
                 else
@@ -955,9 +954,22 @@ namespace CO
 
         private void btnGenerarDocCPFactura_Click(object sender, EventArgs e)
         {
-            //GenerarDocumento CP
-
-            InactivarControles(true);
+            try
+            {
+                //GenerarDocumento CP
+                bool bOkGeneraAsiento =false;
+                ConnectionManager.BeginTran();
+                bOkGeneraAsiento = clsObligacionProveedorDAC.GeneraAsientoContable((int)this.ID_Embarque, this.sUsuario, ref this.AsientoFactura, ConnectionManager.Tran);
+                ConnectionManager.CommitTran();
+                if (bOkGeneraAsiento) {
+                    CG.frmAsiento ofrmAsiento = new CG.frmAsiento(this.AsientoFactura);
+                    ofrmAsiento.ShowDialog();
+                }
+                InactivarControles(true);
+            }catch ( Exception ex) {
+                ConnectionManager.RollBackTran();
+                MessageBox.Show("Han ocurrido los siguientes errores: " + ex.Message);
+            }
         }
         private void HabilitarControlesOtrosPagos(bool Flag)
         {
@@ -1145,7 +1157,7 @@ namespace CO
 
         private void btnRecepcionMercaderia_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            frmRecepcionMeraderia oRecepcion = new frmRecepcionMeraderia(this.ID_Embarque);
+            frmRecepcionMercaderia oRecepcion = new frmRecepcionMercaderia(this.ID_Embarque);
             oRecepcion.ShowDialog();
         }
 

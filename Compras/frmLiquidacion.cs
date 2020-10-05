@@ -428,7 +428,7 @@ namespace CO
                     MontoAnterior = Convert.ToDecimal(value == null ? 0 : value);
                 }
                 ConnectionManager.BeginTran();          
-                DAC.clsLiquidacionCompraDAC.InsertUpdate(sAccion, ref _Liquidacion, ref _IDLiquidacion, (int)this._IDEmbarque, (int)this._IDOrdenCompra, Convert.ToDateTime(this.dtpFechaLiquidacion.EditValue), Convert.ToDecimal(this.txtTipoCambio.EditValue), Convert.ToDecimal(txtValorMercaderia.EditValue), Convert.ToDecimal(txtMontoFlete.EditValue), Convert.ToDecimal(this.txtMontoSeguro.EditValue), 0, _isMonedaNacional ? Convert.ToDecimal(this.txtMontoLocal.EditValue) : Convert.ToDecimal(this.txtMontoDolar.EditValue), ConnectionManager.Tran);
+                DAC.clsLiquidacionCompraDAC.InsertUpdate(sAccion, ref _Liquidacion, ref _IDLiquidacion, (int)this._IDEmbarque, (int)this._IDOrdenCompra, Convert.ToDateTime(this.dtpFechaLiquidacion.EditValue), Convert.ToDecimal(this.txtTipoCambio.EditValue), Convert.ToDecimal(txtValorMercaderia.EditValue), Convert.ToDecimal(txtMontoFlete.EditValue), Convert.ToDecimal(this.txtMontoSeguro.EditValue), _isMonedaNacional ? Convert.ToDecimal(this.txtMontoLocal.EditValue) : Convert.ToDecimal(this.txtMontoDolar.EditValue), ConnectionManager.Tran);
                 this.lblLiquidacion.Text = _Liquidacion;
                 DAC.clsGastosLiquidacionCompraDAC.InsertUpdate("D",this._IDLiquidacion,-1,0,ConnectionManager.Tran);
                 foreach(DataRow row in dtLiquidacionGasto.Rows) {
@@ -527,7 +527,7 @@ namespace CO
 
         private void btnImpresion_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            if (this._IDLiquidacion != null && this._IDLiquidacion != -1)
+            if (this._IDLiquidacion != -1)
             {
                 DevExpress.XtraReports.UI.XtraReport report = DevExpress.XtraReports.UI.XtraReport.FromFile("./Reportes/Plantillas/rptLiquidacionCompra.repx", true);
 

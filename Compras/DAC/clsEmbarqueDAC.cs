@@ -176,6 +176,24 @@ namespace CO.DAC
         }
 
 
+        public static DataSet GetProductosFromEmbarque(long IDEmbarque)
+        {
+            String strSQL = "dbo.coGetProductosFromEmbarque";
+
+            SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
+
+            oCmd.Parameters.Add(new SqlParameter("@IDEmbarque", IDEmbarque));
+            oCmd.CommandType = CommandType.StoredProcedure;
+
+            SqlDataAdapter oAdap = new SqlDataAdapter(oCmd);
+            DataSet DS = new DataSet();
+
+            oAdap.Fill(DS, "Data");
+            return DS;
+        }
+        
+
+
         public static long SetEmbarqueToTransito(int IDEmbarque, SqlTransaction tran)
         {
             long result = -1;
