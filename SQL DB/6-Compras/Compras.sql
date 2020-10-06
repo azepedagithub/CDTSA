@@ -2126,7 +2126,7 @@ WHERE IDEmbarque=@IDEmbarque)
 GO
 
 
-CREATE PROCEDURE dbo.coSetEstadoLiquidacionCompra (@IDEmbarque  AS INT, @IDEstado AS INT)
+CREATE PROCEDURE dbo.coSetEstadoLiquidacionCompra (@IDLiquidacion  AS INT, @IDEstado AS INT)
 AS 
-UPDATE dbo.coLiquidacionCompra SET  IDEstado = @IDEstado WHERE IDEmbarque=@IDEmbarque 
+UPDATE dbo.coLiquidacionCompra SET  IDEstado = @IDEstado WHERE IDLiquidacion =@IDLiquidacion 
 

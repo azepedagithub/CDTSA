@@ -42,7 +42,8 @@ namespace CO
         private DataTable dtObligacionDetalle = new DataTable();
         private DataTable dtObligacionProveedor = new DataTable();
         private DataTable dtMoneda = new DataTable();
-        private int IDEstado = 0; 
+        private int IDEstado = 0;
+        private String sAccion = "Add";
         
  
         public frmLiquidacion(int IDLiquidacion)
@@ -73,7 +74,7 @@ namespace CO
                 this._IDEmbarque = Convert.ToInt32(this.dtLiquidacion.Rows[0]["IDEmbarque"]);
                 this._IDOrdenCompra = Convert.ToInt32(this.dtLiquidacion.Rows[0]["IDOrdenCompra"]);
                 this.IDEstado = Convert.ToInt32(this.dtLiquidacion.Rows[0]["IDEstado"]);
-               
+                sAccion = "View";
             }
             
             this.dtLiquidacionGasto = clsGastosLiquidacionCompraDAC.Get(_IDLiquidacion, -1).Tables[0];
@@ -140,22 +141,35 @@ namespace CO
 
             if (this.IDEstado == 0 || this.IDEstado==1)
             {
-                this.btnEditar.Enabled = false;
-                this.btnGuardar.Enabled = true;
-                this.btnCancelar.Enabled = true;
-                this.btnEliminar.Enabled = false;
-                this.btnCalculaProrratoGastos.Enabled = true;
+                if (sAccion == "Add" || sAccion == "Edit")
+                {
+                    this.btnEditar.Enabled = false;
+                    this.btnGuardar.Enabled = true;
+                    this.btnCancelar.Enabled = true;
+                    this.btnEliminar.Enabled = false;
+                    this.btnCalculaProrratoGastos.Enabled = true;
+                }
+                else
+                {
+                    this.btnEditar.Enabled = true ;
+                    this.btnGuardar.Enabled = false;
+                    this.btnCancelar.Enabled = false;
+                    this.btnEliminar.Enabled = true;
+                    this.btnCalculaProrratoGastos.Enabled = false;
+                   
+                }
 
             }
             else if (this.IDEstado == 2)
             {
-                this.btnEditar.Enabled = true;
+                this.btnEditar.Enabled = false;
                 this.btnGuardar.Enabled = false;
                 this.btnCancelar.Enabled = false; 
                 this.btnCalculaProrratoGastos.Enabled = false;
                 this.btnLiquidar.Enabled = false;
                 this.btnImpresion.Enabled = true;
-                this.btnEliminar.Enabled = true;
+                this.btnEliminar.Enabled = false;
+                this.gridViewGastosInternacion.OptionsBehavior.ReadOnly = true;
             }
             
         }
@@ -250,6 +264,15 @@ namespace CO
             
         }
 
+        private void SetStatusLiquidacion()
+        {
+            if (this.IDEstado == 0)
+                this.lblEstado.Text = "INICIAL";
+            else if (this.IDEstado == 1)
+                this.lblEstado.Text = "CALCULADA";
+            else if (this.IDEstado == 2)
+                this.lblEstado.Text = "LIQUIDADA";
+        }
 
         private void LoadData()
         {
@@ -259,7 +282,7 @@ namespace CO
                 //TipoCambio = CG.TipoCambioDetalleDAC.GetLastTipoCambioFecha(DateTime.Now);
                 this.dtpFechaLiquidacion.EditValue = DateTime.Now;
                 HabilitarControles();
-                HabilitarBotoneriaPrincipal();
+             
                 this._IDLiquidacion = -1;
                 this.hypEmbarque.Text = this.Embarque;
                 this.hypEmbarque.Tag = this._IDEmbarque;
@@ -267,6 +290,10 @@ namespace CO
                 this.hypOrdenCompra.Tag = this._IDOrdenCompra;
 
                 CargarLiquidacion(this._IDLiquidacion, _IDOrdenCompra, _IDEmbarque);
+                SetStatusLiquidacion();
+                HabilitarBotoneriaPrincipal();
+                HabilitarControles();
+
             }
             catch (Exception ex)
             {
@@ -448,10 +475,14 @@ namespace CO
                     }
                     if (dtLiquidacionGastoDetalle.Rows.Count > 0) {
                         DAC.clsLiquidacionCompraDAC.SetEstado(this._IDLiquidacion, 1,ConnectionManager.Tran);
+                        this.IDEstado = 1;
                     }
                 }
                 
                 ConnectionManager.CommitTran();
+                SetStatusLiquidacion();
+                HabilitarBotoneriaPrincipal();
+                HabilitarControles();
                 MessageBox.Show("Los datos se han guardado correctamente");
             }
             }catch(Exception ex) {
@@ -468,6 +499,7 @@ namespace CO
                 this.tbProrrateo.Appearance.Header.BackColor = Color.Transparent;
                 dtLiquidacionGastoDetalle = clsGastosLiquidacionDetalladoDAC.GetProrrateoGastosCompra(this._IDLiquidacion).Tables[0];
                 this.dgProrrateo.DataSource = dtLiquidacionGastoDetalle;
+                SetStatusLiquidacion();
             }
             catch (Exception ex) {
                 MessageBox.Show("Ha ocurrido un error trantando de prorratear la liquidación");
@@ -566,13 +598,24 @@ namespace CO
             {
                 ConnectionManager.BeginTran();
                 DAC.clsLiquidacionCompraDAC.SetEstado(this._IDLiquidacion, 2, ConnectionManager.Tran);
+                this.IDEstado = 2;
                 ConnectionManager.CommitTran();
                 MessageBox.Show("Liquidación aplicada !!");
+                SetStatusLiquidacion();
+                HabilitarBotoneriaPrincipal();
+                HabilitarControles();
             }
             catch (Exception ex) {
                 ConnectionManager.RollBackTran();
                 MessageBox.Show("Ha ocurrido un error tratando de aplicar la liquidación");
             }
+        }
+
+        private void btnEditar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            sAccion = "Edit";
+            HabilitarBotoneriaPrincipal();
+            HabilitarControles();
         }
 
      

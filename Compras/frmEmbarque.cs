@@ -814,7 +814,7 @@ namespace CO
             if (!this.Confirmada) 
                 sMensaje =  sMensaje + " • La orden debe de estar confirmada \n\r";                            
             if (this.IDObligacionProveedor == -1)            
-                sMensaje =  sMensaje + " • Debe definiar la obligación del proveedor \n\r";   
+                sMensaje =  sMensaje + " • Debe definir la obligación del proveedor \n\r";   
             DataView dv = this.dtDetalleEmbarque.AsDataView();
             dv.RowFilter = "CantidadAceptada>0";  
             if (dv.ToTable().Rows.Count==0){
@@ -873,6 +873,9 @@ namespace CO
             bool result = clsEmbarqueDAC.ConfirmarEmbarque((int)this.ID_Embarque, true, null);
             if (result) { 
                 MessageBox.Show("El Embarque ha sido confirmado");
+                this.btnConfirmar.Enabled =false;
+                this.btnAplicar.Enabled = true;
+                this.Confirmada = true;
                 this.tabFactura.PageVisible = true;
                 this.xtraTabControl1.SelectedTabPage = this.tabFactura;
                 CalcularTotalesEmbarque();
