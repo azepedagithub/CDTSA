@@ -156,6 +156,22 @@ namespace CO.DAC
             return DS;
         }
 
+        public static int GetEstadoLiquidacion(int IDEmbarque)
+        {
+            String strSQL = "dbo.coGetStatusLiquidacion";
+
+            SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
+
+            oCmd.Parameters.Add(new SqlParameter("@IDEmbarque", IDEmbarque));
+            oCmd.CommandType = CommandType.StoredProcedure;
+
+            SqlDataAdapter oAdap = new SqlDataAdapter(oCmd);
+            DataSet DS = new DataSet();
+
+            oAdap.Fill(DS, "Data");
+            return Convert.ToInt32(DS.Tables[0].Rows[0]);
+        }
+
 
         public static DataSet GetByID(long IDEmbarque, long IDOrdenCompra)
         {

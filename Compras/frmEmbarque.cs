@@ -1169,8 +1169,16 @@ namespace CO
 
         private void btnRecepcionMercaderia_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            frmRecepcionMercaderia oRecepcion = new frmRecepcionMercaderia(this.ID_Embarque);
-            oRecepcion.ShowDialog();
+            if (DAC.clsEmbarqueDAC.GetEstadoLiquidacion((int)this.IDEmbarque) == 2)
+            {
+                frmRecepcionMercaderia oRecepcion = new frmRecepcionMercaderia(this.ID_Embarque);
+                oRecepcion.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Tiene que liquidar el embarque para poder dar ingreso al inventario");
+                return;
+            }
         }
 
         
