@@ -520,7 +520,17 @@ CONSTRAINT [pkcoGastoCompra] PRIMARY KEY CLUSTERED
 ) ON [PRIMARY]
 
 GO
+CREATE TABLE dbo.coEstadoLiquidacionCompra (
+	IDEstado INT NOT NULL ,
+	Descripcion NVARCHAR(250) NOT NULL,
+	Activo BIT DEFAULT 1,
+CONSTRAINT [pkcoEstadoLiquidacionCompra] PRIMARY KEY CLUSTERED 
+(
+	IDEstado ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
 
+GO
 
 
 CREATE TABLE dbo.coLiquidacionCompra (
@@ -534,6 +544,7 @@ CREATE TABLE dbo.coLiquidacionCompra (
 	MontoFlete DECIMAL(28,8) DEFAULT 0,
 	MontoSeguro DECIMAL(28,8) DEFAULT 0,
 	MontoTotal DECIMAL(28,8) DEFAULT 0,
+	IDEstado INT DEFAULT 0,
 CONSTRAINT [pkcoLiquidacionCompra] PRIMARY KEY CLUSTERED 
 (
 	IDLiquidacion ASC
@@ -542,6 +553,16 @@ CONSTRAINT [pkcoLiquidacionCompra] PRIMARY KEY CLUSTERED
 
 GO
 
+ALTER TABLE [dbo].coLiquidacionCompra  WITH CHECK ADD  CONSTRAINT [fkcoLiquidacionCompra_IDEmbarque] FOREIGN KEY(IDEmbarque)
+REFERENCES [dbo].coEmbarque (IDEmbarque)
+
+GO
+
+ALTER TABLE [dbo].coLiquidacionCompra  WITH CHECK ADD  CONSTRAINT [fkcoEstadoLiquidacionCompra_IDEmbarque] FOREIGN KEY(IDEstado)
+REFERENCES [dbo].coEstadoLiquidacionCompra (IDEstado)
+
+
+GO
 
 
 CREATE TABLE dbo.coGastoLiquidacion (
@@ -651,6 +672,23 @@ go
 
 INSERT INTO dbo.coEstadoOrdenCompra( IDEstadoOrden, Descr, Activo )
 VALUES  (5,'RECIBIDA',1)
+
+
+GO
+
+INSERT INTO dbo.coEstadoLiquidacionCompra( IDEstado, Descripcion, Activo )
+VALUES  ( 0,'Inicializada',1)
+
+GO
+
+INSERT INTO dbo.coEstadoLiquidacionCompra( IDEstado, Descripcion, Activo )
+VALUES  ( 1,'Calculada',1)
+
+GO
+
+INSERT INTO dbo.coEstadoLiquidacionCompra( IDEstado, Descripcion, Activo )
+VALUES  ( 2,'Liquidada',1)
+
 
 
 GO
@@ -884,8 +922,8 @@ END
 GO
 
 
-CREATE   PROCEDURE dbo.coUpdateEmbaque(@Operacion AS NVARCHAR(1),@IDEmbarque AS INT OUTPUT, @Embarque AS NVARCHAR(20) OUTPUT,@Fecha AS DATE, 
-						@FechaEmbarque AS DATE,@Asiento AS NVARCHAR(20),@IDBodega AS INT, @IDProveedor AS INT, @IDOrdenCompra AS INT, 
+CREATE PROCEDURE dbo.coUpdateEmbaque(@Operacion AS NVARCHAR(1),@IDEmbarque AS INT OUTPUT, @Embarque AS NVARCHAR(20) OUTPUT,@Fecha AS DATE, 
+						@FechaEmbarque AS DATE,@IDBodega AS INT, @IDProveedor AS INT, @IDOrdenCompra AS INT, 
 						@IDDocumentoCP AS INT, @TipoCambio AS DECIMAL(28,4), @Usuario AS NVARCHAR(50),@CreateDate AS DATETIME, 
 						@CreatedBy AS NVARCHAR(50),@RecordDate AS DATETIME,@UpdateBy AS NVARCHAR(50))
 AS 
@@ -899,8 +937,8 @@ BEGIN
 	SET @IDConsecutivo = (SELECT IDConsecEmbarque  FROM dbo.coParametrosCompra WHERE IDParametro=1)
 	EXEC [dbo].[invGetNextGlobalConsecutivo] @IDConsecutivo,@Embarque OUTPUT
 	
-	 INSERT INTO dbo.coEmbarque( IDEmbarque ,Embarque ,Fecha ,FechaEmbarque ,Asiento ,IDBodega ,IDProveedor ,IDOrdenCompra  ,IDDocumentoCP ,TipoCambio ,Usuario ,CreateDate ,CreatedBy ,RecordDate ,UpdateBy)
-	 VALUES (@IDEmbarque,@Embarque,@Fecha,@FechaEmbarque,@Asiento,@IDBodega,@IDProveedor,@IDOrdenCompra,@IDDocumentoCP,@TipoCambio,@Usuario,@CreateDate,@CreatedBy,@RecordDate,@UpdateBy)
+	 INSERT INTO dbo.coEmbarque( IDEmbarque ,Embarque ,Fecha ,FechaEmbarque ,IDBodega ,IDProveedor ,IDOrdenCompra  ,IDDocumentoCP ,TipoCambio ,Usuario ,CreateDate ,CreatedBy ,RecordDate ,UpdateBy)
+	 VALUES (@IDEmbarque,@Embarque,@Fecha,@FechaEmbarque,@IDBodega,@IDProveedor,@IDOrdenCompra,@IDDocumentoCP,@TipoCambio,@Usuario,@CreateDate,@CreatedBy,@RecordDate,@UpdateBy)
 	 
 	 UPDATE dbo.coOrdenCompra SET IDEmbarque=@IDEmbarque WHERE IDOrdenCompra =@IDOrdenCompra
 	 
@@ -909,7 +947,7 @@ BEGIN
 END
 IF (@Operacion='U')
 BEGIN
-	UPDATE dbo.coEmbarque SET  FechaEmbarque=@FechaEmbarque, Asiento= @Asiento,IDBodega=@IDBodega,IDProveedor=@IDProveedor,
+	UPDATE dbo.coEmbarque SET  FechaEmbarque=@FechaEmbarque,IDBodega=@IDBodega,IDProveedor=@IDProveedor,
 			IDOrdenCompra=@IDOrdenCompra,IDDocumentoCP=@IDDocumentoCP,RecordDate= @RecordDate,UpdateBy= @UpdateBy
 	  WHERE IDEmbarque=@IDEmbarque
 END
@@ -1311,7 +1349,7 @@ GO
 
 
 
-CREATE alter  PROCEDURE dbo.coCreaPaqueteInventarioEmbarque @IDEmbarque AS INT,@FechaDocumento DATE, @IDTransaccion INT OUTPUT ,@Usuario NVARCHAR(50)
+CREATE  PROCEDURE dbo.coCreaPaqueteInventarioEmbarque @IDEmbarque AS INT,@FechaDocumento DATE, @IDTransaccion INT OUTPUT ,@Usuario NVARCHAR(50)
 AS
 /*DECLARE @IDEmbarque AS INT,@FechaDocumento DATE, @IDTransaccion INT,@Usuario NVARCHAR(50)
 
@@ -1415,7 +1453,7 @@ SELECT TOP 1 @IDPaquete = IDPaquete,@AplicaAutomatico = AplicaAutomaticamenteAsi
 
 GO
 
-CREATE  PROCEDURE dbo.coGeneraAsientoContableEmbarque  @IDEmbarque AS INT,@Asiento AS NVARCHAR(20) OUTPUT,@Usuario AS NVARCHAR(50) 
+CREATE PROCEDURE dbo.coGeneraAsientoContableEmbarque  @IDEmbarque AS INT,@Asiento AS NVARCHAR(20) OUTPUT,@Usuario AS NVARCHAR(50) 
 AS
 /*
 BEGIN TRAN
@@ -1527,8 +1565,8 @@ SET @Linea = 0
 WHILE (@Rows>=@i)
 BEGIN
 	SELECT @IDProducto = IDProducto, @Descr = Descr, @IDBodega = IDBodega, @Cantidad = Cantidad,@CostoPromDolar = CostoUntDolar,
-		   @CostoPromLocal = CostoUntLocal,@CtaInventario = CtaInventario,@CtrInventario = CtrInventario
-	FROM #tmpEmbarque WHERE ID =@Rows
+		   @CostoPromLocal = CostoUntLocal,@CtaInventario = CtaInventario,@CtrInventario = CtrInventario   
+	FROM #tmpEmbarque WHERE ID =@i
 	  
 	 
 	 --//cuenta de Transito
@@ -1627,7 +1665,7 @@ GO
 
 CREATE PROCEDURE dbo.coGetLiquidacionCompra (@IDLiquidacion INT,@IDEmbarque INT, @IDOrdenCompra INT) 
 AS 
-SELECT  A.IDLiquidacion,A.Liquidacion ,A.IDEmbarque , EM.Embarque ,A.IDOrdenCompra , OC.OrdenCompra ,A.Fecha,A.TipoCambio ,a.ValorMercaderia ,A.MontoFlete ,A.MontoSeguro ,A.MontoTotal  
+SELECT  A.IDLiquidacion,A.Liquidacion ,A.IDEmbarque , EM.Embarque ,A.IDOrdenCompra , OC.OrdenCompra ,A.Fecha,A.TipoCambio ,a.ValorMercaderia ,A.MontoFlete ,A.MontoSeguro ,A.MontoTotal, A.IDEstado  
 FROM dbo.coLiquidacionCompra A
 LEFT  JOIN dbo.coOrdenCompra OC ON A.IDOrdenCompra=OC.IDOrdenCompra
 LEFT  JOIN dbo.coEmbarque EM ON A.IDEmbarque=EM.IDEmbarque AND EM.IDOrdenCompra=OC.IDOrdenCompra
@@ -2087,4 +2125,8 @@ WHERE IDEmbarque=@IDEmbarque)
 
 GO
 
+
+CREATE PROCEDURE dbo.coSetEstadoLiquidacionCompra (@IDEmbarque  AS INT, @IDEstado AS INT)
+AS 
+UPDATE dbo.coLiquidacionCompra SET  IDEstado = @IDEstado WHERE IDEmbarque=@IDEmbarque 
 

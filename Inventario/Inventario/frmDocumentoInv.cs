@@ -694,7 +694,7 @@ namespace CI
 
             //if (UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosContableType.EditarAsientodeDiario, _dtSecurity))
             //{
-            //    if (_dsProducto.Tables[0].Rows.Count > 0 )
+            //    if (_dsProducto.Tables[0].Rows.Count > 0)
             //        this.btnEditar.Enabled = false;
             //    else
             //        this.btnEditar.Enabled = true;

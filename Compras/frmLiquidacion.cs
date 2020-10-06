@@ -42,8 +42,7 @@ namespace CO
         private DataTable dtObligacionDetalle = new DataTable();
         private DataTable dtObligacionProveedor = new DataTable();
         private DataTable dtMoneda = new DataTable();
-        
-        private String _Accion;
+        private int IDEstado = 0; 
         
  
         public frmLiquidacion(int IDLiquidacion)
@@ -54,7 +53,7 @@ namespace CO
             this._IDEmbarque = -1;
         }
 
-        public frmLiquidacion(long IDLiquidacion,long IDEmbarque, long IDOrdenCompra, String OrdenCompra,String Embarque, String Accion)
+        public frmLiquidacion(long IDLiquidacion,long IDEmbarque, long IDOrdenCompra, String OrdenCompra,String Embarque)
         {
             InitializeComponent();
             this._IDLiquidacion = Convert.ToInt32(IDLiquidacion);
@@ -62,7 +61,6 @@ namespace CO
             this._IDOrdenCompra = IDOrdenCompra;
             this.OrdenCompra = OrdenCompra;
             this.Embarque = Embarque;
-            this._Accion = Accion;
         }
 
         
@@ -74,6 +72,7 @@ namespace CO
                 this._IDLiquidacion = Convert.ToInt32(this.dtLiquidacion.Rows[0]["IDLiquidacion"]);
                 this._IDEmbarque = Convert.ToInt32(this.dtLiquidacion.Rows[0]["IDEmbarque"]);
                 this._IDOrdenCompra = Convert.ToInt32(this.dtLiquidacion.Rows[0]["IDOrdenCompra"]);
+                this.IDEstado = Convert.ToInt32(this.dtLiquidacion.Rows[0]["IDEstado"]);
                
             }
             
@@ -139,29 +138,26 @@ namespace CO
         private void HabilitarBotoneriaPrincipal()
         {
 
-            if (_Accion == "Add" || _Accion == "Edit")
+            if (this.IDEstado == 0 || this.IDEstado==1)
             {
                 this.btnEditar.Enabled = false;
                 this.btnGuardar.Enabled = true;
                 this.btnCancelar.Enabled = true;
                 this.btnEliminar.Enabled = false;
+                this.btnCalculaProrratoGastos.Enabled = true;
 
             }
-            else if (_Accion == "View")
+            else if (this.IDEstado == 2)
             {
                 this.btnEditar.Enabled = true;
                 this.btnGuardar.Enabled = false;
-                this.btnCancelar.Enabled = false;
-
+                this.btnCancelar.Enabled = false; 
+                this.btnCalculaProrratoGastos.Enabled = false;
+                this.btnLiquidar.Enabled = false;
+                this.btnImpresion.Enabled = true;
                 this.btnEliminar.Enabled = true;
             }
-            else if (_Accion == "ReadOnly")
-            {
-                this.btnEditar.Enabled = false;
-                this.btnGuardar.Enabled = false;
-                this.btnCancelar.Enabled = false;
-                this.btnEliminar.Enabled = false;
-            }
+            
         }
 
 
@@ -171,7 +167,7 @@ namespace CO
             this.txtMontoLocal.ReadOnly = true;
             this.txtMontoDolar.ReadOnly = true;
                 
-            if (_Accion == "Add" || _Accion == "Edit")
+            if (this.IDEstado == 0 || this.IDEstado == 1)
             {
 
                 this.txtMontoFlete.ReadOnly = false;
@@ -232,19 +228,22 @@ namespace CO
                     
 
             }   else {
-                this.txtValorMercaderia.EditValue = dtObligacion.Rows[0]["ValorMercaderia"].ToString();
-                this.txtMontoFlete.EditValue = dtObligacion.Rows[0]["MontoFlete"].ToString();
-                this.txtMontoSeguro.EditValue = dtObligacion.Rows[0]["MontoSeguro"].ToString();
+                if (dtObligacion.Rows.Count > 0)
+                {
+                    this.txtValorMercaderia.EditValue = dtObligacion.Rows[0]["ValorMercaderia"].ToString();
+                    this.txtMontoFlete.EditValue = dtObligacion.Rows[0]["MontoFlete"].ToString();
+                    this.txtMontoSeguro.EditValue = dtObligacion.Rows[0]["MontoSeguro"].ToString();
 
-                if (_isMonedaNacional)
-                {
-                    this.txtMontoLocal.EditValue = dtObligacion.Rows[0]["MontoTotal"].ToString();
-                    this.txtMontoDolar.EditValue = (Convert.ToDouble(dtObligacion.Rows[0]["MontoTotal"]) / TipoCambio).ToString();
-                }
-                else
-                {
-                    this.txtMontoDolar.EditValue = dtObligacion.Rows[0]["MontoTotal"].ToString();
-                    this.txtMontoLocal.EditValue = (Convert.ToDouble(dtObligacion.Rows[0]["MontoTotal"]) * TipoCambio).ToString();
+                    if (_isMonedaNacional)
+                    {
+                        this.txtMontoLocal.EditValue = dtObligacion.Rows[0]["MontoTotal"].ToString();
+                        this.txtMontoDolar.EditValue = (Convert.ToDouble(dtObligacion.Rows[0]["MontoTotal"]) / TipoCambio).ToString();
+                    }
+                    else
+                    {
+                        this.txtMontoDolar.EditValue = dtObligacion.Rows[0]["MontoTotal"].ToString();
+                        this.txtMontoLocal.EditValue = (Convert.ToDouble(dtObligacion.Rows[0]["MontoTotal"]) * TipoCambio).ToString();
+                    }
                 }
                   
             }
@@ -261,15 +260,12 @@ namespace CO
                 this.dtpFechaLiquidacion.EditValue = DateTime.Now;
                 HabilitarControles();
                 HabilitarBotoneriaPrincipal();
-                if (_Accion == "Add")
-                {
-                    this._IDLiquidacion = -1;
-                    this.hypEmbarque.Text = this.Embarque;
-                    this.hypEmbarque.Tag = this._IDEmbarque;
-                    this.hypOrdenCompra.Text = this.OrdenCompra;
-                    this.hypOrdenCompra.Tag = this._IDOrdenCompra;
+                this._IDLiquidacion = -1;
+                this.hypEmbarque.Text = this.Embarque;
+                this.hypEmbarque.Tag = this._IDEmbarque;
+                this.hypOrdenCompra.Text = this.OrdenCompra;
+                this.hypOrdenCompra.Tag = this._IDOrdenCompra;
 
-                }
                 CargarLiquidacion(this._IDLiquidacion, _IDOrdenCompra, _IDEmbarque);
             }
             catch (Exception ex)
@@ -449,7 +445,10 @@ namespace CO
                     DAC.clsGastosLiquidacionDetalladoDAC.InsertUpdate("D", this._IDLiquidacion, -1, -1, 0, ConnectionManager.Tran);
                     foreach(DataRow row in dtLiquidacionGastoDetalle.Rows) {
                         DAC.clsGastosLiquidacionDetalladoDAC.InsertUpdate("I", this._IDLiquidacion,Convert.ToInt32(row["IDGasto"]),Convert.ToInt64(row["IDProducto"]),Convert.ToDecimal(row["Monto"]),ConnectionManager.Tran);
-                    }       
+                    }
+                    if (dtLiquidacionGastoDetalle.Rows.Count > 0) {
+                        DAC.clsLiquidacionCompraDAC.SetEstado(this._IDLiquidacion, 1,ConnectionManager.Tran);
+                    }
                 }
                 
                 ConnectionManager.CommitTran();
@@ -558,6 +557,21 @@ namespace CO
                 tool.ShowPreview();
 
 
+            }
+        }
+
+        private void btnLiquidar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            try
+            {
+                ConnectionManager.BeginTran();
+                DAC.clsLiquidacionCompraDAC.SetEstado(this._IDLiquidacion, 2, ConnectionManager.Tran);
+                ConnectionManager.CommitTran();
+                MessageBox.Show("Liquidación aplicada !!");
+            }
+            catch (Exception ex) {
+                ConnectionManager.RollBackTran();
+                MessageBox.Show("Ha ocurrido un error tratando de aplicar la liquidación");
             }
         }
 

@@ -111,6 +111,7 @@ namespace CO
                 this.btnGuardar.Enabled = true;
                 this.btnCancelar.Enabled = true;
                 this.btnEliminar.Enabled = false;
+                this.btnImprimir.Enabled = false;
 
                 this.btnConfirmar.Enabled = false;
                 this.btnDesconfirmar.Enabled = false;
@@ -127,6 +128,7 @@ namespace CO
                 this.btnEliminar.Enabled = true;
                 this.btnAnular.Enabled = true;
                 this.btnEmbarque.Enabled = false;
+                this.btnImprimir.Enabled = true;
             }
             else if (Accion == "ReadOnly")
             {
@@ -140,6 +142,7 @@ namespace CO
                 this.btnDesconfirmar.Enabled = false;
                 this.btnAnular.Enabled = false;
                 this.btnAnular.Enabled = false;
+                this.btnImprimir.Enabled = true;
             }
         }
 

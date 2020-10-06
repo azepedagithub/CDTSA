@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmEmbarque));
-            DevExpress.XtraBars.Ribbon.ReduceOperation reduceOperation3 = new DevExpress.XtraBars.Ribbon.ReduceOperation();
-            DevExpress.XtraBars.Ribbon.ReduceOperation reduceOperation4 = new DevExpress.XtraBars.Ribbon.ReduceOperation();
+            DevExpress.XtraBars.Ribbon.ReduceOperation reduceOperation1 = new DevExpress.XtraBars.Ribbon.ReduceOperation();
+            DevExpress.XtraBars.Ribbon.ReduceOperation reduceOperation2 = new DevExpress.XtraBars.Ribbon.ReduceOperation();
             this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.btnEditar = new DevExpress.XtraBars.BarButtonItem();
             this.btnGuardar = new DevExpress.XtraBars.BarButtonItem();
@@ -111,8 +111,23 @@
             this.layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
             this.tabOtros = new DevExpress.XtraTab.XtraTabPage();
             this.layoutControl4 = new DevExpress.XtraLayout.LayoutControl();
-            this.dtgObligaciones = new Util.S4UGridControl();
-            this.gridViewObligaciones = new Util.MyGridView();
+            this.txtDocumentoOtrosPagos = new DevExpress.XtraEditors.TextEdit();
+            this.txtMontoOtrosPagos = new DevExpress.XtraEditors.TextEdit();
+            this.dtpFechaOtrosPagos = new DevExpress.XtraEditors.DateEdit();
+            this.slkupMonedaOtrosPagos = new DevExpress.XtraEditors.SearchLookUpEdit();
+            this.searchLookUpEdit1View = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.slkupProveedorOtrosPagos = new DevExpress.XtraEditors.SearchLookUpEdit();
+            this.searchLookUpEdit2View = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.slkupGastosOtrosPagos = new DevExpress.XtraEditors.SearchLookUpEdit();
+            this.searchLookUpEdit3View = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.btnGuardarOtrosPagos = new DevExpress.XtraEditors.SimpleButton();
+            this.btnCancelarOtrosPagos = new DevExpress.XtraEditors.SimpleButton();
+            this.btnAgregarOtrosPagos = new DevExpress.XtraEditors.SimpleButton();
+            this.btnEditarOtrosPagos = new DevExpress.XtraEditors.SimpleButton();
+            this.btnEliminarOtrosGastos = new DevExpress.XtraEditors.SimpleButton();
+            this.txtImpuesto = new DevExpress.XtraEditors.TextEdit();
+            this.dtgObligaciones = new DevExpress.XtraGrid.GridControl();
+            this.gridViewObligaciones = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colFechaDocumento = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colNumDocumento = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colDescrGasto = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -120,21 +135,6 @@
             this.colSubTotalG = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colPorcImpuesto = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colMontoTotal = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.txtImpuesto = new DevExpress.XtraEditors.TextEdit();
-            this.btnEliminarOtrosGastos = new DevExpress.XtraEditors.SimpleButton();
-            this.btnEditarOtrosPagos = new DevExpress.XtraEditors.SimpleButton();
-            this.btnAgregarOtrosPagos = new DevExpress.XtraEditors.SimpleButton();
-            this.btnCancelarOtrosPagos = new DevExpress.XtraEditors.SimpleButton();
-            this.btnGuardarOtrosPagos = new DevExpress.XtraEditors.SimpleButton();
-            this.slkupGastosOtrosPagos = new DevExpress.XtraEditors.SearchLookUpEdit();
-            this.searchLookUpEdit3View = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.slkupProveedorOtrosPagos = new DevExpress.XtraEditors.SearchLookUpEdit();
-            this.searchLookUpEdit2View = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.slkupMonedaOtrosPagos = new DevExpress.XtraEditors.SearchLookUpEdit();
-            this.searchLookUpEdit1View = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.txtMontoOtrosPagos = new DevExpress.XtraEditors.TextEdit();
-            this.dtpFechaOtrosPagos = new DevExpress.XtraEditors.DateEdit();
-            this.txtDocumentoOtrosPagos = new DevExpress.XtraEditors.TextEdit();
             this.layoutControlGroup4 = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem10 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem12 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -222,19 +222,19 @@
             this.tabOtros.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl4)).BeginInit();
             this.layoutControl4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dtgObligaciones)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridViewObligaciones)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtImpuesto.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.slkupGastosOtrosPagos.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit3View)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.slkupProveedorOtrosPagos.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit2View)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.slkupMonedaOtrosPagos.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit1View)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtDocumentoOtrosPagos.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMontoOtrosPagos.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtpFechaOtrosPagos.Properties.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtpFechaOtrosPagos.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtDocumentoOtrosPagos.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.slkupMonedaOtrosPagos.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit1View)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.slkupProveedorOtrosPagos.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit2View)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.slkupGastosOtrosPagos.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit3View)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtImpuesto.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtgObligaciones)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewObligaciones)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem12)).BeginInit();
@@ -358,18 +358,18 @@
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.ribbonPageGroup1});
             this.ribbonPage1.Name = "ribbonPage1";
-            reduceOperation3.Behavior = DevExpress.XtraBars.Ribbon.ReduceOperationBehavior.Single;
-            reduceOperation3.Group = null;
-            reduceOperation3.ItemLinkIndex = 0;
-            reduceOperation3.ItemLinksCount = 0;
-            reduceOperation3.Operation = DevExpress.XtraBars.Ribbon.ReduceOperationType.LargeButtons;
-            reduceOperation4.Behavior = DevExpress.XtraBars.Ribbon.ReduceOperationBehavior.Single;
-            reduceOperation4.Group = null;
-            reduceOperation4.ItemLinkIndex = 0;
-            reduceOperation4.ItemLinksCount = 0;
-            reduceOperation4.Operation = DevExpress.XtraBars.Ribbon.ReduceOperationType.Gallery;
-            this.ribbonPage1.ReduceOperations.Add(reduceOperation3);
-            this.ribbonPage1.ReduceOperations.Add(reduceOperation4);
+            reduceOperation1.Behavior = DevExpress.XtraBars.Ribbon.ReduceOperationBehavior.Single;
+            reduceOperation1.Group = null;
+            reduceOperation1.ItemLinkIndex = 0;
+            reduceOperation1.ItemLinksCount = 0;
+            reduceOperation1.Operation = DevExpress.XtraBars.Ribbon.ReduceOperationType.LargeButtons;
+            reduceOperation2.Behavior = DevExpress.XtraBars.Ribbon.ReduceOperationBehavior.Single;
+            reduceOperation2.Group = null;
+            reduceOperation2.ItemLinkIndex = 0;
+            reduceOperation2.ItemLinksCount = 0;
+            reduceOperation2.Operation = DevExpress.XtraBars.Ribbon.ReduceOperationType.Gallery;
+            this.ribbonPage1.ReduceOperations.Add(reduceOperation1);
+            this.ribbonPage1.ReduceOperations.Add(reduceOperation2);
             this.ribbonPage1.Text = "Opciones Generales";
             // 
             // ribbonPageGroup1
@@ -414,12 +414,12 @@
             // linkAsiento
             // 
             this.linkAsiento.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.linkAsiento.Location = new System.Drawing.Point(719, 12);
+            this.linkAsiento.Location = new System.Drawing.Point(816, 12);
             this.linkAsiento.Name = "linkAsiento";
-            this.linkAsiento.Size = new System.Drawing.Size(109, 13);
+            this.linkAsiento.Size = new System.Drawing.Size(12, 13);
             this.linkAsiento.StyleController = this.layoutControl1;
             this.linkAsiento.TabIndex = 11;
-            this.linkAsiento.Text = "hyperlinkLabelControl2";
+            this.linkAsiento.Text = "---";
             this.linkAsiento.Click += new System.EventHandler(this.linkAsiento_Click);
             // 
             // dtpFechaEmbarque
@@ -1067,19 +1067,19 @@
             // 
             // layoutControl4
             // 
-            this.layoutControl4.Controls.Add(this.dtgObligaciones);
-            this.layoutControl4.Controls.Add(this.txtImpuesto);
-            this.layoutControl4.Controls.Add(this.btnEliminarOtrosGastos);
-            this.layoutControl4.Controls.Add(this.btnEditarOtrosPagos);
-            this.layoutControl4.Controls.Add(this.btnAgregarOtrosPagos);
-            this.layoutControl4.Controls.Add(this.btnCancelarOtrosPagos);
-            this.layoutControl4.Controls.Add(this.btnGuardarOtrosPagos);
-            this.layoutControl4.Controls.Add(this.slkupGastosOtrosPagos);
-            this.layoutControl4.Controls.Add(this.slkupProveedorOtrosPagos);
-            this.layoutControl4.Controls.Add(this.slkupMonedaOtrosPagos);
+            this.layoutControl4.Controls.Add(this.txtDocumentoOtrosPagos);
             this.layoutControl4.Controls.Add(this.txtMontoOtrosPagos);
             this.layoutControl4.Controls.Add(this.dtpFechaOtrosPagos);
-            this.layoutControl4.Controls.Add(this.txtDocumentoOtrosPagos);
+            this.layoutControl4.Controls.Add(this.slkupMonedaOtrosPagos);
+            this.layoutControl4.Controls.Add(this.slkupProveedorOtrosPagos);
+            this.layoutControl4.Controls.Add(this.slkupGastosOtrosPagos);
+            this.layoutControl4.Controls.Add(this.btnGuardarOtrosPagos);
+            this.layoutControl4.Controls.Add(this.btnCancelarOtrosPagos);
+            this.layoutControl4.Controls.Add(this.btnAgregarOtrosPagos);
+            this.layoutControl4.Controls.Add(this.btnEditarOtrosPagos);
+            this.layoutControl4.Controls.Add(this.btnEliminarOtrosGastos);
+            this.layoutControl4.Controls.Add(this.txtImpuesto);
+            this.layoutControl4.Controls.Add(this.dtgObligaciones);
             this.layoutControl4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.layoutControl4.Location = new System.Drawing.Point(0, 0);
             this.layoutControl4.Name = "layoutControl4";
@@ -1087,6 +1087,166 @@
             this.layoutControl4.Size = new System.Drawing.Size(810, 285);
             this.layoutControl4.TabIndex = 0;
             this.layoutControl4.Text = "layoutControl4";
+            // 
+            // txtDocumentoOtrosPagos
+            // 
+            this.txtDocumentoOtrosPagos.Location = new System.Drawing.Point(303, 48);
+            this.txtDocumentoOtrosPagos.MenuManager = this.ribbonControl1;
+            this.txtDocumentoOtrosPagos.Name = "txtDocumentoOtrosPagos";
+            this.txtDocumentoOtrosPagos.Properties.ReadOnly = true;
+            this.txtDocumentoOtrosPagos.Size = new System.Drawing.Size(271, 20);
+            this.txtDocumentoOtrosPagos.StyleController = this.layoutControl4;
+            this.txtDocumentoOtrosPagos.TabIndex = 4;
+            // 
+            // txtMontoOtrosPagos
+            // 
+            this.txtMontoOtrosPagos.Location = new System.Drawing.Point(303, 72);
+            this.txtMontoOtrosPagos.MenuManager = this.ribbonControl1;
+            this.txtMontoOtrosPagos.Name = "txtMontoOtrosPagos";
+            this.txtMontoOtrosPagos.Properties.ReadOnly = true;
+            this.txtMontoOtrosPagos.Size = new System.Drawing.Size(111, 20);
+            this.txtMontoOtrosPagos.StyleController = this.layoutControl4;
+            this.txtMontoOtrosPagos.TabIndex = 6;
+            // 
+            // dtpFechaOtrosPagos
+            // 
+            this.dtpFechaOtrosPagos.EditValue = null;
+            this.dtpFechaOtrosPagos.Location = new System.Drawing.Point(73, 48);
+            this.dtpFechaOtrosPagos.MenuManager = this.ribbonControl1;
+            this.dtpFechaOtrosPagos.Name = "dtpFechaOtrosPagos";
+            this.dtpFechaOtrosPagos.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.dtpFechaOtrosPagos.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.dtpFechaOtrosPagos.Properties.ReadOnly = true;
+            this.dtpFechaOtrosPagos.Size = new System.Drawing.Size(165, 20);
+            this.dtpFechaOtrosPagos.StyleController = this.layoutControl4;
+            this.dtpFechaOtrosPagos.TabIndex = 5;
+            // 
+            // slkupMonedaOtrosPagos
+            // 
+            this.slkupMonedaOtrosPagos.Location = new System.Drawing.Point(73, 72);
+            this.slkupMonedaOtrosPagos.MenuManager = this.ribbonControl1;
+            this.slkupMonedaOtrosPagos.Name = "slkupMonedaOtrosPagos";
+            this.slkupMonedaOtrosPagos.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.slkupMonedaOtrosPagos.Properties.ReadOnly = true;
+            this.slkupMonedaOtrosPagos.Properties.View = this.searchLookUpEdit1View;
+            this.slkupMonedaOtrosPagos.Size = new System.Drawing.Size(165, 20);
+            this.slkupMonedaOtrosPagos.StyleController = this.layoutControl4;
+            this.slkupMonedaOtrosPagos.TabIndex = 7;
+            // 
+            // searchLookUpEdit1View
+            // 
+            this.searchLookUpEdit1View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.searchLookUpEdit1View.Name = "searchLookUpEdit1View";
+            this.searchLookUpEdit1View.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.searchLookUpEdit1View.OptionsView.ShowGroupPanel = false;
+            // 
+            // slkupProveedorOtrosPagos
+            // 
+            this.slkupProveedorOtrosPagos.Location = new System.Drawing.Point(639, 48);
+            this.slkupProveedorOtrosPagos.MenuManager = this.ribbonControl1;
+            this.slkupProveedorOtrosPagos.Name = "slkupProveedorOtrosPagos";
+            this.slkupProveedorOtrosPagos.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.slkupProveedorOtrosPagos.Properties.ReadOnly = true;
+            this.slkupProveedorOtrosPagos.Properties.View = this.searchLookUpEdit2View;
+            this.slkupProveedorOtrosPagos.Size = new System.Drawing.Size(159, 20);
+            this.slkupProveedorOtrosPagos.StyleController = this.layoutControl4;
+            this.slkupProveedorOtrosPagos.TabIndex = 8;
+            // 
+            // searchLookUpEdit2View
+            // 
+            this.searchLookUpEdit2View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.searchLookUpEdit2View.Name = "searchLookUpEdit2View";
+            this.searchLookUpEdit2View.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.searchLookUpEdit2View.OptionsView.ShowGroupPanel = false;
+            // 
+            // slkupGastosOtrosPagos
+            // 
+            this.slkupGastosOtrosPagos.Location = new System.Drawing.Point(639, 72);
+            this.slkupGastosOtrosPagos.MenuManager = this.ribbonControl1;
+            this.slkupGastosOtrosPagos.Name = "slkupGastosOtrosPagos";
+            this.slkupGastosOtrosPagos.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.slkupGastosOtrosPagos.Properties.ReadOnly = true;
+            this.slkupGastosOtrosPagos.Properties.View = this.searchLookUpEdit3View;
+            this.slkupGastosOtrosPagos.Size = new System.Drawing.Size(159, 20);
+            this.slkupGastosOtrosPagos.StyleController = this.layoutControl4;
+            this.slkupGastosOtrosPagos.TabIndex = 10;
+            // 
+            // searchLookUpEdit3View
+            // 
+            this.searchLookUpEdit3View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.searchLookUpEdit3View.Name = "searchLookUpEdit3View";
+            this.searchLookUpEdit3View.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.searchLookUpEdit3View.OptionsView.ShowGroupPanel = false;
+            // 
+            // btnGuardarOtrosPagos
+            // 
+            this.btnGuardarOtrosPagos.Image = ((System.Drawing.Image)(resources.GetObject("btnGuardarOtrosPagos.Image")));
+            this.btnGuardarOtrosPagos.Location = new System.Drawing.Point(235, 12);
+            this.btnGuardarOtrosPagos.Name = "btnGuardarOtrosPagos";
+            this.btnGuardarOtrosPagos.Size = new System.Drawing.Size(74, 22);
+            this.btnGuardarOtrosPagos.StyleController = this.layoutControl4;
+            this.btnGuardarOtrosPagos.TabIndex = 11;
+            this.btnGuardarOtrosPagos.Text = "Guardar";
+            this.btnGuardarOtrosPagos.Click += new System.EventHandler(this.btnGuardarOtrosPagos_Click);
+            // 
+            // btnCancelarOtrosPagos
+            // 
+            this.btnCancelarOtrosPagos.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelarOtrosPagos.Image")));
+            this.btnCancelarOtrosPagos.Location = new System.Drawing.Point(153, 12);
+            this.btnCancelarOtrosPagos.Name = "btnCancelarOtrosPagos";
+            this.btnCancelarOtrosPagos.Size = new System.Drawing.Size(78, 22);
+            this.btnCancelarOtrosPagos.StyleController = this.layoutControl4;
+            this.btnCancelarOtrosPagos.TabIndex = 12;
+            this.btnCancelarOtrosPagos.Text = "Cancelar";
+            this.btnCancelarOtrosPagos.Click += new System.EventHandler(this.btnCancelarOtrosPagos_Click);
+            // 
+            // btnAgregarOtrosPagos
+            // 
+            this.btnAgregarOtrosPagos.Image = ((System.Drawing.Image)(resources.GetObject("btnAgregarOtrosPagos.Image")));
+            this.btnAgregarOtrosPagos.Location = new System.Drawing.Point(12, 12);
+            this.btnAgregarOtrosPagos.Name = "btnAgregarOtrosPagos";
+            this.btnAgregarOtrosPagos.Size = new System.Drawing.Size(67, 22);
+            this.btnAgregarOtrosPagos.StyleController = this.layoutControl4;
+            this.btnAgregarOtrosPagos.TabIndex = 13;
+            this.btnAgregarOtrosPagos.Text = "Agregar";
+            this.btnAgregarOtrosPagos.Click += new System.EventHandler(this.btnAgregarOtrosPagos_Click);
+            // 
+            // btnEditarOtrosPagos
+            // 
+            this.btnEditarOtrosPagos.Image = ((System.Drawing.Image)(resources.GetObject("btnEditarOtrosPagos.Image")));
+            this.btnEditarOtrosPagos.Location = new System.Drawing.Point(83, 12);
+            this.btnEditarOtrosPagos.Name = "btnEditarOtrosPagos";
+            this.btnEditarOtrosPagos.Size = new System.Drawing.Size(66, 22);
+            this.btnEditarOtrosPagos.StyleController = this.layoutControl4;
+            this.btnEditarOtrosPagos.TabIndex = 14;
+            this.btnEditarOtrosPagos.Text = "Editar";
+            this.btnEditarOtrosPagos.Click += new System.EventHandler(this.btnEditarOtrosPagos_Click);
+            // 
+            // btnEliminarOtrosGastos
+            // 
+            this.btnEliminarOtrosGastos.Image = ((System.Drawing.Image)(resources.GetObject("btnEliminarOtrosGastos.Image")));
+            this.btnEliminarOtrosGastos.Location = new System.Drawing.Point(313, 12);
+            this.btnEliminarOtrosGastos.Name = "btnEliminarOtrosGastos";
+            this.btnEliminarOtrosGastos.Size = new System.Drawing.Size(76, 22);
+            this.btnEliminarOtrosGastos.StyleController = this.layoutControl4;
+            this.btnEliminarOtrosGastos.TabIndex = 15;
+            this.btnEliminarOtrosGastos.Text = "Eliminar";
+            this.btnEliminarOtrosGastos.Click += new System.EventHandler(this.btnEliminarOtrosGastos_Click);
+            // 
+            // txtImpuesto
+            // 
+            this.txtImpuesto.Location = new System.Drawing.Point(479, 72);
+            this.txtImpuesto.MenuManager = this.ribbonControl1;
+            this.txtImpuesto.Name = "txtImpuesto";
+            this.txtImpuesto.Properties.ReadOnly = true;
+            this.txtImpuesto.Size = new System.Drawing.Size(95, 20);
+            this.txtImpuesto.StyleController = this.layoutControl4;
+            this.txtImpuesto.TabIndex = 16;
             // 
             // dtgObligaciones
             // 
@@ -1175,166 +1335,6 @@
             this.colMontoTotal.OptionsColumn.ReadOnly = true;
             this.colMontoTotal.Visible = true;
             this.colMontoTotal.VisibleIndex = 6;
-            // 
-            // txtImpuesto
-            // 
-            this.txtImpuesto.Location = new System.Drawing.Point(479, 72);
-            this.txtImpuesto.MenuManager = this.ribbonControl1;
-            this.txtImpuesto.Name = "txtImpuesto";
-            this.txtImpuesto.Properties.ReadOnly = true;
-            this.txtImpuesto.Size = new System.Drawing.Size(95, 20);
-            this.txtImpuesto.StyleController = this.layoutControl4;
-            this.txtImpuesto.TabIndex = 16;
-            // 
-            // btnEliminarOtrosGastos
-            // 
-            this.btnEliminarOtrosGastos.Image = ((System.Drawing.Image)(resources.GetObject("btnEliminarOtrosGastos.Image")));
-            this.btnEliminarOtrosGastos.Location = new System.Drawing.Point(313, 12);
-            this.btnEliminarOtrosGastos.Name = "btnEliminarOtrosGastos";
-            this.btnEliminarOtrosGastos.Size = new System.Drawing.Size(76, 22);
-            this.btnEliminarOtrosGastos.StyleController = this.layoutControl4;
-            this.btnEliminarOtrosGastos.TabIndex = 15;
-            this.btnEliminarOtrosGastos.Text = "Eliminar";
-            this.btnEliminarOtrosGastos.Click += new System.EventHandler(this.btnEliminarOtrosGastos_Click);
-            // 
-            // btnEditarOtrosPagos
-            // 
-            this.btnEditarOtrosPagos.Image = ((System.Drawing.Image)(resources.GetObject("btnEditarOtrosPagos.Image")));
-            this.btnEditarOtrosPagos.Location = new System.Drawing.Point(83, 12);
-            this.btnEditarOtrosPagos.Name = "btnEditarOtrosPagos";
-            this.btnEditarOtrosPagos.Size = new System.Drawing.Size(66, 22);
-            this.btnEditarOtrosPagos.StyleController = this.layoutControl4;
-            this.btnEditarOtrosPagos.TabIndex = 14;
-            this.btnEditarOtrosPagos.Text = "Editar";
-            this.btnEditarOtrosPagos.Click += new System.EventHandler(this.btnEditarOtrosPagos_Click);
-            // 
-            // btnAgregarOtrosPagos
-            // 
-            this.btnAgregarOtrosPagos.Image = ((System.Drawing.Image)(resources.GetObject("btnAgregarOtrosPagos.Image")));
-            this.btnAgregarOtrosPagos.Location = new System.Drawing.Point(12, 12);
-            this.btnAgregarOtrosPagos.Name = "btnAgregarOtrosPagos";
-            this.btnAgregarOtrosPagos.Size = new System.Drawing.Size(67, 22);
-            this.btnAgregarOtrosPagos.StyleController = this.layoutControl4;
-            this.btnAgregarOtrosPagos.TabIndex = 13;
-            this.btnAgregarOtrosPagos.Text = "Agregar";
-            this.btnAgregarOtrosPagos.Click += new System.EventHandler(this.btnAgregarOtrosPagos_Click);
-            // 
-            // btnCancelarOtrosPagos
-            // 
-            this.btnCancelarOtrosPagos.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelarOtrosPagos.Image")));
-            this.btnCancelarOtrosPagos.Location = new System.Drawing.Point(153, 12);
-            this.btnCancelarOtrosPagos.Name = "btnCancelarOtrosPagos";
-            this.btnCancelarOtrosPagos.Size = new System.Drawing.Size(78, 22);
-            this.btnCancelarOtrosPagos.StyleController = this.layoutControl4;
-            this.btnCancelarOtrosPagos.TabIndex = 12;
-            this.btnCancelarOtrosPagos.Text = "Cancelar";
-            this.btnCancelarOtrosPagos.Click += new System.EventHandler(this.btnCancelarOtrosPagos_Click);
-            // 
-            // btnGuardarOtrosPagos
-            // 
-            this.btnGuardarOtrosPagos.Image = ((System.Drawing.Image)(resources.GetObject("btnGuardarOtrosPagos.Image")));
-            this.btnGuardarOtrosPagos.Location = new System.Drawing.Point(235, 12);
-            this.btnGuardarOtrosPagos.Name = "btnGuardarOtrosPagos";
-            this.btnGuardarOtrosPagos.Size = new System.Drawing.Size(74, 22);
-            this.btnGuardarOtrosPagos.StyleController = this.layoutControl4;
-            this.btnGuardarOtrosPagos.TabIndex = 11;
-            this.btnGuardarOtrosPagos.Text = "Guardar";
-            this.btnGuardarOtrosPagos.Click += new System.EventHandler(this.btnGuardarOtrosPagos_Click);
-            // 
-            // slkupGastosOtrosPagos
-            // 
-            this.slkupGastosOtrosPagos.Location = new System.Drawing.Point(639, 72);
-            this.slkupGastosOtrosPagos.MenuManager = this.ribbonControl1;
-            this.slkupGastosOtrosPagos.Name = "slkupGastosOtrosPagos";
-            this.slkupGastosOtrosPagos.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.slkupGastosOtrosPagos.Properties.ReadOnly = true;
-            this.slkupGastosOtrosPagos.Properties.View = this.searchLookUpEdit3View;
-            this.slkupGastosOtrosPagos.Size = new System.Drawing.Size(159, 20);
-            this.slkupGastosOtrosPagos.StyleController = this.layoutControl4;
-            this.slkupGastosOtrosPagos.TabIndex = 10;
-            // 
-            // searchLookUpEdit3View
-            // 
-            this.searchLookUpEdit3View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
-            this.searchLookUpEdit3View.Name = "searchLookUpEdit3View";
-            this.searchLookUpEdit3View.OptionsSelection.EnableAppearanceFocusedCell = false;
-            this.searchLookUpEdit3View.OptionsView.ShowGroupPanel = false;
-            // 
-            // slkupProveedorOtrosPagos
-            // 
-            this.slkupProveedorOtrosPagos.Location = new System.Drawing.Point(639, 48);
-            this.slkupProveedorOtrosPagos.MenuManager = this.ribbonControl1;
-            this.slkupProveedorOtrosPagos.Name = "slkupProveedorOtrosPagos";
-            this.slkupProveedorOtrosPagos.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.slkupProveedorOtrosPagos.Properties.ReadOnly = true;
-            this.slkupProveedorOtrosPagos.Properties.View = this.searchLookUpEdit2View;
-            this.slkupProveedorOtrosPagos.Size = new System.Drawing.Size(159, 20);
-            this.slkupProveedorOtrosPagos.StyleController = this.layoutControl4;
-            this.slkupProveedorOtrosPagos.TabIndex = 8;
-            // 
-            // searchLookUpEdit2View
-            // 
-            this.searchLookUpEdit2View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
-            this.searchLookUpEdit2View.Name = "searchLookUpEdit2View";
-            this.searchLookUpEdit2View.OptionsSelection.EnableAppearanceFocusedCell = false;
-            this.searchLookUpEdit2View.OptionsView.ShowGroupPanel = false;
-            // 
-            // slkupMonedaOtrosPagos
-            // 
-            this.slkupMonedaOtrosPagos.Location = new System.Drawing.Point(73, 72);
-            this.slkupMonedaOtrosPagos.MenuManager = this.ribbonControl1;
-            this.slkupMonedaOtrosPagos.Name = "slkupMonedaOtrosPagos";
-            this.slkupMonedaOtrosPagos.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.slkupMonedaOtrosPagos.Properties.ReadOnly = true;
-            this.slkupMonedaOtrosPagos.Properties.View = this.searchLookUpEdit1View;
-            this.slkupMonedaOtrosPagos.Size = new System.Drawing.Size(165, 20);
-            this.slkupMonedaOtrosPagos.StyleController = this.layoutControl4;
-            this.slkupMonedaOtrosPagos.TabIndex = 7;
-            // 
-            // searchLookUpEdit1View
-            // 
-            this.searchLookUpEdit1View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
-            this.searchLookUpEdit1View.Name = "searchLookUpEdit1View";
-            this.searchLookUpEdit1View.OptionsSelection.EnableAppearanceFocusedCell = false;
-            this.searchLookUpEdit1View.OptionsView.ShowGroupPanel = false;
-            // 
-            // txtMontoOtrosPagos
-            // 
-            this.txtMontoOtrosPagos.Location = new System.Drawing.Point(303, 72);
-            this.txtMontoOtrosPagos.MenuManager = this.ribbonControl1;
-            this.txtMontoOtrosPagos.Name = "txtMontoOtrosPagos";
-            this.txtMontoOtrosPagos.Properties.ReadOnly = true;
-            this.txtMontoOtrosPagos.Size = new System.Drawing.Size(111, 20);
-            this.txtMontoOtrosPagos.StyleController = this.layoutControl4;
-            this.txtMontoOtrosPagos.TabIndex = 6;
-            // 
-            // dtpFechaOtrosPagos
-            // 
-            this.dtpFechaOtrosPagos.EditValue = null;
-            this.dtpFechaOtrosPagos.Location = new System.Drawing.Point(73, 48);
-            this.dtpFechaOtrosPagos.MenuManager = this.ribbonControl1;
-            this.dtpFechaOtrosPagos.Name = "dtpFechaOtrosPagos";
-            this.dtpFechaOtrosPagos.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.dtpFechaOtrosPagos.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.dtpFechaOtrosPagos.Properties.ReadOnly = true;
-            this.dtpFechaOtrosPagos.Size = new System.Drawing.Size(165, 20);
-            this.dtpFechaOtrosPagos.StyleController = this.layoutControl4;
-            this.dtpFechaOtrosPagos.TabIndex = 5;
-            // 
-            // txtDocumentoOtrosPagos
-            // 
-            this.txtDocumentoOtrosPagos.Location = new System.Drawing.Point(303, 48);
-            this.txtDocumentoOtrosPagos.MenuManager = this.ribbonControl1;
-            this.txtDocumentoOtrosPagos.Name = "txtDocumentoOtrosPagos";
-            this.txtDocumentoOtrosPagos.Properties.ReadOnly = true;
-            this.txtDocumentoOtrosPagos.Size = new System.Drawing.Size(271, 20);
-            this.txtDocumentoOtrosPagos.StyleController = this.layoutControl4;
-            this.txtDocumentoOtrosPagos.TabIndex = 4;
             // 
             // layoutControlGroup4
             // 
@@ -1637,7 +1637,7 @@
             this.emptySpaceItem4.MaxSize = new System.Drawing.Size(0, 17);
             this.emptySpaceItem4.MinSize = new System.Drawing.Size(10, 17);
             this.emptySpaceItem4.Name = "emptySpaceItem4";
-            this.emptySpaceItem4.Size = new System.Drawing.Size(339, 17);
+            this.emptySpaceItem4.Size = new System.Drawing.Size(436, 17);
             this.emptySpaceItem4.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             this.emptySpaceItem4.Text = "Asiento Contable :";
             this.emptySpaceItem4.TextSize = new System.Drawing.Size(84, 0);
@@ -1646,9 +1646,9 @@
             // layoutControlItem13
             // 
             this.layoutControlItem13.Control = this.linkAsiento;
-            this.layoutControlItem13.Location = new System.Drawing.Point(707, 0);
+            this.layoutControlItem13.Location = new System.Drawing.Point(804, 0);
             this.layoutControlItem13.Name = "layoutControlItem13";
-            this.layoutControlItem13.Size = new System.Drawing.Size(113, 17);
+            this.layoutControlItem13.Size = new System.Drawing.Size(16, 17);
             this.layoutControlItem13.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem13.TextVisible = false;
             // 
@@ -1736,19 +1736,19 @@
             this.tabOtros.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl4)).EndInit();
             this.layoutControl4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dtgObligaciones)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridViewObligaciones)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtImpuesto.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.slkupGastosOtrosPagos.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit3View)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.slkupProveedorOtrosPagos.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit2View)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.slkupMonedaOtrosPagos.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit1View)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtDocumentoOtrosPagos.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMontoOtrosPagos.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtpFechaOtrosPagos.Properties.CalendarTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtpFechaOtrosPagos.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtDocumentoOtrosPagos.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.slkupMonedaOtrosPagos.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit1View)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.slkupProveedorOtrosPagos.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit2View)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.slkupGastosOtrosPagos.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit3View)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtImpuesto.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtgObligaciones)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewObligaciones)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem12)).EndInit();
@@ -1913,8 +1913,8 @@
         private DevExpress.Utils.ImageCollection imageCollection;
         private DevExpress.XtraEditors.TextEdit txtImpuesto;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem24;
-        private Util.S4UGridControl dtgObligaciones;
-        private Util.MyGridView gridViewObligaciones;
+        private DevExpress.XtraGrid.GridControl dtgObligaciones;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridViewObligaciones;
         private DevExpress.XtraGrid.Columns.GridColumn colFechaDocumento;
         private DevExpress.XtraGrid.Columns.GridColumn colNumDocumento;
         private DevExpress.XtraGrid.Columns.GridColumn colDescrGasto;
@@ -1925,6 +1925,7 @@
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem25;
         private DevExpress.XtraEditors.LabelControl lblMoneda;
         private DevExpress.XtraEditors.LabelControl labelControl13;
+        
 
     }
 }

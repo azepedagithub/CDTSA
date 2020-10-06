@@ -11,8 +11,8 @@ namespace CO.DAC
 {
     public static class clsEmbarqueDAC
     {
-        public static long InsertUpdate(string Operacion, long IDEmbarque, ref String Embarque, DateTime Fecha, DateTime FechaEmbarque,
-              String Asiento, int IDBodega, int IDProveedor, long IDOrdenCompra, int IDDocumentoCP, decimal TipoCambio, String Usuario,
+        public static long InsertUpdate(string Operacion, long IDEmbarque, ref String Embarque, DateTime Fecha, DateTime FechaEmbarque, 
+            int IDBodega, int IDProveedor, long IDOrdenCompra, int IDDocumentoCP, decimal TipoCambio, String Usuario,
               DateTime CreateDate, String CreatedBy, DateTime RecordDate, String UpdateBy, SqlTransaction tran)
         {
             long result = -1;
@@ -29,7 +29,6 @@ namespace CO.DAC
             oCmd.Parameters["@Embarque"].Size = 20;
             oCmd.Parameters.Add(new SqlParameter("@Fecha", Fecha));
             oCmd.Parameters.Add(new SqlParameter("@FechaEmbarque", FechaEmbarque));
-            oCmd.Parameters.Add(new SqlParameter("@Asiento", ""));
             oCmd.Parameters.Add(new SqlParameter("@IDBodega", IDBodega));
             oCmd.Parameters.Add(new SqlParameter("@IDProveedor", IDProveedor));
             oCmd.Parameters.Add(new SqlParameter("@IDOrdenCompra", IDOrdenCompra));
@@ -223,6 +222,49 @@ namespace CO.DAC
             oCmd.Transaction = tran;
             result = oCmd.ExecuteNonQuery();
 
+            return result;
+
+        }
+
+        public static long CreaTransaccionInventario(int IDEmbarque, DateTime FechaDocumento,ref int IDTransaccion, String Usuario, SqlTransaction tran)
+        {
+            long result = -1;
+            String strSQL = "dbo.coCreaPaqueteInventarioEmbarque";
+
+            SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
+
+            oCmd.Parameters.Add(new SqlParameter("@IDEmbarque", IDEmbarque));
+            oCmd.Parameters.Add(new SqlParameter("@FechaDocumento", FechaDocumento));
+            oCmd.Parameters.Add(new SqlParameter("@IDTransaccion", IDTransaccion));
+            oCmd.Parameters["@IDTransaccion"].Direction = ParameterDirection.InputOutput;
+            oCmd.Parameters.Add(new SqlParameter("@Usuario", Usuario));
+            oCmd.CommandType = CommandType.StoredProcedure;
+            oCmd.Transaction = tran;
+            result = oCmd.ExecuteNonQuery();
+
+            IDTransaccion = Convert.ToInt32(oCmd.Parameters["@IDTransaccion"].Value);
+
+            return result;
+
+        }
+
+        public static long CreaAsientoTransaccionInventario(int IDEmbarque, ref String Asiento,String Usuario, SqlTransaction tran)
+        {
+            long result = -1;
+            String strSQL = "dbo.coGeneraAsientoContableEmbarque";
+
+            SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
+
+            oCmd.Parameters.Add(new SqlParameter("@IDEmbarque", IDEmbarque));
+            oCmd.Parameters.Add(new SqlParameter("@Asiento", Asiento));
+            oCmd.Parameters["@Asiento"].Direction = ParameterDirection.InputOutput;
+            oCmd.Parameters["@Asiento"].DbType = DbType.String;
+            oCmd.Parameters["@Asiento"].Size = 20;
+            oCmd.Parameters.Add(new SqlParameter("@Usuario", Usuario));
+            oCmd.CommandType = CommandType.StoredProcedure;
+            oCmd.Transaction = tran;
+            result = oCmd.ExecuteNonQuery();
+            Asiento = oCmd.Parameters["@Asiento"].Value.ToString();
             return result;
 
         }

@@ -52,6 +52,28 @@ namespace CO.DAC
         }
 
 
+        public static bool SetEstado(int IDLiquidacion, int IDEstado, SqlTransaction tran)
+        {
+            long result = -1;
+            bool bResult = false;
+            String strSQL = "dbo.coSetEstadoLiquidacionCompra";
+
+            SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
+
+            oCmd.Parameters.Add(new SqlParameter("@IDLiquidacion", IDLiquidacion));
+            oCmd.Parameters.Add(new SqlParameter("@IDEstado", IDEstado));
+            
+
+            oCmd.CommandType = CommandType.StoredProcedure;
+            oCmd.Transaction = tran;            
+            result = oCmd.ExecuteNonQuery();
+            bResult = true;
+            
+            return bResult;
+
+        }
+
+
         public static DataSet Get(long IDLiquidacion,long IDEmbarque,long IDOrdenCompra, SqlTransaction oTran = null)
         {
             String strSQL = "dbo.coGetLiquidacionCompra";

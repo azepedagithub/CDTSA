@@ -36,7 +36,8 @@
             this.btnGuardar = new DevExpress.XtraBars.BarButtonItem();
             this.btnCancelar = new DevExpress.XtraBars.BarButtonItem();
             this.btnEliminar = new DevExpress.XtraBars.BarButtonItem();
-            this.btnAplicar = new DevExpress.XtraBars.BarButtonItem();
+            this.btnLiquidar = new DevExpress.XtraBars.BarButtonItem();
+            this.btnImpresion = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.labelControl5 = new DevExpress.XtraEditors.LabelControl();
@@ -85,7 +86,6 @@
             this.txtValorMercaderia = new DevExpress.XtraEditors.TextEdit();
             this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
             this.lblMoneda = new DevExpress.XtraEditors.LabelControl();
-            this.btnImpresion = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMontoFlete.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMontoSeguro.Properties)).BeginInit();
@@ -118,7 +118,7 @@
             this.btnGuardar,
             this.btnCancelar,
             this.btnEliminar,
-            this.btnAplicar,
+            this.btnLiquidar,
             this.btnImpresion});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
             this.ribbonControl1.MaxItemId = 3;
@@ -161,13 +161,23 @@
             this.btnEliminar.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnEliminar.LargeGlyph")));
             this.btnEliminar.Name = "btnEliminar";
             // 
-            // btnAplicar
+            // btnLiquidar
             // 
-            this.btnAplicar.Caption = "Aplicar al Inventario";
-            this.btnAplicar.Glyph = ((System.Drawing.Image)(resources.GetObject("btnAplicar.Glyph")));
-            this.btnAplicar.Id = 1;
-            this.btnAplicar.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnAplicar.LargeGlyph")));
-            this.btnAplicar.Name = "btnAplicar";
+            this.btnLiquidar.Caption = "Liquidar";
+            this.btnLiquidar.Glyph = ((System.Drawing.Image)(resources.GetObject("btnLiquidar.Glyph")));
+            this.btnLiquidar.Id = 1;
+            this.btnLiquidar.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnLiquidar.LargeGlyph")));
+            this.btnLiquidar.Name = "btnLiquidar";
+            this.btnLiquidar.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnLiquidar_ItemClick);
+            // 
+            // btnImpresion
+            // 
+            this.btnImpresion.Caption = "Impresion";
+            this.btnImpresion.Glyph = ((System.Drawing.Image)(resources.GetObject("btnImpresion.Glyph")));
+            this.btnImpresion.Id = 2;
+            this.btnImpresion.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnImpresion.LargeGlyph")));
+            this.btnImpresion.Name = "btnImpresion";
+            this.btnImpresion.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnImpresion_ItemClick);
             // 
             // ribbonPage1
             // 
@@ -194,7 +204,7 @@
             this.ribbonPageGroup1.ItemLinks.Add(this.btnGuardar);
             this.ribbonPageGroup1.ItemLinks.Add(this.btnCancelar);
             this.ribbonPageGroup1.ItemLinks.Add(this.btnEliminar);
-            this.ribbonPageGroup1.ItemLinks.Add(this.btnAplicar);
+            this.ribbonPageGroup1.ItemLinks.Add(this.btnLiquidar);
             this.ribbonPageGroup1.ItemLinks.Add(this.btnImpresion);
             this.ribbonPageGroup1.Name = "ribbonPageGroup1";
             // 
@@ -624,15 +634,6 @@
             this.lblMoneda.TabIndex = 1;
             this.lblMoneda.Text = "-- --";
             // 
-            // btnImpresion
-            // 
-            this.btnImpresion.Caption = "Impresion";
-            this.btnImpresion.Glyph = ((System.Drawing.Image)(resources.GetObject("btnImpresion.Glyph")));
-            this.btnImpresion.Id = 2;
-            this.btnImpresion.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnImpresion.LargeGlyph")));
-            this.btnImpresion.Name = "btnImpresion";
-            this.btnImpresion.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnImpresion_ItemClick);
-            // 
             // frmLiquidacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -700,7 +701,7 @@
         private DevExpress.XtraBars.BarButtonItem btnGuardar;
         private DevExpress.XtraBars.BarButtonItem btnCancelar;
         private DevExpress.XtraBars.BarButtonItem btnEliminar;
-        private DevExpress.XtraBars.BarButtonItem btnAplicar;
+        private DevExpress.XtraBars.BarButtonItem btnLiquidar;
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
         private DevExpress.XtraEditors.LabelControl labelControl5;

@@ -143,7 +143,7 @@ namespace CO
                     {
                         ConnectionManager.BeginTran();
                         string s = "";
-                        clsEmbarqueDAC.InsertUpdate("D", Convert.ToInt64(currentRow["IDEmbarque"]),ref s ,DateTime.Now,DateTime.Now,"",-1,-1,-1,-1,0,"",DateTime.Now,"",DateTime.Now,"", ConnectionManager.Tran);
+                        clsEmbarqueDAC.InsertUpdate("D", Convert.ToInt64(currentRow["IDEmbarque"]),ref s ,DateTime.Now,DateTime.Now,-1,-1,-1,-1,0,"",DateTime.Now,"",DateTime.Now,"", ConnectionManager.Tran);
                         clsDetalleSolicitudCompraDAC.InsertUpdate("D", Convert.ToInt32(currentRow["IDSolicitud"]), -1, 0, "", ConnectionManager.Tran);
                         ConnectionManager.CommitTran();
                     }

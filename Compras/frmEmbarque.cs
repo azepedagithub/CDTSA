@@ -702,7 +702,7 @@ namespace CO
                         OrdenCompra = "--";
                         
                         //Ingresar la cabecera de la solicitud
-                        IDEmbarque = DAC.clsEmbarqueDAC.InsertUpdate("I", IDEmbarque,ref Embarque,Fecha,FechaEmbarque,null,IDBodega,IDProveedor,IDOrdenCompra,-1,Convert.ToDecimal(TipoCambio), sUsuario, DateTime.Now,sUsuario,DateTime.Now,sUsuario, ConnectionManager.Tran);
+                        IDEmbarque = DAC.clsEmbarqueDAC.InsertUpdate("I", IDEmbarque,ref Embarque,Fecha,FechaEmbarque,IDBodega,IDProveedor,IDOrdenCompra,-1,Convert.ToDecimal(TipoCambio), sUsuario, DateTime.Now,sUsuario,DateTime.Now,sUsuario, ConnectionManager.Tran);
                         this.txtEmbarque.Tag = IDEmbarque;
                         this.txtEmbarque.Text = Embarque;
                         foreach (DataRow row in dt.Rows)
@@ -719,7 +719,7 @@ namespace CO
 
                      if (Accion == "Edit")
                     {
-                        IDEmbarque = DAC.clsEmbarqueDAC.InsertUpdate("U", IDEmbarque,ref Embarque, Fecha, FechaEmbarque, null, IDBodega, IDProveedor, IDOrdenCompra, -1, 0, sUsuario, DateTime.Now, sUsuario, DateTime.Now, sUsuario, ConnectionManager.Tran);
+                        IDEmbarque = DAC.clsEmbarqueDAC.InsertUpdate("U", IDEmbarque,ref Embarque, Fecha, FechaEmbarque, IDBodega, IDProveedor, IDOrdenCompra, -1, 0, sUsuario, DateTime.Now, sUsuario, DateTime.Now, sUsuario, ConnectionManager.Tran);
                         
                          //Eliminamos el detalle y lo volvemos a insertar
                         DAC.clsEmbarqueDetalleDAC.InsertUpdate("D", IDEmbarque,-1,0,0,0,0,0,0,0,"", ConnectionManager.Tran);
@@ -769,7 +769,7 @@ namespace CO
                     {
                         ConnectionManager.BeginTran();
 
-                        DAC.clsEmbarqueDAC.InsertUpdate("D", IDEmbarque, ref Embarque ,DateTime.Now, DateTime.Now,"",-1,-1,-1,-1,0,"",DateTime.Now,"",DateTime.Now,"", ConnectionManager.Tran);                            
+                        DAC.clsEmbarqueDAC.InsertUpdate("D", IDEmbarque, ref Embarque ,DateTime.Now, DateTime.Now,-1,-1,-1,-1,0,"",DateTime.Now,"",DateTime.Now,"", ConnectionManager.Tran);                            
                         DAC.clsEmbarqueDetalleDAC.InsertUpdate("D",IDEmbarque,-1,0,9,0,0,0,0,0,"", ConnectionManager.Tran);
                         ConnectionManager.CommitTran();
                         MessageBox.Show("El embarque ha sido eliminado correctamente");
@@ -810,27 +810,26 @@ namespace CO
         private void btnAplicar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             
-            //Apliar el producto a inventario
-            /*
-            try
-            {
-                long IDTan = -1;
-                String Asiento = "";
-                ConnectionManager.BeginTran();
-                DAC.clsEmbarqueDAC.CrearPaqueteInventario("CO", Convert.ToInt64(this.txtEmbarque.Tag), sUsuario, ref IDTan, ConnectionManager.Tran);
-                DAC.clsEmbarqueDAC.GeneraAsientoContable("CO", Convert.ToInt64(this.txtEmbarque.Tag), sUsuario, ref Asiento, ConnectionManager.Tran);
-                ConnectionManager.CommitTran();
-                MessageBox.Show("El documento se ha aplicado correctamente ");
-                this.linkAsiento.Text = Asiento;
-                this.btnAplicar.Enabled = false;
+            String sMensaje = "";
+            if (!this.Confirmada) 
+                sMensaje =  sMensaje + " • La orden debe de estar confirmada \n\r";                            
+            if (this.IDObligacionProveedor == -1)            
+                sMensaje =  sMensaje + " • Debe definiar la obligación del proveedor \n\r";   
+            DataView dv = this.dtDetalleEmbarque.AsDataView();
+            dv.RowFilter = "CantidadAceptada>0";  
+            if (dv.ToTable().Rows.Count==0){
+                sMensaje = sMensaje + " • Se ingresar las cantidades que se aceptaran del embarque\n\r";
             }
-            catch (Exception Ex) {
-                MessageBox.Show("Han ocurrido los siguientes errores : " + Ex.Message);
+
+            if (sMensaje !="") {
+                MessageBox.Show("No puede liquidar el embarque, por favor revise : \n\r" + sMensaje) ;
+                return ;
             }
-            */
-            //DAC.clsLiquidacionCompraDAC.Get(-1, this.ID_Embarque, this.IDOrdenCompra);
-            frmLiquidacion ofrmLiquidacion = new frmLiquidacion(-1, this.IDEmbarque, this.IDOrdenCompra,this.OrdenCompra,this.Embarque, "Add");
+
+            frmLiquidacion ofrmLiquidacion = new frmLiquidacion(-1, this.IDEmbarque, this.IDOrdenCompra, this.OrdenCompra, this.Embarque);
             ofrmLiquidacion.ShowDialog();
+            
+           
         }
 
         private void linkAsiento_Click(object sender, EventArgs e)
@@ -864,6 +863,13 @@ namespace CO
 
         private void btnConfirmar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+            DataView dv = this.dtDetalleEmbarque.AsDataView();
+            dv.RowFilter = "CantidadAceptada>0";
+            if (dv.ToTable().Rows.Count == 0)
+            {
+                MessageBox.Show("Por favor verifique lo siguiente: \n\r   • Se ingresar las cantidades que se aceptaran del embarque\n\r");
+                return;
+            } 
             bool result = clsEmbarqueDAC.ConfirmarEmbarque((int)this.ID_Embarque, true, null);
             if (result) { 
                 MessageBox.Show("El Embarque ha sido confirmado");
@@ -1041,11 +1047,14 @@ namespace CO
 
         private void SetCurrentRowOtrosPagos()
         {
-            int index = (int)this.gridViewObligaciones.FocusedRowHandle;
-            if (index > -1)
+            if (this.gridViewObligaciones.DataSource != null)
             {
-                currentRowOtrosPagos = gridViewObligaciones.GetDataRow(index);
-                UpdateControlsFromCurrentRow(currentRowOtrosPagos);
+                int index = (int)this.gridViewObligaciones.FocusedRowHandle;
+                if (index > -1)
+                {
+                    currentRowOtrosPagos = gridViewObligaciones.GetDataRow(index);
+                    UpdateControlsFromCurrentRow(currentRowOtrosPagos);
+                }
             }
         }
 
