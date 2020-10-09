@@ -56,6 +56,10 @@
             this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.colOrdenCompra = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colBodegaDest = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colIdProveedor = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colNombreProveedor = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
@@ -226,6 +230,10 @@
             this.gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colIDEmbarque,
             this.colEmbarque,
+            this.colOrdenCompra,
+            this.colIdProveedor,
+            this.colNombreProveedor,
+            this.colBodegaDest,
             this.colFecha,
             this.colAsiento,
             this.colUsuario});
@@ -240,7 +248,7 @@
             this.colIDEmbarque.Name = "colIDEmbarque";
             this.colIDEmbarque.Visible = true;
             this.colIDEmbarque.VisibleIndex = 0;
-            this.colIDEmbarque.Width = 88;
+            this.colIDEmbarque.Width = 76;
             // 
             // colEmbarque
             // 
@@ -249,7 +257,7 @@
             this.colEmbarque.Name = "colEmbarque";
             this.colEmbarque.Visible = true;
             this.colEmbarque.VisibleIndex = 1;
-            this.colEmbarque.Width = 112;
+            this.colEmbarque.Width = 99;
             // 
             // colFecha
             // 
@@ -258,16 +266,16 @@
             this.colFecha.Name = "colFecha";
             this.colFecha.Visible = true;
             this.colFecha.VisibleIndex = 2;
-            this.colFecha.Width = 73;
+            this.colFecha.Width = 100;
             // 
             // colAsiento
             // 
             this.colAsiento.Caption = "Asiento";
-            this.colAsiento.FieldName = "Asiento";
+            this.colAsiento.FieldName = "AsientoInv";
             this.colAsiento.Name = "colAsiento";
             this.colAsiento.Visible = true;
-            this.colAsiento.VisibleIndex = 3;
-            this.colAsiento.Width = 261;
+            this.colAsiento.VisibleIndex = 7;
+            this.colAsiento.Width = 111;
             // 
             // colUsuario
             // 
@@ -275,8 +283,8 @@
             this.colUsuario.FieldName = "Usuario";
             this.colUsuario.Name = "colUsuario";
             this.colUsuario.Visible = true;
-            this.colUsuario.VisibleIndex = 4;
-            this.colUsuario.Width = 63;
+            this.colUsuario.VisibleIndex = 8;
+            this.colUsuario.Width = 105;
             // 
             // layoutControlGroup1
             // 
@@ -356,6 +364,42 @@
             this.layoutControlItem3.Text = "Embarque:";
             this.layoutControlItem3.TextSize = new System.Drawing.Size(74, 13);
             // 
+            // colOrdenCompra
+            // 
+            this.colOrdenCompra.Caption = "Orden de Compra";
+            this.colOrdenCompra.FieldName = "OrdenCompra";
+            this.colOrdenCompra.Name = "colOrdenCompra";
+            this.colOrdenCompra.Visible = true;
+            this.colOrdenCompra.VisibleIndex = 3;
+            this.colOrdenCompra.Width = 107;
+            // 
+            // colBodegaDest
+            // 
+            this.colBodegaDest.Caption = "Bodega Destino";
+            this.colBodegaDest.FieldName = "DescrBodega";
+            this.colBodegaDest.Name = "colBodegaDest";
+            this.colBodegaDest.Visible = true;
+            this.colBodegaDest.VisibleIndex = 6;
+            this.colBodegaDest.Width = 197;
+            // 
+            // colIdProveedor
+            // 
+            this.colIdProveedor.Caption = "CodProveedor";
+            this.colIdProveedor.FieldName = "CodProveedor";
+            this.colIdProveedor.Name = "colIdProveedor";
+            this.colIdProveedor.Visible = true;
+            this.colIdProveedor.VisibleIndex = 4;
+            this.colIdProveedor.Width = 90;
+            // 
+            // colNombreProveedor
+            // 
+            this.colNombreProveedor.Caption = "Nombre Proveedor";
+            this.colNombreProveedor.FieldName = "NombreProveedor";
+            this.colNombreProveedor.Name = "colNombreProveedor";
+            this.colNombreProveedor.Visible = true;
+            this.colNombreProveedor.VisibleIndex = 5;
+            this.colNombreProveedor.Width = 251;
+            // 
             // frmListadoEmbarque
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -421,5 +465,9 @@
         private DevExpress.XtraGrid.Columns.GridColumn colFecha;
         private DevExpress.XtraGrid.Columns.GridColumn colAsiento;
         private DevExpress.XtraGrid.Columns.GridColumn colUsuario;
+        private DevExpress.XtraGrid.Columns.GridColumn colOrdenCompra;
+        private DevExpress.XtraGrid.Columns.GridColumn colIdProveedor;
+        private DevExpress.XtraGrid.Columns.GridColumn colNombreProveedor;
+        private DevExpress.XtraGrid.Columns.GridColumn colBodegaDest;
     }
 }

@@ -650,28 +650,18 @@ GO
 
 
 INSERT INTO dbo.coEstadoOrdenCompra( IDEstadoOrden, Descr, Activo )
-VALUES  (1,'APROBADO',1)
-
-go 
-
-INSERT INTO dbo.coEstadoOrdenCompra( IDEstadoOrden, Descr, Activo )
-VALUES  (2,'CONFIRMADA',1)
+VALUES  (1,'CONFIRMADA',1)
 
 GO 
 
 
 INSERT INTO dbo.coEstadoOrdenCompra( IDEstadoOrden, Descr, Activo )
-VALUES  (3,'BACKORDER',1)
+VALUES  (2,'CANCELADA',1)
 
 go
 
 INSERT INTO dbo.coEstadoOrdenCompra( IDEstadoOrden, Descr, Activo )
-VALUES  (4,'CANCELADA',1)
-
-go
-
-INSERT INTO dbo.coEstadoOrdenCompra( IDEstadoOrden, Descr, Activo )
-VALUES  (5,'RECIBIDA',1)
+VALUES  (3,'RECIBIDA',1)
 
 
 GO
@@ -1086,7 +1076,7 @@ GO
 CREATE   PROCEDURE dbo.coConfirmarOrdenCompra @IDOrdenCompra  AS INT
 AS
 
-UPDATE dbo.coOrdenCompra SET IDEstado=2
+UPDATE dbo.coOrdenCompra SET IDEstado=1
 WHERE IDOrdenCompra = @IDOrdenCompra
 
 GO 
@@ -1139,7 +1129,7 @@ GO
 CREATE PROCEDURE dbo.coCancelarOrdenCompra @IDOrdenCompra  AS INT
 AS
 
-UPDATE dbo.coOrdenCompra SET IDEstado=4
+UPDATE dbo.coOrdenCompra SET IDEstado=2
 WHERE IDOrdenCompra = @IDOrdenCompra
 
 
@@ -2130,3 +2120,8 @@ CREATE PROCEDURE dbo.coSetEstadoLiquidacionCompra (@IDLiquidacion  AS INT, @IDEs
 AS 
 UPDATE dbo.coLiquidacionCompra SET  IDEstado = @IDEstado WHERE IDLiquidacion =@IDLiquidacion 
 
+GO
+
+CREATE PROCEDURE dbo.coGetStatusLiquidacion(@IDEmbarque AS int)
+AS 
+SELECT TOP 1 IDEstado FROM dbo.coLiquidacionCompra WHERE IDEmbarque=@IDEmbarque

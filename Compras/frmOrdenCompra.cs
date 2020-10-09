@@ -218,8 +218,8 @@ namespace CO
         private void HabilitarBotones(DataTable dt)
         {
             DataRow cabecera = dt.Rows[0];
-            //Estado Aproba
-            if (Convert.ToInt32(cabecera["IDEstado"]) == 1 || Convert.ToInt32(cabecera["IDEstado"]) == 0)
+            //Estado Inicial
+            if  (Convert.ToInt32(cabecera["IDEstado"]) == 0)
             {
                 this.btnConfirmar.Enabled = true;
                 this.btnDesconfirmar.Enabled = false;
@@ -227,7 +227,7 @@ namespace CO
                 this.btnEmbarque.Enabled = false;
             }
             //Estado Confirmada
-            if (Convert.ToInt32(cabecera["IDEstado"]) == 2)
+            if (Convert.ToInt32(cabecera["IDEstado"]) == 1)
             {
                 this.btnConfirmar.Enabled = false;
                 this.btnDesconfirmar.Enabled = true;
@@ -665,7 +665,7 @@ namespace CO
 
         private void btnEditarSolicitud_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            if (this.IDEstado == 2) {
+            if (this.IDEstado == 1) {
                 return;
             }
             this.Accion = "Edit";
@@ -833,7 +833,7 @@ namespace CO
             
             try
             {
-                if (Convert.ToInt32(dtOrdenCompra.Rows[0]["IDEstado"]) >= 2) {
+                if (Convert.ToInt32(dtOrdenCompra.Rows[0]["IDEstado"]) >= 1) {
                     MessageBox.Show("Solo puede eliminar ordenes cuyo estdo sea el inicial");
                     return;
                 }
@@ -1150,10 +1150,10 @@ namespace CO
         {
             ConnectionManager.BeginTran();
             clsOrdenCompraDAC.ConfirmarOrdenCompra(this.IDOrdenCompra, ConnectionManager.Tran);
-            dtOrdenCompra.Rows[0]["IDEstado"] = 2;
+            dtOrdenCompra.Rows[0]["IDEstado"] = 1;
             dtOrdenCompra.Rows[0]["DescrEstado"] = "CONFIRMADA";
             ConnectionManager.CommitTran();
-            this.IDEstado = 2;
+            this.IDEstado = 1;
             HabilitarBotones(this.dtOrdenCompra);
             MessageBox.Show("La Orden ha sido Confirmada correctamente");
         }
@@ -1187,9 +1187,10 @@ namespace CO
             }
             ConnectionManager.BeginTran();
             clsOrdenCompraDAC.CancelarOrdenCompra(this.IDOrdenCompra, ConnectionManager.Tran);
-            dtOrdenCompra.Rows[0]["IDEstado"] = 4;
+            dtOrdenCompra.Rows[0]["IDEstado"] = 2;
             dtOrdenCompra.Rows[0]["DescrEstado"] = "CANCELADA";
             ConnectionManager.CommitTran();
+            this.IDEstado = 2;
             HabilitarBotones(this.dtOrdenCompra);
             MessageBox.Show("La Orden ha sido Confirmada correctamente");
         }

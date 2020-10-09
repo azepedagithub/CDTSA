@@ -131,6 +131,12 @@
     <Compile Include="DAC\clsProveedorDAC.cs" />
     <Compile Include="DAC\clsSolicitudCompraDAC.cs" />
     <Compile Include="DAC\clsUtilDAC.cs" />
+    <Compile Include="frmCondicionesDePago.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCondicionesDePago.Designer.cs">
+      <DependentUpon>frmCondicionesDePago.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmImportFromExcel.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -241,6 +247,9 @@
     <Compile Include="Reportes\rptSubRptGastos.Designer.cs">
       <DependentUpon>rptSubRptGastos.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="frmCondicionesDePago.resx">
+      <DependentUpon>frmCondicionesDePago.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmImportFromExcel.resx">
       <DependentUpon>frmImportFromExcel.cs</DependentUpon>
     </EmbeddedResource>

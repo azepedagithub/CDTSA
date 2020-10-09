@@ -765,15 +765,18 @@ namespace MainMenu
 
                     break;
                 case "treelstCompras":
-                    TreeListNode nodeSolicitudCompra = tl.AppendNode(new object[] { "Solicitudes de Compra" }, -1, 11, 11, 11);
-                    nodeSolicitudCompra.Tag = "frmSolicitudCompra";
-                    TreeListNode nodeListdoOrdenCompra = tl.AppendNode(new object[] { "Ordenes de Compra" }, -1, 11, 11, 11);
-                    nodeListdoOrdenCompra.Tag = "frmListadoOrdenesCompra";
-                    TreeListNode nodeEmbarques = tl.AppendNode(new object[] { "Embarques" }, -1, 11, 11, 11);
-                    nodeEmbarques.Tag = "frmListadoEmbarque";
+                    //TreeListNode nodeSolicitudCompra = tl.AppendNode(new object[] { "Solicitudes de Compra" }, -1, 11, 11, 11);
+                    //nodeSolicitudCompra.Tag = "frmSolicitudCompra";
+                    
                     TreeListNode nodeProveedores = tl.AppendNode(new object[] { "Proveedores" }, -1, 11, 11, 11);
                     nodeProveedores.Tag = "frmListadoProveedores";
-                    TreeListNode nodeParametrosCompra = tl.AppendNode(new object[] { "Parametros Compra" }, -1, 11, 11, 11);
+                    TreeListNode nodeTransaccionesCompra = tl.AppendNode(new object[] { "Transacciones" }, -1, 9, 10, 9);
+                    TreeListNode nodeListdoOrdenCompra = tl.AppendNode(new object[] { "Ordenes de Compra" }, nodeTransaccionesCompra.Id, 11, 11, 11);
+                    nodeListdoOrdenCompra.Tag = "frmListadoOrdenesCompra";
+                    TreeListNode nodeEmbarques = tl.AppendNode(new object[] { "Embarques" }, nodeTransaccionesCompra.Id, 11, 11, 11);
+                    nodeEmbarques.Tag = "frmListadoEmbarque";
+                    TreeListNode nodeParametrosCO= tl.AppendNode(new object[] { "Parámetros" }, -1, 9, 10, 9);
+                    TreeListNode nodeParametrosCompra = tl.AppendNode(new object[] { "Parametros Compra" }, nodeParametrosCO.Id, 11, 11, 11);
                     nodeParametrosCompra.Tag = "frmParametrosCompra";
                                                                   
                     break;

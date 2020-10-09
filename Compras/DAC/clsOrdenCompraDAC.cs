@@ -89,6 +89,23 @@ namespace CO.DAC
 
         }
 
+        public static long RecepcionOrdenCompra(long IDOrdenCompra, SqlTransaction tran)
+        {
+            long result = -1;
+            String strSQL = "dbo.coRecibirOrdenCompra";
+
+            SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
+
+            oCmd.Parameters.Add(new SqlParameter("@IDOrdenCompra", IDOrdenCompra));
+
+            oCmd.CommandType = CommandType.StoredProcedure;
+            oCmd.Transaction = tran;
+            result = oCmd.ExecuteNonQuery();
+
+            return result;
+
+        }
+
         public static long DesConfirmarOrdenCompra(long IDOrdenCompra, SqlTransaction tran)
         {
             long result = -1;

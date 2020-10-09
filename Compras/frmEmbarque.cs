@@ -763,6 +763,10 @@ namespace CO
         {
             try
             {
+                if (Confirmada) {
+                    MessageBox.Show("No se puede eliminar un embarque se encuentra en estado confirmada");
+                    return;
+                }
                 if (MessageBox.Show("Esta seguro que desea eliminar la Orden de Compra seleccionada ? ", "Listado de Ordenes de Compra", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
                 {
                     if (IDOrdenCompra >-1)

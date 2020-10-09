@@ -141,23 +141,23 @@ namespace CO
 
             if (this.IDEstado == 0 || this.IDEstado==1)
             {
-                if (sAccion == "Add" || sAccion == "Edit")
-                {
-                    this.btnEditar.Enabled = false;
+               // if (sAccion == "Add" || sAccion == "Edit")
+               // {
+                    //this.btnEditar.Enabled = false;
                     this.btnGuardar.Enabled = true;
                     this.btnCancelar.Enabled = true;
                     this.btnEliminar.Enabled = false;
                     this.btnCalculaProrratoGastos.Enabled = true;
-                }
-                else
-                {
-                    this.btnEditar.Enabled = true ;
-                    this.btnGuardar.Enabled = false;
-                    this.btnCancelar.Enabled = false;
-                    this.btnEliminar.Enabled = true;
-                    this.btnCalculaProrratoGastos.Enabled = false;
+                //}
+                //else
+                //{
+                //    //this.btnEditar.Enabled = true ;
+                //    this.btnGuardar.Enabled = false;
+                //    this.btnCancelar.Enabled = false;
+                //    this.btnEliminar.Enabled = true;
+                //    this.btnCalculaProrratoGastos.Enabled = false;
                    
-                }
+                //}
 
             }
             else if (this.IDEstado == 2)
@@ -558,7 +558,7 @@ namespace CO
 
         private void btnImpresion_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            if (this._IDLiquidacion != -1)
+            if (this._IDLiquidacion != -1 && this.IDEstado==2)
             {
                 DevExpress.XtraReports.UI.XtraReport report = DevExpress.XtraReports.UI.XtraReport.FromFile("./Reportes/Plantillas/rptLiquidacionCompra.repx", true);
 
@@ -594,16 +594,26 @@ namespace CO
 
         private void btnLiquidar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+
             try
             {
-                ConnectionManager.BeginTran();
-                DAC.clsLiquidacionCompraDAC.SetEstado(this._IDLiquidacion, 2, ConnectionManager.Tran);
-                this.IDEstado = 2;
-                ConnectionManager.CommitTran();
-                MessageBox.Show("Liquidación aplicada !!");
-                SetStatusLiquidacion();
-                HabilitarBotoneriaPrincipal();
-                HabilitarControles();
+                if (this.IDEstado == 1)
+                {
+                    ConnectionManager.BeginTran();
+                    DAC.clsLiquidacionCompraDAC.SetEstado(this._IDLiquidacion, 2, ConnectionManager.Tran);
+                    DAC.clsOrdenCompraDAC.RecepcionOrdenCompra(this._IDOrdenCompra, ConnectionManager.Tran);
+                    this.IDEstado = 2;
+                    ConnectionManager.CommitTran();
+                    MessageBox.Show("Liquidación aplicada !!");
+                    SetStatusLiquidacion();
+                    HabilitarBotoneriaPrincipal();
+                    HabilitarControles();
+                }
+                else
+                {
+                    MessageBox.Show("Por favor distribuya los gastos de las factura antes de liquidar");
+                    return;
+                }
             }
             catch (Exception ex) {
                 ConnectionManager.RollBackTran();

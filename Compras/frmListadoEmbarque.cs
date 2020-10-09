@@ -137,6 +137,10 @@ namespace CO
         {
             try
             {
+                if (Convert.ToBoolean(currentRow["Confirmado"]) == true) {
+                    MessageBox.Show("No se puede eliminar embarques que se encunetran confirmados");
+                    return;
+                }
                 if (MessageBox.Show("Esta seguro que desea eliminar el embarque seleccionada ? ", "Listado de Embarques", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
                 {
                     if (currentRow != null)

@@ -42,6 +42,7 @@
             this.xtraTabControl1 = new DevExpress.XtraTab.XtraTabControl();
             this.tabGeneral = new DevExpress.XtraTab.XtraTabPage();
             this.layoutControl2 = new DevExpress.XtraLayout.LayoutControl();
+            this.chkBonifica = new DevExpress.XtraEditors.CheckEdit();
             this.rdgOrigen = new DevExpress.XtraEditors.RadioGroup();
             this.chkMultimoneda = new DevExpress.XtraEditors.CheckEdit();
             this.chkActivo = new DevExpress.XtraEditors.CheckEdit();
@@ -70,6 +71,7 @@
             this.emptySpaceItem5 = new DevExpress.XtraLayout.EmptySpaceItem();
             this.layoutControlGroup5 = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem15 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
             this.emptySpaceItem17 = new DevExpress.XtraLayout.EmptySpaceItem();
             this.tabOtros = new DevExpress.XtraTab.XtraTabPage();
             this.layoutControl3 = new DevExpress.XtraLayout.LayoutControl();
@@ -119,8 +121,6 @@
             this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
             this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
-            this.chkBonifica = new DevExpress.XtraEditors.CheckEdit();
-            this.layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
@@ -129,6 +129,7 @@
             this.tabGeneral.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl2)).BeginInit();
             this.layoutControl2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chkBonifica.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rdgOrigen.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkMultimoneda.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkActivo.Properties)).BeginInit();
@@ -158,6 +159,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem15)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem17)).BeginInit();
             this.tabOtros.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl3)).BeginInit();
@@ -210,8 +212,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkBonifica.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).BeginInit();
             this.SuspendLayout();
             // 
             // ribbonControl1
@@ -349,6 +349,15 @@
             this.layoutControl2.Size = new System.Drawing.Size(729, 305);
             this.layoutControl2.TabIndex = 0;
             this.layoutControl2.Text = "layoutControl2";
+            // 
+            // chkBonifica
+            // 
+            this.chkBonifica.Location = new System.Drawing.Point(526, 194);
+            this.chkBonifica.Name = "chkBonifica";
+            this.chkBonifica.Properties.Caption = "Bonifica";
+            this.chkBonifica.Size = new System.Drawing.Size(191, 19);
+            this.chkBonifica.StyleController = this.layoutControl2;
+            this.chkBonifica.TabIndex = 12;
             // 
             // rdgOrigen
             // 
@@ -630,6 +639,15 @@
             this.layoutControlItem15.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem15.TextVisible = false;
             // 
+            // layoutControlItem9
+            // 
+            this.layoutControlItem9.Control = this.chkBonifica;
+            this.layoutControlItem9.Location = new System.Drawing.Point(514, 182);
+            this.layoutControlItem9.Name = "layoutControlItem9";
+            this.layoutControlItem9.Size = new System.Drawing.Size(195, 23);
+            this.layoutControlItem9.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItem9.TextVisible = false;
+            // 
             // emptySpaceItem17
             // 
             this.emptySpaceItem17.AllowHotTrack = false;
@@ -664,7 +682,7 @@
             // 
             // txtInteresMora
             // 
-            this.txtInteresMora.Location = new System.Drawing.Point(143, 166);
+            this.txtInteresMora.Location = new System.Drawing.Point(143, 251);
             this.txtInteresMora.MenuManager = this.ribbonControl1;
             this.txtInteresMora.Name = "txtInteresMora";
             this.txtInteresMora.Size = new System.Drawing.Size(219, 20);
@@ -673,7 +691,7 @@
             // 
             // txtDescuento
             // 
-            this.txtDescuento.Location = new System.Drawing.Point(143, 142);
+            this.txtDescuento.Location = new System.Drawing.Point(143, 227);
             this.txtDescuento.MenuManager = this.ribbonControl1;
             this.txtDescuento.Name = "txtDescuento";
             this.txtDescuento.Size = new System.Drawing.Size(219, 20);
@@ -725,7 +743,7 @@
             // 
             // slkupCondicionPago
             // 
-            this.slkupCondicionPago.Location = new System.Drawing.Point(143, 118);
+            this.slkupCondicionPago.Location = new System.Drawing.Point(143, 203);
             this.slkupCondicionPago.MenuManager = this.ribbonControl1;
             this.slkupCondicionPago.Name = "slkupCondicionPago";
             this.slkupCondicionPago.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -787,7 +805,7 @@
             this.emptySpaceItem10,
             this.emptySpaceItem11,
             this.emptySpaceItem12});
-            this.layoutControlGroup7.Location = new System.Drawing.Point(24, 76);
+            this.layoutControlGroup7.Location = new System.Drawing.Point(24, 161);
             this.layoutControlGroup7.Name = "layoutControlGroup7";
             this.layoutControlGroup7.Size = new System.Drawing.Size(660, 114);
             this.layoutControlGroup7.Text = "Condiciones";
@@ -860,7 +878,7 @@
             this.emptySpaceItem7.AllowHotTrack = false;
             this.emptySpaceItem7.Location = new System.Drawing.Point(0, 0);
             this.emptySpaceItem7.Name = "emptySpaceItem7";
-            this.emptySpaceItem7.Size = new System.Drawing.Size(24, 190);
+            this.emptySpaceItem7.Size = new System.Drawing.Size(24, 275);
             this.emptySpaceItem7.TextSize = new System.Drawing.Size(0, 0);
             // 
             // emptySpaceItem8
@@ -868,15 +886,15 @@
             this.emptySpaceItem8.AllowHotTrack = false;
             this.emptySpaceItem8.Location = new System.Drawing.Point(684, 0);
             this.emptySpaceItem8.Name = "emptySpaceItem8";
-            this.emptySpaceItem8.Size = new System.Drawing.Size(25, 190);
+            this.emptySpaceItem8.Size = new System.Drawing.Size(25, 275);
             this.emptySpaceItem8.TextSize = new System.Drawing.Size(0, 0);
             // 
             // emptySpaceItem13
             // 
             this.emptySpaceItem13.AllowHotTrack = false;
-            this.emptySpaceItem13.Location = new System.Drawing.Point(0, 190);
+            this.emptySpaceItem13.Location = new System.Drawing.Point(0, 275);
             this.emptySpaceItem13.Name = "emptySpaceItem13";
-            this.emptySpaceItem13.Size = new System.Drawing.Size(709, 95);
+            this.emptySpaceItem13.Size = new System.Drawing.Size(709, 10);
             this.emptySpaceItem13.TextSize = new System.Drawing.Size(0, 0);
             // 
             // emptySpaceItem6
@@ -884,7 +902,7 @@
             this.emptySpaceItem6.AllowHotTrack = false;
             this.emptySpaceItem6.Location = new System.Drawing.Point(24, 48);
             this.emptySpaceItem6.Name = "emptySpaceItem6";
-            this.emptySpaceItem6.Size = new System.Drawing.Size(660, 28);
+            this.emptySpaceItem6.Size = new System.Drawing.Size(660, 113);
             this.emptySpaceItem6.TextSize = new System.Drawing.Size(0, 0);
             // 
             // tanDirecciones
@@ -1109,24 +1127,6 @@
             this.emptySpaceItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
             // 
-            // chkBonifica
-            // 
-            this.chkBonifica.Location = new System.Drawing.Point(526, 194);
-            this.chkBonifica.Name = "chkBonifica";
-            this.chkBonifica.Properties.Caption = "Bonifica";
-            this.chkBonifica.Size = new System.Drawing.Size(191, 19);
-            this.chkBonifica.StyleController = this.layoutControl2;
-            this.chkBonifica.TabIndex = 12;
-            // 
-            // layoutControlItem9
-            // 
-            this.layoutControlItem9.Control = this.chkBonifica;
-            this.layoutControlItem9.Location = new System.Drawing.Point(514, 182);
-            this.layoutControlItem9.Name = "layoutControlItem9";
-            this.layoutControlItem9.Size = new System.Drawing.Size(195, 23);
-            this.layoutControlItem9.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem9.TextVisible = false;
-            // 
             // frmProveedor
             // 
             this.AllowFormGlass = DevExpress.Utils.DefaultBoolean.True;
@@ -1147,6 +1147,7 @@
             this.tabGeneral.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl2)).EndInit();
             this.layoutControl2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chkBonifica.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rdgOrigen.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkMultimoneda.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkActivo.Properties)).EndInit();
@@ -1176,6 +1177,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem15)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem17)).EndInit();
             this.tabOtros.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl3)).EndInit();
@@ -1228,8 +1230,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkBonifica.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

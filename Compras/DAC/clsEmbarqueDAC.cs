@@ -169,7 +169,7 @@ namespace CO.DAC
             DataSet DS = new DataSet();
 
             oAdap.Fill(DS, "Data");
-            return Convert.ToInt32(DS.Tables[0].Rows[0]);
+            return Convert.ToInt32(DS.Tables[0].Rows[0]["IdEstado"]);
         }
 
 

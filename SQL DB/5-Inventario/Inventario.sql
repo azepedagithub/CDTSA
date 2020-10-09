@@ -2691,7 +2691,7 @@ VALUES (	@IDEjercicio,@Periodo	,@Asiento,'IN',@FechaDocumento,GETDATE(),@Usuario
 					
 SELECT A.IDProducto,A.IDBodega,A.IDLote,A.Cantidad,P.CostoPromDolar,P.CostoPromLocal,A.CostoUntLocal,A.PrecioUntLocal,
 			C.CtaInventario,C.CtrInventario , C.CtaSobranteInvFisico,C.CtrSobranteInvFisico,
-			C.CtaFaltanteInvFisico,C.CtrFaltanteInvFisico,C.CtaVariacionCosto,C.CtrVariacionCosto,C.CtaVencimiento,C.CtrVencimiento,
+			C.CtaFaltanteInvFisico,C.CtrFaltanteInvFisico,C.CtaVariacionCosto,C.CtrVariacionCosto,
 			C.CtaCompra,C.CtrCompra, C.CtaConsumo,C.CtrConsumo,
 			A.IDTipoTran INTO #tmpDocumento 
 			FROM dbo.invTransaccionLinea A
