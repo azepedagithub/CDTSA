@@ -456,6 +456,13 @@ namespace MainMenu
                     ofrmSubirTipoCambio.Show();
                     break;
 
+								case "frmPaises":
+										frmPaises ofrmPaises = new frmPaises();
+										ofrmPaises.MdiParent = this;
+										ShowPagesRibbonMan(false);
+										ofrmPaises.Show();
+										break;
+
                 case "frmDesigner":
 
                     CDTSA.frmDesigner ofrmReportDesigner = new CDTSA.frmDesigner();
@@ -739,6 +746,8 @@ namespace MainMenu
                     nodeSubirTiposCambio.Tag = "frmSubirTipoCambio";
                     TreeListNode nodeParametros = tl.AppendNode(new object[] { "Parametros Generales" }, -1, 11, 11, 11);
                     nodeParametros.Tag = "frmParametrosGenerales";
+										TreeListNode nodePaises = tl.AppendNode(new object[] { "Paises" }, -1, 11, 11, 11);
+										nodePaises.Tag = "frmPaises";
                     TreeListNode nodeReportDesigner = tl.AppendNode(new object[] { "Diseñador de Reportes" }, -1, 11, 11, 11);
                     nodeReportDesigner.Tag = "frmDesigner";
 
@@ -784,6 +793,13 @@ namespace MainMenu
                 case "treelstCuentasPorPagar":
                     TreeListNode nodeDocumentosCP = tl.AppendNode(new object[] { "Documentos" }, -1, 11, 11, 11);
                     nodeDocumentosCP.Tag = "frmDocumento";
+										
+										TreeListNode nodeCondicionPago = tl.AppendNode(new object[] { "Condición de Pago" }, -1, 11, 11, 11);
+										nodeCondicionPago.Tag = "frmCondicionPago";
+                   
+
+										TreeListNode nodeCategoriaProveedor = tl.AppendNode(new object[] { "Categoria Proveedor" }, -1, 11, 11, 11);
+										nodeCategoriaProveedor.Tag = "frmCategoriaProveedor";
                    
                     break;
 
@@ -1123,6 +1139,21 @@ namespace MainMenu
                     ShowPagesRibbonMan(false);
                     ofrmDoc.Show();
                     break;
+								case "frmCategoriaProveedor":
+										CP.frmCategoriaProveedor ofrmCategoriaProveedor = new CP.frmCategoriaProveedor();
+										ofrmCategoriaProveedor.MdiParent = this;
+										ofrmCategoriaProveedor.WindowState = FormWindowState.Maximized;
+										ShowPagesRibbonMan(false);
+										ofrmCategoriaProveedor.Show();
+										break;
+
+								case "frmCondicionPago":
+										CO.frmCondicionesDePago ofrmCondicionPago = new CO.frmCondicionesDePago();
+										ofrmCondicionPago.MdiParent = this;
+										ofrmCondicionPago.WindowState = FormWindowState.Maximized;
+										ShowPagesRibbonMan(false);
+										ofrmCondicionPago.Show();
+										break;
 
                
             }

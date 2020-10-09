@@ -21,6 +21,8 @@ namespace CO.DAC
 
 				oCmd.Parameters.Add(new SqlParameter("@Operacion", Operacion));
 				oCmd.Parameters.Add(new SqlParameter("@IDPais", IDPais));
+				oCmd.Parameters["@IDPais"].Direction = ParameterDirection.InputOutput;
+				oCmd.Parameters["@IDPais"].DbType = DbType.Int32;
 				oCmd.Parameters.Add(new SqlParameter("@Descr", Descr));
 				oCmd.Parameters.Add(new SqlParameter("@Activo", Activo));
 
@@ -28,7 +30,7 @@ namespace CO.DAC
 				oCmd.Transaction = tran;
 				result = oCmd.ExecuteNonQuery();
 				if (@Operacion == "I")
-					IDPais = Convert.ToInt32(oCmd.Parameters["@IDPais"]);
+					IDPais = Convert.ToInt32(oCmd.Parameters["@IDPais"].Value);
 
 				return result;
 

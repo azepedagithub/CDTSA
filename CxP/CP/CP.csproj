@@ -47,6 +47,7 @@
     <ManifestCertificateThumbprint>9BBF27CF4DD8D0FDCFCB75638672A908DF33CF4F</ManifestCertificateThumbprint>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Accessibility" />
     <Reference Include="DevExpress.Data.v15.2, Version=15.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Printing.v15.2.Core, Version=15.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Sparkline.v15.2.Core, Version=15.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
@@ -57,7 +58,10 @@
     <Reference Include="DevExpress.XtraLayout.v15.2, Version=15.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraPrinting.v15.2, Version=15.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -68,6 +72,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAC\clsCategoriaProveedorDAC.cs" />
     <Compile Include="DAC\clsClaseDocumentoDAC.cs" />
     <Compile Include="DAC\clsCondicionPagoDAC.cs" />
     <Compile Include="DAC\clsDocumentocpDAC.cs" />
@@ -77,6 +82,12 @@
     </Compile>
     <Compile Include="Documentos.Designer.cs">
       <DependentUpon>Documentos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmCategoriaProveedor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCategoriaProveedor.Designer.cs">
+      <DependentUpon>frmCategoriaProveedor.cs</DependentUpon>
     </Compile>
     <Compile Include="frmDocumento.cs">
       <SubType>Form</SubType>
@@ -88,6 +99,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Documentos.resx">
       <DependentUpon>Documentos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCategoriaProveedor.resx">
+      <DependentUpon>frmCategoriaProveedor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmDocumento.resx">
       <DependentUpon>frmDocumento.cs</DependentUpon>

@@ -36,7 +36,7 @@ namespace CO
             try
             {
 
-                dtCategoriaProveedor = clsCategoriaProveedorDAC.Get(-1,"*").Tables[0];
+                dtCategoriaProveedor = CP.DAC.clsCategoriaProveedorDAC.Get(-1,"*").Tables[0];
                 Util.Util.ConfigLookupEdit(this.slkupCategoriaProveedor, dtCategoriaProveedor, "Descr", "IDCategoria", 350);
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupCategoriaProveedor, "[{'ColumnCaption':'IDCategoria','ColumnField':'IDCategoria','width':20},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':90}]");
                 this.slkupCategoriaProveedor.Properties.View.OptionsSelection.MultiSelect = true;

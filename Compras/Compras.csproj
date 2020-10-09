@@ -108,7 +108,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DAC\clsCategoriaProveedorDAC.cs" />
     <Compile Include="DAC\clsGastosCompraDAC.cs" />
     <Compile Include="DAC\clsGastosLiquidacionCompraDAC.cs" />
     <Compile Include="DAC\clsGastosLiquidacionDetalladoDAC.cs" />
@@ -197,6 +196,12 @@
     <Compile Include="frmOrdenCompra.Designer.cs">
       <DependentUpon>frmOrdenCompra.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmPaises.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPaises.Designer.cs">
+      <DependentUpon>frmPaises.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmParametros.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -280,6 +285,9 @@
     <EmbeddedResource Include="frmOrdenCompra.resx">
       <DependentUpon>frmOrdenCompra.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmPaises.resx">
+      <DependentUpon>frmPaises.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmParametros.resx">
       <DependentUpon>frmParametros.cs</DependentUpon>
     </EmbeddedResource>
@@ -349,6 +357,10 @@
     <ProjectReference Include="..\ControlBancario\ControlBancario.csproj">
       <Project>{574dcf6a-79a5-4bd7-bddf-d5d2ac2ccd8e}</Project>
       <Name>ControlBancario</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CxP\CP\CP.csproj">
+      <Project>{dca3f3c2-1618-492b-ab85-4117ed7aae52}</Project>
+      <Name>CP</Name>
     </ProjectReference>
     <ProjectReference Include="..\Inventario\Inventario\Inventario.csproj">
       <Project>{4c93329e-8656-4dd9-aebd-6a806e8b70d4}</Project>

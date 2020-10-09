@@ -399,7 +399,7 @@ namespace CO
                 Util.Util.ConfigLookupEdit(this.slkupBodega, clsBodegaDAC.GetData(-1, "*", -1).Tables[0], "Descr", "IDBodega");
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupBodega, "[{'ColumnCaption':'IDBodega','ColumnField':'IDBodega','width':30},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':70}]");
 
-                Util.Util.ConfigLookupEdit(this.slkupCondicionPago, clsCondicionPagoDAC.Get().Tables[0], "Descr", "IDCondicionPago");
+                Util.Util.ConfigLookupEdit(this.slkupCondicionPago, clsCondicionPagoDAC.Get(-1,"*").Tables[0], "Descr", "IDCondicionPago");
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupCondicionPago, "[{'ColumnCaption':'ID Condición','ColumnField':'IDCondicionPago','width':30},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':70}]");
 
 

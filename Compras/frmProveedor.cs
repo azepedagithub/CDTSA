@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace CO
 {
     public partial class frmProveedor : DevExpress.XtraBars.Ribbon.RibbonForm
@@ -324,7 +325,7 @@ namespace CO
                 HabilitarControles(false);
 
                 
-                Util.Util.ConfigLookupEdit(this.slkupCategoria, DAC.clsCategoriaProveedorDAC.Get(-1,"*").Tables[0], "Descr", "IDCategoria");
+                Util.Util.ConfigLookupEdit(this.slkupCategoria, CP.DAC.clsCategoriaProveedorDAC.Get(-1,"*").Tables[0], "Descr", "IDCategoria");
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupCategoria, "[{'ColumnCaption':'IDCategoria','ColumnField':'IDCategoria','width':30},{'ColumnCaption':'Descr','ColumnField':'Descr','width':70}]");
 
                 Util.Util.ConfigLookupEdit(this.slkupPais, DAC.clsGlobalPaisDAC.Get(-1).Tables[0], "Descr", "IDPais");
@@ -333,7 +334,7 @@ namespace CO
                 Util.Util.ConfigLookupEdit(this.slkupMoneda, ControlBancario.DAC.MonedaDAC.GetMoneda(-1).Tables[0], "Descr", "IDMoneda");
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupMoneda, "[{'ColumnCaption':'IDMoneda','ColumnField':'IDMoneda','width':30},{'ColumnCaption':'Descr','ColumnField':'Descr','width':70}]");
 
-                Util.Util.ConfigLookupEdit(this.slkupCondicionPago, DAC.clsCondicionPagoDAC.Get().Tables[0], "Descr", "IDCondicionPago");
+                Util.Util.ConfigLookupEdit(this.slkupCondicionPago, DAC.clsCondicionPagoDAC.Get(-1,"*").Tables[0], "Descr", "IDCondicionPago");
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupCondicionPago, "[{'ColumnCaption':'IDCondicionPago','ColumnField':'IDCondicionPago','width':30},{'ColumnCaption':'Descr','ColumnField':'Descr','width':70}]");
                 
                 
