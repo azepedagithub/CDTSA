@@ -83,7 +83,6 @@ CREATE TABLE dbo.cppCondicionPago(
 	Descr NVARCHAR(250),
 	Dias INT NOT NULL,
 	DescuentoContado DECIMAL(28,4),
-	PagosParciales BIT DEFAULT 0,
 	Activo BIT DEFAULT 1
 CONSTRAINT [pkccpCondicionPago] PRIMARY KEY CLUSTERED 
 (
@@ -1077,6 +1076,13 @@ CREATE   PROCEDURE dbo.coConfirmarOrdenCompra @IDOrdenCompra  AS INT
 AS
 
 UPDATE dbo.coOrdenCompra SET IDEstado=1
+WHERE IDOrdenCompra = @IDOrdenCompra
+GO
+
+CREATE   PROCEDURE dbo.coRecibirOrdenCompra @IDOrdenCompra  AS INT
+AS
+
+UPDATE dbo.coOrdenCompra SET IDEstado=3
 WHERE IDOrdenCompra = @IDOrdenCompra
 
 GO 
@@ -2125,3 +2131,57 @@ GO
 CREATE PROCEDURE dbo.coGetStatusLiquidacion(@IDEmbarque AS int)
 AS 
 SELECT TOP 1 IDEstado FROM dbo.coLiquidacionCompra WHERE IDEmbarque=@IDEmbarque
+
+
+GO 
+
+CREATE PROCEDURE dbo.cppUpdateCondicionPago (@Operacion NVARCHAR(1),@IDCondicionPago INT OUTPUT, @Descr AS NVARCHAR(250),
+											@Dias AS INT,@DescuentoContado AS DECIMAL(28,4),@Activo BIT)
+AS 
+IF (@Operacion ='I')
+BEGIN
+	SET @IDCondicionPago = (SELECT ISNULL(MAX(IDCondicionPago),0) + 1  FROM dbo.cppCondicionPago)
+	INSERT INTO dbo.cppCondicionPago( IDCondicionPago ,Descr ,Dias ,DescuentoContado ,Activo)
+	VALUES (@IDCondicionPago,@Descr,@Dias,@DescuentoContado,@Activo)
+END
+ELSE IF (@Operacion = 'U')
+BEGIN
+	UPDATE dbo.cppCondicionPago SET  Descr=@Descr,Dias = @Dias, DescuentoContado=@DescuentoContado, Activo=@Activo
+	WHERE IDCondicionPago=@IDCondicionPago
+END
+ELSE IF (@Operacion = 'D')
+BEGIN
+	DELETE FROM dbo.cppCondicionPago WHERE IDCondicionPago=@IDCondicionPago
+END
+
+GO
+
+
+CREATE PROCEDURE dbo.cppGetCondicionPago(@IDCondicionPago AS INT, @Descr NVARCHAR(250)) 
+AS 
+SELECT  IDCondicionPago ,Descr ,Dias ,DescuentoContado  ,Activo  
+FROM dbo.cppCondicionPago WHERE (Descr LIKE '%'+ @Descr +'%' OR @Descr ='*') AND (IDCondicionPago=@IDCondicionPago OR @IDCondicionPago = -1)
+
+
+GO
+
+CREATE PROCEDURE dbo.globalUpdatePais(@Operacion NVARCHAR(1),@IDPais INT OUTPUT,@Descr NVARCHAR(250), @Activo BIT)
+AS 
+IF (@Operacion = 'I')
+BEGIN
+	 SET @IDPais = (SELECT ISNULL(MAX(IDPais),0) + 1   FROM dbo.globalPais)
+	 INSERT INTO dbo.globalPais( IDPais, Descr, Activo )
+	 VALUES  ( @IDPais,@Descr,@Activo)
+END
+ELSE IF(@Operacion = 'U')
+BEGIN
+	UPDATE dbo.globalPais SET Descr = @Descr ,Activo = @Activo WHERE IDPais=@IDPais
+END
+ELSE IF (@Operacion = 'D')
+BEGIN
+	DELETE dbo.globalPais WHERE IDPais = @IDPais
+END
+
+GO
+
+
