@@ -787,6 +787,8 @@ namespace MainMenu
                     TreeListNode nodeParametrosCO= tl.AppendNode(new object[] { "Parámetros" }, -1, 9, 10, 9);
                     TreeListNode nodeParametrosCompra = tl.AppendNode(new object[] { "Parametros Compra" }, nodeParametrosCO.Id, 11, 11, 11);
                     nodeParametrosCompra.Tag = "frmParametrosCompra";
+										TreeListNode nodeGastosCompra = tl.AppendNode(new object[] { "Gastos de Compra" }, nodeParametrosCO.Id, 11, 11, 11);
+										nodeGastosCompra.Tag = "frmGastosCompra";
                                                                   
                     break;
 
@@ -1119,6 +1121,13 @@ namespace MainMenu
                     ofrmParametros.WindowState = FormWindowState.Normal;
                     ShowPagesRibbonMan(false);
                     ofrmParametros.Show();
+                    break;
+							case "frmGastosCompra":
+										frmGastosCompra ofrmGastosCompra = new frmGastosCompra();
+										ofrmGastosCompra.MdiParent = this;
+										ofrmGastosCompra.WindowState = FormWindowState.Normal;
+                    ShowPagesRibbonMan(false);
+										ofrmGastosCompra.Show();
                     break;
             }
 

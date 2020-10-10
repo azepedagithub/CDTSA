@@ -11,9 +11,9 @@ namespace CO.DAC
 {
     public static class clsGastosCompraDAC
     {
-        public static long InsertUpdate(string Operacion, int IDGasto, ref String Descripcion, bool Activo, SqlTransaction tran)
+			public static int InsertUpdate(string Operacion, ref int IDGasto, String Descripcion, bool Activo, SqlTransaction tran)
         {
-            long result = -1;
+            int result = -1;
             String strSQL = "dbo.coUpdateGastosCompra";
 
             SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
@@ -30,7 +30,7 @@ namespace CO.DAC
             result = oCmd.ExecuteNonQuery();
             if (Operacion == "I")
             {
-                result = (long)oCmd.Parameters["@IDGasto"].Value;
+                result = (int)oCmd.Parameters["@IDGasto"].Value;
             }
 
 

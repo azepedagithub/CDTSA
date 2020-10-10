@@ -1252,7 +1252,7 @@ BEGIN
 END	
 IF (@Operacion='D')
 BEGIN	
-	DELETE FROM dbo.ccpCategoriaProveedor WHERE IDCategoria= @IDCategoria
+	DELETE  FROM dbo.cppCategoriaProveedor WHERE IDCategoria= @IDCategoria
 END	
 
 GO
@@ -1603,7 +1603,7 @@ BEGIN
 END
 IF (@Operacion ='D')
 BEGIN
-	DELETE dbo.invGastoCompra WHERE IDGasto=@IDGasto AND flgReadOnly=0
+	DELETE dbo.coGastosCompra WHERE IDGasto=@IDGasto AND flgReadOnly=0
 END
 
 

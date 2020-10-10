@@ -136,6 +136,12 @@
     <Compile Include="frmCondicionesDePago.Designer.cs">
       <DependentUpon>frmCondicionesDePago.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmGastosCompra.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGastosCompra.Designer.cs">
+      <DependentUpon>frmGastosCompra.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmImportFromExcel.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -254,6 +260,9 @@
     </Compile>
     <EmbeddedResource Include="frmCondicionesDePago.resx">
       <DependentUpon>frmCondicionesDePago.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGastosCompra.resx">
+      <DependentUpon>frmGastosCompra.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmImportFromExcel.resx">
       <DependentUpon>frmImportFromExcel.cs</DependentUpon>
