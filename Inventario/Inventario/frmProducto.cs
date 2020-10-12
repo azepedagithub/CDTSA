@@ -103,6 +103,7 @@ namespace CI
             _currentRow["IDProducto"] = -1;
             _currentRow["Descr"] = "";
             _currentRow["Alias"] = "";
+						_currentRow["Generico"] = "";
             _currentRow["Clasif1"] = -1;
             _currentRow["Clasif2"] = -1;
             _currentRow["Clasif3"] = -1;
@@ -143,6 +144,7 @@ namespace CI
             this.txtIDProducto.EditValue = _currentRow["IDProducto"].ToString();
             this.txtDescr.EditValue = _currentRow["Descr"].ToString();
             this.txtAlias.EditValue = _currentRow["Alias"].ToString();
+						this.txtGenerico.EditValue = _currentRow["Generico"].ToString();
             this.txtCodigoBarra.Text = _currentRow["CodigoBarra"].ToString(); 
             this.slkupUnidadMedida.EditValue = _currentRow["IDUnidad"];
             //this.dtpFecha.Text = Convert.ToDateTime(_currentRow["Fecha"]).ToShortDateString();
@@ -188,6 +190,7 @@ namespace CI
             this.txtIDProducto.ReadOnly = !Activo;
             this.txtDescr.ReadOnly = !Activo;
             this.txtAlias.ReadOnly = !Activo;
+						this.txtGenerico.ReadOnly = !Activo;
             this.txtCodigoBarra.ReadOnly = !Activo;
             this.slkupUnidadMedida.ReadOnly = !Activo;
             //this.dtpFecha.Text = Convert.ToDateTime(_currentRow["Fecha"]).ToShortDateString();
@@ -340,6 +343,7 @@ namespace CI
                     _currentRow["IDProducto"] = this.txtIDProducto.Text.Trim();
                     _currentRow["Descr"] = this.txtDescr.Text.Trim();
                     _currentRow["Alias"] = this.txtAlias.Text.Trim();
+										_currentRow["Generico"] = this.txtGenerico.Text.Trim();
                     _currentRow["Clasif1"] = (this.slkupClasif1.EditValue == null) ? 1 : Convert.ToInt32(this.slkupClasif1.EditValue);
                     _currentRow["Clasif2"] = (this.slkupClasif2.EditValue == null) ? 2 : Convert.ToInt32(this.slkupClasif2.EditValue);
                     _currentRow["Clasif3"] = (this.slkupClasif3.EditValue == null) ? 3 : Convert.ToInt32(this.slkupClasif3.EditValue);
@@ -415,6 +419,7 @@ namespace CI
                     _currentRow["IDProducto"] = this.txtIDProducto.Text.Trim();
                     _currentRow["Descr"] = this.txtDescr.Text.Trim();
                     _currentRow["Alias"] = this.txtAlias.Text.Trim();
+										_currentRow["Generico"] = this.txtGenerico.Text.Trim();
                     _currentRow["Clasif1"] = (this.slkupClasif1.EditValue == null) ? 1 : Convert.ToInt32(this.slkupClasif1.EditValue);
                     _currentRow["Clasif2"] = (this.slkupClasif2.EditValue == null) ? 2 : Convert.ToInt32(this.slkupClasif2.EditValue);
                     _currentRow["Clasif3"] = (this.slkupClasif3.EditValue == null) ? 3 : Convert.ToInt32(this.slkupClasif3.EditValue);
@@ -506,6 +511,7 @@ namespace CI
             this.txtIDProducto.EditValue = "";
             this.txtDescr.EditValue = "";
             this.txtAlias.EditValue = "";
+						this.txtGenerico.EditValue = "";
             this.txtCodigoBarra.EditValue = "";
             this.slkupUnidadMedida.EditValue = null;
             this.slkupTipoImpuesto.EditValue = null;

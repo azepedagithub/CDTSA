@@ -62,6 +62,7 @@ CREATE     TABLE  [dbo].[invProducto](
 	[IDProducto] [bigint]  NOT NULL,
 	[Descr] [nvarchar](250) NOT NULL,
 	[Alias] [nvarchar](250) NULL,
+	[Generico] [NVARCHAR] (250) NULL,
 	[CostoUltLocal] [decimal](28, 4) NOT NULL DEFAULT 0,
 	[CostoUltDolar] [decimal](28, 4) NOT NULL DEFAULT 0,
 	[CostoPromLocal] [decimal](28, 4) NOT NULL DEFAULT 0,
@@ -814,7 +815,7 @@ GO
 
 
 CREATE TABLE [dbo].[cppProveedor](
-	[IDProveedor] [int] IDENTITY(1,1) NOT NULL,
+	[IDProveedor] [int] NOT NULL,
 	[Nombre] [nvarchar](250) NULL,
 	[Activo] [bit] NULL DEFAULT 0,
  CONSTRAINT [pkcppProveedor] PRIMARY KEY CLUSTERED 
@@ -1048,7 +1049,7 @@ VALUES  ( 10 ,N'DEVOLUCIONES SOBRE VENTA (+)' , N'DV' , N'E' , 1 , 8, 1 , 0 , 0 
 --PENDIENTE AJUSTE AL COSTO
 GO
 
-CREATE  Procedure  [dbo].[invUpdateProducto] @Operacion nvarchar(1), @IDProducto BIGINT , @Descr nvarchar(250), @Alias nvarchar(250),
+CREATE Procedure  [dbo].[invUpdateProducto] @Operacion nvarchar(1), @IDProducto BIGINT , @Descr nvarchar(250), @Generico NVARCHAR(250), @Alias nvarchar(250),
 @Clasif1 int, @Clasif2 INT, @Clasif3 INT ,@Clasif4 INT , @Clasif5 INT, @Clasif6 INT,@IDProveedor AS INT,@IDCuentaContable AS BIGINT, @CodigoBarra NVARCHAR(50),@IDUnidad INT,
 @FactorEmpaque DECIMAL(28,4), @TipoImpuesto INT, @EsMuestra BIT, @EsControlado BIT, @EsEtico BIT, @Activo BIT,@Bonifica BIT,@UserInsert NVARCHAR(50),@UserUpdate NVARCHAR(50),@UpdateDate DATETIME
 as
@@ -1063,9 +1064,9 @@ BEGIN
 		return				
 	END
 
-	INSERT INTO dbo.invProducto( IDProducto, Descr ,Alias ,Clasif1 ,Clasif2 ,Clasif3 ,Clasif4 ,Clasif5 ,Clasif6 ,IDProveedor,IDCuentaContable,CodigoBarra ,IDUnidad ,FactorEmpaque ,TipoImpuesto ,
+	INSERT INTO dbo.invProducto( IDProducto, Descr ,Generico,Alias ,Clasif1 ,Clasif2 ,Clasif3 ,Clasif4 ,Clasif5 ,Clasif6 ,IDProveedor,IDCuentaContable,CodigoBarra ,IDUnidad ,FactorEmpaque ,TipoImpuesto ,
 	          EsMuestra ,EsControlado ,EsEtico ,Activo,Bonifica ,UserInsert ,UserUpdate  ,UpdateDate)
-	VALUES (@IDProducto, @Descr,@Alias,@Clasif1,@Clasif2,@Clasif3,@Clasif4,@Clasif5,@Clasif6,@IDProveedor,@IDCuentaContable,@CodigoBarra,@IDUnidad,@FactorEmpaque,@TipoImpuesto,
+	VALUES (@IDProducto, @Descr,@Generico,@Alias,@Clasif1,@Clasif2,@Clasif3,@Clasif4,@Clasif5,@Clasif6,@IDProveedor,@IDCuentaContable,@CodigoBarra,@IDUnidad,@FactorEmpaque,@TipoImpuesto,
 		@EsMuestra,@EsControlado,@EsEtico,	@Activo,@Bonifica,@UserInsert,@UserUpdate,@UpdateDate)
 	
 		
@@ -1107,7 +1108,7 @@ end
 
 if upper(@Operacion) = 'U' 
 BEGIN
-	UPDATE dbo.invProducto SET Descr=@Descr, Alias = @Alias,Clasif1=@Clasif1,Clasif2=@Clasif2,Clasif3=@Clasif3,Clasif4=@Clasif4,Clasif5=@Clasif5,Clasif6=@Clasif6,
+	UPDATE dbo.invProducto SET Descr=@Descr,Generico = @Generico ,Alias = @Alias,Clasif1=@Clasif1,Clasif2=@Clasif2,Clasif3=@Clasif3,Clasif4=@Clasif4,Clasif5=@Clasif5,Clasif6=@Clasif6,
 	IDProveedor=@IDProveedor,IDCuentaContable = @IDCuentaContable,CodigoBarra =@CodigoBarra,IDUnidad=@IDUnidad,FactorEmpaque=@FactorEmpaque,TipoImpuesto=@TipoImpuesto,EsMuestra=@EsMuestra,EsControlado=@EsControlado,
 	EsEtico=@EsEtico,Activo=@Activo,Bonifica =@Bonifica,UserUpdate=@UserUpdate,UpdateDate=@UpdateDate
 	WHERE IDProducto=@IDProducto
@@ -1118,10 +1119,10 @@ end
 
 GO
 
-CREATE   PROCEDURE [dbo].[invGetProducto] @IDProducto BIgint	,@Descr AS NVARCHAR(250),@Alias NVARCHAR(250),@Clasif1 int, @Clasif2 INT, @Clasif3 INT ,@Clasif4 INT , @Clasif5 INT, @Clasif6 INT, @CodigoBarra NVARCHAR(50),
+CREATE  PROCEDURE [dbo].[invGetProducto] @IDProducto BIgint	,@Descr AS NVARCHAR(250),@Alias NVARCHAR(250),@Clasif1 int, @Clasif2 INT, @Clasif3 INT ,@Clasif4 INT , @Clasif5 INT, @Clasif6 INT, @CodigoBarra NVARCHAR(50),
 															@EsMuestra INT,@EsControlado INT,@EsEtico INT
 AS 
-	SELECT IDProducto,Descr ,Alias ,Clasif1 ,Clasif2 ,Clasif3 ,Clasif4 ,Clasif5 ,Clasif6 ,CodigoBarra,IDProveedor,IDCuentaContable ,IDUnidad ,FactorEmpaque ,TipoImpuesto ,
+	SELECT IDProducto,Descr , Generico,Alias ,Clasif1 ,Clasif2 ,Clasif3 ,Clasif4 ,Clasif5 ,Clasif6 ,CodigoBarra,IDProveedor,IDCuentaContable ,IDUnidad ,FactorEmpaque ,TipoImpuesto ,
 	          EsMuestra ,EsControlado ,EsEtico , CostoUltLocal,CostoUltDolar,CostoPromLocal,CostoPromDolar,Activo,Bonifica ,UserInsert ,UserUpdate  ,UpdateDate,CreateDate 
 	          FROM dbo.invProducto 
 	          WHERE (IDProducto=@IDProducto OR  @IDProducto=-1)

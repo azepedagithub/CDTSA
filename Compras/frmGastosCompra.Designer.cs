@@ -41,27 +41,30 @@
 			this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
-			this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
+			this.chkActivo = new DevExpress.XtraEditors.CheckEdit();
+			this.txtDescr = new DevExpress.XtraEditors.TextEdit();
 			this.dtgGastosCompra = new DevExpress.XtraGrid.GridControl();
 			this.gridViewGastosCompra = new DevExpress.XtraGrid.Views.Grid.GridView();
+			this.colIdGasto = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colDescr = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colActivo = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.txtDescr = new DevExpress.XtraEditors.TextEdit();
-			this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.chkActivo = new DevExpress.XtraEditors.CheckEdit();
-			this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlGroup2 = new DevExpress.XtraLayout.LayoutControlGroup();
+			this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
 			this.layoutControl1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.chkActivo.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.txtDescr.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dtgGastosCompra)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridViewGastosCompra)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.txtDescr.Properties)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.chkActivo.Properties)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// ribbonControl
@@ -180,17 +183,24 @@
 			this.layoutControl1.TabIndex = 1;
 			this.layoutControl1.Text = "layoutControl1";
 			// 
-			// layoutControlGroup1
+			// chkActivo
 			// 
-			this.layoutControlGroup1.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
-			this.layoutControlGroup1.GroupBordersVisible = false;
-			this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.layoutControlItem1,
-            this.layoutControlGroup2});
-			this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
-			this.layoutControlGroup1.Name = "Root";
-			this.layoutControlGroup1.Size = new System.Drawing.Size(676, 417);
-			this.layoutControlGroup1.TextVisible = false;
+			this.chkActivo.Location = new System.Drawing.Point(564, 373);
+			this.chkActivo.MenuManager = this.ribbonControl;
+			this.chkActivo.Name = "chkActivo";
+			this.chkActivo.Properties.Caption = "Activo";
+			this.chkActivo.Size = new System.Drawing.Size(88, 19);
+			this.chkActivo.StyleController = this.layoutControl1;
+			this.chkActivo.TabIndex = 6;
+			// 
+			// txtDescr
+			// 
+			this.txtDescr.Location = new System.Drawing.Point(59, 373);
+			this.txtDescr.MenuManager = this.ribbonControl;
+			this.txtDescr.Name = "txtDescr";
+			this.txtDescr.Size = new System.Drawing.Size(501, 20);
+			this.txtDescr.StyleController = this.layoutControl1;
+			this.txtDescr.TabIndex = 5;
 			// 
 			// dtgGastosCompra
 			// 
@@ -205,8 +215,52 @@
 			// 
 			// gridViewGastosCompra
 			// 
+			this.gridViewGastosCompra.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.colIdGasto,
+            this.colDescr,
+            this.colActivo});
 			this.gridViewGastosCompra.GridControl = this.dtgGastosCompra;
 			this.gridViewGastosCompra.Name = "gridViewGastosCompra";
+			this.gridViewGastosCompra.OptionsBehavior.ReadOnly = true;
+			// 
+			// colIdGasto
+			// 
+			this.colIdGasto.Caption = "IDGasto";
+			this.colIdGasto.FieldName = "IDGasto";
+			this.colIdGasto.Name = "colIdGasto";
+			this.colIdGasto.Visible = true;
+			this.colIdGasto.VisibleIndex = 0;
+			this.colIdGasto.Width = 89;
+			// 
+			// colDescr
+			// 
+			this.colDescr.Caption = "Descripción";
+			this.colDescr.FieldName = "Descripcion";
+			this.colDescr.Name = "colDescr";
+			this.colDescr.Visible = true;
+			this.colDescr.VisibleIndex = 1;
+			this.colDescr.Width = 934;
+			// 
+			// colActivo
+			// 
+			this.colActivo.Caption = "Activo";
+			this.colActivo.FieldName = "Activo";
+			this.colActivo.Name = "colActivo";
+			this.colActivo.Visible = true;
+			this.colActivo.VisibleIndex = 2;
+			this.colActivo.Width = 113;
+			// 
+			// layoutControlGroup1
+			// 
+			this.layoutControlGroup1.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
+			this.layoutControlGroup1.GroupBordersVisible = false;
+			this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.layoutControlItem1,
+            this.layoutControlGroup2});
+			this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
+			this.layoutControlGroup1.Name = "Root";
+			this.layoutControlGroup1.Size = new System.Drawing.Size(676, 417);
+			this.layoutControlGroup1.TextVisible = false;
 			// 
 			// layoutControlItem1
 			// 
@@ -216,43 +270,6 @@
 			this.layoutControlItem1.Size = new System.Drawing.Size(656, 331);
 			this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem1.TextVisible = false;
-			// 
-			// txtDescr
-			// 
-			this.txtDescr.Location = new System.Drawing.Point(60, 373);
-			this.txtDescr.MenuManager = this.ribbonControl;
-			this.txtDescr.Name = "txtDescr";
-			this.txtDescr.Size = new System.Drawing.Size(500, 20);
-			this.txtDescr.StyleController = this.layoutControl1;
-			this.txtDescr.TabIndex = 5;
-			// 
-			// layoutControlItem2
-			// 
-			this.layoutControlItem2.Control = this.txtDescr;
-			this.layoutControlItem2.Location = new System.Drawing.Point(0, 0);
-			this.layoutControlItem2.Name = "layoutControlItem2";
-			this.layoutControlItem2.Size = new System.Drawing.Size(540, 24);
-			this.layoutControlItem2.Text = "Gasto:";
-			this.layoutControlItem2.TextSize = new System.Drawing.Size(32, 13);
-			// 
-			// chkActivo
-			// 
-			this.chkActivo.Location = new System.Drawing.Point(564, 373);
-			this.chkActivo.MenuManager = this.ribbonControl;
-			this.chkActivo.Name = "chkActivo";
-			this.chkActivo.Properties.Caption = "Activo";
-			this.chkActivo.Size = new System.Drawing.Size(88, 19);
-			this.chkActivo.StyleController = this.layoutControl1;
-			this.chkActivo.TabIndex = 6;
-			// 
-			// layoutControlItem3
-			// 
-			this.layoutControlItem3.Control = this.chkActivo;
-			this.layoutControlItem3.Location = new System.Drawing.Point(540, 0);
-			this.layoutControlItem3.Name = "layoutControlItem3";
-			this.layoutControlItem3.Size = new System.Drawing.Size(92, 24);
-			this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
-			this.layoutControlItem3.TextVisible = false;
 			// 
 			// layoutControlGroup2
 			// 
@@ -264,29 +281,47 @@
 			this.layoutControlGroup2.Size = new System.Drawing.Size(656, 66);
 			this.layoutControlGroup2.Text = "Gastos de Liquidación";
 			// 
-			// frmGastosLiquidacion
+			// layoutControlItem2
+			// 
+			this.layoutControlItem2.Control = this.txtDescr;
+			this.layoutControlItem2.Location = new System.Drawing.Point(0, 0);
+			this.layoutControlItem2.Name = "layoutControlItem2";
+			this.layoutControlItem2.Size = new System.Drawing.Size(540, 24);
+			this.layoutControlItem2.Text = "Gasto:";
+			this.layoutControlItem2.TextSize = new System.Drawing.Size(32, 13);
+			// 
+			// layoutControlItem3
+			// 
+			this.layoutControlItem3.Control = this.chkActivo;
+			this.layoutControlItem3.Location = new System.Drawing.Point(540, 0);
+			this.layoutControlItem3.Name = "layoutControlItem3";
+			this.layoutControlItem3.Size = new System.Drawing.Size(92, 24);
+			this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
+			this.layoutControlItem3.TextVisible = false;
+			// 
+			// frmGastosCompra
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(676, 560);
 			this.Controls.Add(this.layoutControl1);
 			this.Controls.Add(this.ribbonControl);
-			this.Name = "frmGastosLiquidacion";
+			this.Name = "frmGastosCompra";
 			this.Ribbon = this.ribbonControl;
 			this.Text = "frmGastosLiquidacion";
 			this.Load += new System.EventHandler(this.frmGastosLiquidacion_Load);
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
 			this.layoutControl1.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.chkActivo.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.txtDescr.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.dtgGastosCompra)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridViewGastosCompra)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.txtDescr.Properties)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.chkActivo.Properties)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -315,5 +350,8 @@
 		private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup2;
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
+		private DevExpress.XtraGrid.Columns.GridColumn colIdGasto;
+		private DevExpress.XtraGrid.Columns.GridColumn colDescr;
+		private DevExpress.XtraGrid.Columns.GridColumn colActivo;
 	}
 }
