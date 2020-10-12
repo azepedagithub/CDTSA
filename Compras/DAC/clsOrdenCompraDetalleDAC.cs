@@ -81,6 +81,24 @@ namespace CO.DAC
             return DS;
         }
 
+				
+				public static Decimal GetLasPriceProduct(long IDProducto)
+				{
+					String strSQL = "dbo.coGetLastPriceProducto";
+
+					SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
+
+					oCmd.Parameters.Add(new SqlParameter("@IDProducto", IDProducto));
+
+					oCmd.CommandType = CommandType.StoredProcedure;
+
+					SqlDataAdapter oAdap = new SqlDataAdapter(oCmd);
+					DataSet DS = new DataSet();
+					
+					oAdap.Fill(DS, "Data");
+					decimal Precio = DS.Tables[0].Rows[0][0] != null ? Convert.ToDecimal(DS.Tables[0].Rows[0][0]) : 0;
+					return Precio;
+				}
 
         public static DataSet GetEmptyImportExcel()
         {

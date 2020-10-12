@@ -433,6 +433,10 @@ namespace CO
                 this.gridView1.PostEditor();
                 int IDUnidad = Convert.ToInt32(dr["IDUnidad"]);
                 this.gridView1.SetFocusedRowCellValue("IDUnidad", IDUnidad);
+
+								Decimal Precio = DAC.clsOrdenCompraDetalleDAC.GetLasPriceProduct(Convert.ToInt64(dr["IDProducto"]));
+								this.gridView1.SetFocusedRowCellValue("PrecioUnitario", Precio);
+
             }
 
             SendKeys.Send("{TAB}");

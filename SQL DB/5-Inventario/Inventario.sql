@@ -893,8 +893,11 @@ VALUES  ( 6,  N'ND',  1, N'ND' )
 GO
 
 --Tipo Impuesto
-INSERT INTO dbo.globalImpuesto(Descr,Activo)
-VALUES ('Exento',1)
+INSERT INTO dbo.globalImpuesto(Descr,Porc,Activo)
+VALUES ('Exento',0,1)
+GO
+INSERT INTO dbo.globalImpuesto(Descr,Porc,Activo)
+VALUES ('IGV',15,1)
 
 --Unidad de Medida
 INSERT INTO dbo.invUnidadMedida
@@ -1125,7 +1128,7 @@ AS
 	SELECT IDProducto,Descr , Generico,Alias ,Clasif1 ,Clasif2 ,Clasif3 ,Clasif4 ,Clasif5 ,Clasif6 ,CodigoBarra,IDProveedor,IDCuentaContable ,IDUnidad ,FactorEmpaque ,TipoImpuesto ,
 	          EsMuestra ,EsControlado ,EsEtico , CostoUltLocal,CostoUltDolar,CostoPromLocal,CostoPromDolar,Activo,Bonifica ,UserInsert ,UserUpdate  ,UpdateDate,CreateDate 
 	          FROM dbo.invProducto 
-	          WHERE (IDProducto=@IDProducto OR  @IDProducto=-1)
+	          WHERE (IDProducto =@IDProducto OR  @IDProducto=-1)
 	          AND (Clasif1 =@Clasif1 OR @Clasif1=-1) AND (Clasif2 =@Clasif2 OR @Clasif2=-1) AND (Clasif3 =@Clasif3 OR @Clasif3=-1)
 	          AND (Clasif4 =@Clasif4 OR @Clasif4=-1) AND (Clasif5 =@Clasif5 OR @Clasif5=-1) AND (Clasif6 =@Clasif6 OR @Clasif6=-1)
 	          AND (CodigoBarra=@CodigoBarra OR @CodigoBarra='*') AND ( EsMuestra =@EsMuestra OR @EsMuestra=-1)  AND

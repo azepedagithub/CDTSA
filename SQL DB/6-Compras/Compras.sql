@@ -2185,3 +2185,9 @@ END
 GO
 
 
+CREATE PROCEDURE dbo.coGetLastPriceProducto(@IDProducto AS BIGINT)
+AS 
+SELECT TOP 1 PrecioUnitario  FROM dbo.coOrdenCompraDetalle 
+WHERE IDProducto=@IDProducto
+ORDER BY IDOrdenCompra DESC
+
