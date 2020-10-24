@@ -1415,16 +1415,17 @@ AS
 if upper(@Operacion) = 'I'
 BEGIN
 	--Obtener el siguiente consecutivo
-	DECLARE @IDConsecutivo AS BIGINT
-	
-	SET @IDConsecutivo = (
-				SELECT TOP 1 C.IDConsecutivo  FROM dbo.invPaquete A
-				INNER JOIN dbo.globalConsecutivos C ON A.IDConsecutivo = C.IDConsecutivo
-				WHERE A.IDPaquete=@IDPaquete)
-	
-	EXEC [dbo].[invGetNextGlobalConsecutivo] @IDConsecutivo,@Documento OUTPUT
-	
-	
+	IF (@ModuloOrigen<>'FAC')
+	BEGIN
+		DECLARE @IDConsecutivo AS BIGINT
+		
+		SET @IDConsecutivo = (
+					SELECT TOP 1 C.IDConsecutivo  FROM dbo.invPaquete A
+					INNER JOIN dbo.globalConsecutivos C ON A.IDConsecutivo = C.IDConsecutivo
+					WHERE A.IDPaquete=@IDPaquete)
+		
+		EXEC [dbo].[invGetNextGlobalConsecutivo] @IDConsecutivo,@Documento OUTPUT
+	END
 
 	INSERT INTO dbo.invTransaccion( ModuloOrigen ,IDPaquete,Fecha ,Usuario ,Referencia ,Documento ,Aplicado ,UniqueValue ,EsTraslado ,IDTraslado  ,CreateDate)
 	VALUES (@ModuloOrigen,@IDPaquete,@Fecha,@Usuario,@Referencia,@Documento,1,NEWID(),@EsTraslado,@IDTraslado,GETDATE())
@@ -2382,12 +2383,14 @@ DECLARE @IDPaquete AS INT
 DECLARE @TipoCambioCont AS NVARCHAR(4)
 DECLARE @TipoCambio AS DECIMAL(28,4)	
 DECLARE @Naturaleza AS NVARCHAR(1)
+DECLARE @Bodega AS INT
+
 
 
 IF (@Modulo = 'FAC')
 BEGIN
 	--//Leer parametros de configuración
-	SELECT TOP	1 @IDPaquete = IDPaquete, @TipoCambioCont= TipoCambioCont  FROM dbo.fafParametros
+	SELECT TOP	1 @IDPaquete = IDPaquete  FROM dbo.fafParametros
 	
 	IF (@IDPaquete IS NULL)
 	BEGIN
@@ -2395,16 +2398,15 @@ BEGIN
 		return		
 	END
 	
-	SELECT @FechaDocumento = Fecha, @Referencia = 'Factura: ' + Factura , @Documento = Factura
+	SELECT @FechaDocumento = Fecha, @Referencia = 'Factura: ' + Factura , @Documento = Factura,@TipoCambio=TipoCambio, @Bodega= IDBodega
 	 FROM dbo.fafFACTURA WHERE IDFactura =@IDDocumento 
-	 
-	--//Cargar el Tipo de Cambio Contabilidad
-	SELECT @TipoCambio = dbo.globalGetTipoCambio(@FechaDocumento,@TipoCambioCont) 
-	  
+	
+	SET  @Documento =  CAST(@Bodega AS NVARCHAR(10)) + '-' + RIGHT('00000000' + RTRIM(LTRIM(@Documento)),8)
+	
 	--//Crear la cabecera del Documento  
 	EXEC  dbo.invUpdateDocumentoInv  @Operacion = N'I', -- nvarchar(1)
 	    @IDTransaccion = @IDTransaccion OUTPUT, -- int
-	    @ModuloOrigen = N'FA', -- nvarchar(4)
+	    @ModuloOrigen = @Modulo, -- nvarchar(4)
 	    @IDPaquete =@IDPaquete, -- int
 	    @Fecha = @FechaDocumento, -- datetime
 	    @Usuario =@Usuario, -- nvarchar(20)
@@ -2490,6 +2492,8 @@ INNER JOIN dbo.invProducto P ON C.IDProducto = P.IDProducto
 UPDATE B SET B.Existencia = B.Existencia + (A.Cantidad * A.Factor) FROM dbo.invTransaccionLinea A
 INNER JOIN dbo.invExistenciaBodega B ON	A.IDBodega = B.IDBodega AND A.IDLote = B.IDLote AND A.IDProducto = B.IDProducto
 WHERE IDTransaccion =@IDTransaccion 
+
+UPDATE dbo.invTransaccion SET Aplicado=1 WHERE IDTransaccion= @IDTransaccion
 
 GO
 
@@ -3546,4 +3550,14 @@ DROP TABLE  #tmpSaldos
 
 GO
 
+
+
+CREATE PROCEDURE  dbo.invGetProductosByProveedor @IDProveedor INT
+AS 
+--SET @IDProveedor = 3
+
+SELECT IDProducto, Descr,Alias,Generico, IDUnidad  FROM dbo.invProducto 
+WHERE (IDProveedor = @IDProveedor OR @IDProveedor = -1) AND Activo=1
+
+GO
 

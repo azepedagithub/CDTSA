@@ -425,10 +425,6 @@ REFERENCES [dbo].globalMoneda (IDMoneda)
 
 GO 
 
-ALTER TABLE [dbo].coObligacionDetalle  WITH CHECK ADD  CONSTRAINT [fkcoOblicacionDetalle_GastoCompra] FOREIGN KEY(IDGasto)
-REFERENCES [dbo].coGastosCompra (IDGasto)
-
-GO
 
 CREATE TABLE dbo.coRecepcionMercaderia(
 	IDEmbarque INT NOT NULL,
@@ -517,6 +513,12 @@ CONSTRAINT [pkcoGastoCompra] PRIMARY KEY CLUSTERED
 	IDGasto ASC
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].coObligacionDetalle  WITH CHECK ADD  CONSTRAINT [fkcoOblicacionDetalle_GastoCompra] FOREIGN KEY(IDGasto)
+REFERENCES [dbo].coGastosCompra (IDGasto)
+
 
 GO
 CREATE TABLE dbo.coEstadoLiquidacionCompra (
@@ -642,6 +644,7 @@ INSERT INTO dbo.coEstadoSolicitud( IDEstado, Descr, Activo ) VALUES(3,'ASIGNADA'
 
 GO 
 
+
 INSERT INTO dbo.coEstadoOrdenCompra( IDEstadoOrden, Descr, Activo )
 VALUES  (0,'INICIAL',1)
 
@@ -686,11 +689,11 @@ INSERT INTO dbo.coGastosCompra( Descripcion,flgReadOnly,flgIsFactura, Activo )
 VALUES  ('FACTURA',1,1,1)
 
 
-
+GO
 
 --// CREACION DE PROCEDIMIENTOS ALMACENADOS
 
-CREATE   PROCEDURE dbo.coUpdateSolicitudCompra(@Operacion NVARCHAR(1), @IDSolicitud AS INT OUTPUT,@Consecutivo NVARCHAR(20) OUTPUT, @Fecha date, @FechaRequerida  AS date, @IDEstado AS int ,@Comentario nvarchar(20)
+CREATE  PROCEDURE dbo.coUpdateSolicitudCompra(@Operacion NVARCHAR(1), @IDSolicitud AS INT OUTPUT,@Consecutivo NVARCHAR(20) OUTPUT, @Fecha date, @FechaRequerida  AS date, @IDEstado AS int ,@Comentario nvarchar(20)
 , @UsuarioSolicitud nvarchar(50),@Usuario nvarchar(50),@CreatedDate datetime,@CreatedBy nvarchar(50),@RecordDate datetime,@UpdateBy nvarchar(50))
 AS 
 IF (@Operacion='I')  
@@ -1122,7 +1125,7 @@ DROP TABLE #tmpProducto
 
 GO
 
-CREATE ALTER PROCEDURE dbo.coDesConfirmarOrdenCompra @IDOrdenCompra  AS INT
+CREATE  PROCEDURE dbo.coDesConfirmarOrdenCompra @IDOrdenCompra  AS INT
 AS
 
 UPDATE dbo.coOrdenCompra SET IDEstado=0
@@ -1195,7 +1198,7 @@ BEGIN
 	SET @IDProveedor = (SELECT  ISNULL(MAX(IDProveedor),0) + 1 FROM dbo.cppProveedor )
 	INSERT INTO dbo.cppProveedor( IDProveedor, Nombre ,RUC ,Activo ,Alias ,IDPais ,IDMoneda ,FechaIngreso ,Contacto ,Telefono  ,IDCategoria ,IDCondicionPago ,
 	          PorcDesc ,PorcInteresMora ,email ,Direccion,MultiMoneda,PagosCongelados,IsLocal,Bonifica)
-	VALUES  ( @IDProveedor @Nombre ,@RUC,@Activo,@Alias,@IDPais,@IDMoneda,@FechaIngreso,@Contacto,@Telefono,@IDCategoria,@IDCondicionPago,@PorcDescuento,@PorcInteresMora,@Email, @Direccion,@MultiMoneda,@PagosCongelados,@IsLocal,@Bonifica)
+	VALUES  ( @IDProveedor, @Nombre ,@RUC,@Activo,@Alias,@IDPais,@IDMoneda,@FechaIngreso,@Contacto,@Telefono,@IDCategoria,@IDCondicionPago,@PorcDescuento,@PorcInteresMora,@Email, @Direccion,@MultiMoneda,@PagosCongelados,@IsLocal,@Bonifica)
 	
 END
 IF (@Operacion='U')
@@ -1864,7 +1867,7 @@ WHERE IDObligacion=@IDObligacionProveedor
 GO
 
 
-CREATE ALTER  PROCEDURE dbo.coCalculaProrrateoGastosCompra @IDLiquidacion AS INT
+CREATE  PROCEDURE dbo.coCalculaProrrateoGastosCompra @IDLiquidacion AS INT
 AS 
 
 DECLARE @IDMoneda AS INT
@@ -1934,7 +1937,7 @@ WHERE A.IDEmbarque = @IDEmbarque
 
 GO
 
-CREATE alter PROCEDURE [dbo].[coRptLiquidacion] @IDLiquidacion AS INT
+CREATE  PROCEDURE [dbo].[coRptLiquidacion] @IDLiquidacion AS INT
 AS
 
 DECLARE @IDMoneda AS INT

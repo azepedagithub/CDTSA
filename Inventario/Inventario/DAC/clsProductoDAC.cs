@@ -244,6 +244,23 @@ namespace CI.DAC
             return DS;
         }
 
+			
+				public static DataSet GetProductoByProveedor(long IDProveedor)
+        {
+						String strSQL = "dbo.invGetProductosByProveedor";
+
+            SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
+
+            oCmd.Parameters.Add(new SqlParameter("@IDProveedor", IDProveedor));
+            
+            oCmd.CommandType = CommandType.StoredProcedure;
+
+            SqlDataAdapter oAdap = new SqlDataAdapter(oCmd);
+            DataSet DS = new DataSet();
+            oAdap.Fill(DS);
+            DS.Tables[0].TableName = "Data";
+            return DS;
+        }
 
         public static DataSet GetProductoByID(long IDProducto,string Descr)
         {

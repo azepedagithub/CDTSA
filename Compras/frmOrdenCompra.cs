@@ -218,8 +218,9 @@ namespace CO
         private void HabilitarBotones(DataTable dt)
         {
             DataRow cabecera = dt.Rows[0];
+					  int IDEstado = Convert.ToInt32(cabecera["IDEstado"]);
             //Estado Inicial
-            if  (Convert.ToInt32(cabecera["IDEstado"]) == 0)
+            if  (IDEstado == 0)
             {
                 this.btnConfirmar.Enabled = true;
                 this.btnDesconfirmar.Enabled = false;
@@ -227,13 +228,25 @@ namespace CO
                 this.btnEmbarque.Enabled = false;
             }
             //Estado Confirmada
-            if (Convert.ToInt32(cabecera["IDEstado"]) == 1)
+            if (IDEstado == 1)
             {
                 this.btnConfirmar.Enabled = false;
                 this.btnDesconfirmar.Enabled = true;
                 this.btnAnular.Enabled = true;
                 this.btnEmbarque.Enabled = true;
             }
+					//Estado Cancelada
+						if (IDEstado == 2)
+						{
+							this.btnConfirmar.Enabled = false;
+							this.btnDesconfirmar.Enabled = false;
+							this.btnAnular.Enabled = false;
+							this.btnEmbarque.Enabled = false;
+							this.btnEditar.Enabled = false;
+							this.btnGuardar.Enabled = false;
+							this.btnAgregar.Enabled = false;
+							this.btnEliminar.Enabled = false;
+						}
 
        
 
@@ -260,7 +273,7 @@ namespace CO
             this.txtAnticipos.EditValue = Convert.ToDecimal((cabecera["Anticipos"] == System.DBNull.Value) ? 0 : cabecera["Anticipos"]);
             this.txtEstado.EditValue = cabecera["DescrEstado"].ToString();
             this.txtEstado.Tag = Convert.ToInt32(cabecera["IDEstado"]);
-
+						this.IDEstado = Convert.ToInt32(cabecera["IDEstado"]);
             HabilitarBotones(dt);
 
       
@@ -282,26 +295,34 @@ namespace CO
         private void HabilitarComandosAccion()
         {
             IDEstado = Convert.ToInt32(this.txtEstado.Tag);
+					//Inicial
             if (IDEstado == 0)
             {
+							this.btnConfirmar.Enabled = true;
+							this.btnDesconfirmar.Enabled = false;
+
                 //this.btnAprobar.Enabled = true;
                 //this.btnRechazar.Enabled = true;
                 //this.btnRevertir.Enabled =false;
                 //this.btnEliminarSolicitud.Enabled = (Accion == "View" && IDEstado == 0) ? true : false;
                 //this.btnEditarSolicitud.Enabled = (Accion == "View" && IDEstado == 0) ? true : false;
             }
-            else if (IDEstado == 1 || IDEstado == 2)
+							//Confirmada
+            else if (IDEstado == 1 )
             {
+							this.btnConfirmar.Enabled = false;
+							this.btnDesconfirmar.Enabled = true;
                 //this.btnAprobar.Enabled = false;
                 //this.btnRechazar.Enabled = false;
                 //this.btnRevertir.Enabled = true;
                 //this.btnEliminarSolicitud.Enabled = false;
                 //this.btnEditarSolicitud.Enabled = false;
             }
-            else
+							//Recibida - Rechazada
+            else if( IDEstado == 2 || IDEstado ==3)
             {
-                //this.btnAprobar.Enabled = false;
-                //this.btnRechazar.Enabled = false;
+							this.btnConfirmar.Enabled = false;
+							this.btnDesconfirmar.Enabled = false;
                 //this.btnRevertir.Enabled = false;
                 //this.btnEliminarSolicitud.Enabled = false;
                 //this.btnEditarSolicitud.Enabled = false;
@@ -982,7 +1003,7 @@ namespace CO
                 long IDProducto = Convert.ToInt64(view.GetRowCellValue(e.RowHandle, view.Columns[0]));
                 int IDProveedor = Convert.ToInt32(this.slkupProveedor.EditValue);
 
-               
+								this.slkupProveedor.Enabled = false;
                 //validar si el producto 
             }
 
@@ -1287,6 +1308,12 @@ namespace CO
             {
                 this.slkupMoneda.EditValue = Convert.ToInt32(drProveedor["IDMoneda"]);
                 this.slkupMoneda.Enabled = (Convert.ToBoolean(drProveedor["MultiMoneda"]) == true) ? true : false;
+
+							  //dtProductos = CI.DAC.clsProductoDAC.GetData(-1, "*", "*", -1, -1, -1, -1, -1, -1, "*", -1, -1, -1).Tables[0];
+								dtProductos = CI.DAC.clsProductoDAC.GetProductoByProveedor(Convert.ToInt32(drProveedor["IDProveedor"])).Tables[0];
+								this.slkupIDProducto.DataSource = dtProductos;
+								this.slkupDescrProducto.DataSource = dtProductos;
+								
             }
         }
 

@@ -1,14 +1,3 @@
-
-
-
-ALTER TABLE  DBO.globalMoneda  ADD Nacional bit default 1
-go
-
-Update dbo.globalMoneda set Nacional = 0 where MONEDA = 'DOLAR'
-go
-Update dbo.globalMoneda set Nacional = 1 where MONEDA = 'LOCAL'
-go
-
 Create Table dbo.fafTipoVendedor ( IDTipo int not null, Descr nvarchar(250), Activo bit default 1 )
 go
 
@@ -1367,7 +1356,7 @@ A.Descr,  Cantidad , 	L.PrecioLocal ,  L.PrecioDolar ,
 P.FechaRequerida, P.Anulado , P.EsTeleventa, P.Estado, E.Descr DescrEstado, P.IDBodega,
 P.IDVendedor, P.IDTipoEntrega, Cl.Farmacia, CAST(0 as bit) LoteAsignado,
 P.IdNivel, P.IDMoneda,M.Nacional, P.idPlazo, 
-Bonifica  ,BonifConProd  , CantBonificada  , 
+l.Bonifica  ,BonifConProd  , CantBonificada  , 
 PorcDescuentoEsp   , 
 L.SubTotalFinalLocal+L.ImpuestoLocal  TotalFinalLocal,  L.SubTotalFinalDolar+L.ImpuestoDolar TotalFinalDolar
 --into #Detalle

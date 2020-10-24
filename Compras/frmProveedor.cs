@@ -175,7 +175,7 @@ namespace CO
             if (this.dtpFechaIngreso.EditValue == null || this.dtpFechaIngreso.EditValue.ToString() == "")
                 sMensaje = sMensaje + "     • Seleccione la fecha de ingreso del proveedor \n\r";
             if (this.txtNIT.EditValue == null || this.txtNIT.EditValue.ToString() == "")
-                sMensaje = sMensaje + "     • Seleccione el Tipo de Contribuyente \n\r";
+                sMensaje = sMensaje + "     • Digite el número de Contribuyente \n\r";
             if (this.slkupCategoria.EditValue == null || this.slkupCategoria.EditValue.ToString() == "")
                 sMensaje = sMensaje + "     • Seleccione la categoria del proveedor \n\r";
             if (this.slkupMoneda.EditValue == null || this.slkupMoneda.EditValue.ToString() == "")
@@ -252,6 +252,7 @@ namespace CO
                  this.btnEliminar.Enabled = true;
                  this.btnGuardar.Enabled = false;
                  this.btnCancelar.Enabled = false;
+								 HabilitarControles(false);
 
             }
             catch (Exception ex)

@@ -354,7 +354,7 @@ namespace CO
                     this.txtTipoCambio.EditValue = Convert.ToDecimal(drObl["TipoCambio"]);
                     this.txtMontoFlete.EditValue = Convert.ToDecimal(drObl["MontoFlete"]);
                     this.txtMontoSeguro.EditValue = Convert.ToDecimal(drObl["MontoSeguro"]);
-                    this.txtAsiento.EditValue = drObl["Asiento"].ToString();                    
+                    this.linkAsientoMercaderia.Text = drObl["Asiento"].ToString();                    
                     //Validar si tiene documento CP asociado
                     //string sDocCP = clsObligacionProveedorDAC.getDocumentoCP((int)this.ID_Embarque);
                      if (drObl["Asiento"] != null && drObl["Asiento"].ToString()!="")
@@ -367,7 +367,6 @@ namespace CO
                      else
                      {
                          this.btnGenerarDocCPFactura.Enabled = true;
-                         //this.txtAsiento.Text = "";
                          this.btnGuardarFactura.Enabled = true;
                          InactivarControles(false);
 
@@ -377,7 +376,7 @@ namespace CO
                 else
                 {
                     this.btnGenerarDocCPFactura.Enabled = true;
-                    this.txtAsiento.Text = "";
+                    this.linkAsientoMercaderia.Text = "";
                     InactivarControles(false);
                     
                 }
@@ -1184,6 +1183,15 @@ namespace CO
                 return;
             }
         }
+
+				private void linkAsientoMercaderia_Click(object sender, EventArgs e)
+				{
+					if (this.linkAsientoMercaderia.Text != "" || this.linkAsientoMercaderia.Text != " --- --- ")
+					{
+						CG.frmAsiento ofrmAsiento = new CG.frmAsiento(this.linkAsientoMercaderia.Text);
+						ofrmAsiento.ShowDialog();
+					}
+				}
 
         
 

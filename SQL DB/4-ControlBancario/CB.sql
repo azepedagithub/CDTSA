@@ -157,17 +157,17 @@ go
 alter table dbo.cbTipoCuenta add constraint pkTipoCta primary key ( IDTipo )
 go
 
-Insert dbo.cbTipoCuenta( IDTipo, Descr )
-values (1, 'Cuenta Corriente' )
+Insert dbo.cbTipoCuenta( IDTipo, Descr,Activo )
+values (1, 'Cuenta Corriente',1 )
 go
-Insert dbo.cbTipoCuenta( IDTipo, Descr )
-values (2, 'Cuenta Ahorro' )
+Insert dbo.cbTipoCuenta( IDTipo, Descr,Activo )
+values (2, 'Cuenta Ahorro',1 )
 go
-Insert dbo.cbTipoCuenta( IDTipo, Descr )
-values (3, 'Cuenta de Debito' )
+Insert dbo.cbTipoCuenta( IDTipo, Descr,Activo )
+values (3, 'Cuenta de Debito' ,1)
 go
-Insert dbo.cbTipoCuenta( IDTipo, Descr )
-values (4, 'Tarjeta de Credito' )
+Insert dbo.cbTipoCuenta( IDTipo, Descr,Activo )
+values (4, 'Tarjeta de Credito',1 )
 go
 
 Create Table dbo.cbTipoDocumento ( IDTipo int not null, Tipo nvarchar(3) not null , Descr nvarchar(200), Activo bit default 1 )
@@ -260,11 +260,11 @@ go
 Alter Table dbo.globalMoneda add constraint ukglobalMoneda unique (Moneda)
 go
 
-INSERT dbo.globalMoneda (IDMoneda, Moneda , Descr, Simbolo ,1 )
-VALUES (1, 'CORDOBAS', 'CORDOBAS', 'C$' )
+INSERT dbo.globalMoneda (IDMoneda, Moneda , Descr, Simbolo , Nacional)
+VALUES (1, 'CORDOBAS', 'CORDOBAS', 'C$',1 )
 GO
-INSERT dbo.globalMoneda (IDMoneda, Moneda , Descr, Simbolo,0 )
-VALUES (2, 'DOLAR', 'DOLAR', '$' )
+INSERT dbo.globalMoneda (IDMoneda, Moneda , Descr, Simbolo, Nacional)
+VALUES (2, 'DOLAR', 'DOLAR', '$' ,0 )
 GO
 
 Create Table dbo.cbCuentaBancaria ( IDCuentaBanco int not null, Codigo nvarchar(25), Descr nvarchar(250),
