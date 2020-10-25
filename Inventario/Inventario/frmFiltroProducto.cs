@@ -113,6 +113,30 @@ namespace CI
             
         }
 
+		private void CargarDescripcionesClasificaciones()
+		{
+			DataTable DT = clsGrupoClasificacionDAC.GetAllData().Tables[0];
+
+			this.lyClasificacion1.Text = DT.Rows[0]["Descr"].ToString() + ":";
+			this.lyClasificacion1.Visibility = (Convert.ToBoolean(DT.Rows[0]["Activo"])) ? DevExpress.XtraLayout.Utils.LayoutVisibility.Always : DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
+
+			this.lyClasificacion2.Text = DT.Rows[1]["Descr"].ToString() + ":";
+			this.lyClasificacion2.Visibility = (Convert.ToBoolean(DT.Rows[1]["Activo"])) ? DevExpress.XtraLayout.Utils.LayoutVisibility.Always : DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
+
+			this.lyClasificacion3.Text = DT.Rows[2]["Descr"].ToString() + ":";
+			this.lyClasificacion3.Visibility = (Convert.ToBoolean(DT.Rows[2]["Activo"])) ? DevExpress.XtraLayout.Utils.LayoutVisibility.Always : DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
+
+			this.lyClasificacion4.Text = DT.Rows[3]["Descr"].ToString() + ":";
+			this.lyClasificacion4.Visibility = (Convert.ToBoolean(DT.Rows[3]["Activo"])) ? DevExpress.XtraLayout.Utils.LayoutVisibility.Always : DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
+
+			this.lyClasificacion5.Text = DT.Rows[4]["Descr"].ToString() + ":";
+			this.lyClasificacion5.Visibility = (Convert.ToBoolean(DT.Rows[4]["Activo"])) ? DevExpress.XtraLayout.Utils.LayoutVisibility.Always : DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
+								 
+			this.lyClasificacion6.Text = DT.Rows[5]["Descr"].ToString() + ":";
+			this.lyClasificacion6.Visibility = (Convert.ToBoolean(DT.Rows[5]["Activo"])) ? DevExpress.XtraLayout.Utils.LayoutVisibility.Always : DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
+
+		}
+
         void frmFiltroProducto_Load(object sender, EventArgs e)
         {
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -136,31 +160,12 @@ namespace CI
         }
 
 
-        private void CargarDescripcionesClasificaciones()
-        {
-            DataTable DT = clsGrupoClasificacionDAC.GetData(-1, "*").Tables[0];
-
-            this.lyClasificacion1.Text = DT.Rows[0]["Descr"].ToString() + ":";
-
-            this.lyClasificacion2.Text = DT.Rows[1]["Descr"].ToString() + ":";
-
-            this.lyClasificacion3.Text = DT.Rows[2]["Descr"].ToString() + ":";
-
-            this.lyClasificacion4.Text = DT.Rows[3]["Descr"].ToString() + ":";
-
-            this.lyClasificacion5.Text = DT.Rows[4]["Descr"].ToString() + ":";
-
-            this.lyClasificacion6.Text = DT.Rows[5]["Descr"].ToString() + ":";
-
-        }
-
-
         private void ObtenerFiltro()
         {
-            this.IDProducto = (this.txtIDProducto.EditValue =="") ? -1 : Convert.ToInt32(this.txtIDProducto.EditValue);
-            this.Descripcion = (this.txtDescripcion.EditValue =="") ? "*": this.txtDescripcion.EditValue.ToString();
-            this.Alias = (this.txtAlias.EditValue =="") ? "*": this.txtAlias.EditValue.ToString();
-            this.CodigoBarra =(this.txtCodigoBarra.EditValue =="") ? "*" : this.txtCodigoBarra.EditValue.ToString();
+            this.IDProducto = (this.txtIDProducto.EditValue == null || this.txtIDProducto.EditValue.ToString() =="") ? -1 : Convert.ToInt32(this.txtIDProducto.EditValue);
+            this.Descripcion = (this.txtDescripcion.EditValue== null || this.txtDescripcion.EditValue.ToString() =="") ? "*": this.txtDescripcion.EditValue.ToString();
+            this.Alias = (this.txtAlias.EditValue == null || this.txtAlias.EditValue.ToString() =="") ? "*": this.txtAlias.EditValue.ToString();
+            this.CodigoBarra =(this.txtCodigoBarra.EditValue == null || this.txtCodigoBarra.EditValue.ToString() =="") ? "*" : this.txtCodigoBarra.EditValue.ToString();
             this.iEsControlado = Convert.ToInt32(this.chkEsControlado.EditValue);
             this.iEsMuestra = Convert.ToInt32(this.chkEsMuestra.EditValue);
             this.iEsEtico = Convert.ToInt32(this.chkEsEtico.EditValue);

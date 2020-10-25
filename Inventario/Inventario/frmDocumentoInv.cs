@@ -272,10 +272,11 @@ namespace CI
                        this.slkupTransaccion.Focus();
                        break;
                    case "Editar":
-                       AccionDetalle = "Editar";
-                       HabilitarControlesDetalle(true);
+                       
                        if (this.gridViewDetalle.GetSelectedRows().Count() > 0)
                        {
+						   AccionDetalle = "Editar";
+						   HabilitarControlesDetalle(true);
                            DataRow row = this.gridViewDetalle.GetDataRow(0);
                            this.slkupTransaccion.EditValue = row["IDTipoTran"];
                            this.slkupProducto.EditValue = row["IDProducto"];
@@ -767,6 +768,17 @@ namespace CI
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupLote, "[{'ColumnCaption':'IDLote','ColumnField':'IDLote','width':20},{'ColumnCaption':'Lote','ColumnField':'LoteProveedor','width':60},{'ColumnCaption':'F.V','ColumnField':'FechaVencimiento','width':20}]");
                 
                 this.slkupLote.Enabled = true;
+				//TODO Si la transaccion es tipo miscelanio y es ingreso agregar el costo del producto
+				if (this.slkupTransaccion.EditValue != null)
+				{
+					DataRowView dr = (DataRowView)slkupTransaccion.Properties.GetRowByKeyValue(this.slkupTransaccion.EditValue);
+					if ((Convert.ToBoolean(dr["EsAjuste"]) && Convert.ToInt32(dr["Factor"]) > 0) || Convert.ToBoolean(dr["EsCompra"]))
+					{
+						DataTable dtTempProd = clsProductoDAC.GetProductoByID(Convert.ToInt64(slkupProducto.EditValue), "*").Tables[0];
+						this.txtCostoLocal.EditValue = Convert.ToDecimal(dtTempProd.Rows[0]["CostoPromLocal"]);
+						this.txtCostoDolar.EditValue = Convert.ToDecimal(dtTempProd.Rows[0]["CostoPromDolar"]);
+					}
+				}
             }
             else {
                 this.slkupLote.Enabled = false;

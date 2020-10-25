@@ -56,6 +56,7 @@ namespace CI.DAC
                 oAdaptador.InsertCommand.Parameters.Add("@IDProducto", SqlDbType.BigInt).SourceColumn = "IDProducto";
                 oAdaptador.InsertCommand.Parameters.Add("@Descr", SqlDbType.NChar).SourceColumn = "Descr";
                 oAdaptador.InsertCommand.Parameters.Add("@Alias", SqlDbType.NChar).SourceColumn = "Alias";
+				oAdaptador.InsertCommand.Parameters.Add("@Generico", SqlDbType.NChar).SourceColumn = "Generico";
                 oAdaptador.InsertCommand.Parameters.Add("@Clasif1", SqlDbType.Int).SourceColumn = "Clasif1";
                 oAdaptador.InsertCommand.Parameters.Add("@Clasif2", SqlDbType.Int).SourceColumn = "Clasif2";
                 oAdaptador.InsertCommand.Parameters.Add("@Clasif3", SqlDbType.Int).SourceColumn = "Clasif3";
@@ -83,6 +84,7 @@ namespace CI.DAC
                 oAdaptador.UpdateCommand.Parameters.Add("@IDProducto", SqlDbType.BigInt).SourceColumn = "IDProducto";
                 oAdaptador.UpdateCommand.Parameters.Add("@Descr", SqlDbType.NChar).SourceColumn = "Descr";
                 oAdaptador.UpdateCommand.Parameters.Add("@Alias", SqlDbType.NChar).SourceColumn = "Alias";
+				oAdaptador.UpdateCommand.Parameters.Add("@Generico", SqlDbType.NChar).SourceColumn = "Generico";
                 oAdaptador.UpdateCommand.Parameters.Add("@Clasif1", SqlDbType.Int).SourceColumn = "Clasif1";
                 oAdaptador.UpdateCommand.Parameters.Add("@Clasif2", SqlDbType.Int).SourceColumn = "Clasif2";
                 oAdaptador.UpdateCommand.Parameters.Add("@Clasif3", SqlDbType.Int).SourceColumn = "Clasif3";
@@ -112,6 +114,7 @@ namespace CI.DAC
                 oAdaptador.DeleteCommand.Parameters.Add("@IDProducto", SqlDbType.BigInt).SourceColumn = "IDProducto";
                 oAdaptador.DeleteCommand.Parameters.Add("@Descr", SqlDbType.NChar).SourceColumn = "Descr";
                 oAdaptador.DeleteCommand.Parameters.Add("@Alias", SqlDbType.NChar).SourceColumn = "Alias";
+				oAdaptador.DeleteCommand.Parameters.Add("@Generico", SqlDbType.NChar).SourceColumn = "Generico";
                 oAdaptador.DeleteCommand.Parameters.Add("@Clasif1", SqlDbType.Int).SourceColumn = "Clasif1";
                 oAdaptador.DeleteCommand.Parameters.Add("@Clasif2", SqlDbType.Int).SourceColumn = "Clasif2";
                 oAdaptador.DeleteCommand.Parameters.Add("@Clasif3", SqlDbType.Int).SourceColumn = "Clasif3";
