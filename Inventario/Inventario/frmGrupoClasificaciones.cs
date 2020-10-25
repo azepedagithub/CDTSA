@@ -31,7 +31,7 @@ namespace CI
             try
             {
                 //Cargar los Grupos
-                _dsGrupos = clsGrupoClasificacionDAC.GetData(-1, "*");
+							_dsGrupos = clsGrupoClasificacionDAC.GetAllData();
                 dtGrupos = _dsGrupos.Tables[0];
 
                 this.txtDescrC1.Text = dtGrupos.Rows[0]["Descr"].ToString();
@@ -61,12 +61,12 @@ namespace CI
         private bool Validar() {
             bool result = true;
             string sMensaje =  "";
-            if (this.txtDescrC1.EditValue.ToString() == "") sMensaje = " • Descripción de clasificacion 1";
-            if (this.txtDescrC2.EditValue.ToString() == "") sMensaje = " • Descripción de clasificacion 2";
-            if (this.txtDescrC3.EditValue.ToString() == "") sMensaje = " • Descripción de clasificacion 3";
-            if (this.txtDescrC4.EditValue.ToString() == "") sMensaje = " • Descripción de clasificacion 4";
-            if (this.txtDescrC5.EditValue.ToString() == "") sMensaje = " • Descripción de clasificacion 5";
-            if (this.txtDescrC6.EditValue.ToString() == "") sMensaje = " • Descripción de clasificacion 6";
+            if (Convert.ToBoolean(this.chkActivoC1.EditValue) == true && this.txtDescrC1.EditValue.ToString() == "") sMensaje = " • Descripción de clasificacion 1";
+            if (Convert.ToBoolean(this.chkActivoC2.EditValue) == true && this.txtDescrC2.EditValue.ToString() == "") sMensaje = " • Descripción de clasificacion 2";
+            if (Convert.ToBoolean(this.chkActivoC3.EditValue) == true && this.txtDescrC3.EditValue.ToString() == "") sMensaje = " • Descripción de clasificacion 3";
+            if (Convert.ToBoolean(this.chkActivoC4.EditValue) == true && this.txtDescrC4.EditValue.ToString() == "") sMensaje = " • Descripción de clasificacion 4";
+            if (Convert.ToBoolean(this.chkActivoC5.EditValue) == true && this.txtDescrC5.EditValue.ToString() == "") sMensaje = " • Descripción de clasificacion 5";
+            if (Convert.ToBoolean(this.chkActivoC6.EditValue) == true && this.txtDescrC6.EditValue.ToString() == "") sMensaje = " • Descripción de clasificacion 6";
 
             if (sMensaje != "") {
                 result = false;

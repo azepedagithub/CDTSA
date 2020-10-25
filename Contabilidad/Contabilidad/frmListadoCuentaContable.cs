@@ -112,14 +112,14 @@ namespace CG
 
         private void PopulateDataSearchLookup()
         {
-            Util.Util.ConfigLookupEdit(this.slkupCuentaAnterior, _dtCuenta, "Descr", "IDCuenta");
+            Util.Util.ConfigLookupEdit(this.slkupCuentaAnterior, _dtCuenta, "Descr", "IDCuenta",400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupCuentaAnterior, "[{'ColumnCaption':'Cuenta','ColumnField':'Cuenta','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");
 
             DataView dvCuentaMayor = new DataView();
             dvCuentaMayor.Table = _dtCuenta;
             dvCuentaMayor.RowFilter = "EsMayor=1";
 
-            Util.Util.ConfigLookupEdit(this.slkupCuentaMayor, dvCuentaMayor.ToTable(), "Descr", "IDCuenta");
+            Util.Util.ConfigLookupEdit(this.slkupCuentaMayor, dvCuentaMayor.ToTable(), "Descr", "IDCuenta",400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupCuentaMayor, "[{'ColumnCaption':'Cuenta','ColumnField':'Cuenta','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");
         }
 
@@ -573,12 +573,14 @@ namespace CG
                 this.chkAceptaDatos.Enabled = false;
                 this.chkAceptaDatos.EditValue = false;
                 this.chkUsaCentroCosto.Enabled = false;
+								this.txtDescripcion.Properties.CharacterCasing = CharacterCasing.Upper;
             }
             else
             {
                 this.chkAceptaDatos.Enabled = true;
                 this.chkAceptaDatos.EditValue = true;
                 this.chkUsaCentroCosto.Enabled = true;
+								this.txtDescripcion.Properties.CharacterCasing = CharacterCasing.Normal;
             }
         }
 

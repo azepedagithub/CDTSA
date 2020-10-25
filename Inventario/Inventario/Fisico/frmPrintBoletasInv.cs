@@ -70,9 +70,40 @@ namespace CI.Fisico
             Util.Util.ConfigLookupEdit(this.slkupClasif6, DTClasif6, "Descr", "IDClasificacion", 350);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupClasif6, "[{'ColumnCaption':'ID','ColumnField':'IDClasificacion','width':20},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':90}]");
             this.slkupClasif6.Properties.ShowClearButton = true;
-
+			
+			CargarDescripcionesClasificaciones();
 
         }
+
+		private void CargarDescripcionesClasificaciones()
+		{
+			DataTable DT = clsGrupoClasificacionDAC.GetAllData().Tables[0];
+
+			this.lblClasif1.Text = DT.Rows[0]["Descr"].ToString() + ":";
+			this.slkupClasif1.Visible = Convert.ToBoolean(DT.Rows[0]["Activo"]);
+			this.lblClasif1.Visible = Convert.ToBoolean(DT.Rows[0]["Activo"]);
+
+			this.lblClasif2.Text = DT.Rows[1]["Descr"].ToString() + ":";
+			this.slkupClasif2.Visible = Convert.ToBoolean(DT.Rows[1]["Activo"]);
+			this.lblClasif2.Visible = Convert.ToBoolean(DT.Rows[1]["Activo"]);
+
+			this.lblClasif3.Text = DT.Rows[2]["Descr"].ToString() + ":";
+			this.slkupClasif3.Visible = Convert.ToBoolean(DT.Rows[2]["Activo"]);
+			this.lblClasif3.Visible = Convert.ToBoolean(DT.Rows[2]["Activo"]);
+
+			this.lblClasif4.Text = DT.Rows[3]["Descr"].ToString() + ":";
+			this.slkupClasif4.Visible = Convert.ToBoolean(DT.Rows[3]["Activo"]);
+			this.lblClasif4.Visible = Convert.ToBoolean(DT.Rows[3]["Activo"]);
+
+			this.lblClasif5.Text = DT.Rows[4]["Descr"].ToString() + ":";
+			this.slkupClasif5.Visible = Convert.ToBoolean(DT.Rows[4]["Activo"]);
+			this.lblClasif5.Visible = Convert.ToBoolean(DT.Rows[4]["Activo"]);
+
+			this.lblClasif6.Text = DT.Rows[5]["Descr"].ToString() + ":";
+			this.slkupClasif6.Visible = Convert.ToBoolean(DT.Rows[5]["Activo"]);
+			this.lblClasif6.Visible = Convert.ToBoolean(DT.Rows[5]["Activo"]);
+
+		}
 
         private void ImprimirBoletasdeInventario()
         {

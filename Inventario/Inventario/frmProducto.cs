@@ -543,25 +543,25 @@ namespace CI
         }
 
         private void CargarDescripcionesClasificaciones() {
-            DataTable DT = clsGrupoClasificacionDAC.GetData(-1, "*").Tables[0];
+            DataTable DT = clsGrupoClasificacionDAC.GetAllData().Tables[0];
 
             this.lyClasif1.Text = DT.Rows[0]["Descr"].ToString() + ":";
-            this.slkupClasif1.Enabled = Convert.ToBoolean(DT.Rows[0]["Activo"]);
+            this.lyClasif1.Visibility = ( Convert.ToBoolean(DT.Rows[0]["Activo"])) ? DevExpress.XtraLayout.Utils.LayoutVisibility.Always : DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
 
             this.lyClasif2.Text = DT.Rows[1]["Descr"].ToString() + ":";
-            this.slkupClasif1.Enabled = Convert.ToBoolean(DT.Rows[1]["Activo"]);
+			this.lyClasif2.Visibility = ( Convert.ToBoolean(DT.Rows[1]["Activo"])) ? DevExpress.XtraLayout.Utils.LayoutVisibility.Always : DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
 
             this.lyClasif3.Text = DT.Rows[2]["Descr"].ToString() + ":";
-            this.slkupClasif1.Enabled = Convert.ToBoolean(DT.Rows[2]["Activo"]);
+			this.lyClasif3.Visibility = ( Convert.ToBoolean(DT.Rows[2]["Activo"])) ? DevExpress.XtraLayout.Utils.LayoutVisibility.Always : DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
 
             this.lyClasif4.Text = DT.Rows[3]["Descr"].ToString() + ":";
-            this.slkupClasif1.Enabled = Convert.ToBoolean(DT.Rows[3]["Activo"]);
+			this.lyClasif4.Visibility = ( Convert.ToBoolean(DT.Rows[3]["Activo"])) ? DevExpress.XtraLayout.Utils.LayoutVisibility.Always : DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
 
             this.lyClasif5.Text = DT.Rows[4]["Descr"].ToString() + ":";
-            this.slkupClasif1.Enabled = Convert.ToBoolean(DT.Rows[4]["Activo"]);
+			this.lyClasif5.Visibility = ( Convert.ToBoolean(DT.Rows[4]["Activo"])) ? DevExpress.XtraLayout.Utils.LayoutVisibility.Always : DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
 
-            this.lyClasif6.Text = DT.Rows[5]["Descr"].ToString() + ":"; 
-            this.slkupClasif1.Enabled = Convert.ToBoolean(DT.Rows[5]["Activo"]);
+            this.lyClasif6.Text = DT.Rows[5]["Descr"].ToString() + ":";
+			this.lyClasif6.Visibility = (Convert.ToBoolean(DT.Rows[5]["Activo"])) ? DevExpress.XtraLayout.Utils.LayoutVisibility.Always : DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
 
         }
 

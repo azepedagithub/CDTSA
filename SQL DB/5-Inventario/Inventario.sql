@@ -894,7 +894,7 @@ GO
 
 --Tipo Impuesto
 INSERT INTO dbo.globalImpuesto(Descr,Porc,Activo)
-VALUES ('Exento',0,1)
+VALUES ('EXENTO',0,1)
 GO
 INSERT INTO dbo.globalImpuesto(Descr,Porc,Activo)
 VALUES ('IGV',15,1)
@@ -1240,11 +1240,11 @@ end
 GO
 
 
-CREATE   PROCEDURE dbo.invGetClasificacion @IDClasificacion AS INT, @IDGrupo AS int	, @Descr nvarchar(250)
+CREATE  PROCEDURE dbo.invGetClasificacion @IDClasificacion AS INT, @IDGrupo AS int	, @Descr nvarchar(250)
 AS 
 SELECT B.IDGrupo,B.Descr DescrGrupo, IDClasificacion,A.Descr,A.Activo  FROM dbo.invClasificacion A
 INNER JOIN dbo.invGrupoClasif B ON A.IDGrupo = B.IDGrupo
- WHERE  (IDClasificacion = @IDClasificacion OR @IDClasificacion=-1) AND  (A.IDGrupo=@IDGrupo OR @IDGrupo=-1) AND (A.Descr LIKE '%'+@Descr+'%' OR @Descr = '*') AND A.Activo=1
+ WHERE  (IDClasificacion = @IDClasificacion OR @IDClasificacion=-1) AND  (A.IDGrupo=@IDGrupo OR @IDGrupo=-1) AND (A.Descr LIKE '%'+@Descr+'%' OR @Descr = '*') AND A.Activo=1 AND B.Activo=1
 ORDER BY B.IDGrupo 
 
 
@@ -1963,6 +1963,13 @@ AS
 SELECT IDGrupo,Descr ,Etiqueta,Activo FROM dbo.invGrupoClasif
 WHERE (IDGrupo=@IDGrupo OR @IDGrupo=-1) AND (Descr LIKE '%Descr%' OR @Descr ='*')
 AND Activo=1 AND IDGrupo<>0
+
+GO
+
+CREATE  PROCEDURE dbo.invGetAllGrupoClasif 
+AS 
+SELECT IDGrupo,Descr ,Etiqueta,Activo FROM dbo.invGrupoClasif
+WHERE IDGrupo<>0
 
 GO
  

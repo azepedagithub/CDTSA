@@ -73,6 +73,19 @@ namespace CI.DAC
             return DS;
         }
 
+				public static DataSet GetAllData()
+				{
+					String strSQL = "dbo.invGetAllGrupoClasif";
+
+					SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
+					oCmd.CommandType = CommandType.StoredProcedure;
+					SqlDataAdapter oAdaptador = new SqlDataAdapter(oCmd);
+					DataSet DS = CreateDataSet();
+
+					oAdaptador.Fill(DS.Tables["Data"]);
+					return DS;
+				}
+
     }
 
 }
