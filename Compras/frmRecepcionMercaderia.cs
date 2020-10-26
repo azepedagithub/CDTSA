@@ -1,4 +1,5 @@
 ﻿using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraLayout;
 using Security;
@@ -56,6 +57,10 @@ namespace CO
             this.slkupGridLote.ValueMember = "IDLote";
             this.slkupGridLote.NullText = " --- ---";
             this.slkupGridLote.EditValueChanged += slkupGridLote_EditValueChanged;
+			EditorButton buttoAdd = new EditorButton( DevExpress.XtraEditors.Controls.ButtonPredefines.Plus,"Agregar",100,true,true,true, DevExpress.Utils.HorzAlignment.Center, null);
+			this.slkupGridLote.Buttons.Add(buttoAdd);
+			buttoAdd.Click += buttoAdd_Click;	
+			
             
             this.slkupGridLote.Popup += slkup_Popup;
 
@@ -69,6 +74,11 @@ namespace CO
             
             CargarRecepcionMercaderia();
         }
+
+		void buttoAdd_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show("hi");
+		}
 
         
    
@@ -97,8 +107,15 @@ namespace CO
             DataRowView dr = (DataRowView)editor.GetSelectedDataRow();
 
             this.gridViewIngresoMercaderia.PostEditor();
-            DateTime Fecha = Convert.ToDateTime(dr["FechaVencimiento"]);
-            this.gridViewIngresoMercaderia.SetFocusedRowCellValue("FechaVencimiento", Fecha);
+			if (dr == null)
+			{
+				this.gridViewIngresoMercaderia.SetFocusedRowCellValue("FechaVencimiento", null);
+			}
+			else
+			{
+				DateTime Fecha = Convert.ToDateTime(dr["FechaVencimiento"]);
+				this.gridViewIngresoMercaderia.SetFocusedRowCellValue("FechaVencimiento", Fecha);
+			}
 
             SendKeys.Send("{TAB}");
 

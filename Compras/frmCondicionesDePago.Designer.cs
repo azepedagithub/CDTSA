@@ -47,6 +47,11 @@
 			this.txtDescr = new DevExpress.XtraEditors.TextEdit();
 			this.dtgCondicionPago = new DevExpress.XtraGrid.GridControl();
 			this.gridView = new DevExpress.XtraGrid.Views.Grid.GridView();
+			this.ColID = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colDescr = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colDias = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colDescContado = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colActivo = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
@@ -59,11 +64,6 @@
 			this.emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.emptySpaceItem3 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.emptySpaceItem5 = new DevExpress.XtraLayout.EmptySpaceItem();
-			this.ColID = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colDescr = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colDias = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colDescContado = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colActivo = new DevExpress.XtraGrid.Columns.GridColumn();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
 			this.layoutControl1.SuspendLayout();
@@ -269,6 +269,46 @@
 			this.gridView.Name = "gridView";
 			this.gridView.OptionsBehavior.ReadOnly = true;
 			// 
+			// ColID
+			// 
+			this.ColID.Caption = "ID";
+			this.ColID.FieldName = "IDCondicionPago";
+			this.ColID.Name = "ColID";
+			this.ColID.Visible = true;
+			this.ColID.VisibleIndex = 0;
+			// 
+			// colDescr
+			// 
+			this.colDescr.Caption = "Descripción";
+			this.colDescr.FieldName = "Descr";
+			this.colDescr.Name = "colDescr";
+			this.colDescr.Visible = true;
+			this.colDescr.VisibleIndex = 1;
+			// 
+			// colDias
+			// 
+			this.colDias.Caption = "Días";
+			this.colDias.FieldName = "Dias";
+			this.colDias.Name = "colDias";
+			this.colDias.Visible = true;
+			this.colDias.VisibleIndex = 2;
+			// 
+			// colDescContado
+			// 
+			this.colDescContado.Caption = "% Desc. Contado";
+			this.colDescContado.FieldName = "DescuentoContado";
+			this.colDescContado.Name = "colDescContado";
+			this.colDescContado.Visible = true;
+			this.colDescContado.VisibleIndex = 3;
+			// 
+			// colActivo
+			// 
+			this.colActivo.Caption = "Activo";
+			this.colActivo.FieldName = "Activo";
+			this.colActivo.Name = "colActivo";
+			this.colActivo.Visible = true;
+			this.colActivo.VisibleIndex = 4;
+			// 
 			// layoutControlGroup1
 			// 
 			this.layoutControlGroup1.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
@@ -401,46 +441,6 @@
 			this.emptySpaceItem5.Name = "emptySpaceItem5";
 			this.emptySpaceItem5.Size = new System.Drawing.Size(673, 15);
 			this.emptySpaceItem5.TextSize = new System.Drawing.Size(0, 0);
-			// 
-			// ColID
-			// 
-			this.ColID.Caption = "ID";
-			this.ColID.FieldName = "IDCondicionPago";
-			this.ColID.Name = "ColID";
-			this.ColID.Visible = true;
-			this.ColID.VisibleIndex = 0;
-			// 
-			// colDescr
-			// 
-			this.colDescr.Caption = "Descripción";
-			this.colDescr.FieldName = "Descr";
-			this.colDescr.Name = "colDescr";
-			this.colDescr.Visible = true;
-			this.colDescr.VisibleIndex = 1;
-			// 
-			// colDias
-			// 
-			this.colDias.Caption = "Días";
-			this.colDias.FieldName = "Dias";
-			this.colDias.Name = "colDias";
-			this.colDias.Visible = true;
-			this.colDias.VisibleIndex = 2;
-			// 
-			// colDescContado
-			// 
-			this.colDescContado.Caption = "% Desc. Contado";
-			this.colDescContado.FieldName = "DescuentoContado";
-			this.colDescContado.Name = "colDescContado";
-			this.colDescContado.Visible = true;
-			this.colDescContado.VisibleIndex = 3;
-			// 
-			// colActivo
-			// 
-			this.colActivo.Caption = "Activo";
-			this.colActivo.FieldName = "Activo";
-			this.colActivo.Name = "colActivo";
-			this.colActivo.Visible = true;
-			this.colActivo.VisibleIndex = 4;
 			// 
 			// frmCondicionesDePago
 			// 

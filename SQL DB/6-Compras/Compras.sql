@@ -945,8 +945,9 @@ BEGIN
 END
 IF (@Operacion ='D')
 BEGIN
-	UPDATE dbo.coOrdenCompra SET  IDEmbarque = -1 WHERE IDEmbarque=@IDEmbarque
 	DELETE FROM dbo.coEmbarque WHERE IDEmbarque=@IDEmbarque
+	UPDATE dbo.coOrdenCompra SET  IDEmbarque = -1 WHERE IDEmbarque=@IDEmbarque
+	
 END
 
 
@@ -2007,7 +2008,7 @@ WHERE IDParametro=1
 GO
 
 
-CREATE PROCEDURE dbo.coGeneraAsientoObligacionProveedor @IDEmbarque AS INT,@Usuario NVARCHAR(250),@Asiento AS nvarchar(20) OUTPUT
+CREATE  PROCEDURE dbo.coGeneraAsientoObligacionProveedor @IDEmbarque AS INT,@Usuario NVARCHAR(250),@Asiento AS nvarchar(20) OUTPUT
 AS 
 --DECLARE	 @IDEmbarque AS INT,@Usuario NVARCHAR(250)
 --SET @IDEmbarque =1
@@ -2041,6 +2042,35 @@ AS
 
 	SELECT TOP 1 @IDCategoria = IDCategoria, @IsLocal =IsLocal,  @NombreProveedor = Nombre  FROM dbo.cppProveedor (NOLOCK) WHERE IDProveedor=@IDProveedor
 
+
+	--Guardar Detalle del Asiento  
+	-- Debitar CtaCompra
+	-- Acreditar CtxPagar
+	DECLARE @CtrTransitoExterior AS INT,@CtaTransitoExterior BIGINT,@CtrTransitoLocal AS INT,@CtaTransitoLocal BIGINT,
+		@Cta_CXP BIGINT,@Ctr_CXP int
+
+	-- Inventario Transito 	
+	SELECT @CtrTransitoExterior= CtrTransitoExterior,@CtaTransitoExterior = CtaTransitoExterior,@CtrTransitoLocal=CtrTransitoLocal,
+		   @CtaTransitoLocal=CtaTransitoLocal  FROM dbo.coParametrosCompra (NOLOCK)	 WHERE IDParametro=1
+		   
+	-- CXP
+	SELECT @Cta_CXP = Cta_CXP,@Ctr_CXP = Ctr_CXP  FROM dbo.cppCategoriaProveedor (NOLOCK) WHERE IDCategoria = @IDCategoria
+	
+	DECLARE @ValidacionCentros AS INT,@ValidacionCuentas BIGINT
+	SET @ValidacionCentros = @CtrTransitoExterior + @CtrTransitoLocal 
+	SET @ValidacionCuentas = @CtaTransitoExterior + @CtaTransitoLocal 
+	IF (@ValidacionCentros IS NULL OR @ValidacionCuentas IS NULL)
+	BEGIN
+		RAISERROR ('GENERACIÓN DEL ASIENTO CONTABLE: Por favor verifique la administración de Compras y establezca las cuentas adecuadamente...', 16, 1) ;
+		return		
+	END 
+	
+	IF (@Ctr_CXP IS NULL OR @Cta_CXP IS NULL)
+	BEGIN	
+		RAISERROR ('GENERACIÓN DEL ASIENTO CONTABLE: Por favor verifique las cuentas de Categoria de Proveedor...', 16, 1) ;
+		return		
+	END
+
 	SET @Fecha =  DATEADD(s,-1,DATEADD(mm, DATEDIFF(m,0,@FechaDocumento)+1,0))
 	DECLARE @IDEjercicio AS INT,@Periodo NVARCHAR(10), @Cerrado AS BIT,@Activo AS BIT
 
@@ -2072,19 +2102,6 @@ AS
 	VALUES ( @IDEjercicio,@Periodo,@Asiento,@TipoAsiento,@FechaDocumento,GETDATE(),@Usuario,GETDATE(),NULL,NULL,NULL,NULL,@Concepto,0,0,@TipoCambio,'CO',0)					
 
 
-	--Guardar Detalle del Asiento  
-	-- Debitar CtaCompra
-	-- Acreditar CtxPagar
-	DECLARE @CtrTransitoExterior AS INT,@CtaTransitoExterior BIGINT,@CtrTransitoLocal AS INT,@CtaTransitoLocal BIGINT,
-		@Cta_CXP BIGINT,@Ctr_CXP int
-
-	-- Inventario Transito 	
-	SELECT @CtrTransitoExterior= CtrTransitoExterior,@CtaTransitoExterior = CtaTransitoExterior,@CtrTransitoLocal=CtrTransitoLocal,
-		   @CtaTransitoLocal=CtaTransitoLocal  FROM dbo.coParametrosCompra (NOLOCK)	 WHERE IDParametro=1
-		   
-
-	-- CXP
-	SELECT @Cta_CXP = Cta_CXP,@Ctr_CXP = Ctr_CXP  FROM dbo.cppCategoriaProveedor (NOLOCK) WHERE IDCategoria = @IDCategoria
 
 	DECLARE @Linea AS INT,@MontoAsiento AS DECIMAL(28,8)
 

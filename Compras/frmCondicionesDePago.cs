@@ -215,7 +215,7 @@ namespace CO
 		private void ObtenerDatos()
 		{
 			Descr = this.txtDescr.Text.Trim();
-			PorcDescuentoContado = Convert.ToDecimal(this.txtDescContado.EditValue);
+			PorcDescuentoContado = Convert.ToDecimal(this.txtDescContado.EditValue.ToString() == "" ? "0" : this.txtDescContado.EditValue);
 			Dias = Convert.ToInt32(this.txtDias.EditValue);
 			Activo = Convert.ToBoolean(this.chkActivo.Checked);
 		}

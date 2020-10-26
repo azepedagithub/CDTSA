@@ -99,14 +99,18 @@ namespace CO
             this.dtDetalleOrden = new DataTable();
         }
 
-        private void HabilitarBotoneriaPrincipal() { 
-            
-            if (Accion=="Add" || Accion=="Edit"){
+        private void HabilitarBotoneriaPrincipal() {
+
+			this.btnRecepcionMercaderia.Enabled = (this.ID_Embarque != -1) ? true : false;
+			this.btnConfirmar.Enabled = (this.ID_Embarque != -1) ? true : false;
+
+			if (Accion=="Add" || Accion=="Edit"){
                 this.btnEditar.Enabled = false;
                 this.btnGuardar.Enabled = true;
                 this.btnCancelar.Enabled = true;
                 this.btnEliminar.Enabled = false;
-                this.tabFactura.PageVisible = false;    
+                this.tabFactura.PageVisible = false;
+				
                
             }
             else if (Accion == "View") {
@@ -138,6 +142,8 @@ namespace CO
                 this.btnCancelar.Enabled = false;
                 this.btnEliminar.Enabled = false;
                 this.btnAplicar.Enabled = false;
+				this.btnRecepcionMercaderia.Enabled = false;
+				this.btnConfirmar.Enabled =false;
                 if (this.Confirmada)
                 {
                     this.tabFactura.PageVisible = true;
@@ -221,6 +227,8 @@ namespace CO
                 this.btnEliminar.Enabled = (this.Confirmada) ? false : true;
                 this.btnRellenar.Enabled = (this.Confirmada) ? false : true;
             }
+
+			
         }
 
         private void CargarEmbarque(long IDOrdenCompra,long IDEmbarque) {
@@ -485,6 +493,7 @@ namespace CO
                 dtObligacionDetalle = DAC.clsObligacionDetalleDAC.Get(-1, IDObligacionProveedor).Tables[0];
                 this.dtgObligaciones.DataSource = dtObligacionDetalle;
                 this.tabOtros.PageVisible = true;
+				
             }
             else
             {
@@ -772,11 +781,12 @@ namespace CO
                     {
                         ConnectionManager.BeginTran();
 
-                        DAC.clsEmbarqueDAC.InsertUpdate("D", IDEmbarque, ref Embarque ,DateTime.Now, DateTime.Now,-1,-1,-1,-1,0,"",DateTime.Now,"",DateTime.Now,"", ConnectionManager.Tran);                            
-                        DAC.clsEmbarqueDetalleDAC.InsertUpdate("D",IDEmbarque,-1,0,9,0,0,0,0,0,"", ConnectionManager.Tran);
+						DAC.clsEmbarqueDetalleDAC.InsertUpdate("D", IDEmbarque, -1, 0, 9, 0, 0, 0, 0, 0, "", ConnectionManager.Tran);
+						DAC.clsEmbarqueDAC.InsertUpdate("D", IDEmbarque, ref Embarque ,DateTime.Now, DateTime.Now,-1,-1,-1,-1,0,"",DateTime.Now,"",DateTime.Now,"", ConnectionManager.Tran);                            
                         ConnectionManager.CommitTran();
                         MessageBox.Show("El embarque ha sido eliminado correctamente");
                     }
+					this.IDEmbarque = -1;
                     this.Close();
                 }
             }
@@ -997,22 +1007,35 @@ namespace CO
         }
         private void HabilitarBotonesOtrosPagos()
         {
-            if (AccionOtrosPagos == "New" ||  AccionOtrosPagos=="Edit")
-            {
-                this.btnAgregarOtrosPagos.Enabled = false;
-                this.btnEditarOtrosPagos.Enabled = false;
-                this.btnCancelarOtrosPagos.Enabled = true;
-                this.btnGuardarOtrosPagos.Enabled = true;
-                this.btnEliminarOtrosGastos.Enabled = false;
-            }
-            else  
-            {
-                this.btnAgregarOtrosPagos.Enabled = true;
-                this.btnEditarOtrosPagos.Enabled = true;
-                this.btnCancelarOtrosPagos.Enabled = false;
-                this.btnGuardarOtrosPagos.Enabled = false;
-                this.btnEliminarOtrosGastos.Enabled = true;
-            }
+			if (DAC.clsEmbarqueDAC.GetEstadoLiquidacion((int)this.IDEmbarque) == 2)
+			{
+				this.btnAgregarOtrosPagos.Enabled = false;
+				this.btnEditarOtrosPagos.Enabled = false;
+				this.btnEliminarOtrosGastos.Enabled = false;
+				this.btnGuardarOtrosPagos.Enabled = false;
+				this.btnCancelarOtrosPagos.Enabled = false;
+
+			}
+			else
+			{
+				if (AccionOtrosPagos == "New" || AccionOtrosPagos == "Edit")
+				{
+					this.btnAgregarOtrosPagos.Enabled = false;
+					this.btnEditarOtrosPagos.Enabled = false;
+					this.btnCancelarOtrosPagos.Enabled = true;
+					this.btnGuardarOtrosPagos.Enabled = true;
+					this.btnEliminarOtrosGastos.Enabled = false;
+				}
+				else
+				{
+					this.btnAgregarOtrosPagos.Enabled = true;
+					this.btnEditarOtrosPagos.Enabled = true;
+					this.btnCancelarOtrosPagos.Enabled = false;
+					this.btnGuardarOtrosPagos.Enabled = false;
+					this.btnEliminarOtrosGastos.Enabled = true;
+				}
+			}
+
         }
 
         private void btnAgregarOtrosPagos_Click(object sender, EventArgs e)

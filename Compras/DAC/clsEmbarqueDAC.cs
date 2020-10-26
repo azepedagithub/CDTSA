@@ -159,6 +159,7 @@ namespace CO.DAC
         public static int GetEstadoLiquidacion(int IDEmbarque)
         {
             String strSQL = "dbo.coGetStatusLiquidacion";
+			int Result = -1;
 
             SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
 
@@ -169,7 +170,9 @@ namespace CO.DAC
             DataSet DS = new DataSet();
 
             oAdap.Fill(DS, "Data");
-            return Convert.ToInt32(DS.Tables[0].Rows[0]["IdEstado"]);
+			if (DS.Tables[0].Rows.Count>0)
+				Result = Convert.ToInt32(DS.Tables[0].Rows[0]["IdEstado"]);
+			return Result;
         }
 
 

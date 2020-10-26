@@ -456,12 +456,12 @@ namespace MainMenu
                     ofrmSubirTipoCambio.Show();
                     break;
 
-								case "frmPaises":
-										frmPaises ofrmPaises = new frmPaises();
-										ofrmPaises.MdiParent = this;
-										ShowPagesRibbonMan(false);
-										ofrmPaises.Show();
-										break;
+				case "frmPaises":
+					frmPaises ofrmPaises = new frmPaises();
+					ofrmPaises.MdiParent = this;
+					ShowPagesRibbonMan(false);
+					ofrmPaises.Show();
+					break;
 
                 case "frmDesigner":
 
@@ -787,21 +787,21 @@ namespace MainMenu
                     TreeListNode nodeParametrosCO= tl.AppendNode(new object[] { "Parámetros" }, -1, 9, 10, 9);
                     TreeListNode nodeParametrosCompra = tl.AppendNode(new object[] { "Parametros Compra" }, nodeParametrosCO.Id, 11, 11, 11);
                     nodeParametrosCompra.Tag = "frmParametrosCompra";
-										TreeListNode nodeGastosCompra = tl.AppendNode(new object[] { "Gastos de Compra" }, nodeParametrosCO.Id, 11, 11, 11);
-										nodeGastosCompra.Tag = "frmGastosCompra";
-                                                                  
+					TreeListNode nodeGastosCompra = tl.AppendNode(new object[] { "Gastos de Compra" }, nodeParametrosCO.Id, 11, 11, 11);
+					nodeGastosCompra.Tag = "frmGastosCompra";
+					                                              
                     break;
 
                 case "treelstCuentasPorPagar":
                     TreeListNode nodeDocumentosCP = tl.AppendNode(new object[] { "Documentos" }, -1, 11, 11, 11);
                     nodeDocumentosCP.Tag = "frmDocumento";
 										
-										TreeListNode nodeCondicionPago = tl.AppendNode(new object[] { "Condición de Pago" }, -1, 11, 11, 11);
-										nodeCondicionPago.Tag = "frmCondicionPago";
+					TreeListNode nodeCondicionPago = tl.AppendNode(new object[] { "Condición de Pago" }, -1, 11, 11, 11);
+					nodeCondicionPago.Tag = "frmCondicionPago";
                    
 
-										TreeListNode nodeCategoriaProveedor = tl.AppendNode(new object[] { "Categoria Proveedor" }, -1, 11, 11, 11);
-										nodeCategoriaProveedor.Tag = "frmCategoriaProveedor";
+					TreeListNode nodeCategoriaProveedor = tl.AppendNode(new object[] { "Categoria Proveedor" }, -1, 11, 11, 11);
+					nodeCategoriaProveedor.Tag = "frmCategoriaProveedor";
                    
                     break;
 

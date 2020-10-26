@@ -29,7 +29,7 @@ namespace CO
 
         long IDOrdenCompra;
         DateTime FechaOrden, FechaRequerida, FechaRequeridaEmbarque, FechaCotizacion, FechaEmision;
-        int IDEstado, IDProveedor, IDBodega, IDCondicionPago, IDMoneda;
+        int IDEstado, IDProveedor, IDBodega, IDCondicionPago, IDMoneda,IDBodegaDefault;
         Decimal Descuento, Flete, Seguro, Anticipos, Impuesto;
         String  OrdenCompra;
         String sUsuario = (UsuarioDAC._DS.Tables.Count > 0) ? UsuarioDAC._DS.Tables[0].Rows[0]["Usuario"].ToString() : "azepeda";
@@ -63,6 +63,9 @@ namespace CO
 
         private void InicializarNuevoElement()
         {
+			DataTable dtBodegaDefault = clsUtilDAC.GetParametroCompra("IDBodegaDefault").Tables[0];
+			IDBodegaDefault = (dtBodegaDefault.Rows[0][0] != null || dtBodegaDefault.Rows[0][0].ToString() != "") ? Convert.ToInt32(dtBodegaDefault.Rows[0][0]) : -1;
+
             this.txtOrdenCompra.Text = "--";
             this.dtpFechaOrden.EditValue = DateTime.Now;
             this.txtEstado.Text = "Inicial";
@@ -80,7 +83,11 @@ namespace CO
             this.slkupMonedaFactura.EditValue = null;
             this.slkupProveedor.EditValue = null;
             this.slkupSubTipo.EditValue = null;
-            this.slkupBodega.EditValue = null;
+			if (this.IDBodegaDefault == -1)
+				this.slkupBodega.EditValue =  null;
+			else 
+				this.slkupBodega.EditValue =  this.IDBodegaDefault;
+
 
             this.txtNotas.Text = "";
             this.txtMontoFactura.Text = "";
@@ -235,18 +242,25 @@ namespace CO
                 this.btnAnular.Enabled = true;
                 this.btnEmbarque.Enabled = true;
             }
-					//Estado Cancelada
-						if (IDEstado == 2)
-						{
-							this.btnConfirmar.Enabled = false;
-							this.btnDesconfirmar.Enabled = false;
-							this.btnAnular.Enabled = false;
-							this.btnEmbarque.Enabled = false;
-							this.btnEditar.Enabled = false;
-							this.btnGuardar.Enabled = false;
-							this.btnAgregar.Enabled = false;
-							this.btnEliminar.Enabled = false;
-						}
+			//Estado Cancelada
+				if (IDEstado == 2)
+				{
+					this.btnConfirmar.Enabled = false;
+					this.btnDesconfirmar.Enabled = false;
+					this.btnAnular.Enabled = false;
+					this.btnEmbarque.Enabled = false;
+					this.btnEditar.Enabled = false;
+					this.btnGuardar.Enabled = false;
+					this.btnAgregar.Enabled = false;
+					this.btnEliminar.Enabled = false;
+				}
+				if (IDEstado == 3)
+				{
+					this.btnConfirmar.Enabled = false;
+					this.btnDesconfirmar.Enabled = false;
+					this.btnAnular.Enabled = false;
+					this.btnEmbarque.Enabled = true;
+				}
 
        
 
@@ -273,7 +287,8 @@ namespace CO
             this.txtAnticipos.EditValue = Convert.ToDecimal((cabecera["Anticipos"] == System.DBNull.Value) ? 0 : cabecera["Anticipos"]);
             this.txtEstado.EditValue = cabecera["DescrEstado"].ToString();
             this.txtEstado.Tag = Convert.ToInt32(cabecera["IDEstado"]);
-						this.IDEstado = Convert.ToInt32(cabecera["IDEstado"]);
+			this.IDEstado = Convert.ToInt32(cabecera["IDEstado"]);
+
             HabilitarBotones(dt);
 
       
@@ -370,6 +385,7 @@ namespace CO
                     this.Close();
                 }
 
+				
 
                 this.dtpFechaCotizacion.EditValue = DateTime.Now;
                 this.dtpFechaOrden.EditValue = DateTime.Now;
@@ -1240,9 +1256,14 @@ namespace CO
         void ofrmEmbarque_FormClosed(object sender, FormClosedEventArgs e)
         {
             frmEmbarque ofrm = (frmEmbarque)sender;
-            if (ofrm.IDEmbarque != -1) {
-                dtOrdenCompra.Rows[0]["IDEmbarque"] = ofrm.IDEmbarque;
-            }
+			if (ofrm.IDEmbarque != -1)
+			{
+				dtOrdenCompra.Rows[0]["IDEmbarque"] = ofrm.IDEmbarque;
+			}
+			else
+			{
+				dtOrdenCompra.Rows[0]["IDEmbarque"] = -1;
+			}
         }
 
       
