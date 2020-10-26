@@ -57,9 +57,6 @@ namespace CO
             this.slkupGridLote.ValueMember = "IDLote";
             this.slkupGridLote.NullText = " --- ---";
             this.slkupGridLote.EditValueChanged += slkupGridLote_EditValueChanged;
-			EditorButton buttoAdd = new EditorButton( DevExpress.XtraEditors.Controls.ButtonPredefines.Plus,"Agregar",100,true,true,true, DevExpress.Utils.HorzAlignment.Center, null);
-			this.slkupGridLote.Buttons.Add(buttoAdd);
-			buttoAdd.Click += buttoAdd_Click;	
 			
             
             this.slkupGridLote.Popup += slkup_Popup;
@@ -219,6 +216,19 @@ namespace CO
                 MessageBox.Show("Han ocurrido errores tratando de aplicar el documento");
             }
         }
+
+		private void btnAddLote_Click(object sender, EventArgs e)
+		{
+			CI.frmLote oLote = new CI.frmLote();
+			oLote.FormClosed += oLote_FormClosed;
+			oLote.ShowDialog();
+		}
+
+		void oLote_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			dtLotes = CI.DAC.clsLoteDAC.GetData(-1, -1, "*", "*").Tables[0];
+			this.slkupGridLote.DataSource = dtLotes;
+		}
        
 
        
