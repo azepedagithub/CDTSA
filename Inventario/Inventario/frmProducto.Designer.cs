@@ -1368,8 +1368,8 @@
 			// 
 			this.tabbedControlGroup1.Location = new System.Drawing.Point(0, 50);
 			this.tabbedControlGroup1.Name = "tabbedControlGroup1";
-			this.tabbedControlGroup1.SelectedTabPage = this.layoutControlGroup4;
-			this.tabbedControlGroup1.SelectedTabPageIndex = 1;
+			this.tabbedControlGroup1.SelectedTabPage = this.layoutControlGroup2;
+			this.tabbedControlGroup1.SelectedTabPageIndex = 0;
 			this.tabbedControlGroup1.Size = new System.Drawing.Size(684, 395);
 			this.tabbedControlGroup1.TabPages.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlGroup2,

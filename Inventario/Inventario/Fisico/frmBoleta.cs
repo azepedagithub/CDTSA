@@ -649,5 +649,14 @@ namespace CI.Fisico
             frmPrintBoletasInv ofrmPrint = new frmPrintBoletasInv(frmPrintBoletasInv.typAccion.PrintDifBoletas);
             ofrmPrint.ShowDialog();
         }
+
+		private void btnPropagarFechas_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+		{
+			if (MessageBox.Show("Esta acción reemplazara las fechas a todas las boletas ingresadas, desea continuar con el proceso ?", "Boletas de Inventario Fiscal", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes) { 
+				
+			}
+		}
+
+	
     }
 }
