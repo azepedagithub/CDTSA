@@ -601,7 +601,6 @@ namespace CO
                 {
                     ConnectionManager.BeginTran();
                     DAC.clsLiquidacionCompraDAC.SetEstado(this._IDLiquidacion, 2, ConnectionManager.Tran);
-                    DAC.clsOrdenCompraDAC.RecepcionOrdenCompra(this._IDOrdenCompra, ConnectionManager.Tran);
                     this.IDEstado = 2;
                     ConnectionManager.CommitTran();
                     MessageBox.Show("Liquidación aplicada !!");

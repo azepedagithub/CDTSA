@@ -89,6 +89,26 @@ namespace CO.DAC
 
         }
 
+
+		public static int GetEstadoOrdenCompra(long IDOrdenCompra, SqlTransaction tran)
+		{
+		
+			String strSQL = "dbo.coGetEstadoOrdenCompra";
+
+			SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
+
+			oCmd.Parameters.Add(new SqlParameter("@IDOrdenCompra", IDOrdenCompra));
+
+			oCmd.CommandType = CommandType.StoredProcedure;
+			oCmd.Transaction = tran;
+
+			SqlDataAdapter oAdap = new SqlDataAdapter(oCmd);
+			DataSet DS = new DataSet();
+
+			oAdap.Fill(DS, "Data");
+			return Convert.ToInt32(DS.Tables[0].Rows[0]["IDEstado"]);
+		}
+
         public static long RecepcionOrdenCompra(long IDOrdenCompra, SqlTransaction tran)
         {
             long result = -1;

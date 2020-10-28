@@ -18,6 +18,7 @@ namespace CO
     public partial class frmRecepcionMercaderia : Form
     {
         long IDEmbarque = -1;
+		long IDOrdenCompra = -1;
         int IDProveedor, IDBodega;
         String OrdenCompra, Embarque;
         String sUsuario = (UsuarioDAC._DS.Tables.Count > 0) ? UsuarioDAC._DS.Tables[0].Rows[0]["Usuario"].ToString() : "azepeda";
@@ -29,10 +30,11 @@ namespace CO
         DataTable dtLotes = new DataTable();
 
 
-        public frmRecepcionMercaderia(long IDEmbarque)
+        public frmRecepcionMercaderia(long IDEmbarque,long IDOrdenCompra)
         {
             InitializeComponent();
             this.IDEmbarque = IDEmbarque;
+			this.IDOrdenCompra = IDOrdenCompra;
         }
 
 
@@ -42,6 +44,14 @@ namespace CO
 
             dtProductos = DAC.clsEmbarqueDAC.GetProductosFromEmbarque(IDEmbarque).Tables[0];
             dtLotes = CI.DAC.clsLoteDAC.GetData(-1, -1, "*", "*").Tables[0];
+
+			int IDEstado = DAC.clsOrdenCompraDAC.GetEstadoOrdenCompra(IDOrdenCompra, null);
+			if (IDEstado == 3) {
+				this.btnAddLote.Enabled = false;
+				this.btnAplicar.Enabled = false;
+				this.btnAgregarLotes.Enabled = false;
+				this.gridViewIngresoMercaderia.OptionsBehavior.ReadOnly = true;
+			}
 
             this.slkupGridIDProd.DataSource = dtProductos;
             this.slkupGridIDProd.DisplayMember = "IDProducto";
@@ -208,6 +218,7 @@ namespace CO
                 DAC.clsEmbarqueDAC.CreaTransaccionInventario((int)this.IDEmbarque, (DateTime)this.dtpFecha.EditValue, ref IDTransaccion, this.sUsuario, ConnectionManager.Tran);
                 CI.DAC.clsDocumentoInvCabecera.AplicaInventario(IDTransaccion, ConnectionManager.Tran);
                 DAC.clsEmbarqueDAC.CreaAsientoTransaccionInventario((int)this.IDEmbarque, ref Asiento, sUsuario, ConnectionManager.Tran);
+				DAC.clsOrdenCompraDAC.RecepcionOrdenCompra(this.IDOrdenCompra, ConnectionManager.Tran);
                 ConnectionManager.CommitTran();
 
                 CG.frmAsiento ofrmAsiento = new CG.frmAsiento(Asiento);

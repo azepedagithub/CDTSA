@@ -1200,7 +1200,7 @@ namespace CO
         {
             if (DAC.clsEmbarqueDAC.GetEstadoLiquidacion((int)this.IDEmbarque) == 2)
             {
-                frmRecepcionMercaderia oRecepcion = new frmRecepcionMercaderia(this.ID_Embarque);
+                frmRecepcionMercaderia oRecepcion = new frmRecepcionMercaderia(this.ID_Embarque,this.IDOrdenCompra);
                 oRecepcion.ShowDialog();
             }
             else

@@ -50,12 +50,12 @@
 			this.colDescr = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colActivo = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
-			this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
+			this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
 			this.layoutControl1.SuspendLayout();
@@ -65,12 +65,12 @@
 			((System.ComponentModel.ISupportInitialize)(this.dtgUnidadMedida)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// ribbonControl
@@ -252,7 +252,7 @@
 			// colDescr
 			// 
 			this.colDescr.Caption = "Descripción";
-			this.colDescr.FieldName = "Descripcion";
+			this.colDescr.FieldName = "Descr";
 			this.colDescr.Name = "colDescr";
 			this.colDescr.Visible = true;
 			this.colDescr.VisibleIndex = 1;
@@ -284,15 +284,6 @@
 			this.layoutControlGroup1.Name = "Root";
 			this.layoutControlGroup1.Size = new System.Drawing.Size(736, 284);
 			this.layoutControlGroup1.TextVisible = false;
-			// 
-			// layoutControlItem1
-			// 
-			this.layoutControlItem1.Control = this.dtgUnidadMedida;
-			this.layoutControlItem1.Location = new System.Drawing.Point(0, 71);
-			this.layoutControlItem1.Name = "layoutControlItem1";
-			this.layoutControlItem1.Size = new System.Drawing.Size(716, 193);
-			this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
-			this.layoutControlItem1.TextVisible = false;
 			// 
 			// layoutControlItem2
 			// 
@@ -347,6 +338,15 @@
 			this.emptySpaceItem2.Size = new System.Drawing.Size(223, 24);
 			this.emptySpaceItem2.TextSize = new System.Drawing.Size(0, 0);
 			// 
+			// layoutControlItem1
+			// 
+			this.layoutControlItem1.Control = this.dtgUnidadMedida;
+			this.layoutControlItem1.Location = new System.Drawing.Point(0, 71);
+			this.layoutControlItem1.Name = "layoutControlItem1";
+			this.layoutControlItem1.Size = new System.Drawing.Size(716, 193);
+			this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
+			this.layoutControlItem1.TextVisible = false;
+			// 
 			// frmUnidadMedida
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -367,12 +367,12 @@
 			((System.ComponentModel.ISupportInitialize)(this.dtgUnidadMedida)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

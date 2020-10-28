@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmOrdenCompra));
-			DevExpress.XtraBars.Ribbon.ReduceOperation reduceOperation1 = new DevExpress.XtraBars.Ribbon.ReduceOperation();
-			DevExpress.XtraBars.Ribbon.ReduceOperation reduceOperation2 = new DevExpress.XtraBars.Ribbon.ReduceOperation();
+			DevExpress.XtraBars.Ribbon.ReduceOperation reduceOperation3 = new DevExpress.XtraBars.Ribbon.ReduceOperation();
+			DevExpress.XtraBars.Ribbon.ReduceOperation reduceOperation4 = new DevExpress.XtraBars.Ribbon.ReduceOperation();
 			this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
 			this.btnAgregar = new DevExpress.XtraBars.BarButtonItem();
 			this.btnEditar = new DevExpress.XtraBars.BarButtonItem();
@@ -167,6 +167,8 @@
 			this.layoutControlItem42 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem16 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.btnCargarPedido = new DevExpress.XtraEditors.SimpleButton();
+			this.layoutControlItem11 = new DevExpress.XtraLayout.LayoutControlItem();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
 			this.layoutControl1.SuspendLayout();
@@ -277,6 +279,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem42)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem16)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem11)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// ribbonControl1
@@ -395,12 +398,12 @@
 			this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.ribbonPageGroup1});
 			this.ribbonPage1.Name = "ribbonPage1";
-			reduceOperation1.Behavior = DevExpress.XtraBars.Ribbon.ReduceOperationBehavior.Single;
-			reduceOperation1.Group = null;
-			reduceOperation1.ItemLinkIndex = 0;
-			reduceOperation1.ItemLinksCount = 0;
-			reduceOperation1.Operation = DevExpress.XtraBars.Ribbon.ReduceOperationType.Gallery;
-			this.ribbonPage1.ReduceOperations.Add(reduceOperation1);
+			reduceOperation3.Behavior = DevExpress.XtraBars.Ribbon.ReduceOperationBehavior.Single;
+			reduceOperation3.Group = null;
+			reduceOperation3.ItemLinkIndex = 0;
+			reduceOperation3.ItemLinksCount = 0;
+			reduceOperation3.Operation = DevExpress.XtraBars.Ribbon.ReduceOperationType.Gallery;
+			this.ribbonPage1.ReduceOperations.Add(reduceOperation3);
 			this.ribbonPage1.Text = "Opciones Generales";
 			// 
 			// ribbonPageGroup1
@@ -517,6 +520,7 @@
 			// 
 			// layoutControl2
 			// 
+			this.layoutControl2.Controls.Add(this.btnCargarPedido);
 			this.layoutControl2.Controls.Add(this.btnOpenTemplate);
 			this.layoutControl2.Controls.Add(this.dtgDetalle);
 			this.layoutControl2.Controls.Add(this.btnImportFromExcel);
@@ -852,12 +856,12 @@
 			this.ribbonPage2.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.ribbonPageGroup2});
 			this.ribbonPage2.Name = "ribbonPage2";
-			reduceOperation2.Behavior = DevExpress.XtraBars.Ribbon.ReduceOperationBehavior.Single;
-			reduceOperation2.Group = null;
-			reduceOperation2.ItemLinkIndex = 0;
-			reduceOperation2.ItemLinksCount = 0;
-			reduceOperation2.Operation = DevExpress.XtraBars.Ribbon.ReduceOperationType.Gallery;
-			this.ribbonPage2.ReduceOperations.Add(reduceOperation2);
+			reduceOperation4.Behavior = DevExpress.XtraBars.Ribbon.ReduceOperationBehavior.Single;
+			reduceOperation4.Group = null;
+			reduceOperation4.ItemLinkIndex = 0;
+			reduceOperation4.ItemLinksCount = 0;
+			reduceOperation4.Operation = DevExpress.XtraBars.Ribbon.ReduceOperationType.Gallery;
+			this.ribbonPage2.ReduceOperations.Add(reduceOperation4);
 			this.ribbonPage2.Text = "Opciones Generales";
 			// 
 			// ribbonPageGroup2
@@ -890,7 +894,8 @@
             this.layoutControlItem10,
             this.layoutControlItem14,
             this.emptySpaceItem2,
-            this.layoutControlItem12});
+            this.layoutControlItem12,
+            this.layoutControlItem11});
 			this.layoutControlGroup2.Location = new System.Drawing.Point(0, 0);
 			this.layoutControlGroup2.Name = "layoutControlGroup2";
 			this.layoutControlGroup2.Size = new System.Drawing.Size(919, 319);
@@ -918,9 +923,9 @@
 			// emptySpaceItem2
 			// 
 			this.emptySpaceItem2.AllowHotTrack = false;
-			this.emptySpaceItem2.Location = new System.Drawing.Point(262, 0);
+			this.emptySpaceItem2.Location = new System.Drawing.Point(410, 0);
 			this.emptySpaceItem2.Name = "emptySpaceItem2";
-			this.emptySpaceItem2.Size = new System.Drawing.Size(637, 26);
+			this.emptySpaceItem2.Size = new System.Drawing.Size(489, 26);
 			this.emptySpaceItem2.TextSize = new System.Drawing.Size(0, 0);
 			// 
 			// layoutControlItem12
@@ -1721,6 +1726,26 @@
 			this.layoutControlItem4.Text = "Condición de Pago:";
 			this.layoutControlItem4.TextSize = new System.Drawing.Size(136, 13);
 			// 
+			// btnCargarPedido
+			// 
+			this.btnCargarPedido.Image = ((System.Drawing.Image)(resources.GetObject("btnCargarPedido.Image")));
+			this.btnCargarPedido.Location = new System.Drawing.Point(274, 12);
+			this.btnCargarPedido.Name = "btnCargarPedido";
+			this.btnCargarPedido.Size = new System.Drawing.Size(144, 22);
+			this.btnCargarPedido.StyleController = this.layoutControl2;
+			this.btnCargarPedido.TabIndex = 20;
+			this.btnCargarPedido.Text = "Cargar Pedido Sugerido";
+			this.btnCargarPedido.Click += new System.EventHandler(this.btnCargarPedido_Click);
+			// 
+			// layoutControlItem11
+			// 
+			this.layoutControlItem11.Control = this.btnCargarPedido;
+			this.layoutControlItem11.Location = new System.Drawing.Point(262, 0);
+			this.layoutControlItem11.Name = "layoutControlItem11";
+			this.layoutControlItem11.Size = new System.Drawing.Size(148, 26);
+			this.layoutControlItem11.TextSize = new System.Drawing.Size(0, 0);
+			this.layoutControlItem11.TextVisible = false;
+			// 
 			// frmOrdenCompra
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1843,6 +1868,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem42)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem16)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem11)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -1986,5 +2012,7 @@
         private DevExpress.XtraEditors.Repository.RepositoryItemSearchLookUpEdit slkupPresentacion;
         private DevExpress.XtraGrid.Views.Grid.GridView gridView6;
         private DevExpress.XtraBars.BarButtonItem btnImprimir;
+		private DevExpress.XtraEditors.SimpleButton btnCargarPedido;
+		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem11;
     }
 }

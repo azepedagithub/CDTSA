@@ -1367,7 +1367,44 @@ namespace CO
 
 
             }
-        }                                       
+        }
+
+		private void btnCargarPedido_Click(object sender, EventArgs e)
+		{
+			DataTable dtPedidoSugerido = clsOrdenCompraDetalleDAC.ObtenerPedidoSugerido(-1, DateTime.Now).Tables[0];
+
+			foreach (DataRow fila in dtPedidoSugerido.Rows)
+			{
+				DataRow nuevaFila = this.dtDetalleOrden.NewRow();
+				nuevaFila["IDProducto"] = fila["IDProducto"];
+				nuevaFila["DescrProducto"] = fila["DescrProducto"];
+				nuevaFila["Cantidad"] = fila["Cantidad"];
+				nuevaFila["PrecioUnitario"] = 0;
+				nuevaFila["MontoDesc"] = 0;
+				//if (Convert.ToDecimal(fila["PorcDesc"]) > 0)
+				//{
+				//	decimal Cantidad = Convert.ToDecimal(fila["Cantidad"]);
+				//	decimal Precio = Convert.ToDecimal(fila["PrecioUnitario"]);
+				//	decimal Porc = Convert.ToDecimal(fila["PorcDesc"]);
+				//	nuevaFila["MontoDesc"] = (Cantidad * Precio) * (Porc / 100);
+				//}
+				//if (Convert.ToDecimal(fila["MontoDesc"]) > 0 && Convert.ToDecimal(fila["PorcDesc"]) == 0)
+				//{
+				//	decimal Cantidad = Convert.ToDecimal(fila["Cantidad"]);
+				//	decimal Precio = Convert.ToDecimal(fila["PrecioUnitario"]);
+				//	decimal MontoDesc = Convert.ToDecimal(fila["MontoDesc"]);
+				//	nuevaFila["PorcDesc"] = ((Cantidad * Precio) / MontoDesc) * 100;
+				//}
+				nuevaFila["PorcDesc"] = 0;
+				nuevaFila["Comentario"] = "";
+				nuevaFila["Impuesto"] = 0;
+				nuevaFila["Monto"] = fila["Monto"];
+				this.dtDetalleOrden.Rows.InsertAt(nuevaFila, 0);
+
+			}
+
+			CalcularMontosOrden();
+		}                                       
 
 
     }

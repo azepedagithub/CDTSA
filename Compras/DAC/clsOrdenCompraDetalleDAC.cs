@@ -81,6 +81,25 @@ namespace CO.DAC
             return DS;
         }
 
+
+		public static DataSet ObtenerPedidoSugerido(int IDProveedor, DateTime Fecha)
+		{
+			String strSQL = "dbo.coGetPedidoSugerido";
+
+			SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
+
+			oCmd.Parameters.Add(new SqlParameter("@IDProveedor", IDProveedor));
+			oCmd.Parameters.Add(new SqlParameter("@Fecha", Fecha));
+
+			oCmd.CommandType = CommandType.StoredProcedure;
+
+			SqlDataAdapter oAdap = new SqlDataAdapter(oCmd);
+			DataSet DS = new DataSet();
+
+			oAdap.Fill(DS, "Data");
+			return DS;
+		}
+
 				
 				public static Decimal GetLasPriceProduct(long IDProducto)
 				{

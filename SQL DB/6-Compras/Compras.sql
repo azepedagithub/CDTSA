@@ -2213,3 +2213,28 @@ SELECT TOP 1 PrecioUnitario  FROM dbo.coOrdenCompraDetalle
 WHERE IDProducto=@IDProducto
 ORDER BY IDOrdenCompra DESC
 
+GO
+
+
+CREATE ALTER PROCEDURE dbo.coGetPedidoSugerido(@IDProveedor INT, @Fecha DATE)
+AS 
+--SET @Fecha = '20201002'
+
+DECLARE @FechaInicial AS DATETIME,@FechaFinal AS DATETIME
+
+set @FechaInicial = CAST(SUBSTRING(CAST(DATEADD(MONTH,-3,@Fecha) AS CHAR),1,11) + ' 00:00:00.000' AS DATETIME)
+set @FechaFinal = CAST(SUBSTRING(CAST(@Fecha AS CHAR),1,11) + ' 23:59:59.998' AS DATETIME)
+
+
+SELECT  J.IDProducto,P.Descr DescrProducto,Cantidad,CostoPromDolar, Cantidad * CostoPromDolar FROM  
+(
+	SELECT A.IDProducto,Cantidad * (CASE WHEN C.IsLocal=1 THEN 2 ELSE 3.5 END) Cantidad,P.CostoPromDolar,CostoPromLocal FROM 
+		(SELECT IDProducto, SUM(Cantidad)/3 Cantidad 
+			FROM dbo.vfafDetalleProducto A
+		    INNER JOIN dbo.invProducto P ON A.IDProducto = P.IDProducto
+			INNER JOIN dbo.cppProveedor D ON P.IDProveedor = D.IDProveedor
+			WHERE Fecha BETWEEN @FechaInicial AND @FechaFinal AND  D.IDProveedor = @IDProveedor 
+			GROUP BY IDProducto
+		) J
+) D
+INNER JOIN dbo.invProducto P ON D.IDProducto=A.IDProducto 
