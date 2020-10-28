@@ -58,6 +58,7 @@ CREATE  TABLE [dbo].[globalImpuesto](
 
 GO
 
+
 CREATE     TABLE  [dbo].[invProducto](
 	[IDProducto] [bigint]  NOT NULL,
 	[Descr] [nvarchar](250) NOT NULL,
@@ -87,8 +88,11 @@ CREATE     TABLE  [dbo].[invProducto](
 	[EsMuestra] BIT DEFAULT 0,
 	[EsControlado] BIT DEFAULT 0,
 	[EsEtico] BIT DEFAULT 0,
+	[EsGenerico] BIT DEFAULT 0,
 	[Activo] [bit] NOT NULL DEFAULT 1,
 	[Bonifica][bit] NOT NULL DEFAULT 0,
+	[NumRegSanitario] NVARCHAR(250) NULL,
+	[FechaVencimientoRegistro] DATE  NULL,
 	[UserInsert] NVARCHAR(50) NULL,
 	[UserUpdate] NVARCHAR(50) NULL,
 	[CreateDate] [datetime] NOT NULL DEFAULT (GETDATE()),
@@ -1007,9 +1011,9 @@ VALUES  ( 9 ,N'VENTA (-)' , N'VT' , N'S' , -1 , 7 , 1 , 0 , 0 ,0 , 0 ,1 , 0 ,0 ,
 GO
 
 
-INSERT INTO DBO.globalConsecutivos( Descr ,Prefijo ,Consecutivo ,Documento ,Activo)
-VALUES ('CONSECUTIVO FACTURA','FAC',1,'FAC00000001',1)
-GO
+--INSERT INTO DBO.globalConsecutivos( Descr ,Prefijo ,Consecutivo ,Documento ,Activo)
+--VALUES ('CONSECUTIVO FACTURA','FAC',1,'FAC00000001',1)
+--GO
 INSERT INTO DBO.globalConsecutivos( Descr ,Prefijo ,Consecutivo ,Documento ,Activo)
 VALUES ('CONSECUTIVO COMPRA','COM',1,'COM00000001',1)
 GO
@@ -1054,7 +1058,7 @@ GO
 
 CREATE Procedure  [dbo].[invUpdateProducto] @Operacion nvarchar(1), @IDProducto BIGINT , @Descr nvarchar(250), @Generico NVARCHAR(250), @Alias nvarchar(250),
 @Clasif1 int, @Clasif2 INT, @Clasif3 INT ,@Clasif4 INT , @Clasif5 INT, @Clasif6 INT,@IDProveedor AS INT,@IDCuentaContable AS BIGINT, @CodigoBarra NVARCHAR(50),@IDUnidad INT,
-@FactorEmpaque DECIMAL(28,4), @TipoImpuesto INT, @EsMuestra BIT, @EsControlado BIT, @EsEtico BIT, @Activo BIT,@Bonifica BIT,@UserInsert NVARCHAR(50),@UserUpdate NVARCHAR(50),@UpdateDate DATETIME
+@FactorEmpaque DECIMAL(28,4), @TipoImpuesto INT, @EsMuestra BIT, @EsControlado BIT, @EsEtico BIT,@EsGenerico BIT, @Activo BIT,@Bonifica BIT,@NumRegistroSanitario NVARCHAR(250),@FechaVencimientoRegistro DATE,@UserInsert NVARCHAR(50),@UserUpdate NVARCHAR(50),@UpdateDate DATETIME
 as
 set nocount on 
 
@@ -1068,9 +1072,9 @@ BEGIN
 	END
 
 	INSERT INTO dbo.invProducto( IDProducto, Descr ,Generico,Alias ,Clasif1 ,Clasif2 ,Clasif3 ,Clasif4 ,Clasif5 ,Clasif6 ,IDProveedor,IDCuentaContable,CodigoBarra ,IDUnidad ,FactorEmpaque ,TipoImpuesto ,
-	          EsMuestra ,EsControlado ,EsEtico ,Activo,Bonifica ,UserInsert ,UserUpdate  ,UpdateDate)
+	          EsMuestra ,EsControlado ,EsEtico ,EsGenerico,Activo,Bonifica ,NumRegSanitario,FechaVencimientoRegistro,UserInsert ,UserUpdate  ,UpdateDate)
 	VALUES (@IDProducto, @Descr,@Generico,@Alias,@Clasif1,@Clasif2,@Clasif3,@Clasif4,@Clasif5,@Clasif6,@IDProveedor,@IDCuentaContable,@CodigoBarra,@IDUnidad,@FactorEmpaque,@TipoImpuesto,
-		@EsMuestra,@EsControlado,@EsEtico,	@Activo,@Bonifica,@UserInsert,@UserUpdate,@UpdateDate)
+		@EsMuestra,@EsControlado,@EsEtico,@EsGenerico,	@Activo,@Bonifica,@NumRegistroSanitario,@FechaVencimientoRegistro,@UserInsert,@UserUpdate,@UpdateDate)
 	
 		
 		INSERT INTO dbo.invLote( IDLote ,IDProducto ,LoteInterno ,LoteProveedor ,FechaVencimiento ,FechaFabricacion )
@@ -1113,7 +1117,7 @@ if upper(@Operacion) = 'U'
 BEGIN
 	UPDATE dbo.invProducto SET Descr=@Descr,Generico = @Generico ,Alias = @Alias,Clasif1=@Clasif1,Clasif2=@Clasif2,Clasif3=@Clasif3,Clasif4=@Clasif4,Clasif5=@Clasif5,Clasif6=@Clasif6,
 	IDProveedor=@IDProveedor,IDCuentaContable = @IDCuentaContable,CodigoBarra =@CodigoBarra,IDUnidad=@IDUnidad,FactorEmpaque=@FactorEmpaque,TipoImpuesto=@TipoImpuesto,EsMuestra=@EsMuestra,EsControlado=@EsControlado,
-	EsEtico=@EsEtico,Activo=@Activo,Bonifica =@Bonifica,UserUpdate=@UserUpdate,UpdateDate=@UpdateDate
+	EsEtico=@EsEtico,EsGenerico=@EsGenerico,Activo=@Activo,Bonifica =@Bonifica,NumRegSanitario=@NumRegistroSanitario,FechaVencimientoRegistro = @FechaVencimientoRegistro,UserUpdate=@UserUpdate,UpdateDate=@UpdateDate
 	WHERE IDProducto=@IDProducto
 	
 end
@@ -1122,11 +1126,11 @@ end
 
 GO
 
-CREATE  PROCEDURE [dbo].[invGetProducto] @IDProducto BIgint	,@Descr AS NVARCHAR(250),@Alias NVARCHAR(250),@Clasif1 int, @Clasif2 INT, @Clasif3 INT ,@Clasif4 INT , @Clasif5 INT, @Clasif6 INT, @CodigoBarra NVARCHAR(50),
+CREATE PROCEDURE [dbo].[invGetProducto] @IDProducto BIgint	,@Descr AS NVARCHAR(250),@Alias NVARCHAR(250),@Clasif1 int, @Clasif2 INT, @Clasif3 INT ,@Clasif4 INT , @Clasif5 INT, @Clasif6 INT, @CodigoBarra NVARCHAR(50),
 															@EsMuestra INT,@EsControlado INT,@EsEtico INT
 AS 
 	SELECT IDProducto,Descr , Generico,Alias ,Clasif1 ,Clasif2 ,Clasif3 ,Clasif4 ,Clasif5 ,Clasif6 ,CodigoBarra,IDProveedor,IDCuentaContable ,IDUnidad ,FactorEmpaque ,TipoImpuesto ,
-	          EsMuestra ,EsControlado ,EsEtico , CostoUltLocal,CostoUltDolar,CostoPromLocal,CostoPromDolar,Activo,Bonifica ,UserInsert ,UserUpdate  ,UpdateDate,CreateDate 
+	          EsMuestra ,EsControlado ,EsEtico,EsGenerico, CostoUltLocal,CostoUltDolar,CostoPromLocal,CostoPromDolar,Activo,Bonifica,NumRegSanitario,FechaVencimientoRegistro,UserInsert ,UserUpdate  ,UpdateDate,CreateDate 
 	          FROM dbo.invProducto 
 	          WHERE (IDProducto =@IDProducto OR  @IDProducto=-1)
 	          AND (Clasif1 =@Clasif1 OR @Clasif1=-1) AND (Clasif2 =@Clasif2 OR @Clasif2=-1) AND (Clasif3 =@Clasif3 OR @Clasif3=-1)
@@ -1778,7 +1782,7 @@ GO
 
 
 CREATE   PROCEDURE [dbo].[invGetExistenciaBodegabyClasificacion] (@Bodega AS NVARCHAR(4000), @Producto AS NVARCHAR(250),
-							@Lote AS  NVARCHAR(4000),@Clasif1 AS NVARCHAR(4000),@Clasif2 NVARCHAR(4000), @Clasif3 NVARCHAR(4000),
+							@Lote AS  NVARCHAR(4000),@IDProveedor INT,@Clasif1 AS NVARCHAR(4000),@Clasif2 NVARCHAR(4000), @Clasif3 NVARCHAR(4000),
 							@Clasif4 NVARCHAR(4000), @Clasif5 NVARCHAR(4000), @Clasif6 NVARCHAR(4000),@DetallaLote AS BIT)
 AS 
 DECLARE @Separador AS NVARCHAR(1)
@@ -1794,6 +1798,7 @@ AND (A.IDLote  IN (SELECT Value FROM [dbo].[ConvertListToTable](@Lote,@Separador
 AND (P.Clasif2  IN (SELECT Value FROM [dbo].[ConvertListToTable](@Clasif2,@Separador)) or @Clasif2='*') AND ( P.Clasif3 IN (SELECT Value FROM [dbo].[ConvertListToTable](@Producto,@Separador)) or @Clasif3='*')
 AND ( P.Clasif3 IN (SELECT Value FROM [dbo].[ConvertListToTable](@Clasif3,@Separador)) or @Clasif3='*') AND (P.Clasif4  IN (SELECT Value FROM [dbo].[ConvertListToTable](@Clasif4,@Separador) ) or @Clasif4='*')
 AND (P.Clasif5  IN (SELECT Value FROM [dbo].[ConvertListToTable](@Clasif5,@Separador)) or @Clasif5='*')  AND (P.Clasif6 IN (SELECT Value FROM [dbo].[ConvertListToTable](@clasif6,@Separador)) or @Clasif6='*')
+AND (P.IDProveedor = @IDProveedor OR @IDProveedor=-1)
 
 IF (@DetallaLote=1) 
 	SELECT  IDBodega ,DescrBodega ,IDProducto ,DescrProducto ,IDLote ,LoteInterno ,LoteProveedor ,FechaVencimiento ,FechaIngreso ,Existencia ,Reservada  FROM #tmpExistencias
@@ -1873,12 +1878,13 @@ WHERE (IDBodega IN (SELECT *  FROM dbo.ConvertListToTable(@lstBodega,',')) OR @l
 GO
 
 
-CREATE  PROCEDURE [dbo].[invGetTransaccionesByProducto] (@Bodega AS NVARCHAR(4000), @IDProducto AS BIGINT,
+CREATE PROCEDURE [dbo].[invGetTransaccionesByProducto] (@Bodega AS NVARCHAR(4000), @IDProducto AS BIGINT,
 							@Lote AS  NVARCHAR(4000),@Transacciones NVARCHAR(4000),@Paquete NVARCHAR(4000),
 							@Documento NVARCHAR(4000), @Referencia NVARCHAR(4000),@FechaInicial DATE, @FechaFinal DATE)
 AS 
 DECLARE @Separador NVARCHAR(1)
 SET @Separador =','
+SET @FechaFinal = CAST(SUBSTRING(CAST(@FechaFinal AS CHAR),1,11) + ' 23:59:59.998' AS DATETIME)
 
 SELECT  A.IDTransaccion ,A.ModuloOrigen ,A.IDPaquete ,PQ.Descr DescrPaquete,A.Fecha ,A.Usuario ,B.IDProducto,P.Descr DescrProducto,
 		B.IDBodega ,C.Descr DescrBodega,B.IDTipoTran,T.Descr DescrTipoTran,B.IDLote ,L.LoteProveedor,L.FechaIngreso,L.FechaVencimiento,L.FechaFabricacion,B.Cantidad ,
@@ -1897,13 +1903,13 @@ AND (b.IDTransaccion IN (SELECT *  FROM dbo.ConvertListToTable(@Transacciones,@S
 AND (A.IDPaquete IN (SELECT *  FROM dbo.ConvertListToTable(@Paquete,@Separador)) or @Paquete='*')
 AND (A.Documento LIKE '%' + @Documento +'%' OR  @Documento='*')
 AND (A.Referencia LIKE '%' +  @Referencia + '%' OR  @Referencia ='*')
-AND A.Fecha BETWEEN @FechaInicial AND @FechaFinal
+AND CAST(A.Fecha AS DATE) BETWEEN @FechaInicial AND @FechaFinal
 
 GO
 
 
-CREATE  PROCEDURE dbo.invGetConsultaTransaccionesByCriterio (@Bodega AS NVARCHAR(4000), @Producto AS NVARCHAR(250),
-							@Lote AS  NVARCHAR(4000),@Clasif1 AS NVARCHAR(4000),@Clasif2 NVARCHAR(4000), @Clasif3 NVARCHAR(4000),
+CREATE PROCEDURE dbo.invGetConsultaTransaccionesByCriterio (@Bodega AS NVARCHAR(4000), @Producto AS NVARCHAR(250),
+							@Lote AS  NVARCHAR(4000),@IDProveedor INT,@Clasif1 AS NVARCHAR(4000),@Clasif2 NVARCHAR(4000), @Clasif3 NVARCHAR(4000),
 							@Clasif4 NVARCHAR(4000), @Clasif5 NVARCHAR(4000), @Clasif6 NVARCHAR(4000),@Transacciones NVARCHAR(4000),
 							@Paquete NVARCHAR(4000),@Documento NVARCHAR(4000), @Referencia NVARCHAR(4000),@FechaInicial DATE, @FechaFinal DATE)
 AS 
@@ -1934,16 +1940,17 @@ AND (b.IDTransaccion IN (SELECT *  FROM dbo.ConvertListToTable(@Transacciones,@S
 AND (A.IDPaquete IN (SELECT *  FROM dbo.ConvertListToTable(@Paquete,@Separador)) or @Paquete='*')
 AND (A.Documento LIKE '%' + @Documento +'%' OR  @Documento='*')
 AND (A.Referencia LIKE '%' +  @Referencia + '%' OR  @Referencia ='*')
+AND (P.IDProveedor = @IDProveedor OR @IDProveedor =-1)
 AND A.Fecha BETWEEN @FechaInicial AND @FechaFinal
 
 GO 
 
 
-CREATE    PROCEDURE [dbo].[invGetProductoByID] @IDProducto BIgint	,@Descr AS NVARCHAR(250)
+CREATE  PROCEDURE [dbo].[invGetProductoByID] @IDProducto BIgint	,@Descr AS NVARCHAR(250)
 AS 
 	SELECT IDProducto,P.Descr ,P.Alias ,Clasif1,C1.Descr DescrClasif1 ,Clasif2 ,C2.Descr DescrClasif2,Clasif3,C3.Descr DescrClasif3 ,Clasif4 ,C4.Descr DescrClasif4,
 				Clasif5 ,C5.Descr DescrClasif5 ,Clasif6, C6.Descr DescrClasif6 ,PR.IDProveedor,PR.Nombre NombreProveedor, P.CostoPromDolar,P.CostoPromLocal,P.CostoUltDolar,P.CostoUltLocal,CodigoBarra,IDCuentaContable ,P.IDUnidad ,UM.Descr DescrUnidadMedida,FactorEmpaque ,TipoImpuesto , I.Descr DescrTipoImpuesto,
-	          EsMuestra ,EsControlado ,EsEtico , P.Activo ,UserInsert ,UserUpdate  ,UpdateDate,CreateDate FROM dbo.invProducto  P
+	          EsMuestra ,EsControlado ,EsEtico ,EsGenerico, P.Activo, P.Bonifica,NumRegSanitario,FechaVencimientoRegistro,UserInsert ,UserUpdate  ,UpdateDate,CreateDate FROM dbo.invProducto  P
 	          LEFT JOIN dbo.invUnidadMedida UM ON P.IDUnidad = UM.IDUnidad
 	          LEFT JOIN dbo.globalImpuesto I ON P.TipoImpuesto = I.IDImpuesto
 			  LEFT JOIN dbo.invClasificacion C1 ON P.Clasif1=C1.IDClasificacion  AND C1.IDGrupo=1

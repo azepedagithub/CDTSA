@@ -28,9 +28,11 @@ namespace CI
         public int iClasificacion4 {get;set;}
         public int iClasificacion5 {get;set;}
         public int iClasificacion6 { get; set; }
+		public int IDProveedor { get; set; }
 
-        public DataTable dtTipoImpuesto;
+        public DataTable dtTipoImpuesto,dtProveedor;
         public DataTable dtClasif1, dtClasif2, dtClasif3, dtClasif4, dtClasif5, dtClasif6;
+
 
 
         public frmFiltroProducto()
@@ -44,7 +46,7 @@ namespace CI
             this.Load += frmFiltroProducto_Load;
         }
 
-        public frmFiltroProducto(int IDProducto,String sDescripcion, String sAlias,String sCodigoBarra, int iEsControlado,int iEsMuestra,int iEsEstico,
+        public frmFiltroProducto(int IDProducto,String sDescripcion, String sAlias,String sCodigoBarra,int IDProveedor, int iEsControlado,int iEsMuestra,int iEsEstico,
                                  int iTipoImpuesto, int iClasificacion1,int iClasificacion2, int iClasificacion3,int iClasificacion4 , int iClasificacion5, int iClasificacion6)
         {
             InitializeComponent();
@@ -52,6 +54,7 @@ namespace CI
             this.Descripcion = sDescripcion;
             this.Alias = sAlias;
             this.CodigoBarra = sCodigoBarra;
+			this.IDProveedor = IDProveedor;
             this.iEsControlado = iEsControlado;
             this.iEsEtico = iEsEstico;
             this.iEsMuestra = iEsMuestra;
@@ -69,28 +72,38 @@ namespace CI
 
         private void PopulateDataSearchLookup()
         {
-           
+
+			Util.Util.ConfigLookupEdit(this.slkupProveedor, dtProveedor, "Nombre", "IDProveedor",400,300);
+			Util.Util.ConfigLookupEditSetViewColumns(this.slkupProveedor, "[{'ColumnCaption':'ID Proveedor','ColumnField':'IDProveedor','width':30},{'ColumnCaption':'Nombre','ColumnField':'Nombre','width':70}]");
+			this.slkupProveedor.Properties.View.OptionsView.ShowAutoFilterRow=true;
             
-            Util.Util.ConfigLookupEdit(this.slkImpuesto, dtTipoImpuesto, "Descr", "IDImpuesto");
+            Util.Util.ConfigLookupEdit(this.slkImpuesto, dtTipoImpuesto, "Descr", "IDImpuesto",400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkImpuesto, "[{'ColumnCaption':'IDImpuesto','ColumnField':'IDImpuesto','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");
+			this.slkImpuesto.Properties.View.OptionsView.ShowAutoFilterRow=true;
 
-            Util.Util.ConfigLookupEdit(this.slkupClasificacion1, dtClasif1, "Descr", "IDClasificacion");
+            Util.Util.ConfigLookupEdit(this.slkupClasificacion1, dtClasif1, "Descr", "IDClasificacion",400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupClasificacion1, "[{'ColumnCaption':'IDClasificacion','ColumnField':'IDClasificacion','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");
+			this.slkupClasificacion1.Properties.View.OptionsView.ShowAutoFilterRow=true;
 
-            Util.Util.ConfigLookupEdit(this.slkupClasificacion2, dtClasif2, "Descr", "IDClasificacion");
+			Util.Util.ConfigLookupEdit(this.slkupClasificacion2, dtClasif2, "Descr", "IDClasificacion", 400, 300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupClasificacion2, "[{'ColumnCaption':'IDClasificacion','ColumnField':'IDClasificacion','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");
+			this.slkupClasificacion2.Properties.View.OptionsView.ShowAutoFilterRow=true;
 
-            Util.Util.ConfigLookupEdit(this.slkupClasificacion3, dtClasif3, "Descr", "IDClasificacion");
+			Util.Util.ConfigLookupEdit(this.slkupClasificacion3, dtClasif3, "Descr", "IDClasificacion", 400, 300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupClasificacion3, "[{'ColumnCaption':'IDClasificacion','ColumnField':'IDClasificacion','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");
+			this.slkupClasificacion3.Properties.View.OptionsView.ShowAutoFilterRow=true;
 
-            Util.Util.ConfigLookupEdit(this.slkupClasificacion4, dtClasif4, "Descr", "IDClasificacion");
+			Util.Util.ConfigLookupEdit(this.slkupClasificacion4, dtClasif4, "Descr", "IDClasificacion", 400, 300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupClasificacion4, "[{'ColumnCaption':'IDClasificacion','ColumnField':'IDClasificacion','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");
+			this.slkupClasificacion4.Properties.View.OptionsView.ShowAutoFilterRow=true;
 
-            Util.Util.ConfigLookupEdit(this.slkupClasificacion5, dtClasif5, "Descr", "IDClasificacion");
+            Util.Util.ConfigLookupEdit(this.slkupClasificacion5, dtClasif5, "Descr", "IDClasificacion",400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupClasificacion5, "[{'ColumnCaption':'IDClasificacion','ColumnField':'IDClasificacion','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");
+			this.slkupClasificacion5.Properties.View.OptionsView.ShowAutoFilterRow=true;
 
-            Util.Util.ConfigLookupEdit(this.slkupClasificacion6, dtClasif6, "Descr", "IDClasificacion");
+            Util.Util.ConfigLookupEdit(this.slkupClasificacion6, dtClasif6, "Descr", "IDClasificacion",400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupClasificacion6, "[{'ColumnCaption':'IDClasificacion','ColumnField':'IDClasificacion','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");
+			this.slkupClasificacion6.Properties.View.OptionsView.ShowAutoFilterRow=true;
         }
 
 
@@ -100,6 +113,7 @@ namespace CI
             this.txtDescripcion.EditValue = (this.Descripcion == "*") ? "" : this.Descripcion ;
             this.txtAlias.EditValue = (this.Alias == "*") ? "" : this.Alias;
             this.txtCodigoBarra.EditValue = (this.CodigoBarra=="*") ? "":this.CodigoBarra;
+			this.slkupProveedor.EditValue = Convert.ToInt32(this.IDProveedor);
             this.chkEsControlado.EditValue = Convert.ToBoolean(this.iEsControlado);
             this.chkEsMuestra.EditValue = Convert.ToBoolean(this.iEsMuestra);
             this.chkEsEtico.EditValue = Convert.ToBoolean(this.iEsEtico);
@@ -142,7 +156,7 @@ namespace CI
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.StartPosition = FormStartPosition.CenterScreen;
-
+			dtProveedor = clsProductoDAC.GetlstProvedores(-1, "*", -1).Tables["Data"];
              dtTipoImpuesto = globalTipoImpuestoDAC.GetData(-1,"*").Tables["Data"];
              dtClasif1 = clsClasificacionDAC.GetData(-1, 1, "*").Tables["Data"];
              dtClasif2 = clsClasificacionDAC.GetData(-1, 2, "*").Tables["Data"];
@@ -166,6 +180,7 @@ namespace CI
             this.Descripcion = (this.txtDescripcion.EditValue== null || this.txtDescripcion.EditValue.ToString() =="") ? "*": this.txtDescripcion.EditValue.ToString();
             this.Alias = (this.txtAlias.EditValue == null || this.txtAlias.EditValue.ToString() =="") ? "*": this.txtAlias.EditValue.ToString();
             this.CodigoBarra =(this.txtCodigoBarra.EditValue == null || this.txtCodigoBarra.EditValue.ToString() =="") ? "*" : this.txtCodigoBarra.EditValue.ToString();
+			this.IDProveedor = (this.slkupProveedor.EditValue == null) ? -1 : Convert.ToInt32(this.slkupProveedor.EditValue);
             this.iEsControlado = Convert.ToInt32(this.chkEsControlado.EditValue);
             this.iEsMuestra = Convert.ToInt32(this.chkEsMuestra.EditValue);
             this.iEsEtico = Convert.ToInt32(this.chkEsEtico.EditValue);
@@ -201,6 +216,7 @@ namespace CI
             this.txtIDProducto.EditValue = "";
             this.txtCodigoBarra.EditValue = "";
             this.slkImpuesto.EditValue = null;
+			this.slkupProveedor.EditValue = null;
             this.slkupClasificacion1.EditValue = null;
             this.slkupClasificacion2.EditValue = null;
             this.slkupClasificacion3.EditValue = null;
@@ -211,9 +227,6 @@ namespace CI
             this.Close();
         }
 
-        private void frmFiltroProducto_Load_1(object sender, EventArgs e)
-        {
-
-        }
+      
     }
 }

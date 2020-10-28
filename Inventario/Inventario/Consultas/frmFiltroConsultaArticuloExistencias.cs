@@ -35,15 +35,17 @@ namespace CI.Consultas
         private void frmFiltroConsultaArticuloExistencias_Load(object sender, EventArgs e)
         {
             DTLote = clsLoteDAC.GetData(-1,IdProducto, "*", "*").Tables[0];
-            Util.Util.ConfigLookupEdit(this.slkupLote, DTLote, "LoteProveedor", "IDLote", 350);
+            Util.Util.ConfigLookupEdit(this.slkupLote, DTLote, "LoteProveedor", "IDLote", 400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupLote, "[{'ColumnCaption':'IDLote','ColumnField':'IDLote','width':20},{'ColumnCaption':'Lote Proveedor','ColumnField':'LoteProveedor','width':90}]");
+			this.slkupLote.Properties.View.OptionsView.ShowAutoFilterRow = true;
             this.slkupLote.Properties.View.OptionsSelection.MultiSelect = true;
             this.slkupLote.Properties.View.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CheckBoxRowSelect;
             this.slkupLote.Popup += slkupLote_Popup;
 
             DTBodega = clsBodegaDAC.GetData(-1, "*", -1).Tables[0];
-            Util.Util.ConfigLookupEdit(this.slkupBodega, DTBodega, "Descr", "IDBodega", 350);
+            Util.Util.ConfigLookupEdit(this.slkupBodega, DTBodega, "Descr", "IDBodega", 400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupBodega, "[{'ColumnCaption':'IDBodega','ColumnField':'IDBodega','width':20},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':90}]");
+			this.slkupBodega.Properties.View.OptionsView.ShowAutoFilterRow = true;
             this.slkupBodega.Properties.View.OptionsSelection.MultiSelect = true;
             this.slkupBodega.Properties.View.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CheckBoxRowSelect;
             this.slkupBodega.Popup += slkupBodega_Popup;

@@ -18,6 +18,7 @@ namespace CI
         private String sBodegas = "";
         private String sClasif1,sClasif2, sClasif3, sClasif4, sClasif5, sClasif6;
         private bool bDetallaLote;
+		private int IDProveedor = -1;
 
         public frmConsultaExistenciaBodega()
         {
@@ -32,7 +33,7 @@ namespace CI
 
         private void btnFiltrar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            frmFiltroConsultaExistencia ofrmFiltro = new frmFiltroConsultaExistencia("Existencia",sProductos,sLotes,sBodegas,sClasif1,sClasif2,sClasif3,sClasif4,sClasif5,sClasif6,"","","","",DateTime.Now,DateTime.Now,bDetallaLote);
+            frmFiltroConsultaExistencia ofrmFiltro = new frmFiltroConsultaExistencia("Existencia",sProductos,sLotes,sBodegas,IDProveedor,sClasif1,sClasif2,sClasif3,sClasif4,sClasif5,sClasif6,"","","","",DateTime.Now,DateTime.Now,bDetallaLote);
             ofrmFiltro.FormClosed += ofrmFiltro_FormClosed;
             ofrmFiltro.ShowDialog();
         }
@@ -52,6 +53,7 @@ namespace CI
                 this.sClasif5 = ofrm.getLstFiltro("Clasif5");
                 this.sClasif6 = ofrm.getLstFiltro("Clasif6");
                 this.bDetallaLote = ofrm.DetallaLote;
+				this.IDProveedor = ofrm.IDProveedor;
             }
             
         }
@@ -74,7 +76,7 @@ namespace CI
                 this.gridViewConsultaExistencia.Columns[7].Visible = true;
                 this.gridViewConsultaExistencia.Columns[8].Visible = true;
             }
-            DataTable DTExistencias =  clsExistenciaBodegaDAC.GetExistenciaBodegaByClasificacion(sBodegas, sProductos, sLotes, sClasif1, sClasif2, sClasif3, sClasif4, sClasif5, sClasif6,bDetallaLote).Tables[0];
+            DataTable DTExistencias =  clsExistenciaBodegaDAC.GetExistenciaBodegaByClasificacion(sBodegas, sProductos, sLotes,IDProveedor, sClasif1, sClasif2, sClasif3, sClasif4, sClasif5, sClasif6,bDetallaLote).Tables[0];
             this.dtgConsultaExistencia.DataSource = DTExistencias;
             this.dtgConsultaExistencia.Refresh();
         }

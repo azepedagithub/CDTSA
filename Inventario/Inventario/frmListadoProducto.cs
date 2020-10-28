@@ -29,6 +29,7 @@ namespace CI
         public int _iClasificacion4;
         public int _iClasificacion5;
         public int _iClasificacion6;
+		public int _IDProveedor;
 
 
         private String sSql = "";
@@ -103,6 +104,7 @@ namespace CI
                 _iClasificacion4 = -1;
                 _iClasificacion5 = -1;
                 _iClasificacion6 = -1;
+				_IDProveedor = -1;
 
 
                 sSql = "SELECT IDProducto,Descr ,Alias ,Clasif1 ,Clasif2 ,Clasif3 ,Clasif4 ,Clasif5 ,Clasif6 ,CodigoBarra ,IDUnidad ,FactorEmpaque,IDCuentaContable ,TipoImpuesto ," +
@@ -152,7 +154,7 @@ namespace CI
 
         private void BtnFiltro_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            frmFiltroProducto ofrmFiltro = new frmFiltroProducto(_IDProducto,_Descripcion,_Alias,_CodigoBarra,_iEsControlado,_iEsMuestra,_iEsEtico,_TipoImpuesto,_iClasificacion1,_iClasificacion2,_iClasificacion3,_iClasificacion4,_iClasificacion5,_iClasificacion6);
+            frmFiltroProducto ofrmFiltro = new frmFiltroProducto(_IDProducto,_Descripcion,_Alias,_CodigoBarra,_IDProveedor,_iEsControlado,_iEsMuestra,_iEsEtico,_TipoImpuesto,_iClasificacion1,_iClasificacion2,_iClasificacion3,_iClasificacion4,_iClasificacion5,_iClasificacion6);
             ofrmFiltro.FormClosed += OfrmFiltro_FormClosed;
             ofrmFiltro.ShowDialog();
         }
@@ -166,6 +168,7 @@ namespace CI
             _Descripcion = ofrmFiltro.Descripcion;
             _Alias = ofrmFiltro.Alias;
             _CodigoBarra = ofrmFiltro.CodigoBarra;
+			_IDProveedor = ofrmFiltro.IDProveedor;
             _iEsControlado = ofrmFiltro.iEsControlado;
             _iEsEtico = ofrmFiltro.iEsEtico;
             _iEsMuestra = ofrmFiltro.iEsMuestra;
@@ -186,6 +189,8 @@ namespace CI
                 sWhereSql = string.Format("{0}  Alias LIKE '%{1}%' and ", sWhereSql, _Alias);
             if (_CodigoBarra != "*")
                 sWhereSql = string.Format("{0}  CodigoBarra LIKE '%{1}%' and ", sWhereSql, _CodigoBarra);
+			if (_IDProveedor != -1)
+				sWhereSql = string.Format("{0}  IDProveedor = {1} and ", sWhereSql, _IDProveedor);
             if (_iEsControlado == 0)
                 sWhereSql = string.Format("{0}  EsControlado= 0 and ", sWhereSql);
             if (_iEsEtico == 0)

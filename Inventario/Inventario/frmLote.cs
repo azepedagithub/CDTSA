@@ -118,8 +118,9 @@ namespace CI
         private void PopulateData()
         {
             
-            Util.Util.ConfigLookupEdit(this.slkupProducto, clsProductoDAC.GetData(-1,"*","*",-1,-1,-1,-1,-1,-1,"*",-1,-1,-1).Tables[0], "Descr", "IDProducto");
+            Util.Util.ConfigLookupEdit(this.slkupProducto, clsProductoDAC.GetData(-1,"*","*",-1,-1,-1,-1,-1,-1,"*",-1,-1,-1).Tables[0], "Descr", "IDProducto",400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupProducto, "[{'ColumnCaption':'IDProducto','ColumnField':'IDProducto','width':30},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':70}]");
+			this.slkupProducto.Properties.View.OptionsView.ShowAutoFilterRow = true;
 
             
         }

@@ -63,6 +63,9 @@
 			this.chkUsaSeparadorCuenta = new DevExpress.XtraEditors.CheckEdit();
 			this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.tabbedControlGroup1 = new DevExpress.XtraLayout.TabbedControlGroup();
+			this.layoutControlGroup3 = new DevExpress.XtraLayout.LayoutControlGroup();
+			this.layoutControlItem10 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.layoutControlItem11 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlGroup5 = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.layoutControlItem16 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem19 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -79,9 +82,6 @@
 			this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem18 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.layoutControlGroup3 = new DevExpress.XtraLayout.LayoutControlGroup();
-			this.layoutControlItem10 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.layoutControlItem11 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlGroup4 = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.layoutControlItem12 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem14 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -116,6 +116,9 @@
 			((System.ComponentModel.ISupportInitialize)(this.chkUsaSeparadorCuenta.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.tabbedControlGroup1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup3)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem11)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup5)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem16)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem19)).BeginInit();
@@ -132,9 +135,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem18)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup3)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem11)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup4)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem12)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem14)).BeginInit();
@@ -460,14 +460,42 @@
 			// 
 			this.tabbedControlGroup1.Location = new System.Drawing.Point(0, 0);
 			this.tabbedControlGroup1.Name = "tabbedControlGroup1";
-			this.tabbedControlGroup1.SelectedTabPage = this.layoutControlGroup3;
-			this.tabbedControlGroup1.SelectedTabPageIndex = 2;
+			this.tabbedControlGroup1.SelectedTabPage = this.layoutControlGroup5;
+			this.tabbedControlGroup1.SelectedTabPageIndex = 0;
 			this.tabbedControlGroup1.Size = new System.Drawing.Size(531, 329);
 			this.tabbedControlGroup1.TabPages.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlGroup5,
             this.layoutControlGroup2,
             this.layoutControlGroup3,
             this.layoutControlGroup4});
+			// 
+			// layoutControlGroup3
+			// 
+			this.layoutControlGroup3.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.layoutControlItem10,
+            this.layoutControlItem11});
+			this.layoutControlGroup3.Location = new System.Drawing.Point(0, 0);
+			this.layoutControlGroup3.Name = "layoutControlGroup3";
+			this.layoutControlGroup3.Size = new System.Drawing.Size(507, 283);
+			this.layoutControlGroup3.Text = "Cuentas EF";
+			// 
+			// layoutControlItem10
+			// 
+			this.layoutControlItem10.Control = this.slkupCuentaUtilidadPeriodo;
+			this.layoutControlItem10.Location = new System.Drawing.Point(0, 0);
+			this.layoutControlItem10.Name = "layoutControlItem10";
+			this.layoutControlItem10.Size = new System.Drawing.Size(507, 24);
+			this.layoutControlItem10.Text = "Cuenta Utilidad Periodo:";
+			this.layoutControlItem10.TextSize = new System.Drawing.Size(139, 13);
+			// 
+			// layoutControlItem11
+			// 
+			this.layoutControlItem11.Control = this.slkupCuentaUtilidadAcumulada;
+			this.layoutControlItem11.Location = new System.Drawing.Point(0, 24);
+			this.layoutControlItem11.Name = "layoutControlItem11";
+			this.layoutControlItem11.Size = new System.Drawing.Size(507, 259);
+			this.layoutControlItem11.Text = "Cuenta Utilidad Acumulada:";
+			this.layoutControlItem11.TextSize = new System.Drawing.Size(139, 13);
 			// 
 			// layoutControlGroup5
 			// 
@@ -625,34 +653,6 @@
 			this.layoutControlItem18.Text = "Cant Carácteres Nivel6:";
 			this.layoutControlItem18.TextSize = new System.Drawing.Size(139, 13);
 			// 
-			// layoutControlGroup3
-			// 
-			this.layoutControlGroup3.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.layoutControlItem10,
-            this.layoutControlItem11});
-			this.layoutControlGroup3.Location = new System.Drawing.Point(0, 0);
-			this.layoutControlGroup3.Name = "layoutControlGroup3";
-			this.layoutControlGroup3.Size = new System.Drawing.Size(507, 283);
-			this.layoutControlGroup3.Text = "Cuentas EF";
-			// 
-			// layoutControlItem10
-			// 
-			this.layoutControlItem10.Control = this.slkupCuentaUtilidadPeriodo;
-			this.layoutControlItem10.Location = new System.Drawing.Point(0, 0);
-			this.layoutControlItem10.Name = "layoutControlItem10";
-			this.layoutControlItem10.Size = new System.Drawing.Size(507, 24);
-			this.layoutControlItem10.Text = "Cuenta Utilidad Periodo:";
-			this.layoutControlItem10.TextSize = new System.Drawing.Size(139, 13);
-			// 
-			// layoutControlItem11
-			// 
-			this.layoutControlItem11.Control = this.slkupCuentaUtilidadAcumulada;
-			this.layoutControlItem11.Location = new System.Drawing.Point(0, 24);
-			this.layoutControlItem11.Name = "layoutControlItem11";
-			this.layoutControlItem11.Size = new System.Drawing.Size(507, 259);
-			this.layoutControlItem11.Text = "Cuenta Utilidad Acumulada:";
-			this.layoutControlItem11.TextSize = new System.Drawing.Size(139, 13);
-			// 
 			// layoutControlGroup4
 			// 
 			this.layoutControlGroup4.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
@@ -755,6 +755,9 @@
 			((System.ComponentModel.ISupportInitialize)(this.chkUsaSeparadorCuenta.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.tabbedControlGroup1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup3)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem11)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup5)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem16)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem19)).EndInit();
@@ -771,9 +774,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem18)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup3)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem11)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup4)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem12)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem14)).EndInit();

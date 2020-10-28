@@ -119,8 +119,11 @@ namespace CI
             _currentRow["EsMuestra"] = false;
             _currentRow["EsControlado"] = false;
             _currentRow["EsEtico"] = false;
+			_currentRow["EsGenerico"] = false;
             _currentRow["Activo"] = true;
             _currentRow["Bonifica"] = false;
+			_currentRow["NumRegSanitario"] = "";
+			_currentRow["FechaVencimientoRegistro"] = DateTime.Now;
             _currentRow["UserInsert"] = sUsuario;
             _currentRow["UserUpdate"] = DateTime.Now;
             _currentRow["UpdateDate"] = DateTime.Now;
@@ -154,6 +157,7 @@ namespace CI
             this.chkEsMuestra.EditValue = _currentRow["EsMuestra"];
             this.chkEsControlado.EditValue = _currentRow["EsControlado"];
             this.chkEsEtico.EditValue = _currentRow["EsEtico"];
+			this.chkEsGenerico.EditValue = _currentRow["EsGenerico"];
             
             //TODO Actualizar los Costos
             this.txtCostoPromDolar.EditValue = ((Decimal)_currentRow["CostoPromDolar"]).ToString("N" + Util.Util.DecimalLenght);
@@ -178,7 +182,11 @@ namespace CI
             this.txtFechaCreacion.Text = _currentRow["CreateDate"].ToString();
             this.txtUsuarioModificacion.Text = _currentRow["UserUpdate"].ToString();
             this.txtFechaModificacion.Text = _currentRow["UpdateDate"].ToString();
-            //Obtener los datos segun cabecera
+            
+
+			//Datos de RegistroSanitario
+			this.txtNumRegistroSanitario.EditValue = _currentRow["NumRegSanitario"].ToString();
+			this.dtpFechaCaducidadRegistro.EditValue =_currentRow["FechaVencimientoRegistro"];
             
         }
 
@@ -196,10 +204,11 @@ namespace CI
             //this.dtpFecha.Text = Convert.ToDateTime(_currentRow["Fecha"]).ToShortDateString();
             this.slkupTipoImpuesto.ReadOnly = !Activo;
             this.chkActivo.ReadOnly = !Activo;
-            this.chkBonifica.ReadOnly = !Activo;
+            //this.chkBonifica.ReadOnly = !Activo;
             this.chkEsControlado.ReadOnly = !Activo;
             this.chkEsEtico.ReadOnly = !Activo;
             this.chkEsMuestra.ReadOnly = !Activo;
+			this.chkEsGenerico.ReadOnly = !Activo;
             
             
             this.slkupClasif1.ReadOnly = !Activo;
@@ -210,6 +219,9 @@ namespace CI
             this.slkupClasif6.ReadOnly = !Activo;
             this.slkupProveedor.ReadOnly = !Activo;
             this.slkupCuentaArticulo.ReadOnly = !Activo;
+
+			this.txtNumRegistroSanitario.ReadOnly = !Activo;
+			this.dtpFechaCaducidadRegistro.ReadOnly = !Activo;
 
 
             //Pagina de auditoria
@@ -318,11 +330,11 @@ namespace CI
         private void btnGuardar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
 
-            GuardarAsiento();
+            GuardarProducto();
         }
 
 
-        private void GuardarAsiento()
+        private void GuardarProducto()
         {
          
                 if (!ValidaDatos()) return;
@@ -359,8 +371,11 @@ namespace CI
                     _currentRow["EsMuestra"] = this.chkEsMuestra.EditValue;
                     _currentRow["EsControlado"] = this.chkEsControlado.EditValue;
                     _currentRow["EsEtico"] = this.chkEsEtico.EditValue;
+					_currentRow["EsGenerico"] = this.chkEsGenerico.EditValue;
                     _currentRow["Activo"] = this.chkActivo.EditValue;
                     _currentRow["Bonifica"] = this.chkBonifica.EditValue;
+					_currentRow["NumRegSanitario"] = this.txtNumRegistroSanitario.EditValue.ToString().Trim();
+					_currentRow["FechaVencimientoRegistro"] = Convert.ToDateTime(this.dtpFechaCaducidadRegistro.EditValue);
                     _currentRow["UserInsert"] = sUsuario;
                     _currentRow["UserUpdate"] = sUsuario;
                     _currentRow["UpdateDate"] = DateTime.Now;
@@ -435,8 +450,11 @@ namespace CI
                     _currentRow["EsMuestra"] = this.chkEsMuestra.EditValue;
                     _currentRow["EsControlado"] = this.chkEsControlado.EditValue;
                     _currentRow["EsEtico"] = this.chkEsEtico.EditValue;
+					_currentRow["EsGenerico"] = this.chkEsGenerico.EditValue;
                     _currentRow["Activo"] = this.chkActivo.EditValue; 
                     _currentRow["Bonifica"] = this.chkBonifica.EditValue;
+					_currentRow["NumRegSanitario"] = this.txtNumRegistroSanitario.EditValue.ToString().Trim();
+					_currentRow["FechaVencimientoRegistro"] = Convert.ToDateTime(this.dtpFechaCaducidadRegistro.EditValue);
                     _currentRow["UserInsert"] = sUsuario;
                     _currentRow["UserUpdate"] = sUsuario;
                     _currentRow["UpdateDate"] = DateTime.Now;
@@ -516,10 +534,11 @@ namespace CI
             this.slkupUnidadMedida.EditValue = null;
             this.slkupTipoImpuesto.EditValue = null;
             this.chkActivo.EditValue = true;
-            this.chkBonifica.EditValue = true;
+            this.chkBonifica.EditValue = false;
             this.chkEsControlado.EditValue = false;
             this.chkEsMuestra.EditValue = false;
             this.chkEsEtico.EditValue = false;
+			this.chkEsGenerico.EditValue = false;
             
             this.txtCostoPromLocal.EditValue = "";
             this.txtCostoPromDolar.EditValue = "";
@@ -539,6 +558,9 @@ namespace CI
             this.txtFechaCreacion.EditValue = "";
             this.txtUsuarioModificacion.EditValue = "";
             this.txtFechaModificacion.EditValue = "";
+
+			this.txtNumRegistroSanitario.EditValue = "";
+			this.dtpFechaCaducidadRegistro.EditValue = null;
 
         }
 

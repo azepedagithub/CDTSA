@@ -435,8 +435,9 @@ namespace CO
                 Util.Util.ConfigLookupEdit(this.slkupMonedaOtrosPagos, dtMoneda, "Descr", "IDMoneda");
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupMonedaOtrosPagos, "[{'ColumnCaption':'ID','ColumnField':'IDMoneda','width':30},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':70}]");
                
-                Util.Util.ConfigLookupEdit(this.slkupProveedorOtrosPagos, dtProveedor, "Nombre", "IDProveedor");
+                Util.Util.ConfigLookupEdit(this.slkupProveedorOtrosPagos, dtProveedor, "Nombre", "IDProveedor",400,300);
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupProveedorOtrosPagos, "[{'ColumnCaption':'ID','ColumnField':'IDProveedor','width':30},{'ColumnCaption':'Nombre','ColumnField':'Nombre','width':70}]");
+				this.slkupProveedorOtrosPagos.Properties.View.OptionsView.ShowAutoFilterRow = true;
 
                 Util.Util.ConfigLookupEdit(this.slkupGastosOtrosPagos, dtGastos, "Descripcion", "IDGasto");
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupGastosOtrosPagos, "[{'ColumnCaption':'ID','ColumnField':'IDGasto','width':30},{'ColumnCaption':'Descripción','ColumnField':'Descripcion','width':70}]");
@@ -452,6 +453,7 @@ namespace CO
                 this.slkupIDProducto.DisplayMember = "IDProducto";
                 this.slkupIDProducto.ValueMember = "IDProducto";
                 this.slkupIDProducto.NullText = " --- ---";
+				this.slkupIDProducto.View.OptionsView.ShowAutoFilterRow = true;
                 this.slkupIDProducto.EditValueChanged += slkup_EditValueProductoChanged;
                 this.slkupIDProducto.Popup += slkup_Popup;
                 //this.slkupIDProducto.PopulateViewColumns();
@@ -460,6 +462,7 @@ namespace CO
                 this.slkupDescrProducto.DisplayMember = "Descr";
                 this.slkupDescrProducto.ValueMember = "IDProducto";
                 this.slkupDescrProducto.NullText = " --- ---";
+				this.slkupDescrProducto.View.OptionsView.ShowAutoFilterRow = true;
                 this.slkupDescrProducto.EditValueChanged += slkup_EditValueProductoChanged;
                 this.slkupDescrProducto.Popup += slkup_Popup;
 

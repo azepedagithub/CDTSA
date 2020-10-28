@@ -32,7 +32,7 @@ namespace CI.Consultas
 
         private void CargarDescripcionesClasificaciones()
         {
-            DataTable DT = clsGrupoClasificacionDAC.GetData(-1, "*").Tables[0];
+            DataTable DT = clsGrupoClasificacionDAC.GetAllData().Tables[0];
 
             this.lyClasif1.Text = DT.Rows[0]["Descr"].ToString() + ":";
             this.lyClasif1.Visibility = (Convert.ToBoolean(DT.Rows[0]["Activo"]) == true) ? DevExpress.XtraLayout.Utils.LayoutVisibility.Always : DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
@@ -63,8 +63,9 @@ namespace CI.Consultas
             this.dtpFechaInicial.EditValue = FechaInicial;
             this.dtpFechaFinal.EditValue = FechaFinal;
 
-            Util.Util.ConfigLookupEdit(this.slkupProducto, clsProductoDAC.GetProductoByID(-1, "*").Tables[0], "Descr", "IDProducto");
+            Util.Util.ConfigLookupEdit(this.slkupProducto, clsProductoDAC.GetProductoByID(-1, "*").Tables[0], "Descr", "IDProducto",400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupProducto, "[{'ColumnCaption':'ID Producto','ColumnField':'IDProducto','width':30},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':70}]");
+			this.slkupProducto.Properties.View.OptionsView.ShowAutoFilterRow = true;
             
             CargarDescripcionesClasificaciones();
             
@@ -73,7 +74,7 @@ namespace CI.Consultas
 
         private void CargarExistencias() {
             DataTable DtExistencias = new DataTable();
-            DtExistencias = clsExistenciaBodegaDAC.GetExistenciaBodegaByClasificacion(sBodega,this.slkupProducto.EditValue.ToString(),sLote,"*","*","*","*","*","*",true).Tables[0];
+            DtExistencias = clsExistenciaBodegaDAC.GetExistenciaBodegaByClasificacion(sBodega,this.slkupProducto.EditValue.ToString(),sLote,-1,"*","*","*","*","*","*",true).Tables[0];
             this.dtgExistencias.DataSource = DtExistencias;
         }
 

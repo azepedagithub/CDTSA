@@ -46,6 +46,9 @@
 			this.txtIDUnidadMedida = new DevExpress.XtraEditors.TextEdit();
 			this.dtgUnidadMedida = new DevExpress.XtraGrid.GridControl();
 			this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+			this.colIDUnidad = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colDescr = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colActivo = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -53,9 +56,6 @@
 			this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
-			this.colIDUnidad = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colDescr = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colActivo = new DevExpress.XtraGrid.Columns.GridColumn();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
 			this.layoutControl1.SuspendLayout();
@@ -184,7 +184,7 @@
 			this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.layoutControl1.Location = new System.Drawing.Point(0, 143);
 			this.layoutControl1.Name = "layoutControl1";
-			this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1065, 222, 250, 350);
+			this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(913, 240, 250, 350);
 			this.layoutControl1.Root = this.layoutControlGroup1;
 			this.layoutControl1.Size = new System.Drawing.Size(736, 284);
 			this.layoutControl1.TabIndex = 1;
@@ -192,7 +192,7 @@
 			// 
 			// chkActivo
 			// 
-			this.chkActivo.Location = new System.Drawing.Point(370, 228);
+			this.chkActivo.Location = new System.Drawing.Point(370, 35);
 			this.chkActivo.MenuManager = this.ribbonControl;
 			this.chkActivo.Name = "chkActivo";
 			this.chkActivo.Properties.Caption = "Activo";
@@ -202,7 +202,7 @@
 			// 
 			// txtDescripcion
 			// 
-			this.txtDescripcion.Location = new System.Drawing.Point(73, 252);
+			this.txtDescripcion.Location = new System.Drawing.Point(73, 59);
 			this.txtDescripcion.MenuManager = this.ribbonControl;
 			this.txtDescripcion.Name = "txtDescripcion";
 			this.txtDescripcion.Size = new System.Drawing.Size(651, 20);
@@ -211,7 +211,7 @@
 			// 
 			// txtIDUnidadMedida
 			// 
-			this.txtIDUnidadMedida.Location = new System.Drawing.Point(73, 228);
+			this.txtIDUnidadMedida.Location = new System.Drawing.Point(73, 35);
 			this.txtIDUnidadMedida.MenuManager = this.ribbonControl;
 			this.txtIDUnidadMedida.Name = "txtIDUnidadMedida";
 			this.txtIDUnidadMedida.Properties.ReadOnly = true;
@@ -221,7 +221,7 @@
 			// 
 			// dtgUnidadMedida
 			// 
-			this.dtgUnidadMedida.Location = new System.Drawing.Point(12, 35);
+			this.dtgUnidadMedida.Location = new System.Drawing.Point(12, 83);
 			this.dtgUnidadMedida.MainView = this.gridView1;
 			this.dtgUnidadMedida.MenuManager = this.ribbonControl;
 			this.dtgUnidadMedida.Name = "dtgUnidadMedida";
@@ -238,84 +238,6 @@
             this.colActivo});
 			this.gridView1.GridControl = this.dtgUnidadMedida;
 			this.gridView1.Name = "gridView1";
-			// 
-			// layoutControlGroup1
-			// 
-			this.layoutControlGroup1.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
-			this.layoutControlGroup1.GroupBordersVisible = false;
-			this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.layoutControlItem1,
-            this.layoutControlItem2,
-            this.layoutControlItem3,
-            this.layoutControlItem4,
-            this.emptySpaceItem1,
-            this.emptySpaceItem2});
-			this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
-			this.layoutControlGroup1.Name = "Root";
-			this.layoutControlGroup1.Size = new System.Drawing.Size(736, 284);
-			this.layoutControlGroup1.TextVisible = false;
-			// 
-			// layoutControlItem1
-			// 
-			this.layoutControlItem1.Control = this.dtgUnidadMedida;
-			this.layoutControlItem1.Location = new System.Drawing.Point(0, 23);
-			this.layoutControlItem1.Name = "layoutControlItem1";
-			this.layoutControlItem1.Size = new System.Drawing.Size(716, 193);
-			this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
-			this.layoutControlItem1.TextVisible = false;
-			// 
-			// layoutControlItem2
-			// 
-			this.layoutControlItem2.Control = this.txtIDUnidadMedida;
-			this.layoutControlItem2.Location = new System.Drawing.Point(0, 216);
-			this.layoutControlItem2.Name = "layoutControlItem2";
-			this.layoutControlItem2.Size = new System.Drawing.Size(358, 24);
-			this.layoutControlItem2.Text = "ID";
-			this.layoutControlItem2.TextSize = new System.Drawing.Size(58, 13);
-			// 
-			// layoutControlItem3
-			// 
-			this.layoutControlItem3.Control = this.txtDescripcion;
-			this.layoutControlItem3.Location = new System.Drawing.Point(0, 240);
-			this.layoutControlItem3.Name = "layoutControlItem3";
-			this.layoutControlItem3.Size = new System.Drawing.Size(716, 24);
-			this.layoutControlItem3.Text = "Descripción:";
-			this.layoutControlItem3.TextSize = new System.Drawing.Size(58, 13);
-			// 
-			// layoutControlItem4
-			// 
-			this.layoutControlItem4.Control = this.chkActivo;
-			this.layoutControlItem4.Location = new System.Drawing.Point(358, 216);
-			this.layoutControlItem4.Name = "layoutControlItem4";
-			this.layoutControlItem4.Size = new System.Drawing.Size(135, 24);
-			this.layoutControlItem4.TextSize = new System.Drawing.Size(0, 0);
-			this.layoutControlItem4.TextVisible = false;
-			// 
-			// emptySpaceItem1
-			// 
-			this.emptySpaceItem1.AllowHotTrack = false;
-			this.emptySpaceItem1.AppearanceItemCaption.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.emptySpaceItem1.AppearanceItemCaption.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-			this.emptySpaceItem1.AppearanceItemCaption.Options.UseFont = true;
-			this.emptySpaceItem1.AppearanceItemCaption.Options.UseForeColor = true;
-			this.emptySpaceItem1.AppearanceItemCaption.Options.UseTextOptions = true;
-			this.emptySpaceItem1.AppearanceItemCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-			this.emptySpaceItem1.ControlAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-			this.emptySpaceItem1.Location = new System.Drawing.Point(0, 0);
-			this.emptySpaceItem1.Name = "emptySpaceItem1";
-			this.emptySpaceItem1.Size = new System.Drawing.Size(716, 23);
-			this.emptySpaceItem1.Text = "Listado de Presentaciones";
-			this.emptySpaceItem1.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
-			this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
-			this.emptySpaceItem1.TextVisible = true;
-			// 
-			// emptySpaceItem2
-			// 
-			this.emptySpaceItem2.AllowHotTrack = false;
-			this.emptySpaceItem2.Location = new System.Drawing.Point(493, 216);
-			this.emptySpaceItem2.Name = "emptySpaceItem2";
-			this.emptySpaceItem2.Size = new System.Drawing.Size(223, 24);
-			this.emptySpaceItem2.TextSize = new System.Drawing.Size(0, 0);
 			// 
 			// colIDUnidad
 			// 
@@ -346,6 +268,84 @@
 			this.colActivo.Visible = true;
 			this.colActivo.VisibleIndex = 2;
 			this.colActivo.Width = 70;
+			// 
+			// layoutControlGroup1
+			// 
+			this.layoutControlGroup1.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
+			this.layoutControlGroup1.GroupBordersVisible = false;
+			this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.layoutControlItem2,
+            this.layoutControlItem3,
+            this.layoutControlItem4,
+            this.emptySpaceItem1,
+            this.emptySpaceItem2,
+            this.layoutControlItem1});
+			this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
+			this.layoutControlGroup1.Name = "Root";
+			this.layoutControlGroup1.Size = new System.Drawing.Size(736, 284);
+			this.layoutControlGroup1.TextVisible = false;
+			// 
+			// layoutControlItem1
+			// 
+			this.layoutControlItem1.Control = this.dtgUnidadMedida;
+			this.layoutControlItem1.Location = new System.Drawing.Point(0, 71);
+			this.layoutControlItem1.Name = "layoutControlItem1";
+			this.layoutControlItem1.Size = new System.Drawing.Size(716, 193);
+			this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
+			this.layoutControlItem1.TextVisible = false;
+			// 
+			// layoutControlItem2
+			// 
+			this.layoutControlItem2.Control = this.txtIDUnidadMedida;
+			this.layoutControlItem2.Location = new System.Drawing.Point(0, 23);
+			this.layoutControlItem2.Name = "layoutControlItem2";
+			this.layoutControlItem2.Size = new System.Drawing.Size(358, 24);
+			this.layoutControlItem2.Text = "ID";
+			this.layoutControlItem2.TextSize = new System.Drawing.Size(58, 13);
+			// 
+			// layoutControlItem3
+			// 
+			this.layoutControlItem3.Control = this.txtDescripcion;
+			this.layoutControlItem3.Location = new System.Drawing.Point(0, 47);
+			this.layoutControlItem3.Name = "layoutControlItem3";
+			this.layoutControlItem3.Size = new System.Drawing.Size(716, 24);
+			this.layoutControlItem3.Text = "Descripción:";
+			this.layoutControlItem3.TextSize = new System.Drawing.Size(58, 13);
+			// 
+			// layoutControlItem4
+			// 
+			this.layoutControlItem4.Control = this.chkActivo;
+			this.layoutControlItem4.Location = new System.Drawing.Point(358, 23);
+			this.layoutControlItem4.Name = "layoutControlItem4";
+			this.layoutControlItem4.Size = new System.Drawing.Size(135, 24);
+			this.layoutControlItem4.TextSize = new System.Drawing.Size(0, 0);
+			this.layoutControlItem4.TextVisible = false;
+			// 
+			// emptySpaceItem1
+			// 
+			this.emptySpaceItem1.AllowHotTrack = false;
+			this.emptySpaceItem1.AppearanceItemCaption.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.emptySpaceItem1.AppearanceItemCaption.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+			this.emptySpaceItem1.AppearanceItemCaption.Options.UseFont = true;
+			this.emptySpaceItem1.AppearanceItemCaption.Options.UseForeColor = true;
+			this.emptySpaceItem1.AppearanceItemCaption.Options.UseTextOptions = true;
+			this.emptySpaceItem1.AppearanceItemCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+			this.emptySpaceItem1.ControlAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+			this.emptySpaceItem1.Location = new System.Drawing.Point(0, 0);
+			this.emptySpaceItem1.Name = "emptySpaceItem1";
+			this.emptySpaceItem1.Size = new System.Drawing.Size(716, 23);
+			this.emptySpaceItem1.Text = "Listado de Presentaciones";
+			this.emptySpaceItem1.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
+			this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
+			this.emptySpaceItem1.TextVisible = true;
+			// 
+			// emptySpaceItem2
+			// 
+			this.emptySpaceItem2.AllowHotTrack = false;
+			this.emptySpaceItem2.Location = new System.Drawing.Point(493, 23);
+			this.emptySpaceItem2.Name = "emptySpaceItem2";
+			this.emptySpaceItem2.Size = new System.Drawing.Size(223, 24);
+			this.emptySpaceItem2.TextSize = new System.Drawing.Size(0, 0);
 			// 
 			// frmUnidadMedida
 			// 

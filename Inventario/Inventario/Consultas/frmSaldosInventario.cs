@@ -44,18 +44,20 @@ namespace CI.Consultas
             this.dtpFechaFinal.EditValue = FechaFinal;
 
             DTProducto = clsProductoDAC.GetData(-1, "*", "*", -1, -1, -1, -1, -1, -1, "*", -1, -1, -1).Tables[0];
-            Util.Util.ConfigLookupEdit(this.slkupProducto, DTProducto, "Descr", "IDProducto", 350);
+            Util.Util.ConfigLookupEdit(this.slkupProducto, DTProducto, "Descr", "IDProducto", 400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupProducto, "[{'ColumnCaption':'ID Producto','ColumnField':'IDProducto','width':30},{'ColumnCaption':'Descr','ColumnField':'Descr','width':90}]");
+			this.slkupProducto.Properties.View.OptionsView.ShowAutoFilterRow = true;
 
             DTBodega = clsBodegaDAC.GetData(-1, "*", -1).Tables[0];
-            Util.Util.ConfigLookupEdit(this.slkupBodega, DTBodega, "Descr", "IDBodega", 350);
+            Util.Util.ConfigLookupEdit(this.slkupBodega, DTBodega, "Descr", "IDBodega", 400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupBodega, "[{'ColumnCaption':'IDBodega','ColumnField':'IDBodega','width':20},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':90}]");
+			this.slkupBodega.Properties.View.OptionsView.ShowAutoFilterRow = true;
             
         }
 
         private void btnFiltrar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            frmFiltroConsultaExistencia ofrmFiltro = new frmFiltroConsultaExistencia("SaldosInventario", sProductos, sLotes, sBodegas, sClasif1, sClasif2, sClasif3, sClasif4, sClasif5, sClasif6,"*","*","*","*",Fecha,Fecha, bDetallaLote);
+            frmFiltroConsultaExistencia ofrmFiltro = new frmFiltroConsultaExistencia("SaldosInventario", sProductos, sLotes, sBodegas,-1, sClasif1, sClasif2, sClasif3, sClasif4, sClasif5, sClasif6,"*","*","*","*",Fecha,Fecha, bDetallaLote);
                ofrmFiltro.FormClosed += ofrmFiltro_FormClosed;
             ofrmFiltro.ShowDialog();
         }
@@ -166,8 +168,9 @@ namespace CI.Consultas
         {
             if (this.slkupProducto.EditValue != null)
             {
-                Util.Util.ConfigLookupEdit(this.slkupLote, clsLoteDAC.GetData(-1, Convert.ToInt32(slkupProducto.EditValue), "*", "*").Tables[0], "LoteProveedor", "IDLote", 350);
+                Util.Util.ConfigLookupEdit(this.slkupLote, clsLoteDAC.GetData(-1, Convert.ToInt32(slkupProducto.EditValue), "*", "*").Tables[0], "LoteProveedor", "IDLote", 400,300);
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupLote, "[{'ColumnCaption':'IDLote','ColumnField':'IDLote','width':20},{'ColumnCaption':'Lote','ColumnField':'LoteProveedor','width':60},{'ColumnCaption':'F.V','ColumnField':'FechaVencimiento','width':20}]");
+				this.slkupLote.Properties.View.OptionsView.ShowAutoFilterRow = true;
 
                 this.slkupLote.Enabled = true;
             }

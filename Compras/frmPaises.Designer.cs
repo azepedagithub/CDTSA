@@ -182,7 +182,7 @@
 			// 
 			// chkActivo
 			// 
-			this.chkActivo.Location = new System.Drawing.Point(551, 303);
+			this.chkActivo.Location = new System.Drawing.Point(551, 42);
 			this.chkActivo.MenuManager = this.ribbonControl;
 			this.chkActivo.Name = "chkActivo";
 			this.chkActivo.Properties.Caption = "Activo";
@@ -192,7 +192,7 @@
 			// 
 			// txtPais
 			// 
-			this.txtPais.Location = new System.Drawing.Point(85, 303);
+			this.txtPais.Location = new System.Drawing.Point(85, 42);
 			this.txtPais.MenuManager = this.ribbonControl;
 			this.txtPais.Name = "txtPais";
 			this.txtPais.Size = new System.Drawing.Size(462, 20);
@@ -201,7 +201,7 @@
 			// 
 			// dtgPais
 			// 
-			this.dtgPais.Location = new System.Drawing.Point(12, 12);
+			this.dtgPais.Location = new System.Drawing.Point(12, 78);
 			this.dtgPais.MainView = this.gridView;
 			this.dtgPais.MenuManager = this.ribbonControl;
 			this.dtgPais.Name = "dtgPais";
@@ -230,7 +230,7 @@
 			// layoutControlItem1
 			// 
 			this.layoutControlItem1.Control = this.dtgPais;
-			this.layoutControlItem1.Location = new System.Drawing.Point(0, 0);
+			this.layoutControlItem1.Location = new System.Drawing.Point(0, 66);
 			this.layoutControlItem1.Name = "layoutControlItem1";
 			this.layoutControlItem1.Size = new System.Drawing.Size(670, 261);
 			this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
@@ -241,7 +241,7 @@
 			this.layoutControlGroup2.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlItem3,
             this.layoutControlItem2});
-			this.layoutControlGroup2.Location = new System.Drawing.Point(0, 261);
+			this.layoutControlGroup2.Location = new System.Drawing.Point(0, 0);
 			this.layoutControlGroup2.Name = "layoutControlGroup2";
 			this.layoutControlGroup2.Size = new System.Drawing.Size(670, 66);
 			this.layoutControlGroup2.Text = "País";

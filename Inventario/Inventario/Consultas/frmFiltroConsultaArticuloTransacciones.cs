@@ -55,30 +55,34 @@ namespace CI.Consultas
         private void frmFiltroConsultaArticuloTransacciones_Load(object sender, EventArgs e)
         {
             DTLote = clsLoteDAC.GetData(-1,IDProducto, "*", "*").Tables[0];
-            Util.Util.ConfigLookupEdit(this.slkupLote, DTLote, "LoteProveedor", "IDLote", 350);
+            Util.Util.ConfigLookupEdit(this.slkupLote, DTLote, "LoteProveedor", "IDLote", 400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupLote, "[{'ColumnCaption':'IDLote','ColumnField':'IDLote','width':20},{'ColumnCaption':'Lote Proveedor','ColumnField':'LoteProveedor','width':90}]");
+			this.slkupLote.Properties.View.OptionsView.ShowAutoFilterRow = true;
             this.slkupLote.Properties.View.OptionsSelection.MultiSelect = true;
             this.slkupLote.Properties.View.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CheckBoxRowSelect;
             this.slkupLote.Popup += slkLote_Popup;          
             
             DTBodega = clsBodegaDAC.GetData(-1, "*", -1).Tables[0];
-            Util.Util.ConfigLookupEdit(this.slkupBodega, DTBodega, "Descr", "IDBodega", 350);
+            Util.Util.ConfigLookupEdit(this.slkupBodega, DTBodega, "Descr", "IDBodega", 400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupBodega, "[{'ColumnCaption':'IDBodega','ColumnField':'IDBodega','width':20},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':90}]");
+			this.slkupBodega.Properties.View.OptionsView.ShowAutoFilterRow = true;
             this.slkupBodega.Properties.View.OptionsSelection.MultiSelect = true;
             this.slkupBodega.Properties.View.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CheckBoxRowSelect;
             this.slkupBodega.Popup += slkBodega_Popup;          
             
             DTTransaccion = clsGlobalTipoTransaccionDAC.Get(-1, "*", "*", "*").Tables[0];
-            Util.Util.ConfigLookupEdit(this.slkupTransaccion, DTTransaccion, "Descr", "IDTipoTran", 250);
+            Util.Util.ConfigLookupEdit(this.slkupTransaccion, DTTransaccion, "Descr", "IDTipoTran", 400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupTransaccion, "[{'ColumnCaption':'Transaccion','ColumnField':'Transaccion','width':10},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':100}]");
+			this.slkupTransaccion.Properties.View.OptionsView.ShowAutoFilterRow = true;
             this.slkupTransaccion.Properties.View.GridControl.DataSource = slkupTransaccion.Properties.DataSource;
             this.slkupTransaccion.Properties.View.GridControl.ForceInitialize();
             this.slkupTransaccion.Properties.View.GridControl.BindingContext = new System.Windows.Forms.BindingContext();
             this.slkupTransaccion.Popup += slkTransaccion_Popup;          
 
             DTPaquete = clsPaqueteDAC.GetData(-1, "*", "*", -1, "*", 1).Tables[0];
-            Util.Util.ConfigLookupEdit(this.slkupPaquete, DTPaquete, "Descr", "IDPaquete", 350);
+            Util.Util.ConfigLookupEdit(this.slkupPaquete, DTPaquete, "Descr", "IDPaquete", 400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupPaquete, "[{'ColumnCaption':'Paquete','ColumnField':'PAQUETE','width':10},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':100}]");
+			this.slkupPaquete.Properties.View.OptionsView.ShowAutoFilterRow = true;
             this.slkupPaquete.Popup += slkPaquete_Popup;          
             
             

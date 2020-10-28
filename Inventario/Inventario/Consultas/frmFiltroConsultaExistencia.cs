@@ -27,6 +27,7 @@ namespace CI
         DataTable DTClasif6 = new DataTable();
         DataTable DTPaquete = new DataTable();
         DataTable DTTransaccion = new DataTable();
+		DataTable DTProveedor = new DataTable();
 
         List<object> valuesProducto = new List<object>();
         List<object> valuesLote = new List<object>();
@@ -42,15 +43,17 @@ namespace CI
 
         string sProducto, sOrigen, sLote, sBodega, sClasif1, sClasif2, sClasif3, sClasif4, sClasif5, sClasif6, sPaquete, sTransaccion, sReferencia, sAplicacion;
         DateTime FechaInicial, FechaFinal;
+		public int IDProveedor {get;set;}
         public bool DetallaLote = true;
 
 
-        public frmFiltroConsultaExistencia(string sOrigen, string sProducto, string sLote, string sBodega, string sClasif1, string sClasif2, string sClasif3, string sClasif4, string sClasif5, string sClasif6, String sPaquete, String sTransaccion, String sReferencia, String sAplicacion, DateTime FI, DateTime FF, bool DetallaLote)
+        public frmFiltroConsultaExistencia(string sOrigen, string sProducto, string sLote, string sBodega, int IDProveedor, string sClasif1, string sClasif2, string sClasif3, string sClasif4, string sClasif5, string sClasif6, String sPaquete, String sTransaccion, String sReferencia, String sAplicacion, DateTime FI, DateTime FF, bool DetallaLote)
         {
             InitializeComponent();
             this.sProducto = sProducto;
             this.sLote = sLote;
             this.sBodega = sBodega;
+			this.IDProveedor = IDProveedor;
             this.sClasif1 = sClasif1;
             this.sClasif2 = sClasif2;
             this.sClasif3 = sClasif3;
@@ -67,13 +70,55 @@ namespace CI
             this.sOrigen = sOrigen;
         }
 
+		private void CargarDescripcionesClasificaciones()
+		{
+			DataTable DT = clsGrupoClasificacionDAC.GetAllData().Tables[0];
+
+			this.lblClasif1.Text = DT.Rows[0]["Descr"].ToString() + ":";
+			this.lblClasif1.Visible = (Convert.ToBoolean(DT.Rows[0]["Activo"])) ? true :false;
+			this.chkBoxClasif1.Visible = (Convert.ToBoolean(DT.Rows[0]["Activo"])) ? true : false;
+			this.chkAllClasificacion1.Visible = (Convert.ToBoolean(DT.Rows[0]["Activo"])) ? true : false;
+
+			this.lblClasif2.Text = DT.Rows[1]["Descr"].ToString() + ":";
+			this.lblClasif2.Visible = (Convert.ToBoolean(DT.Rows[1]["Activo"])) ? true : false;
+			this.chkBoxClasif2.Visible = (Convert.ToBoolean(DT.Rows[1]["Activo"])) ? true : false;
+			this.chkAllClasificacion2.Visible = (Convert.ToBoolean(DT.Rows[1]["Activo"])) ? true : false;
+
+			this.lblClasfic3.Text = DT.Rows[2]["Descr"].ToString() + ":";
+			this.lblClasfic3.Visible = (Convert.ToBoolean(DT.Rows[2]["Activo"])) ? true : false;
+			this.chkBoxClasif3.Visible = (Convert.ToBoolean(DT.Rows[2]["Activo"])) ? true : false;
+			this.chkAllClasificacion3.Visible = (Convert.ToBoolean(DT.Rows[2]["Activo"])) ? true : false;
+
+			this.lblClasif4.Text = DT.Rows[3]["Descr"].ToString() + ":";
+			this.lblClasif4.Visible = (Convert.ToBoolean(DT.Rows[3]["Activo"])) ? true : false;
+			this.chkBoxClasif4.Visible = (Convert.ToBoolean(DT.Rows[3]["Activo"])) ? true : false;
+			this.chkAllClasificacion4.Visible = (Convert.ToBoolean(DT.Rows[3]["Activo"])) ? true : false;
+			
+			this.lblClasif5.Text = DT.Rows[4]["Descr"].ToString() + ":";
+			this.lblClasif5.Visible = (Convert.ToBoolean(DT.Rows[4]["Activo"])) ? true : false;
+			this.chkBoxClasif5.Visible = (Convert.ToBoolean(DT.Rows[4]["Activo"])) ? true : false;
+			this.chkAllClasif5.Visible = (Convert.ToBoolean(DT.Rows[4]["Activo"])) ? true : false;
+
+			this.lblClasif6.Text = DT.Rows[5]["Descr"].ToString() + ":";
+			this.lblClasif6.Visible = (Convert.ToBoolean(DT.Rows[5]["Activo"])) ? true : false;
+			this.chkBoxClasif6.Visible = (Convert.ToBoolean(DT.Rows[5]["Activo"])) ? true : false;
+			this.chkAllClasif6.Visible = (Convert.ToBoolean(DT.Rows[5]["Activo"])) ? true : false;
+
+		}
+
 
         private void frmFiltroConsultaExistencia_Load(object sender, EventArgs e)
         {
 
-            DTProducto = clsProductoDAC.GetData(-1, "*", "*", -1, -1, -1, -1, -1, -1, "*", -1, -1, -1).Tables[0];
-            Util.Util.ConfigLookupEdit(this.chkBoxProducto, DTProducto, "Descr", "IDProducto", 350);
+			DTProveedor = clsProductoDAC.GetlstProvedores(-1, "*", -1).Tables[0];
+			Util.Util.ConfigLookupEdit(this.slkupProveedor, DTProveedor, "Nombre", "IDProveedor", 400, 300);
+			Util.Util.ConfigLookupEditSetViewColumns(this.slkupProveedor, "[{'ColumnCaption':'ID Proveedor','ColumnField':'IDProveedor','width':30},{'ColumnCaption':'Nombre','ColumnField':'Nombre','width':70}]");
+			this.slkupProveedor.Properties.View.OptionsView.ShowAutoFilterRow = true;
+			
+			DTProducto = clsProductoDAC.GetData(-1, "*", "*", -1, -1, -1, -1, -1, -1, "*", -1, -1, -1).Tables[0];
+            Util.Util.ConfigLookupEdit(this.chkBoxProducto, DTProducto, "Descr", "IDProducto", 400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.chkBoxProducto, "[{'ColumnCaption':'ID Producto','ColumnField':'IDProducto','width':30},{'ColumnCaption':'Descr','ColumnField':'Descr','width':90}]");
+			this.chkBoxProducto.Properties.View.OptionsView.ShowAutoFilterRow = true;
             /*this.chkBoxProducto.Properties.DataSource = DTProducto;
             this.chkBoxProducto.Properties.DisplayMember = "Descr";
             this.chkBoxProducto.Properties.ValueMember = "IDProducto";*/
@@ -82,43 +127,49 @@ namespace CI
 
 
             DTLote = clsLoteDAC.GetData(-1, -1, "*", "*").Tables[0];
-            Util.Util.ConfigLookupEdit(this.chkBoxLote, DTLote, "LoteProveedor", "IDLote", 350);
+            Util.Util.ConfigLookupEdit(this.chkBoxLote, DTLote, "LoteProveedor", "IDLote", 400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.chkBoxLote, "[{'ColumnCaption':'IDLote','ColumnField':'IDLote','width':20},{'ColumnCaption':'Lote Proveedor','ColumnField':'LoteProveedor','width':90}]");
+			this.chkBoxLote.Properties.View.OptionsView.ShowAutoFilterRow = true;
             this.chkBoxLote.Properties.View.OptionsSelection.MultiSelect = true;
             this.chkBoxLote.Properties.View.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CheckBoxRowSelect;
 
             DTBodega = clsBodegaDAC.GetData(-1, "*", -1).Tables[0];
-            Util.Util.ConfigLookupEdit(this.chkBoxBodega, DTBodega, "Descr", "IDBodega", 350);
+            Util.Util.ConfigLookupEdit(this.chkBoxBodega, DTBodega, "Descr", "IDBodega", 400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.chkBoxBodega, "[{'ColumnCaption':'IDBodega','ColumnField':'IDBodega','width':20},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':90}]");
+			this.chkBoxBodega.Properties.View.OptionsView.ShowAutoFilterRow = true;
             this.chkBoxBodega.Properties.View.OptionsSelection.MultiSelect = true;
             this.chkBoxBodega.Properties.View.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CheckBoxRowSelect;
 
 
             DTClasif1 = clsClasificacionDAC.GetData(-1, 1, "*").Tables[0];
-            Util.Util.ConfigLookupEdit(this.chkBoxClasif1, DTClasif1, "Descr", "IDClasificacion", 350);
+            Util.Util.ConfigLookupEdit(this.chkBoxClasif1, DTClasif1, "Descr", "IDClasificacion", 400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.chkBoxClasif1, "[{'ColumnCaption':'IDClasificacion','ColumnField':'IDClasificacion','width':20},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':100}]");
+			this.chkBoxClasif1.Properties.View.OptionsView.ShowAutoFilterRow = true;
             this.chkBoxClasif1.Properties.View.OptionsSelection.MultiSelect = true;
             this.chkBoxClasif1.Properties.View.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CheckBoxRowSelect;
 
 
             DTClasif2 = clsClasificacionDAC.GetData(-1, 2, "*").Tables[0];
-            Util.Util.ConfigLookupEdit(this.chkBoxClasif2, DTClasif2, "Descr", "IDClasificacion", 350);
+            Util.Util.ConfigLookupEdit(this.chkBoxClasif2, DTClasif2, "Descr", "IDClasificacion", 400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.chkBoxClasif2, "[{'ColumnCaption':'IDClasificacion','ColumnField':'IDClasificacion','width':20},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':100}]");
+			this.chkBoxClasif2.Properties.View.OptionsView.ShowAutoFilterRow = true;
             this.chkBoxClasif2.Properties.View.OptionsSelection.MultiSelect = true;
             this.chkBoxClasif2.Properties.View.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CheckBoxRowSelect;
 
 
 
             DTClasif3 = clsClasificacionDAC.GetData(-1, 3, "*").Tables[0];
-            Util.Util.ConfigLookupEdit(this.chkBoxClasif3, DTClasif3, "Descr", "IDClasificacion", 350);
+            Util.Util.ConfigLookupEdit(this.chkBoxClasif3, DTClasif3, "Descr", "IDClasificacion", 400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.chkBoxClasif3, "[{'ColumnCaption':'IDClasificacion','ColumnField':'IDClasificacion','width':20},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':100}]");
+			this.chkBoxClasif3.Properties.View.OptionsView.ShowAutoFilterRow = true;
             this.chkBoxClasif3.Properties.View.OptionsSelection.MultiSelect = true;
             this.chkBoxClasif3.Properties.View.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CheckBoxRowSelect;
 
 
             DTClasif4 = clsClasificacionDAC.GetData(-1, 4, "*").Tables[0];
-            Util.Util.ConfigLookupEdit(this.chkBoxClasif4, DTClasif4, "Descr", "IDClasificacion", 350);
+            Util.Util.ConfigLookupEdit(this.chkBoxClasif4, DTClasif4, "Descr", "IDClasificacion", 400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.chkBoxClasif4, "[{'ColumnCaption':'IDClasificacion','ColumnField':'IDClasificacion','width':20},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':100}]");
+			this.chkBoxClasif4.Properties.View.OptionsView.ShowAutoFilterRow = true;
             this.chkBoxClasif4.Properties.View.OptionsSelection.MultiSelect = true;
             this.chkBoxClasif4.Properties.View.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CheckBoxRowSelect;
 
@@ -126,26 +177,30 @@ namespace CI
 
             DTClasif5 = clsClasificacionDAC.GetData(-1, 5, "*").Tables[0];
             this.chkBoxClasif5.Properties.DataSource = DTClasif5;
-            Util.Util.ConfigLookupEdit(this.chkBoxClasif5, DTClasif5, "Descr", "IDClasificacion", 250);
+            Util.Util.ConfigLookupEdit(this.chkBoxClasif5, DTClasif5, "Descr", "IDClasificacion", 400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.chkBoxClasif5, "[{'ColumnCaption':'IDClasificacion','ColumnField':'IDClasificacion','width':20},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':100}]");
+			this.chkBoxClasif5.Properties.View.OptionsView.ShowAutoFilterRow = true;
             this.chkBoxClasif5.Properties.View.OptionsSelection.MultiSelect = true;
             this.chkBoxClasif5.Properties.View.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CheckBoxRowSelect;
 
 
 
             DTClasif6 = clsClasificacionDAC.GetData(-1, 6, "*").Tables[0];
-            Util.Util.ConfigLookupEdit(this.chkBoxClasif6, DTClasif6, "Descr", "IDClasificacion", 250);
+            Util.Util.ConfigLookupEdit(this.chkBoxClasif6, DTClasif6, "Descr", "IDClasificacion", 400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.chkBoxClasif6, "[{'ColumnCaption':'IDClasificacion','ColumnField':'IDClasificacion','width':20},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':100}]");
+			this.chkBoxClasif6.Properties.View.OptionsView.ShowAutoFilterRow = true;
             this.chkBoxClasif6.Properties.View.OptionsSelection.MultiSelect = true;
             this.chkBoxClasif6.Properties.View.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CheckBoxRowSelect;
 
             DTTransaccion = clsGlobalTipoTransaccionDAC.Get(-1,"*", "*","*").Tables[0];
-            Util.Util.ConfigLookupEdit(this.slkupTransaccion, DTTransaccion, "Descr", "IDTipoTran", 250);
+            Util.Util.ConfigLookupEdit(this.slkupTransaccion, DTTransaccion, "Descr", "IDTipoTran", 400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupTransaccion, "[{'ColumnCaption':'Transaccion','ColumnField':'Transaccion','width':10},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':100}]");
+			this.slkupTransaccion.Properties.View.OptionsView.ShowAutoFilterRow = true;
 
             DTPaquete = clsPaqueteDAC.GetData(-1, "*", "*", -1, "*", 1).Tables[0];
-            Util.Util.ConfigLookupEdit(this.slkupPaquete, DTPaquete, "Descr", "IDPaquete", 350);
+            Util.Util.ConfigLookupEdit(this.slkupPaquete, DTPaquete, "Descr", "IDPaquete", 400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupPaquete, "[{'ColumnCaption':'Paquete','ColumnField':'PAQUETE','width':10},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':100}]");
+			this.slkupPaquete.Properties.View.OptionsView.ShowAutoFilterRow = true;
 
 
 
@@ -161,6 +216,7 @@ namespace CI
                 this.Height = 581;
             }
 
+			this.slkupProveedor.EditValue = this.IDProveedor;
             setItemSelected(sProducto, this.chkBoxProducto);
             setItemSelected(sLote, this.chkBoxLote);
             setItemSelected(sBodega, this.chkBoxBodega);
@@ -178,6 +234,7 @@ namespace CI
             this.dtpFechaInicial.EditValue = FechaInicial;
             this.dtpFechaFinal.EditValue = FechaFinal;
 
+			CargarDescripcionesClasificaciones();
 
         }
 
@@ -199,6 +256,11 @@ namespace CI
                 this.chkBoxBodega.Enabled = Enable;
                 this.chkAllBodega.Checked = !Enable;
             }
+			else if (Nombre == "slkupProveedor")
+			{
+				this.slkupProveedor.Enabled = Enable;
+				this.chkAllProveedor.Checked = !Enable;
+			}
             else if (Nombre == "chkBoxClasif1")
             {
                 this.chkBoxClasif1.Enabled = Enable;
@@ -396,6 +458,7 @@ namespace CI
         {
             this.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.DetallaLote = this.chkDetallaLote.Checked;
+			this.IDProveedor = (this.slkupProveedor.EditValue == null) ? -1: Convert.ToInt32(this.slkupProveedor.EditValue);
             this.Close();
         }
 
@@ -701,6 +764,17 @@ namespace CI
             setItemSelected(sClasif6, edit);
        
         }
+
+		private void chkAllProveedor_CheckedChanged(object sender, EventArgs e)
+		{
+			if (this.chkAllProveedor.Checked == true)
+			{
+				this.slkupProveedor.Enabled = false;
+				this.slkupProveedor.EditValue = null;
+			}
+			else
+				this.slkupProveedor.Enabled = true;
+		}
 
 
 

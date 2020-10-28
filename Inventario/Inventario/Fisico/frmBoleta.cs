@@ -154,14 +154,17 @@ namespace CI.Fisico
 
                 EnlazarEventos();
 
-                Util.Util.ConfigLookupEdit(this.slkupBodega, clsBodegaDAC.GetData(-1,"*",1).Tables[0], "Descr", "IDBodega");
+                Util.Util.ConfigLookupEdit(this.slkupBodega, clsBodegaDAC.GetData(-1,"*",1).Tables[0], "Descr", "IDBodega",400,300);
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupBodega, "[{'ColumnCaption':'IDBodega','ColumnField':'IDBodega','width':30},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':70}]");
+				this.slkupBodega.Properties.View.OptionsView.ShowAutoFilterRow = true;
 
-                Util.Util.ConfigLookupEdit(this.slkupProducto, clsProductoDAC.GetData(-1,"*","*",-1,-1,-1,-1,-1,-1,"*",-1,-1,-1).Tables[0], "Descr", "IDProducto");
+                Util.Util.ConfigLookupEdit(this.slkupProducto, clsProductoDAC.GetData(-1,"*","*",-1,-1,-1,-1,-1,-1,"*",-1,-1,-1).Tables[0], "Descr", "IDProducto",400,300);
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupProducto, "[{'ColumnCaption':'IDProducto','ColumnField':'IDProducto','width':30},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':70}]");
+				this.slkupProducto.Properties.View.OptionsView.ShowAutoFilterRow = true;
 
-                Util.Util.ConfigLookupEdit(this.slkupLote, clsLoteDAC.GetData(-1,-1,"*","*").Tables[0], "LoteProveedor", "IDLote");
+                Util.Util.ConfigLookupEdit(this.slkupLote, clsLoteDAC.GetData(-1,-1,"*","*").Tables[0], "LoteProveedor", "IDLote",400,300);
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupLote, "[{'ColumnCaption':'IDLote','ColumnField':'IDLote','width':30},{'ColumnCaption':'Lote Proveedor','ColumnField':'LoteProveedor','width':70}]");
+				this.slkupProducto.Properties.View.OptionsView.ShowAutoFilterRow = true;
 
                 this.dtpFecha.EditValue = DateTime.Now;
 

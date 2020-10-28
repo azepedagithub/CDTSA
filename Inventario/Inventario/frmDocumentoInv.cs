@@ -605,23 +605,28 @@ namespace CI
                     stTemp.Rows[1].Delete();
                     stTemp.Rows[0]["Descr"] = "Traslados";
 
-                    Util.Util.ConfigLookupEdit(this.slkupTransaccion, stTemp, "Descr", "IDTipoTran");
+                    Util.Util.ConfigLookupEdit(this.slkupTransaccion, stTemp, "Descr", "IDTipoTran",400,300);
                     Util.Util.ConfigLookupEditSetViewColumns(this.slkupTransaccion, "[{'ColumnCaption':'TipoTran','ColumnField':'IDTipoTran','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");
+					this.slkupTransaccion.Properties.View.OptionsView.ShowAutoFilterRow = true;
                 }
                 else
                 {
-                    Util.Util.ConfigLookupEdit(this.slkupTransaccion, clsGlobalTipoTransaccionDAC.Get(-1, "*", "*", _dtPaquete.Rows[0]["Transaccion"].ToString()).Tables[0], "Descr", "IDTipoTran");
+                    Util.Util.ConfigLookupEdit(this.slkupTransaccion, clsGlobalTipoTransaccionDAC.Get(-1, "*", "*", _dtPaquete.Rows[0]["Transaccion"].ToString()).Tables[0], "Descr", "IDTipoTran",400,300);
                     Util.Util.ConfigLookupEditSetViewColumns(this.slkupTransaccion, "[{'ColumnCaption':'TipoTran','ColumnField':'IDTipoTran','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");
+					this.slkupTransaccion.Properties.View.OptionsView.ShowAutoFilterRow = true;
                 }
 
-                Util.Util.ConfigLookupEdit(this.slkupBodegaOrigen, clsBodegaDAC.GetData(-1, "*", -1).Tables[0], "Descr", "IDBodega");
+                Util.Util.ConfigLookupEdit(this.slkupBodegaOrigen, clsBodegaDAC.GetData(-1, "*", -1).Tables[0], "Descr", "IDBodega",400,300);
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupBodegaOrigen, "[{'ColumnCaption':'IDBodega','ColumnField':'IDBodega','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");
+				this.slkupBodegaOrigen.Properties.View.OptionsView.ShowAutoFilterRow = true;
 
-                Util.Util.ConfigLookupEdit(this.slkupBodegaDestino, clsBodegaDAC.GetData(-1, "*", -1).Tables[0], "Descr", "IDBodega");
+                Util.Util.ConfigLookupEdit(this.slkupBodegaDestino, clsBodegaDAC.GetData(-1, "*", -1).Tables[0], "Descr", "IDBodega",400,300);
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupBodegaDestino, "[{'ColumnCaption':'IDBodega','ColumnField':'IDBodega','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");
+				this.slkupBodegaDestino.Properties.View.OptionsView.ShowAutoFilterRow = true;
 
-                Util.Util.ConfigLookupEdit(this.slkupProducto, clsProductoDAC.GetData(-1, "*", "*", -1, -1, -1, -1, -1, -1, "*", -1, -1, -1).Tables[0], "Descr", "IDProducto",450);
+                Util.Util.ConfigLookupEdit(this.slkupProducto, clsProductoDAC.GetData(-1, "*", "*", -1, -1, -1, -1, -1, -1, "*", -1, -1, -1).Tables[0], "Descr", "IDProducto",400,300);
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupProducto, "[{'ColumnCaption':'IdProducto','ColumnField':'IDProducto','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");
+				this.slkupProducto.Properties.View.OptionsView.ShowAutoFilterRow = true;
 
                 Util.Util.SetFormatTextEdit(txtCantidad, Util.Util.FormatType.Numerico);
                 Util.Util.SetFormatTextEdit(txtCostoDolar, Util.Util.FormatType.MonedaExtrangera);

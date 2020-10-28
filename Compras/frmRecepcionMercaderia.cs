@@ -48,6 +48,7 @@ namespace CO
             this.slkupGridIDProd.ValueMember = "IDProducto";
             this.slkupGridIDProd.NullText = " --- ---";
             this.slkupGridIDProd.EditValueChanged += slkup_EditValueChanged;
+			this.slkupGridIDProd.View.OptionsView.ShowAutoFilterRow = true;
             this.slkupGridIDProd.Popup += slkup_Popup;
             //this.slkupIDProducto.PopulateViewColumns();
 
@@ -56,6 +57,7 @@ namespace CO
             this.slkupGridLote.DisplayMember = "LoteProveedor";
             this.slkupGridLote.ValueMember = "IDLote";
             this.slkupGridLote.NullText = " --- ---";
+			this.slkupGridLote.View.OptionsView.ShowAutoFilterRow = true;
             this.slkupGridLote.EditValueChanged += slkupGridLote_EditValueChanged;
 			
             
@@ -66,6 +68,7 @@ namespace CO
             this.slkupGridDescrProd.DisplayMember = "Descr";
             this.slkupGridDescrProd.ValueMember = "IDProducto";
             this.slkupGridDescrProd.NullText = " --- ---";
+			this.slkupGridDescrProd.View.OptionsView.ShowAutoFilterRow = true;
             this.slkupGridDescrProd.EditValueChanged += slkup_EditValueChanged;
             this.slkupGridDescrProd.Popup += slkup_Popup;
             

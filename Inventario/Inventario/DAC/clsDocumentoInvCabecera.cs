@@ -156,7 +156,7 @@ namespace CI.DAC
 
         
 							
-        public static DataSet GetTransaccionesInventarioByCriterio(String Bodega, String Producto, String Lote, 
+        public static DataSet GetTransaccionesInventarioByCriterio(String Bodega, String Producto, String Lote, int IDProveedor,
                     String Clasif1, String Clasif2, String Clasif3, String Clasif4, String Clasif5, String Clasif6, 
                     String Transacciones,String Paquete,String Documento,String Referencia,DateTime FechaInicial,DateTime FechaFinal)
         {
@@ -167,6 +167,7 @@ namespace CI.DAC
             oCmd.Parameters.Add(new SqlParameter("@Bodega", Bodega));
             oCmd.Parameters.Add(new SqlParameter("@Lote", Lote));
             oCmd.Parameters.Add(new SqlParameter("@Producto", Producto));
+			oCmd.Parameters.Add(new SqlParameter("@IDProveedor", IDProveedor));
             oCmd.Parameters.Add(new SqlParameter("@Clasif1", Clasif1));
             oCmd.Parameters.Add(new SqlParameter("@Clasif2", Clasif2));
             oCmd.Parameters.Add(new SqlParameter("@Clasif3", Clasif3));

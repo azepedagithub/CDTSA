@@ -199,7 +199,7 @@
 			this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.layoutControl1.Location = new System.Drawing.Point(0, 143);
 			this.layoutControl1.Name = "layoutControl1";
-			this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(926, 301, 250, 350);
+			this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(747, 301, 250, 350);
 			this.layoutControl1.Root = this.layoutControlGroup1;
 			this.layoutControl1.Size = new System.Drawing.Size(693, 405);
 			this.layoutControl1.TabIndex = 1;
@@ -207,7 +207,7 @@
 			// 
 			// chkActivo
 			// 
-			this.chkActivo.Location = new System.Drawing.Point(607, 337);
+			this.chkActivo.Location = new System.Drawing.Point(607, 74);
 			this.chkActivo.MenuManager = this.ribbonControl;
 			this.chkActivo.Name = "chkActivo";
 			this.chkActivo.Properties.Caption = "Activo";
@@ -217,7 +217,7 @@
 			// 
 			// txtDescContado
 			// 
-			this.txtDescContado.Location = new System.Drawing.Point(552, 337);
+			this.txtDescContado.Location = new System.Drawing.Point(552, 74);
 			this.txtDescContado.MenuManager = this.ribbonControl;
 			this.txtDescContado.Name = "txtDescContado";
 			this.txtDescContado.Properties.Mask.EditMask = "p";
@@ -228,7 +228,7 @@
 			// 
 			// txtDias
 			// 
-			this.txtDias.Location = new System.Drawing.Point(322, 337);
+			this.txtDias.Location = new System.Drawing.Point(322, 74);
 			this.txtDias.MenuManager = this.ribbonControl;
 			this.txtDias.Name = "txtDias";
 			this.txtDias.Properties.Mask.EditMask = "n0";
@@ -239,7 +239,7 @@
 			// 
 			// txtDescr
 			// 
-			this.txtDescr.Location = new System.Drawing.Point(97, 337);
+			this.txtDescr.Location = new System.Drawing.Point(97, 74);
 			this.txtDescr.MenuManager = this.ribbonControl;
 			this.txtDescr.Name = "txtDescr";
 			this.txtDescr.Size = new System.Drawing.Size(192, 20);
@@ -248,11 +248,11 @@
 			// 
 			// dtgCondicionPago
 			// 
-			this.dtgCondicionPago.Location = new System.Drawing.Point(12, 44);
+			this.dtgCondicionPago.Location = new System.Drawing.Point(12, 127);
 			this.dtgCondicionPago.MainView = this.gridView;
 			this.dtgCondicionPago.MenuManager = this.ribbonControl;
 			this.dtgCondicionPago.Name = "dtgCondicionPago";
-			this.dtgCondicionPago.Size = new System.Drawing.Size(669, 244);
+			this.dtgCondicionPago.Size = new System.Drawing.Size(669, 242);
 			this.dtgCondicionPago.TabIndex = 4;
 			this.dtgCondicionPago.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView});
@@ -316,11 +316,11 @@
 			this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlItem1,
             this.emptySpaceItem1,
-            this.layoutControlGroup2,
             this.emptySpaceItem4,
+            this.layoutControlGroup2,
             this.emptySpaceItem2,
-            this.emptySpaceItem3,
-            this.emptySpaceItem5});
+            this.emptySpaceItem5,
+            this.emptySpaceItem3});
 			this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
 			this.layoutControlGroup1.Name = "Root";
 			this.layoutControlGroup1.Size = new System.Drawing.Size(693, 405);
@@ -329,9 +329,9 @@
 			// layoutControlItem1
 			// 
 			this.layoutControlItem1.Control = this.dtgCondicionPago;
-			this.layoutControlItem1.Location = new System.Drawing.Point(0, 32);
+			this.layoutControlItem1.Location = new System.Drawing.Point(0, 115);
 			this.layoutControlItem1.Name = "layoutControlItem1";
-			this.layoutControlItem1.Size = new System.Drawing.Size(673, 248);
+			this.layoutControlItem1.Size = new System.Drawing.Size(673, 246);
 			this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem1.TextVisible = false;
 			// 
@@ -359,7 +359,7 @@
             this.layoutControlItem3,
             this.layoutControlItem4,
             this.layoutControlItem5});
-			this.layoutControlGroup2.Location = new System.Drawing.Point(10, 295);
+			this.layoutControlGroup2.Location = new System.Drawing.Point(10, 32);
 			this.layoutControlGroup2.Name = "layoutControlGroup2";
 			this.layoutControlGroup2.Size = new System.Drawing.Size(653, 66);
 			this.layoutControlGroup2.Text = "Condición de Pago";
@@ -421,7 +421,7 @@
 			// emptySpaceItem2
 			// 
 			this.emptySpaceItem2.AllowHotTrack = false;
-			this.emptySpaceItem2.Location = new System.Drawing.Point(0, 295);
+			this.emptySpaceItem2.Location = new System.Drawing.Point(0, 32);
 			this.emptySpaceItem2.Name = "emptySpaceItem2";
 			this.emptySpaceItem2.Size = new System.Drawing.Size(10, 66);
 			this.emptySpaceItem2.TextSize = new System.Drawing.Size(0, 0);
@@ -429,17 +429,20 @@
 			// emptySpaceItem3
 			// 
 			this.emptySpaceItem3.AllowHotTrack = false;
-			this.emptySpaceItem3.Location = new System.Drawing.Point(663, 295);
+			this.emptySpaceItem3.Location = new System.Drawing.Point(0, 98);
+			this.emptySpaceItem3.MaxSize = new System.Drawing.Size(0, 17);
+			this.emptySpaceItem3.MinSize = new System.Drawing.Size(10, 17);
 			this.emptySpaceItem3.Name = "emptySpaceItem3";
-			this.emptySpaceItem3.Size = new System.Drawing.Size(10, 66);
+			this.emptySpaceItem3.Size = new System.Drawing.Size(673, 17);
+			this.emptySpaceItem3.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
 			this.emptySpaceItem3.TextSize = new System.Drawing.Size(0, 0);
 			// 
 			// emptySpaceItem5
 			// 
 			this.emptySpaceItem5.AllowHotTrack = false;
-			this.emptySpaceItem5.Location = new System.Drawing.Point(0, 280);
+			this.emptySpaceItem5.Location = new System.Drawing.Point(663, 32);
 			this.emptySpaceItem5.Name = "emptySpaceItem5";
-			this.emptySpaceItem5.Size = new System.Drawing.Size(673, 15);
+			this.emptySpaceItem5.Size = new System.Drawing.Size(10, 66);
 			this.emptySpaceItem5.TextSize = new System.Drawing.Size(0, 0);
 			// 
 			// frmCondicionesDePago

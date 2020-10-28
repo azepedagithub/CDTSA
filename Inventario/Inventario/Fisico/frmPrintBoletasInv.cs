@@ -32,44 +32,52 @@ namespace CI.Fisico
         private void frmPrintBoletasInv_Load(object sender, EventArgs e)
         {
             DataTable DTProducto = clsProductoDAC.GetData(-1, "*", "*", -1, -1, -1, -1, -1, -1, "*", -1, -1, -1).Tables[0];
-            Util.Util.ConfigLookupEdit(this.slkupProducto, DTProducto, "Descr", "IDProducto", 350);
+            Util.Util.ConfigLookupEdit(this.slkupProducto, DTProducto, "Descr", "IDProducto", 400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupProducto, "[{'ColumnCaption':'IDProducto','ColumnField':'IDProducto','width':20},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':90}]");
             this.slkupProducto.Properties.ShowClearButton = true;
+			this.slkupProducto.Properties.View.OptionsView.ShowAutoFilterRow = true;
 
             DataTable DTBodega = clsBodegaDAC.GetData(-1, "*", -1).Tables[0];
-            Util.Util.ConfigLookupEdit(this.slkupBodega, DTBodega, "Descr", "IDBodega", 350);
+            Util.Util.ConfigLookupEdit(this.slkupBodega, DTBodega, "Descr", "IDBodega", 400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupBodega, "[{'ColumnCaption':'IDBodega','ColumnField':'IDBodega','width':20},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':90}]");
             this.slkupBodega.Properties.ShowClearButton = true;
+			this.slkupBodega.Properties.View.OptionsView.ShowAutoFilterRow = true;
 
             DataTable DTClasif1 = clsClasificacionDAC.GetData(-1,1,"*").Tables[0];
-            Util.Util.ConfigLookupEdit(this.slkupClasif1, DTClasif1, "Descr", "IDClasificacion", 350);
+            Util.Util.ConfigLookupEdit(this.slkupClasif1, DTClasif1, "Descr", "IDClasificacion", 400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupClasif1, "[{'ColumnCaption':'ID','ColumnField':'IDClasificacion','width':20},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':90}]");
             this.slkupClasif1.Properties.ShowClearButton = true;
+			this.slkupClasif1.Properties.View.OptionsView.ShowAutoFilterRow = true;
 
             DataTable DTClasif2 = clsClasificacionDAC.GetData(-1, 2, "*").Tables[0];
-            Util.Util.ConfigLookupEdit(this.slkupClasif2, DTClasif2, "Descr", "IDClasificacion", 350);
+            Util.Util.ConfigLookupEdit(this.slkupClasif2, DTClasif2, "Descr", "IDClasificacion", 400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupClasif2, "[{'ColumnCaption':'ID','ColumnField':'IDClasificacion','width':20},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':90}]");
             this.slkupClasif2.Properties.ShowClearButton = true;
+			this.slkupClasif2.Properties.View.OptionsView.ShowAutoFilterRow = true;
             
             DataTable DTClasif3 = clsClasificacionDAC.GetData(-1, 3, "*").Tables[0];
-            Util.Util.ConfigLookupEdit(this.slkupClasif3, DTClasif3, "Descr", "IDClasificacion", 350);
+            Util.Util.ConfigLookupEdit(this.slkupClasif3, DTClasif3, "Descr", "IDClasificacion", 400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupClasif3, "[{'ColumnCaption':'ID','ColumnField':'IDClasificacion','width':20},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':90}]");
             this.slkupClasif3.Properties.ShowClearButton = true;
+			this.slkupClasif3.Properties.View.OptionsView.ShowAutoFilterRow = true;
 
             DataTable DTClasif4 = clsClasificacionDAC.GetData(-1, 4, "*").Tables[0];
-            Util.Util.ConfigLookupEdit(this.slkupClasif4, DTClasif4, "Descr", "IDClasificacion", 350);
+            Util.Util.ConfigLookupEdit(this.slkupClasif4, DTClasif4, "Descr", "IDClasificacion", 400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupClasif4, "[{'ColumnCaption':'ID','ColumnField':'IDClasificacion','width':20},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':90}]");
             this.slkupClasif4.Properties.ShowClearButton = true;
+			this.slkupClasif4.Properties.View.OptionsView.ShowAutoFilterRow = true;
 
             DataTable DTClasif5 = clsClasificacionDAC.GetData(-1, 5, "*").Tables[0];
-            Util.Util.ConfigLookupEdit(this.slkupClasif5, DTClasif5, "Descr", "IDClasificacion", 350);
+            Util.Util.ConfigLookupEdit(this.slkupClasif5, DTClasif5, "Descr", "IDClasificacion", 400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupClasif5, "[{'ColumnCaption':'ID','ColumnField':'IDClasificacion','width':20},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':90}]");
             this.slkupClasif5.Properties.ShowClearButton = true;
+			this.slkupClasif5.Properties.View.OptionsView.ShowAutoFilterRow = true;
 
             DataTable DTClasif6 = clsClasificacionDAC.GetData(-1, 6, "*").Tables[0];
-            Util.Util.ConfigLookupEdit(this.slkupClasif6, DTClasif6, "Descr", "IDClasificacion", 350);
+            Util.Util.ConfigLookupEdit(this.slkupClasif6, DTClasif6, "Descr", "IDClasificacion", 400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupClasif6, "[{'ColumnCaption':'ID','ColumnField':'IDClasificacion','width':20},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':90}]");
             this.slkupClasif6.Properties.ShowClearButton = true;
+			this.slkupClasif6.Properties.View.OptionsView.ShowAutoFilterRow = true;
 			
 			CargarDescripcionesClasificaciones();
 

@@ -18,6 +18,7 @@ namespace CI
         private String sBodegas = "";
         private String sClasif1, sClasif2, sClasif3, sClasif4, sClasif5, sClasif6, sAplicacion,sReferencia,sTransaccion,sPaquete;
         private bool bDetallaLote;
+		private int IDProveedor;
         private DateTime FechaInicial, FechaFinal;
 
 
@@ -30,13 +31,15 @@ namespace CI
         {
             sProductos = sLotes = sBodegas = sClasif1 = sClasif2 = sClasif3 = sClasif4 = sClasif5 = sClasif6 =sAplicacion=sReferencia=sTransaccion=sPaquete = "*";
             bDetallaLote = true;
+			IDProveedor = -1;
+
             FechaFinal = DateTime.Today.AddDays(1).AddTicks(-1);
             FechaInicial = DateTime.Now.AddMonths(-1);
         }
 
         private void btnFiltrar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            frmFiltroConsultaExistencia ofrmFiltro = new frmFiltroConsultaExistencia("Transacciones", sProductos, sLotes, sBodegas, sClasif1, sClasif2, sClasif3, sClasif4, sClasif5, sClasif6,sPaquete,sTransaccion,sReferencia,sAplicacion,FechaInicial,FechaFinal, bDetallaLote);
+            frmFiltroConsultaExistencia ofrmFiltro = new frmFiltroConsultaExistencia("Transacciones", sProductos, sLotes, sBodegas,IDProveedor, sClasif1, sClasif2, sClasif3, sClasif4, sClasif5, sClasif6,sPaquete,sTransaccion,sReferencia,sAplicacion,FechaInicial,FechaFinal, bDetallaLote);
                ofrmFiltro.FormClosed += ofrmFiltro_FormClosed;
             ofrmFiltro.ShowDialog();
         }
@@ -62,6 +65,7 @@ namespace CI
                 this.sTransaccion = ofrm.getLstFiltro("Transaccion");
                 this.sPaquete = ofrm.getLstFiltro("Paquete");
                 this.bDetallaLote = ofrm.DetallaLote;
+				this.IDProveedor = ofrm.IDProveedor;
 
             }
             
@@ -70,7 +74,7 @@ namespace CI
         private void btnRefrescar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             
-            DataTable DTExistencias = clsDocumentoInvCabecera.GetTransaccionesInventarioByCriterio(sBodegas, sProductos, sLotes, sClasif1, sClasif2, sClasif3, sClasif4, sClasif5, sClasif6,sTransaccion,sPaquete,sAplicacion,sReferencia,FechaInicial,FechaFinal).Tables[0];
+            DataTable DTExistencias = clsDocumentoInvCabecera.GetTransaccionesInventarioByCriterio(sBodegas, sProductos, sLotes,IDProveedor, sClasif1, sClasif2, sClasif3, sClasif4, sClasif5, sClasif6,sTransaccion,sPaquete,sAplicacion,sReferencia,FechaInicial,FechaFinal).Tables[0];
             this.dtgDetalleTransacciones.DataSource = DTExistencias;
             this.dtgDetalleTransacciones.Refresh();
         }

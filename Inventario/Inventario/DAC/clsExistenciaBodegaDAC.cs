@@ -30,7 +30,7 @@ namespace CI.DAC
         }
 
 
-         public static DataSet GetExistenciaBodegaByClasificacion(String Bodega, String Producto, String Lote, String Clasif1, String Clasif2, String Clasif3, String Clasif4, String Clasif5, String Clasif6,bool DetallaLote)
+         public static DataSet GetExistenciaBodegaByClasificacion(String Bodega, String Producto, String Lote,int IDProveedor, String Clasif1, String Clasif2, String Clasif3, String Clasif4, String Clasif5, String Clasif6,bool DetallaLote)
          {
              String strSQL = "dbo.invGetExistenciaBodegabyClasificacion";
 
@@ -39,6 +39,7 @@ namespace CI.DAC
              oCmd.Parameters.Add(new SqlParameter("@Bodega", Bodega));
              oCmd.Parameters.Add(new SqlParameter("@Lote", Lote));
              oCmd.Parameters.Add(new SqlParameter("@Producto", Producto));
+			 oCmd.Parameters.Add(new SqlParameter("@IDProveedor", IDProveedor));
              oCmd.Parameters.Add(new SqlParameter("@Clasif1", Clasif1));
              oCmd.Parameters.Add(new SqlParameter("@Clasif2", Clasif2));
              oCmd.Parameters.Add(new SqlParameter("@Clasif3", Clasif3));

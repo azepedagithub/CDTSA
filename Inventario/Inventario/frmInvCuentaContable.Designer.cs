@@ -118,6 +118,8 @@
 			this.layoutControlItem17 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem25 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem30 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.emptySpaceItem4 = new DevExpress.XtraLayout.EmptySpaceItem();
+			this.emptySpaceItem5 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.layoutControlGroup3 = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem10 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -137,8 +139,6 @@
 			this.emptySpaceItem3 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
-			this.emptySpaceItem4 = new DevExpress.XtraLayout.EmptySpaceItem();
-			this.emptySpaceItem5 = new DevExpress.XtraLayout.EmptySpaceItem();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
 			this.layoutControl1.SuspendLayout();
@@ -207,6 +207,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem17)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem25)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem30)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem5)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup3)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).BeginInit();
@@ -226,8 +228,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem5)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// ribbonControl
@@ -371,7 +371,7 @@
 			// 
 			// slkupCtaConsumo
 			// 
-			this.slkupCtaConsumo.Location = new System.Drawing.Point(410, 494);
+			this.slkupCtaConsumo.Location = new System.Drawing.Point(410, 292);
 			this.slkupCtaConsumo.MenuManager = this.ribbonControl;
 			this.slkupCtaConsumo.Name = "slkupCtaConsumo";
 			this.slkupCtaConsumo.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -390,7 +390,7 @@
 			// 
 			// slkupCtroConsumo
 			// 
-			this.slkupCtroConsumo.Location = new System.Drawing.Point(139, 494);
+			this.slkupCtroConsumo.Location = new System.Drawing.Point(139, 292);
 			this.slkupCtroConsumo.MenuManager = this.ribbonControl;
 			this.slkupCtroConsumo.Name = "slkupCtroConsumo";
 			this.slkupCtroConsumo.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -424,7 +424,7 @@
 			// 
 			// slkupCtaDesBonificacion
 			// 
-			this.slkupCtaDesBonificacion.Location = new System.Drawing.Point(761, 393);
+			this.slkupCtaDesBonificacion.Location = new System.Drawing.Point(761, 191);
 			this.slkupCtaDesBonificacion.MenuManager = this.ribbonControl;
 			this.slkupCtaDesBonificacion.Name = "slkupCtaDesBonificacion";
 			this.slkupCtaDesBonificacion.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -443,7 +443,7 @@
 			// 
 			// slkupCtaCompras
 			// 
-			this.slkupCtaCompras.Location = new System.Drawing.Point(761, 367);
+			this.slkupCtaCompras.Location = new System.Drawing.Point(761, 165);
 			this.slkupCtaCompras.MenuManager = this.ribbonControl;
 			this.slkupCtaCompras.Name = "slkupCtaCompras";
 			this.slkupCtaCompras.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -462,7 +462,7 @@
 			// 
 			// slkupCtrDescBonificacion
 			// 
-			this.slkupCtrDescBonificacion.Location = new System.Drawing.Point(600, 393);
+			this.slkupCtrDescBonificacion.Location = new System.Drawing.Point(600, 191);
 			this.slkupCtrDescBonificacion.MenuManager = this.ribbonControl;
 			this.slkupCtrDescBonificacion.Name = "slkupCtrDescBonificacion";
 			this.slkupCtrDescBonificacion.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -481,7 +481,7 @@
 			// 
 			// slkupCtrCompras
 			// 
-			this.slkupCtrCompras.Location = new System.Drawing.Point(600, 367);
+			this.slkupCtrCompras.Location = new System.Drawing.Point(600, 165);
 			this.slkupCtrCompras.MenuManager = this.ribbonControl;
 			this.slkupCtrCompras.Name = "slkupCtrCompras";
 			this.slkupCtrCompras.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -500,7 +500,7 @@
 			// 
 			// slkupCtaCostoVenta
 			// 
-			this.slkupCtaCostoVenta.Location = new System.Drawing.Point(292, 445);
+			this.slkupCtaCostoVenta.Location = new System.Drawing.Point(292, 243);
 			this.slkupCtaCostoVenta.MenuManager = this.ribbonControl;
 			this.slkupCtaCostoVenta.Name = "slkupCtaCostoVenta";
 			this.slkupCtaCostoVenta.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -519,7 +519,7 @@
 			// 
 			// slkupCtaDescVentas
 			// 
-			this.slkupCtaDescVentas.Location = new System.Drawing.Point(292, 419);
+			this.slkupCtaDescVentas.Location = new System.Drawing.Point(292, 217);
 			this.slkupCtaDescVentas.MenuManager = this.ribbonControl;
 			this.slkupCtaDescVentas.Name = "slkupCtaDescVentas";
 			this.slkupCtaDescVentas.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -538,7 +538,7 @@
 			// 
 			// slkuCtaDevVentas
 			// 
-			this.slkuCtaDevVentas.Location = new System.Drawing.Point(292, 393);
+			this.slkuCtaDevVentas.Location = new System.Drawing.Point(292, 191);
 			this.slkuCtaDevVentas.MenuManager = this.ribbonControl;
 			this.slkuCtaDevVentas.Name = "slkuCtaDevVentas";
 			this.slkuCtaDevVentas.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -557,7 +557,7 @@
 			// 
 			// slkuCtaVentas
 			// 
-			this.slkuCtaVentas.Location = new System.Drawing.Point(292, 367);
+			this.slkuCtaVentas.Location = new System.Drawing.Point(292, 165);
 			this.slkuCtaVentas.MenuManager = this.ribbonControl;
 			this.slkuCtaVentas.Name = "slkuCtaVentas";
 			this.slkuCtaVentas.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -576,7 +576,7 @@
 			// 
 			// slkupCtaSobranteInventario
 			// 
-			this.slkupCtaSobranteInventario.Location = new System.Drawing.Point(411, 469);
+			this.slkupCtaSobranteInventario.Location = new System.Drawing.Point(411, 267);
 			this.slkupCtaSobranteInventario.MenuManager = this.ribbonControl;
 			this.slkupCtaSobranteInventario.Name = "slkupCtaSobranteInventario";
 			this.slkupCtaSobranteInventario.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -595,7 +595,7 @@
 			// 
 			// slkupCtaFaltanteInventario
 			// 
-			this.slkupCtaFaltanteInventario.Location = new System.Drawing.Point(411, 443);
+			this.slkupCtaFaltanteInventario.Location = new System.Drawing.Point(411, 241);
 			this.slkupCtaFaltanteInventario.MenuManager = this.ribbonControl;
 			this.slkupCtaFaltanteInventario.Name = "slkupCtaFaltanteInventario";
 			this.slkupCtaFaltanteInventario.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -614,7 +614,7 @@
 			// 
 			// slkupCtaVariacionCosto
 			// 
-			this.slkupCtaVariacionCosto.Location = new System.Drawing.Point(411, 417);
+			this.slkupCtaVariacionCosto.Location = new System.Drawing.Point(411, 215);
 			this.slkupCtaVariacionCosto.MenuManager = this.ribbonControl;
 			this.slkupCtaVariacionCosto.Name = "slkupCtaVariacionCosto";
 			this.slkupCtaVariacionCosto.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -633,7 +633,7 @@
 			// 
 			// slkupCtaInventario
 			// 
-			this.slkupCtaInventario.Location = new System.Drawing.Point(411, 391);
+			this.slkupCtaInventario.Location = new System.Drawing.Point(411, 189);
 			this.slkupCtaInventario.MenuManager = this.ribbonControl;
 			this.slkupCtaInventario.Name = "slkupCtaInventario";
 			this.slkupCtaInventario.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -652,7 +652,7 @@
 			// 
 			// slkupCtrSobranteInventario
 			// 
-			this.slkupCtrSobranteInventario.Location = new System.Drawing.Point(140, 469);
+			this.slkupCtrSobranteInventario.Location = new System.Drawing.Point(140, 267);
 			this.slkupCtrSobranteInventario.MenuManager = this.ribbonControl;
 			this.slkupCtrSobranteInventario.Name = "slkupCtrSobranteInventario";
 			this.slkupCtrSobranteInventario.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -671,7 +671,7 @@
 			// 
 			// slkupCtrFaltanteInv
 			// 
-			this.slkupCtrFaltanteInv.Location = new System.Drawing.Point(140, 443);
+			this.slkupCtrFaltanteInv.Location = new System.Drawing.Point(140, 241);
 			this.slkupCtrFaltanteInv.MenuManager = this.ribbonControl;
 			this.slkupCtrFaltanteInv.Name = "slkupCtrFaltanteInv";
 			this.slkupCtrFaltanteInv.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -690,7 +690,7 @@
 			// 
 			// slkupCtrVariacionCosto
 			// 
-			this.slkupCtrVariacionCosto.Location = new System.Drawing.Point(140, 417);
+			this.slkupCtrVariacionCosto.Location = new System.Drawing.Point(140, 215);
 			this.slkupCtrVariacionCosto.MenuManager = this.ribbonControl;
 			this.slkupCtrVariacionCosto.Name = "slkupCtrVariacionCosto";
 			this.slkupCtrVariacionCosto.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -709,7 +709,7 @@
 			// 
 			// slkupCtrInventario
 			// 
-			this.slkupCtrInventario.Location = new System.Drawing.Point(140, 391);
+			this.slkupCtrInventario.Location = new System.Drawing.Point(140, 189);
 			this.slkupCtrInventario.MenuManager = this.ribbonControl;
 			this.slkupCtrInventario.Name = "slkupCtrInventario";
 			this.slkupCtrInventario.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -728,7 +728,7 @@
 			// 
 			// txtIdCuenta
 			// 
-			this.txtIdCuenta.Location = new System.Drawing.Point(128, 281);
+			this.txtIdCuenta.Location = new System.Drawing.Point(128, 79);
 			this.txtIdCuenta.MenuManager = this.ribbonControl;
 			this.txtIdCuenta.Name = "txtIdCuenta";
 			this.txtIdCuenta.Properties.ReadOnly = true;
@@ -738,7 +738,7 @@
 			// 
 			// txtDescr
 			// 
-			this.txtDescr.Location = new System.Drawing.Point(128, 307);
+			this.txtDescr.Location = new System.Drawing.Point(128, 105);
 			this.txtDescr.MenuManager = this.ribbonControl;
 			this.txtDescr.Name = "txtDescr";
 			this.txtDescr.Size = new System.Drawing.Size(783, 20);
@@ -747,7 +747,7 @@
 			// 
 			// dtgDetalle
 			// 
-			this.dtgDetalle.Location = new System.Drawing.Point(12, 48);
+			this.dtgDetalle.Location = new System.Drawing.Point(12, 340);
 			this.dtgDetalle.MainView = this.gridViewDetalle;
 			this.dtgDetalle.MenuManager = this.ribbonControl;
 			this.dtgDetalle.Name = "dtgDetalle";
@@ -793,7 +793,7 @@
 			// 
 			// slkupCtrVentas
 			// 
-			this.slkupCtrVentas.Location = new System.Drawing.Point(140, 367);
+			this.slkupCtrVentas.Location = new System.Drawing.Point(140, 165);
 			this.slkupCtrVentas.MenuManager = this.ribbonControl1;
 			this.slkupCtrVentas.Name = "slkupCtrVentas";
 			this.slkupCtrVentas.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -914,7 +914,7 @@
 			// 
 			// slkuCtrDevVentas
 			// 
-			this.slkuCtrDevVentas.Location = new System.Drawing.Point(140, 393);
+			this.slkuCtrDevVentas.Location = new System.Drawing.Point(140, 191);
 			this.slkuCtrDevVentas.MenuManager = this.ribbonControl1;
 			this.slkuCtrDevVentas.Name = "slkuCtrDevVentas";
 			this.slkuCtrDevVentas.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -933,7 +933,7 @@
 			// 
 			// slkupCtrDescVentas
 			// 
-			this.slkupCtrDescVentas.Location = new System.Drawing.Point(140, 419);
+			this.slkupCtrDescVentas.Location = new System.Drawing.Point(140, 217);
 			this.slkupCtrDescVentas.MenuManager = this.ribbonControl1;
 			this.slkupCtrDescVentas.Name = "slkupCtrDescVentas";
 			this.slkupCtrDescVentas.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -952,7 +952,7 @@
 			// 
 			// slkupCtrCostoVenta
 			// 
-			this.slkupCtrCostoVenta.Location = new System.Drawing.Point(140, 445);
+			this.slkupCtrCostoVenta.Location = new System.Drawing.Point(140, 243);
 			this.slkupCtrCostoVenta.MenuManager = this.ribbonControl1;
 			this.slkupCtrCostoVenta.Name = "slkupCtrCostoVenta";
 			this.slkupCtrCostoVenta.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -975,9 +975,9 @@
 			this.layoutControlGroup1.GroupBordersVisible = false;
 			this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlItem1,
-            this.layoutControlGroup5,
             this.emptySpaceItem3,
-            this.layoutControlItem7});
+            this.layoutControlItem7,
+            this.layoutControlGroup5});
 			this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
 			this.layoutControlGroup1.Name = "Root";
 			this.layoutControlGroup1.Size = new System.Drawing.Size(936, 550);
@@ -986,7 +986,7 @@
 			// layoutControlItem1
 			// 
 			this.layoutControlItem1.Control = this.dtgDetalle;
-			this.layoutControlItem1.Location = new System.Drawing.Point(0, 36);
+			this.layoutControlItem1.Location = new System.Drawing.Point(0, 328);
 			this.layoutControlItem1.MinSize = new System.Drawing.Size(104, 24);
 			this.layoutControlItem1.Name = "layoutControlItem1";
 			this.layoutControlItem1.Size = new System.Drawing.Size(916, 202);
@@ -1001,7 +1001,7 @@
             this.tabbedControlGroup1,
             this.layoutControlItem2,
             this.layoutControlItem3});
-			this.layoutControlGroup5.Location = new System.Drawing.Point(0, 238);
+			this.layoutControlGroup5.Location = new System.Drawing.Point(0, 36);
 			this.layoutControlGroup5.Name = "layoutControlGroup5";
 			this.layoutControlGroup5.Size = new System.Drawing.Size(916, 292);
 			this.layoutControlGroup5.Text = "Cuentas  Contables de Inventario";
@@ -1134,6 +1134,38 @@
 			this.layoutControlItem30.Size = new System.Drawing.Size(494, 24);
 			this.layoutControlItem30.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem30.TextVisible = false;
+			// 
+			// emptySpaceItem4
+			// 
+			this.emptySpaceItem4.AllowHotTrack = false;
+			this.emptySpaceItem4.AppearanceItemCaption.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.emptySpaceItem4.AppearanceItemCaption.Options.UseFont = true;
+			this.emptySpaceItem4.AppearanceItemCaption.Options.UseTextOptions = true;
+			this.emptySpaceItem4.AppearanceItemCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+			this.emptySpaceItem4.Location = new System.Drawing.Point(0, 0);
+			this.emptySpaceItem4.MaxSize = new System.Drawing.Size(0, 24);
+			this.emptySpaceItem4.MinSize = new System.Drawing.Size(204, 24);
+			this.emptySpaceItem4.Name = "emptySpaceItem4";
+			this.emptySpaceItem4.Size = new System.Drawing.Size(374, 24);
+			this.emptySpaceItem4.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+			this.emptySpaceItem4.Text = "Centros de Costos";
+			this.emptySpaceItem4.TextSize = new System.Drawing.Size(100, 0);
+			this.emptySpaceItem4.TextVisible = true;
+			this.emptySpaceItem4.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.OnlyInCustomization;
+			// 
+			// emptySpaceItem5
+			// 
+			this.emptySpaceItem5.AllowHotTrack = false;
+			this.emptySpaceItem5.AppearanceItemCaption.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.emptySpaceItem5.AppearanceItemCaption.Options.UseFont = true;
+			this.emptySpaceItem5.AppearanceItemCaption.Options.UseTextOptions = true;
+			this.emptySpaceItem5.AppearanceItemCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+			this.emptySpaceItem5.Location = new System.Drawing.Point(374, 0);
+			this.emptySpaceItem5.Name = "emptySpaceItem5";
+			this.emptySpaceItem5.Size = new System.Drawing.Size(494, 24);
+			this.emptySpaceItem5.Text = "Cuentas Contables";
+			this.emptySpaceItem5.TextSize = new System.Drawing.Size(100, 0);
+			this.emptySpaceItem5.TextVisible = true;
 			// 
 			// layoutControlGroup3
 			// 
@@ -1343,37 +1375,6 @@
 			this.emptySpaceItem1.Size = new System.Drawing.Size(186, 240);
 			this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
 			// 
-			// emptySpaceItem4
-			// 
-			this.emptySpaceItem4.AllowHotTrack = false;
-			this.emptySpaceItem4.AppearanceItemCaption.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.emptySpaceItem4.AppearanceItemCaption.Options.UseFont = true;
-			this.emptySpaceItem4.AppearanceItemCaption.Options.UseTextOptions = true;
-			this.emptySpaceItem4.AppearanceItemCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-			this.emptySpaceItem4.Location = new System.Drawing.Point(0, 0);
-			this.emptySpaceItem4.MinSize = new System.Drawing.Size(204, 24);
-			this.emptySpaceItem4.Name = "emptySpaceItem4";
-			this.emptySpaceItem4.Size = new System.Drawing.Size(374, 24);
-			this.emptySpaceItem4.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-			this.emptySpaceItem4.Text = "Centros de Costos";
-			this.emptySpaceItem4.TextSize = new System.Drawing.Size(100, 0);
-			this.emptySpaceItem4.TextVisible = true;
-			this.emptySpaceItem4.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.OnlyInCustomization;
-			// 
-			// emptySpaceItem5
-			// 
-			this.emptySpaceItem5.AllowHotTrack = false;
-			this.emptySpaceItem5.AppearanceItemCaption.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.emptySpaceItem5.AppearanceItemCaption.Options.UseFont = true;
-			this.emptySpaceItem5.AppearanceItemCaption.Options.UseTextOptions = true;
-			this.emptySpaceItem5.AppearanceItemCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-			this.emptySpaceItem5.Location = new System.Drawing.Point(374, 0);
-			this.emptySpaceItem5.Name = "emptySpaceItem5";
-			this.emptySpaceItem5.Size = new System.Drawing.Size(494, 24);
-			this.emptySpaceItem5.Text = "Cuentas Contables";
-			this.emptySpaceItem5.TextSize = new System.Drawing.Size(100, 0);
-			this.emptySpaceItem5.TextVisible = true;
-			// 
 			// frmInvCuentaContable
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1455,6 +1456,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem17)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem25)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem30)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem5)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup3)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).EndInit();
@@ -1474,8 +1477,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem5)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

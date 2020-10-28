@@ -118,9 +118,9 @@ namespace CI
         private void PopulateData()
         {
                      //Cargar Grupo
-            Util.Util.ConfigLookupEdit(this.slkupGrupo, clsGrupoClasificacionDAC.GetData(-1,"*").Tables[0], "Descr", "IDGrupo");
+            Util.Util.ConfigLookupEdit(this.slkupGrupo, clsGrupoClasificacionDAC.GetData(-1,"*").Tables[0], "Descr", "IDGrupo",400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupGrupo, "[{'ColumnCaption':'IDGrupo','ColumnField':'IDGrupo','width':30},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':70}]");
-
+			this.slkupGrupo.Properties.View.OptionsView.ShowAutoFilterRow = true;
 
         }
 

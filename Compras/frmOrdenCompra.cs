@@ -409,6 +409,7 @@ namespace CO
                 this.slkupIDProducto.ValueMember = "IDProducto";
                 this.slkupIDProducto.NullText = " --- ---";
                 this.slkupIDProducto.EditValueChanged += slkup_EditValueChanged;
+				this.slkupIDProducto.View.OptionsView.ShowAutoFilterRow = true;
                 this.slkupIDProducto.Popup += slkup_Popup;
                 this.slkupIDProducto.PopulateViewColumns();
 
@@ -416,6 +417,7 @@ namespace CO
                 this.slkupDescrProducto.DisplayMember = "Descr";
                 this.slkupDescrProducto.ValueMember = "IDProducto";
                 this.slkupDescrProducto.NullText = " --- ---";
+				this.slkupDescrProducto.View.OptionsView.ShowAutoFilterRow = true;
                 this.slkupDescrProducto.EditValueChanged += slkup_EditValueChanged;
                 this.slkupDescrProducto.Popup += slkup_Popup;
 
@@ -423,6 +425,7 @@ namespace CO
                 this.slkupPresentacion.DisplayMember = "Descr";
                 this.slkupPresentacion.ValueMember = "IDUnidad";
                 this.slkupPresentacion.NullText = " --- ---";
+				this.slkupPresentacion.View.OptionsView.ShowAutoFilterRow = true;
                 //this.slkupPresentacion.EditValueChanged += slkup_EditValueChanged;
                 this.slkupPresentacion.Popup += slkup_Popup;
 
