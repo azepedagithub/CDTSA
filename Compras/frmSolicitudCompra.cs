@@ -237,7 +237,7 @@ namespace CO
                 Util.Util.SetDefaultBehaviorControls(this.gridView1, true, null, "Solicitud Compra", this);
                 //slkupIDProducto
 
-                dtProductos = CI.DAC.clsProductoDAC.GetData(-1, "*", "*", -1, -1, -1, -1, -1, -1, "*", -1, -1, -1).Tables[0];
+                dtProductos = CI.DAC.clsProductoDAC.GetData(-1, "*", "*", -1, -1, -1, -1, -1, -1, "*", 0, -1, -1).Tables[0];
 
                 this.slkupIDProducto.DataSource = dtProductos;
                 this.slkupIDProducto.DisplayMember = "IDProducto";

@@ -245,6 +245,7 @@ namespace CO
                    Telefono, IDCategoria, IDCondicionPago, Descuento,
                     InteresMora, email, Direccion,MultiMoneda,PagosCongelados,isLocal,Bonifica, ConnectionManager.Tran);
 
+
                  ConnectionManager.CommitTran();
 
                  this.btnAgregar.Enabled = true;
@@ -360,5 +361,7 @@ namespace CO
                 MessageBox.Show(ex.Message);
             }
         }
+
+		
     }
 }

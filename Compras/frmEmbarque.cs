@@ -424,7 +424,7 @@ namespace CO
                     this.Close();
                 }
 
-                dtProductos = CI.DAC.clsProductoDAC.GetData(-1, "*", "*", -1, -1, -1, -1, -1, -1, "*", -1, -1, -1).Tables[0];
+                dtProductos = CI.DAC.clsProductoDAC.GetData(-1, "*", "*", -1, -1, -1, -1, -1, -1, "*", 0, -1, -1).Tables[0];
                 
                 
                 dtMoneda = ControlBancario.DAC.MonedaDAC.GetMoneda(-1).Tables[0];
@@ -974,6 +974,13 @@ namespace CO
             DataSet DS = CG.TipoCambioDetalleDAC.GetData(sTipoCambio, Convert.ToDateTime(this.dtpFechaFactura.EditValue));
             this.TipoCambioPoliza = Convert.ToDouble((DS.Tables[0].Rows.Count == 0) ? 0 : DS.Tables[0].Rows[0]["Monto"]);
             this.txtTipoCambio.EditValue = this.TipoCambioPoliza;
+
+			if (this.dtpFechaFactura.EditValue != null && this.dtpFechaFactura.EditValue.ToString() != "")
+			{
+				this.dtpFechaVence.EditValue = DAC.clsOrdenCompraDAC.CalculaFechaVencimiento(Convert.ToInt32(this.IDOrdenCompra), Convert.ToDateTime(dtpFechaFactura.EditValue));
+			}
+
+			//Calcular la fecha de vencimiento
 
         }
 

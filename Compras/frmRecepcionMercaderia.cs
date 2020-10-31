@@ -46,7 +46,8 @@ namespace CO
             dtLotes = CI.DAC.clsLoteDAC.GetData(-1, -1, "*", "*").Tables[0];
 
 			int IDEstado = DAC.clsOrdenCompraDAC.GetEstadoOrdenCompra(IDOrdenCompra, null);
-			if (IDEstado == 3) {
+			if (IDEstado == 3)
+			{
 				this.btnAddLote.Enabled = false;
 				this.btnAplicar.Enabled = false;
 				this.btnAgregarLotes.Enabled = false;
@@ -212,17 +213,20 @@ namespace CO
         {
             try
             {
-                ConnectionManager.BeginTran();
-                int IDTransaccion = -1;
-                String Asiento = "";
-                DAC.clsEmbarqueDAC.CreaTransaccionInventario((int)this.IDEmbarque, (DateTime)this.dtpFecha.EditValue, ref IDTransaccion, this.sUsuario, ConnectionManager.Tran);
-                CI.DAC.clsDocumentoInvCabecera.AplicaInventario(IDTransaccion, ConnectionManager.Tran);
-                DAC.clsEmbarqueDAC.CreaAsientoTransaccionInventario((int)this.IDEmbarque, ref Asiento, sUsuario, ConnectionManager.Tran);
-				DAC.clsOrdenCompraDAC.RecepcionOrdenCompra(this.IDOrdenCompra, ConnectionManager.Tran);
-                ConnectionManager.CommitTran();
+				if (ValidarCantidades())
+				{
+					ConnectionManager.BeginTran();
+					int IDTransaccion = -1;
+					String Asiento = "";
+					DAC.clsEmbarqueDAC.CreaTransaccionInventario((int)this.IDEmbarque, (DateTime)this.dtpFecha.EditValue, ref IDTransaccion, this.sUsuario, ConnectionManager.Tran);
+					CI.DAC.clsDocumentoInvCabecera.AplicaInventario(IDTransaccion, ConnectionManager.Tran);
+					DAC.clsEmbarqueDAC.CreaAsientoTransaccionInventario((int)this.IDEmbarque, ref Asiento, sUsuario, ConnectionManager.Tran);
+					DAC.clsOrdenCompraDAC.RecepcionOrdenCompra(this.IDOrdenCompra, ConnectionManager.Tran);
+					ConnectionManager.CommitTran();
 
-                CG.frmAsiento ofrmAsiento = new CG.frmAsiento(Asiento);
-                ofrmAsiento.ShowDialog();
+					CG.frmAsiento ofrmAsiento = new CG.frmAsiento(Asiento);
+					ofrmAsiento.ShowDialog();
+				}
             }
             catch (Exception ex)
             {
@@ -230,6 +234,33 @@ namespace CO
                 MessageBox.Show("Han ocurrido errores tratando de aplicar el documento");
             }
         }
+
+		private bool ValidarCantidades() {
+			bool result = true;
+			String sMensaje = "";
+			var dt = dtRecepcionMercaderia.AsEnumerable()
+				.GroupBy(r => r["IdProducto"])
+				.Select( g => new {
+					IDProducto = g.Key,
+					Cantidad = g.Sum(s=> Convert.ToDecimal(s["Cantidad"]))
+				});
+
+			foreach (DataRow fila in dtDetalleEmbarque.Rows) {
+				decimal CantRecepcion = Convert.ToDecimal(dt.Where(r => r.IDProducto.ToString() == fila["IDProducto"].ToString()).Select(a => a.Cantidad).First());
+				decimal CantEmbarque = Convert.ToDecimal(fila["CantidadAceptada"]);
+				if (CantRecepcion != CantEmbarque )
+				{
+					sMensaje = sMensaje + " • Los lotes del producto " + fila["IdProducto"].ToString() + " - " + fila["DescrProducto"].ToString() + " no coinciden \n\r";
+				}
+			}
+
+			if (sMensaje != "") {
+				MessageBox.Show("Por favor verifique: \n\r" + sMensaje);
+				result = false;
+			}
+					
+			return result;
+		}
 
 		private void btnAddLote_Click(object sender, EventArgs e)
 		{

@@ -121,7 +121,7 @@ namespace CI
 
         private void PopulateGrid()
         {
-            _dsBodega = clsBodegaDAC.GetData(-1,"*",-1);
+            _dsBodega = clsBodegaDAC.GetData(-1,"*",-1, -1);
 
             _dtBodega = _dsBodega.Tables[0];
             this.dtgDetalle.DataSource = null;

@@ -71,11 +71,11 @@ namespace CO
             this.txtEstado.Text = "Inicial";
             this.txtEstado.Tag = 0;
 
-            this.dtpFechaRequerida.EditValue = null;
-            this.dtpFechaRequeridaEmbarque.EditValue = null;
-            this.dtpFechaCotizacion.EditValue = null;
-            this.dtpFechaEmision.EditValue = null;
-            this.dtpFechaFactura.EditValue = null;
+            this.dtpFechaRequerida.EditValue = DateTime.Now;
+            this.dtpFechaRequeridaEmbarque.EditValue = DateTime.Now;
+            this.dtpFechaCotizacion.EditValue = DateTime.Now;
+            this.dtpFechaEmision.EditValue = DateTime.Now;
+            this.dtpFechaFactura.EditValue = DateTime.Now;
 
             this.slkupCondicionPago.EditValue = null;
             this.slkupCondicionPagoFactura.EditValue = null;
@@ -401,7 +401,7 @@ namespace CO
 
                 this.gridView1.InitNewRow += gridView1_InitNewRow;
                 Util.Util.SetDefaultBehaviorControls(this.gridView1, true, null, "Orden de Compra", this);
-                dtProductos = CI.DAC.clsProductoDAC.GetData(-1, "*", "*", -1, -1, -1, -1, -1, -1, "*", -1, -1, -1).Tables[0];
+                dtProductos = CI.DAC.clsProductoDAC.GetData(-1, "*", "*", -1, -1, -1, -1, -1, -1, "*", 0, -1, -1).Tables[0];
                 dtPresentacion = CI.DAC.clsUnidadMedidaDAC.GetData(-1,"*").Tables[0];
 
                 this.slkupIDProducto.DataSource = dtProductos;
@@ -436,7 +436,7 @@ namespace CO
                 Util.Util.ConfigLookupEdit(this.slkupMoneda, MonedaDAC.GetMoneda(-1).Tables[0], "Moneda", "IDMoneda");
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupMoneda, "[{'ColumnCaption':'ID','ColumnField':'IDMoneda','width':30},{'ColumnCaption':'Moneda','ColumnField':'Moneda','width':70}]");
 
-                Util.Util.ConfigLookupEdit(this.slkupBodega, clsBodegaDAC.GetData(-1, "*", -1).Tables[0], "Descr", "IDBodega");
+                Util.Util.ConfigLookupEdit(this.slkupBodega, clsBodegaDAC.GetData(-1, "*", -1,0).Tables[0], "Descr", "IDBodega");
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupBodega, "[{'ColumnCaption':'IDBodega','ColumnField':'IDBodega','width':30},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':70}]");
 
                 Util.Util.ConfigLookupEdit(this.slkupCondicionPago, clsCondicionPagoDAC.Get(-1,"*").Tables[0], "Descr", "IDCondicionPago");
@@ -739,15 +739,15 @@ namespace CO
                 sMensaje = sMensaje + "   • Fecha Requerida de Embarque \r\n";
             if (this.dtpFechaCotizacion.EditValue == null || this.dtpFechaCotizacion.EditValue.ToString() == "" )
                 sMensaje = sMensaje + "   • Fecha de Cotizacion \r\n";
-            if (Convert.ToDateTime(this.dtpFechaCotizacion.EditValue) > Convert.ToDateTime(this.dtpFechaRequerida.EditValue)) 
-                sMensaje = sMensaje + "   • Fecha de Cotizacion debe de ser menor a la fecha Requerida \r\n";
-            if (Convert.ToDateTime(this.dtpFechaCotizacion.EditValue) > Convert.ToDateTime(this.dtpFechaRequeridaEmbarque.EditValue))
-                sMensaje = sMensaje + "   • Fecha de Cotizacion debe de ser menor a la fecha Requerida de Embarque \r\n";
-            if (Convert.ToDateTime(this.dtpFechaEmision.EditValue) > Convert.ToDateTime(this.dtpFechaRequerida.EditValue))
-                sMensaje = sMensaje + "   • Fecha de Emision debe de ser menor a la fecha Requerida \r\n";
+			//if (Convert.ToDateTime(this.dtpFechaCotizacion.EditValue) > Convert.ToDateTime(this.dtpFechaRequerida.EditValue)) 
+			//	sMensaje = sMensaje + "   • Fecha de Cotizacion debe de ser menor a la fecha Requerida \r\n";
+			//if (Convert.ToDateTime(this.dtpFechaCotizacion.EditValue) > Convert.ToDateTime(this.dtpFechaRequeridaEmbarque.EditValue))
+			//	sMensaje = sMensaje + "   • Fecha de Cotizacion debe de ser menor a la fecha Requerida de Embarque \r\n";
+			//if (Convert.ToDateTime(this.dtpFechaEmision.EditValue) > Convert.ToDateTime(this.dtpFechaRequerida.EditValue))
+			//	sMensaje = sMensaje + "   • Fecha de Emision debe de ser menor a la fecha Requerida \r\n";
 
-            if (Convert.ToDateTime(this.dtpFechaEmision.EditValue) > Convert.ToDateTime(this.dtpFechaRequeridaEmbarque.EditValue))
-                sMensaje = "   • Fecha de Emision debe de ser menor a la fecha Requerida de Embarque \r\n";
+			//if (Convert.ToDateTime(this.dtpFechaEmision.EditValue) > Convert.ToDateTime(this.dtpFechaRequeridaEmbarque.EditValue))
+			//	sMensaje = "   • Fecha de Emision debe de ser menor a la fecha Requerida de Embarque \r\n";
 
             
             if (((DataTable)this.dtgDetalle.DataSource).Rows.Count == 0)
@@ -1195,7 +1195,8 @@ namespace CO
             ConnectionManager.BeginTran();
             clsOrdenCompraDAC.ConfirmarOrdenCompra(this.IDOrdenCompra, ConnectionManager.Tran);
             dtOrdenCompra.Rows[0]["IDEstado"] = 1;
-            dtOrdenCompra.Rows[0]["DescrEstado"] = "CONFIRMADA";
+			dtOrdenCompra.Rows[0]["DescrEstado"] = "CONFIRMADA";
+			this.txtEstado.Text = "CONFIRMADA";
             ConnectionManager.CommitTran();
             this.IDEstado = 1;
             HabilitarBotones(this.dtOrdenCompra);

@@ -161,6 +161,29 @@ namespace CO.DAC
 
         }
 
+		
+		public static DateTime CalculaFechaVencimiento(int IDOrdenCompra, DateTime Fecha)
+		{
+			String strSQL = "dbo.coCalculaFechaVencimiento";
+
+			SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
+
+			oCmd.Parameters.Add(new SqlParameter("@IDOrdenCompra", IDOrdenCompra));
+			oCmd.Parameters.Add(new SqlParameter("@Fecha", Fecha));
+			
+			oCmd.CommandType = CommandType.StoredProcedure;
+
+			SqlDataAdapter oAdap = new SqlDataAdapter(oCmd);
+			DataSet DS = new DataSet();
+
+			oAdap.Fill(DS, "Data");
+			if (DS.Tables[0].Rows.Count > 0)
+				return Convert.ToDateTime(DS.Tables[0].Rows[0]["FechaVencimiento"]);
+			else
+				return DateTime.MinValue;
+		}
+
+
         public static DataSet Get(int IDOrdenCompra, DateTime FechaInicial, DateTime FechaFinal,String Proveedor, String Estado,DateTime FechaRequeridaInicial, DateTime FechaRequeridaFinal )
         {
             String strSQL = "dbo.coGetOrdenCompra";

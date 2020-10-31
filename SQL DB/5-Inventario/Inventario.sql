@@ -372,7 +372,8 @@ CREATE TABLE [dbo].[invBodega](
 	[PuedeFacturar] BIT DEFAULT 0,
 	[PuedePreFacturar] BIT DEFAULT 0,
 	[IDPaqueteFactura]  INT  NULL,
-	[ConsecutivoPreFactura] INT NULL
+	[ConsecutivoPreFactura] INT NULL,
+	[IsForMuestra] BIT DEFAULT 0 ,
  CONSTRAINT [pkinvBodega] PRIMARY KEY CLUSTERED 
 (
 	[IDBodega] ASC
@@ -530,7 +531,6 @@ CREATE TABLE [dbo].[globalConsecutivos](
 
 GO
  
-
 CREATE  TABLE [dbo].[invPaquete](
 	[IDPaquete] [int] IDENTITY(1,1) NOT NULL,
 	[PAQUETE] [nvarchar](20) NULL,
@@ -538,6 +538,7 @@ CREATE  TABLE [dbo].[invPaquete](
 	[IDConsecutivo] [int] NOT  NULL,
 	[Transaccion] [nvarchar](3) not NULL,
 	[Activo] [bit] NULL,
+	[isReadOnly] [bit] DEFAULT 0,
  CONSTRAINT [PKINVPAQUETE] PRIMARY KEY CLUSTERED 
 (
 	[IDPaquete] ASC
@@ -756,8 +757,7 @@ CREATE TABLE [dbo].[invTransaccionLinea](
 	[PrecioUntLocal] [decimal](28, 4) NULL DEFAULT 0,
 	[PrecioUntDolar] [decimal](28, 4) NULL DEFAULT 0,
 	[Transaccion] [nvarchar](3) NOT NULL,
-	[TipoCambio] [decimal](28, 4) NULL DEFAULT 0,
-	[Aplicado] [bit] NULL DEFAULT 0,
+	[TipoCambio] [decimal](28, 4) NULL DEFAULT 0
  CONSTRAINT [pkTransaccionLinea] PRIMARY KEY CLUSTERED 
 (
 	[IDTransaccion] ASC,
@@ -1011,9 +1011,9 @@ VALUES  ( 9 ,N'VENTA (-)' , N'VT' , N'S' , -1 , 7 , 1 , 0 , 0 ,0 , 0 ,1 , 0 ,0 ,
 GO
 
 
---INSERT INTO DBO.globalConsecutivos( Descr ,Prefijo ,Consecutivo ,Documento ,Activo)
---VALUES ('CONSECUTIVO FACTURA','FAC',1,'FAC00000001',1)
---GO
+INSERT INTO DBO.globalConsecutivos( Descr ,Prefijo ,Consecutivo ,Documento ,Activo)
+VALUES ('CONSECUTIVO FACTURA','FAC',1,'FAC00000001',1)
+GO
 INSERT INTO DBO.globalConsecutivos( Descr ,Prefijo ,Consecutivo ,Documento ,Activo)
 VALUES ('CONSECUTIVO COMPRA','COM',1,'COM00000001',1)
 GO
@@ -1031,9 +1031,14 @@ VALUES ('CONSECUTIVO LIQUIDACION','LIQ',1,'LIQ00000001',1)
 GO
 INSERT INTO DBO.globalConsecutivos( Descr ,Prefijo ,Consecutivo ,Documento ,Activo)
 VALUES ('CONSECUTIVO FISICO','FIS',1,'FIS00000001',1)
+go
+INSERT INTO DBO.globalConsecutivos( Descr ,Prefijo ,Consecutivo ,Documento ,Activo)
+VALUES ('CONSECUTIVO MUETRAS','MUE',1,'MUE00000001',1)
 
 
 GO
+
+SELECT *  FROM DBO.globalConsecutivos
 
 INSERT INTO DBO.invPaquete( PAQUETE ,Descr ,IDConsecutivo ,Transaccion ,Activo)
 VALUES ('COM','COMPRAS',2,'CO',1)
@@ -1045,7 +1050,11 @@ INSERT INTO DBO.invPaquete( PAQUETE ,Descr ,IDConsecutivo ,Transaccion ,Activo)
 VALUES ('AJU','AJUSTES',3,'AJ',1)
 GO
 INSERT INTO DBO.invPaquete( PAQUETE ,Descr ,IDConsecutivo ,Transaccion ,Activo)
-VALUES ('FIS','FISICO',4,'FI',1)
+VALUES ('FIS','FISICO',7,'FI',1)
+GO
+INSERT INTO DBO.invPaquete( PAQUETE ,Descr ,IDConsecutivo ,Transaccion ,Activo,isReadOnly)
+VALUES ('MUE','MUESTRAS',8,'AJ',1,1)
+
 
 GO
 
@@ -1287,14 +1296,14 @@ END
 
 GO
 
-CREATE   PROCEDURE dbo.invGetPaquete @IDPaquete int, @Paquete nvarchar(20), @Descr nvarchar(200),@Transaccion nvarchar(3) , @IDConsecutivo int ,@Activo INT
+CREATE  PROCEDURE dbo.invGetPaquete @IDPaquete int, @Paquete nvarchar(20), @Descr nvarchar(200),@Transaccion nvarchar(3) , @IDConsecutivo int ,@Activo INT
 AS 
 SELECT  IDPaquete ,
         PAQUETE ,
         Descr ,
         IDConsecutivo ,
         Transaccion ,
-        Activo  FROM dbo.invPaquete
+        Activo ,isReadOnly FROM dbo.invPaquete
 WHERE (IDPaquete = @IDPaquete OR @IDPaquete=-1)  AND (PAQUETE LIKE '%' +@Paquete + ' %' OR @Paquete = '*') 
 AND (Descr LIKE '%' + @Descr + '%' OR @Descr ='*' ) 
 AND (Transaccion = @Transaccion OR @Transaccion ='*')  AND ( IDConsecutivo = @IDConsecutivo OR @IDConsecutivo =-1 )  AND  (Activo = @Activo or @Activo =-1)
@@ -1448,9 +1457,9 @@ END
 
 GO
 
-CREATE   PROCEDURE dbo.invUpdateDocumentoInvDetalle(@Operacion AS NVARCHAR(1),@IDTransaccion AS INT,@IDProducto AS BIGINT,@IDLote AS INT,@IDTipoTran AS INT,@IDBodega AS INT,
+CREATE PROCEDURE dbo.invUpdateDocumentoInvDetalle(@Operacion AS NVARCHAR(1),@IDTransaccion AS INT,@IDProducto AS BIGINT,@IDLote AS INT,@IDTipoTran AS INT,@IDBodega AS INT,
 											@IDTraslado AS INT,@Cantidad AS DECIMAL(28,4),@PrecioUnitarioDolar AS DECIMAL(28,4),@PrecioUnitarioLocal AS DECIMAL(28,4), 
-											@CostoDolar AS decimal(28,4), @CostoLocal AS decimal(28,4), @Transaccion AS NVARCHAR(3),@TipoCambio AS decimal(26,4),@Aplicado AS BIT)
+											@CostoDolar AS decimal(28,4), @CostoLocal AS decimal(28,4), @Transaccion AS NVARCHAR(3),@TipoCambio AS decimal(26,4))
 AS 
 
 
@@ -1466,13 +1475,13 @@ SELECT @Naturaleza = Naturaleza,@Factor=Factor  FROM dbo.globalTipoTran WHERE ID
 
 IF UPPER(@Operacion)='I'
 BEGIN
-	INSERT INTO dbo.invTransaccionLinea( IDTransaccion ,IDProducto ,IDLote ,IDTipoTran ,IDBodega ,IDTraslado  ,Naturaleza ,Factor ,Cantidad ,CostoUntLocal ,CostoUntDolar ,PrecioUntLocal ,PrecioUntDolar ,Transaccion ,TipoCambio ,Aplicado)
-	VALUES (@IDTransaccion,@IDProducto,@IDLote,@IDTipoTran,@IDBodega,ISNULL(@IDTraslado,-1),@Naturaleza ,@Factor,@Cantidad,@CostoLocal,@CostoDolar,@PrecioUnitarioLocal,@PrecioUnitarioDolar,@Transaccion,@TipoCambio,@Aplicado)
+	INSERT INTO dbo.invTransaccionLinea( IDTransaccion ,IDProducto ,IDLote ,IDTipoTran ,IDBodega ,IDTraslado  ,Naturaleza ,Factor ,Cantidad ,CostoUntLocal ,CostoUntDolar ,PrecioUntLocal ,PrecioUntDolar ,Transaccion ,TipoCambio)
+	VALUES (@IDTransaccion,@IDProducto,@IDLote,@IDTipoTran,@IDBodega,ISNULL(@IDTraslado,-1),@Naturaleza ,@Factor,@Cantidad,@CostoLocal,@CostoDolar,@PrecioUnitarioLocal,@PrecioUnitarioDolar,@Transaccion,@TipoCambio)
 END
 IF UPPER(@Operacion)='U'
 BEGIN
 	UPDATE dbo.invTransaccionLinea SET Cantidad =@Cantidad , Naturaleza= @Naturaleza , Factor = @Factor,
-		PrecioUntLocal = @PrecioUnitarioLocal,PrecioUntDolar = @PrecioUnitarioDolar,TipoCambio = @TipoCambio,Aplicado = @Aplicado
+		PrecioUntLocal = @PrecioUnitarioLocal,PrecioUntDolar = @PrecioUnitarioDolar,TipoCambio = @TipoCambio
 	WHERE IDTransaccion=@IDTransaccion AND IDProducto=@IDProducto AND IDLote=@IDLote AND IDTipoTran =@IDTipoTran AND IDBodega=@IDBodega
 END
 IF UPPER(@Operacion) = 'D'
@@ -1529,12 +1538,12 @@ WHERE Fecha BETWEEN @FechaInicio AND @FechaFinal AND (Referencia LIKE  '%' + @Re
 
 GO
 
-CREATE  PROCEDURE dbo.invGetTransaccionInvDetalle (@IDTransaccion AS INT )
+CREATE PROCEDURE dbo.invGetTransaccionInvDetalle (@IDTransaccion AS INT )
 AS 
 
 SELECT  IDTransaccion ,A.IDProducto, P.Descr DescrProducto ,A.IDLote, L.LoteInterno, L.LoteProveedor,L.FechaVencimiento ,A.IDTipoTran,TT.Descr DescrTipoTran,
 				B.IDBodega IDBodegaOrigen,B.Descr DescrBodegaOrigen ,IDTraslado ,A.Naturaleza ,A.Factor ,Cantidad ,CostoUntLocal ,CostoUntDolar ,
-				PrecioUntLocal ,PrecioUntDolar ,A.Transaccion ,TipoCambio ,Aplicado, CASE WHEN ISNULL(E.Existencia,0) < A.Cantidad THEN 'E' ELSE 'N' END Estado
+				PrecioUntLocal ,PrecioUntDolar ,A.Transaccion ,TipoCambio, CASE WHEN ISNULL(E.Existencia,0) < A.Cantidad THEN 'E' ELSE 'N' END Estado
 FROM dbo.invTransaccionLinea A 
 INNER JOIN dbo.invProducto P ON A.IDProducto = P.IDProducto
 INNER JOIN dbo.invBodega B ON A.IDBodega=B.IDBodega
@@ -1546,9 +1555,9 @@ LEFT  JOIN dbo.invExistenciaBodega E ON a.IDBodega = E.IDBodega AND A.IDProducto
 
 go
 
-CREATE    PROCEDURE dbo.invGetEmptyTransaccionInvDetalle 
+CREATE  PROCEDURE dbo.invGetEmptyTransaccionInvDetalle 
 AS 
-SELECT  IDTransaccion ,'A' Estado,A.IDProducto, P.Descr DescrProducto ,A.IDLote, L.LoteInterno,L.LoteProveedor ,A.IDTipoTran,TT.Descr DescrTipoTran ,A.IDBodega IDBodegaOrigen,BO.Descr DescrBodegaOrigen,A.IDBodega IDBodegaDestino,Bo.Descr DescrBodegaDestino ,IDTraslado ,A.Naturaleza ,A.Factor ,Cantidad ,CostoUntLocal ,CostoUntDolar ,PrecioUntLocal ,PrecioUntDolar ,A.Transaccion ,TipoCambio ,Aplicado  
+SELECT  IDTransaccion ,'A' Estado,A.IDProducto, P.Descr DescrProducto ,A.IDLote, L.LoteInterno,L.LoteProveedor ,A.IDTipoTran,TT.Descr DescrTipoTran ,A.IDBodega IDBodegaOrigen,BO.Descr DescrBodegaOrigen,A.IDBodega IDBodegaDestino,Bo.Descr DescrBodegaDestino ,IDTraslado ,A.Naturaleza ,A.Factor ,Cantidad ,CostoUntLocal ,CostoUntDolar ,PrecioUntLocal ,PrecioUntDolar ,A.Transaccion ,TipoCambio   
 FROM dbo.invTransaccionLinea A 
 INNER JOIN dbo.invProducto P ON	A.IDProducto = P.IDProducto
 INNER JOIN dbo.invBodega BO ON A.IDBodega= BO.IDBodega
@@ -1559,27 +1568,31 @@ WHERE 1=2
 
 GO 
 
-CREATE  PROCEDURE  dbo.invUpdateBodega(@Operacion AS NVARCHAR(1), @IDBodega AS int OUTPUT, @Descr nvarchar(250), @Activo AS bit,@PuedeFacturar AS bit,@PuedePreFacturar AS bit	,@IDPaqueteFactura AS int,@ConsecutivoPreFactura AS int)
+CREATE PROCEDURE  dbo.invUpdateBodega(@Operacion AS NVARCHAR(1), @IDBodega AS int OUTPUT, @Descr nvarchar(250), @Activo AS bit,@PuedeFacturar AS bit,@PuedePreFacturar AS bit	,@IDPaqueteFactura AS int,@ConsecutivoPreFactura AS INT,@IsForMuestra BIT)
 AS 
 IF UPPER(@Operacion) ='I'
 BEGIN
-	INSERT INTO dbo.invBodega( Descr ,Activo ,PuedeFacturar ,PuedePreFacturar ,IDPaqueteFactura ,ConsecutivoPreFactura)
-	VALUES (@Descr,@Activo,@PuedeFacturar,@PuedePreFacturar,@IDPaqueteFactura,@ConsecutivoPreFactura)
+	INSERT INTO dbo.invBodega( Descr ,Activo ,PuedeFacturar ,PuedePreFacturar ,IDPaqueteFactura ,ConsecutivoPreFactura,isForMuestra)
+	VALUES (@Descr,@Activo,@PuedeFacturar,@PuedePreFacturar,@IDPaqueteFactura,@ConsecutivoPreFactura,@IsForMuestra)
 END
 IF UPPER(@Operacion) ='U'
 BEGIN
-	UPDATE dbo.invBodega SET PuedeFacturar =@PuedeFacturar,PuedePreFacturar = @PuedePreFacturar,IDPaqueteFactura = @IDPaqueteFactura, ConsecutivoPreFactura=@ConsecutivoPreFactura WHERE IDBodega = @IDBodega
+	UPDATE dbo.invBodega SET PuedeFacturar =@PuedeFacturar,PuedePreFacturar = @PuedePreFacturar,IDPaqueteFactura = @IDPaqueteFactura, ConsecutivoPreFactura=@ConsecutivoPreFactura,isForMuestra = @IsForMuestra WHERE IDBodega = @IDBodega
 END
 IF UPPER(@Operacion)='D'
 BEGIN
 	DELETE FROM dbo.invBodega WHERE IDBodega=@IDBodega
 END
-
 GO
 
-CREATE PROCEDURE dbo.invGetBodega(@IDBodega AS INT,@Descr AS NVARCHAR(250),@Activo AS INT)
+CREATE  PROCEDURE dbo.invGetBodega(@IDBodega AS INT,@Descr AS NVARCHAR(250),@Activo AS INT, @IsForMuestra bit)
 AS 
-SELECT IDBodega,Descr,Activo,PuedeFacturar,PuedePreFacturar,IDPaqueteFactura,ConsecutivoPreFactura  FROM dbo.invBodega WHERE (IDBodega = @IDBodega OR @IDBodega =-1) AND (Descr LIKE '%'+ @Descr+'%' OR @Descr ='*') AND (Activo = @Activo OR @Activo=-1)
+SELECT IDBodega,Descr,Activo,PuedeFacturar,PuedePreFacturar,IDPaqueteFactura,ConsecutivoPreFactura, isForMuestra  
+FROM dbo.invBodega 
+WHERE (IDBodega = @IDBodega OR @IDBodega =-1) 
+AND (Descr LIKE '%'+ @Descr+'%' OR @Descr ='*') 
+AND (Activo = @Activo OR @Activo=-1)
+AND (isForMuestra = @IsForMuestra OR @IsForMuestra =-1)
 
 GO 
 
@@ -1768,20 +1781,20 @@ GO
 
 
 
-CREATE   PROCEDURE dbo.invGetExistenciaBodega (@IDBodega AS BIGINT,@IDProducto AS BIGINT,@IDLote AS  BIGINT)
+CREATE PROCEDURE dbo.invGetExistenciaBodega (@IDBodega AS BIGINT,@IDProducto AS BIGINT,@IDLote AS  BIGINT)
 AS 
 SELECT A.IDBodega,B.Descr DescrBodega,A.IDProducto,P.Descr DescrProducto,A.IDLote, L.LoteInterno , L.LoteProveedor,L.FechaVencimiento,L.FechaIngreso,A.Existencia,A.Reservada  FROM dbo.invExistenciaBodega A
 INNER JOIN dbo.invProducto P ON A.IDProducto = P.IDProducto
 INNER JOIN dbo.invLote L ON P.IDProducto = L.IDProducto AND A.IDLote=L.IDLote
 INNER JOIN dbo.invBodega B ON A.IDBodega=B.IDBodega
-WHERE (A.IDBodega =  @IDBodega OR @IDBodega =-1) AND (A.IDProducto = @IDProducto OR @IDProducto=-1)
+WHERE P.EsMuestra=0 AND  (A.IDBodega =  @IDBodega OR @IDBodega =-1) AND (A.IDProducto = @IDProducto OR @IDProducto=-1)
 AND (A.IDLote = @IDLote  OR @IDLote=-1)
 
 
 GO
 
 
-CREATE   PROCEDURE [dbo].[invGetExistenciaBodegabyClasificacion] (@Bodega AS NVARCHAR(4000), @Producto AS NVARCHAR(250),
+CREATE  PROCEDURE [dbo].[invGetExistenciaBodegabyClasificacion] (@Bodega AS NVARCHAR(4000), @Producto AS NVARCHAR(250),
 							@Lote AS  NVARCHAR(4000),@IDProveedor INT,@Clasif1 AS NVARCHAR(4000),@Clasif2 NVARCHAR(4000), @Clasif3 NVARCHAR(4000),
 							@Clasif4 NVARCHAR(4000), @Clasif5 NVARCHAR(4000), @Clasif6 NVARCHAR(4000),@DetallaLote AS BIT)
 AS 
@@ -1793,7 +1806,7 @@ FROM dbo.invExistenciaBodega A
 INNER JOIN dbo.invProducto P ON A.IDProducto = P.IDProducto
 INNER JOIN dbo.invLote L ON P.IDProducto = L.IDProducto AND A.IDLote=L.IDLote
 INNER JOIN dbo.invBodega B ON A.IDBodega=B.IDBodega
-WHERE (A.IDBodega  IN (SELECT Value FROM [dbo].[ConvertListToTable](@Bodega,@Separador) )or @Bodega ='*') AND (A.IDProducto IN (SELECT Value FROM [dbo].[ConvertListToTable](@Producto,@Separador)) OR @Producto='*')
+WHERE P.EsMuestra=0 AND  (A.IDBodega  IN (SELECT Value FROM [dbo].[ConvertListToTable](@Bodega,@Separador) )or @Bodega ='*') AND (A.IDProducto IN (SELECT Value FROM [dbo].[ConvertListToTable](@Producto,@Separador)) OR @Producto='*')
 AND (A.IDLote  IN (SELECT Value FROM [dbo].[ConvertListToTable](@Lote,@Separador)) OR @Lote='*') AND (P.Clasif1   IN (SELECT Value FROM [dbo].[ConvertListToTable](@Clasif1,@Separador)) or @Clasif1='*') 
 AND (P.Clasif2  IN (SELECT Value FROM [dbo].[ConvertListToTable](@Clasif2,@Separador)) or @Clasif2='*') AND ( P.Clasif3 IN (SELECT Value FROM [dbo].[ConvertListToTable](@Producto,@Separador)) or @Clasif3='*')
 AND ( P.Clasif3 IN (SELECT Value FROM [dbo].[ConvertListToTable](@Clasif3,@Separador)) or @Clasif3='*') AND (P.Clasif4  IN (SELECT Value FROM [dbo].[ConvertListToTable](@Clasif4,@Separador) ) or @Clasif4='*')
@@ -1861,7 +1874,7 @@ WHERE (IDProducto IN (SELECT *  FROM dbo.ConvertListToTable(@lstProducto,',')) O
 
 GO
 
-CREATE PROCEDURE dbo.invGetBodegaSplit(@lstBodega NVARCHAR(2000))
+CREATE ALTER PROCEDURE dbo.invGetBodegaSplit(@lstBodega NVARCHAR(2000),@ShowMuestra BIT)
 AS 
 /*
 DECLARE @lstProducto  AS NVARCHAR(2000)
@@ -1871,6 +1884,7 @@ SET @lstProducto ='1,2'
 SELECT IDBodega,Descr
 FROM dbo.invBodega A
 WHERE (IDBodega IN (SELECT *  FROM dbo.ConvertListToTable(@lstBodega,',')) OR @lstBodega='*') 
+AND isForMuestra = @ShowMuestra
 
 
 
@@ -1926,7 +1940,7 @@ INNER JOIN dbo.invBodega C ON B.IDBodega = C.IDBodega
 INNER JOIN dbo.invPaquete PQ ON A.IDPaquete = PQ.IDPaquete
 INNER JOIN dbo.invLote L ON B.IDLote=L.IDLote AND B.IDProducto =L.IDProducto
 INNER JOIN dbo.globalTipoTran T ON B.IDTipoTran = T.IDTipoTran
-WHERE (B.IDBodega  IN (SELECT Value FROM [dbo].[ConvertListToTable](@Bodega,@Separador) )or @Bodega ='*') 
+WHERE p.EsMuestra=0 AND (B.IDBodega  IN (SELECT Value FROM [dbo].[ConvertListToTable](@Bodega,@Separador) )or @Bodega ='*') 
 AND (B.IDProducto IN (SELECT Value FROM [dbo].[ConvertListToTable](@Producto,@Separador)) OR @Producto='*')
 AND (B.IDLote  IN (SELECT Value FROM [dbo].[ConvertListToTable](@Lote,@Separador)) OR @Lote='*') 
 AND (P.Clasif1   IN (SELECT Value FROM [dbo].[ConvertListToTable](@Clasif1,@Separador)) or @Clasif1='*') 
@@ -1946,7 +1960,7 @@ AND A.Fecha BETWEEN @FechaInicial AND @FechaFinal
 GO 
 
 
-CREATE  PROCEDURE [dbo].[invGetProductoByID] @IDProducto BIgint	,@Descr AS NVARCHAR(250)
+CREATE PROCEDURE [dbo].[invGetProductoByID] @IDProducto BIgint	,@Descr AS NVARCHAR(250)
 AS 
 	SELECT IDProducto,P.Descr ,P.Alias ,Clasif1,C1.Descr DescrClasif1 ,Clasif2 ,C2.Descr DescrClasif2,Clasif3,C3.Descr DescrClasif3 ,Clasif4 ,C4.Descr DescrClasif4,
 				Clasif5 ,C5.Descr DescrClasif5 ,Clasif6, C6.Descr DescrClasif6 ,PR.IDProveedor,PR.Nombre NombreProveedor, P.CostoPromDolar,P.CostoPromLocal,P.CostoUltDolar,P.CostoUltLocal,CodigoBarra,IDCuentaContable ,P.IDUnidad ,UM.Descr DescrUnidadMedida,FactorEmpaque ,TipoImpuesto , I.Descr DescrTipoImpuesto,
@@ -1960,7 +1974,7 @@ AS
 			  LEFT JOIN dbo.invClasificacion C5 ON P.Clasif5=C5.IDClasificacion  AND C5.IDGrupo=5
 			  LEFT JOIN dbo.invClasificacion C6 ON P.Clasif6=C6.IDClasificacion  AND C6.IDGrupo=6
 			  LEFT  JOIN dbo.cppProveedor PR ON P.IDProveedor = PR.IDProveedor
-	          WHERE (IDProducto=@IDProducto OR  @IDProducto=-1) AND 
+	          WHERE P.EsMuestra=0 AND  (IDProducto=@IDProducto OR  @IDProducto=-1) AND 
 	          (P.Descr =@Descr OR P.Descr LIKE '%' +@Descr + '%' OR @Descr='*') 
 	          
 GO
@@ -2088,7 +2102,7 @@ AS
 	INNER JOIN dbo.invBodega B ON A.IDBodega = B.IDBodega
 	INNER JOIN dbo.invProducto P ON A.IDProducto= P.IDProducto
 	INNER JOIN dbo.invLote L ON P.IDProducto = L.IDProducto AND A.IDLote=L.IDLote
-	WHERE (A.IDProducto=@IDProducto OR  @IDProducto=-1)
+	WHERE p.EsMuestra=0 AND (A.IDProducto=@IDProducto OR  @IDProducto=-1)
 	          AND (A.IDBodega = @IDBodega OR @IDBodega=-1) 
 	          AND (A.IDLote =@IDLote  OR @IDLote=-1) 
 	          AND (A.Validada =@Validada OR @Validada=-1)
@@ -2119,7 +2133,7 @@ BEGIN
 	INNER JOIN dbo.invProducto P ON B.IDProducto = P.IDProducto
 	INNER JOIN dbo.invBodega BO ON B.IDBodega=BO.IDBodega
 	INNER JOIN dbo.invLote L ON B.IDLote=L.IDLote AND B.IDProducto=L.IDProducto
-	WHERE (B.IDBodega =@IDBodega OR @IDBodega=-1) AND 
+	WHERE p.EsMuestra=0 AND (B.IDBodega =@IDBodega OR @IDBodega=-1) AND 
 					(B.IDProducto =@IDProducto OR @IDProducto=-1) AND 
 					(P.Clasif1=@Clasif1 OR @Clasif1=-1) AND 
 					(p.Clasif2=@Clasif2 OR @Clasif2=-1) AND
@@ -2136,7 +2150,7 @@ BEGIN
 	INNER JOIN dbo.invProducto P ON B.IDProducto = P.IDProducto
 	INNER JOIN dbo.invBodega BO ON B.IDBodega=BO.IDBodega
 	INNER JOIN dbo.invLote L ON B.IDLote=L.IDLote AND B.IDProducto=L.IDProducto
-	WHERE (B.IDBodega =@IDBodega OR @IDBodega=-1) AND 
+	WHERE p.EsMuestra=0 AND  (B.IDBodega =@IDBodega OR @IDBodega=-1) AND 
 					(B.IDProducto =@IDProducto OR @IDProducto=-1) AND 
 					(P.Clasif1=@Clasif1 OR @Clasif1=-1) AND 
 					(p.Clasif2=@Clasif2 OR @Clasif2=-1) AND
@@ -2177,7 +2191,7 @@ BEGIN
 	SELECT B.IDBodega,B.IDProducto,-1 IDLote,SUM(B.Cantidad )
 	FROM dbo.invBoletaInvFisico B
 	INNER JOIN dbo.invProducto P ON B.IDProducto = P.IDProducto
-	WHERE (B.IDBodega =@IDBodega OR @IDBodega=-1) AND 
+	WHERE p.EsMuestra=0 AND  (B.IDBodega =@IDBodega OR @IDBodega=-1) AND 
 					(B.IDProducto =@IDProducto OR @IDProducto=-1) AND 
 					(P.Clasif1=@Clasif1 OR @Clasif1=-1) AND 
 					(p.Clasif2=@Clasif2 OR @Clasif2=-1) AND
@@ -2192,7 +2206,7 @@ BEGIN
 	SELECT B.IDBodega,B.IDProducto,-1 IDLote,SUM(B.Existencia)
 	FROM dbo.invExistenciaBodega B
 	INNER JOIN dbo.invProducto P ON B.IDProducto = P.IDProducto
-	WHERE (B.IDBodega =@IDBodega OR @IDBodega=-1) AND 
+	WHERE P.EsMuestra=0 AND (B.IDBodega =@IDBodega OR @IDBodega=-1) AND 
 					(B.IDProducto =@IDProducto OR @IDProducto=-1) AND 
 					(P.Clasif1=@Clasif1 OR @Clasif1=-1) AND 
 					(p.Clasif2=@Clasif2 OR @Clasif2=-1) AND
@@ -2208,7 +2222,7 @@ BEGIN
 	SELECT B.IDBodega,B.IDProducto,B.IDLote, B.Cantidad
 	FROM dbo.invBoletaInvFisico B
 	INNER JOIN dbo.invProducto P ON B.IDProducto = P.IDProducto
-	WHERE (B.IDBodega =@IDBodega OR @IDBodega=-1) AND 
+	WHERE P.EsMuestra=0 AND  (B.IDBodega =@IDBodega OR @IDBodega=-1) AND 
 					(B.IDProducto =@IDProducto OR @IDProducto=-1) AND 
 					(P.Clasif1=@Clasif1 OR @Clasif1=-1) AND 
 					(p.Clasif2=@Clasif2 OR @Clasif2=-1) AND
@@ -2221,7 +2235,7 @@ BEGIN
 	SELECT B.IDBodega,B.IDProducto,B.IDLote, B.Existencia
 	FROM dbo.invExistenciaBodega B
 	INNER JOIN dbo.invProducto P ON B.IDProducto = P.IDProducto
-	WHERE (B.IDBodega =@IDBodega OR @IDBodega=-1) AND 
+	WHERE P.EsMuestra=0 AND (B.IDBodega =@IDBodega OR @IDBodega=-1) AND 
 					(B.IDProducto =@IDProducto OR @IDProducto=-1) AND 
 					(P.Clasif1=@Clasif1 OR @Clasif1=-1) AND 
 					(p.Clasif2=@Clasif2 OR @Clasif2=-1) AND
@@ -2280,13 +2294,13 @@ CREATE TABLE #Catalogo(IDBodega INT,IDProducto INT,IDLote INT)
 	SELECT B.IDBodega,B.IDProducto,B.IDLote, B.Cantidad
 	FROM dbo.invBoletaInvFisico B
 	INNER JOIN dbo.invProducto P ON B.IDProducto = P.IDProducto 
-	WHERE B.Validada=1 AND (B.IDBodega=@IDBodega OR @IDBodega=-1) AND B.Aplicada=0
+	WHERE p.EsMuestra=0 AND  B.Validada=1 AND (B.IDBodega=@IDBodega OR @IDBodega=-1) AND B.Aplicada=0
 				    
 	INSERT INTO #Inventario( IDBodega  ,IDProducto  ,IDLote  ,Cantidad )
 	SELECT B.IDBodega,B.IDProducto,B.IDLote, B.Existencia
 	FROM dbo.invExistenciaBodega B
 	INNER JOIN dbo.invProducto P ON B.IDProducto = P.IDProducto 
-	WHERE (B.IDBodega =@IDBodega OR @IDBodega=-1)
+	WHERE p.EsMuestra=0 AND  (B.IDBodega =@IDBodega OR @IDBodega=-1)
 	
 	
 	IF (@ProductoNoInvSetCero =1)
@@ -2379,7 +2393,7 @@ CREATE TABLE #Catalogo(IDBodega INT,IDProducto INT,IDLote INT)
 
 GO
 
-CREATE PROCEDURE dbo.invCreaPaqueteInvFactura (@Modulo AS NVARCHAR(4),@IDDocumento AS INT,@Usuario AS NVARCHAR(50),@IDTransaccion AS BIGINT OUTPUT)
+CREATE  PROCEDURE dbo.invCreaPaqueteInvFactura (@Modulo AS NVARCHAR(4),@IDDocumento AS INT,@Usuario AS NVARCHAR(50),@IDTransaccion AS BIGINT OUTPUT)
 AS 
 /*SET @Modulo = 'FAC'
 SET @IDDocumento= 2
@@ -2434,8 +2448,8 @@ BEGIN
 	SELECT @IDTipoTran =IDTipoTran, @Factor = Factor,@Naturaleza = Naturaleza, @Transaccion=Transaccion  FROM dbo.globalTipoTran WHERE  Transaccion = (SELECT Transaccion  FROM dbo.invPaquete WHERE IDPaquete=@IDPaquete) 
 
 	--//Insertar el detalle del documento
-	INSERT INTO dbo.invTransaccionLinea( IDTransaccion ,IDProducto ,IDLote ,IDTipoTran ,IDBodega ,IDTraslado , Naturaleza ,Factor ,Cantidad ,CostoUntLocal ,CostoUntDolar ,PrecioUntLocal ,PrecioUntDolar ,Transaccion ,TipoCambio ,Aplicado)
-	SELECT @IDTransaccion, A.IDProducto,B.IDLote,@IDTipoTran,A.IDBodega,-1 IDTranslado,@Naturaleza,@Factor ,B.Cantidad, P.CostoPromLocal,CostoPromDolar,A.PrecioLocal,A.PrecioDolar,@Transaccion, @TipoCambio, 0 Aplicado
+	INSERT INTO dbo.invTransaccionLinea( IDTransaccion ,IDProducto ,IDLote ,IDTipoTran ,IDBodega ,IDTraslado , Naturaleza ,Factor ,Cantidad ,CostoUntLocal ,CostoUntDolar ,PrecioUntLocal ,PrecioUntDolar ,Transaccion ,TipoCambio)
+	SELECT @IDTransaccion, A.IDProducto,B.IDLote,@IDTipoTran,A.IDBodega,-1 IDTranslado,@Naturaleza,@Factor ,B.Cantidad, P.CostoPromLocal,CostoPromDolar,A.PrecioLocal,A.PrecioDolar,@Transaccion, @TipoCambio
 	 FROM dbo.fafFacturaProd A
 	INNER JOIN dbo.fafFacturaProdLote B ON A.IDFacturaProd = B.IDFacturaProd
 	INNER JOIN dbo.invProducto P ON A.IDProducto=P.IDProducto
@@ -2461,7 +2475,7 @@ BEGIN
 
 		--//Obtener el costo del Producto Actual
 		SELECT @CostoPromLoc = ISNULL(CostoPromLocal,0) , @CostoPromDol = ISNULL(CostoPromDolar,0)
-		FROM dbo.invProducto WHERE IDProducto=@IDProducto
+		FROM dbo.invProducto WHERE IDProducto=@IDProducto 
 
 		--//Inventario actual
 		SELECT @ExistenciaActual = ISNULL(SUM(Existencia),0)  FROM dbo.invExistenciaBodega WHERE IDProducto =@IDProducto
@@ -3028,7 +3042,7 @@ SELECT A.IDProducto,IDLote,IDBodega,C.Naturaleza, SUM(a.Cantidad * C.Factor )  C
 INNER JOIN dbo.invTransaccion B ON A.IDTransaccion = B.IDTransaccion
 INNER JOIN dbo.globalTipoTran C ON A.IDTipoTran = C.IDTipoTran
 INNER JOIN dbo.invProducto P ON A.IDProducto=P.IDProducto
-WHERE Fecha BETWEEN @FechaInicial AND @FechaFinal
+WHERE p.EsMuestra=0 AND  Fecha BETWEEN @FechaInicial AND @FechaFinal
 AND  (A.IDBodega  IN (SELECT Value FROM [dbo].[ConvertListToTable](@Bodega,@Separador) )or @Bodega ='*') 
 AND (A.IDProducto IN (SELECT Value FROM [dbo].[ConvertListToTable](@Producto,@Separador)) OR @Producto='*')
 AND (A.IDLote  IN (SELECT Value FROM [dbo].[ConvertListToTable](@Lote,@Separador)) OR @Lote='*') 
@@ -3055,7 +3069,7 @@ FROM
 UNION 
 SELECT S.IDProducto,S.IDLote,S.IDBodega,S.SaldoMesAnt  FROM  dbo.invSaldos S
 INNER JOIN dbo.invProducto P ON S.IDProducto = P.IDProducto
-WHERE Fecha = @FechaSaldoAnterior  
+WHERE p.EsMuestra=0 AND  Fecha = @FechaSaldoAnterior  
 AND  (S.IDBodega  IN (SELECT Value FROM [dbo].[ConvertListToTable](@Bodega,@Separador) )or @Bodega ='*') 
 AND (S.IDProducto IN (SELECT Value FROM [dbo].[ConvertListToTable](@Producto,@Separador)) OR @Producto='*')
 AND (S.IDLote  IN (SELECT Value FROM [dbo].[ConvertListToTable](@Lote,@Separador)) OR @Lote='*') 
@@ -3109,7 +3123,7 @@ GO
 
 
 
-CREATE  PROCEDURE [dbo].[invGetExistenciaProductoCorte] @Fecha DATETIME,@IDBodega AS INT, @IDProducto AS BIGINT,
+CREATE ALTER PROCEDURE [dbo].[invGetExistenciaProductoCorte] @Fecha DATETIME,@IDBodega AS INT, @IDProducto AS BIGINT,
 							@IDLote AS  INT,@DetallaLote BIT=0
 							
 AS 
@@ -3137,7 +3151,7 @@ SELECT B.Fecha,A.IDProducto,IDLote,IDBodega,C.Descr,C.Naturaleza, SUM(a.Cantidad
 INNER JOIN dbo.invTransaccion B ON A.IDTransaccion = B.IDTransaccion
 INNER JOIN dbo.globalTipoTran C ON A.IDTipoTran = C.IDTipoTran
 INNER JOIN dbo.invProducto P ON A.IDProducto=P.IDProducto
-WHERE Fecha BETWEEN @FechaInicial AND @FechaFinal
+WHERE P.EsMuestra = 0 AND  Fecha BETWEEN @FechaInicial AND @FechaFinal
 AND (A.IDProducto= @IDProducto OR @IDProducto=-1) AND (a.IDBodega = @IDBodega  OR @IDBodega=-1) AND (a.IDLote = @IDLote  OR @IDLote = -1)
 GROUP BY B.Fecha,A.IDProducto,IDLote,IDBodega,C.Descr,C.Naturaleza
 
@@ -3149,7 +3163,7 @@ FROM
 UNION 
 SELECT S.IDProducto,S.IDLote,S.IDBodega,S.SaldoMesAnt  FROM  dbo.invSaldos S
 INNER JOIN dbo.invProducto P ON S.IDProducto = P.IDProducto
-WHERE Fecha = @FechaSaldoAnterior  
+WHERE P.EsMuestra = 0 AND  Fecha = @FechaSaldoAnterior  
 	AND (P.IDProducto = @IDProducto  OR   @IDProducto=-1) AND (S.IDbodega = @IDBodega OR @IDBodega =-1) AND (s.IDLote =@IDLote OR @IDLote=-1)
 ) P
 
@@ -3229,7 +3243,7 @@ BEGIN
 	INNER JOIN dbo.invTransaccion B ON A.IDTransaccion = B.IDTransaccion
 	INNER JOIN dbo.globalTipoTran C ON A.IDTipoTran = C.IDTipoTran
 	INNER JOIN dbo.invProducto P ON A.IDProducto=P.IDProducto
-	WHERE Fecha BETWEEN @FechaInicial AND @FechaFinal
+	WHERE P.EsMuestra = 0  AND  Fecha BETWEEN @FechaInicial AND @FechaFinal
 	AND A.IDProducto= @IDProducto AND (a.IDBodega = @IDBodega  OR @IDBodega=-1)
 	GROUP BY CAST(B.Fecha AS DATE) ,A.IDProducto,IDBodega,C.Naturaleza
 END
@@ -3240,7 +3254,7 @@ BEGIN
 	INNER JOIN dbo.invTransaccion B ON A.IDTransaccion = B.IDTransaccion
 	INNER JOIN dbo.globalTipoTran C ON A.IDTipoTran = C.IDTipoTran
 	INNER JOIN dbo.invProducto P ON A.IDProducto=P.IDProducto
-	WHERE Fecha BETWEEN @FechaInicial AND @FechaFinal
+	WHERE P.EsMuestra=0 AND  Fecha BETWEEN @FechaInicial AND @FechaFinal
 	AND A.IDProducto= @IDProducto AND (a.IDBodega = @IDBodega  OR @IDBodega=-1) AND (a.IDLote = @IDLote  OR @IDLote = -1)
 	GROUP BY CAST(B.Fecha AS DATE) ,A.IDProducto,IDLote,IDBodega,C.Naturaleza
 END
@@ -3290,7 +3304,7 @@ BEGIN
 	INNER JOIN dbo.invPaquete P ON A.IDPaquete=P.IDPaquete
 	INNER JOIN dbo.invProducto Pr ON B.IDProducto=Pr.IDProducto
 	INNER JOIN dbo.invUnidadMedida U ON pr.IDUnidad=U.IDUnidad
-	WHERE Fecha  BETWEEN @FechaInicial AND @FechaFinal
+	WHERE PR.EsMuestra=0 AND  Fecha  BETWEEN @FechaInicial AND @FechaFinal
 	AND B.IDProducto= @IDProducto AND (B.IDBodega = @IDBodega  OR @IDBodega=-1)
 END
 ELSE
@@ -3308,7 +3322,7 @@ BEGIN
 	INNER JOIN dbo.invProducto Pr ON B.IDProducto=Pr.IDProducto
 	INNER JOIN dbo.invLote L ON B.IDProducto=l.IDProducto AND B.IDLote =L.IDLote
 	INNER JOIN dbo.invUnidadMedida U ON pr.IDUnidad=U.IDUnidad
-	WHERE Fecha  BETWEEN @FechaInicial AND @FechaFinal
+	WHERE PR.EsMuestra=0 AND  Fecha  BETWEEN @FechaInicial AND @FechaFinal
 	AND b.IDProducto= @IDProducto AND (b.IDBodega = @IDBodega  OR @IDBodega=-1)
 END
 
@@ -3348,7 +3362,7 @@ SELECT B.Fecha,A.IDProducto,IDLote,IDBodega,C.Descr,C.Naturaleza, SUM(a.Cantidad
 INNER JOIN dbo.invTransaccion B ON A.IDTransaccion = B.IDTransaccion
 INNER JOIN dbo.globalTipoTran C ON A.IDTipoTran = C.IDTipoTran
 INNER JOIN dbo.invProducto P ON A.IDProducto=P.IDProducto
-WHERE Fecha BETWEEN @FechaInicial AND @FechaFinal
+WHERE p.EsMuestra=0 AND  Fecha BETWEEN @FechaInicial AND @FechaFinal
 AND (A.IDProducto= @IDProducto OR  @IDProducto=-1) AND (a.IDBodega = @IDBodega  OR @IDBodega=-1) AND (a.IDLote = @IDLote  OR @IDLote = -1)
 GROUP BY B.Fecha,A.IDProducto,IDLote,IDBodega,C.Descr,C.Naturaleza
 
@@ -3459,7 +3473,7 @@ GO
 
 
 
-CREATE  PROCEDURE [dbo].[invGetCorteInventario] ( @Fecha DATE,@Bodega AS NVARCHAR(4000), @Producto AS NVARCHAR(250),
+CREATE PROCEDURE [dbo].[invGetCorteInventario] ( @Fecha DATE,@Bodega AS NVARCHAR(4000), @Producto AS NVARCHAR(250),
 							@Lote AS  NVARCHAR(4000),@Clasif1 AS NVARCHAR(4000),@Clasif2 NVARCHAR(4000), @Clasif3 NVARCHAR(4000),
 							@Clasif4 NVARCHAR(4000), @Clasif5 NVARCHAR(4000), @Clasif6 NVARCHAR(4000),@DetallaLote AS BIT)
 AS
@@ -3488,7 +3502,7 @@ SELECT A.IDProducto,IDLote,IDBodega,C.Naturaleza, SUM(a.Cantidad * C.Factor )  C
 INNER JOIN dbo.invTransaccion B ON A.IDTransaccion = B.IDTransaccion
 INNER JOIN dbo.globalTipoTran C ON A.IDTipoTran = C.IDTipoTran
 INNER JOIN dbo.invProducto P ON A.IDProducto=P.IDProducto
-WHERE Fecha BETWEEN @FechaInicial AND @FechaFinal
+WHERE P.EsMuestra=0 AND  Fecha BETWEEN @FechaInicial AND @FechaFinal
 AND  (A.IDBodega  IN (SELECT Value FROM [dbo].[ConvertListToTable](@Bodega,@Separador) )or @Bodega ='*') 
 AND (A.IDProducto IN (SELECT Value FROM [dbo].[ConvertListToTable](@Producto,@Separador)) OR @Producto='*')
 AND (A.IDLote  IN (SELECT Value FROM [dbo].[ConvertListToTable](@Lote,@Separador)) OR @Lote='*') 
@@ -3515,7 +3529,7 @@ FROM
 UNION 
 SELECT S.IDProducto,S.IDLote,S.IDBodega,S.SaldoMesAnt  FROM  dbo.invSaldos S
 INNER JOIN dbo.invProducto P ON S.IDProducto = P.IDProducto
-WHERE Fecha = @FechaSaldoAnterior  
+WHERE P.EsMuestra = 0  AND  Fecha = @FechaSaldoAnterior  
 AND  (S.IDBodega  IN (SELECT Value FROM [dbo].[ConvertListToTable](@Bodega,@Separador) )or @Bodega ='*') 
 AND (S.IDProducto IN (SELECT Value FROM [dbo].[ConvertListToTable](@Producto,@Separador)) OR @Producto='*')
 AND (S.IDLote  IN (SELECT Value FROM [dbo].[ConvertListToTable](@Lote,@Separador)) OR @Lote='*') 
@@ -3571,7 +3585,7 @@ AS
 --SET @IDProveedor = 3
 
 SELECT IDProducto, Descr,Alias,Generico, IDUnidad  FROM dbo.invProducto 
-WHERE (IDProveedor = @IDProveedor OR @IDProveedor = -1) AND Activo=1
+WHERE (IDProveedor = @IDProveedor OR @IDProveedor = -1) AND Activo=1 AND EsMuestra=0
 
 GO
 

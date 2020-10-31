@@ -33,6 +33,7 @@ namespace CI.DAC
                 oAdaptador.SelectCommand.Parameters.Add("@IDBodega", SqlDbType.Int).SourceColumn = "IDBodega";
                 oAdaptador.SelectCommand.Parameters.Add("@Descr", SqlDbType.NVarChar).SourceColumn = "Descr";
                 oAdaptador.SelectCommand.Parameters.Add("@Activo", SqlDbType.Int).SourceColumn = "Activo";
+				oAdaptador.SelectCommand.Parameters.Add("@IsForMuestra", SqlDbType.Bit).SourceColumn = "IsForMuestra";
 
 
 
@@ -46,6 +47,7 @@ namespace CI.DAC
                 oAdaptador.InsertCommand.Parameters.Add("@PuedePreFacturar", SqlDbType.Int).SourceColumn = "PuedePreFacturar";
                 oAdaptador.InsertCommand.Parameters.Add("@IDPaqueteFactura", SqlDbType.Int).SourceColumn = "IDPaqueteFactura";
                 oAdaptador.InsertCommand.Parameters.Add("@ConsecutivoPreFactura", SqlDbType.Int).SourceColumn = "ConsecutivoPreFactura";
+				oAdaptador.InsertCommand.Parameters.Add("@IsForMuestra", SqlDbType.Bit).SourceColumn = "IsForMuestra";
 
                 //Paremetros Update 
                 oAdaptador.UpdateCommand.CommandType = CommandType.StoredProcedure;
@@ -57,6 +59,7 @@ namespace CI.DAC
                 oAdaptador.UpdateCommand.Parameters.Add("@PuedePreFacturar", SqlDbType.Int).SourceColumn = "PuedePreFacturar";
                 oAdaptador.UpdateCommand.Parameters.Add("@IDPaqueteFactura", SqlDbType.Int).SourceColumn = "IDPaqueteFactura";
                 oAdaptador.UpdateCommand.Parameters.Add("@ConsecutivoPreFactura", SqlDbType.Int).SourceColumn = "ConsecutivoPreFactura";
+				oAdaptador.UpdateCommand.Parameters.Add("@IsForMuestra", SqlDbType.Bit).SourceColumn = "IsForMuestra";
 
                 //Paremetros Delete 
                 oAdaptador.DeleteCommand.CommandType = CommandType.StoredProcedure;
@@ -68,6 +71,7 @@ namespace CI.DAC
                 oAdaptador.DeleteCommand.Parameters.Add("@PuedePreFacturar", SqlDbType.Int).SourceColumn = "PuedePreFacturar";
                 oAdaptador.DeleteCommand.Parameters.Add("@IDPaqueteFactura", SqlDbType.Int).SourceColumn = "IDPaqueteFactura";
                 oAdaptador.DeleteCommand.Parameters.Add("@ConsecutivoPreFactura", SqlDbType.Int).SourceColumn = "ConsecutivoPreFactura";
+				oAdaptador.DeleteCommand.Parameters.Add("@IsForMuestra", SqlDbType.Bit).SourceColumn = "IsForMuestra";
 
                 return oAdaptador;
             }
@@ -93,18 +97,19 @@ namespace CI.DAC
             return DS;
         }
 
-        public static DataSet GetData(int IDBodega, String Descr,int Activo)
+        public static DataSet GetData(int IDBodega, String Descr,int Activo,int isForMuestra)
         {
             DataSet DS = CreateDataSet();
             oAdaptador.SelectCommand.Parameters["@IDBodega"].Value = IDBodega;
             oAdaptador.SelectCommand.Parameters["@Descr"].Value = Descr;
             oAdaptador.SelectCommand.Parameters["@Activo"].Value = Activo;
+			oAdaptador.SelectCommand.Parameters["@isForMuestra"].Value = isForMuestra;
 
             oAdaptador.Fill(DS.Tables["Data"]);
             return DS;
         }
 
-        public static DataSet GetBodegaSplit(string lstBodega)
+        public static DataSet GetBodegaSplit(string lstBodega, bool ShowMuestra)
         {
             String strSQL = "dbo.invGetBodegaSplit";
 
@@ -112,6 +117,8 @@ namespace CI.DAC
 
 
             oCmd.Parameters.Add(new SqlParameter("@lstBodega", lstBodega));
+			oCmd.Parameters.Add(new SqlParameter("@@ShowMuestra", ShowMuestra));
+			
             
             oCmd.CommandType = CommandType.StoredProcedure;
 

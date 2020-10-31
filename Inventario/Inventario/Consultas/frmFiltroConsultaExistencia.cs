@@ -115,7 +115,7 @@ namespace CI
 			Util.Util.ConfigLookupEditSetViewColumns(this.slkupProveedor, "[{'ColumnCaption':'ID Proveedor','ColumnField':'IDProveedor','width':30},{'ColumnCaption':'Nombre','ColumnField':'Nombre','width':70}]");
 			this.slkupProveedor.Properties.View.OptionsView.ShowAutoFilterRow = true;
 			
-			DTProducto = clsProductoDAC.GetData(-1, "*", "*", -1, -1, -1, -1, -1, -1, "*", -1, -1, -1).Tables[0];
+			DTProducto = clsProductoDAC.GetData(-1, "*", "*", -1, -1, -1, -1, -1, -1, "*", 0, -1, -1).Tables[0];
             Util.Util.ConfigLookupEdit(this.chkBoxProducto, DTProducto, "Descr", "IDProducto", 400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.chkBoxProducto, "[{'ColumnCaption':'ID Producto','ColumnField':'IDProducto','width':30},{'ColumnCaption':'Descr','ColumnField':'Descr','width':90}]");
 			this.chkBoxProducto.Properties.View.OptionsView.ShowAutoFilterRow = true;
@@ -133,7 +133,7 @@ namespace CI
             this.chkBoxLote.Properties.View.OptionsSelection.MultiSelect = true;
             this.chkBoxLote.Properties.View.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CheckBoxRowSelect;
 
-            DTBodega = clsBodegaDAC.GetData(-1, "*", -1).Tables[0];
+            DTBodega = clsBodegaDAC.GetData(-1, "*", -1, 0).Tables[0];
             Util.Util.ConfigLookupEdit(this.chkBoxBodega, DTBodega, "Descr", "IDBodega", 400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.chkBoxBodega, "[{'ColumnCaption':'IDBodega','ColumnField':'IDBodega','width':20},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':90}]");
 			this.chkBoxBodega.Properties.View.OptionsView.ShowAutoFilterRow = true;

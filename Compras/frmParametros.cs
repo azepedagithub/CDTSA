@@ -75,7 +75,7 @@ namespace CO
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupLiquidacion, "[{'ColumnCaption':'IDConsecutivo','ColumnField':'IDConsecutivo','width':20},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':80}]");
             this.slkupLiquidacion.EditValueChanged += slkupLiquidacion_EditValueChanged;
 
-            Util.Util.ConfigLookupEdit(this.slkupBodegaDefault, CI.DAC.clsBodegaDAC.GetData(-1,"*",-1).Tables[0], "Descr", "IDBodega", 350);
+            Util.Util.ConfigLookupEdit(this.slkupBodegaDefault, CI.DAC.clsBodegaDAC.GetData(-1,"*",-1,0).Tables[0], "Descr", "IDBodega", 350);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupBodegaDefault, "[{'ColumnCaption':'IDBodega','ColumnField':'IDBodega','width':20},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':80}]");
             this.slkupBodegaDefault.EditValueChanged += slkupBodegaDefault_EditValueChanged;
 

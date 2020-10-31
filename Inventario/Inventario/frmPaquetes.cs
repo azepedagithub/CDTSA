@@ -206,19 +206,26 @@ namespace CI
 
         private void btnEditar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            if (currentRow == null)
-            {
-                lblStatus.Caption = "Por favor seleccione un elemento de la Lista";
-                return;
-            }
-            else
-                lblStatus.Caption = "";
-            isEdition = true;
-            HabilitarControles(true);
+			if (currentRow == null)
+			{
+				lblStatus.Caption = "Por favor seleccione un elemento de la Lista";
+				return;
+			}
+			else
+			{
+				if (Convert.ToBoolean(currentRow["isReadObly"]))
+				{
+					MessageBox.Show("El elemento es solo lectura, no se puede modificar");
+					return;
+				}
+				lblStatus.Caption = "";
+				isEdition = true;
+				HabilitarControles(true);
 
 
-            lblStatus.Caption = "Editando el registro : " + currentRow["Descr"].ToString();
-            this.txtDescripcion.Focus();
+				lblStatus.Caption = "Editando el registro : " + currentRow["Descr"].ToString();
+				this.txtDescripcion.Focus();
+			}
         }
 
         private bool ValidarDatos()
@@ -366,6 +373,11 @@ namespace CI
         {
             if (currentRow != null)
             {
+				if (Convert.ToBoolean(currentRow["isReadObly"]))
+				{
+					MessageBox.Show("El elemento es solo lectura, no se puede eliminar");
+					return;
+				}
                 string msg = currentRow["Descr"] + " eliminado..";
 
 

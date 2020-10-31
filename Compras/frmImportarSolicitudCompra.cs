@@ -173,7 +173,7 @@ namespace CO
                 this.slkupClas6.Properties.PopulateViewColumns();
 
 
-                _dtProductos = CI.DAC.clsProductoDAC.GetData(-1, "*", "*", -1, -1, -1, -1, -1, -1, "*", -1, -1, -1).Tables[0];
+                _dtProductos = CI.DAC.clsProductoDAC.GetData(-1, "*", "*", -1, -1, -1, -1, -1, -1, "*", 0, -1, -1).Tables[0];
 
                 this.slkupProducto.Properties.DataSource = _dtProductos;
                 this.slkupProducto.Properties.DisplayMember = "Descr";

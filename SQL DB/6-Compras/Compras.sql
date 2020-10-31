@@ -1201,6 +1201,9 @@ BEGIN
 	          PorcDesc ,PorcInteresMora ,email ,Direccion,MultiMoneda,PagosCongelados,IsLocal,Bonifica)
 	VALUES  ( @IDProveedor, @Nombre ,@RUC,@Activo,@Alias,@IDPais,@IDMoneda,@FechaIngreso,@Contacto,@Telefono,@IDCategoria,@IDCondicionPago,@PorcDescuento,@PorcInteresMora,@Email, @Direccion,@MultiMoneda,@PagosCongelados,@IsLocal,@Bonifica)
 	
+	--Actualizar los productos del proveedor
+	UPDATE dbo.invProducto SET Bonifica= @Bonifica WHERE IDProveedor=@IDProveedor
+	
 END
 IF (@Operacion='U')
 BEGIN
@@ -1209,9 +1212,18 @@ BEGIN
 				PorcDesc = @PorcDescuento, PorcInteresMora = @PorcInteresMora, email = @Email, Direccion = @Direccion, MultiMoneda = @MultiMoneda, 
 				PagosCongelados = @PagosCongelados, IsLocal = @IsLocal,Bonifica=@Bonifica
 	WHERE IDProveedor = @IDProveedor
+	
+	--Actualizar los productos del proveedor
+	UPDATE dbo.invProducto SET Bonifica= @Bonifica WHERE IDProveedor=@IDProveedor
+	
 END
 IF (@Operacion='D') 
 BEGIN
+	IF EXISTS (SELECT TOP 1 IDProducto  FROM dbo.invProducto WHERE IDProveedor = @IDProveedor)
+	BEGIN
+		RAISERROR ( 'El proveer tiene productos asociados, no se puede eliminar.', 16, 1) ;
+		return		
+	END
 	DELETE FROM dbo.cppProveedor WHERE IDProveedor =@IDProveedor
 END
 
@@ -2238,3 +2250,22 @@ SELECT  J.IDProducto,P.Descr DescrProducto,Cantidad,CostoPromDolar, Cantidad * C
 		) J
 ) D
 INNER JOIN dbo.invProducto P ON D.IDProducto=A.IDProducto 
+
+
+GO
+
+CREATE PROCEDURE dbo.coGetEstadoOrdenCompra @IDOrdenCompra AS INT
+AS
+SELECT IDEstado  FROM dbo.coOrdenCompra WHERE IDOrdenCompra=@IDOrdenCompra
+
+GO
+
+CREATE PROCEDURE dbo.coCalculaFechaVencimiento @IDOrdenCompra AS INT,@Fecha AS DATE
+AS 
+
+--SET @IDOrdenCompra =3
+--SET @Fecha = '20201029'
+
+SELECT DATEADD(DAY,C.Dias,@Fecha) nn  FROM dbo.coOrdenCompra O
+INNER JOIN dbo.cppCondicionPago C ON O.IDCondicionPago = C.IDCondicionPago
+WHERE IDOrdenCompra =@IDOrdenCompra

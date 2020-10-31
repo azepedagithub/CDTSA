@@ -241,7 +241,7 @@ namespace CO
                      
 
             this.dtgDetalle.DataSource = dtDetalleOrden;
-            dtProductos = CI.DAC.clsProductoDAC.GetData(-1, "*", "*", -1, -1, -1, -1, -1, -1, "*", -1, -1, -1).Tables[0];
+            dtProductos = CI.DAC.clsProductoDAC.GetData(-1, "*", "*", -1, -1, -1, -1, -1, -1, "*", 0, -1, -1).Tables[0];
 
             this.slkupIDProducto.DataSource = dtProductos;
             this.slkupIDProducto.DisplayMember = "IDProducto";

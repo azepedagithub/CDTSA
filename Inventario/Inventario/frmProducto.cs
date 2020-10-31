@@ -375,7 +375,7 @@ namespace CI
                     _currentRow["Activo"] = this.chkActivo.EditValue;
                     _currentRow["Bonifica"] = this.chkBonifica.EditValue;
 					_currentRow["NumRegSanitario"] = this.txtNumRegistroSanitario.EditValue.ToString().Trim();
-					_currentRow["FechaVencimientoRegistro"] = Convert.ToDateTime(this.dtpFechaCaducidadRegistro.EditValue);
+					_currentRow["FechaVencimientoRegistro"] =this.dtpFechaCaducidadRegistro.EditValue;
                     _currentRow["UserInsert"] = sUsuario;
                     _currentRow["UserUpdate"] = sUsuario;
                     _currentRow["UpdateDate"] = DateTime.Now;

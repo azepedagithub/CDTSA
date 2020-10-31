@@ -310,8 +310,16 @@ namespace CI
                                    this.txtCostoLocal.Enabled = true;
                                    this.txtPrecioDolar.Enabled = false;
                                    this.txtPrecioLocal.Enabled = false;
-                                   this.txtCostoLocal.EditValue = row["CostoUntLocal"];
-                                   this.txtCostoDolar.EditValue = row["CostoUntDolar"];
+								   if (Convert.ToBoolean(_dtPaquete.Rows[0]["IsReadOnly"]) == true && _dtPaquete.Rows[0]["Paquete"] == "MUE")
+								   {
+									   this.txtCostoDolar.Enabled = false;
+									   this.txtCostoLocal.Enabled = false;
+								   }
+								   else
+								   {
+									   this.txtCostoLocal.EditValue = row["CostoUntLocal"];
+									   this.txtCostoDolar.EditValue = row["CostoUntDolar"];
+								   }
                                }
                                else if (Convert.ToBoolean(dr["EsTraslado"]))
                                {
@@ -552,7 +560,7 @@ namespace CI
                if  (this.txtPrecioDolar.EditValue ==null || this.txtPrecioLocal.EditValue.ToString()=="")
                    sMensaje = " • Ingrese el precio del producto \n\r";
             }
-            else if (Convert.ToBoolean(dr["EsAjuste"]) || Convert.ToBoolean(dr["EsCompra"]))
+            else if (Convert.ToBoolean(dr["EsAjuste"]) || Convert.ToBoolean(dr["EsCompra"]) && (Convert.ToBoolean(_dtPaquete.Rows[0]["IsReadOnly"]) == false ))
             {
                 if (this.txtCostoDolar.EditValue == null || this.txtCostoDolar.EditValue.ToString() == "")
                     sMensaje = " • Ingrese sel costo del producto \n\r";
@@ -615,16 +623,20 @@ namespace CI
                     Util.Util.ConfigLookupEditSetViewColumns(this.slkupTransaccion, "[{'ColumnCaption':'TipoTran','ColumnField':'IDTipoTran','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");
 					this.slkupTransaccion.Properties.View.OptionsView.ShowAutoFilterRow = true;
                 }
-
-                Util.Util.ConfigLookupEdit(this.slkupBodegaOrigen, clsBodegaDAC.GetData(-1, "*", -1).Tables[0], "Descr", "IDBodega",400,300);
+				if (_dtPaquete.Rows[0]["Paquete"].ToString() == "MUE")
+					Util.Util.ConfigLookupEdit(this.slkupBodegaOrigen, clsBodegaDAC.GetData(-1, "*", -1, 1).Tables[0], "Descr", "IDBodega", 400, 300);
+				else
+					Util.Util.ConfigLookupEdit(this.slkupBodegaOrigen, clsBodegaDAC.GetData(-1, "*", -1, 0).Tables[0], "Descr", "IDBodega", 400, 300);
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupBodegaOrigen, "[{'ColumnCaption':'IDBodega','ColumnField':'IDBodega','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");
 				this.slkupBodegaOrigen.Properties.View.OptionsView.ShowAutoFilterRow = true;
-
-                Util.Util.ConfigLookupEdit(this.slkupBodegaDestino, clsBodegaDAC.GetData(-1, "*", -1).Tables[0], "Descr", "IDBodega",400,300);
+				if (_dtPaquete.Rows[0]["Paquete"].ToString() == "MUE")
+					Util.Util.ConfigLookupEdit(this.slkupBodegaDestino, clsBodegaDAC.GetData(-1, "*", -1, 1).Tables[0], "Descr", "IDBodega",400,300);
+				else
+					Util.Util.ConfigLookupEdit(this.slkupBodegaDestino, clsBodegaDAC.GetData(-1, "*", -1, 0).Tables[0], "Descr", "IDBodega", 400, 300);
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupBodegaDestino, "[{'ColumnCaption':'IDBodega','ColumnField':'IDBodega','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");
 				this.slkupBodegaDestino.Properties.View.OptionsView.ShowAutoFilterRow = true;
 
-                Util.Util.ConfigLookupEdit(this.slkupProducto, clsProductoDAC.GetData(-1, "*", "*", -1, -1, -1, -1, -1, -1, "*", -1, -1, -1).Tables[0], "Descr", "IDProducto",400,300);
+                Util.Util.ConfigLookupEdit(this.slkupProducto, clsProductoDAC.GetData(-1, "*", "*", -1, -1, -1, -1, -1, -1, "*", 0, -1, -1).Tables[0], "Descr", "IDProducto",400,300);
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupProducto, "[{'ColumnCaption':'IdProducto','ColumnField':'IDProducto','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");
 				this.slkupProducto.Properties.View.OptionsView.ShowAutoFilterRow = true;
 
@@ -739,7 +751,7 @@ namespace CI
                         this.txtPrecioLocal.Enabled = true;
                         this.txtPrecioLocal.TabStop = true;
                     }
-                    else if ((Convert.ToBoolean(dr["EsAjuste"]) && Convert.ToInt32(dr["Factor"])>0) || Convert.ToBoolean(dr["EsCompra"]))
+					else if ((Convert.ToBoolean(dr["EsAjuste"]) && Convert.ToInt32(dr["Factor"]) > 0 && Convert.ToBoolean(_dtPaquete.Rows[0]["IsReadOnly"]) == false) || Convert.ToBoolean(dr["EsCompra"]))
                     {
                         this.txtCostoDolar.Enabled = true;
                         this.txtCostoDolar.TabStop = true;
@@ -777,7 +789,7 @@ namespace CI
 				if (this.slkupTransaccion.EditValue != null)
 				{
 					DataRowView dr = (DataRowView)slkupTransaccion.Properties.GetRowByKeyValue(this.slkupTransaccion.EditValue);
-					if ((Convert.ToBoolean(dr["EsAjuste"]) && Convert.ToInt32(dr["Factor"]) > 0) || Convert.ToBoolean(dr["EsCompra"]))
+					if ((Convert.ToBoolean(dr["EsAjuste"]) && Convert.ToInt32(dr["Factor"]) > 0 && Convert.ToBoolean(_dtPaquete.Rows[0]["IsReadOnly"]) == false) || Convert.ToBoolean(dr["EsCompra"]))
 					{
 						DataTable dtTempProd = clsProductoDAC.GetProductoByID(Convert.ToInt64(slkupProducto.EditValue), "*").Tables[0];
 						this.txtCostoLocal.EditValue = Convert.ToDecimal(dtTempProd.Rows[0]["CostoPromLocal"]);
@@ -946,7 +958,6 @@ namespace CI
                             _currentRowDetalle["Transaccion"] = "TR";
 
                             _currentRowDetalle["TipoCambio"] = _dsDetalle.Tables[0].Rows[i]["TipoCambio"];
-                            _currentRowDetalle["Aplicado"] = _dsDetalle.Tables[0].Rows[i]["Aplicado"];
 
                         }
                         else
@@ -968,7 +979,6 @@ namespace CI
                             _currentRowDetalle["Factor"] = _dsDetalle.Tables[0].Rows[i]["Factor"];
                             _currentRowDetalle["Naturaleza"] = _dsDetalle.Tables[0].Rows[i]["Naturaleza"];
                             _currentRowDetalle["TipoCambio"] = _dsDetalle.Tables[0].Rows[i]["TipoCambio"];
-                            _currentRowDetalle["Aplicado"] = _dsDetalle.Tables[0].Rows[i]["Aplicado"];
 
                         }
                         dsTemp.Tables[0].Rows.Add(_currentRowDetalle);
@@ -986,16 +996,22 @@ namespace CI
                     AplicarPrivilegios();
                     BotoneriaSuperior();
 
-                   
-                    //Crear el asiento contable y aplicar el documento en inventario
-                    long IDTransaccion = (long)_dsDocumentoInv.Tables[0].Rows[0]["IDTransaccion"];
-                    bool result = clsDocumentoInvCabecera.AplicaInventario(IDTransaccion, ConnectionManager.Tran);
-                    String Asiento = clsDocumentoInvCabecera.GeneraAsientoTransaccion(IDTransaccion, sUsuario, ConnectionManager.Tran);
-                    this.hlblAsiento.Text = Asiento;
-                    if (result && Asiento != null)
-                        ConnectionManager.CommitTran();
-                    else
-                        throw new Exception("Ha ocurrido un error");
+					if (_dtPaquete.Rows[0]["Paquete"].ToString() != "MUE")
+					{
+						//Crear el asiento contable y aplicar el documento en inventario
+						long IDTransaccion = (long)_dsDocumentoInv.Tables[0].Rows[0]["IDTransaccion"];
+						bool result = clsDocumentoInvCabecera.AplicaInventario(IDTransaccion, ConnectionManager.Tran);
+						String Asiento = clsDocumentoInvCabecera.GeneraAsientoTransaccion(IDTransaccion, sUsuario, ConnectionManager.Tran);
+						this.hlblAsiento.Text = Asiento;
+						if (result && Asiento != null)
+							ConnectionManager.CommitTran();
+						else
+							throw new Exception("Ha ocurrido un error");
+					}
+					else
+					{
+						ConnectionManager.CommitTran();
+					}
 
                     MessageBox.Show("El documento se ha guardado correctamente");
                     HabilitarControlesCabecera(false);

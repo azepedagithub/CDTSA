@@ -32,7 +32,7 @@ namespace CI.Fisico
         private void frmAplicaBoletas_Load(object sender, EventArgs e)
         {
             this.dtpFecha.EditValue = DateTime.Now;
-			DataTable dtBodega =DAC.clsBodegaDAC.GetData(IDBodega, "*", -1).Tables[0];
+			DataTable dtBodega =DAC.clsBodegaDAC.GetData(IDBodega, "*", -1, 0).Tables[0];
 			this.lblBodega.Text = (dtBodega.Rows.Count>0) ? dtBodega.Rows[0]["Descr"].ToString() : " -- --" ;
             this.btnAplicar.Click += btnAplicar_Click;
         }

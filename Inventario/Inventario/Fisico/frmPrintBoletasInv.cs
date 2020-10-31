@@ -31,13 +31,13 @@ namespace CI.Fisico
 
         private void frmPrintBoletasInv_Load(object sender, EventArgs e)
         {
-            DataTable DTProducto = clsProductoDAC.GetData(-1, "*", "*", -1, -1, -1, -1, -1, -1, "*", -1, -1, -1).Tables[0];
+            DataTable DTProducto = clsProductoDAC.GetData(-1, "*", "*", -1, -1, -1, -1, -1, -1, "*", 0, -1, -1).Tables[0];
             Util.Util.ConfigLookupEdit(this.slkupProducto, DTProducto, "Descr", "IDProducto", 400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupProducto, "[{'ColumnCaption':'IDProducto','ColumnField':'IDProducto','width':20},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':90}]");
             this.slkupProducto.Properties.ShowClearButton = true;
 			this.slkupProducto.Properties.View.OptionsView.ShowAutoFilterRow = true;
 
-            DataTable DTBodega = clsBodegaDAC.GetData(-1, "*", -1).Tables[0];
+            DataTable DTBodega = clsBodegaDAC.GetData(-1, "*", -1, 0).Tables[0];
             Util.Util.ConfigLookupEdit(this.slkupBodega, DTBodega, "Descr", "IDBodega", 400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupBodega, "[{'ColumnCaption':'IDBodega','ColumnField':'IDBodega','width':20},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':90}]");
             this.slkupBodega.Properties.ShowClearButton = true;

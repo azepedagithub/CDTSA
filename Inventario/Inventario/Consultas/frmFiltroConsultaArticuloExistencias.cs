@@ -42,7 +42,7 @@ namespace CI.Consultas
             this.slkupLote.Properties.View.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CheckBoxRowSelect;
             this.slkupLote.Popup += slkupLote_Popup;
 
-            DTBodega = clsBodegaDAC.GetData(-1, "*", -1).Tables[0];
+            DTBodega = clsBodegaDAC.GetData(-1, "*", -1, 0).Tables[0];
             Util.Util.ConfigLookupEdit(this.slkupBodega, DTBodega, "Descr", "IDBodega", 400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupBodega, "[{'ColumnCaption':'IDBodega','ColumnField':'IDBodega','width':20},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':90}]");
 			this.slkupBodega.Properties.View.OptionsView.ShowAutoFilterRow = true;

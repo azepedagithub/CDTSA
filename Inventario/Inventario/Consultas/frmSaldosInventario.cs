@@ -43,12 +43,12 @@ namespace CI.Consultas
             this.dtpFechaInicio.EditValue = FechaInicial;
             this.dtpFechaFinal.EditValue = FechaFinal;
 
-            DTProducto = clsProductoDAC.GetData(-1, "*", "*", -1, -1, -1, -1, -1, -1, "*", -1, -1, -1).Tables[0];
+            DTProducto = clsProductoDAC.GetData(-1, "*", "*", -1, -1, -1, -1, -1, -1, "*", 0, -1, -1).Tables[0];
             Util.Util.ConfigLookupEdit(this.slkupProducto, DTProducto, "Descr", "IDProducto", 400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupProducto, "[{'ColumnCaption':'ID Producto','ColumnField':'IDProducto','width':30},{'ColumnCaption':'Descr','ColumnField':'Descr','width':90}]");
 			this.slkupProducto.Properties.View.OptionsView.ShowAutoFilterRow = true;
 
-            DTBodega = clsBodegaDAC.GetData(-1, "*", -1).Tables[0];
+            DTBodega = clsBodegaDAC.GetData(-1, "*", -1,0).Tables[0];
             Util.Util.ConfigLookupEdit(this.slkupBodega, DTBodega, "Descr", "IDBodega", 400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupBodega, "[{'ColumnCaption':'IDBodega','ColumnField':'IDBodega','width':20},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':90}]");
 			this.slkupBodega.Properties.View.OptionsView.ShowAutoFilterRow = true;
