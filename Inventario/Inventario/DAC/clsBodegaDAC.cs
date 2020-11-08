@@ -33,7 +33,7 @@ namespace CI.DAC
                 oAdaptador.SelectCommand.Parameters.Add("@IDBodega", SqlDbType.Int).SourceColumn = "IDBodega";
                 oAdaptador.SelectCommand.Parameters.Add("@Descr", SqlDbType.NVarChar).SourceColumn = "Descr";
                 oAdaptador.SelectCommand.Parameters.Add("@Activo", SqlDbType.Int).SourceColumn = "Activo";
-				oAdaptador.SelectCommand.Parameters.Add("@IsForMuestra", SqlDbType.Bit).SourceColumn = "IsForMuestra";
+				oAdaptador.SelectCommand.Parameters.Add("@IsForMuestra", SqlDbType.Int).SourceColumn = "IsForMuestra";
 
 
 
@@ -47,7 +47,7 @@ namespace CI.DAC
                 oAdaptador.InsertCommand.Parameters.Add("@PuedePreFacturar", SqlDbType.Int).SourceColumn = "PuedePreFacturar";
                 oAdaptador.InsertCommand.Parameters.Add("@IDPaqueteFactura", SqlDbType.Int).SourceColumn = "IDPaqueteFactura";
                 oAdaptador.InsertCommand.Parameters.Add("@ConsecutivoPreFactura", SqlDbType.Int).SourceColumn = "ConsecutivoPreFactura";
-				oAdaptador.InsertCommand.Parameters.Add("@IsForMuestra", SqlDbType.Bit).SourceColumn = "IsForMuestra";
+				oAdaptador.InsertCommand.Parameters.Add("@IsForMuestra", SqlDbType.Int).SourceColumn = "IsForMuestra";
 
                 //Paremetros Update 
                 oAdaptador.UpdateCommand.CommandType = CommandType.StoredProcedure;
@@ -59,7 +59,7 @@ namespace CI.DAC
                 oAdaptador.UpdateCommand.Parameters.Add("@PuedePreFacturar", SqlDbType.Int).SourceColumn = "PuedePreFacturar";
                 oAdaptador.UpdateCommand.Parameters.Add("@IDPaqueteFactura", SqlDbType.Int).SourceColumn = "IDPaqueteFactura";
                 oAdaptador.UpdateCommand.Parameters.Add("@ConsecutivoPreFactura", SqlDbType.Int).SourceColumn = "ConsecutivoPreFactura";
-				oAdaptador.UpdateCommand.Parameters.Add("@IsForMuestra", SqlDbType.Bit).SourceColumn = "IsForMuestra";
+				oAdaptador.UpdateCommand.Parameters.Add("@IsForMuestra", SqlDbType.Int).SourceColumn = "IsForMuestra";
 
                 //Paremetros Delete 
                 oAdaptador.DeleteCommand.CommandType = CommandType.StoredProcedure;
@@ -71,7 +71,7 @@ namespace CI.DAC
                 oAdaptador.DeleteCommand.Parameters.Add("@PuedePreFacturar", SqlDbType.Int).SourceColumn = "PuedePreFacturar";
                 oAdaptador.DeleteCommand.Parameters.Add("@IDPaqueteFactura", SqlDbType.Int).SourceColumn = "IDPaqueteFactura";
                 oAdaptador.DeleteCommand.Parameters.Add("@ConsecutivoPreFactura", SqlDbType.Int).SourceColumn = "ConsecutivoPreFactura";
-				oAdaptador.DeleteCommand.Parameters.Add("@IsForMuestra", SqlDbType.Bit).SourceColumn = "IsForMuestra";
+				oAdaptador.DeleteCommand.Parameters.Add("@IsForMuestra", SqlDbType.Int).SourceColumn = "IsForMuestra";
 
                 return oAdaptador;
             }

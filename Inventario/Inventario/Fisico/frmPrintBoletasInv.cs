@@ -18,7 +18,8 @@ namespace CI.Fisico
     {
         public enum typAccion {
             PrintBoletas,
-            PrintDifBoletas
+            PrintDifBoletas,
+			PrintFormatoCaptacion
         }
 
         private typAccion Accion;
@@ -31,7 +32,23 @@ namespace CI.Fisico
 
         private void frmPrintBoletasInv_Load(object sender, EventArgs e)
         {
-            DataTable DTProducto = clsProductoDAC.GetData(-1, "*", "*", -1, -1, -1, -1, -1, -1, "*", 0, -1, -1).Tables[0];
+			if (Accion == typAccion.PrintFormatoCaptacion)
+			{
+				this.slkupProveedor.Visible = true;
+				this.lblProveedor.Visible = true;
+				DataTable DTProveedor = clsProductoDAC.GetlstProvedores(-1, "*", -1).Tables[0];
+				Util.Util.ConfigLookupEdit(this.slkupProveedor, DTProveedor, "Nombre", "IDProveedor", 400, 300);
+				Util.Util.ConfigLookupEditSetViewColumns(this.slkupProveedor, "[{'ColumnCaption':'IDProveedor','ColumnField':'IDProveedor','width':20},{'ColumnCaption':'Nombre','ColumnField':'Nombre','width':90}]");
+				this.slkupProveedor.Properties.ShowClearButton = true;
+				this.slkupProveedor.Properties.View.OptionsView.ShowAutoFilterRow = true;
+			}
+			else
+			{
+				this.slkupProveedor.Visible = false;
+				this.lblProveedor.Visible = false;
+			}
+
+			DataTable DTProducto = clsProductoDAC.GetData(-1, "*", "*", -1, -1, -1, -1, -1, -1, "*", 0, -1, -1).Tables[0];
             Util.Util.ConfigLookupEdit(this.slkupProducto, DTProducto, "Descr", "IDProducto", 400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupProducto, "[{'ColumnCaption':'IDProducto','ColumnField':'IDProducto','width':20},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':90}]");
             this.slkupProducto.Properties.ShowClearButton = true;
@@ -173,6 +190,35 @@ namespace CI.Fisico
 
             tool.ShowPreview();
         }
+
+		private void ImprimirFormatoCaptacion() {
+			DevExpress.XtraReports.UI.XtraReport report = DevExpress.XtraReports.UI.XtraReport.FromFile("./Reportes/rptFormatoBoletas.repx", true);
+
+			SqlDataSource sqlDataSource = report.DataSource as SqlDataSource;
+
+			SqlDataSource ds = report.DataSource as SqlDataSource;
+			ds.ConnectionName = "sqlDataSource1";
+			String sNameConexion = (Security.Esquema.Compania == "CEDETSA") ? "StringConCedetsa" : "StringConDasa";
+			System.Data.SqlClient.SqlConnectionStringBuilder builder = new System.Data.SqlClient.SqlConnectionStringBuilder(System.Configuration.ConfigurationManager.ConnectionStrings[sNameConexion].ConnectionString);
+			ds.ConnectionParameters = new DevExpress.DataAccess.ConnectionParameters.MsSqlConnectionParameters(builder.DataSource, builder.InitialCatalog, builder.UserID, builder.Password, MsSqlAuthorizationType.SqlServer);
+
+			// Obtain a parameter, and set its value.
+			report.Parameters["IDProveedor"].Value = Convert.ToInt32(GetDefaultValue(this.slkupProveedor));
+			report.Parameters["IDBodega"].Value = Convert.ToInt32(GetDefaultValue(this.slkupBodega));
+			report.Parameters["IDProducto"].Value = Convert.ToInt32(GetDefaultValue(this.slkupProducto));
+			report.Parameters["Clasif1"].Value = Convert.ToInt32(GetDefaultValue(this.slkupClasif1));
+			report.Parameters["Clasif2"].Value = Convert.ToInt32(GetDefaultValue(this.slkupClasif2));
+			report.Parameters["Clasif3"].Value = Convert.ToInt32(GetDefaultValue(this.slkupClasif3));
+			report.Parameters["Clasif4"].Value = Convert.ToInt32(GetDefaultValue(this.slkupClasif4));
+			report.Parameters["Clasif5"].Value = Convert.ToInt32(GetDefaultValue(this.slkupClasif5));
+			report.Parameters["Clasif6"].Value = Convert.ToInt32(GetDefaultValue(this.slkupClasif6));
+
+
+			// Show the report's print preview.
+			DevExpress.XtraReports.UI.ReportPrintTool tool = new DevExpress.XtraReports.UI.ReportPrintTool(report);
+
+			tool.ShowPreview();
+		}
 
 
         private void btnAceptar_Click(object sender, EventArgs e)

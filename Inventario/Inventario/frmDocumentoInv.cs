@@ -437,7 +437,6 @@ namespace CI
                            _currentRowDetalle["Factor"] = dr["Factor"].ToString();
                            _currentRowDetalle["Naturaleza"] = dr["Naturaleza"].ToString();
                            _currentRowDetalle["TipoCambio"] = TipoCambio;
-                           _currentRowDetalle["Aplicado"] = 0;
                            _currentRow.EndEdit();
 
                          
@@ -490,7 +489,7 @@ namespace CI
                            _currentRowDetalle["Factor"] = dr["Factor"].ToString();
                            _currentRowDetalle["Naturaleza"] = dr["Naturaleza"].ToString();
                            _currentRowDetalle["TipoCambio"] = TipoCambio;
-                           _currentRowDetalle["Aplicado"] = 0;
+
 
                            //Validar que el elemento no exista
                            DataView Dv = new DataView();
@@ -630,13 +629,19 @@ namespace CI
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupBodegaOrigen, "[{'ColumnCaption':'IDBodega','ColumnField':'IDBodega','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");
 				this.slkupBodegaOrigen.Properties.View.OptionsView.ShowAutoFilterRow = true;
 				if (_dtPaquete.Rows[0]["Paquete"].ToString() == "MUE")
-					Util.Util.ConfigLookupEdit(this.slkupBodegaDestino, clsBodegaDAC.GetData(-1, "*", -1, 1).Tables[0], "Descr", "IDBodega",400,300);
+				{
+					Util.Util.ConfigLookupEdit(this.slkupBodegaDestino, clsBodegaDAC.GetData(-1, "*", -1, 1).Tables[0], "Descr", "IDBodega", 400, 300);
+					Util.Util.ConfigLookupEdit(this.slkupProducto, clsProductoDAC.GetData(-1, "*", "*", -1, -1, -1, -1, -1, -1, "*", 1, -1, -1).Tables[0], "Descr", "IDProducto", 400, 300);
+				}
 				else
+				{
 					Util.Util.ConfigLookupEdit(this.slkupBodegaDestino, clsBodegaDAC.GetData(-1, "*", -1, 0).Tables[0], "Descr", "IDBodega", 400, 300);
+					Util.Util.ConfigLookupEdit(this.slkupProducto, clsProductoDAC.GetData(-1, "*", "*", -1, -1, -1, -1, -1, -1, "*", 0, -1, -1).Tables[0], "Descr", "IDProducto", 400, 300);
+				}
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupBodegaDestino, "[{'ColumnCaption':'IDBodega','ColumnField':'IDBodega','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");
 				this.slkupBodegaDestino.Properties.View.OptionsView.ShowAutoFilterRow = true;
 
-                Util.Util.ConfigLookupEdit(this.slkupProducto, clsProductoDAC.GetData(-1, "*", "*", -1, -1, -1, -1, -1, -1, "*", 0, -1, -1).Tables[0], "Descr", "IDProducto",400,300);
+                
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupProducto, "[{'ColumnCaption':'IdProducto','ColumnField':'IDProducto','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");
 				this.slkupProducto.Properties.View.OptionsView.ShowAutoFilterRow = true;
 
@@ -773,6 +778,9 @@ namespace CI
                         this.txtPrecioLocal.Enabled = false;
                         this.txtPrecioLocal.TabStop = false;
                     }
+
+
+			
                 }
             }
         }
@@ -1091,21 +1099,21 @@ namespace CI
 
         private void gridViewDetalle_RowCellStyle(object sender, DevExpress.XtraGrid.Views.Grid.RowCellStyleEventArgs e)
         {
-            
-            GridView view = sender as GridView;
-            DataRow row1 = view.GetDataRow(e.RowHandle);
-            if (!Convert.ToBoolean(row1["Aplicado"]))
-            {
-                if (e.RowHandle >= 0)
-                {
-                    String Estado = row1["Estado"].ToString();
-                    String Naturaleza = row1["Naturaleza"].ToString();
-                    if (Estado == "E" && Naturaleza=="S")
-                    {
-                        e.Appearance.ForeColor = Color.Red;
-                    }
-                }
-            }
+
+			GridView view = sender as GridView;
+			DataRow row1 = view.GetDataRow(e.RowHandle);
+			//if (!Convert.ToBoolean(row1["Aplicado"]))
+			//{
+				if (e.RowHandle >= 0)
+				{
+					String Estado = row1["Estado"].ToString();
+					String Naturaleza = row1["Naturaleza"].ToString();
+					if (Estado == "E" && Naturaleza == "S")
+					{
+						e.Appearance.ForeColor = Color.Red;
+					}
+				}
+			//}
         }
 
         private void btnCancelDoc_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)

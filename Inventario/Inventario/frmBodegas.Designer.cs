@@ -72,7 +72,6 @@
 			this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -80,6 +79,9 @@
 			this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.chkBodegaMuestra = new DevExpress.XtraEditors.CheckEdit();
+			this.layoutControlItem10 = new DevExpress.XtraLayout.LayoutControlItem();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
 			this.layoutControl1.SuspendLayout();
@@ -97,7 +99,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.Root)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).BeginInit();
@@ -105,6 +106,9 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.chkBodegaMuestra.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// ribbonControl
@@ -212,6 +216,7 @@
 			// 
 			// layoutControl1
 			// 
+			this.layoutControl1.Controls.Add(this.chkBodegaMuestra);
 			this.layoutControl1.Controls.Add(this.pictureEdit1);
 			this.layoutControl1.Controls.Add(this.slkupPaqueteFactura);
 			this.layoutControl1.Controls.Add(this.chkPuedePrefacturar);
@@ -254,7 +259,7 @@
 			this.slkupPaqueteFactura.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
 			this.slkupPaqueteFactura.Properties.View = this.searchLookUpEdit1View;
-			this.slkupPaqueteFactura.Size = new System.Drawing.Size(471, 20);
+			this.slkupPaqueteFactura.Size = new System.Drawing.Size(469, 20);
 			this.slkupPaqueteFactura.StyleController = this.layoutControl1;
 			this.slkupPaqueteFactura.TabIndex = 14;
 			// 
@@ -267,22 +272,23 @@
 			// 
 			// chkPuedePrefacturar
 			// 
-			this.chkPuedePrefacturar.Location = new System.Drawing.Point(625, 109);
+			this.chkPuedePrefacturar.Location = new System.Drawing.Point(623, 132);
 			this.chkPuedePrefacturar.MenuManager = this.ribbonControl;
 			this.chkPuedePrefacturar.Name = "chkPuedePrefacturar";
 			this.chkPuedePrefacturar.Properties.Caption = "Puede Prefacturar";
-			this.chkPuedePrefacturar.Size = new System.Drawing.Size(110, 19);
+			this.chkPuedePrefacturar.Size = new System.Drawing.Size(112, 19);
 			this.chkPuedePrefacturar.StyleController = this.layoutControl1;
 			this.chkPuedePrefacturar.TabIndex = 13;
+			this.chkPuedePrefacturar.Visible = false;
 			this.chkPuedePrefacturar.CheckedChanged += new System.EventHandler(this.chkPuedePrefacturar_CheckedChanged);
 			// 
 			// chkPuedeFacturar
 			// 
-			this.chkPuedeFacturar.Location = new System.Drawing.Point(625, 84);
+			this.chkPuedeFacturar.Location = new System.Drawing.Point(623, 84);
 			this.chkPuedeFacturar.MenuManager = this.ribbonControl;
 			this.chkPuedeFacturar.Name = "chkPuedeFacturar";
 			this.chkPuedeFacturar.Properties.Caption = "Puede Facturar";
-			this.chkPuedeFacturar.Size = new System.Drawing.Size(110, 19);
+			this.chkPuedeFacturar.Size = new System.Drawing.Size(112, 19);
 			this.chkPuedeFacturar.StyleController = this.layoutControl1;
 			this.chkPuedeFacturar.TabIndex = 12;
 			this.chkPuedeFacturar.CheckedChanged += new System.EventHandler(this.chkPuedeFacturar_CheckedChanged);
@@ -301,11 +307,11 @@
 			// 
 			// dtgDetalle
 			// 
-			this.dtgDetalle.Location = new System.Drawing.Point(23, 137);
+			this.dtgDetalle.Location = new System.Drawing.Point(23, 157);
 			this.dtgDetalle.MainView = this.gridView1;
 			this.dtgDetalle.MenuManager = this.ribbonControl1;
 			this.dtgDetalle.Name = "dtgDetalle";
-			this.dtgDetalle.Size = new System.Drawing.Size(712, 188);
+			this.dtgDetalle.Size = new System.Drawing.Size(712, 168);
 			this.dtgDetalle.TabIndex = 5;
 			this.dtgDetalle.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
@@ -498,7 +504,7 @@
 			this.txtDescr.Location = new System.Drawing.Point(148, 59);
 			this.txtDescr.MenuManager = this.ribbonControl1;
 			this.txtDescr.Name = "txtDescr";
-			this.txtDescr.Size = new System.Drawing.Size(471, 20);
+			this.txtDescr.Size = new System.Drawing.Size(469, 20);
 			this.txtDescr.StyleController = this.layoutControl1;
 			this.txtDescr.TabIndex = 6;
 			// 
@@ -510,17 +516,17 @@
 			this.txtConsecutivoPreFactura.Name = "txtConsecutivoPreFactura";
 			this.txtConsecutivoPreFactura.Properties.Mask.EditMask = "n0";
 			this.txtConsecutivoPreFactura.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
-			this.txtConsecutivoPreFactura.Size = new System.Drawing.Size(471, 20);
+			this.txtConsecutivoPreFactura.Size = new System.Drawing.Size(469, 20);
 			this.txtConsecutivoPreFactura.StyleController = this.layoutControl1;
 			this.txtConsecutivoPreFactura.TabIndex = 8;
 			// 
 			// chkActivo
 			// 
-			this.chkActivo.Location = new System.Drawing.Point(625, 59);
+			this.chkActivo.Location = new System.Drawing.Point(623, 59);
 			this.chkActivo.MenuManager = this.ribbonControl1;
 			this.chkActivo.Name = "chkActivo";
 			this.chkActivo.Properties.Caption = "Activo";
-			this.chkActivo.Size = new System.Drawing.Size(110, 19);
+			this.chkActivo.Size = new System.Drawing.Size(112, 19);
 			this.chkActivo.StyleController = this.layoutControl1;
 			this.chkActivo.TabIndex = 11;
 			// 
@@ -549,7 +555,8 @@
             this.layoutControlItem4,
             this.layoutControlItem5,
             this.layoutControlItem7,
-            this.layoutControlItem2});
+            this.layoutControlItem2,
+            this.layoutControlItem10});
 			this.Root.Location = new System.Drawing.Point(0, 0);
 			this.Root.Name = "item0";
 			this.Root.Size = new System.Drawing.Size(738, 328);
@@ -572,17 +579,6 @@
 			this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem1.TextVisible = false;
 			// 
-			// layoutControlItem2
-			// 
-			this.layoutControlItem2.Control = this.dtgDetalle;
-			this.layoutControlItem2.CustomizationFormText = "layoutControlItem2";
-			this.layoutControlItem2.Location = new System.Drawing.Point(0, 114);
-			this.layoutControlItem2.Name = "layoutControlItem2";
-			this.layoutControlItem2.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
-			this.layoutControlItem2.Size = new System.Drawing.Size(718, 194);
-			this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
-			this.layoutControlItem2.TextVisible = false;
-			// 
 			// layoutControlItem3
 			// 
 			this.layoutControlItem3.Control = this.txtDescr;
@@ -590,7 +586,7 @@
 			this.layoutControlItem3.Location = new System.Drawing.Point(0, 36);
 			this.layoutControlItem3.Name = "layoutControlItem3";
 			this.layoutControlItem3.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
-			this.layoutControlItem3.Size = new System.Drawing.Size(602, 26);
+			this.layoutControlItem3.Size = new System.Drawing.Size(600, 26);
 			this.layoutControlItem3.Text = "Descricpción:";
 			this.layoutControlItem3.TextSize = new System.Drawing.Size(122, 13);
 			// 
@@ -598,30 +594,30 @@
 			// 
 			this.layoutControlItem8.Control = this.chkActivo;
 			this.layoutControlItem8.CustomizationFormText = "layoutControlItem8";
-			this.layoutControlItem8.Location = new System.Drawing.Point(602, 36);
+			this.layoutControlItem8.Location = new System.Drawing.Point(600, 36);
 			this.layoutControlItem8.Name = "layoutControlItem8";
 			this.layoutControlItem8.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
-			this.layoutControlItem8.Size = new System.Drawing.Size(116, 25);
+			this.layoutControlItem8.Size = new System.Drawing.Size(118, 25);
 			this.layoutControlItem8.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem8.TextVisible = false;
 			// 
 			// layoutControlItem6
 			// 
 			this.layoutControlItem6.Control = this.chkPuedeFacturar;
-			this.layoutControlItem6.Location = new System.Drawing.Point(602, 61);
+			this.layoutControlItem6.Location = new System.Drawing.Point(600, 61);
 			this.layoutControlItem6.Name = "layoutControlItem6";
 			this.layoutControlItem6.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
-			this.layoutControlItem6.Size = new System.Drawing.Size(116, 25);
+			this.layoutControlItem6.Size = new System.Drawing.Size(118, 25);
 			this.layoutControlItem6.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem6.TextVisible = false;
 			// 
 			// layoutControlItem9
 			// 
 			this.layoutControlItem9.Control = this.chkPuedePrefacturar;
-			this.layoutControlItem9.Location = new System.Drawing.Point(602, 86);
+			this.layoutControlItem9.Location = new System.Drawing.Point(600, 109);
 			this.layoutControlItem9.Name = "layoutControlItem9";
 			this.layoutControlItem9.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
-			this.layoutControlItem9.Size = new System.Drawing.Size(116, 28);
+			this.layoutControlItem9.Size = new System.Drawing.Size(118, 25);
 			this.layoutControlItem9.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem9.TextVisible = false;
 			// 
@@ -631,7 +627,7 @@
 			this.layoutControlItem4.Location = new System.Drawing.Point(0, 62);
 			this.layoutControlItem4.Name = "layoutControlItem4";
 			this.layoutControlItem4.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
-			this.layoutControlItem4.Size = new System.Drawing.Size(602, 26);
+			this.layoutControlItem4.Size = new System.Drawing.Size(600, 26);
 			this.layoutControlItem4.Text = "Paquete de Factura:";
 			this.layoutControlItem4.TextSize = new System.Drawing.Size(122, 13);
 			// 
@@ -642,7 +638,7 @@
 			this.layoutControlItem5.Location = new System.Drawing.Point(0, 88);
 			this.layoutControlItem5.Name = "layoutControlItem5";
 			this.layoutControlItem5.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
-			this.layoutControlItem5.Size = new System.Drawing.Size(602, 26);
+			this.layoutControlItem5.Size = new System.Drawing.Size(600, 46);
 			this.layoutControlItem5.Text = "Consecutivo Pre Factura:";
 			this.layoutControlItem5.TextSize = new System.Drawing.Size(122, 13);
 			// 
@@ -656,6 +652,37 @@
 			this.layoutControlItem7.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
 			this.layoutControlItem7.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem7.TextVisible = false;
+			// 
+			// layoutControlItem2
+			// 
+			this.layoutControlItem2.Control = this.dtgDetalle;
+			this.layoutControlItem2.CustomizationFormText = "layoutControlItem2";
+			this.layoutControlItem2.Location = new System.Drawing.Point(0, 134);
+			this.layoutControlItem2.Name = "layoutControlItem2";
+			this.layoutControlItem2.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
+			this.layoutControlItem2.Size = new System.Drawing.Size(718, 174);
+			this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
+			this.layoutControlItem2.TextVisible = false;
+			// 
+			// chkBodegaMuestra
+			// 
+			this.chkBodegaMuestra.Location = new System.Drawing.Point(622, 108);
+			this.chkBodegaMuestra.MenuManager = this.ribbonControl;
+			this.chkBodegaMuestra.Name = "chkBodegaMuestra";
+			this.chkBodegaMuestra.Properties.Caption = "Es Bodega Muestra";
+			this.chkBodegaMuestra.Size = new System.Drawing.Size(114, 19);
+			this.chkBodegaMuestra.StyleController = this.layoutControl1;
+			this.chkBodegaMuestra.TabIndex = 16;
+			this.chkBodegaMuestra.CheckedChanged += new System.EventHandler(this.chkBodegaMuestra_CheckedChanged);
+			// 
+			// layoutControlItem10
+			// 
+			this.layoutControlItem10.Control = this.chkBodegaMuestra;
+			this.layoutControlItem10.Location = new System.Drawing.Point(600, 86);
+			this.layoutControlItem10.Name = "layoutControlItem10";
+			this.layoutControlItem10.Size = new System.Drawing.Size(118, 23);
+			this.layoutControlItem10.TextSize = new System.Drawing.Size(0, 0);
+			this.layoutControlItem10.TextVisible = false;
 			// 
 			// frmBodegas
 			// 
@@ -686,7 +713,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.Root)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).EndInit();
@@ -694,6 +720,9 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.chkBodegaMuestra.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -752,5 +781,7 @@
         private DevExpress.XtraGrid.Columns.GridColumn colConsecutivoPreFactura;
         private DevExpress.XtraEditors.PictureEdit pictureEdit1;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem7;
+		private DevExpress.XtraEditors.CheckEdit chkBodegaMuestra;
+		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem10;
     }
 }

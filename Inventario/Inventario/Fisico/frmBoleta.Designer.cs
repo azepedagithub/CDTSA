@@ -87,6 +87,7 @@
 			this.layoutControlItem12 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem13 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.btnCaptacion = new DevExpress.XtraBars.BarButtonItem();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
 			this.layoutControl1.SuspendLayout();
@@ -140,9 +141,10 @@
             this.btnValidar,
             this.btnAplicar,
             this.btnImprimirBoletas,
-            this.btnImprimirDiferencias});
+            this.btnImprimirDiferencias,
+            this.btnCaptacion});
 			this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-			this.ribbonControl.MaxItemId = 12;
+			this.ribbonControl.MaxItemId = 13;
 			this.ribbonControl.Name = "ribbonControl";
 			this.ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -249,6 +251,7 @@
 			this.ribbonPageGroup1.ItemLinks.Add(this.btnAplicar);
 			this.ribbonPageGroup1.ItemLinks.Add(this.btnImprimirBoletas);
 			this.ribbonPageGroup1.ItemLinks.Add(this.btnImprimirDiferencias);
+			this.ribbonPageGroup1.ItemLinks.Add(this.btnCaptacion);
 			this.ribbonPageGroup1.Name = "ribbonPageGroup1";
 			this.ribbonPageGroup1.Text = "Acciones";
 			// 
@@ -746,6 +749,15 @@
 			this.layoutControlItem9.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem9.TextVisible = false;
 			// 
+			// btnCaptacion
+			// 
+			this.btnCaptacion.Caption = "Formato de Captación";
+			this.btnCaptacion.Glyph = ((System.Drawing.Image)(resources.GetObject("btnCaptacion.Glyph")));
+			this.btnCaptacion.Id = 12;
+			this.btnCaptacion.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnCaptacion.LargeGlyph")));
+			this.btnCaptacion.Name = "btnCaptacion";
+			this.btnCaptacion.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnCaptacion_ItemClick);
+			// 
 			// frmBoleta
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -859,5 +871,6 @@
         private DevExpress.XtraBars.BarButtonItem btnAplicar;
         private DevExpress.XtraBars.BarButtonItem btnImprimirBoletas;
 		private DevExpress.XtraBars.BarButtonItem btnImprimirDiferencias;
+		private DevExpress.XtraBars.BarButtonItem btnCaptacion;
     }
 }

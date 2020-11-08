@@ -1034,11 +1034,13 @@ VALUES ('CONSECUTIVO FISICO','FIS',1,'FIS00000001',1)
 go
 INSERT INTO DBO.globalConsecutivos( Descr ,Prefijo ,Consecutivo ,Documento ,Activo)
 VALUES ('CONSECUTIVO MUETRAS','MUE',1,'MUE00000001',1)
+go
+INSERT INTO DBO.globalConsecutivos( Descr ,Prefijo ,Consecutivo ,Documento ,Activo)
+VALUES ('CONSECUTIVO TRASLADOS','MOV',1,'MOV00000001',1)
 
 
 GO
 
-SELECT *  FROM DBO.globalConsecutivos
 
 INSERT INTO DBO.invPaquete( PAQUETE ,Descr ,IDConsecutivo ,Transaccion ,Activo)
 VALUES ('COM','COMPRAS',2,'CO',1)
@@ -1054,6 +1056,11 @@ VALUES ('FIS','FISICO',7,'FI',1)
 GO
 INSERT INTO DBO.invPaquete( PAQUETE ,Descr ,IDConsecutivo ,Transaccion ,Activo,isReadOnly)
 VALUES ('MUE','MUESTRAS',8,'AJ',1,1)
+GO
+INSERT INTO DBO.invPaquete( PAQUETE ,Descr ,IDConsecutivo ,Transaccion ,Activo,isReadOnly)
+VALUES ('MOV','TRASLADOS',9,'TR',1,1)
+
+
 
 
 GO
@@ -1585,7 +1592,7 @@ BEGIN
 END
 GO
 
-CREATE  PROCEDURE dbo.invGetBodega(@IDBodega AS INT,@Descr AS NVARCHAR(250),@Activo AS INT, @IsForMuestra bit)
+CREATE  PROCEDURE dbo.invGetBodega(@IDBodega AS INT,@Descr AS NVARCHAR(250),@Activo AS INT, @IsForMuestra INT)
 AS 
 SELECT IDBodega,Descr,Activo,PuedeFacturar,PuedePreFacturar,IDPaqueteFactura,ConsecutivoPreFactura, isForMuestra  
 FROM dbo.invBodega 
@@ -2111,6 +2118,7 @@ AS
 
 
 go
+
 
 
 --// Imprime las Boletas
@@ -3589,3 +3597,21 @@ WHERE (IDProveedor = @IDProveedor OR @IDProveedor = -1) AND Activo=1 AND EsMuest
 
 GO
 
+CREATE PROCEDURE dbo.invGetFormatoBoleta @IDBodega INT, @IDC1 INT, @IDC2 INT, @IDC3 INT,@IDC4 INT,@IDC5 INT,@IDC6 INT,@IDProveedor INT
+AS 
+SELECT pro.Nombre Proveedor, C1.Descr DescrC1, C2.Descr DescrC2, C3.Descr DescrC3, C4.Descr DescrC4, C5.Descr DescrC5,C6.Descr DescrC6,
+		a.IDBodega,B.Descr NombreBodega,a.IDProducto,P.Descr,L.LoteProveedor,L.FechaVencimiento 
+FROM dbo.invExistenciaBodega a
+INNER JOIN dbo.invProducto p ON a.IDProducto = p.IDProducto
+INNER JOIN dbo.invLote L ON a.IDProducto = L.IDProducto AND a.IDLote=L.IDLote
+INNER JOIN dbo.invBodega B ON A.IDBodega=B.IDBodega
+INNER JOIN dbo.cppProveedor Pro ON P.IDProveedor = Pro.IDProveedor
+LEFT JOIN dbo.invClasificacion C1 ON P.Clasif1 = C1.IDClasificacion  AND C1.IDGrupo =1 
+LEFT JOIN dbo.invClasificacion C2 ON P.Clasif2 = C2.IDClasificacion  AND C2.IDGrupo =2
+LEFT JOIN dbo.invClasificacion C3 ON P.Clasif3 = C3.IDClasificacion  AND C3.IDGrupo =3 
+LEFT JOIN dbo.invClasificacion C4 ON P.Clasif4 = C4.IDClasificacion  AND C4.IDGrupo =4 
+LEFT JOIN dbo.invClasificacion C5 ON P.Clasif5 = C5.IDClasificacion  AND C5.IDGrupo =5 
+LEFT JOIN dbo.invClasificacion C6 ON P.Clasif6 = C6.IDClasificacion  AND C6.IDGrupo =6 
+WHERE A.Existencia >0 AND (A.IDBodega = @IDBodega OR @IDBodega =-1) AND (p.Clasif1 = @IDC1 OR @IDC1 = -1)
+AND (p.Clasif2 = @IDC2 OR @IDC2 = -1) AND (p.Clasif3 = @IDC3 OR @IDC3 = -1) AND (p.Clasif4= @IDC4 OR @IDC4 = -1)
+AND (p.Clasif5 = @IDC5 OR @IDC5 = -1) AND (p.Clasif6 = @IDC6 OR @IDC6 = -1) AND (p.IDProveedor = @IDProveedor OR @IDProveedor =-1)

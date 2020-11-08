@@ -309,6 +309,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reportes\rptFormatoBoletas.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\rptFormatoBoletas.Designer.cs">
+      <DependentUpon>rptFormatoBoletas.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\rptBoletasInv.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -413,6 +419,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Reportes\rptFormatoBoletas.resx">
+      <DependentUpon>rptFormatoBoletas.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reportes\rptBoletasInv.resx">
       <DependentUpon>rptBoletasInv.cs</DependentUpon>
     </EmbeddedResource>
@@ -445,6 +454,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Reportes\rptFichaProducto.repx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Reportes\rptFormatoBoletas.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

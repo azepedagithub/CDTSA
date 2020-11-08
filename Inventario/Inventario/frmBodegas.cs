@@ -139,6 +139,7 @@ namespace CI
             this.chkPuedeFacturar.EditValue = false;
             this.chkPuedePrefacturar.EditValue = false;
             this.chkActivo.EditValue = true;
+			this.chkBodegaMuestra.EditValue = false;
             
         }
 
@@ -147,6 +148,7 @@ namespace CI
         {
             this.txtDescr.ReadOnly = !Activo;
             this.chkActivo.ReadOnly = !Activo;
+			this.chkBodegaMuestra.ReadOnly = !Activo;
             this.slkupPaqueteFactura.ReadOnly = !Activo;
             this.txtConsecutivoPreFactura.ReadOnly = !Activo;
             this.chkPuedeFacturar.ReadOnly = !Activo;
@@ -180,6 +182,7 @@ namespace CI
             this.chkPuedeFacturar.EditValue = Row["PuedeFacturar"].ToString();
             this.chkPuedePrefacturar.EditValue = Row["PuedePreFacturar"].ToString();
             this.chkActivo.EditValue = Convert.ToBoolean(Row["Activo"]);
+			this.chkBodegaMuestra.EditValue = Convert.ToBoolean(Row["IsForMuestra"]);
         }
 
 
@@ -261,6 +264,7 @@ namespace CI
                     currentRow["PuedePreFacturar"] = this.chkPuedePrefacturar.EditValue;
                     currentRow["ConsecutivoPreFactura"] = this.txtConsecutivoPreFactura.EditValue.ToString() == "" ? 0 : Convert.ToInt32(this.txtConsecutivoPreFactura.EditValue);
                     currentRow["Activo"] = this.chkActivo.EditValue;
+					currentRow["IsforMuestra"] = this.chkBodegaMuestra.EditValue;
 
                     currentRow.EndEdit();
 
@@ -319,6 +323,7 @@ namespace CI
                     currentRow["PuedePreFacturar"] = this.chkPuedePrefacturar.EditValue;
                     currentRow["ConsecutivoPreFactura"] = this.txtConsecutivoPreFactura.EditValue.ToString() == "" ? 0 : Convert.ToInt32(this.txtConsecutivoPreFactura.EditValue);
                     currentRow["Activo"] = this.chkActivo.EditValue;
+					currentRow["IsForMuestra"] = this.chkBodegaMuestra.EditValue;
 
                     _dtBodega.Rows.Add(currentRow);
                     try
@@ -407,6 +412,11 @@ namespace CI
         {
 
         }
+
+		private void chkBodegaMuestra_CheckedChanged(object sender, EventArgs e)
+		{
+
+		}
 
 
      
