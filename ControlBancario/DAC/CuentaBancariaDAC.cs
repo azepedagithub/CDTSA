@@ -15,8 +15,8 @@ namespace ControlBancario.DAC
         
         private static SqlDataAdapter InicializarAdaptador()
         {
-            String getSQL = "SELECT  A.IDCuentaBanco ,A.Codigo ,A.Descr ,A.IDBanco ,B.Descr DescrBanco,A.IDMoneda ,M.Descr DescrMoneda,A.SaldoInicial ,A.FechaCreacion ,A.IDTipo,C.Descr DescrTipo ,A.SaldoLibro ,A.SaldoBanco ,A.ConsecDeposito ,A.ConsecCheque , "  +
-                            "A.ConsecTransferencia ,A.Limite ,A.Sobregiro ,A.IDCuenta ,A.Activa " +
+            String getSQL = "SELECT  A.IDCuentaBanco ,A.Codigo ,A.Descr ,A.IDBanco ,B.Descr DescrBanco,A.IDMoneda ,M.Descr DescrMoneda,A.SaldoInicial ,A.FechaCreacion ,A.IDTipo,C.Descr DescrTipo ,A.SaldoLibro ,A.SaldoBanco  ,A.ConsecCheque , "  +
+                            "A.Limite ,A.Sobregiro ,A.IDCuenta ,A.Activa " +
                             "FROM dbo.cbCuentaBancaria A " +
                             "INNER JOIN dbo.cbBanco B ON a.IDBanco=B.IDBanco " +
                             "INNER JOIN dbo.cbTipoCuenta C ON A.IDTipo=C.IDTipo " +
@@ -53,6 +53,7 @@ namespace ControlBancario.DAC
                 oAdaptador.InsertCommand.Parameters.Add("@SaldoInicial", SqlDbType.Decimal).SourceColumn = "SaldoInicial";
                 oAdaptador.InsertCommand.Parameters.Add("@FechaCreacion", SqlDbType.DateTime).SourceColumn = "FechaCreacion";
                 oAdaptador.InsertCommand.Parameters.Add("@IDTipo", SqlDbType.Int).SourceColumn = "IDTipo";
+				oAdaptador.InsertCommand.Parameters.Add("@ConsecCheque", SqlDbType.Int).SourceColumn = "ConsecCheque";
                 oAdaptador.InsertCommand.Parameters.Add("@Limite", SqlDbType.Decimal).SourceColumn = "Limite";
                 oAdaptador.InsertCommand.Parameters.Add("@IDCuenta", SqlDbType.Int ).SourceColumn = "IDCuenta";
                 oAdaptador.InsertCommand.Parameters.Add("@Activa", SqlDbType.Bit).SourceColumn = "Activa";
@@ -69,6 +70,7 @@ namespace ControlBancario.DAC
                 oAdaptador.UpdateCommand.Parameters.Add("@SaldoInicial", SqlDbType.Decimal).SourceColumn = "SaldoInicial";
                 oAdaptador.UpdateCommand.Parameters.Add("@FechaCreacion", SqlDbType.DateTime).SourceColumn = "FechaCreacion";
                 oAdaptador.UpdateCommand.Parameters.Add("@IDTipo", SqlDbType.Int).SourceColumn = "IDTipo";
+				oAdaptador.UpdateCommand.Parameters.Add("@ConsecCheque", SqlDbType.Int).SourceColumn = "ConsecCheque";
                 oAdaptador.UpdateCommand.Parameters.Add("@Limite", SqlDbType.Decimal).SourceColumn = "Limite";
                 oAdaptador.UpdateCommand.Parameters.Add("@IDCuenta", SqlDbType.Int ).SourceColumn = "IDCuenta";
                 oAdaptador.UpdateCommand.Parameters.Add("@Activa", SqlDbType.Bit).SourceColumn = "Activa";
@@ -86,6 +88,7 @@ namespace ControlBancario.DAC
                 oAdaptador.DeleteCommand.Parameters.Add("@SaldoInicial", SqlDbType.Decimal).SourceColumn = "SaldoInicial";
                 oAdaptador.DeleteCommand.Parameters.Add("@FechaCreacion", SqlDbType.DateTime).SourceColumn = "FechaCreacion";
                 oAdaptador.DeleteCommand.Parameters.Add("@IDTipo", SqlDbType.Int).SourceColumn = "IDTipo";
+				oAdaptador.DeleteCommand.Parameters.Add("@ConsecCheque", SqlDbType.Int).SourceColumn = "ConsecCheque";
                 oAdaptador.DeleteCommand.Parameters.Add("@Limite", SqlDbType.Decimal).SourceColumn = "Limite";
                 oAdaptador.DeleteCommand.Parameters.Add("@IDCuenta", SqlDbType.Int ).SourceColumn = "IDCuenta";
                 oAdaptador.DeleteCommand.Parameters.Add("@Activa", SqlDbType.Bit).SourceColumn = "Activa";

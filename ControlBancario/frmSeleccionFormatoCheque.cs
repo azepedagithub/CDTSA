@@ -34,7 +34,8 @@ namespace ControlBancario
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            this.Close();
+			this.DialogResult = DialogResult.Cancel;
+			this.Close();
         }
 
         private void btnImprimir_Click(object sender, EventArgs e)
@@ -49,6 +50,7 @@ namespace ControlBancario
             }
              
             this.IDFormato =  Convert.ToInt32(this.slkupReportes.EditValue);
+			this.DialogResult = DialogResult.OK;
             this.Close();
         }
     }

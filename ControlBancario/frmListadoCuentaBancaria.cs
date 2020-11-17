@@ -212,9 +212,9 @@ namespace ControlBancario
             this.txtLimite.EditValue = Convert.ToDecimal(Row["Limite"]);
             this.txtSaldoBancos.EditValue = (Row["SaldoBanco"] == DBNull.Value ) ? 0 : Convert.ToDecimal(Row["SaldoBanco"]);
 			this.txtSaldoLibros.EditValue = (Row["SaldoLibro"] == DBNull.Value) ? 0 : Convert.ToDecimal(Row["SaldoLibro"]);
-            this.txtUltDeposito.EditValue = (Row["ConsecDeposito"] == DBNull.Value) ? 0 : Convert.ToDecimal(Row["ConsecDeposito"]);
+            //this.txtUltDeposito.EditValue = (Row["ConsecDeposito"] == DBNull.Value) ? 0 : Convert.ToDecimal(Row["ConsecDeposito"]);
             this.txtUltimoCheque.EditValue = (Row["ConsecCheque"] == DBNull.Value) ? 0 : Convert.ToDecimal(Row["ConsecCheque"]);
-            this.txtUltTransferencia.EditValue =(Row["ConsecTransferencia"] == DBNull.Value) ? 0 : Convert.ToDecimal(Row["ConsecTransferencia"]);
+            //this.txtUltTransferencia.EditValue =(Row["ConsecTransferencia"] == DBNull.Value) ? 0 : Convert.ToDecimal(Row["ConsecTransferencia"]);
             this.chkActivo.EditValue = Convert.ToBoolean(Row["Activa"]);
             this.dtFechaCreacion.EditValue = Convert.ToDateTime(Row["FechaCreacion"]);
 

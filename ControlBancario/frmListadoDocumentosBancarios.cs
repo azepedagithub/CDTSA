@@ -81,14 +81,14 @@ namespace ControlBancario
         }
 
         private void MostrarElementoSeleccionado() {
-            frmDocumento ofrmCheque = new frmDocumento(Convert.ToInt32(_currentRow["IDCuentaBanco"]),
+            frmDocumento ofrmDocumento = new frmDocumento(Convert.ToInt32(_currentRow["IDCuentaBanco"]),
                                                          Convert.ToInt32(_currentRow["IDTipo"]),
                                                          Convert.ToInt32(_currentRow["IDSubTipo"]),
                                                          Convert.ToInt32(_currentRow["IDRuc"]),
                                                          _currentRow["Numero"].ToString()
                                                          );
-            ofrmCheque.FormClosed += ofrmCheque_FormClosed;
-            ofrmCheque.ShowDialog();
+            ofrmDocumento.FormClosed += ofrmCheque_FormClosed;
+            ofrmDocumento.ShowDialog();
         }
         private void GridView_DoubleClick(object sender, EventArgs e)
         {

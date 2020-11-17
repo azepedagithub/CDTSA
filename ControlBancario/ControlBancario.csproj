@@ -136,6 +136,12 @@
       <DependentUpon>rptChequeBase.cs</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="frmConciliacionBancaria.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmConciliacionBancaria.Designer.cs">
+      <DependentUpon>frmConciliacionBancaria.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmDocumento.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -208,6 +214,9 @@
     <EmbeddedResource Include="FormatosCheques\rptChequeBase.resx">
       <DependentUpon>rptChequeBase.cs</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmConciliacionBancaria.resx">
+      <DependentUpon>frmConciliacionBancaria.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmDocumento.resx">
       <DependentUpon>frmDocumento.cs</DependentUpon>

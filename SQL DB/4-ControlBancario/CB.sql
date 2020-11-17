@@ -270,8 +270,8 @@ GO
 Create Table dbo.cbCuentaBancaria ( IDCuentaBanco int not null, Codigo nvarchar(25), Descr nvarchar(250),
 IDBanco int not null, IDMoneda int not null, SaldoInicial decimal(28,4 ) default 0, FechaCreacion date,
 IDTipo int not null, 
-SaldoLibro decimal(28,4 ) default 0, SaldoBanco decimal(28,4 ) default 0, ConsecDeposito int default 0, ConsecCheque int default 0,
-ConsecTransferencia int default 0, Limite decimal(28,4 ) default 0, 
+SaldoLibro decimal(28,4 ) default 0, SaldoBanco decimal(28,4 ) default 0, ConsecCheque int default 0,
+Limite decimal(28,4 ) default 0, 
 Sobregiro bit default 0, IDCuenta BIGINT not null, Activa bit default 1 )
 
 go
@@ -388,8 +388,8 @@ end
 
 GO
 
-CREATE   Procedure [dbo].[cbUpdateCuentaBancaria] @Operacion nvarchar(1), @IDCuentaBanco int, @Codigo nvarchar(10), @Descr nvarchar(250),
-			@IDBanco INT,@IDMoneda INT ,@SaldoInicial DECIMAL(28,4), @FechaCreacion DATE,@IDTipo INT, @Limite DECIMAL(28,4),@IDCuenta int ,@Activa BIT
+CREATE  Procedure [dbo].[cbUpdateCuentaBancaria] @Operacion nvarchar(1), @IDCuentaBanco int, @Codigo nvarchar(10), @Descr nvarchar(250),
+			@IDBanco INT,@IDMoneda INT ,@SaldoInicial DECIMAL(28,4), @FechaCreacion DATE,@IDTipo INT,@ConsecCheque AS INT, @Limite DECIMAL(28,4),@IDCuenta int ,@Activa BIT
 as
 set nocount on 
 
@@ -397,8 +397,8 @@ if upper(@Operacion) = 'I'
 BEGIN
 	SET @IDCuentaBanco =  (SELECT ISNULL(MAX(IDCuentaBanco),0) +1  FROM dbo.cbCuentaBancaria)
 	INSERT INTO dbo.cbCuentaBancaria  ( IDCuentaBanco ,Codigo ,Descr ,IDBanco ,IDMoneda ,SaldoInicial ,FechaCreacion ,IDTipo ,SaldoLibro ,SaldoBanco ,
-	          ConsecDeposito ,ConsecCheque ,ConsecTransferencia ,Limite ,Sobregiro ,IDCuenta ,Activa)
-	VALUES (@IDCuentaBanco,@Codigo,@Descr,@IDBanco,@IDMoneda,@SaldoInicial,@FechaCreacion,@IDTipo,0,0,0,0,0,@Limite,0,@IDCuenta,@Activa)
+	          ConsecCheque ,Limite ,Sobregiro ,IDCuenta ,Activa)
+	VALUES (@IDCuentaBanco,@Codigo,@Descr,@IDBanco,@IDMoneda,@SaldoInicial,@FechaCreacion,@IDTipo,0,0,0,@Limite,0,@IDCuenta,@Activa)
 END 
 
 if upper(@Operacion) = 'D'
@@ -416,7 +416,7 @@ end
 if upper(@Operacion) = 'U' 
 BEGIN
 	UPDATE dbo.cbCuentaBancaria SET Codigo=@Codigo,  Descr = @Descr, IDBanco=@IDBanco,IDMoneda=@IDMoneda,
-											IDTipo=@IDTipo,Limite=@Limite,IDCuenta=@IDCuenta,Activa=@Activa
+											IDTipo=@IDTipo,Limite=@Limite,IDCuenta=@IDCuenta,Activa=@Activa, ConsecCheque = @ConsecCheque
 	WHERE IDCuentaBanco=@IDCuentaBanco
 
 end
