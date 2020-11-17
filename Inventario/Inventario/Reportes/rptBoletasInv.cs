@@ -6,9 +6,9 @@ using DevExpress.XtraReports.UI;
 
 namespace CI.Reportes
 {
-    public partial class rptBoletasInv : DevExpress.XtraReports.UI.XtraReport
+    public partial class rptBoletaInv : DevExpress.XtraReports.UI.XtraReport
     {
-        public rptBoletasInv()
+        public rptBoletaInv()
         {
             InitializeComponent();
         }

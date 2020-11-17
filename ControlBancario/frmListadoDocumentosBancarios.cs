@@ -81,7 +81,7 @@ namespace ControlBancario
         }
 
         private void MostrarElementoSeleccionado() {
-            frmCheque ofrmCheque = new frmCheque(Convert.ToInt32(_currentRow["IDCuentaBanco"]),
+            frmDocumento ofrmCheque = new frmDocumento(Convert.ToInt32(_currentRow["IDCuentaBanco"]),
                                                          Convert.ToInt32(_currentRow["IDTipo"]),
                                                          Convert.ToInt32(_currentRow["IDSubTipo"]),
                                                          Convert.ToInt32(_currentRow["IDRuc"]),
@@ -258,7 +258,7 @@ namespace ControlBancario
 
         private void BtnAgregar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            frmCheque ofrmCheque  = new frmCheque();
+            frmDocumento ofrmCheque  = new frmDocumento();
             ofrmCheque.FormClosed+=ofrmCheque_FormClosed;
 
             if (!ofrmCheque.IsDisposed)

@@ -136,11 +136,11 @@
       <DependentUpon>rptChequeBase.cs</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="frmCheque.cs">
+    <Compile Include="frmDocumento.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmCheque.Designer.cs">
-      <DependentUpon>frmCheque.cs</DependentUpon>
+    <Compile Include="frmDocumento.Designer.cs">
+      <DependentUpon>frmDocumento.cs</DependentUpon>
     </Compile>
     <Compile Include="frmListadoBanco.cs">
       <SubType>Form</SubType>
@@ -209,8 +209,8 @@
       <DependentUpon>rptChequeBase.cs</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmCheque.resx">
-      <DependentUpon>frmCheque.cs</DependentUpon>
+    <EmbeddedResource Include="frmDocumento.resx">
+      <DependentUpon>frmDocumento.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmListadoBanco.resx">
       <DependentUpon>frmListadoBanco.cs</DependentUpon>

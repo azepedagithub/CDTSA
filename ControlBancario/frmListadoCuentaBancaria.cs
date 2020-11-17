@@ -210,11 +210,11 @@ namespace ControlBancario
             this.slkupMoneda.EditValue = Convert.ToInt32(Row["IDMoneda"]);
             this.slkupTipo.EditValue = Convert.ToInt32(Row["IDTipo"]);
             this.txtLimite.EditValue = Convert.ToDecimal(Row["Limite"]);
-            this.txtSaldoBancos.EditValue = Convert.ToDecimal(Row["SaldoBanco"]);
-            this.txtSaldoLibros.EditValue = Convert.ToDecimal(Row["SaldoLibro"]);
-            this.txtUltDeposito.EditValue = Convert.ToDecimal(Row["ConsecDeposito"]);
-            this.txtUltimoCheque.EditValue = Convert.ToDecimal(Row["ConsecCheque"]);
-            this.txtUltTransferencia.EditValue = Convert.ToDecimal(Row["ConsecTransferencia"]);
+            this.txtSaldoBancos.EditValue = (Row["SaldoBanco"] == DBNull.Value ) ? 0 : Convert.ToDecimal(Row["SaldoBanco"]);
+			this.txtSaldoLibros.EditValue = (Row["SaldoLibro"] == DBNull.Value) ? 0 : Convert.ToDecimal(Row["SaldoLibro"]);
+            this.txtUltDeposito.EditValue = (Row["ConsecDeposito"] == DBNull.Value) ? 0 : Convert.ToDecimal(Row["ConsecDeposito"]);
+            this.txtUltimoCheque.EditValue = (Row["ConsecCheque"] == DBNull.Value) ? 0 : Convert.ToDecimal(Row["ConsecCheque"]);
+            this.txtUltTransferencia.EditValue =(Row["ConsecTransferencia"] == DBNull.Value) ? 0 : Convert.ToDecimal(Row["ConsecTransferencia"]);
             this.chkActivo.EditValue = Convert.ToBoolean(Row["Activa"]);
             this.dtFechaCreacion.EditValue = Convert.ToDateTime(Row["FechaCreacion"]);
 
