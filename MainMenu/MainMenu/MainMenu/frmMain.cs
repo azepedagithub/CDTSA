@@ -250,6 +250,12 @@ namespace MainMenu
                     ShowPagesRibbonMan(false);
                     ofrmRUC.Show();
                     break;
+				case "frmConciliacionBancaria":
+					ControlBancario.frmConciliacionBancaria ofrmConciliacion = new ControlBancario.frmConciliacionBancaria();
+					ofrmConciliacion.MdiParent = this;
+					ShowPagesRibbonMan(false);
+					ofrmConciliacion.Show();
+					break;
             }
         }
 
@@ -769,6 +775,9 @@ namespace MainMenu
                     nodeCheques.Tag = "frmListadoDocumentosBancarios";
                     TreeListNode nodeNit = tl.AppendNode(new object[] { "Nit" }, nodeDocumentos.Id, 11, 11, 11);
                     nodeNit.Tag = "frmNIT";
+					TreeListNode nodeProcesosBanco = tl.AppendNode(new object[] { "Procesos" }, -1, 9, 10, 9);
+					TreeListNode nodeConciliacion = tl.AppendNode(new object[] { "Conciliación Bancaria" }, nodeProcesosBanco.Id, 11, 11, 11);
+					nodeConciliacion.Tag = "frmConciliacionBancaria";
 
                     
 

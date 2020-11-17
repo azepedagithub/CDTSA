@@ -42,84 +42,84 @@
 			this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
-			this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
-			this.slkupCuentaBancaria = new DevExpress.XtraEditors.SearchLookUpEdit();
-			this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.searchLookUpEdit1View = new DevExpress.XtraGrid.Views.Grid.GridView();
-			this.txtBanco = new DevExpress.XtraEditors.TextEdit();
-			this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.txtMoneda = new DevExpress.XtraEditors.TextEdit();
-			this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.txtCuentaContable = new DevExpress.XtraEditors.TextEdit();
-			this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
-			this.dtpFechaSaldo = new DevExpress.XtraEditors.DateEdit();
-			this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
-			this.emptySpaceItem3 = new DevExpress.XtraLayout.EmptySpaceItem();
-			this.txtSaldoLibro = new DevExpress.XtraEditors.TextEdit();
-			this.layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.txtSaldoBanco = new DevExpress.XtraEditors.TextEdit();
-			this.layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.gridMobLibros = new DevExpress.XtraGrid.GridControl();
-			this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
-			this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.slkupTypeView = new DevExpress.XtraEditors.SearchLookUpEdit();
+			this.searchLookUpEdit2View = new DevExpress.XtraGrid.Views.Grid.GridView();
+			this.txtDiferencia = new DevExpress.XtraEditors.TextEdit();
+			this.txtTotalMarcado = new DevExpress.XtraEditors.TextEdit();
+			this.txtMarcadosLibros = new DevExpress.XtraEditors.TextEdit();
 			this.gridMovBanco = new DevExpress.XtraGrid.GridControl();
 			this.gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
+			this.gridMobLibros = new DevExpress.XtraGrid.GridControl();
+			this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+			this.txtSaldoBanco = new DevExpress.XtraEditors.TextEdit();
+			this.txtSaldoLibro = new DevExpress.XtraEditors.TextEdit();
+			this.dtpFechaSaldo = new DevExpress.XtraEditors.DateEdit();
+			this.txtCuentaContable = new DevExpress.XtraEditors.TextEdit();
+			this.txtMoneda = new DevExpress.XtraEditors.TextEdit();
+			this.txtBanco = new DevExpress.XtraEditors.TextEdit();
+			this.slkupCuentaBancaria = new DevExpress.XtraEditors.SearchLookUpEdit();
+			this.searchLookUpEdit1View = new DevExpress.XtraGrid.Views.Grid.GridView();
+			this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
+			this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
+			this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.emptySpaceItem3 = new DevExpress.XtraLayout.EmptySpaceItem();
+			this.layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.txtMarcadosLibros = new DevExpress.XtraEditors.TextEdit();
+			this.emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.layoutControlItem10 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.txtTotalMarcado = new DevExpress.XtraEditors.TextEdit();
 			this.layoutControlItem11 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.txtDiferencia = new DevExpress.XtraEditors.TextEdit();
 			this.layoutControlItem12 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.emptySpaceItem4 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.emptySpaceItem5 = new DevExpress.XtraLayout.EmptySpaceItem();
-			this.slkupTypeView = new DevExpress.XtraEditors.SearchLookUpEdit();
 			this.layoutControlItem13 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.searchLookUpEdit2View = new DevExpress.XtraGrid.Views.Grid.GridView();
 			this.emptySpaceItem6 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.emptySpaceItem7 = new DevExpress.XtraLayout.EmptySpaceItem();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
 			this.layoutControl1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.slkupCuentaBancaria.Properties)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit1View)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.txtBanco.Properties)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.txtMoneda.Properties)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.txtCuentaContable.Properties)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.dtpFechaSaldo.Properties.CalendarTimeProperties)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.dtpFechaSaldo.Properties)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.txtSaldoLibro.Properties)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.txtSaldoBanco.Properties)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.gridMobLibros)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.slkupTypeView.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit2View)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.txtDiferencia.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.txtTotalMarcado.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.txtMarcadosLibros.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridMovBanco)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView2)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.gridMobLibros)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.txtSaldoBanco.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.txtSaldoLibro.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.dtpFechaSaldo.Properties.CalendarTimeProperties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.dtpFechaSaldo.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.txtCuentaContable.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.txtMoneda.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.txtBanco.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.slkupCuentaBancaria.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit1View)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.txtMarcadosLibros.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.txtTotalMarcado.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem11)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.txtDiferencia.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem12)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem5)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.slkupTypeView.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem13)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit2View)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem6)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem7)).BeginInit();
 			this.SuspendLayout();
@@ -260,6 +260,165 @@
 			this.layoutControl1.TabIndex = 1;
 			this.layoutControl1.Text = "layoutControl1";
 			// 
+			// slkupTypeView
+			// 
+			this.slkupTypeView.Location = new System.Drawing.Point(100, 12);
+			this.slkupTypeView.MenuManager = this.ribbonControl;
+			this.slkupTypeView.Name = "slkupTypeView";
+			this.slkupTypeView.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+			this.slkupTypeView.Properties.View = this.searchLookUpEdit2View;
+			this.slkupTypeView.Size = new System.Drawing.Size(302, 20);
+			this.slkupTypeView.StyleController = this.layoutControl1;
+			this.slkupTypeView.TabIndex = 16;
+			// 
+			// searchLookUpEdit2View
+			// 
+			this.searchLookUpEdit2View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+			this.searchLookUpEdit2View.Name = "searchLookUpEdit2View";
+			this.searchLookUpEdit2View.OptionsSelection.EnableAppearanceFocusedCell = false;
+			this.searchLookUpEdit2View.OptionsView.ShowGroupPanel = false;
+			// 
+			// txtDiferencia
+			// 
+			this.txtDiferencia.Location = new System.Drawing.Point(344, 449);
+			this.txtDiferencia.MenuManager = this.ribbonControl;
+			this.txtDiferencia.Name = "txtDiferencia";
+			this.txtDiferencia.Size = new System.Drawing.Size(224, 20);
+			this.txtDiferencia.StyleController = this.layoutControl1;
+			this.txtDiferencia.TabIndex = 15;
+			// 
+			// txtTotalMarcado
+			// 
+			this.txtTotalMarcado.Location = new System.Drawing.Point(505, 425);
+			this.txtTotalMarcado.MenuManager = this.ribbonControl;
+			this.txtTotalMarcado.Name = "txtTotalMarcado";
+			this.txtTotalMarcado.Size = new System.Drawing.Size(319, 20);
+			this.txtTotalMarcado.StyleController = this.layoutControl1;
+			this.txtTotalMarcado.TabIndex = 14;
+			// 
+			// txtMarcadosLibros
+			// 
+			this.txtMarcadosLibros.Location = new System.Drawing.Point(100, 425);
+			this.txtMarcadosLibros.MenuManager = this.ribbonControl;
+			this.txtMarcadosLibros.Name = "txtMarcadosLibros";
+			this.txtMarcadosLibros.Size = new System.Drawing.Size(302, 20);
+			this.txtMarcadosLibros.StyleController = this.layoutControl1;
+			this.txtMarcadosLibros.TabIndex = 13;
+			// 
+			// gridMovBanco
+			// 
+			this.gridMovBanco.Location = new System.Drawing.Point(417, 158);
+			this.gridMovBanco.MainView = this.gridView2;
+			this.gridMovBanco.MenuManager = this.ribbonControl;
+			this.gridMovBanco.Name = "gridMovBanco";
+			this.gridMovBanco.Size = new System.Drawing.Size(407, 263);
+			this.gridMovBanco.TabIndex = 12;
+			this.gridMovBanco.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gridView2});
+			// 
+			// gridView2
+			// 
+			this.gridView2.GridControl = this.gridMovBanco;
+			this.gridView2.Name = "gridView2";
+			this.gridView2.OptionsView.ShowGroupPanel = false;
+			// 
+			// gridMobLibros
+			// 
+			this.gridMobLibros.Location = new System.Drawing.Point(12, 160);
+			this.gridMobLibros.MainView = this.gridView1;
+			this.gridMobLibros.MenuManager = this.ribbonControl;
+			this.gridMobLibros.Name = "gridMobLibros";
+			this.gridMobLibros.Size = new System.Drawing.Size(390, 261);
+			this.gridMobLibros.TabIndex = 11;
+			this.gridMobLibros.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gridView1});
+			// 
+			// gridView1
+			// 
+			this.gridView1.GridControl = this.gridMobLibros;
+			this.gridView1.Name = "gridView1";
+			this.gridView1.OptionsView.ShowGroupPanel = false;
+			// 
+			// txtSaldoBanco
+			// 
+			this.txtSaldoBanco.Location = new System.Drawing.Point(505, 134);
+			this.txtSaldoBanco.MenuManager = this.ribbonControl;
+			this.txtSaldoBanco.Name = "txtSaldoBanco";
+			this.txtSaldoBanco.Size = new System.Drawing.Size(319, 20);
+			this.txtSaldoBanco.StyleController = this.layoutControl1;
+			this.txtSaldoBanco.TabIndex = 10;
+			// 
+			// txtSaldoLibro
+			// 
+			this.txtSaldoLibro.Location = new System.Drawing.Point(100, 136);
+			this.txtSaldoLibro.MenuManager = this.ribbonControl;
+			this.txtSaldoLibro.Name = "txtSaldoLibro";
+			this.txtSaldoLibro.Size = new System.Drawing.Size(302, 20);
+			this.txtSaldoLibro.StyleController = this.layoutControl1;
+			this.txtSaldoLibro.TabIndex = 9;
+			// 
+			// dtpFechaSaldo
+			// 
+			this.dtpFechaSaldo.EditValue = null;
+			this.dtpFechaSaldo.Location = new System.Drawing.Point(100, 112);
+			this.dtpFechaSaldo.MenuManager = this.ribbonControl;
+			this.dtpFechaSaldo.Name = "dtpFechaSaldo";
+			this.dtpFechaSaldo.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+			this.dtpFechaSaldo.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+			this.dtpFechaSaldo.Size = new System.Drawing.Size(302, 20);
+			this.dtpFechaSaldo.StyleController = this.layoutControl1;
+			this.dtpFechaSaldo.TabIndex = 8;
+			// 
+			// txtCuentaContable
+			// 
+			this.txtCuentaContable.Location = new System.Drawing.Point(494, 54);
+			this.txtCuentaContable.MenuManager = this.ribbonControl;
+			this.txtCuentaContable.Name = "txtCuentaContable";
+			this.txtCuentaContable.Size = new System.Drawing.Size(330, 20);
+			this.txtCuentaContable.StyleController = this.layoutControl1;
+			this.txtCuentaContable.TabIndex = 7;
+			// 
+			// txtMoneda
+			// 
+			this.txtMoneda.Location = new System.Drawing.Point(494, 78);
+			this.txtMoneda.MenuManager = this.ribbonControl;
+			this.txtMoneda.Name = "txtMoneda";
+			this.txtMoneda.Size = new System.Drawing.Size(330, 20);
+			this.txtMoneda.StyleController = this.layoutControl1;
+			this.txtMoneda.TabIndex = 6;
+			// 
+			// txtBanco
+			// 
+			this.txtBanco.Location = new System.Drawing.Point(100, 78);
+			this.txtBanco.MenuManager = this.ribbonControl;
+			this.txtBanco.Name = "txtBanco";
+			this.txtBanco.Size = new System.Drawing.Size(302, 20);
+			this.txtBanco.StyleController = this.layoutControl1;
+			this.txtBanco.TabIndex = 5;
+			// 
+			// slkupCuentaBancaria
+			// 
+			this.slkupCuentaBancaria.Location = new System.Drawing.Point(100, 54);
+			this.slkupCuentaBancaria.MenuManager = this.ribbonControl;
+			this.slkupCuentaBancaria.Name = "slkupCuentaBancaria";
+			this.slkupCuentaBancaria.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+			this.slkupCuentaBancaria.Properties.View = this.searchLookUpEdit1View;
+			this.slkupCuentaBancaria.Size = new System.Drawing.Size(302, 20);
+			this.slkupCuentaBancaria.StyleController = this.layoutControl1;
+			this.slkupCuentaBancaria.TabIndex = 4;
+			this.slkupCuentaBancaria.EditValueChanged += new System.EventHandler(this.slkupCuentaBancaria_EditValueChanged);
+			// 
+			// searchLookUpEdit1View
+			// 
+			this.searchLookUpEdit1View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+			this.searchLookUpEdit1View.Name = "searchLookUpEdit1View";
+			this.searchLookUpEdit1View.OptionsSelection.EnableAppearanceFocusedCell = false;
+			this.searchLookUpEdit1View.OptionsView.ShowGroupPanel = false;
+			// 
 			// layoutControlGroup1
 			// 
 			this.layoutControlGroup1.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
@@ -290,18 +449,6 @@
 			this.layoutControlGroup1.Size = new System.Drawing.Size(836, 481);
 			this.layoutControlGroup1.TextVisible = false;
 			// 
-			// slkupCuentaBancaria
-			// 
-			this.slkupCuentaBancaria.Location = new System.Drawing.Point(101, 54);
-			this.slkupCuentaBancaria.MenuManager = this.ribbonControl;
-			this.slkupCuentaBancaria.Name = "slkupCuentaBancaria";
-			this.slkupCuentaBancaria.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-			this.slkupCuentaBancaria.Properties.View = this.searchLookUpEdit1View;
-			this.slkupCuentaBancaria.Size = new System.Drawing.Size(301, 20);
-			this.slkupCuentaBancaria.StyleController = this.layoutControl1;
-			this.slkupCuentaBancaria.TabIndex = 4;
-			// 
 			// layoutControlItem1
 			// 
 			this.layoutControlItem1.Control = this.slkupCuentaBancaria;
@@ -310,22 +457,6 @@
 			this.layoutControlItem1.Size = new System.Drawing.Size(394, 24);
 			this.layoutControlItem1.Text = "Cuenta Bancaria:";
 			this.layoutControlItem1.TextSize = new System.Drawing.Size(85, 13);
-			// 
-			// searchLookUpEdit1View
-			// 
-			this.searchLookUpEdit1View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
-			this.searchLookUpEdit1View.Name = "searchLookUpEdit1View";
-			this.searchLookUpEdit1View.OptionsSelection.EnableAppearanceFocusedCell = false;
-			this.searchLookUpEdit1View.OptionsView.ShowGroupPanel = false;
-			// 
-			// txtBanco
-			// 
-			this.txtBanco.Location = new System.Drawing.Point(101, 78);
-			this.txtBanco.MenuManager = this.ribbonControl;
-			this.txtBanco.Name = "txtBanco";
-			this.txtBanco.Size = new System.Drawing.Size(301, 20);
-			this.txtBanco.StyleController = this.layoutControl1;
-			this.txtBanco.TabIndex = 5;
 			// 
 			// layoutControlItem2
 			// 
@@ -336,15 +467,6 @@
 			this.layoutControlItem2.Text = "Banco:";
 			this.layoutControlItem2.TextSize = new System.Drawing.Size(85, 13);
 			// 
-			// txtMoneda
-			// 
-			this.txtMoneda.Location = new System.Drawing.Point(495, 78);
-			this.txtMoneda.MenuManager = this.ribbonControl;
-			this.txtMoneda.Name = "txtMoneda";
-			this.txtMoneda.Size = new System.Drawing.Size(329, 20);
-			this.txtMoneda.StyleController = this.layoutControl1;
-			this.txtMoneda.TabIndex = 6;
-			// 
 			// layoutControlItem3
 			// 
 			this.layoutControlItem3.Control = this.txtMoneda;
@@ -353,15 +475,6 @@
 			this.layoutControlItem3.Size = new System.Drawing.Size(422, 24);
 			this.layoutControlItem3.Text = "Moneda:";
 			this.layoutControlItem3.TextSize = new System.Drawing.Size(85, 13);
-			// 
-			// txtCuentaContable
-			// 
-			this.txtCuentaContable.Location = new System.Drawing.Point(495, 54);
-			this.txtCuentaContable.MenuManager = this.ribbonControl;
-			this.txtCuentaContable.Name = "txtCuentaContable";
-			this.txtCuentaContable.Size = new System.Drawing.Size(329, 20);
-			this.txtCuentaContable.StyleController = this.layoutControl1;
-			this.txtCuentaContable.TabIndex = 7;
 			// 
 			// layoutControlItem4
 			// 
@@ -380,20 +493,6 @@
 			this.emptySpaceItem1.Size = new System.Drawing.Size(816, 10);
 			this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
 			// 
-			// dtpFechaSaldo
-			// 
-			this.dtpFechaSaldo.EditValue = null;
-			this.dtpFechaSaldo.Location = new System.Drawing.Point(101, 112);
-			this.dtpFechaSaldo.MenuManager = this.ribbonControl;
-			this.dtpFechaSaldo.Name = "dtpFechaSaldo";
-			this.dtpFechaSaldo.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-			this.dtpFechaSaldo.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-			this.dtpFechaSaldo.Size = new System.Drawing.Size(301, 20);
-			this.dtpFechaSaldo.StyleController = this.layoutControl1;
-			this.dtpFechaSaldo.TabIndex = 8;
-			// 
 			// layoutControlItem5
 			// 
 			this.layoutControlItem5.Control = this.dtpFechaSaldo;
@@ -403,14 +502,6 @@
 			this.layoutControlItem5.Text = "Fecha Saldo:";
 			this.layoutControlItem5.TextSize = new System.Drawing.Size(85, 13);
 			// 
-			// emptySpaceItem2
-			// 
-			this.emptySpaceItem2.AllowHotTrack = false;
-			this.emptySpaceItem2.Location = new System.Drawing.Point(394, 100);
-			this.emptySpaceItem2.Name = "emptySpaceItem2";
-			this.emptySpaceItem2.Size = new System.Drawing.Size(11, 337);
-			this.emptySpaceItem2.TextSize = new System.Drawing.Size(0, 0);
-			// 
 			// emptySpaceItem3
 			// 
 			this.emptySpaceItem3.AllowHotTrack = false;
@@ -418,15 +509,6 @@
 			this.emptySpaceItem3.Name = "emptySpaceItem3";
 			this.emptySpaceItem3.Size = new System.Drawing.Size(411, 22);
 			this.emptySpaceItem3.TextSize = new System.Drawing.Size(0, 0);
-			// 
-			// txtSaldoLibro
-			// 
-			this.txtSaldoLibro.Location = new System.Drawing.Point(101, 136);
-			this.txtSaldoLibro.MenuManager = this.ribbonControl;
-			this.txtSaldoLibro.Name = "txtSaldoLibro";
-			this.txtSaldoLibro.Size = new System.Drawing.Size(301, 20);
-			this.txtSaldoLibro.StyleController = this.layoutControl1;
-			this.txtSaldoLibro.TabIndex = 9;
 			// 
 			// layoutControlItem6
 			// 
@@ -437,15 +519,6 @@
 			this.layoutControlItem6.Text = "Saldo en Libros";
 			this.layoutControlItem6.TextSize = new System.Drawing.Size(85, 13);
 			// 
-			// txtSaldoBanco
-			// 
-			this.txtSaldoBanco.Location = new System.Drawing.Point(506, 134);
-			this.txtSaldoBanco.MenuManager = this.ribbonControl;
-			this.txtSaldoBanco.Name = "txtSaldoBanco";
-			this.txtSaldoBanco.Size = new System.Drawing.Size(318, 20);
-			this.txtSaldoBanco.StyleController = this.layoutControl1;
-			this.txtSaldoBanco.TabIndex = 10;
-			// 
 			// layoutControlItem7
 			// 
 			this.layoutControlItem7.Control = this.txtSaldoBanco;
@@ -454,23 +527,6 @@
 			this.layoutControlItem7.Size = new System.Drawing.Size(411, 24);
 			this.layoutControlItem7.Text = "Saldo en Banco:";
 			this.layoutControlItem7.TextSize = new System.Drawing.Size(85, 13);
-			// 
-			// gridMobLibros
-			// 
-			this.gridMobLibros.Location = new System.Drawing.Point(12, 160);
-			this.gridMobLibros.MainView = this.gridView1;
-			this.gridMobLibros.MenuManager = this.ribbonControl;
-			this.gridMobLibros.Name = "gridMobLibros";
-			this.gridMobLibros.Size = new System.Drawing.Size(390, 261);
-			this.gridMobLibros.TabIndex = 11;
-			this.gridMobLibros.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.gridView1});
-			// 
-			// gridView1
-			// 
-			this.gridView1.GridControl = this.gridMobLibros;
-			this.gridView1.Name = "gridView1";
-			this.gridView1.OptionsView.ShowGroupPanel = false;
 			// 
 			// layoutControlItem8
 			// 
@@ -481,23 +537,6 @@
 			this.layoutControlItem8.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem8.TextVisible = false;
 			// 
-			// gridMovBanco
-			// 
-			this.gridMovBanco.Location = new System.Drawing.Point(417, 158);
-			this.gridMovBanco.MainView = this.gridView2;
-			this.gridMovBanco.MenuManager = this.ribbonControl;
-			this.gridMovBanco.Name = "gridMovBanco";
-			this.gridMovBanco.Size = new System.Drawing.Size(407, 263);
-			this.gridMovBanco.TabIndex = 12;
-			this.gridMovBanco.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.gridView2});
-			// 
-			// gridView2
-			// 
-			this.gridView2.GridControl = this.gridMovBanco;
-			this.gridView2.Name = "gridView2";
-			this.gridView2.OptionsView.ShowGroupPanel = false;
-			// 
 			// layoutControlItem9
 			// 
 			this.layoutControlItem9.Control = this.gridMovBanco;
@@ -507,14 +546,13 @@
 			this.layoutControlItem9.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem9.TextVisible = false;
 			// 
-			// txtMarcadosLibros
+			// emptySpaceItem2
 			// 
-			this.txtMarcadosLibros.Location = new System.Drawing.Point(101, 425);
-			this.txtMarcadosLibros.MenuManager = this.ribbonControl;
-			this.txtMarcadosLibros.Name = "txtMarcadosLibros";
-			this.txtMarcadosLibros.Size = new System.Drawing.Size(301, 20);
-			this.txtMarcadosLibros.StyleController = this.layoutControl1;
-			this.txtMarcadosLibros.TabIndex = 13;
+			this.emptySpaceItem2.AllowHotTrack = false;
+			this.emptySpaceItem2.Location = new System.Drawing.Point(394, 100);
+			this.emptySpaceItem2.Name = "emptySpaceItem2";
+			this.emptySpaceItem2.Size = new System.Drawing.Size(11, 337);
+			this.emptySpaceItem2.TextSize = new System.Drawing.Size(0, 0);
 			// 
 			// layoutControlItem10
 			// 
@@ -525,15 +563,6 @@
 			this.layoutControlItem10.Text = "Total Marcados:";
 			this.layoutControlItem10.TextSize = new System.Drawing.Size(85, 13);
 			// 
-			// txtTotalMarcado
-			// 
-			this.txtTotalMarcado.Location = new System.Drawing.Point(506, 425);
-			this.txtTotalMarcado.MenuManager = this.ribbonControl;
-			this.txtTotalMarcado.Name = "txtTotalMarcado";
-			this.txtTotalMarcado.Size = new System.Drawing.Size(318, 20);
-			this.txtTotalMarcado.StyleController = this.layoutControl1;
-			this.txtTotalMarcado.TabIndex = 14;
-			// 
 			// layoutControlItem11
 			// 
 			this.layoutControlItem11.Control = this.txtTotalMarcado;
@@ -542,15 +571,6 @@
 			this.layoutControlItem11.Size = new System.Drawing.Size(411, 24);
 			this.layoutControlItem11.Text = "Total Marcado:";
 			this.layoutControlItem11.TextSize = new System.Drawing.Size(85, 13);
-			// 
-			// txtDiferencia
-			// 
-			this.txtDiferencia.Location = new System.Drawing.Point(345, 449);
-			this.txtDiferencia.MenuManager = this.ribbonControl;
-			this.txtDiferencia.Name = "txtDiferencia";
-			this.txtDiferencia.Size = new System.Drawing.Size(223, 20);
-			this.txtDiferencia.StyleController = this.layoutControl1;
-			this.txtDiferencia.TabIndex = 15;
 			// 
 			// layoutControlItem12
 			// 
@@ -577,18 +597,6 @@
 			this.emptySpaceItem5.Size = new System.Drawing.Size(256, 24);
 			this.emptySpaceItem5.TextSize = new System.Drawing.Size(0, 0);
 			// 
-			// slkupTypeView
-			// 
-			this.slkupTypeView.Location = new System.Drawing.Point(101, 12);
-			this.slkupTypeView.MenuManager = this.ribbonControl;
-			this.slkupTypeView.Name = "slkupTypeView";
-			this.slkupTypeView.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-			this.slkupTypeView.Properties.View = this.searchLookUpEdit2View;
-			this.slkupTypeView.Size = new System.Drawing.Size(301, 20);
-			this.slkupTypeView.StyleController = this.layoutControl1;
-			this.slkupTypeView.TabIndex = 16;
-			// 
 			// layoutControlItem13
 			// 
 			this.layoutControlItem13.Control = this.slkupTypeView;
@@ -597,13 +605,6 @@
 			this.layoutControlItem13.Size = new System.Drawing.Size(394, 24);
 			this.layoutControlItem13.Text = "Mostrar:";
 			this.layoutControlItem13.TextSize = new System.Drawing.Size(85, 13);
-			// 
-			// searchLookUpEdit2View
-			// 
-			this.searchLookUpEdit2View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
-			this.searchLookUpEdit2View.Name = "searchLookUpEdit2View";
-			this.searchLookUpEdit2View.OptionsSelection.EnableAppearanceFocusedCell = false;
-			this.searchLookUpEdit2View.OptionsView.ShowGroupPanel = false;
 			// 
 			// emptySpaceItem6
 			// 
@@ -634,43 +635,43 @@
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
 			this.layoutControl1.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.slkupCuentaBancaria.Properties)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit1View)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.txtBanco.Properties)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.txtMoneda.Properties)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.txtCuentaContable.Properties)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.dtpFechaSaldo.Properties.CalendarTimeProperties)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.dtpFechaSaldo.Properties)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.txtSaldoLibro.Properties)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.txtSaldoBanco.Properties)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.gridMobLibros)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.slkupTypeView.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit2View)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.txtDiferencia.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.txtTotalMarcado.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.txtMarcadosLibros.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridMovBanco)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView2)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.gridMobLibros)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.txtSaldoBanco.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.txtSaldoLibro.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.dtpFechaSaldo.Properties.CalendarTimeProperties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.dtpFechaSaldo.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.txtCuentaContable.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.txtMoneda.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.txtBanco.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.slkupCuentaBancaria.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit1View)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.txtMarcadosLibros.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.txtTotalMarcado.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem11)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.txtDiferencia.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem12)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem5)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.slkupTypeView.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem13)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit2View)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem6)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem7)).EndInit();
 			this.ResumeLayout(false);
