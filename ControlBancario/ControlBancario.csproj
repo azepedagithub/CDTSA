@@ -105,6 +105,9 @@
     <Reference Include="DevExpress.XtraPrinting.v15.2, Version=15.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraReports.v15.2, Version=15.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraReports.v15.2.Extensions, Version=15.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -119,6 +122,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAC\BancoDAC.cs" />
+    <Compile Include="DAC\ConcialiacionDAC.cs" />
+    <Compile Include="DAC\ConcMovBancosDAC.cs" />
     <Compile Include="DAC\CuentaBancariaDAC.cs" />
     <Compile Include="DAC\CuentaFormatoChequeDAC.cs" />
     <Compile Include="DAC\MonedaDAC.cs" />
@@ -147,6 +152,12 @@
     </Compile>
     <Compile Include="frmDocumento.Designer.cs">
       <DependentUpon>frmDocumento.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmImportMovBancos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmImportMovBancos.Designer.cs">
+      <DependentUpon>frmImportMovBancos.cs</DependentUpon>
     </Compile>
     <Compile Include="frmListadoBanco.cs">
       <SubType>Form</SubType>
@@ -220,6 +231,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmDocumento.resx">
       <DependentUpon>frmDocumento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmImportMovBancos.resx">
+      <DependentUpon>frmImportMovBancos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmListadoBanco.resx">
       <DependentUpon>frmListadoBanco.cs</DependentUpon>

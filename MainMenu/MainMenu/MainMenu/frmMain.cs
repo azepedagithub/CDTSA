@@ -251,7 +251,7 @@ namespace MainMenu
                     ofrmRUC.Show();
                     break;
 				case "frmConciliacionBancaria":
-					ControlBancario.frmConciliacionBancaria ofrmConciliacion = new ControlBancario.frmConciliacionBancaria();
+					ControlBancario.frmConciliacionBancaria ofrmConciliacion = new ControlBancario.frmConciliacionBancaria("New");
 					ofrmConciliacion.MdiParent = this;
 					ShowPagesRibbonMan(false);
 					ofrmConciliacion.Show();

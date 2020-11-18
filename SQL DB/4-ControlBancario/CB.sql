@@ -388,6 +388,19 @@ end
 
 GO
 
+CREATE PROCEDURE dbo.cbGetCuentaBancaria @IDCuenta INT, @IDBanco INT
+AS 
+	SELECT  A.IDCuentaBanco ,A.Codigo ,A.Descr ,A.IDBanco ,B.Descr DescrBanco,A.IDMoneda ,M.Descr DescrMoneda,A.SaldoInicial ,A.FechaCreacion ,A.IDTipo,C.Descr DescrTipo ,A.SaldoLibro ,A.SaldoBanco  ,A.ConsecCheque , 
+            A.Limite ,A.Sobregiro ,A.IDCuenta ,CC.Descr DescrCuentaContable,A.Activa 
+	FROM dbo.cbCuentaBancaria A 
+	INNER JOIN dbo.cbBanco B ON a.IDBanco=B.IDBanco 
+	INNER JOIN dbo.cbTipoCuenta C ON A.IDTipo=C.IDTipo 
+	INNER JOIN dbo.globalMoneda M ON A.IDMoneda=M.IDMoneda 
+	INNER JOIN dbo.cntCuenta CC ON A.IDCuenta=CC.IDCuenta 
+	WHERE (A.IDCuentaBanco=@IDCuenta or @IDCuenta=-1) AND (A.IDBanco=@IDBanco or @IDBanco=-1)
+
+GO
+
 CREATE  Procedure [dbo].[cbUpdateCuentaBancaria] @Operacion nvarchar(1), @IDCuentaBanco int, @Codigo nvarchar(10), @Descr nvarchar(250),
 			@IDBanco INT,@IDMoneda INT ,@SaldoInicial DECIMAL(28,4), @FechaCreacion DATE,@IDTipo INT,@ConsecCheque AS INT, @Limite DECIMAL(28,4),@IDCuenta int ,@Activa BIT
 as
@@ -878,3 +891,164 @@ GO
 CREATE PROCEDURE dbo.cbMarcarChequeImpreso  @Numero AS INT, @IDCuentaBanco AS INT,@IDTipo AS INT, @IDSubTipo AS INT, @Usuario AS NVARCHAR(50)
 AS 
 update dbo.cbMovimientos SET Impreso=1, UsuarioImpresion = @Usuario,FechaImpresion=GETDATE() WHERE IDCuentaBanco=@IDCuentaBanco AND IDTipo=@IDTipo AND IDSubTipo=@IDSubTipo AND Numero=@Numero
+
+
+GO
+
+Create table dbo.cbConciliacion (IDConciliacion int not null, IDCuentaBanco int not null,  FechaInicio date, FechaFin date, 
+SaldoInicialBanco decimal (28, 4) default 0,
+TotalIngresosBanco decimal (28, 4) default 0, TotalSalidasBanco decimal (28, 4) default 0,  SaldoFinalBanco decimal (28, 4) default 0, 
+SaldoInicialLibro decimal (28, 4) default 0,  
+TotalIngresosLibro decimal (28, 4) default 0, TotalSalidasLibro decimal (28, 4) default 0,  SaldoFinalLibro decimal (28, 4) default 0,
+Estado nvarchar(1), Usuario nvarchar(20))
+go
+
+alter table  dbo.cbConciliacion add constraint pkConciliacion primary key ( IDConciliacion  )
+go
+-- Se debe crear un proceso que importe el estado de cuenta del banco a esta tabla.
+Create table dbo.cbConcMovBanco (IDMovBanco int identity (1,1) not null, IDCuentaBanco int not null, Fecha date, IDConciliacion int,
+Referencia nvarchar(255), Monto decimal (28, 4) default 0, Factor int, MatchNumber int default 0, Usuario nvarchar(20), Estado nvarchar(1)  ) 
+go
+
+Alter table dbo.cbMovimientos add IDConciliacion int, MatchNumber int default 0, UsuarioConciliacion nvarchar(20), EstadoConciliacion nvarchar(1),
+NotaConciliacion nvarchar(255)
+go
+
+
+alter table dbo.cbConcMovBanco add constraint pkMovBanco primary key (IDMovBanco)
+go
+alter table dbo.cbConcMovBanco add constraint ukMovBanco UNIQUE (IDCuentaBanco, Fecha, IDConciliacion, Referencia, Monto)
+go
+alter table dbo.cbConcMovBanco add constraint fkMovBanco foreign key (IDCuentaBanco) references dbo.cbCuentaBancaria (IDCuentaBanco)
+go
+alter table dbo.cbConcMovBanco add constraint fkMovBancoConciliacion foreign key (IDConciliacion) references dbo.cbConciliacion (IDConciliacion)
+go
+alter table dbo.cbMovimientos add constraint fkmovMovBancoConciliacion foreign key (IDConciliacion) references dbo.cbConciliacion (IDConciliacion)
+go
+
+IF EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_cbConcMovBanco_Cuenta_Fecha')   
+    DROP INDEX IX_cbConcMovBanco_Cuenta_Fecha ON dbo.cbConcMovBanco   
+GO  
+CREATE NONCLUSTERED INDEX IX_cbConcMovBanco_Cuenta_Fecha   
+    ON dbo.cbConcMovBanco(IDMovBanco, IDCuentaBanco, Fecha);   
+GO 
+
+
+alter table dbo.cbMovimientos add constraint fkcbMovimientosConciliacion foreign key (IDConciliacion) references dbo.cbConciliacion (IDConciliacion)
+go
+
+-- select dbo.cbgetMatchNumber (1,1)
+Create Function dbo.cbgetMatchNumber (@IDConciliacion int, @IDCuentaBanco int)
+returns int
+as
+begin
+declare @MatchNumber int 
+Select @MatchNumber = MAX (MatchNumber )
+from dbo.cbMovimientos
+Where IDConciliacion = @IDConciliacion and IDCuentaBanco = @IDCuentaBanco
+return isnull(@MatchNumber,0) + 1
+end
+GO
+
+
+CREATE PROCEDURE dbo.cbGetLastFechaConciliacion 
+AS 
+SELECT ISNULL(MAX(FechaFin),GETDATE()) Fecha  FROM dbo.cbConciliacion 
+
+
+GO
+
+
+CREATE  Procedure [dbo].[cbUpdateConciliacion] @Operacion nvarchar(1), @IDConciliacion INT OUTPUT,@IDCuentaBanco INT , @FechaInicio DATE, @FechaFin DATE,@Usuario NVARCHAR(50)
+as
+set nocount on 
+
+if upper(@Operacion) = 'I'
+BEGIN
+
+	SET @IDConciliacion =  (SELECT ISNULL(MAX(IDConciliacion),0) +1 FROM dbo.cbConciliacion WHERE IDCuentaBanco=@IDCuentaBanco)
+	INSERT INTO dbo.cbConciliacion( IDConciliacion ,IDCuentaBanco ,FechaInicio,FechaFin ,Estado ,Usuario)
+	VALUES  (@IDConciliacion,@IDCuentaBanco,@FechaInicio,@FechaFin,1,@Usuario )
+END
+if upper(@Operacion) = 'U'
+begin
+	UPDATE  dbo.cbConciliacion SET  FechaInicio = @FechaInicio, FechaFin = @FechaFin, IDCuentaBanco = @IDCuentaBanco WHERE  IDConciliacion =@IDConciliacion
+end
+
+if upper(@Operacion) = 'D'
+begin
+	DELETE  FROM dbo.cbConciliacion WHERE  IDConciliacion =@IDConciliacion
+end
+
+GO
+
+CREATE PROCEDURE dbo.cbGetConciliacion @IDConciliacion INT,@IDCuenta INT
+AS 
+SELECT  IDConciliacion ,IDCuentaBanco ,FechaInicio ,FechaFin ,SaldoInicialBanco ,TotalIngresosBanco ,TotalSalidasBanco ,
+        SaldoFinalBanco ,SaldoInicialLibro ,TotalIngresosLibro ,TotalSalidasLibro ,SaldoFinalLibro ,Estado ,
+        Usuario  FROM dbo.cbConciliacion
+WHERE (IDConciliacion=@IDConciliacion OR @IDConciliacion = -1) OR (IDCuentaBanco = @IDCuenta OR @IDCuenta = -1)
+
+GO
+
+CREATE PROCEDURE dbo.cbGetSaldoInicialLibro @IDCuentaBanco AS INT
+AS 
+--SET @IDCuentaBanco = 1
+DECLARE @SaldoInicialLibro DECIMAL(28,4)
+
+SELECT @SaldoInicialLibro = SaldoFinalLibro  FROM dbo.cbConciliacion 
+WHERE IDConciliacion = -1 --(SELECT MAX(IDConciliacion)  FROM dbo.cbConciliacion WHERE IDCuentaBanco = @IDCuentaBanco)
+
+IF (@SaldoInicialLibro IS NULL)
+BEGIN
+	SELECT @SaldoInicialLibro = SaldoInicial  FROM dbo.cbCuentaBancaria WHERE IDCuentaBanco = @IDCuentaBanco
+END
+
+SELECT ISNULL(@SaldoInicialLibro,0) SaldoInicialLibro
+
+GO
+
+
+CREATE PROCEDURE dbo.cbGetMovLibrosContable @IDCuentaBancaria INT, @FechaInicial DATETIME, @FechaFinal DATETIME
+AS 
+
+set @FechaInicial = CAST(SUBSTRING(CAST(@FechaInicial AS CHAR),1,11) + ' 00:00:00.000' AS DATETIME)
+set @FechaFinal = CAST(SUBSTRING(CAST(@FechaFinal AS CHAR),1,11) + ' 23:59:59.998' AS DATETIME)
+
+SELECT Fecha,T.Descr TipoMov,Referencia,ConceptoContable,Monto,CASE WHEN MatchNumber IS NOT NULl THEN 1 ELSE 0 END Selected, MatchNumber
+FROM dbo.cbMovimientos M
+INNER JOIN dbo.cbTipoDocumento T ON M.IDTipo = T.IDTipo
+WHERE Fecha BETWEEN @FechaInicial and @FechaFinal AND IDCuentaBanco = @IDCuentaBancaria
+
+
+GO
+
+
+CREATE PROCEDURE dbo.cbUpdateConcMovBanco @Operacion NVARCHAR(1), @IDMovBanco INT OUTPUT, @IDCuentaBanco INT,
+					@Fecha DATE,@IDConciliacion INT,@Referencia NVARCHAR(255), @Monto DECIMAL(28,4), @Factor INT,
+					@Usuario NVARCHAR(20), @Estado NVARCHAR(1)
+AS 
+IF (@Operacion = 'I')
+BEGIN
+	INSERT INTO dbo.cbConcMovBanco( IDCuentaBanco ,Fecha ,IDConciliacion ,Referencia ,Monto ,Factor  ,Usuario ,Estado)
+	VALUES  (@IDCuentaBanco, @Fecha,@IDConciliacion,@Referencia,@Monto,@Factor,@Usuario,@Estado)
+	SET @IDMovBanco  = @@IDentity	
+END
+IF (@Operacion = 'U')
+BEGIN
+	UPDATE dbo.cbConcMovBanco SET Fecha = @Fecha, Referencia = @Referencia,Monto = @Monto WHERE IDMovBanco = @IDMovBanco
+END
+IF (@Operacion ='D')
+BEGIN
+	DELETE dbo.cbConcMovBanco WHERE (IDConciliacion = @IDConciliacion OR @IDConciliacion =-1 ) AND ( IDMovBanco = @IDMovBanco OR @IDMovBanco=-1)
+END	
+
+GO
+
+CREATE PROCEDURE  dbo.cbGetConcMovBanco(@IDConciliacion INT, @IDCuentaBanco INT)
+AS
+SELECT  IDMovBanco ,IDCuentaBanco ,Fecha ,IDConciliacion ,Referencia ,Monto ,Factor ,MatchNumber ,Usuario ,Estado  
+FROM dbo.cbConcMovBanco WHERE (IDConciliacion=@IDConciliacion OR @IDConciliacion =-1)	 AND (IDCuentaBanco = @IDCuentaBanco OR @IDCuentaBanco=-1)
+
+GO

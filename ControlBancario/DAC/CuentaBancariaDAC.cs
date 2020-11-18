@@ -31,6 +31,7 @@ namespace ControlBancario.DAC
                 };
 
                 //Paremetros Select 
+				oAdaptador.SelectCommand.CommandType = CommandType.StoredProcedure;
                 oAdaptador.SelectCommand.Parameters.Add("@IDCuenta", SqlDbType.Int).SourceColumn = "IDCuenta";
                 oAdaptador.SelectCommand.Parameters.Add("@IDBanco", SqlDbType.Int).SourceColumn = "IDBanco";
                 
