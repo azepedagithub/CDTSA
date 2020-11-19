@@ -51,9 +51,9 @@
 			this.txtTotalMarcado = new DevExpress.XtraEditors.TextEdit();
 			this.txtMarcadosLibros = new DevExpress.XtraEditors.TextEdit();
 			this.gridMovBanco = new DevExpress.XtraGrid.GridControl();
-			this.gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
+			this.gridViewMovBanco = new DevExpress.XtraGrid.Views.Grid.GridView();
 			this.gridMobLibros = new DevExpress.XtraGrid.GridControl();
-			this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+			this.gridViewMovLibros = new DevExpress.XtraGrid.Views.Grid.GridView();
 			this.colFecha = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colTipoMov = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colReferencia = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -90,6 +90,13 @@
 			this.emptySpaceItem7 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.layoutControlItem14 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem15 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.colCheck = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colMatchNumber = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colFechaBanco = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colReferenciaBanco = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colMontoBanco = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colSelectedBanco = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colMatchNumberBanco = new DevExpress.XtraGrid.Columns.GridColumn();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
 			this.layoutControl1.SuspendLayout();
@@ -103,9 +110,9 @@
 			((System.ComponentModel.ISupportInitialize)(this.txtTotalMarcado.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtMarcadosLibros.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridMovBanco)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.gridView2)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.gridViewMovBanco)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridMobLibros)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.gridViewMovLibros)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtSaldoBanco.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtSaldoLibro.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dtpFechaSaldo.Properties.CalendarTimeProperties)).BeginInit();
@@ -166,6 +173,7 @@
 			// btnAsociar
 			// 
 			this.btnAsociar.Caption = "Asociar";
+			this.btnAsociar.Enabled = false;
 			this.btnAsociar.Glyph = ((System.Drawing.Image)(resources.GetObject("btnAsociar.Glyph")));
 			this.btnAsociar.Id = 1;
 			this.btnAsociar.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnAsociar.LargeGlyph")));
@@ -174,6 +182,7 @@
 			// btnDesAsociar
 			// 
 			this.btnDesAsociar.Caption = "Des-Asociar";
+			this.btnDesAsociar.Enabled = false;
 			this.btnDesAsociar.Glyph = ((System.Drawing.Image)(resources.GetObject("btnDesAsociar.Glyph")));
 			this.btnDesAsociar.Id = 2;
 			this.btnDesAsociar.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnDesAsociar.LargeGlyph")));
@@ -182,6 +191,7 @@
 			// btnConciliar
 			// 
 			this.btnConciliar.Caption = "Conciliar";
+			this.btnConciliar.Enabled = false;
 			this.btnConciliar.Glyph = ((System.Drawing.Image)(resources.GetObject("btnConciliar.Glyph")));
 			this.btnConciliar.Id = 3;
 			this.btnConciliar.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnConciliar.LargeGlyph")));
@@ -198,6 +208,7 @@
 			// btnEliminar
 			// 
 			this.btnEliminar.Caption = "Eliminar";
+			this.btnEliminar.Enabled = false;
 			this.btnEliminar.Glyph = ((System.Drawing.Image)(resources.GetObject("btnEliminar.Glyph")));
 			this.btnEliminar.Id = 5;
 			this.btnEliminar.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnEliminar.LargeGlyph")));
@@ -212,6 +223,7 @@
 			// btnImportar
 			// 
 			this.btnImportar.Caption = "Importar";
+			this.btnImportar.Enabled = false;
 			this.btnImportar.Glyph = ((System.Drawing.Image)(resources.GetObject("btnImportar.Glyph")));
 			this.btnImportar.Id = 2;
 			this.btnImportar.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnImportar.LargeGlyph")));
@@ -221,6 +233,7 @@
 			// btnRefrescar
 			// 
 			this.btnRefrescar.Caption = "Refrescar";
+			this.btnRefrescar.Enabled = false;
 			this.btnRefrescar.Glyph = ((System.Drawing.Image)(resources.GetObject("btnRefrescar.Glyph")));
 			this.btnRefrescar.Id = 3;
 			this.btnRefrescar.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnRefrescar.LargeGlyph")));
@@ -229,6 +242,7 @@
 			// btnFormato
 			// 
 			this.btnFormato.Caption = "Formato Impresión";
+			this.btnFormato.Enabled = false;
 			this.btnFormato.Glyph = ((System.Drawing.Image)(resources.GetObject("btnFormato.Glyph")));
 			this.btnFormato.Id = 4;
 			this.btnFormato.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnFormato.LargeGlyph")));
@@ -343,6 +357,7 @@
 			this.txtDiferencia.Location = new System.Drawing.Point(344, 449);
 			this.txtDiferencia.MenuManager = this.ribbonControl;
 			this.txtDiferencia.Name = "txtDiferencia";
+			this.txtDiferencia.Properties.ReadOnly = true;
 			this.txtDiferencia.Size = new System.Drawing.Size(224, 20);
 			this.txtDiferencia.StyleController = this.layoutControl1;
 			this.txtDiferencia.TabIndex = 15;
@@ -352,6 +367,7 @@
 			this.txtTotalMarcado.Location = new System.Drawing.Point(505, 425);
 			this.txtTotalMarcado.MenuManager = this.ribbonControl;
 			this.txtTotalMarcado.Name = "txtTotalMarcado";
+			this.txtTotalMarcado.Properties.ReadOnly = true;
 			this.txtTotalMarcado.Size = new System.Drawing.Size(319, 20);
 			this.txtTotalMarcado.StyleController = this.layoutControl1;
 			this.txtTotalMarcado.TabIndex = 14;
@@ -361,6 +377,7 @@
 			this.txtMarcadosLibros.Location = new System.Drawing.Point(100, 425);
 			this.txtMarcadosLibros.MenuManager = this.ribbonControl;
 			this.txtMarcadosLibros.Name = "txtMarcadosLibros";
+			this.txtMarcadosLibros.Properties.ReadOnly = true;
 			this.txtMarcadosLibros.Size = new System.Drawing.Size(302, 20);
 			this.txtMarcadosLibros.StyleController = this.layoutControl1;
 			this.txtMarcadosLibros.TabIndex = 13;
@@ -368,42 +385,50 @@
 			// gridMovBanco
 			// 
 			this.gridMovBanco.Location = new System.Drawing.Point(417, 183);
-			this.gridMovBanco.MainView = this.gridView2;
+			this.gridMovBanco.MainView = this.gridViewMovBanco;
 			this.gridMovBanco.MenuManager = this.ribbonControl;
 			this.gridMovBanco.Name = "gridMovBanco";
 			this.gridMovBanco.Size = new System.Drawing.Size(407, 238);
 			this.gridMovBanco.TabIndex = 12;
 			this.gridMovBanco.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.gridView2});
+            this.gridViewMovBanco});
 			// 
-			// gridView2
+			// gridViewMovBanco
 			// 
-			this.gridView2.GridControl = this.gridMovBanco;
-			this.gridView2.Name = "gridView2";
-			this.gridView2.OptionsView.ShowGroupPanel = false;
+			this.gridViewMovBanco.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.colFechaBanco,
+            this.colReferenciaBanco,
+            this.colMontoBanco,
+            this.colSelectedBanco,
+            this.colMatchNumberBanco});
+			this.gridViewMovBanco.GridControl = this.gridMovBanco;
+			this.gridViewMovBanco.Name = "gridViewMovBanco";
+			this.gridViewMovBanco.OptionsView.ShowGroupPanel = false;
 			// 
 			// gridMobLibros
 			// 
 			this.gridMobLibros.Location = new System.Drawing.Point(12, 183);
-			this.gridMobLibros.MainView = this.gridView1;
+			this.gridMobLibros.MainView = this.gridViewMovLibros;
 			this.gridMobLibros.MenuManager = this.ribbonControl;
 			this.gridMobLibros.Name = "gridMobLibros";
 			this.gridMobLibros.Size = new System.Drawing.Size(390, 238);
 			this.gridMobLibros.TabIndex = 11;
 			this.gridMobLibros.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.gridView1});
+            this.gridViewMovLibros});
 			// 
-			// gridView1
+			// gridViewMovLibros
 			// 
-			this.gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+			this.gridViewMovLibros.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colFecha,
             this.colTipoMov,
             this.colReferencia,
             this.colConcepto,
-            this.colMonto});
-			this.gridView1.GridControl = this.gridMobLibros;
-			this.gridView1.Name = "gridView1";
-			this.gridView1.OptionsView.ShowGroupPanel = false;
+            this.colMonto,
+            this.colCheck,
+            this.colMatchNumber});
+			this.gridViewMovLibros.GridControl = this.gridMobLibros;
+			this.gridViewMovLibros.Name = "gridViewMovLibros";
+			this.gridViewMovLibros.OptionsView.ShowGroupPanel = false;
 			// 
 			// colFecha
 			// 
@@ -450,6 +475,7 @@
 			this.txtSaldoBanco.Location = new System.Drawing.Point(505, 159);
 			this.txtSaldoBanco.MenuManager = this.ribbonControl;
 			this.txtSaldoBanco.Name = "txtSaldoBanco";
+			this.txtSaldoBanco.Properties.ReadOnly = true;
 			this.txtSaldoBanco.Size = new System.Drawing.Size(319, 20);
 			this.txtSaldoBanco.StyleController = this.layoutControl1;
 			this.txtSaldoBanco.TabIndex = 10;
@@ -459,6 +485,7 @@
 			this.txtSaldoLibro.Location = new System.Drawing.Point(100, 159);
 			this.txtSaldoLibro.MenuManager = this.ribbonControl;
 			this.txtSaldoLibro.Name = "txtSaldoLibro";
+			this.txtSaldoLibro.Properties.ReadOnly = true;
 			this.txtSaldoLibro.Size = new System.Drawing.Size(302, 20);
 			this.txtSaldoLibro.StyleController = this.layoutControl1;
 			this.txtSaldoLibro.TabIndex = 9;
@@ -483,6 +510,7 @@
 			this.txtCuentaContable.Location = new System.Drawing.Point(494, 77);
 			this.txtCuentaContable.MenuManager = this.ribbonControl;
 			this.txtCuentaContable.Name = "txtCuentaContable";
+			this.txtCuentaContable.Properties.ReadOnly = true;
 			this.txtCuentaContable.Size = new System.Drawing.Size(330, 20);
 			this.txtCuentaContable.StyleController = this.layoutControl1;
 			this.txtCuentaContable.TabIndex = 7;
@@ -492,6 +520,7 @@
 			this.txtMoneda.Location = new System.Drawing.Point(494, 101);
 			this.txtMoneda.MenuManager = this.ribbonControl;
 			this.txtMoneda.Name = "txtMoneda";
+			this.txtMoneda.Properties.ReadOnly = true;
 			this.txtMoneda.Size = new System.Drawing.Size(330, 20);
 			this.txtMoneda.StyleController = this.layoutControl1;
 			this.txtMoneda.TabIndex = 6;
@@ -501,6 +530,7 @@
 			this.txtBanco.Location = new System.Drawing.Point(100, 101);
 			this.txtBanco.MenuManager = this.ribbonControl;
 			this.txtBanco.Name = "txtBanco";
+			this.txtBanco.Properties.ReadOnly = true;
 			this.txtBanco.Size = new System.Drawing.Size(302, 20);
 			this.txtBanco.StyleController = this.layoutControl1;
 			this.txtBanco.TabIndex = 5;
@@ -748,6 +778,62 @@
 			this.layoutControlItem15.Text = "Fecha Final:";
 			this.layoutControlItem15.TextSize = new System.Drawing.Size(85, 13);
 			// 
+			// colCheck
+			// 
+			this.colCheck.Caption = "Seleccionado";
+			this.colCheck.FieldName = "Selected";
+			this.colCheck.Name = "colCheck";
+			this.colCheck.Visible = true;
+			this.colCheck.VisibleIndex = 5;
+			// 
+			// colMatchNumber
+			// 
+			this.colMatchNumber.Caption = "# Asociación";
+			this.colMatchNumber.FieldName = "MatchNumber";
+			this.colMatchNumber.Name = "colMatchNumber";
+			this.colMatchNumber.Visible = true;
+			this.colMatchNumber.VisibleIndex = 6;
+			// 
+			// colFechaBanco
+			// 
+			this.colFechaBanco.Caption = "Fecha";
+			this.colFechaBanco.FieldName = "Fecha";
+			this.colFechaBanco.Name = "colFechaBanco";
+			this.colFechaBanco.Visible = true;
+			this.colFechaBanco.VisibleIndex = 0;
+			// 
+			// colReferenciaBanco
+			// 
+			this.colReferenciaBanco.Caption = "Referencia";
+			this.colReferenciaBanco.FieldName = "Referencia";
+			this.colReferenciaBanco.Name = "colReferenciaBanco";
+			this.colReferenciaBanco.Visible = true;
+			this.colReferenciaBanco.VisibleIndex = 1;
+			// 
+			// colMontoBanco
+			// 
+			this.colMontoBanco.Caption = "Monto";
+			this.colMontoBanco.FieldName = "Monto";
+			this.colMontoBanco.Name = "colMontoBanco";
+			this.colMontoBanco.Visible = true;
+			this.colMontoBanco.VisibleIndex = 2;
+			// 
+			// colSelectedBanco
+			// 
+			this.colSelectedBanco.Caption = "Seleccionado";
+			this.colSelectedBanco.FieldName = "Selected";
+			this.colSelectedBanco.Name = "colSelectedBanco";
+			this.colSelectedBanco.Visible = true;
+			this.colSelectedBanco.VisibleIndex = 3;
+			// 
+			// colMatchNumberBanco
+			// 
+			this.colMatchNumberBanco.Caption = "# Asociación";
+			this.colMatchNumberBanco.FieldName = "MatchNumber";
+			this.colMatchNumberBanco.Name = "colMatchNumberBanco";
+			this.colMatchNumberBanco.Visible = true;
+			this.colMatchNumberBanco.VisibleIndex = 4;
+			// 
 			// frmConciliacionBancaria
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -759,6 +845,8 @@
 			this.Ribbon = this.ribbonControl;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Conciliación Bancaria";
+			this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+			this.Load += new System.EventHandler(this.frmConciliacionBancaria_Load_1);
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
 			this.layoutControl1.ResumeLayout(false);
@@ -772,9 +860,9 @@
 			((System.ComponentModel.ISupportInitialize)(this.txtTotalMarcado.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtMarcadosLibros.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridMovBanco)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.gridView2)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.gridViewMovBanco)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridMobLibros)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.gridViewMovLibros)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtSaldoBanco.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtSaldoLibro.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.dtpFechaSaldo.Properties.CalendarTimeProperties)).EndInit();
@@ -828,9 +916,9 @@
 		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
 		private DevExpress.XtraLayout.LayoutControl layoutControl1;
 		private DevExpress.XtraGrid.GridControl gridMovBanco;
-		private DevExpress.XtraGrid.Views.Grid.GridView gridView2;
+		private DevExpress.XtraGrid.Views.Grid.GridView gridViewMovBanco;
 		private DevExpress.XtraGrid.GridControl gridMobLibros;
-		private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
+		private DevExpress.XtraGrid.Views.Grid.GridView gridViewMovLibros;
 		private DevExpress.XtraEditors.TextEdit txtSaldoBanco;
 		private DevExpress.XtraEditors.TextEdit txtSaldoLibro;
 		private DevExpress.XtraEditors.DateEdit dtpFechaSaldo;
@@ -875,5 +963,12 @@
 		private DevExpress.XtraGrid.Columns.GridColumn colReferencia;
 		private DevExpress.XtraGrid.Columns.GridColumn colConcepto;
 		private DevExpress.XtraGrid.Columns.GridColumn colMonto;
+		private DevExpress.XtraGrid.Columns.GridColumn colFechaBanco;
+		private DevExpress.XtraGrid.Columns.GridColumn colReferenciaBanco;
+		private DevExpress.XtraGrid.Columns.GridColumn colMontoBanco;
+		private DevExpress.XtraGrid.Columns.GridColumn colSelectedBanco;
+		private DevExpress.XtraGrid.Columns.GridColumn colMatchNumberBanco;
+		private DevExpress.XtraGrid.Columns.GridColumn colCheck;
+		private DevExpress.XtraGrid.Columns.GridColumn colMatchNumber;
 	}
 }

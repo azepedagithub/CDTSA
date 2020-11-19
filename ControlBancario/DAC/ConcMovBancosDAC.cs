@@ -41,7 +41,7 @@ namespace ControlBancario.DAC
 				//Paremetros Insert
 				oAdaptador.InsertCommand.CommandType = CommandType.StoredProcedure;
 				oAdaptador.InsertCommand.Parameters.Add("@Operacion", SqlDbType.NChar).Value = "I";
-				oAdaptador.InsertCommand.Parameters.Add("@IDMovBanco", SqlDbType.Int).SourceColumn = "IDBanco";
+				oAdaptador.InsertCommand.Parameters.Add("@IDMovBanco", SqlDbType.Int).SourceColumn = "IDMovBanco";
 				oAdaptador.InsertCommand.Parameters.Add("@IDCuentaBanco", SqlDbType.Int).SourceColumn = "IDCuentaBanco";
 				oAdaptador.InsertCommand.Parameters.Add("@Fecha", SqlDbType.Date).SourceColumn = "Fecha";
 				oAdaptador.InsertCommand.Parameters.Add("@IDConciliacion", SqlDbType.Int).SourceColumn = "IDConciliacion";
@@ -56,7 +56,7 @@ namespace ControlBancario.DAC
 				//Paremetros Update 
 				oAdaptador.UpdateCommand.CommandType = CommandType.StoredProcedure;
 				oAdaptador.UpdateCommand.Parameters.Add("@Operacion", SqlDbType.NChar).Value = "I";
-				oAdaptador.UpdateCommand.Parameters.Add("@IDMovBanco", SqlDbType.Int).SourceColumn = "IDBanco";
+				oAdaptador.UpdateCommand.Parameters.Add("@IDMovBanco", SqlDbType.Int).SourceColumn = "IDMovBanco";
 				oAdaptador.UpdateCommand.Parameters.Add("@IDCuentaBanco", SqlDbType.Int).SourceColumn = "IDCuentaBanco";
 				oAdaptador.UpdateCommand.Parameters.Add("@Fecha", SqlDbType.Date).SourceColumn = "Fecha";
 				oAdaptador.UpdateCommand.Parameters.Add("@IDConciliacion", SqlDbType.Int).SourceColumn = "IDConciliacion";
@@ -71,7 +71,7 @@ namespace ControlBancario.DAC
 				//Paremetros Delete 
 				oAdaptador.DeleteCommand.CommandType = CommandType.StoredProcedure;
 				oAdaptador.DeleteCommand.Parameters.Add("@Operacion", SqlDbType.NChar).Value = "I";
-				oAdaptador.DeleteCommand.Parameters.Add("@IDMovBanco", SqlDbType.Int).SourceColumn = "IDBanco";
+				oAdaptador.DeleteCommand.Parameters.Add("@IDMovBanco", SqlDbType.Int).SourceColumn = "IDMovBanco";
 				oAdaptador.DeleteCommand.Parameters.Add("@IDCuentaBanco", SqlDbType.Int).SourceColumn = "IDCuentaBanco";
 				oAdaptador.DeleteCommand.Parameters.Add("@Fecha", SqlDbType.Date).SourceColumn = "Fecha";
 				oAdaptador.DeleteCommand.Parameters.Add("@IDConciliacion", SqlDbType.Int).SourceColumn = "IDConciliacion";

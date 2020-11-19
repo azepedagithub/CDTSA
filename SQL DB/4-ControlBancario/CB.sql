@@ -310,6 +310,11 @@ FechaImpresion date,Impreso bit DEFAULT(0),
 Referencia nvarchar(100) Default ' ' not null, ConceptoContable nvarchar(255) )
 go
 
+
+ALTER TABLE dbo.cbMovimientos ADD IDMovimiento BIGINT IDENTITY (1,1)
+
+GO
+
 alter table dbo.cbMovimientos add constraint pkcbMovimientos primary key (IDCuentaBanco, Fecha, IDTipo, IDSubtipo, Numero)
 go
 
@@ -960,7 +965,7 @@ SELECT ISNULL(MAX(FechaFin),GETDATE()) Fecha  FROM dbo.cbConciliacion
 GO
 
 
-CREATE  Procedure [dbo].[cbUpdateConciliacion] @Operacion nvarchar(1), @IDConciliacion INT OUTPUT,@IDCuentaBanco INT , @FechaInicio DATE, @FechaFin DATE,@Usuario NVARCHAR(50)
+CREATE Procedure [dbo].[cbUpdateConciliacion] @Operacion nvarchar(1), @IDConciliacion INT OUTPUT,@IDCuentaBanco INT , @FechaInicio DATE, @FechaFin DATE,@Usuario NVARCHAR(50)
 as
 set nocount on 
 
@@ -969,7 +974,7 @@ BEGIN
 
 	SET @IDConciliacion =  (SELECT ISNULL(MAX(IDConciliacion),0) +1 FROM dbo.cbConciliacion WHERE IDCuentaBanco=@IDCuentaBanco)
 	INSERT INTO dbo.cbConciliacion( IDConciliacion ,IDCuentaBanco ,FechaInicio,FechaFin ,Estado ,Usuario)
-	VALUES  (@IDConciliacion,@IDCuentaBanco,@FechaInicio,@FechaFin,1,@Usuario )
+	VALUES  (@IDConciliacion,@IDCuentaBanco,@FechaInicio,@FechaFin,'P',@Usuario )
 END
 if upper(@Operacion) = 'U'
 begin
@@ -1016,7 +1021,7 @@ AS
 set @FechaInicial = CAST(SUBSTRING(CAST(@FechaInicial AS CHAR),1,11) + ' 00:00:00.000' AS DATETIME)
 set @FechaFinal = CAST(SUBSTRING(CAST(@FechaFinal AS CHAR),1,11) + ' 23:59:59.998' AS DATETIME)
 
-SELECT Fecha,T.Descr TipoMov,Referencia,ConceptoContable,Monto,CASE WHEN MatchNumber IS NOT NULl THEN 1 ELSE 0 END Selected, MatchNumber
+SELECT Fecha,T.Descr TipoMov,Referencia,ConceptoContable,Monto,CAST(CASE WHEN MatchNumber IS NOT NULl THEN 1 ELSE 0 END AS BIT) Selected, MatchNumber
 FROM dbo.cbMovimientos M
 INNER JOIN dbo.cbTipoDocumento T ON M.IDTipo = T.IDTipo
 WHERE Fecha BETWEEN @FechaInicial and @FechaFinal AND IDCuentaBanco = @IDCuentaBancaria
@@ -1046,9 +1051,40 @@ END
 
 GO
 
+
 CREATE PROCEDURE  dbo.cbGetConcMovBanco(@IDConciliacion INT, @IDCuentaBanco INT)
 AS
-SELECT  IDMovBanco ,IDCuentaBanco ,Fecha ,IDConciliacion ,Referencia ,Monto ,Factor ,MatchNumber ,Usuario ,Estado  
+SELECT  IDMovBanco ,IDCuentaBanco ,Fecha ,IDConciliacion ,Referencia ,Monto ,Factor ,CASE WHEN MatchNumber =0 THEN NULL ELSE  MatchNumber END MatchNumber, CAST(CASE WHEN MatchNumber >0 THEN 1 ELSE 0 END AS BIT) Selected ,Usuario ,Estado  
 FROM dbo.cbConcMovBanco WHERE (IDConciliacion=@IDConciliacion OR @IDConciliacion =-1)	 AND (IDCuentaBanco = @IDCuentaBanco OR @IDCuentaBanco=-1)
+
+GO
+
+CREATE PROCEDURE dbo.cbCanAddConciliacionBancaria
+AS 
+DECLARE @Status NVARCHAR(10)
+SET @Status = 'Ok'
+IF EXISTS(SELECT TOP 1 IDConciliacion FROM dbo.cbConciliacion WHERE Estado='P' ORDER BY FechaFin DESC)
+BEGIN
+	SET @Status = 'EnProceso'
+END
+SELECT @Status Estado
+
+
+GO
+
+
+CREATE PROCEDURE dbo.cgMatchedElements(@IDConciliacion AS INT,  @IDCuentaBancaria AS INT ,  @LstIDMovBanco NVARCHAR(800), @LstIDMovimiento NVARCHAR(800))
+AS 
+--DECLARE @IDConciliacion AS INT
+--DECLARE @IDCuentaBancaria AS INT
+
+--DECLARE @LstIDMovBanco NVARCHAR(800)
+--DECLARE @LstIDMovimiento NVARCHAR(800)
+DECLARE @MatchNumber INT
+
+SET @MatchNumber = (SELECT dbo.cbgetMatchNumber(@IDConciliacion,@IDCuentaBancaria))
+
+UPDATE dbo.cbMovimientos SET MatchNumber =@MatchNumber WHERE IDMovimiento IN (SELECT Value FROM dbo.ConvertListToTable(@LstIDMovimiento,'|'))
+UPDATE dbo.cbConcMovBanco SET MatchNumber =@MatchNumber WHERE IDMovBanco IN (SELECT Value FROM dbo.ConvertListToTable(@LstIDMovBanco, '|'))
 
 GO

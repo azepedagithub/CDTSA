@@ -11,6 +11,7 @@ using Excel = Microsoft.Office.Interop.Excel;
 using System.Runtime.InteropServices;
 using DevExpress.XtraGrid.Views.Grid;
 using Security;
+using System.Transactions;
 
 namespace ControlBancario
 {
@@ -78,9 +79,35 @@ namespace ControlBancario
 			Rows = xlRange.Rows.Count;
 			Cols = xlRange.Columns.Count;
 
+		
 			
 			try
 			{
+
+				//Validar que el documento cumple los requirimientos de importacion:
+				String sMensaje = "";
+				if (Cols > 4)
+					sMensaje = sMensaje + "El archivo de importacion unicamente debe de contener cuatro columnas \n\r";
+
+				for (int i = 1; i <= 4; i++)
+				{
+					
+					Object valorCabecera = xlRange.Cells[1, i].Value2;
+					if (i == 1 && valorCabecera.ToString().ToLower() != "fecha")
+						sMensaje = sMensaje + "	• La primer columna debe de ser Fecha \n\r";
+					if (i == 2 && valorCabecera.ToString().ToLower() != "referencia")
+						sMensaje = sMensaje + " • La segunda columna debe de ser Referencia \n\r";
+					if (i == 3 && valorCabecera.ToString().ToLower() != "concepto")
+						sMensaje = sMensaje + "	• La tercer columna debe de ser Concepto \n\r";
+					if (i == 4 && valorCabecera.ToString().ToLower() != "monto")
+						sMensaje = sMensaje + "	• La cuarta columna debe de ser Monto \n\r";
+				}
+
+				if (sMensaje != "")
+				{
+					MessageBox.Show("Por favor verifique lo siguiente: \n\r" + sMensaje);
+					return;
+				}
 
 				for (int i = 2; i <= Rows; i++)
 				{
@@ -205,43 +232,50 @@ namespace ControlBancario
 		{
 			//Procesar
 			this.dtMovBancos.Clear();
-			
-			ConnectionManager.BeginTran();
-			
-			foreach (clsMovBancos fila in oLstMov)
+
+			try
 			{
-				DataRow nuevaFila = this.dtMovBancos.NewRow();
-				nuevaFila["Fecha"] = fila.Fecha;
-				nuevaFila["IDCuentaBanco"] =fila.IDCuentaBanco;
-				nuevaFila["IDConciliacion"] = fila.IDConciliacion;
-				nuevaFila["Referencia"] = fila.Referencia;
-				nuevaFila["Monto"] = fila.Monto;
-				nuevaFila["Factor"] = fila.Factor;
-				nuevaFila["Usuario"] = fila.Usuario;
-				nuevaFila["Estado"] = fila.Estado;
-
-				this.dtMovBancos.Rows.Add(nuevaFila);
-				
-				
-				try
+				using (var scope = new TransactionScope())
 				{
-					DAC.ConcMovBancosDAC.oAdaptador.Update(this.dtMovBancos);
-					nuevaFila["IDMovBanco"] = Convert.ToInt32(DAC.ConcMovBancosDAC.oAdaptador.InsertCommand.Parameters["@IDMovBanco"].Value);
-					dtMovBancos.AcceptChanges();
-					Application.DoEvents();
+					foreach (clsMovBancos fila in oLstMov)
+					{
+						DataRow nuevaFila = this.dtMovBancos.NewRow();
+						nuevaFila["Fecha"] = fila.Fecha;
+						nuevaFila["IDMovBanco"] = -1;
+						nuevaFila["IDCuentaBanco"] = fila.IDCuentaBanco;
+						nuevaFila["IDConciliacion"] = fila.IDConciliacion;
+						nuevaFila["Referencia"] = fila.Referencia;
+						nuevaFila["Monto"] = fila.Monto;
+						nuevaFila["Factor"] = fila.Factor;
+						nuevaFila["Usuario"] = fila.Usuario;
+						nuevaFila["Estado"] = fila.Estado;
 
-				}
-				catch (System.Data.SqlClient.SqlException ex)
-				{
-					dtMovBancos.RejectChanges();
-					nuevaFila = null;
-					MessageBox.Show(ex.Message);
-					ConnectionManager.RollBackTran();
-					break;
+						this.dtMovBancos.Rows.Add(nuevaFila);
+
+
+						try
+						{
+							DAC.ConcMovBancosDAC.oAdaptador.Update(this.dtMovBancos);
+							//nuevaFila["IDMovBanco"] = Convert.ToInt32(DAC.ConcMovBancosDAC.oAdaptador.InsertCommand.Parameters["@IDMovBanco"].Value);
+							dtMovBancos.AcceptChanges();
+							Application.DoEvents();
+
+						}
+						catch (System.Data.SqlClient.SqlException ex)
+						{
+							dtMovBancos.RejectChanges();
+							nuevaFila = null;
+							throw new Exception(ex.Message);
+							break;
+						}
+					}
+					scope.Complete();
 				}
 			}
-
-			ConnectionManager.CommitTran();
+			catch (Exception ex) {
+				MessageBox.Show("Ha ocurrido un error");
+			}
+			
 			this.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.Close();
 		}

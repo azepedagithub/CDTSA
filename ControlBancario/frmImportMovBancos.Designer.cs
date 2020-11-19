@@ -30,6 +30,7 @@
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmImportMovBancos));
 			this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
+			this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
 			this.dtgImport = new DevExpress.XtraGrid.GridControl();
 			this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
 			this.btnLoadDoc = new DevExpress.XtraEditors.SimpleButton();
@@ -41,9 +42,12 @@
 			this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
-			this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
 			this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
+			this.colFecha = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colRef = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colConcepto = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colMonto = new DevExpress.XtraGrid.Columns.GridColumn();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
 			this.layoutControl1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dtgImport)).BeginInit();
@@ -74,6 +78,17 @@
 			this.layoutControl1.TabIndex = 0;
 			this.layoutControl1.Text = "layoutControl1";
 			// 
+			// simpleButton1
+			// 
+			this.simpleButton1.Image = ((System.Drawing.Image)(resources.GetObject("simpleButton1.Image")));
+			this.simpleButton1.Location = new System.Drawing.Point(503, 330);
+			this.simpleButton1.Name = "simpleButton1";
+			this.simpleButton1.Size = new System.Drawing.Size(118, 22);
+			this.simpleButton1.StyleController = this.layoutControl1;
+			this.simpleButton1.TabIndex = 8;
+			this.simpleButton1.Text = "Importar";
+			this.simpleButton1.Click += new System.EventHandler(this.simpleButton1_Click);
+			// 
 			// dtgImport
 			// 
 			this.dtgImport.Location = new System.Drawing.Point(12, 76);
@@ -86,6 +101,11 @@
 			// 
 			// gridView1
 			// 
+			this.gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.colFecha,
+            this.colRef,
+            this.colConcepto,
+            this.colMonto});
 			this.gridView1.GridControl = this.dtgImport;
 			this.gridView1.Name = "gridView1";
 			this.gridView1.OptionsView.ShowGroupPanel = false;
@@ -184,17 +204,6 @@
 			this.emptySpaceItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
 			this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
 			// 
-			// simpleButton1
-			// 
-			this.simpleButton1.Image = ((System.Drawing.Image)(resources.GetObject("simpleButton1.Image")));
-			this.simpleButton1.Location = new System.Drawing.Point(503, 330);
-			this.simpleButton1.Name = "simpleButton1";
-			this.simpleButton1.Size = new System.Drawing.Size(118, 22);
-			this.simpleButton1.StyleController = this.layoutControl1;
-			this.simpleButton1.TabIndex = 8;
-			this.simpleButton1.Text = "Importar";
-			this.simpleButton1.Click += new System.EventHandler(this.simpleButton1_Click);
-			// 
 			// layoutControlItem4
 			// 
 			this.layoutControlItem4.Control = this.simpleButton1;
@@ -211,6 +220,38 @@
 			this.emptySpaceItem2.Name = "emptySpaceItem2";
 			this.emptySpaceItem2.Size = new System.Drawing.Size(491, 26);
 			this.emptySpaceItem2.TextSize = new System.Drawing.Size(0, 0);
+			// 
+			// colFecha
+			// 
+			this.colFecha.Caption = "Fecha";
+			this.colFecha.FieldName = "Fecha";
+			this.colFecha.Name = "colFecha";
+			this.colFecha.Visible = true;
+			this.colFecha.VisibleIndex = 0;
+			// 
+			// colRef
+			// 
+			this.colRef.Caption = "Referencia";
+			this.colRef.FieldName = "Referencia";
+			this.colRef.Name = "colRef";
+			this.colRef.Visible = true;
+			this.colRef.VisibleIndex = 1;
+			// 
+			// colConcepto
+			// 
+			this.colConcepto.Caption = "Concepto";
+			this.colConcepto.FieldName = "Concepto";
+			this.colConcepto.Name = "colConcepto";
+			this.colConcepto.Visible = true;
+			this.colConcepto.VisibleIndex = 2;
+			// 
+			// colMonto
+			// 
+			this.colMonto.Caption = "Monto";
+			this.colMonto.FieldName = "Monto";
+			this.colMonto.Name = "colMonto";
+			this.colMonto.Visible = true;
+			this.colMonto.VisibleIndex = 3;
 			// 
 			// frmImportMovBancos
 			// 
@@ -256,5 +297,9 @@
 		private DevExpress.XtraEditors.SimpleButton simpleButton1;
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
 		private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem2;
+		private DevExpress.XtraGrid.Columns.GridColumn colFecha;
+		private DevExpress.XtraGrid.Columns.GridColumn colRef;
+		private DevExpress.XtraGrid.Columns.GridColumn colConcepto;
+		private DevExpress.XtraGrid.Columns.GridColumn colMonto;
 	}
 }

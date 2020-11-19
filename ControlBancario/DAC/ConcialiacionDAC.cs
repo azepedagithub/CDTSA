@@ -141,5 +141,36 @@ namespace ControlBancario.DAC
 			return DS.Tables[0];
 		}
 
+		public static String CanAddConciliacionBancaria() {
+			DataSet DS = new DataSet();
+			SqlCommand ocmd = new SqlCommand("dbo.cbCanAddConciliacionBancaria", ConnectionManager.GetConnection());
+			SqlDataAdapter oAdaptador = new SqlDataAdapter(ocmd);
+			oAdaptador.Fill(DS, "Data");
+			return DS.Tables[0].Rows[0]["Estado"].ToString();
+		}
+
+
+		public static bool MatchElements(int IDConciliacion, int IDCuentaBancaria, String lstIDMovBanco, String lstIDMovimientoLibro, SqlTransaction tran)
+		{
+			bool bresult = false;
+			long result;
+			String strSQL = "dbo.cgMatchedElements";
+
+			SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
+
+			oCmd.Parameters.Add(new SqlParameter("@IDConciliacion", IDConciliacion));
+			oCmd.Parameters.Add(new SqlParameter("@IDCuentaBancaria", IDCuentaBancaria));
+			oCmd.Parameters.Add(new SqlParameter("@LstIDMovBanco", lstIDMovBanco));
+			oCmd.Parameters.Add(new SqlParameter("@LstIDMovimiento", lstIDMovimientoLibro));
+
+			oCmd.CommandType = CommandType.StoredProcedure;
+			oCmd.Transaction = tran;
+			if (oCmd.Connection.State != ConnectionState.Open)
+				oCmd.Connection.Open();
+			result = oCmd.ExecuteNonQuery();
+			bresult = (result != 0) ? true : false;
+			return bresult;
+		}
+
 	}
 }
