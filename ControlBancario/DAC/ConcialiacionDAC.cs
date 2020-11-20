@@ -154,7 +154,7 @@ namespace ControlBancario.DAC
 		{
 			bool bresult = false;
 			long result;
-			String strSQL = "dbo.cgMatchedElements";
+			String strSQL = "dbo.cbMatchElements";
 
 			SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
 
@@ -162,6 +162,28 @@ namespace ControlBancario.DAC
 			oCmd.Parameters.Add(new SqlParameter("@IDCuentaBancaria", IDCuentaBancaria));
 			oCmd.Parameters.Add(new SqlParameter("@LstIDMovBanco", lstIDMovBanco));
 			oCmd.Parameters.Add(new SqlParameter("@LstIDMovimiento", lstIDMovimientoLibro));
+
+			oCmd.CommandType = CommandType.StoredProcedure;
+			oCmd.Transaction = tran;
+			if (oCmd.Connection.State != ConnectionState.Open)
+				oCmd.Connection.Open();
+			result = oCmd.ExecuteNonQuery();
+			bresult = (result != 0) ? true : false;
+			return bresult;
+		}
+
+		public static bool UnMatchElements(int IDConciliacion, int IDCuentaBancaria, int IDMovBanco, int IDMovimientoLibro, SqlTransaction tran)
+		{
+			bool bresult = false;
+			long result;
+			String strSQL = "dbo.cbUnMatchElements";
+
+			SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
+
+			oCmd.Parameters.Add(new SqlParameter("@IDConciliacion", IDConciliacion));
+			oCmd.Parameters.Add(new SqlParameter("@IDCuentaBancaria", IDCuentaBancaria));
+			oCmd.Parameters.Add(new SqlParameter("@IDMovBanco", IDMovBanco));
+			oCmd.Parameters.Add(new SqlParameter("@IDMovimiento", IDMovimientoLibro));
 
 			oCmd.CommandType = CommandType.StoredProcedure;
 			oCmd.Transaction = tran;

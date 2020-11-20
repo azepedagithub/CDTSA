@@ -15,7 +15,7 @@ namespace ControlBancario.DAC
 
         private static SqlDataAdapter InicializarAdaptador()
         {
-            String getSQL = "SELECT  M.IDCuentaBanco ,M.Fecha ,M.IDTipo ,M.IDSubTipo ,R.IDRuc,R.Nombre,R.Alias,M.Numero ,M.Pagadero_a ,M.Monto ,M.Asiento ,M.Anulado ,M.AsientoAnulacion ,M.Usuario ,M.UsuarioAnulacion ,M.FechaAnulacion, M.UsuarioAprobacion,M.FechaAprobacion,M.UsuarioImpresion,M.FechaImpresion,M.Impreso ,M.Referencia ,M.ConceptoContable  " +
+            String getSQL = "SELECT  M.IDCuentaBanco ,M.Fecha ,M.IDTipo ,M.IDSubTipo ,R.IDRuc,R.Nombre,R.Alias,M.Numero ,M.Pagadero_a ,M.Monto ,M.Asiento ,M.Anulado ,M.AsientoAnulacion ,M.Usuario ,M.UsuarioAnulacion ,M.FechaAnulacion, M.UsuarioAprobacion,M.FechaAprobacion,M.UsuarioImpresion,M.FechaImpresion,M.Impreso  ,M.ConceptoContable  " +
                             "FROM dbo.cbMovimientos M " +
                             "INNER JOIN dbo.cbCuentaBancaria CB ON M.IDCuentaBanco = CB.IDCuentaBanco " +
                             "INNER JOIN dbo.cbTipoCuenta T ON CB.IDTipo = T.IDTipo " +
@@ -59,7 +59,6 @@ namespace ControlBancario.DAC
                 oAdaptador.InsertCommand.Parameters.Add("@Pagaderoa", SqlDbType.NChar).SourceColumn = "Pagadero_a";
                 oAdaptador.InsertCommand.Parameters.Add("@Monto", SqlDbType.Decimal).SourceColumn = "Monto";
                 oAdaptador.InsertCommand.Parameters.Add("@Usuario", SqlDbType.NChar).SourceColumn = "Usuario";
-                oAdaptador.InsertCommand.Parameters.Add("@Referencia", SqlDbType.NChar).SourceColumn = "Referencia";
                 oAdaptador.InsertCommand.Parameters.Add("@ConceptoContable", SqlDbType.NChar).SourceColumn = "ConceptoContable";
 
                 //Paremetros Update 
@@ -74,7 +73,6 @@ namespace ControlBancario.DAC
                 oAdaptador.UpdateCommand.Parameters.Add("@Pagaderoa", SqlDbType.NChar).SourceColumn = "Pagadero_a";
                 oAdaptador.UpdateCommand.Parameters.Add("@Monto", SqlDbType.Decimal).SourceColumn = "Monto";
                 oAdaptador.UpdateCommand.Parameters.Add("@Usuario", SqlDbType.NChar).SourceColumn = "Usuario";
-                oAdaptador.UpdateCommand.Parameters.Add("@Referencia", SqlDbType.NChar).SourceColumn = "Referencia";
                 oAdaptador.UpdateCommand.Parameters.Add("@ConceptoContable", SqlDbType.NChar).SourceColumn = "ConceptoContable";
 
 
@@ -91,7 +89,6 @@ namespace ControlBancario.DAC
                 oAdaptador.DeleteCommand.Parameters.Add("@Pagaderoa", SqlDbType.NChar).SourceColumn = "Pagadero_a";
                 oAdaptador.DeleteCommand.Parameters.Add("@Monto", SqlDbType.Decimal).SourceColumn = "Monto";
                 oAdaptador.DeleteCommand.Parameters.Add("@Usuario", SqlDbType.NChar).SourceColumn = "Usuario";
-                oAdaptador.DeleteCommand.Parameters.Add("@Referencia", SqlDbType.NChar).SourceColumn = "Referencia";
                 oAdaptador.DeleteCommand.Parameters.Add("@ConceptoContable", SqlDbType.NChar).SourceColumn = "ConceptoContable";
 
                 return oAdaptador;
@@ -121,7 +118,7 @@ namespace ControlBancario.DAC
 
         public static DataSet GetDataEmpty()
         {
-            String strSQL = "SELECT  IDCuentaBanco ,Fecha ,IDTipo ,IDSubTipo ,IDRuc,Numero ,Pagadero_a ,Monto ,Asiento ,Anulado ,AsientoAnulacion ,Usuario ,UsuarioAnulacion, UsuarioAprobacion,FechaAprobacion,UsuarioImpresion,FechaImpresion,Impreso ,FechaAnulacion ,Referencia ,ConceptoContable  FROM dbo.cbMovimientos WHERE 1=2";
+            String strSQL = "SELECT  IDCuentaBanco ,Fecha ,IDTipo ,IDSubTipo ,IDRuc,Numero ,Pagadero_a ,Monto ,Asiento ,Anulado ,AsientoAnulacion ,Usuario ,UsuarioAnulacion, UsuarioAprobacion,FechaAprobacion,UsuarioImpresion,FechaImpresion,Impreso ,FechaAnulacion ,ConceptoContable  FROM dbo.cbMovimientos WHERE 1=2";
 
             SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
             SqlDataAdapter oAdaptador = new SqlDataAdapter(oCmd);
@@ -171,7 +168,6 @@ namespace ControlBancario.DAC
                 oCmd.Parameters.Add("@IDSubTipo", SqlDbType.Int, 50).Value = IdSubTipo;
                 oCmd.Parameters.Add("@PagaderoA", SqlDbType.VarChar,200).Value = PagaderoA;
                 oCmd.Parameters.Add("@Anulado", SqlDbType.Int, 50).Value = Anulado;
-                oCmd.Parameters.Add("@Referencia", SqlDbType.VarChar,200).Value = Referencia;
                 oCmd.Parameters.Add("@ConceptoContable", SqlDbType.VarChar, 50).Value = ConceptoContable;
                 
                 oAdapatadorTmp.Fill(DS, "Data");

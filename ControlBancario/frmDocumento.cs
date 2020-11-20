@@ -107,7 +107,6 @@ namespace ControlBancario
             _currentRow["Monto"] = "0";
             _currentRow["IDRuc"] = DBNull.Value;
             _currentRow["Usuario"] = sUsuario;
-            _currentRow["Referencia"] = "";
             _currentRow["ConceptoContable"] = "";
 			
 
@@ -146,7 +145,6 @@ namespace ControlBancario
             this.txtAsiento.EditValue = _currentRow["Asiento"].ToString();
             this.txtAsientoAnulacion.Text = _currentRow["AsientoAnulacion"].ToString();
             this.txtConcepto.EditValue = _currentRow["ConceptoContable"].ToString();
-            this.txtReferencia.Text = _currentRow["Referencia"].ToString();
             this.slkupRuc.EditValue =_currentRow["IDRuc"].ToString();
             this.txtPagaderoA.Text = _currentRow["Pagadero_a"].ToString();
             this.txtUsuario.EditValue = _currentRow["Usuario"].ToString();
@@ -163,6 +161,8 @@ namespace ControlBancario
         private void ClearControls()
         {
             this.txtConcepto.Text = "";
+			this.txtPagaderoA.Text = "";
+			this.txtNumero.Text = "";
         }
 
 
@@ -170,13 +170,11 @@ namespace ControlBancario
         {
 
             this.txtConcepto.ReadOnly = !(Activo);
-            this.txtReferencia.ReadOnly = !Activo;
             this.slkupTipo.ReadOnly = !Activo;
             this.slkupSubTipo.ReadOnly = !Activo;
             this.slkupRuc.ReadOnly = !Activo;
             this.txtPagaderoA.ReadOnly = !(Activo);
             this.txtMonto.ReadOnly = !(Activo);
-            this.txtReferencia.ReadOnly = !(Activo);
             this.txtConcepto.ReadOnly = !(Activo);
             this.btnEditar.Enabled = !Activo;
             this.btnGuardar.Enabled = (Mayorizado == true) ? false : Activo;
@@ -344,8 +342,6 @@ namespace ControlBancario
                 sMensaje = sMensaje + "     • Ingrese el Sub Tipo de Documento. \n\r";
             if (this.txtMonto.EditValue == null || this.txtMonto.EditValue.ToString()=="" || this.txtMonto.EditValue.ToString()=="0.00")
                 sMensaje = sMensaje + "     • Ingrese el monto del cheque. \n\r";
-            if (this.txtReferencia.EditValue == null || this.txtReferencia.EditValue.ToString()=="")
-                sMensaje = sMensaje + "     • Ingrese la Referencia del cheque. \n\r";
             if (this.txtConcepto.EditValue == null || this.txtConcepto.EditValue.ToString()=="")
                 sMensaje = sMensaje + "     • Digite el concepto del Asiento. \n\r";
 			if (this.txtNumero.EditValue == null || this.txtNumero.EditValue.ToString() == "")
@@ -394,7 +390,6 @@ namespace ControlBancario
                     _currentRow["Pagadero_a"] = this.txtPagaderoA.EditValue;
                     _currentRow["Monto"] = this.txtMonto.EditValue;
                     _currentRow["ConceptoContable"] = this.txtConcepto.EditValue;
-                    _currentRow["Referencia"] = this.txtReferencia.EditValue;
                     _currentRow["Usuario"] = this.txtUsuario.EditValue;
 
 
@@ -452,14 +447,13 @@ namespace ControlBancario
 
                 _currentRow["IDCuentaBanco"] = this.slkupCuentaBancaria.EditValue.ToString();
                 _currentRow["Fecha"] = this.dtpFecha.EditValue;
-                _currentRow["IDRuc"] = this.slkupRuc.EditValue;
+                _currentRow["IDRuc"] = (this.slkupRuc.EditValue == null || this.slkupRuc.EditValue.ToString() == "") ? 0 : Convert.ToInt32(this.slkupRuc.EditValue) ;
                 _currentRow["IDTipo"] = this.slkupTipo.EditValue;
                 _currentRow["IDSubTipo"] = this.slkupSubTipo.EditValue;
                 _currentRow["Numero"] = this.txtNumero.EditValue;
                 _currentRow["Pagadero_a"] = this.txtPagaderoA.EditValue;
                 _currentRow["Monto"] = this.txtMonto.EditValue;
                 _currentRow["ConceptoContable"] = this.txtConcepto.EditValue;
-                _currentRow["Referencia"] = this.txtReferencia.EditValue;
                 _currentRow["Usuario"] = this.txtUsuario.EditValue;
                 _dtDocumento.Rows.Add(_currentRow);
                 try
@@ -574,9 +568,12 @@ namespace ControlBancario
 				{
 					this.txtNumero.EditValue = CuentaBancariaDAC.NextConsecutivoCheque(Convert.ToInt32(this.slkupCuentaBancaria.EditValue));
 					this.lblLayoutPagaderoA.Text = "Pagadero a";
+					this.layoutRUC.Enabled = true;
 				}
 				else {
-					this.lblLayoutPagaderoA.Text = "Recibido de";
+					this.lblLayoutPagaderoA.Text = "Beneficiario:";
+					this.layoutRUC.Enabled = false;
+					
 				}
 
 

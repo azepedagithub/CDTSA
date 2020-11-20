@@ -771,7 +771,7 @@ namespace MainMenu
                     TreeListNode nodeListadoCuentaBancaria = tl.AppendNode(new object[] { "Cuentas Bancarias" }, nodeCatalogoBanco.Id, 11, 11, 11);
                     nodeListadoCuentaBancaria.Tag = "frmListadoCuentaBancaria";
                     TreeListNode nodeDocumentos = tl.AppendNode(new object[] { "Documentos" }, -1, 9, 10, 9);
-                    TreeListNode nodeCheques = tl.AppendNode(new object[] { "Listado Cheques" }, nodeDocumentos.Id, 11, 11, 11);
+                    TreeListNode nodeCheques = tl.AppendNode(new object[] { "Listado de Documentos" }, nodeDocumentos.Id, 11, 11, 11);
                     nodeCheques.Tag = "frmListadoDocumentosBancarios";
                     TreeListNode nodeNit = tl.AppendNode(new object[] { "Nit" }, nodeDocumentos.Id, 11, 11, 11);
                     nodeNit.Tag = "frmNIT";

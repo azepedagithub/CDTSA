@@ -29,6 +29,16 @@
 		private void InitializeComponent()
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmConciliacionBancaria));
+			DevExpress.XtraGrid.GridFormatRule gridFormatRule1 = new DevExpress.XtraGrid.GridFormatRule();
+			DevExpress.XtraEditors.FormatConditionRuleContains formatConditionRuleContains1 = new DevExpress.XtraEditors.FormatConditionRuleContains();
+			DevExpress.XtraGrid.GridFormatRule gridFormatRule2 = new DevExpress.XtraGrid.GridFormatRule();
+			DevExpress.XtraEditors.FormatConditionRuleContains formatConditionRuleContains2 = new DevExpress.XtraEditors.FormatConditionRuleContains();
+			DevExpress.XtraGrid.GridFormatRule gridFormatRule3 = new DevExpress.XtraGrid.GridFormatRule();
+			DevExpress.XtraEditors.FormatConditionRuleContains formatConditionRuleContains3 = new DevExpress.XtraEditors.FormatConditionRuleContains();
+			DevExpress.XtraGrid.GridFormatRule gridFormatRule4 = new DevExpress.XtraGrid.GridFormatRule();
+			DevExpress.XtraEditors.FormatConditionRuleContains formatConditionRuleContains4 = new DevExpress.XtraEditors.FormatConditionRuleContains();
+			this.colSelectedBanco = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colCheck = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.ribbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
 			this.btnAsociar = new DevExpress.XtraBars.BarButtonItem();
 			this.btnDesAsociar = new DevExpress.XtraBars.BarButtonItem();
@@ -48,10 +58,14 @@
 			this.slkupTypeView = new DevExpress.XtraEditors.SearchLookUpEdit();
 			this.searchLookUpEdit2View = new DevExpress.XtraGrid.Views.Grid.GridView();
 			this.txtDiferencia = new DevExpress.XtraEditors.TextEdit();
-			this.txtTotalMarcado = new DevExpress.XtraEditors.TextEdit();
+			this.txtTotalMarcadoBanco = new DevExpress.XtraEditors.TextEdit();
 			this.txtMarcadosLibros = new DevExpress.XtraEditors.TextEdit();
 			this.gridMovBanco = new DevExpress.XtraGrid.GridControl();
 			this.gridViewMovBanco = new DevExpress.XtraGrid.Views.Grid.GridView();
+			this.colFechaBanco = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colReferenciaBanco = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colMontoBanco = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colMatchNumberBanco = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.gridMobLibros = new DevExpress.XtraGrid.GridControl();
 			this.gridViewMovLibros = new DevExpress.XtraGrid.Views.Grid.GridView();
 			this.colFecha = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -59,6 +73,7 @@
 			this.colReferencia = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colConcepto = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colMonto = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colMatchNumber = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.txtSaldoBanco = new DevExpress.XtraEditors.TextEdit();
 			this.txtSaldoLibro = new DevExpress.XtraEditors.TextEdit();
 			this.dtpFechaSaldo = new DevExpress.XtraEditors.DateEdit();
@@ -90,13 +105,6 @@
 			this.emptySpaceItem7 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.layoutControlItem14 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem15 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.colCheck = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colMatchNumber = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colFechaBanco = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colReferenciaBanco = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colMontoBanco = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colSelectedBanco = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colMatchNumberBanco = new DevExpress.XtraGrid.Columns.GridColumn();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
 			this.layoutControl1.SuspendLayout();
@@ -107,7 +115,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.slkupTypeView.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit2View)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtDiferencia.Properties)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.txtTotalMarcado.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.txtTotalMarcadoBanco.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtMarcadosLibros.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridMovBanco)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridViewMovBanco)).BeginInit();
@@ -147,6 +155,23 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem15)).BeginInit();
 			this.SuspendLayout();
 			// 
+			// colSelectedBanco
+			// 
+			this.colSelectedBanco.Caption = "Seleccionado";
+			this.colSelectedBanco.FieldName = "Selected";
+			this.colSelectedBanco.Name = "colSelectedBanco";
+			this.colSelectedBanco.Visible = true;
+			this.colSelectedBanco.VisibleIndex = 3;
+			// 
+			// colCheck
+			// 
+			this.colCheck.Caption = "Seleccionado";
+			this.colCheck.FieldName = "Selected";
+			this.colCheck.Name = "colCheck";
+			this.colCheck.OptionsColumn.ImmediateUpdateRowPosition = DevExpress.Utils.DefaultBoolean.True;
+			this.colCheck.Visible = true;
+			this.colCheck.VisibleIndex = 5;
+			// 
 			// ribbonControl
 			// 
 			this.ribbonControl.ExpandCollapseItem.Id = 0;
@@ -178,6 +203,7 @@
 			this.btnAsociar.Id = 1;
 			this.btnAsociar.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnAsociar.LargeGlyph")));
 			this.btnAsociar.Name = "btnAsociar";
+			this.btnAsociar.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnAsociar_ItemClick);
 			// 
 			// btnDesAsociar
 			// 
@@ -187,6 +213,7 @@
 			this.btnDesAsociar.Id = 2;
 			this.btnDesAsociar.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnDesAsociar.LargeGlyph")));
 			this.btnDesAsociar.Name = "btnDesAsociar";
+			this.btnDesAsociar.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnDesAsociar_ItemClick);
 			// 
 			// btnConciliar
 			// 
@@ -284,7 +311,7 @@
 			this.layoutControl1.Controls.Add(this.dtpFechaInicial);
 			this.layoutControl1.Controls.Add(this.slkupTypeView);
 			this.layoutControl1.Controls.Add(this.txtDiferencia);
-			this.layoutControl1.Controls.Add(this.txtTotalMarcado);
+			this.layoutControl1.Controls.Add(this.txtTotalMarcadoBanco);
 			this.layoutControl1.Controls.Add(this.txtMarcadosLibros);
 			this.layoutControl1.Controls.Add(this.gridMovBanco);
 			this.layoutControl1.Controls.Add(this.gridMobLibros);
@@ -362,15 +389,15 @@
 			this.txtDiferencia.StyleController = this.layoutControl1;
 			this.txtDiferencia.TabIndex = 15;
 			// 
-			// txtTotalMarcado
+			// txtTotalMarcadoBanco
 			// 
-			this.txtTotalMarcado.Location = new System.Drawing.Point(505, 425);
-			this.txtTotalMarcado.MenuManager = this.ribbonControl;
-			this.txtTotalMarcado.Name = "txtTotalMarcado";
-			this.txtTotalMarcado.Properties.ReadOnly = true;
-			this.txtTotalMarcado.Size = new System.Drawing.Size(319, 20);
-			this.txtTotalMarcado.StyleController = this.layoutControl1;
-			this.txtTotalMarcado.TabIndex = 14;
+			this.txtTotalMarcadoBanco.Location = new System.Drawing.Point(505, 425);
+			this.txtTotalMarcadoBanco.MenuManager = this.ribbonControl;
+			this.txtTotalMarcadoBanco.Name = "txtTotalMarcadoBanco";
+			this.txtTotalMarcadoBanco.Properties.ReadOnly = true;
+			this.txtTotalMarcadoBanco.Size = new System.Drawing.Size(319, 20);
+			this.txtTotalMarcadoBanco.StyleController = this.layoutControl1;
+			this.txtTotalMarcadoBanco.TabIndex = 14;
 			// 
 			// txtMarcadosLibros
 			// 
@@ -401,9 +428,67 @@
             this.colMontoBanco,
             this.colSelectedBanco,
             this.colMatchNumberBanco});
+			gridFormatRule1.ApplyToRow = true;
+			gridFormatRule1.Column = this.colSelectedBanco;
+			gridFormatRule1.Enabled = false;
+			gridFormatRule1.Name = "Format0";
+			formatConditionRuleContains1.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+			formatConditionRuleContains1.Appearance.Options.UseBackColor = true;
+			formatConditionRuleContains1.Values = ((System.Collections.IList)(resources.GetObject("formatConditionRuleContains1.Values")));
+			gridFormatRule1.Rule = formatConditionRuleContains1;
+			gridFormatRule2.ApplyToRow = true;
+			gridFormatRule2.Column = this.colSelectedBanco;
+			gridFormatRule2.Enabled = false;
+			gridFormatRule2.Name = "Format1";
+			formatConditionRuleContains2.Appearance.BackColor = System.Drawing.Color.PaleGreen;
+			formatConditionRuleContains2.Appearance.Options.UseBackColor = true;
+			formatConditionRuleContains2.Values = ((System.Collections.IList)(resources.GetObject("formatConditionRuleContains2.Values")));
+			gridFormatRule2.Rule = formatConditionRuleContains2;
+			this.gridViewMovBanco.FormatRules.Add(gridFormatRule1);
+			this.gridViewMovBanco.FormatRules.Add(gridFormatRule2);
 			this.gridViewMovBanco.GridControl = this.gridMovBanco;
 			this.gridViewMovBanco.Name = "gridViewMovBanco";
 			this.gridViewMovBanco.OptionsView.ShowGroupPanel = false;
+			this.gridViewMovBanco.RowCellStyle += new DevExpress.XtraGrid.Views.Grid.RowCellStyleEventHandler(this.gridView_RowCellStyle);
+			this.gridViewMovBanco.RowStyle += new DevExpress.XtraGrid.Views.Grid.RowStyleEventHandler(this.gridView_RowStyle);
+			this.gridViewMovBanco.HiddenEditor += new System.EventHandler(this.gridViewMovBancos_HiddenEditor);
+			this.gridViewMovBanco.ShownEditor += new System.EventHandler(this.gridViewMovBanco_ShownEditor);
+			// 
+			// colFechaBanco
+			// 
+			this.colFechaBanco.Caption = "Fecha";
+			this.colFechaBanco.FieldName = "Fecha";
+			this.colFechaBanco.Name = "colFechaBanco";
+			this.colFechaBanco.OptionsColumn.ReadOnly = true;
+			this.colFechaBanco.Visible = true;
+			this.colFechaBanco.VisibleIndex = 0;
+			// 
+			// colReferenciaBanco
+			// 
+			this.colReferenciaBanco.Caption = "Referencia";
+			this.colReferenciaBanco.FieldName = "Referencia";
+			this.colReferenciaBanco.Name = "colReferenciaBanco";
+			this.colReferenciaBanco.OptionsColumn.ReadOnly = true;
+			this.colReferenciaBanco.Visible = true;
+			this.colReferenciaBanco.VisibleIndex = 1;
+			// 
+			// colMontoBanco
+			// 
+			this.colMontoBanco.Caption = "Monto";
+			this.colMontoBanco.FieldName = "Monto";
+			this.colMontoBanco.Name = "colMontoBanco";
+			this.colMontoBanco.OptionsColumn.ReadOnly = true;
+			this.colMontoBanco.Visible = true;
+			this.colMontoBanco.VisibleIndex = 2;
+			// 
+			// colMatchNumberBanco
+			// 
+			this.colMatchNumberBanco.Caption = "# Asociación";
+			this.colMatchNumberBanco.FieldName = "MatchNumber";
+			this.colMatchNumberBanco.Name = "colMatchNumberBanco";
+			this.colMatchNumberBanco.OptionsColumn.ReadOnly = true;
+			this.colMatchNumberBanco.Visible = true;
+			this.colMatchNumberBanco.VisibleIndex = 4;
 			// 
 			// gridMobLibros
 			// 
@@ -426,15 +511,40 @@
             this.colMonto,
             this.colCheck,
             this.colMatchNumber});
+			gridFormatRule3.ApplyToRow = true;
+			gridFormatRule3.Column = this.colCheck;
+			gridFormatRule3.Enabled = false;
+			gridFormatRule3.Name = "Format0";
+			formatConditionRuleContains3.Appearance.BackColor = System.Drawing.Color.PaleGreen;
+			formatConditionRuleContains3.Appearance.Options.UseBackColor = true;
+			formatConditionRuleContains3.Values = ((System.Collections.IList)(resources.GetObject("formatConditionRuleContains3.Values")));
+			gridFormatRule3.Rule = formatConditionRuleContains3;
+			gridFormatRule4.ApplyToRow = true;
+			gridFormatRule4.Column = this.colCheck;
+			gridFormatRule4.Enabled = false;
+			gridFormatRule4.Name = "Format1";
+			formatConditionRuleContains4.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+			formatConditionRuleContains4.Appearance.Options.UseBackColor = true;
+			formatConditionRuleContains4.Values = ((System.Collections.IList)(resources.GetObject("formatConditionRuleContains4.Values")));
+			gridFormatRule4.Rule = formatConditionRuleContains4;
+			this.gridViewMovLibros.FormatRules.Add(gridFormatRule3);
+			this.gridViewMovLibros.FormatRules.Add(gridFormatRule4);
 			this.gridViewMovLibros.GridControl = this.gridMobLibros;
 			this.gridViewMovLibros.Name = "gridViewMovLibros";
+			this.gridViewMovLibros.OptionsBehavior.EditingMode = DevExpress.XtraGrid.Views.Grid.GridEditingMode.Inplace;
 			this.gridViewMovLibros.OptionsView.ShowGroupPanel = false;
+			this.gridViewMovLibros.RowCellStyle += new DevExpress.XtraGrid.Views.Grid.RowCellStyleEventHandler(this.gridView_RowCellStyle);
+			this.gridViewMovLibros.RowStyle += new DevExpress.XtraGrid.Views.Grid.RowStyleEventHandler(this.gridView_RowStyle);
+			this.gridViewMovLibros.ShowingEditor += new System.ComponentModel.CancelEventHandler(this.gridViewMovLibros_ShowingEditor);
+			this.gridViewMovLibros.HiddenEditor += new System.EventHandler(this.gridViewMovLibros_HiddenEditor);
+			this.gridViewMovLibros.ShownEditor += new System.EventHandler(this.gridViewMovLibros_ShownEditor);
 			// 
 			// colFecha
 			// 
 			this.colFecha.Caption = "Fecha";
 			this.colFecha.FieldName = "Fecha";
 			this.colFecha.Name = "colFecha";
+			this.colFecha.OptionsColumn.ReadOnly = true;
 			this.colFecha.Visible = true;
 			this.colFecha.VisibleIndex = 0;
 			// 
@@ -443,6 +553,7 @@
 			this.colTipoMov.Caption = "Tipo Movimiento";
 			this.colTipoMov.FieldName = "TipoMov";
 			this.colTipoMov.Name = "colTipoMov";
+			this.colTipoMov.OptionsColumn.ReadOnly = true;
 			this.colTipoMov.Visible = true;
 			this.colTipoMov.VisibleIndex = 1;
 			// 
@@ -451,6 +562,7 @@
 			this.colReferencia.Caption = "Referencia";
 			this.colReferencia.FieldName = "Referencia";
 			this.colReferencia.Name = "colReferencia";
+			this.colReferencia.OptionsColumn.ReadOnly = true;
 			this.colReferencia.Visible = true;
 			this.colReferencia.VisibleIndex = 2;
 			// 
@@ -459,6 +571,7 @@
 			this.colConcepto.Caption = "Concepto";
 			this.colConcepto.FieldName = "ConceptoContable";
 			this.colConcepto.Name = "colConcepto";
+			this.colConcepto.OptionsColumn.ReadOnly = true;
 			this.colConcepto.Visible = true;
 			this.colConcepto.VisibleIndex = 3;
 			// 
@@ -467,8 +580,18 @@
 			this.colMonto.Caption = "Monto";
 			this.colMonto.FieldName = "Monto";
 			this.colMonto.Name = "colMonto";
+			this.colMonto.OptionsColumn.ReadOnly = true;
 			this.colMonto.Visible = true;
 			this.colMonto.VisibleIndex = 4;
+			// 
+			// colMatchNumber
+			// 
+			this.colMatchNumber.Caption = "# Asociación";
+			this.colMatchNumber.FieldName = "MatchNumber";
+			this.colMatchNumber.Name = "colMatchNumber";
+			this.colMatchNumber.OptionsColumn.ReadOnly = true;
+			this.colMatchNumber.Visible = true;
+			this.colMatchNumber.VisibleIndex = 6;
 			// 
 			// txtSaldoBanco
 			// 
@@ -644,8 +767,11 @@
 			// 
 			this.emptySpaceItem3.AllowHotTrack = false;
 			this.emptySpaceItem3.Location = new System.Drawing.Point(405, 123);
+			this.emptySpaceItem3.MaxSize = new System.Drawing.Size(0, 24);
+			this.emptySpaceItem3.MinSize = new System.Drawing.Size(10, 24);
 			this.emptySpaceItem3.Name = "emptySpaceItem3";
 			this.emptySpaceItem3.Size = new System.Drawing.Size(411, 24);
+			this.emptySpaceItem3.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
 			this.emptySpaceItem3.TextSize = new System.Drawing.Size(0, 0);
 			// 
 			// layoutControlItem6
@@ -703,7 +829,7 @@
 			// 
 			// layoutControlItem11
 			// 
-			this.layoutControlItem11.Control = this.txtTotalMarcado;
+			this.layoutControlItem11.Control = this.txtTotalMarcadoBanco;
 			this.layoutControlItem11.Location = new System.Drawing.Point(405, 413);
 			this.layoutControlItem11.Name = "layoutControlItem11";
 			this.layoutControlItem11.Size = new System.Drawing.Size(411, 24);
@@ -778,62 +904,6 @@
 			this.layoutControlItem15.Text = "Fecha Final:";
 			this.layoutControlItem15.TextSize = new System.Drawing.Size(85, 13);
 			// 
-			// colCheck
-			// 
-			this.colCheck.Caption = "Seleccionado";
-			this.colCheck.FieldName = "Selected";
-			this.colCheck.Name = "colCheck";
-			this.colCheck.Visible = true;
-			this.colCheck.VisibleIndex = 5;
-			// 
-			// colMatchNumber
-			// 
-			this.colMatchNumber.Caption = "# Asociación";
-			this.colMatchNumber.FieldName = "MatchNumber";
-			this.colMatchNumber.Name = "colMatchNumber";
-			this.colMatchNumber.Visible = true;
-			this.colMatchNumber.VisibleIndex = 6;
-			// 
-			// colFechaBanco
-			// 
-			this.colFechaBanco.Caption = "Fecha";
-			this.colFechaBanco.FieldName = "Fecha";
-			this.colFechaBanco.Name = "colFechaBanco";
-			this.colFechaBanco.Visible = true;
-			this.colFechaBanco.VisibleIndex = 0;
-			// 
-			// colReferenciaBanco
-			// 
-			this.colReferenciaBanco.Caption = "Referencia";
-			this.colReferenciaBanco.FieldName = "Referencia";
-			this.colReferenciaBanco.Name = "colReferenciaBanco";
-			this.colReferenciaBanco.Visible = true;
-			this.colReferenciaBanco.VisibleIndex = 1;
-			// 
-			// colMontoBanco
-			// 
-			this.colMontoBanco.Caption = "Monto";
-			this.colMontoBanco.FieldName = "Monto";
-			this.colMontoBanco.Name = "colMontoBanco";
-			this.colMontoBanco.Visible = true;
-			this.colMontoBanco.VisibleIndex = 2;
-			// 
-			// colSelectedBanco
-			// 
-			this.colSelectedBanco.Caption = "Seleccionado";
-			this.colSelectedBanco.FieldName = "Selected";
-			this.colSelectedBanco.Name = "colSelectedBanco";
-			this.colSelectedBanco.Visible = true;
-			this.colSelectedBanco.VisibleIndex = 3;
-			// 
-			// colMatchNumberBanco
-			// 
-			this.colMatchNumberBanco.Caption = "# Asociación";
-			this.colMatchNumberBanco.FieldName = "MatchNumber";
-			this.colMatchNumberBanco.Name = "colMatchNumberBanco";
-			this.colMatchNumberBanco.Visible = true;
-			this.colMatchNumberBanco.VisibleIndex = 4;
-			// 
 			// frmConciliacionBancaria
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -857,7 +927,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.slkupTypeView.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit2View)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtDiferencia.Properties)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.txtTotalMarcado.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.txtTotalMarcadoBanco.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtMarcadosLibros.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridMovBanco)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridViewMovBanco)).EndInit();
@@ -943,7 +1013,7 @@
 		private DevExpress.XtraEditors.SearchLookUpEdit slkupTypeView;
 		private DevExpress.XtraGrid.Views.Grid.GridView searchLookUpEdit2View;
 		private DevExpress.XtraEditors.TextEdit txtDiferencia;
-		private DevExpress.XtraEditors.TextEdit txtTotalMarcado;
+		private DevExpress.XtraEditors.TextEdit txtTotalMarcadoBanco;
 		private DevExpress.XtraEditors.TextEdit txtMarcadosLibros;
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem10;
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem11;

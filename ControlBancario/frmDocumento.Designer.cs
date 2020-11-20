@@ -55,7 +55,6 @@
 			this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
 			this.slkupRuc = new DevExpress.XtraEditors.SearchLookUpEdit();
 			this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
-			this.txtReferencia = new DevExpress.XtraEditors.TextEdit();
 			this.txtMonto = new DevExpress.XtraEditors.TextEdit();
 			this.txtPagaderoA = new DevExpress.XtraEditors.TextEdit();
 			this.txtNumero = new DevExpress.XtraEditors.TextEdit();
@@ -72,11 +71,10 @@
 			this.lblLayoutPagaderoA = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem15 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.layoutControlItem14 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.layoutNumero = new DevExpress.XtraLayout.LayoutControlItem();
 			this.emptySpaceItem5 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.emptySpaceItem6 = new DevExpress.XtraLayout.EmptySpaceItem();
-			this.layoutControlItem16 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.layoutRUC = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem24 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.xtraTabPage3 = new DevExpress.XtraTab.XtraTabPage();
 			this.layoutControl3 = new DevExpress.XtraLayout.LayoutControl();
@@ -125,7 +123,6 @@
 			this.layoutControl2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.slkupRuc.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.txtReferencia.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtMonto.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtPagaderoA.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtNumero.Properties)).BeginInit();
@@ -143,11 +140,10 @@
 			((System.ComponentModel.ISupportInitialize)(this.lblLayoutPagaderoA)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem15)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem14)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutNumero)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem5)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem6)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem16)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutRUC)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem24)).BeginInit();
 			this.xtraTabPage3.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl3)).BeginInit();
@@ -407,7 +403,6 @@
 			// 
 			this.layoutControl2.Controls.Add(this.labelControl1);
 			this.layoutControl2.Controls.Add(this.slkupRuc);
-			this.layoutControl2.Controls.Add(this.txtReferencia);
 			this.layoutControl2.Controls.Add(this.txtMonto);
 			this.layoutControl2.Controls.Add(this.txtPagaderoA);
 			this.layoutControl2.Controls.Add(this.txtNumero);
@@ -452,15 +447,6 @@
 			this.gridView1.Name = "gridView1";
 			this.gridView1.OptionsSelection.EnableAppearanceFocusedCell = false;
 			this.gridView1.OptionsView.ShowGroupPanel = false;
-			// 
-			// txtReferencia
-			// 
-			this.txtReferencia.Location = new System.Drawing.Point(457, 132);
-			this.txtReferencia.MenuManager = this.ribbonControl;
-			this.txtReferencia.Name = "txtReferencia";
-			this.txtReferencia.Size = new System.Drawing.Size(195, 20);
-			this.txtReferencia.StyleController = this.layoutControl2;
-			this.txtReferencia.TabIndex = 6;
 			// 
 			// txtMonto
 			// 
@@ -566,11 +552,10 @@
             this.lblLayoutPagaderoA,
             this.layoutControlItem8,
             this.layoutControlItem15,
-            this.layoutControlItem6,
-            this.layoutControlItem14,
+            this.layoutNumero,
             this.emptySpaceItem5,
             this.emptySpaceItem6,
-            this.layoutControlItem16,
+            this.layoutRUC,
             this.layoutControlItem24});
 			this.layoutControlGroup2.Location = new System.Drawing.Point(0, 0);
 			this.layoutControlGroup2.Name = "layoutControlGroup2";
@@ -631,23 +616,14 @@
 			this.layoutControlItem15.Text = "Concepto:";
 			this.layoutControlItem15.TextSize = new System.Drawing.Size(59, 13);
 			// 
-			// layoutControlItem6
+			// layoutNumero
 			// 
-			this.layoutControlItem6.Control = this.txtNumero;
-			this.layoutControlItem6.Location = new System.Drawing.Point(389, 0);
-			this.layoutControlItem6.Name = "layoutControlItem6";
-			this.layoutControlItem6.Size = new System.Drawing.Size(255, 24);
-			this.layoutControlItem6.Text = "Número:";
-			this.layoutControlItem6.TextSize = new System.Drawing.Size(59, 13);
-			// 
-			// layoutControlItem14
-			// 
-			this.layoutControlItem14.Control = this.txtReferencia;
-			this.layoutControlItem14.Location = new System.Drawing.Point(383, 120);
-			this.layoutControlItem14.Name = "layoutControlItem14";
-			this.layoutControlItem14.Size = new System.Drawing.Size(261, 24);
-			this.layoutControlItem14.Text = "Referencia:";
-			this.layoutControlItem14.TextSize = new System.Drawing.Size(59, 13);
+			this.layoutNumero.Control = this.txtNumero;
+			this.layoutNumero.Location = new System.Drawing.Point(389, 0);
+			this.layoutNumero.Name = "layoutNumero";
+			this.layoutNumero.Size = new System.Drawing.Size(255, 24);
+			this.layoutNumero.Text = "Número:";
+			this.layoutNumero.TextSize = new System.Drawing.Size(59, 13);
 			// 
 			// emptySpaceItem5
 			// 
@@ -662,17 +638,17 @@
 			this.emptySpaceItem6.AllowHotTrack = false;
 			this.emptySpaceItem6.Location = new System.Drawing.Point(277, 120);
 			this.emptySpaceItem6.Name = "emptySpaceItem6";
-			this.emptySpaceItem6.Size = new System.Drawing.Size(106, 24);
+			this.emptySpaceItem6.Size = new System.Drawing.Size(367, 24);
 			this.emptySpaceItem6.TextSize = new System.Drawing.Size(0, 0);
 			// 
-			// layoutControlItem16
+			// layoutRUC
 			// 
-			this.layoutControlItem16.Control = this.slkupRuc;
-			this.layoutControlItem16.Location = new System.Drawing.Point(0, 72);
-			this.layoutControlItem16.Name = "layoutControlItem16";
-			this.layoutControlItem16.Size = new System.Drawing.Size(644, 24);
-			this.layoutControlItem16.Text = "Ruc:";
-			this.layoutControlItem16.TextSize = new System.Drawing.Size(59, 13);
+			this.layoutRUC.Control = this.slkupRuc;
+			this.layoutRUC.Location = new System.Drawing.Point(0, 72);
+			this.layoutRUC.Name = "layoutRUC";
+			this.layoutRUC.Size = new System.Drawing.Size(644, 24);
+			this.layoutRUC.Text = "Ruc:";
+			this.layoutRUC.TextSize = new System.Drawing.Size(59, 13);
 			// 
 			// layoutControlItem24
 			// 
@@ -1046,7 +1022,6 @@
 			this.layoutControl2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.slkupRuc.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.txtReferencia.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtMonto.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtPagaderoA.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtNumero.Properties)).EndInit();
@@ -1064,11 +1039,10 @@
 			((System.ComponentModel.ISupportInitialize)(this.lblLayoutPagaderoA)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem15)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem14)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutNumero)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem5)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem6)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem16)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutRUC)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem24)).EndInit();
 			this.xtraTabPage3.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl3)).EndInit();
@@ -1130,8 +1104,7 @@
         private DevExpress.XtraGrid.Views.Grid.GridView searchLookUpEdit1View;
         private DevExpress.XtraTab.XtraTabControl tabDocumento;
         private DevExpress.XtraTab.XtraTabPage xtraTabPage1;
-        private DevExpress.XtraLayout.LayoutControl layoutControl2;
-        private DevExpress.XtraEditors.TextEdit txtReferencia;
+		private DevExpress.XtraLayout.LayoutControl layoutControl2;
         private DevExpress.XtraEditors.TextEdit txtMonto;
         private DevExpress.XtraEditors.TextEdit txtPagaderoA;
         private DevExpress.XtraEditors.TextEdit txtNumero;
@@ -1145,10 +1118,9 @@
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem6;
+        private DevExpress.XtraLayout.LayoutControlItem layoutNumero;
         private DevExpress.XtraLayout.LayoutControlItem lblLayoutPagaderoA;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem8;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem14;
+		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem8;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem15;
         private DevExpress.XtraTab.XtraTabPage xtraTabPage3;
         private DevExpress.XtraLayout.LayoutControl layoutControl3;
@@ -1171,7 +1143,7 @@
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem13;
         private DevExpress.XtraEditors.SearchLookUpEdit slkupRuc;
         private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem16;
+        private DevExpress.XtraLayout.LayoutControlItem layoutRUC;
         private DevExpress.XtraBars.BarButtonItem btnImprimir;
         private DevExpress.XtraBars.BarButtonItem btnAprobar;
         private DevExpress.XtraBars.BarButtonItem btnAnular;

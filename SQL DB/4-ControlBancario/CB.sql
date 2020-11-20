@@ -306,8 +306,7 @@ Create Table dbo.cbMovimientos (IDCuentaBanco int not null, Fecha date not null,
 IDRuc int not null, 
 Numero int not null, Pagadero_a nvarchar(250), Monto decimal(28,4) default 0, Asiento nvarchar(20), Anulado bit default 0, AsientoAnulacion nvarchar(20),
 Usuario nvarchar(20), UsuarioAnulacion nvarchar(20), FechaAnulacion date,UsuarioAprobacion nvarchar(20), FechaAprobacion date,UsuarioImpresion nvarchar(20),
-FechaImpresion date,Impreso bit DEFAULT(0),
-Referencia nvarchar(100) Default ' ' not null, ConceptoContable nvarchar(255) )
+FechaImpresion date,Impreso bit DEFAULT(0), ConceptoContable nvarchar(255) )
 go
 
 
@@ -326,16 +325,10 @@ alter table dbo.cbMovimientos add constraint fkcbRUC foreign key (IDRUC) referen
 go
 
 
-alter table dbo.cbMovimientos 
-ADD CONSTRAINT uReferenciaUnica UNIQUE NONCLUSTERED
-(
- IDCuentaBanco, Fecha, IDTipo, Numero, Referencia
-)
-GO
 
 
 --Valida si el deposito es unico segun la referencia antes de ingresarlo a la base de datos.
-CREATE FUNCTION [dbo].[cbReferenciaValida] (@IDCuentaBanco int, @IDTipo int, @IDSubTipo int, @Fecha date, @Numero int, @Referencia nvarchar(100))
+CREATE  FUNCTION [dbo].[cbReferenciaValida] (@IDCuentaBanco int, @IDTipo int, @IDSubTipo int, @Fecha date, @Numero int)
 RETURNS bit
 AS
 BEGIN
@@ -348,7 +341,7 @@ Begin
 IF exists (SELECT Distinct IDTipo 
 FROM dbo.cbMovimientos 
 WHERE IDCuentaBanco = @IDCuentaBanco and IDTipo = @IDTipo and Fecha = @Fecha 
-and Numero = @Numero and Referencia = @Referencia )
+and Numero = @Numero  )
 set @Resultado = 0
 ELSE
 set @Resultado = 1
@@ -572,14 +565,14 @@ GO
 
 --DROP Procedure [dbo].[cbUpdateMovimientos]
 CREATE   Procedure [dbo].[cbUpdateMovimientos] @Operacion nvarchar(1), @IDCuentaBanco int,@Fecha DATE,@IDTipo INT,@IDSubTipo INT,@IDRuc int,@Numero INT,
-		@Pagaderoa nvarchar(250),@Monto DECIMAL(28,4),@Usuario NVARCHAR(20),@Referencia nvarchar(100),@ConceptoContable NVARCHAR(200)
+		@Pagaderoa nvarchar(250),@Monto DECIMAL(28,4),@Usuario NVARCHAR(20),@ConceptoContable NVARCHAR(200)
 as
 set nocount on 
 
 if upper(@Operacion) = 'I'
 BEGIN
-	INSERT INTO dbo.cbMovimientos( IDCuentaBanco ,Fecha ,IDTipo ,IDSubTipo,IDRuc ,Numero ,Pagadero_a ,Monto   ,Usuario   ,Referencia ,ConceptoContable)
-	VALUES  ( @IDCuentaBanco,@Fecha,@IDTipo,@IDSubTipo,@IDRuc,@Numero,@Pagaderoa,@Monto,@Usuario,@Referencia,@ConceptoContable)
+	INSERT INTO dbo.cbMovimientos( IDCuentaBanco ,Fecha ,IDTipo ,IDSubTipo,IDRuc ,Numero ,Pagadero_a ,Monto   ,Usuario    ,ConceptoContable)
+	VALUES  ( @IDCuentaBanco,@Fecha,@IDTipo,@IDSubTipo,@IDRuc,@Numero,@Pagaderoa,@Monto,@Usuario,@ConceptoContable)
 	
 	--CK
 	--IF (@IDTipo=1)
@@ -594,7 +587,7 @@ end
 
 if upper(@Operacion) = 'U' 
 BEGIN
-	UPDATE dbo.cbMovimientos SET  Referencia = @Referencia,IDRuc=@IDRuc,ConceptoContable=@ConceptoContable,Pagadero_a=@Pagaderoa,Monto=@Monto WHERE IDCuentaBanco=@IDCuentaBanco AND Fecha=@Fecha AND  IDTipo=@IDTipo AND IDSubTipo=@IDSubTipo AND Numero=@Numero
+	UPDATE dbo.cbMovimientos SET  IDRuc=@IDRuc,ConceptoContable=@ConceptoContable,Pagadero_a=@Pagaderoa,Monto=@Monto WHERE IDCuentaBanco=@IDCuentaBanco AND Fecha=@Fecha AND  IDTipo=@IDTipo AND IDSubTipo=@IDSubTipo AND Numero=@Numero
 
 end
 
@@ -654,19 +647,19 @@ end
 
 GO
 
-CREATE  PROCEDURE dbo.cbGetMovimientosByCriterios @FechaInicial AS DATE,@FechaFinal AS DATE,@IDRuc AS INT,@NombreRUC AS NVARCHAR(100),@AliasRUC NVARCHAR(100),
-						@IDTipo AS INT,@IDSubTipo AS INT,@PagaderoA AS NVARCHAR(100),@Anulado AS INT,@Referencia AS NVARCHAR(200),@ConceptoContable AS NVARCHAR(200)
+CREATE   PROCEDURE dbo.cbGetMovimientosByCriterios @FechaInicial AS DATE,@FechaFinal AS DATE,@IDRuc AS INT,@NombreRUC AS NVARCHAR(100),@AliasRUC NVARCHAR(100),
+						@IDTipo AS INT,@IDSubTipo AS INT,@PagaderoA AS NVARCHAR(100),@Anulado AS INT,@ConceptoContable AS NVARCHAR(200)
 AS 
 SELECT  M.IDCuentaBanco,CB.Descr DescrCuentaBancaria,M.Fecha ,M.IDTipo ,T.Descr DescrTipo,M.IDSubTipo ,D.Descr DescrSubTipo,M.IDRuc ,R.Alias,R.Nombre,M.Numero ,
         M.Pagadero_a ,M.Monto ,M.Asiento ,M.Anulado ,M.AsientoAnulacion ,M.Usuario ,M.UsuarioAnulacion ,M.FechaAnulacion ,M.UsuarioAprobacion, M.FechaAprobacion,
-       M.UsuarioImpresion,M.FechaImpresion,M.Impreso, M.Referencia ,M.ConceptoContable  
+       M.UsuarioImpresion,M.FechaImpresion,M.Impreso,M.ConceptoContable  
         FROM dbo.cbMovimientos M
 INNER JOIN dbo.cbTipoCuenta T ON M.IDTipo = T.IDTipo
 INNER JOIN dbo.cbSubTipoDocumento D ON D.IDTipo = M.IDTipo AND D.IDSubtipo=M.IDSubTipo
 INNER JOIN dbo.cbCuentaBancaria CB ON M.IDCuentaBanco=CB.IDCuentaBanco
 INNER JOIN dbo.cbRUC R ON M.IDRuc=R.IDRuc
 WHERE M.Fecha BETWEEN @FechaInicial AND @FechaFinal AND (M.IDTipo= @IDTipo OR @IDTipo=-1) AND (M.IDSubTipo=@IDSubTipo OR @IDSubtipo=-1)
-AND (Pagadero_a LIKE '%' + @PagaderoA + '%') AND (Anulado=@Anulado OR @Anulado=-1) AND (Referencia LIKE '%' + @Referencia + '%') AND ConceptoContable LIKE '%' + @ConceptoContable + '%'
+AND (Pagadero_a LIKE '%' + @PagaderoA + '%') AND (Anulado=@Anulado OR @Anulado=-1) AND ConceptoContable LIKE '%' + @ConceptoContable + '%'
 AND (R.Nombre LIKE '%' + @NombreRUC + '%') AND (r.Alias LIKE '%' + @AliasRUC +'%')
 
 
@@ -1021,7 +1014,7 @@ AS
 set @FechaInicial = CAST(SUBSTRING(CAST(@FechaInicial AS CHAR),1,11) + ' 00:00:00.000' AS DATETIME)
 set @FechaFinal = CAST(SUBSTRING(CAST(@FechaFinal AS CHAR),1,11) + ' 23:59:59.998' AS DATETIME)
 
-SELECT Fecha,T.Descr TipoMov,Referencia,ConceptoContable,Monto,CAST(CASE WHEN MatchNumber IS NOT NULl THEN 1 ELSE 0 END AS BIT) Selected, MatchNumber
+SELECT IDMovimiento, Fecha,T.Descr TipoMov,Referencia,ConceptoContable,Monto,CAST(CASE WHEN MatchNumber IS NOT NULl THEN 1 ELSE 0 END AS BIT) Selected, MatchNumber
 FROM dbo.cbMovimientos M
 INNER JOIN dbo.cbTipoDocumento T ON M.IDTipo = T.IDTipo
 WHERE Fecha BETWEEN @FechaInicial and @FechaFinal AND IDCuentaBanco = @IDCuentaBancaria
@@ -1073,18 +1066,40 @@ SELECT @Status Estado
 GO
 
 
-CREATE PROCEDURE dbo.cgMatchedElements(@IDConciliacion AS INT,  @IDCuentaBancaria AS INT ,  @LstIDMovBanco NVARCHAR(800), @LstIDMovimiento NVARCHAR(800))
+CREATE PROCEDURE dbo.cbMatchElements(@IDConciliacion AS INT,  @IDCuentaBancaria AS INT ,  @LstIDMovBanco NVARCHAR(800), @LstIDMovimiento NVARCHAR(800))
 AS 
 --DECLARE @IDConciliacion AS INT
 --DECLARE @IDCuentaBancaria AS INT
 
 --DECLARE @LstIDMovBanco NVARCHAR(800)
 --DECLARE @LstIDMovimiento NVARCHAR(800)
-DECLARE @MatchNumber INT
+	DECLARE @MatchNumber INT
 
-SET @MatchNumber = (SELECT dbo.cbgetMatchNumber(@IDConciliacion,@IDCuentaBancaria))
+	SET @MatchNumber = (SELECT dbo.cbgetMatchNumber(@IDConciliacion,@IDCuentaBancaria))
 
-UPDATE dbo.cbMovimientos SET MatchNumber =@MatchNumber WHERE IDMovimiento IN (SELECT Value FROM dbo.ConvertListToTable(@LstIDMovimiento,'|'))
-UPDATE dbo.cbConcMovBanco SET MatchNumber =@MatchNumber WHERE IDMovBanco IN (SELECT Value FROM dbo.ConvertListToTable(@LstIDMovBanco, '|'))
+	UPDATE dbo.cbMovimientos SET MatchNumber =@MatchNumber, IDConciliacion=@IDConciliacion, EstadoConciliacion='P' WHERE IDMovimiento IN (SELECT Value FROM dbo.ConvertListToTable(@LstIDMovimiento,'|'))
+	UPDATE dbo.cbConcMovBanco SET MatchNumber =@MatchNumber, Estado='P' WHERE IDMovBanco IN (SELECT Value FROM dbo.ConvertListToTable(@LstIDMovBanco, '|'))
 
 GO
+
+
+CREATE PROCEDURE dbo.cbUnMatchElements(@IDConciliacion AS INT,  @IDCuentaBancaria AS INT ,  @IDMovBanco INT, @IDMovimiento INT)
+AS 
+	DECLARE @MatchNumber INT
+	SET @MatchNumber = -1 
+	IF (@IDMovBanco IS NOT NULL AND @IDMovBanco <> -1 )
+		SET @MatchNumber = (SELECT MatchNumber FROM dbo.cbConcMovBanco WHERE IDMovBanco = @IDMovBanco)
+	IF (@IDMovimiento IS NOT NULL AND @IDMovimiento <> -1 )
+		SET @MatchNumber = (SELECT MatchNumber FROM dbo.cbMovimientos WHERE IDMovimiento = @IDMovimiento)
+		
+	IF (@MatchNumber = -1)
+	begin 
+		RAISERROR ( 'Ha ocurrido un error, no se encontro el numero de movimiento', 16, 1) ;
+		return				
+	end
+	
+	UPDATE dbo.cbMovimientos SET  MatchNumber = NULL , EstadoConciliacion = NULL, IDConciliacion = NULL WHERE MatchNumber=@MatchNumber
+	UPDATE dbo.cbConcMovBanco SET  MatchNumber = NULL  WHERE MatchNumber=@MatchNumber
+	
+GO
+
