@@ -647,7 +647,7 @@ end
 
 GO
 
-CREATE   PROCEDURE dbo.cbGetMovimientosByCriterios @FechaInicial AS DATE,@FechaFinal AS DATE,@IDRuc AS INT,@NombreRUC AS NVARCHAR(100),@AliasRUC NVARCHAR(100),
+CREATE  PROCEDURE dbo.cbGetMovimientosByCriterios @FechaInicial AS DATE,@FechaFinal AS DATE,@IDRuc AS INT,@NombreRUC AS NVARCHAR(100),@AliasRUC NVARCHAR(100),
 						@IDTipo AS INT,@IDSubTipo AS INT,@PagaderoA AS NVARCHAR(100),@Anulado AS INT,@ConceptoContable AS NVARCHAR(200)
 AS 
 SELECT  M.IDCuentaBanco,CB.Descr DescrCuentaBancaria,M.Fecha ,M.IDTipo ,T.Descr DescrTipo,M.IDSubTipo ,D.Descr DescrSubTipo,M.IDRuc ,R.Alias,R.Nombre,M.Numero ,
@@ -666,7 +666,7 @@ AND (R.Nombre LIKE '%' + @NombreRUC + '%') AND (r.Alias LIKE '%' + @AliasRUC +'%
 GO
 
 
-CREATE   PROCEDURE dbo.rptGetCheque @IDCuentaBanco AS int,@IDTipo AS int,@IDSubTipo AS int,@Numero AS int
+CREATE  PROCEDURE dbo.rptGetCheque @IDCuentaBanco AS int,@IDTipo AS int,@IDSubTipo AS int,@Numero AS int
 AS 
 SELECT  M.IDCuentaBanco ,
 		B.Descr,B.ConsecCheque,
@@ -689,7 +689,6 @@ SELECT  M.IDCuentaBanco ,
        M.UsuarioImpresion,
        M.FechaImpresion,
        M.Impreso, 
-        M.Referencia ,
         M.ConceptoContable
 FROM dbo.cbMovimientos M
 INNER JOIN dbo.cbCuentaBancaria B ON M.IDCuentaBanco=B.IDCuentaBanco
@@ -1008,13 +1007,13 @@ SELECT ISNULL(@SaldoInicialLibro,0) SaldoInicialLibro
 GO
 
 
-CREATE PROCEDURE dbo.cbGetMovLibrosContable @IDCuentaBancaria INT, @FechaInicial DATETIME, @FechaFinal DATETIME
+CREATE  PROCEDURE dbo.cbGetMovLibrosContable @IDCuentaBancaria INT, @FechaInicial DATETIME, @FechaFinal DATETIME
 AS 
 
 set @FechaInicial = CAST(SUBSTRING(CAST(@FechaInicial AS CHAR),1,11) + ' 00:00:00.000' AS DATETIME)
 set @FechaFinal = CAST(SUBSTRING(CAST(@FechaFinal AS CHAR),1,11) + ' 23:59:59.998' AS DATETIME)
 
-SELECT IDMovimiento, Fecha,T.Descr TipoMov,Referencia,ConceptoContable,Monto,CAST(CASE WHEN MatchNumber IS NOT NULl THEN 1 ELSE 0 END AS BIT) Selected, MatchNumber
+SELECT IDMovimiento, Fecha,Numero Referencia,T.Descr TipoMov,ConceptoContable,Monto,CAST(CASE WHEN MatchNumber IS NOT NULl THEN 1 ELSE 0 END AS BIT) Selected, MatchNumber
 FROM dbo.cbMovimientos M
 INNER JOIN dbo.cbTipoDocumento T ON M.IDTipo = T.IDTipo
 WHERE Fecha BETWEEN @FechaInicial and @FechaFinal AND IDCuentaBanco = @IDCuentaBancaria
@@ -1029,7 +1028,7 @@ CREATE PROCEDURE dbo.cbUpdateConcMovBanco @Operacion NVARCHAR(1), @IDMovBanco IN
 AS 
 IF (@Operacion = 'I')
 BEGIN
-	INSERT INTO dbo.cbConcMovBanco( IDCuentaBanco ,Fecha ,IDConciliacion ,Referencia ,Monto ,Factor  ,Usuario ,Estado)
+	INSERT INTO dbo.cbConcMovBanco( IDCuentaBanco ,Fecha ,IDConciliacion , ,Monto ,Factor  ,Usuario ,Estado)
 	VALUES  (@IDCuentaBanco, @Fecha,@IDConciliacion,@Referencia,@Monto,@Factor,@Usuario,@Estado)
 	SET @IDMovBanco  = @@IDentity	
 END

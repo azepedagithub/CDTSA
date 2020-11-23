@@ -173,7 +173,7 @@ namespace ControlBancario.DAC
 		}
 
 		public static bool UnMatchElements(int IDConciliacion, int IDCuentaBancaria, int IDMovBanco, int IDMovimientoLibro, SqlTransaction tran)
-		{
+		{						  
 			bool bresult = false;
 			long result;
 			String strSQL = "dbo.cbUnMatchElements";
