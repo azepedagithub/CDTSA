@@ -371,6 +371,8 @@ namespace ControlBancario
 
 			String lstMovBancoSelected = "";
 			String lstMovLibroSelected = "";
+			Decimal TotalBancos = 0;
+			Decimal TotalLibros = 0;
 
 			//Recorrer la grilla de mov libros
 			//DataView dvSelectMovLibros = new DataView(((DataTable)this.gridMobLibros.DataSource));			
@@ -388,6 +390,7 @@ namespace ControlBancario
 
 			foreach (DataRow fila in dtLibros) {
 				lstMovLibroSelected = lstMovLibroSelected + fila["IDMovimiento"].ToString() + "|";
+				TotalLibros += Convert.ToDecimal(fila["monto"]);
 			}
 			if (dtLibros.Count() > 0)
 				lstMovLibroSelected = lstMovLibroSelected.Substring(0, lstMovLibroSelected.Length - 1);
@@ -395,6 +398,12 @@ namespace ControlBancario
 			foreach (DataRow fila in dtBancos)
 			{
 				lstMovBancoSelected = lstMovBancoSelected + fila["IDMovBanco"].ToString() + "|";
+				TotalBancos += Convert.ToDecimal(fila["monto"]);
+			}
+
+			if (TotalBancos != TotalLibros) {
+				MessageBox.Show("Los Montos a asociar deben de ser iguales");
+				return;
 			}
 
 			if (dtBancos.Count() > 0)
@@ -549,11 +558,13 @@ namespace ControlBancario
 			editBancos = null;
 		}
 
-		
+		private void gridViewMovBanco_ShowingEditor(object sender, CancelEventArgs e)
+		{
+			DataRow ele = this.gridViewMovBanco.GetDataRow(Convert.ToInt32(this.gridViewMovBanco.FocusedRowHandle));
+			e.Cancel = gridViewMovBanco.FocusedColumn.FieldName == "Selected" && Convert.ToBoolean(ele["Selected"]) == true && ele["MatchNumber"].ToString() != "";
+		}
 
 		
-
-
 		
 	}
 

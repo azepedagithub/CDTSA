@@ -451,6 +451,7 @@
 			this.gridViewMovBanco.OptionsView.ShowGroupPanel = false;
 			this.gridViewMovBanco.RowCellStyle += new DevExpress.XtraGrid.Views.Grid.RowCellStyleEventHandler(this.gridView_RowCellStyle);
 			this.gridViewMovBanco.RowStyle += new DevExpress.XtraGrid.Views.Grid.RowStyleEventHandler(this.gridView_RowStyle);
+			this.gridViewMovBanco.ShowingEditor += new System.ComponentModel.CancelEventHandler(this.gridViewMovBanco_ShowingEditor);
 			this.gridViewMovBanco.HiddenEditor += new System.EventHandler(this.gridViewMovBancos_HiddenEditor);
 			this.gridViewMovBanco.ShownEditor += new System.EventHandler(this.gridViewMovBanco_ShownEditor);
 			// 
