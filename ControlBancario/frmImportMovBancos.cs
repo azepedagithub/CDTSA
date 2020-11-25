@@ -23,6 +23,7 @@ namespace ControlBancario
 
 		public bool IsResult = false;
 		int IDCuentaBanco, IDConciliacion;
+		String sUsuario = (UsuarioDAC._DS.Tables.Count > 0) ? UsuarioDAC._DS.Tables[0].Rows[0]["Usuario"].ToString() : "azepeda";
 	
 		public frmImportMovBancos(int IDCuentaBanco, int IDConciliacion)
 		{
@@ -158,7 +159,7 @@ namespace ControlBancario
 						oDetalle.IDCuentaBanco = this.IDCuentaBanco;
 						oDetalle.IDConciliacion = this.IDConciliacion;
 						oDetalle.Factor = 1;
-						oDetalle.Usuario = "azepeda";
+						oDetalle.Usuario = sUsuario;
 						oDetalle.Estado = "P";
 						oLstMov.Add(oDetalle);
 						
@@ -233,10 +234,23 @@ namespace ControlBancario
 			//Procesar
 			this.dtMovBancos.Clear();
 
+
 			try
 			{
+				
+
 				using (var scope = new TransactionScope())
 				{
+					//Eliminar lo que existe para la conciliacion
+					DataTable dtDelete = DAC.ConcMovBancosDAC.GetData(this.IDConciliacion, -1).Tables[0];
+
+					foreach (DataRow row in dtDelete.Rows)
+					{
+						row.Delete();
+					}
+					DAC.ConcMovBancosDAC.oAdaptador.Update(dtDelete);
+					dtDelete.AcceptChanges();
+
 					foreach (clsMovBancos fila in oLstMov)
 					{
 						DataRow nuevaFila = this.dtMovBancos.NewRow();
@@ -273,7 +287,7 @@ namespace ControlBancario
 				}
 			}
 			catch (Exception ex) {
-				MessageBox.Show("Ha ocurrido un error");
+				MessageBox.Show("Ha ocurrido un error", ex.Message);
 			}
 			
 			this.DialogResult = System.Windows.Forms.DialogResult.OK;

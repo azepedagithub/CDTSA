@@ -50,9 +50,12 @@
 			this.btnRefrescar = new DevExpress.XtraBars.BarButtonItem();
 			this.btnFormato = new DevExpress.XtraBars.BarButtonItem();
 			this.btnGuardar = new DevExpress.XtraBars.BarButtonItem();
+			this.btnAsociarSimilares = new DevExpress.XtraBars.BarButtonItem();
 			this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
+			this.txtSelectedBancos = new DevExpress.XtraEditors.TextEdit();
+			this.txtSelectedLibros = new DevExpress.XtraEditors.TextEdit();
 			this.dtpFechaFinal = new DevExpress.XtraEditors.DateEdit();
 			this.dtpFechaInicial = new DevExpress.XtraEditors.DateEdit();
 			this.slkupTypeView = new DevExpress.XtraEditors.SearchLookUpEdit();
@@ -105,9 +108,15 @@
 			this.emptySpaceItem7 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.layoutControlItem14 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem15 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.layoutControlItem16 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.layoutControlItem17 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.emptySpaceItem8 = new DevExpress.XtraLayout.EmptySpaceItem();
+			this.emptySpaceItem9 = new DevExpress.XtraLayout.EmptySpaceItem();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
 			this.layoutControl1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.txtSelectedBancos.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.txtSelectedLibros.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dtpFechaFinal.Properties.CalendarTimeProperties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dtpFechaFinal.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dtpFechaInicial.Properties.CalendarTimeProperties)).BeginInit();
@@ -153,6 +162,10 @@
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem7)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem14)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem15)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem16)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem17)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem8)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem9)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// colSelectedBanco
@@ -186,9 +199,10 @@
             this.btnImportar,
             this.btnRefrescar,
             this.btnFormato,
-            this.btnGuardar});
+            this.btnGuardar,
+            this.btnAsociarSimilares});
 			this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-			this.ribbonControl.MaxItemId = 6;
+			this.ribbonControl.MaxItemId = 7;
 			this.ribbonControl.Name = "ribbonControl";
 			this.ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -265,6 +279,7 @@
 			this.btnRefrescar.Id = 3;
 			this.btnRefrescar.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnRefrescar.LargeGlyph")));
 			this.btnRefrescar.Name = "btnRefrescar";
+			this.btnRefrescar.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnRefrescar_ItemClick);
 			// 
 			// btnFormato
 			// 
@@ -284,6 +299,15 @@
 			this.btnGuardar.Name = "btnGuardar";
 			this.btnGuardar.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnGuardar_ItemClick);
 			// 
+			// btnAsociarSimilares
+			// 
+			this.btnAsociarSimilares.Caption = "Asociar Sugerida";
+			this.btnAsociarSimilares.Glyph = ((System.Drawing.Image)(resources.GetObject("btnAsociarSimilares.Glyph")));
+			this.btnAsociarSimilares.Id = 6;
+			this.btnAsociarSimilares.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnAsociarSimilares.LargeGlyph")));
+			this.btnAsociarSimilares.Name = "btnAsociarSimilares";
+			this.btnAsociarSimilares.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnAsociarSimilares_ItemClick);
+			// 
 			// ribbonPage1
 			// 
 			this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -302,11 +326,14 @@
 			this.ribbonPageGroup1.ItemLinks.Add(this.btnRefrescar);
 			this.ribbonPageGroup1.ItemLinks.Add(this.btnGuardar);
 			this.ribbonPageGroup1.ItemLinks.Add(this.btnFormato);
+			this.ribbonPageGroup1.ItemLinks.Add(this.btnAsociarSimilares);
 			this.ribbonPageGroup1.Name = "ribbonPageGroup1";
 			this.ribbonPageGroup1.Text = "Acciones";
 			// 
 			// layoutControl1
 			// 
+			this.layoutControl1.Controls.Add(this.txtSelectedBancos);
+			this.layoutControl1.Controls.Add(this.txtSelectedLibros);
 			this.layoutControl1.Controls.Add(this.dtpFechaFinal);
 			this.layoutControl1.Controls.Add(this.dtpFechaInicial);
 			this.layoutControl1.Controls.Add(this.slkupTypeView);
@@ -330,6 +357,24 @@
 			this.layoutControl1.Size = new System.Drawing.Size(836, 481);
 			this.layoutControl1.TabIndex = 1;
 			this.layoutControl1.Text = "layoutControl1";
+			// 
+			// txtSelectedBancos
+			// 
+			this.txtSelectedBancos.Location = new System.Drawing.Point(505, 401);
+			this.txtSelectedBancos.MenuManager = this.ribbonControl;
+			this.txtSelectedBancos.Name = "txtSelectedBancos";
+			this.txtSelectedBancos.Size = new System.Drawing.Size(319, 20);
+			this.txtSelectedBancos.StyleController = this.layoutControl1;
+			this.txtSelectedBancos.TabIndex = 20;
+			// 
+			// txtSelectedLibros
+			// 
+			this.txtSelectedLibros.Location = new System.Drawing.Point(100, 401);
+			this.txtSelectedLibros.MenuManager = this.ribbonControl;
+			this.txtSelectedLibros.Name = "txtSelectedLibros";
+			this.txtSelectedLibros.Size = new System.Drawing.Size(302, 20);
+			this.txtSelectedLibros.StyleController = this.layoutControl1;
+			this.txtSelectedLibros.TabIndex = 19;
 			// 
 			// dtpFechaFinal
 			// 
@@ -411,11 +456,11 @@
 			// 
 			// gridMovBanco
 			// 
-			this.gridMovBanco.Location = new System.Drawing.Point(417, 183);
+			this.gridMovBanco.Location = new System.Drawing.Point(417, 207);
 			this.gridMovBanco.MainView = this.gridViewMovBanco;
 			this.gridMovBanco.MenuManager = this.ribbonControl;
 			this.gridMovBanco.Name = "gridMovBanco";
-			this.gridMovBanco.Size = new System.Drawing.Size(407, 238);
+			this.gridMovBanco.Size = new System.Drawing.Size(407, 190);
 			this.gridMovBanco.TabIndex = 12;
 			this.gridMovBanco.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridViewMovBanco});
@@ -493,11 +538,11 @@
 			// 
 			// gridMobLibros
 			// 
-			this.gridMobLibros.Location = new System.Drawing.Point(12, 183);
+			this.gridMobLibros.Location = new System.Drawing.Point(12, 207);
 			this.gridMobLibros.MainView = this.gridViewMovLibros;
 			this.gridMobLibros.MenuManager = this.ribbonControl;
 			this.gridMobLibros.Name = "gridMobLibros";
-			this.gridMobLibros.Size = new System.Drawing.Size(390, 238);
+			this.gridMobLibros.Size = new System.Drawing.Size(390, 190);
 			this.gridMobLibros.TabIndex = 11;
 			this.gridMobLibros.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridViewMovLibros});
@@ -596,7 +641,7 @@
 			// 
 			// txtSaldoBanco
 			// 
-			this.txtSaldoBanco.Location = new System.Drawing.Point(505, 159);
+			this.txtSaldoBanco.Location = new System.Drawing.Point(505, 183);
 			this.txtSaldoBanco.MenuManager = this.ribbonControl;
 			this.txtSaldoBanco.Name = "txtSaldoBanco";
 			this.txtSaldoBanco.Properties.ReadOnly = true;
@@ -606,7 +651,7 @@
 			// 
 			// txtSaldoLibro
 			// 
-			this.txtSaldoLibro.Location = new System.Drawing.Point(100, 159);
+			this.txtSaldoLibro.Location = new System.Drawing.Point(100, 183);
 			this.txtSaldoLibro.MenuManager = this.ribbonControl;
 			this.txtSaldoLibro.Name = "txtSaldoLibro";
 			this.txtSaldoLibro.Properties.ReadOnly = true;
@@ -617,7 +662,7 @@
 			// dtpFechaSaldo
 			// 
 			this.dtpFechaSaldo.EditValue = null;
-			this.dtpFechaSaldo.Location = new System.Drawing.Point(100, 135);
+			this.dtpFechaSaldo.Location = new System.Drawing.Point(100, 133);
 			this.dtpFechaSaldo.MenuManager = this.ribbonControl;
 			this.dtpFechaSaldo.Name = "dtpFechaSaldo";
 			this.dtpFechaSaldo.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -631,7 +676,7 @@
 			// 
 			// txtCuentaContable
 			// 
-			this.txtCuentaContable.Location = new System.Drawing.Point(494, 77);
+			this.txtCuentaContable.Location = new System.Drawing.Point(494, 75);
 			this.txtCuentaContable.MenuManager = this.ribbonControl;
 			this.txtCuentaContable.Name = "txtCuentaContable";
 			this.txtCuentaContable.Properties.ReadOnly = true;
@@ -641,7 +686,7 @@
 			// 
 			// txtMoneda
 			// 
-			this.txtMoneda.Location = new System.Drawing.Point(494, 101);
+			this.txtMoneda.Location = new System.Drawing.Point(494, 99);
 			this.txtMoneda.MenuManager = this.ribbonControl;
 			this.txtMoneda.Name = "txtMoneda";
 			this.txtMoneda.Properties.ReadOnly = true;
@@ -651,7 +696,7 @@
 			// 
 			// txtBanco
 			// 
-			this.txtBanco.Location = new System.Drawing.Point(100, 101);
+			this.txtBanco.Location = new System.Drawing.Point(100, 99);
 			this.txtBanco.MenuManager = this.ribbonControl;
 			this.txtBanco.Name = "txtBanco";
 			this.txtBanco.Properties.ReadOnly = true;
@@ -661,7 +706,7 @@
 			// 
 			// slkupCuentaBancaria
 			// 
-			this.slkupCuentaBancaria.Location = new System.Drawing.Point(100, 77);
+			this.slkupCuentaBancaria.Location = new System.Drawing.Point(100, 75);
 			this.slkupCuentaBancaria.MenuManager = this.ribbonControl;
 			this.slkupCuentaBancaria.Name = "slkupCuentaBancaria";
 			this.slkupCuentaBancaria.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -705,7 +750,11 @@
             this.emptySpaceItem6,
             this.emptySpaceItem7,
             this.layoutControlItem14,
-            this.layoutControlItem15});
+            this.layoutControlItem15,
+            this.layoutControlItem16,
+            this.layoutControlItem17,
+            this.emptySpaceItem8,
+            this.emptySpaceItem9});
 			this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
 			this.layoutControlGroup1.Name = "Root";
 			this.layoutControlGroup1.Size = new System.Drawing.Size(836, 481);
@@ -714,7 +763,7 @@
 			// layoutControlItem1
 			// 
 			this.layoutControlItem1.Control = this.slkupCuentaBancaria;
-			this.layoutControlItem1.Location = new System.Drawing.Point(0, 65);
+			this.layoutControlItem1.Location = new System.Drawing.Point(0, 63);
 			this.layoutControlItem1.Name = "layoutControlItem1";
 			this.layoutControlItem1.Size = new System.Drawing.Size(394, 24);
 			this.layoutControlItem1.Text = "Cuenta Bancaria:";
@@ -723,7 +772,7 @@
 			// layoutControlItem2
 			// 
 			this.layoutControlItem2.Control = this.txtBanco;
-			this.layoutControlItem2.Location = new System.Drawing.Point(0, 89);
+			this.layoutControlItem2.Location = new System.Drawing.Point(0, 87);
 			this.layoutControlItem2.Name = "layoutControlItem2";
 			this.layoutControlItem2.Size = new System.Drawing.Size(394, 24);
 			this.layoutControlItem2.Text = "Banco:";
@@ -732,7 +781,7 @@
 			// layoutControlItem3
 			// 
 			this.layoutControlItem3.Control = this.txtMoneda;
-			this.layoutControlItem3.Location = new System.Drawing.Point(394, 89);
+			this.layoutControlItem3.Location = new System.Drawing.Point(394, 87);
 			this.layoutControlItem3.Name = "layoutControlItem3";
 			this.layoutControlItem3.Size = new System.Drawing.Size(422, 24);
 			this.layoutControlItem3.Text = "Moneda:";
@@ -741,7 +790,7 @@
 			// layoutControlItem4
 			// 
 			this.layoutControlItem4.Control = this.txtCuentaContable;
-			this.layoutControlItem4.Location = new System.Drawing.Point(394, 65);
+			this.layoutControlItem4.Location = new System.Drawing.Point(394, 63);
 			this.layoutControlItem4.Name = "layoutControlItem4";
 			this.layoutControlItem4.Size = new System.Drawing.Size(422, 24);
 			this.layoutControlItem4.Text = "Cuenta Contable:";
@@ -750,7 +799,7 @@
 			// emptySpaceItem1
 			// 
 			this.emptySpaceItem1.AllowHotTrack = false;
-			this.emptySpaceItem1.Location = new System.Drawing.Point(0, 113);
+			this.emptySpaceItem1.Location = new System.Drawing.Point(0, 111);
 			this.emptySpaceItem1.Name = "emptySpaceItem1";
 			this.emptySpaceItem1.Size = new System.Drawing.Size(816, 10);
 			this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
@@ -758,7 +807,7 @@
 			// layoutControlItem5
 			// 
 			this.layoutControlItem5.Control = this.dtpFechaSaldo;
-			this.layoutControlItem5.Location = new System.Drawing.Point(0, 123);
+			this.layoutControlItem5.Location = new System.Drawing.Point(0, 121);
 			this.layoutControlItem5.Name = "layoutControlItem5";
 			this.layoutControlItem5.Size = new System.Drawing.Size(394, 24);
 			this.layoutControlItem5.Text = "Fecha Saldo:";
@@ -767,7 +816,7 @@
 			// emptySpaceItem3
 			// 
 			this.emptySpaceItem3.AllowHotTrack = false;
-			this.emptySpaceItem3.Location = new System.Drawing.Point(405, 123);
+			this.emptySpaceItem3.Location = new System.Drawing.Point(405, 121);
 			this.emptySpaceItem3.MaxSize = new System.Drawing.Size(0, 24);
 			this.emptySpaceItem3.MinSize = new System.Drawing.Size(10, 24);
 			this.emptySpaceItem3.Name = "emptySpaceItem3";
@@ -778,7 +827,7 @@
 			// layoutControlItem6
 			// 
 			this.layoutControlItem6.Control = this.txtSaldoLibro;
-			this.layoutControlItem6.Location = new System.Drawing.Point(0, 147);
+			this.layoutControlItem6.Location = new System.Drawing.Point(0, 171);
 			this.layoutControlItem6.Name = "layoutControlItem6";
 			this.layoutControlItem6.Size = new System.Drawing.Size(394, 24);
 			this.layoutControlItem6.Text = "Saldo en Libros";
@@ -787,7 +836,7 @@
 			// layoutControlItem7
 			// 
 			this.layoutControlItem7.Control = this.txtSaldoBanco;
-			this.layoutControlItem7.Location = new System.Drawing.Point(405, 147);
+			this.layoutControlItem7.Location = new System.Drawing.Point(405, 171);
 			this.layoutControlItem7.Name = "layoutControlItem7";
 			this.layoutControlItem7.Size = new System.Drawing.Size(411, 24);
 			this.layoutControlItem7.Text = "Saldo en Banco:";
@@ -796,27 +845,27 @@
 			// layoutControlItem8
 			// 
 			this.layoutControlItem8.Control = this.gridMobLibros;
-			this.layoutControlItem8.Location = new System.Drawing.Point(0, 171);
+			this.layoutControlItem8.Location = new System.Drawing.Point(0, 195);
 			this.layoutControlItem8.Name = "layoutControlItem8";
-			this.layoutControlItem8.Size = new System.Drawing.Size(394, 242);
+			this.layoutControlItem8.Size = new System.Drawing.Size(394, 194);
 			this.layoutControlItem8.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem8.TextVisible = false;
 			// 
 			// layoutControlItem9
 			// 
 			this.layoutControlItem9.Control = this.gridMovBanco;
-			this.layoutControlItem9.Location = new System.Drawing.Point(405, 171);
+			this.layoutControlItem9.Location = new System.Drawing.Point(405, 195);
 			this.layoutControlItem9.Name = "layoutControlItem9";
-			this.layoutControlItem9.Size = new System.Drawing.Size(411, 242);
+			this.layoutControlItem9.Size = new System.Drawing.Size(411, 194);
 			this.layoutControlItem9.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem9.TextVisible = false;
 			// 
 			// emptySpaceItem2
 			// 
 			this.emptySpaceItem2.AllowHotTrack = false;
-			this.emptySpaceItem2.Location = new System.Drawing.Point(394, 123);
+			this.emptySpaceItem2.Location = new System.Drawing.Point(394, 121);
 			this.emptySpaceItem2.Name = "emptySpaceItem2";
-			this.emptySpaceItem2.Size = new System.Drawing.Size(11, 314);
+			this.emptySpaceItem2.Size = new System.Drawing.Size(11, 316);
 			this.emptySpaceItem2.TextSize = new System.Drawing.Size(0, 0);
 			// 
 			// layoutControlItem10
@@ -825,7 +874,7 @@
 			this.layoutControlItem10.Location = new System.Drawing.Point(0, 413);
 			this.layoutControlItem10.Name = "layoutControlItem10";
 			this.layoutControlItem10.Size = new System.Drawing.Size(394, 24);
-			this.layoutControlItem10.Text = "Total Marcados:";
+			this.layoutControlItem10.Text = "Total Conciliados:";
 			this.layoutControlItem10.TextSize = new System.Drawing.Size(85, 13);
 			// 
 			// layoutControlItem11
@@ -834,7 +883,7 @@
 			this.layoutControlItem11.Location = new System.Drawing.Point(405, 413);
 			this.layoutControlItem11.Name = "layoutControlItem11";
 			this.layoutControlItem11.Size = new System.Drawing.Size(411, 24);
-			this.layoutControlItem11.Text = "Total Marcado:";
+			this.layoutControlItem11.Text = "Total Conciliados";
 			this.layoutControlItem11.TextSize = new System.Drawing.Size(85, 13);
 			// 
 			// layoutControlItem12
@@ -884,7 +933,7 @@
 			this.emptySpaceItem7.AllowHotTrack = false;
 			this.emptySpaceItem7.Location = new System.Drawing.Point(0, 48);
 			this.emptySpaceItem7.Name = "emptySpaceItem7";
-			this.emptySpaceItem7.Size = new System.Drawing.Size(816, 17);
+			this.emptySpaceItem7.Size = new System.Drawing.Size(816, 15);
 			this.emptySpaceItem7.TextSize = new System.Drawing.Size(0, 0);
 			// 
 			// layoutControlItem14
@@ -905,6 +954,52 @@
 			this.layoutControlItem15.Text = "Fecha Final:";
 			this.layoutControlItem15.TextSize = new System.Drawing.Size(85, 13);
 			// 
+			// layoutControlItem16
+			// 
+			this.layoutControlItem16.Control = this.txtSelectedLibros;
+			this.layoutControlItem16.Location = new System.Drawing.Point(0, 389);
+			this.layoutControlItem16.Name = "layoutControlItem16";
+			this.layoutControlItem16.Size = new System.Drawing.Size(394, 24);
+			this.layoutControlItem16.Text = "Total Marcados";
+			this.layoutControlItem16.TextSize = new System.Drawing.Size(85, 13);
+			// 
+			// layoutControlItem17
+			// 
+			this.layoutControlItem17.Control = this.txtSelectedBancos;
+			this.layoutControlItem17.Location = new System.Drawing.Point(405, 389);
+			this.layoutControlItem17.Name = "layoutControlItem17";
+			this.layoutControlItem17.Size = new System.Drawing.Size(411, 24);
+			this.layoutControlItem17.Text = "Total Marcados:";
+			this.layoutControlItem17.TextSize = new System.Drawing.Size(85, 13);
+			// 
+			// emptySpaceItem8
+			// 
+			this.emptySpaceItem8.AllowHotTrack = false;
+			this.emptySpaceItem8.AppearanceItemCaption.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.emptySpaceItem8.AppearanceItemCaption.Options.UseFont = true;
+			this.emptySpaceItem8.AppearanceItemCaption.Options.UseTextOptions = true;
+			this.emptySpaceItem8.AppearanceItemCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+			this.emptySpaceItem8.Location = new System.Drawing.Point(0, 145);
+			this.emptySpaceItem8.Name = "emptySpaceItem8";
+			this.emptySpaceItem8.Size = new System.Drawing.Size(394, 26);
+			this.emptySpaceItem8.Text = "Movimiento Libros";
+			this.emptySpaceItem8.TextSize = new System.Drawing.Size(85, 0);
+			this.emptySpaceItem8.TextVisible = true;
+			// 
+			// emptySpaceItem9
+			// 
+			this.emptySpaceItem9.AllowHotTrack = false;
+			this.emptySpaceItem9.AppearanceItemCaption.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.emptySpaceItem9.AppearanceItemCaption.Options.UseFont = true;
+			this.emptySpaceItem9.AppearanceItemCaption.Options.UseTextOptions = true;
+			this.emptySpaceItem9.AppearanceItemCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+			this.emptySpaceItem9.Location = new System.Drawing.Point(405, 145);
+			this.emptySpaceItem9.Name = "emptySpaceItem9";
+			this.emptySpaceItem9.Size = new System.Drawing.Size(411, 26);
+			this.emptySpaceItem9.Text = "Movimientos Banco";
+			this.emptySpaceItem9.TextSize = new System.Drawing.Size(85, 0);
+			this.emptySpaceItem9.TextVisible = true;
+			// 
 			// frmConciliacionBancaria
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -917,10 +1012,11 @@
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Conciliación Bancaria";
 			this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-			this.Load += new System.EventHandler(this.frmConciliacionBancaria_Load_1);
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
 			this.layoutControl1.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.txtSelectedBancos.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.txtSelectedLibros.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.dtpFechaFinal.Properties.CalendarTimeProperties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.dtpFechaFinal.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.dtpFechaInicial.Properties.CalendarTimeProperties)).EndInit();
@@ -966,6 +1062,10 @@
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem7)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem14)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem15)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem16)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem17)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem8)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem9)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -1041,5 +1141,12 @@
 		private DevExpress.XtraGrid.Columns.GridColumn colMatchNumberBanco;
 		private DevExpress.XtraGrid.Columns.GridColumn colCheck;
 		private DevExpress.XtraGrid.Columns.GridColumn colMatchNumber;
+		private DevExpress.XtraEditors.TextEdit txtSelectedBancos;
+		private DevExpress.XtraEditors.TextEdit txtSelectedLibros;
+		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem16;
+		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem17;
+		private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem8;
+		private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem9;
+		private DevExpress.XtraBars.BarButtonItem btnAsociarSimilares;
 	}
 }

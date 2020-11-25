@@ -70,7 +70,7 @@ namespace ControlBancario.DAC
 
 				//Paremetros Delete 
 				oAdaptador.DeleteCommand.CommandType = CommandType.StoredProcedure;
-				oAdaptador.DeleteCommand.Parameters.Add("@Operacion", SqlDbType.NChar).Value = "I";
+				oAdaptador.DeleteCommand.Parameters.Add("@Operacion", SqlDbType.NChar).Value = "D";
 				oAdaptador.DeleteCommand.Parameters.Add("@IDMovBanco", SqlDbType.Int).SourceColumn = "IDMovBanco";
 				oAdaptador.DeleteCommand.Parameters.Add("@IDCuentaBanco", SqlDbType.Int).SourceColumn = "IDCuentaBanco";
 				oAdaptador.DeleteCommand.Parameters.Add("@Fecha", SqlDbType.Date).SourceColumn = "Fecha";

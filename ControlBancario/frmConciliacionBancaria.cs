@@ -1,5 +1,6 @@
 ﻿using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Grid;
+using Security;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,6 +31,7 @@ namespace ControlBancario
 		Decimal SaldoInicialLibro = 0;
 		DataRow currentRow;
 		bool LoadEdit = false;
+		String sUsuario = (UsuarioDAC._DS.Tables.Count > 0) ? UsuarioDAC._DS.Tables[0].Rows[0]["Usuario"].ToString() : "azepeda";
 
 		private void CargarEstados() {
 			lstEstados.Clear();
@@ -70,10 +72,11 @@ namespace ControlBancario
 
 				LoadData();
 			}
-			catch (Exception ex) {
+			catch (Exception ex)
+			{
 				MessageBox.Show("Han ocurrido los siguientes errores" + ex.Message);
 			}
-		
+
 		}
 
 		void gridViewMovLibros_FocusedRowChanged(object sender, DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
@@ -96,7 +99,7 @@ namespace ControlBancario
 			if (index > -1)
 			{
 				DataRow ele = this.gridViewMovBanco.GetDataRow(Convert.ToInt32(index));
-				if (ele["MatchNumber"] != "" && Convert.ToBoolean(ele["Selected"]) == true)
+				if (ele["MatchNumber"].ToString() != "" && Convert.ToBoolean(ele["Selected"]) == true)
 				{
 					IDMovimientoSelected = -1;
 					IDMovBancoSelected = Convert.ToInt32(ele["IDMovBanco"]);
@@ -176,6 +179,7 @@ namespace ControlBancario
 				if (LoadEdit)
 				{
 					this.btnGuardar.ItemAppearance.Normal.BackColor = Color.Transparent;
+					this.btnRefrescar.Enabled = true;
 					LoadEdit = false;
 				}
 				else
@@ -218,7 +222,7 @@ namespace ControlBancario
 					currentRow["IDCuentaBanco"] = this.slkupCuentaBancaria.EditValue;
 					currentRow["FechaInicio"] = Convert.ToDateTime(this.dtpFechaInicial.EditValue);
 					currentRow["FechaFin"] = Convert.ToDateTime(this.dtpFechaFinal.EditValue);
-					currentRow["Usuario"] = "Azepeda";
+					currentRow["Usuario"] = sUsuario;
 
 					dtConciliacion.Rows.Add(currentRow);
 					try
@@ -252,7 +256,7 @@ namespace ControlBancario
 						currentRow["IDCuentaBanco"] = this.slkupCuentaBancaria.EditValue;
 						currentRow["FechaInicio"] = Convert.ToDateTime(this.dtpFechaInicial.EditValue);
 						currentRow["FechaFin"] = Convert.ToDateTime(this.dtpFechaFinal.EditValue);
-						currentRow["Usuario"] = "Azepeda";
+						currentRow["Usuario"] = sUsuario;
 
 						currentRow.EndEdit();
 
@@ -285,6 +289,7 @@ namespace ControlBancario
 
 				this.btnGuardar.ItemAppearance.Normal.BackColor = Color.Transparent;
 				this.btnEliminar.Enabled = true;
+				this.btnRefrescar.Enabled = true;
 			}
 		}
 
@@ -353,20 +358,15 @@ namespace ControlBancario
 			}
 		}
 
-		private void frmConciliacionBancaria_Load_1(object sender, EventArgs e)
-		{
 
-		}
-
-		private void btnAsociar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
-		{
+		private void AsociarReferencias() {
 			this.gridViewMovBanco.PostEditor();
-			gridViewMovBanco.UpdateCurrentRow();  
-			
+			gridViewMovBanco.UpdateCurrentRow();
+
 
 			this.gridViewMovLibros.PostEditor();
-			gridViewMovLibros.UpdateCurrentRow();  
-			
+			gridViewMovLibros.UpdateCurrentRow();
+
 
 
 			String lstMovBancoSelected = "";
@@ -379,16 +379,17 @@ namespace ControlBancario
 			DataTable dtSelectMovLibros = (DataTable)this.gridMobLibros.DataSource;
 			DataTable dtSelectMovBancos = (DataTable)this.gridMovBanco.DataSource;
 
-			DataRow[] dtLibros  =  dtSelectMovLibros.Select("Selected = 1 and MatchNumber is null");
+			DataRow[] dtLibros = dtSelectMovLibros.Select("Selected = 1 and MatchNumber is null");
 			DataRow[] dtBancos = dtSelectMovBancos.Select("Selected = 1 and MatchNumber is null");
 
 			if (dtLibros.Count() == 0 || dtBancos.Count() == 0)
-			{ 
+			{
 				MessageBox.Show("Por favor seleccione los documentos en ambas listas");
 				return;
 			}
 
-			foreach (DataRow fila in dtLibros) {
+			foreach (DataRow fila in dtLibros)
+			{
 				lstMovLibroSelected = lstMovLibroSelected + fila["IDMovimiento"].ToString() + "|";
 				TotalLibros += Convert.ToDecimal(fila["monto"]);
 			}
@@ -401,7 +402,8 @@ namespace ControlBancario
 				TotalBancos += Convert.ToDecimal(fila["monto"]);
 			}
 
-			if (TotalBancos != TotalLibros) {
+			if (TotalBancos != TotalLibros)
+			{
 				MessageBox.Show("Los Montos a asociar deben de ser iguales");
 				return;
 			}
@@ -415,6 +417,16 @@ namespace ControlBancario
 
 			CargarMovimientosLibros();
 			CargarMovimientoBancos();
+			CalcularTotalesMovBanco();
+			CalcularTotalesMovLibros();
+			CalcularTotalesSelectMovBanco();
+			CalcularTotalesSelectMovLibros();
+			ValidarElementosToAsociar();
+		}
+	
+		private void btnAsociar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+		{
+			AsociarReferencias();
 					  
 		}
 
@@ -447,8 +459,35 @@ namespace ControlBancario
 			}
 			CargarMovimientosLibros();
 			CargarMovimientoBancos();
+
+			CalcularTotalesMovBanco();
+			CalcularTotalesMovLibros();
+			CalcularTotalesSelectMovBanco();
+			CalcularTotalesSelectMovLibros();
+			ValidarElementosToAsociar();
 		}
 
+
+		private void ValidarElementosToAsociar() {
+			if (Convert.ToDecimal(this.txtSelectedBancos.EditValue) == Convert.ToDecimal(this.txtSelectedLibros.EditValue))
+			{
+				if (Convert.ToDecimal(this.txtSelectedLibros.EditValue) != 0)
+				{
+					this.txtSelectedBancos.BackColor = Color.LightGreen;
+					this.txtSelectedLibros.BackColor = Color.LightGreen;
+				}
+				else
+				{
+					this.txtSelectedBancos.BackColor = Color.White;
+					this.txtSelectedLibros.BackColor = Color.White;
+				}
+			}
+			else
+			{
+				this.txtSelectedBancos.BackColor = Color.LightCoral;
+				this.txtSelectedLibros.BackColor = Color.LightCoral;
+			}
+		}
 		
 		private void gridViewMovLibros_ShowingEditor(object sender, CancelEventArgs e)
 		{
@@ -505,13 +544,28 @@ namespace ControlBancario
 		{
 			gridViewMovLibros.PostEditor();
 			CalcularTotalesMovLibros();
+			CalcularTotalesSelectMovLibros();
+			ValidarElementosToAsociar();
+		}
+
+		private void CalcularTotalesSelectMovLibros()
+		{
+			decimal dTotal = 0;
+			foreach (DataRow e in dtMovLibros.Rows)
+			{
+				if (Convert.ToBoolean(e["Selected"]) == true && e["MatchNumber"].ToString() == "")
+				{
+					dTotal = dTotal + Convert.ToDecimal(e["Monto"]);
+				}
+			}
+			this.txtSelectedLibros.EditValue = dTotal.ToString("N2");
 		}
 
 		
 		private void CalcularTotalesMovLibros() {
 			decimal dTotal = 0;
 			foreach (DataRow e in dtMovLibros.Rows) { 
-				if (Convert.ToBoolean(e["Selected"]) == true) {
+				if (Convert.ToBoolean(e["Selected"]) == true && e["MatchNumber"].ToString() != "") {
 					dTotal = dTotal + Convert.ToDecimal(e["Monto"]);
 				} 
 			}
@@ -524,13 +578,27 @@ namespace ControlBancario
 			decimal dTotal = 0;
 			foreach (DataRow e in this.dtMovBanco.Rows)
 			{
-				if (Convert.ToBoolean(e["Selected"]) == true)
+				if (Convert.ToBoolean(e["Selected"]) == true && e["MatchNumber"].ToString() != "")
 				{
 					dTotal = dTotal + Convert.ToDecimal(e["Monto"]);
 				}
 			}
 			this.txtTotalMarcadoBanco.EditValue = dTotal.ToString("N2");
 			this.txtDiferencia.EditValue = (Convert.ToDecimal(this.txtMarcadosLibros.EditValue) - Convert.ToDecimal(this.txtTotalMarcadoBanco.EditValue)).ToString("N2");
+		}
+
+		private void CalcularTotalesSelectMovBanco()
+		{
+			decimal dTotal = 0;
+			foreach (DataRow e in this.dtMovBanco.Rows)
+			{
+				if (Convert.ToBoolean(e["Selected"]) == true && e["MatchNumber"].ToString() == "")
+				{
+					dTotal = dTotal + Convert.ToDecimal(e["Monto"]);
+				}
+			}
+			this.txtSelectedBancos.EditValue = dTotal.ToString("N2");
+			
 		}
 
 		private void gridViewMovLibros_HiddenEditor(object sender, EventArgs e)
@@ -543,13 +611,15 @@ namespace ControlBancario
 		{
 			GridView view = sender as GridView;
 			editBancos = view.ActiveEditor;
-			editBancos.EditValueChanged += edit_EditBancosValueChanged; 
+			editBancos.EditValueChanged += edit_EditBancosValueChanged;
 		}
 
 		void edit_EditBancosValueChanged(object sender, EventArgs e)
 		{
 			gridViewMovBanco.PostEditor();
 			CalcularTotalesMovBanco();
+			CalcularTotalesSelectMovBanco();
+			ValidarElementosToAsociar();
 		}
 
 		private void gridViewMovBancos_HiddenEditor(object sender, EventArgs e)
@@ -562,6 +632,41 @@ namespace ControlBancario
 		{
 			DataRow ele = this.gridViewMovBanco.GetDataRow(Convert.ToInt32(this.gridViewMovBanco.FocusedRowHandle));
 			e.Cancel = gridViewMovBanco.FocusedColumn.FieldName == "Selected" && Convert.ToBoolean(ele["Selected"]) == true && ele["MatchNumber"].ToString() != "";
+		}
+
+		private void btnAsociarSimilares_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+		{
+			bool hasFound = false;
+			bool hasMatch = false;
+			foreach (DataRow filaBanco in this.dtMovBanco.Rows)
+			{
+				if (Convert.ToBoolean(filaBanco["Selected"]) == false ) {
+					foreach (DataRow filaLibro in this.dtMovLibros.Rows) {
+						if (Convert.ToBoolean(filaLibro["Selected"]) == false ) { 
+							if (filaBanco["Referencia"].ToString() == filaLibro["Referencia"].ToString() &&  Convert.ToDecimal(filaBanco["Monto"]) == Convert.ToDecimal(filaLibro["Monto"])) {
+								filaLibro["Selected"] = true;
+								hasFound = true;
+							}
+						} 
+					}
+					if (hasFound) {
+						filaBanco["Selected"] = true;
+						if (hasMatch == false)
+							hasMatch = true;
+						hasFound = false;
+					}
+				}
+			}
+			if (hasMatch)
+				AsociarReferencias();
+			else {
+				MessageBox.Show("No se encontraron registros que concuerden");
+			}
+		}
+
+		private void btnRefrescar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+		{
+			LoadData();
 		}
 
 		
