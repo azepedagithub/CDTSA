@@ -33,6 +33,10 @@
 			this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
 			this.dtgImport = new DevExpress.XtraGrid.GridControl();
 			this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+			this.colFecha = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colRef = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colConcepto = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colMonto = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.btnLoadDoc = new DevExpress.XtraEditors.SimpleButton();
 			this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
 			this.txtName = new DevExpress.XtraEditors.TextEdit();
@@ -44,10 +48,6 @@
 			this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
-			this.colFecha = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colRef = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colConcepto = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colMonto = new DevExpress.XtraGrid.Columns.GridColumn();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
 			this.layoutControl1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dtgImport)).BeginInit();
@@ -110,6 +110,38 @@
 			this.gridView1.Name = "gridView1";
 			this.gridView1.OptionsView.ShowGroupPanel = false;
 			this.gridView1.CustomDrawCell += new DevExpress.XtraGrid.Views.Base.RowCellCustomDrawEventHandler(this.gridView1_CustomDrawCell);
+			// 
+			// colFecha
+			// 
+			this.colFecha.Caption = "Fecha";
+			this.colFecha.FieldName = "Fecha";
+			this.colFecha.Name = "colFecha";
+			this.colFecha.Visible = true;
+			this.colFecha.VisibleIndex = 0;
+			// 
+			// colRef
+			// 
+			this.colRef.Caption = "Referencia";
+			this.colRef.FieldName = "Referencia";
+			this.colRef.Name = "colRef";
+			this.colRef.Visible = true;
+			this.colRef.VisibleIndex = 1;
+			// 
+			// colConcepto
+			// 
+			this.colConcepto.Caption = "Concepto";
+			this.colConcepto.FieldName = "Concepto";
+			this.colConcepto.Name = "colConcepto";
+			this.colConcepto.Visible = true;
+			this.colConcepto.VisibleIndex = 2;
+			// 
+			// colMonto
+			// 
+			this.colMonto.Caption = "Monto";
+			this.colMonto.FieldName = "Monto";
+			this.colMonto.Name = "colMonto";
+			this.colMonto.Visible = true;
+			this.colMonto.VisibleIndex = 3;
 			// 
 			// btnLoadDoc
 			// 
@@ -221,38 +253,6 @@
 			this.emptySpaceItem2.Size = new System.Drawing.Size(491, 26);
 			this.emptySpaceItem2.TextSize = new System.Drawing.Size(0, 0);
 			// 
-			// colFecha
-			// 
-			this.colFecha.Caption = "Fecha";
-			this.colFecha.FieldName = "Fecha";
-			this.colFecha.Name = "colFecha";
-			this.colFecha.Visible = true;
-			this.colFecha.VisibleIndex = 0;
-			// 
-			// colRef
-			// 
-			this.colRef.Caption = "Referencia";
-			this.colRef.FieldName = "Referencia";
-			this.colRef.Name = "colRef";
-			this.colRef.Visible = true;
-			this.colRef.VisibleIndex = 1;
-			// 
-			// colConcepto
-			// 
-			this.colConcepto.Caption = "Concepto";
-			this.colConcepto.FieldName = "Concepto";
-			this.colConcepto.Name = "colConcepto";
-			this.colConcepto.Visible = true;
-			this.colConcepto.VisibleIndex = 2;
-			// 
-			// colMonto
-			// 
-			this.colMonto.Caption = "Monto";
-			this.colMonto.FieldName = "Monto";
-			this.colMonto.Name = "colMonto";
-			this.colMonto.Visible = true;
-			this.colMonto.VisibleIndex = 3;
-			// 
 			// frmImportMovBancos
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -261,7 +261,7 @@
 			this.Controls.Add(this.layoutControl1);
 			this.Name = "frmImportMovBancos";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "frmImportMovBancos";
+			this.Text = "Importar Estado de Cuenta del Banco";
 			this.Load += new System.EventHandler(this.frmImportMovBancos_Load);
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
 			this.layoutControl1.ResumeLayout(false);

@@ -23,7 +23,7 @@ namespace ControlBancario
         public String NombreRuc { get; set; }
         public String AliasRuc { get; set; }
         public String PagaderaA { get; set; }
-        public String Referencia { get; set; }
+        public String Numero { get; set; }
         public String ConceptoContable { get; set; }
 
 
@@ -45,7 +45,7 @@ namespace ControlBancario
             this.NombreRuc = NombreRuc;
             this.AliasRuc = AliasRuc;
             this.PagaderaA = PagaderoA;
-            this.Referencia = Referencia;
+            this.Numero = Referencia;
             this.ConceptoContable = ConceptoContable;
             this.Load += frmParametrosFiltroDocumentoBancario_Load;
             
@@ -99,7 +99,7 @@ namespace ControlBancario
             this.txtNombreRuc.EditValue = this.NombreRuc;
             this.txtAliasRuc.EditValue = this.AliasRuc;
             this.txtPagaderoA.EditValue = this.PagaderaA;
-            this.txtReferencia.EditValue = this.Referencia;
+            this.txtNumero.EditValue = this.Numero;
             this.txtConceptoContable.EditValue = this.ConceptoContable;
             
         }
@@ -117,7 +117,7 @@ namespace ControlBancario
             this.NombreRuc = this.txtNombreRuc.EditValue.ToString();
             this.AliasRuc = this.txtAliasRuc.EditValue.ToString();
             this.PagaderaA = this.txtPagaderoA.EditValue.ToString();
-            this.Referencia = this.txtReferencia.EditValue.ToString();
+            this.Numero = this.txtNumero.EditValue.ToString();
             this.ConceptoContable = this.txtConceptoContable.EditValue.ToString();
 
             

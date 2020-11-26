@@ -158,7 +158,8 @@ namespace ControlBancario
 					if (i > 1)  {
 						oDetalle.IDCuentaBanco = this.IDCuentaBanco;
 						oDetalle.IDConciliacion = this.IDConciliacion;
-						oDetalle.Factor = 1;
+						// Realizar el cambio de Factor
+						oDetalle.Factor = (oDetalle.Monto > 0) ? -1 : 1; 
 						oDetalle.Usuario = sUsuario;
 						oDetalle.Estado = "P";
 						oLstMov.Add(oDetalle);

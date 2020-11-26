@@ -12,6 +12,8 @@ using ControlBancario.DAC;
 using System.IO;
 using DevExpress.DataAccess.Sql;
 using DevExpress.DataAccess.ConnectionParameters;
+using CG;
+using System.Transactions;
 
 namespace ControlBancario
 {
@@ -108,27 +110,44 @@ namespace ControlBancario
             _currentRow["IDRuc"] = DBNull.Value;
             _currentRow["Usuario"] = sUsuario;
             _currentRow["ConceptoContable"] = "";
+
+
 			
 
         }
 
 
+		private bool ValidarEjerciosPeriodoTrabajo()
+		{
+			bool result = false;
+			DataSet ds = new DataSet();
+			ds = EjercicioDAC.ValidaEjercicioPeriodoTrabajo(Convert.ToDateTime(this.dtpFecha.EditValue));
+			String sMensaje = ds.Tables[0].Rows[0]["msg"].ToString();
+			if (sMensaje != "OK")
+			{
+				MessageBox.Show(sMensaje);
+			}
+			else
+				result = true;
+
+			return result;
+		}
 
 
 
-        private String EstadoAsiento()
-        {
-            String sEstado = "";
-            if (Convert.ToBoolean(_currentRow["Mayorizado"]))
-                sEstado = "Mayorizado";
-            else if (Convert.ToBoolean(_currentRow["Anulado"]))
-                sEstado = "Anulado";
-            else if (Convert.ToBoolean(_currentRow["CuadreTemporal"]))
-                sEstado = "Cuadre Temporal";
-            else
-                sEstado = "Editando..";
-            return sEstado;
-        }
+		//private String EstadoAsiento()
+		//{
+		//	String sEstado = "";
+		//	if (Convert.ToBoolean(_currentRow["Mayorizado"]))
+		//		sEstado = "Mayorizado";
+		//	else if (Convert.ToBoolean(_currentRow["Anulado"]))
+		//		sEstado = "Anulado";
+		//	else if (Convert.ToBoolean(_currentRow["CuadreTemporal"]))
+		//		sEstado = "Cuadre Temporal";
+		//	else
+		//		sEstado = "Editando..";
+		//	return sEstado;
+		//}
 
 
 
@@ -168,9 +187,11 @@ namespace ControlBancario
 
         private void HabilitarControles(bool Activo, bool Mayorizado)
         {
-
+			this.slkupCuentaBancaria.ReadOnly = !Activo;
             this.txtConcepto.ReadOnly = !(Activo);
             this.slkupTipo.ReadOnly = !Activo;
+			this.dtpFecha.ReadOnly =  (this.Accion == "Edit") ? true : !Activo;
+			this.txtNumero.ReadOnly = (this.Accion == "Edit") ? true: !Activo;
             this.slkupSubTipo.ReadOnly = !Activo;
             this.slkupRuc.ReadOnly = !Activo;
             this.txtPagaderoA.ReadOnly = !(Activo);
@@ -268,6 +289,9 @@ namespace ControlBancario
 					this.btnAprobar.Enabled = false;
 					this.btnImprimir.Enabled = false;
 					this.btnAnular.Enabled = false;
+					ValidarEjerciosPeriodoTrabajo();
+					
+
 
 				}
 				else if (Accion == "Edit" || Accion == "View") 
@@ -276,7 +300,7 @@ namespace ControlBancario
                     if (_currentRow["Asiento"].ToString() != ""){
                         this.btnImprimir.Enabled = true;
                         this.btnAprobar.Enabled = false;
-                        this.btnAnular.Enabled = true;
+						this.btnAnular.Enabled = _currentRow["AsientoAnulacion"].ToString() != "" ? false : true; ;
                     }
                     else {
                         this.btnImprimir.Enabled = false;
@@ -288,6 +312,8 @@ namespace ControlBancario
 					{
 						HabilitarControles(true, false);
 						this.slkupCuentaBancaria.ReadOnly = true;
+						ValidarEjerciosPeriodoTrabajo();
+						
 					}
 					else
 					{
@@ -346,6 +372,11 @@ namespace ControlBancario
                 sMensaje = sMensaje + "     • Digite el concepto del Asiento. \n\r";
 			if (this.txtNumero.EditValue == null || this.txtNumero.EditValue.ToString() == "")
 				sMensaje = sMensaje + "     • Digite el Numero del Documento. \n\r";
+			if (!ValidarEjerciosPeriodoTrabajo())
+			{
+				sMensaje = sMensaje + "     • Favor verifique los periodos de trabajo contable. \n\r"; 
+			}
+
              
             if (sMensaje != "")
             {
@@ -424,7 +455,7 @@ namespace ControlBancario
                     if (okFlag)
                     {
                         MovimientosDAC.oAdaptador.Update(_dsChanged, "Data");
-                        lblStatus.Caption = "Actualizado " + _currentRow["Descr"].ToString();
+                        //lblStatus.Caption = "Actualizado " + _currentRow["Descr"].ToString();
                         Application.DoEvents();
                         // isEdition = false;
                         _dsDocumento.AcceptChanges();
@@ -503,57 +534,32 @@ namespace ControlBancario
         {
             if (_currentRow != null)
             {
-                if (MessageBox.Show("Esta seguro que desea eliminar el asiento de diario? ", "Asiento de Diario", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show("Esta seguro que desea eliminar el movimiento de Banco? ", "Movimientos de Bancos", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
 
-                    // AsientoDAC.InsertUpdateAsiento("D", "", _currentRow["Asiento"].ToString(), _currentRow["Tipo"].ToString());
+					_currentRow.Delete();
+
+					try
+					{
+
+						MovimientosDAC.oAdaptador.Update(_dsDocumento, "Data");
+						_dsDocumento.AcceptChanges();
+
+						this.Close();
+						Application.DoEvents();
+					}
+					catch (System.Data.SqlClient.SqlException ex)
+					{
+						_dsDocumento.RejectChanges();
+						lblStatus.Caption = "";
+						MessageBox.Show(ex.Message);
+					}
                 }
             }
         }
 
 
-        private void btnMayorizar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
-        {
-            // Vlidar si el documento esta guardado si no lo esta realizar el save
-            if (_dsDocumento.Tables[0].Rows.Count > 0)
-            {
-                //Validar el Periodo contable
-                DateTime Fecha = Convert.ToDateTime(this.dtpFecha.EditValue);
-                try
-                {
-                    //if (Fecha == null || PeriodoContableDAC.ValidaFechaInPeriodoContable(Fecha))
-                    //PeriodoContableDAC.ValidaFechaInPeriodoContable(Fecha);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Han ocurrido los siguientes errores: \r\n" + ex.Message);
-                    return;
-                }
-
-                GuardarAsiento();
-
-                //Validar situaciones comunes al momento de mayorizar
-                if (Convert.ToBoolean(_dsDocumento.Tables[0].Rows[0]["Mayorizado"]) == false)
-                {
-                    //Validar situaciones comunes al momento de mayorizar
-
-                    int IdEjercicio = (int)_dsDocumento.Tables[0].Rows[0]["IDEjercicio"];// (int)_dsEjercicioPeriodo.Tables[0].Rows[0]["IDEjercicio"];
-                    String Periodo = _dsDocumento.Tables[0].Rows[0]["Periodo"].ToString();
-                    bool bExito = false;
-                    // bExito = AsientoDAC.Mayorizar(IdEjercicio, Periodo, _Asiento, sUsuario);
-
-                    if (bExito)
-                    {
-                        MessageBox.Show("El asiento contable, se ha mayorizado con exito");
-                        this.Close();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Ha ocurrido un error tratando de mayorizar el asiento..");
-                    }
-                }
-            }
-        }
+	
 
         private void slkupTipo_EditValueChanged(object sender, EventArgs e)
         {
@@ -573,6 +579,7 @@ namespace ControlBancario
 				else {
 					this.lblLayoutPagaderoA.Text = "Beneficiario:";
 					this.layoutRUC.Enabled = false;
+					this.txtNumero.EditValue = null;
 					
 				}
 
@@ -713,20 +720,25 @@ namespace ControlBancario
             if (_currentRow["Asiento"].ToString() == "" || _currentRow["Asiento"] == null) {
                 try
                 {
-                    //Security.ConnectionManager.BeginTran();
-                    String Asiento = MovimientosDAC.GenerarAsientoContable(Convert.ToInt32(_currentRow["Numero"]), Convert.ToInt32(_currentRow["IDCuentaBanco"]), Convert.ToInt32(_currentRow["IDTipo"]), Convert.ToInt32(_currentRow["IDSubTipo"]), sUsuario);
-                    if (Asiento == "") {
-                        MessageBox.Show("Ha ocurrido un error tratando de generar el asiento contable del cheque");
-                        return;
-                    }
-                    CG.frmAsiento ofrmAsiento = new CG.frmAsiento(Asiento,"PndtGuardar",true);
-                    ofrmAsiento.FormClosed += ofrmAsiento_FormClosed;
-                    ofrmAsiento.ShowDialog();
-                    //Security.ConnectionManager.CommitTran();
+					String Asiento;
+					using (var scope = new TransactionScope())
+					{
+						 Asiento = MovimientosDAC.GenerarAsientoContable(_currentRow["Numero"].ToString(), Convert.ToInt32(_currentRow["IDCuentaBanco"]), Convert.ToInt32(_currentRow["IDTipo"]), Convert.ToInt32(_currentRow["IDSubTipo"]), sUsuario);
+						if (Asiento == "")
+						{
+							MessageBox.Show("Ha ocurrido un error tratando de generar el asiento contable del cheque");
+							return;
+						}
+						scope.Complete();
+					}
+						CG.frmAsiento ofrmAsiento = new CG.frmAsiento(Asiento,"PndtGuardar",true);
+						ofrmAsiento.FormClosed += ofrmAsiento_FormClosed;
+						ofrmAsiento.ShowDialog();
+						
+					
                 }
                 catch (Exception ex) {
                     MessageBox.Show("Han ocurrido los siguientes errores, tratando de generar el asiento contable \n\r\n\r\n\r\n\r\n\r\n\r\n\r" + ex.Message);
-                   // Security.ConnectionManager.RollBackTran();
                 }
             }
         }
@@ -742,7 +754,7 @@ namespace ControlBancario
             {
                 this.btnImprimir.Enabled = true;
                 this.btnAprobar.Enabled = false;
-                this.btnAnular.Enabled = true;
+				this.btnAnular.Enabled = _currentRow["AsientoAnulacion"].ToString() != "" ? false : true;
             }
             else
             {
@@ -760,11 +772,25 @@ namespace ControlBancario
         private void btnAnular_ItemClick_1(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             //Preguntar por restricciones de anulacion
+			try
+			{
+				if (_currentRow["Asiento"].ToString() != "")
+				{
+					using (var scope = new TransactionScope())
+					{
+						MovimientosDAC.RevierteAsientoContable(_currentRow["Numero"].ToString(), Convert.ToInt32(_currentRow["IDCuentaBanco"]), Convert.ToInt32(_currentRow["IDTipo"]), Convert.ToInt32(_currentRow["IDSubTipo"]), sUsuario);
+						MessageBox.Show("El cheque y su transaccion contable se ha anulado");
+						CargarReloadData();
+						scope.Complete();
+						
+					}
+				}
+			}
+			catch (Exception ex) {
+				MessageBox.Show("Ha ocurrido un error tratando de anular el documento.");
+				Security.ConnectionManager.RollBackTran();
+			}
 
-            if (_currentRow["Asiento"].ToString() != "") {
-                MovimientosDAC.RevierteAsientoContable(Convert.ToInt32(_currentRow["Numero"]), Convert.ToInt32(_currentRow["IDCuentaBanco"]), Convert.ToInt32(_currentRow["IDTipo"]), Convert.ToInt32(_currentRow["IDSubTipo"]), sUsuario);
-                MessageBox.Show("El cheque y su transaccion contable se ha anulado");
-            }
         }
 
         private void slkupRuc_EditValueChanged(object sender, EventArgs e)
@@ -785,6 +811,13 @@ namespace ControlBancario
             }
         }
 
+		private void dtpFecha_EditValueChanged(object sender, EventArgs e)
+		{
+			//ValidarEjerciosPeriodoTrabajo();
+		}
+
+		
+		
 
 
 

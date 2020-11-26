@@ -140,6 +140,13 @@ GO
 alter table dbo.cbRUC add constraint FkTIPORUC foreign key (IDTipoRuc) references dbo.cbTipoRUC ( IDTipoRuc )
 GO
 
+INSERT INTO dbo.cbRUC( IDRuc ,IDTipoRuc ,RUC ,Nombre ,Alias ,Activo)
+VALUES  ( 0,1,'ND','NO DEFINIDO','NO DEFINIDO',1)
+
+GO
+
+
+
 Create Table dbo.cbBanco ( IDBanco int identity(1,1) not null, Codigo nvarchar(10) not null, 
 Descr nvarchar(250) ,Activo bit default 1 )
 go
@@ -170,7 +177,7 @@ Insert dbo.cbTipoCuenta( IDTipo, Descr,Activo )
 values (4, 'Tarjeta de Credito',1 )
 go
 
-Create Table dbo.cbTipoDocumento ( IDTipo int not null, Tipo nvarchar(3) not null , Descr nvarchar(200), Activo bit default 1 )
+Create Table dbo.cbTipoDocumento ( IDTipo int not null, Tipo nvarchar(3) not null , Descr nvarchar(200), Activo bit default 1, Factor INT NOT NULL DEFAULT 1 )
 go
 
 alter table dbo.cbTipoDocumento add constraint pkcbTipoDocumento primary key (IDTipo)
@@ -216,6 +223,12 @@ values (7,'O/C', 'OTROS CREDITO', 1)
 GO
 insert dbo.cbTipoDocumento (IDTipo, Tipo , Descr, Activo )
 values (8,'O/D', 'OTROS DEBITO', 1)
+GO
+
+
+UPDATE dbo.cbTipoDocumento SET Factor = -1 WHERE IDTipo IN (1,3,6,7)
+
+
 GO
 -- SUBTIPOS DE DOCUMENTOS delete from dbo.cbSubTipoDocumento
 insert dbo.cbSubTipoDocumento (IDTipo, IDSubtipo , SUBTipo, Descr, Activo , ReadOnlySys )
@@ -301,14 +314,35 @@ go
 alter table dbo.cbCuentaFormatoCheque add constraint fkCuentaFormatCheque foreign key (IDCuentaBanco) references dbo.cbCuentaBancaria (IDCuentaBanco)
 go
 
+CREATE TABLE dbo.cbEstadoMovimiento(IDEstado INT NOT NULL, Descr NVARCHAR(250), Activo BIT DEFAULT 1)
+GO
+
+alter table dbo.cbEstadoMovimiento add constraint pkcbEstadoMovimiento primary key (IDEstado)
+
+GO
+
+INSERT INTO dbo.cbEstadoMovimiento( IDEstado, Descr, Activo )
+VALUES  ( 0, 'Pendiente',1)
+
+GO
+
+INSERT INTO dbo.cbEstadoMovimiento( IDEstado, Descr, Activo )
+VALUES  ( 1, 'Aprobado',1)
+
+GO
+
+INSERT INTO dbo.cbEstadoMovimiento( IDEstado, Descr, Activo )
+VALUES  ( 2, 'Anulado',1)
+
+GO
+
 --drop table dbo.cbMovimientos
 Create Table dbo.cbMovimientos (IDCuentaBanco int not null, Fecha date not null, IDTipo int not null, IDSubTipo int not null, 
 IDRuc int not null, 
-Numero int not null, Pagadero_a nvarchar(250), Monto decimal(28,4) default 0, Asiento nvarchar(20), Anulado bit default 0, AsientoAnulacion nvarchar(20),
+Numero NVARCHAR(250) not null, Pagadero_a nvarchar(250), Monto decimal(28,4) default 0, Asiento nvarchar(20), Anulado bit default 0, AsientoAnulacion nvarchar(20),
 Usuario nvarchar(20), UsuarioAnulacion nvarchar(20), FechaAnulacion date,UsuarioAprobacion nvarchar(20), FechaAprobacion date,UsuarioImpresion nvarchar(20),
-FechaImpresion date,Impreso bit DEFAULT(0), ConceptoContable nvarchar(255) )
+FechaImpresion date,Impreso bit DEFAULT(0), ConceptoContable nvarchar(255),IDEstado INT DEFAULT 0 )
 go
-
 
 ALTER TABLE dbo.cbMovimientos ADD IDMovimiento BIGINT IDENTITY (1,1)
 
@@ -324,11 +358,13 @@ GO
 alter table dbo.cbMovimientos add constraint fkcbRUC foreign key (IDRUC) references dbo.cbRUC (IDRUC)
 go
 
+alter table dbo.cbMovimientos add constraint fkcbIDEstado_EstadoMovimiento foreign key (IDEstado) references dbo.cbEstadoMovimiento (IDEstado)
+go
 
 
 
 --Valida si el deposito es unico segun la referencia antes de ingresarlo a la base de datos.
-CREATE  FUNCTION [dbo].[cbReferenciaValida] (@IDCuentaBanco int, @IDTipo int, @IDSubTipo int, @Fecha date, @Numero int)
+CREATE  FUNCTION [dbo].[cbReferenciaValida] (@IDCuentaBanco int, @IDTipo int, @IDSubTipo int, @Fecha date, @Numero NVARCHAR(250))
 RETURNS bit
 AS
 BEGIN
@@ -564,7 +600,7 @@ end
 GO
 
 --DROP Procedure [dbo].[cbUpdateMovimientos]
-CREATE   Procedure [dbo].[cbUpdateMovimientos] @Operacion nvarchar(1), @IDCuentaBanco int,@Fecha DATE,@IDTipo INT,@IDSubTipo INT,@IDRuc int,@Numero INT,
+CREATE  Procedure [dbo].[cbUpdateMovimientos] @Operacion nvarchar(1), @IDCuentaBanco int,@Fecha DATE,@IDTipo INT,@IDSubTipo INT,@IDRuc int,@Numero NVARCHAR(250),
 		@Pagaderoa nvarchar(250),@Monto DECIMAL(28,4),@Usuario NVARCHAR(20),@ConceptoContable NVARCHAR(200)
 as
 set nocount on 
@@ -575,15 +611,14 @@ BEGIN
 	VALUES  ( @IDCuentaBanco,@Fecha,@IDTipo,@IDSubTipo,@IDRuc,@Numero,@Pagaderoa,@Monto,@Usuario,@ConceptoContable)
 	
 	--CK
-	--IF (@IDTipo=1)
-	--	UPDATE dbo.cbCuentaBancaria SET ConsecCheque = @Numero WHERE IDCuentaBanco=@IDCuentaBanco
+	IF (@IDTipo=1)
+		UPDATE dbo.cbCuentaBancaria SET ConsecCheque = @Numero WHERE IDCuentaBanco=@IDCuentaBanco
 end
 
---if upper(@Operacion) = 'D'
---begin
-
-	
---end
+if upper(@Operacion) = 'D'
+begin
+	DELETE dbo.cbMovimientos WHERE  IDCuentaBanco=@IDCuentaBanco AND Fecha=@Fecha AND  IDTipo=@IDTipo AND IDSubTipo=@IDSubTipo AND Numero=@Numero
+end
 
 if upper(@Operacion) = 'U' 
 BEGIN
@@ -648,25 +683,26 @@ end
 GO
 
 CREATE PROCEDURE dbo.cbGetMovimientosByCriterios @FechaInicial AS DATE,@FechaFinal AS DATE,@IDRuc AS INT,@NombreRUC AS NVARCHAR(100),@AliasRUC NVARCHAR(100),
-						@IDTipo AS INT,@IDSubTipo AS INT,@PagaderoA AS NVARCHAR(100),@Anulado AS INT,@ConceptoContable AS NVARCHAR(200)
+						@IDTipo AS INT,@IDSubTipo AS INT,@PagaderoA AS NVARCHAR(100),@Anulado AS INT,@ConceptoContable AS NVARCHAR(200),@Numero AS NVARCHAR(250)
 AS 
 SELECT  M.IDCuentaBanco,CB.Descr DescrCuentaBancaria,M.Fecha ,M.IDTipo ,T.Descr DescrTipo,M.IDSubTipo ,D.Descr DescrSubTipo,M.IDRuc ,R.Alias,R.Nombre,M.Numero ,
         M.Pagadero_a ,M.Monto ,M.Asiento ,M.Anulado ,M.AsientoAnulacion ,M.Usuario ,M.UsuarioAnulacion ,M.FechaAnulacion ,M.UsuarioAprobacion, M.FechaAprobacion,
-       M.UsuarioImpresion,M.FechaImpresion,M.Impreso,M.ConceptoContable  
+       M.UsuarioImpresion,M.FechaImpresion,M.Impreso,M.ConceptoContable,IDMovimiento,M.IDEstado, EM.Descr DescrEstado
         FROM dbo.cbMovimientos M
-INNER JOIN dbo.cbTipoCuenta T ON M.IDTipo = T.IDTipo
 INNER JOIN dbo.cbSubTipoDocumento D ON D.IDTipo = M.IDTipo AND D.IDSubtipo=M.IDSubTipo
 INNER JOIN dbo.cbCuentaBancaria CB ON M.IDCuentaBanco=CB.IDCuentaBanco
+INNER JOIN dbo.cbTipoCuenta T ON CB.IDTipo = T.IDTipo
 INNER JOIN dbo.cbRUC R ON M.IDRuc=R.IDRuc
+INNER JOIN dbo.cbEstadoMovimiento EM ON M.IDEstado= EM.IDEstado
 WHERE M.Fecha BETWEEN @FechaInicial AND @FechaFinal AND (M.IDTipo= @IDTipo OR @IDTipo=-1) AND (M.IDSubTipo=@IDSubTipo OR @IDSubtipo=-1)
 AND (Pagadero_a LIKE '%' + @PagaderoA + '%') AND (Anulado=@Anulado OR @Anulado=-1) AND ConceptoContable LIKE '%' + @ConceptoContable + '%'
-AND (R.Nombre LIKE '%' + @NombreRUC + '%') AND (r.Alias LIKE '%' + @AliasRUC +'%')
+AND (R.Nombre LIKE '%' + @NombreRUC + '%') AND (r.Alias LIKE '%' + @AliasRUC +'%') AND (Numero LIKE '%' + @Numero + '%' )
 
 
 GO
 
 
-CREATE  PROCEDURE dbo.rptGetCheque @IDCuentaBanco AS int,@IDTipo AS int,@IDSubTipo AS int,@Numero AS int
+CREATE  PROCEDURE dbo.rptGetCheque @IDCuentaBanco AS int,@IDTipo AS int,@IDSubTipo AS int,@Numero AS NVARCHAR(250)
 AS 
 SELECT  M.IDCuentaBanco ,
 		B.Descr,B.ConsecCheque,
@@ -698,7 +734,7 @@ GO
 
 
 
-CREATE   PROCEDURE dbo.cbGenerarAsientoContableCheque  @Numero AS INT, @IDCuentaBanco AS INT,@IDTipo AS INT, @IDSubTipo AS INT, @Usuario AS NVARCHAR(50)
+CREATE  PROCEDURE dbo.cbGenerarAsientoContableCheque  @Numero AS NVARCHAR(250), @IDCuentaBanco AS INT,@IDTipo AS INT, @IDSubTipo AS INT, @Usuario AS NVARCHAR(50)
 AS 
 /*
 DECLARE @Numero AS INT
@@ -758,6 +794,7 @@ SELECT @Asiento = (tipo + RIGHT( replicate('0', @LongAsiento ) + cast (Consecuti
 				if exists (Select Asiento From dbo.cntAsiento (NOLOCK)  where Asiento = @Asiento )
 				begin
 					RAISERROR ( 'Ya Existe ese asiento contable, no se puede crear', 16, 1) ;		
+					RETURN	
 				end	
 				Update dbo.cntTipoAsiento set UltimoAsiento = @Asiento , Consecutivo = @Consecutivo 		 			
 				where Tipo = 'BA' 
@@ -777,7 +814,7 @@ VALUES  ( @IDEjercicio , -- IDEjercicio - int
           NULL , -- MayorizadoDate - datetime
           N'' , -- Anuladoby - nvarchar(20)
           Null , -- AnuladoDate - datetime
-          N'Generado de modulo Bancario CK: ' + CAST(@Numero AS NVARCHAR(20)) , -- Concepto - nvarchar(255)
+          N'Generado de modulo Bancario : ' + CAST(@Numero AS NVARCHAR(20)) , -- Concepto - nvarchar(255)
           0 , -- Mayorizado - bit
           0 , -- Anulado - bit
           @TipoCambio , -- TipoCambio - decimal
@@ -798,17 +835,17 @@ VALUES  ( @Asiento , -- Asiento - nvarchar(20)
           '2017-11-24 02:09:37'  -- daterecord - datetime
         )
  
---Actualizar consecutivo del Cheque
-UPDATE dbo.cbCuentaBancaria SET ConsecCheque = @Numero WHERE IDCuentaBanco=@IDCuentaBanco
+----Actualizar consecutivo del Cheque
+--UPDATE dbo.cbCuentaBancaria SET ConsecCheque = @Numero WHERE IDCuentaBanco=@IDCuentaBanco
 
-UPDATE dbo.cbMovimientos SET Asiento=@Asiento, FechaAprobacion = GETDATE(), usuarioAprobacion = @Usuario WHERE IDCuentaBanco=@IDCuentaBanco AND IDSubTipo=@IDSubTipo AND IDTipo=@IDTipo AND Numero=@Numero
+UPDATE dbo.cbMovimientos SET Asiento=@Asiento, FechaAprobacion = GETDATE(), usuarioAprobacion = @Usuario, IDEstado=1 WHERE IDCuentaBanco=@IDCuentaBanco AND IDSubTipo=@IDSubTipo AND IDTipo=@IDTipo AND Numero=@Numero
 
 
 SELECT @Asiento  Asiento
 
 GO
 
-CREATE PROCEDURE dbo.cbAnularAsientoContableCheque  @Numero AS INT, @IDCuentaBanco AS INT,@IDTipo AS INT, @IDSubTipo AS INT, @Usuario AS NVARCHAR(50)
+CREATE PROCEDURE dbo.cbAnularAsientoContableCheque  @Numero AS NVARCHAR(250), @IDCuentaBanco AS INT,@IDTipo AS INT, @IDSubTipo AS INT, @Usuario AS NVARCHAR(50)
 AS 
 /*
 DECLARE @Numero AS INT
@@ -835,9 +872,15 @@ DECLARE @TipoCambio AS DECIMAL(28,4)
 DECLARE @Asiento AS NVARCHAR(20)
 DECLARE @AsientoAnt AS NVARCHAR(20)
 DECLARE @Monto AS DECIMAL(28,4)
+DECLARE @Anulado  AS BIT
 
 
-SELECT @AsientoAnt = asiento FROM dbo.cbMovimientos WHERE IDCuentaBanco=@IDCuentaBanco AND IDSubTipo=@IDSubTipo AND IDTipo=@IDTipo AND Numero=@Numero
+SELECT @AsientoAnt = asiento, @Fecha =  Fecha, @Anulado = Anulado FROM dbo.cbMovimientos WHERE IDCuentaBanco=@IDCuentaBanco AND IDSubTipo=@IDSubTipo AND IDTipo=@IDTipo AND Numero=@Numero
+
+IF (@Anulado =1) 
+	RAISERROR ( 'Ya Existe ese asiento contable, no se puede crear', 16, 1) ;		
+					
+
 
 
 DECLARE	@TipoTC AS NVARCHAR(20)
@@ -879,13 +922,13 @@ SELECT  @Asiento ,Linea ,IDCentro ,IDCuenta ,'ANULACION -- '  + Referencia Refer
 FROM dbo.cntAsientoDetalle WHERE Asiento=@AsientoAnt
 
  
-UPDATE dbo.cbMovimientos SET Anulado=1, AsientoAnulacion=@Asiento,FechaAnulacion = GETDATE(), UsuarioAnulacion = @Usuario WHERE 
+UPDATE dbo.cbMovimientos SET Anulado=1, AsientoAnulacion=@Asiento,FechaAnulacion = GETDATE(), UsuarioAnulacion = @Usuario, IDEstado=2 WHERE 
 IDCuentaBanco=@IDCuentaBanco AND IDSubTipo=@IDSubTipo AND IDTipo=@IDTipo AND Numero=@Numero
 
 
 GO
 
-CREATE PROCEDURE dbo.cbMarcarChequeImpreso  @Numero AS INT, @IDCuentaBanco AS INT,@IDTipo AS INT, @IDSubTipo AS INT, @Usuario AS NVARCHAR(50)
+CREATE PROCEDURE dbo.cbMarcarChequeImpreso  @Numero AS NVARCHAR(250), @IDCuentaBanco AS INT,@IDTipo AS INT, @IDSubTipo AS INT, @Usuario AS NVARCHAR(50)
 AS 
 update dbo.cbMovimientos SET Impreso=1, UsuarioImpresion = @Usuario,FechaImpresion=GETDATE() WHERE IDCuentaBanco=@IDCuentaBanco AND IDTipo=@IDTipo AND IDSubTipo=@IDSubTipo AND Numero=@Numero
 
@@ -1101,4 +1144,6 @@ AS
 	UPDATE dbo.cbConcMovBanco SET  MatchNumber = NULL  WHERE MatchNumber=@MatchNumber
 	
 GO
+
+
 

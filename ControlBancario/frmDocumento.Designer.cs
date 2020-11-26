@@ -245,6 +245,7 @@
 			this.btnEliminar.Id = 5;
 			this.btnEliminar.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnEliminar.LargeGlyph")));
 			this.btnEliminar.Name = "btnEliminar";
+			this.btnEliminar.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnEliminar_ItemClick);
 			// 
 			// lblStatus
 			// 
@@ -527,10 +528,10 @@
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
 			this.dtpFecha.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-			this.dtpFecha.Properties.ReadOnly = true;
 			this.dtpFecha.Size = new System.Drawing.Size(211, 20);
 			this.dtpFecha.StyleController = this.layoutControl2;
 			this.dtpFecha.TabIndex = 1;
+			this.dtpFecha.EditValueChanged += new System.EventHandler(this.dtpFecha_EditValueChanged);
 			// 
 			// txtConcepto
 			// 

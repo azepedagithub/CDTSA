@@ -519,7 +519,6 @@
     <EmbeddedResource Include="Reporte\ReportesFinancieros\rptEstadoResultado.resx">
       <DependentUpon>rptEstadoResultado.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="packages.config" />
     <None Include="Properties\DataSources\System.Xml.XmlElement.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

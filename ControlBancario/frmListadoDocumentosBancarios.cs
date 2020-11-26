@@ -10,6 +10,9 @@ using System.Windows.Forms;
 using Security;
 using Util;
 using System.Collections;
+using ControlBancario.DAC;
+using DevExpress.XtraGrid.Views.Grid;
+using System.Transactions;
 
 namespace ControlBancario
 {
@@ -25,7 +28,7 @@ namespace ControlBancario
         int IdRuc=-1;
         String PagaderoA="";
         int Anulado=-1;
-        String Referencia="";
+        String Numero="";
         String ConceptoContable="";
 
         public frmListadoDocumentosBancarios()
@@ -121,10 +124,36 @@ namespace ControlBancario
         private void EnlazarEventos()
         {
             this.btnAgregar.ItemClick += BtnAgregar_ItemClick;
-            this.btnAnular.ItemClick += BtnEliminar_ItemClick;
+			this.btnAnular.ItemClick += btnAnular_ItemClick;
             this.btnExportar.ItemClick += BtnExportar_ItemClick;
             this.btnRefrescar.ItemClick += btnRefrescar_ItemClick;
         }
+
+
+		private void btnAnular_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+		{
+			//Preguntar por restricciones de anulacion
+			try
+			{
+				if (_currentRow["Asiento"].ToString() != "")
+				{
+					using (var scope = new TransactionScope())
+					{
+						MovimientosDAC.RevierteAsientoContable(_currentRow["Numero"].ToString(), Convert.ToInt32(_currentRow["IDCuentaBanco"]), Convert.ToInt32(_currentRow["IDTipo"]), Convert.ToInt32(_currentRow["IDSubTipo"]), _sUsuario);
+						MessageBox.Show("El cheque y su transaccion contable se ha anulado");
+						PopulateGrid();
+						scope.Complete();
+
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show("Ha ocurrido un error tratando de anular el documento.");
+				Security.ConnectionManager.RollBackTran();
+			}
+
+		}
 
         void btnRefrescar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
@@ -151,7 +180,7 @@ namespace ControlBancario
 
         private void BtnFiltro_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            frmParametrosFiltroDocumentoBancario ofrmFiltro = new frmParametrosFiltroDocumentoBancario(_FechaInicial, _FechaFinal,Anulado,IdTipo,IdSubTipo,IdRuc,NombreRuc,AliasRuc,PagaderoA,Referencia,ConceptoContable);
+            frmParametrosFiltroDocumentoBancario ofrmFiltro = new frmParametrosFiltroDocumentoBancario(_FechaInicial, _FechaFinal,Anulado,IdTipo,IdSubTipo,IdRuc,NombreRuc,AliasRuc,PagaderoA,Numero,ConceptoContable);
             ofrmFiltro.FormClosed += OfrmFiltro_FormClosed;
             ofrmFiltro.ShowDialog();
         }
@@ -169,7 +198,7 @@ namespace ControlBancario
             NombreRuc = ofrmFiltro.NombreRuc;
             AliasRuc = ofrmFiltro.AliasRuc;
             PagaderoA = ofrmFiltro.PagaderaA;
-            Referencia = ofrmFiltro.Referencia;
+            Numero = ofrmFiltro.Numero;
             ConceptoContable = ofrmFiltro.ConceptoContable;
             
             ofrmFiltro.FormClosed -= OfrmFiltro_FormClosed;
@@ -181,67 +210,27 @@ namespace ControlBancario
         {
             if (_currentRow != null)
             {
-                //string msg = _currentRow["Asiento"] + " eliminado..";
-                //if (Convert.ToBoolean(_currentRow["Mayorizado"]) == true)
-                //{
-                //    lblStatus.Caption = "No puede eliminar asientos que se encuentran mayorizados";
-                //    return;
-                //}
+				if (MessageBox.Show("Esta seguro que desea eliminar el movimiento de Banco? ", "Movimientos de Bancos", MessageBoxButtons.YesNo) == DialogResult.Yes)
+				{
 
-                //if (MessageBox.Show("Esta seguro que desea eliminar el elemento: " + _currentRow["Asiento"].ToString(), _tituloVentana, MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
-                //{
-                //    DataSet _dsAsientotmp = new DataSet();
-                //    DataSet _dsDetalle = new DataSet();
-                //    DataTable _dtAsientotmp = new DataTable();
-                //    DataTable _dtDetalle = new DataTable();
+					_currentRow.Delete();
 
-                //    String sAsiento = _currentRow["Asiento"].ToString();
+					try
+					{
 
-                //    _dsAsientotmp = AsientoDAC.GetDataByAsiento(sAsiento);
-                //    _dtDocumentos = _dsDocumentos.Tables[0];
-
-                //    _dsDetalle = AsientoDetalleDAC.GetData(sAsiento, -1, -1);
-                //    _dtDetalle = _dsDetalle.Tables[0];
-
-
-                //    try
-                //    {
-
-                //        String xml = "";
-
-                //        _dsAsientotmp.Tables[0].TableName = "Asiento";
-
-                //        DataTable dt = new DataTable();
-                //        dt = _dtDetalle.Clone();
-                //        dt.TableName = "Detalle";
-                //        if (_dsAsientotmp.Tables["Detalle"] != null)
-                //            _dsAsientotmp.Tables.Remove(_dsAsientotmp.Tables["Detalle"]);
-                //        foreach (DataRow dr in _dsDetalle.Tables[0].Rows)
-                //        {
-                //            dt.Rows.Add(dr.ItemArray);
-                //        }
-                //        _dsAsientotmp.Tables.Add(dt);
-
-                //        DataRelation rel = new DataRelation("CabeceraDetalle", _dsAsientotmp.Tables[0].Columns["Asiento"], _dsAsientotmp.Tables[1].Columns["Asiento"], true);
-                //        _dsAsientotmp.DataSetName = "Root";
-                //        xml = _dsAsientotmp.GetXml(); //ToStringAsXml(_dsAsiento);
-
-
-                //        AsientoDAC.InsertUpdateAsiento("D", xml, _currentRow["Asiento"].ToString(), _currentRow["Tipo"].ToString());
-
-                //        MessageBox.Show("El asiento se ha eliminado correctamente.");
-                //    }
-                //    catch (System.Data.SqlClient.SqlException ex)
-                //    {
-                //        //_dsAsiento.RejectChanges();
-                //        //_dsDetalle.RejectChanges();
-                //        MessageBox.Show("Han ocurrido errores al momento de eliminar el asiento por favor verifique" + ex.Message);
-                //    }
-
-                //    PopulateGrid();
-
-                //}
-
+						MovimientosDAC.oAdaptador.Update(_dsDocumentos, "Data");
+						_dsDocumentos.AcceptChanges();
+						PopulateGrid();
+						
+						Application.DoEvents();
+					}
+					catch (System.Data.SqlClient.SqlException ex)
+					{
+						_dsDocumentos.RejectChanges();
+						lblStatus.Caption = "";
+						MessageBox.Show(ex.Message);
+					}
+				}
             }
         }
 
@@ -271,7 +260,7 @@ namespace ControlBancario
 
         private void PopulateGrid()
         {
-            _dsDocumentos = DAC.MovimientosDAC.GetDatosByCriterio(_FechaInicial, _FechaFinal, IdRuc, NombreRuc, AliasRuc, IdTipo, IdSubTipo, PagaderoA, Anulado, Referencia, ConceptoContable);
+            _dsDocumentos = DAC.MovimientosDAC.GetDatosByCriterio(_FechaInicial, _FechaFinal, IdRuc, NombreRuc, AliasRuc, IdTipo, IdSubTipo, PagaderoA, Anulado, Numero, ConceptoContable);
 
             _dtDocumentos = _dsDocumentos.Tables[0];
             this.gridDocumentos.DataSource = null;
@@ -280,72 +269,65 @@ namespace ControlBancario
 
         }
 
-        private void btnMayorizar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
-        {
-            ////Validar que al menos un elemento se encuentre seleccionado
-            //ArrayList rows = new ArrayList();
-            //for (int i = 0; i < this.gridView1.SelectedRowsCount; i++)
-            //{
-            //    if (gridView1.GetSelectedRows()[i] >= 0)
-            //        rows.Add(gridView1.GetDataRow(gridView1.GetSelectedRows()[i]));
-            //}
+      
 
-            //if (rows.Count == 0)
-            //{
-            //    MessageBox.Show("Por favor chequee los elementos que desea mayorizar");
-            //    return;
-            //}
+		private void btnAprobar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+		{
+			if (_currentRow == null)
+				return;
+			if (_currentRow["Asiento"].ToString() == "" || _currentRow["Asiento"] == null)
+			{
+				try
+				{
+					//Security.ConnectionManager.BeginTran();
+					String Asiento = MovimientosDAC.GenerarAsientoContable(_currentRow["Numero"].ToString(), Convert.ToInt32(_currentRow["IDCuentaBanco"]), Convert.ToInt32(_currentRow["IDTipo"]), Convert.ToInt32(_currentRow["IDSubTipo"]), _sUsuario);
+					if (Asiento == "")
+					{
+						MessageBox.Show("Ha ocurrido un error tratando de generar el asiento contable del cheque");
+						return;
+					}
+					CG.frmAsiento ofrmAsiento = new CG.frmAsiento(Asiento, "PndtGuardar", true);
+					ofrmAsiento.FormClosed += ofrmAsiento_FormClosed;
+					ofrmAsiento.ShowDialog();
+					//Security.ConnectionManager.CommitTran();
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show("Han ocurrido los siguientes errores, tratando de generar el asiento contable \n\r\n\r\n\r\n\r\n\r\n\r\n\r" + ex.Message);
+					// Security.ConnectionManager.RollBackTran();
+				}
+			}
+			else if (_currentRow["Asiento"].ToString() != "") {
+				MessageBox.Show("El documento ya ha sido aprobado!", "Documentos Bancarios");
+			}
+		}
 
-            //try
-            //{
+		void ofrmAsiento_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			PopulateGrid();
+		}
 
-            //    for (int i = 0; i < rows.Count; i++)
-            //    {
-            //        DataRow row = rows[i] as DataRow;
-            //        // Change the field value.
+		private void gridView1_RowStyle(object sender, DevExpress.XtraGrid.Views.Grid.RowStyleEventArgs e)
+		{
+			GridView view = sender as GridView;
+			if (e.RowHandle > -1)
+			{
 
+				int _estado = (int)view.GetRowCellValue(e.RowHandle, "IDEstado");
+				Color color = _estado==0 ?  Color.FromArgb(254, 224, 224) : Color.Transparent;
+				e.Appearance.BackColor = color;
+				view.Appearance.SelectedRow.BackColor = color;
 
-            //        DateTime Fecha = Convert.ToDateTime(row["Fecha"]);
-            //        try
-            //        {
-            //            //if (Fecha == null || PeriodoContableDAC.ValidaFechaInPeriodoContable(Fecha))
-            //            PeriodoContableDAC.ValidaFechaInPeriodoContable(Fecha);
-            //        }
-            //        catch (Exception ex)
-            //        {
-            //            MessageBox.Show("Han ocurrido los siguientes errores: \r\n" + ex.Message);
-            //            return;
-            //        }
+				//if (view.FocusedRowHandle == e.RowHandle)
+				view.Appearance.FocusedRow.BackColor = color;
+				view.Appearance.SelectedRow.BackColor = color;
+				view.Appearance.HideSelectionRow.BackColor = color;
+				view.Appearance.FocusedCell.BackColor = color;
 
-            //        if (Convert.ToBoolean(row["Mayorizado"]) == false)
-            //        {
-            //            //Validar situaciones comunes al momento de mayorizar
-            //            String NumAsiento = row["Asiento"].ToString();
-            //            int IdEjercicio = (int)row["IDEjercicio"];// (int)_dsEjercicioPeriodo.Tables[0].Rows[0]["IDEjercicio"];
-            //            String Periodo = row["Periodo"].ToString();
-            //            bool bExito = false;
-            //            bExito = AsientoDAC.Mayorizar(IdEjercicio, Periodo, NumAsiento, sUsuario);
+			}
+		}
 
-            //            if (!bExito)
-            //            {
-            //                MessageBox.Show("Ha ocurrido un error tratando de mayorizar el asiento..");
-            //                return;
-            //            }
-            //        }
-
-            //    }
-            //    MessageBox.Show("El asiento contable, se ha mayorizado con exito");
-
-            //    PopulateGrid();
-            //}
-            //finally
-            //{
-
-            //}
-
-
-        }
-
+		
         
      
     }

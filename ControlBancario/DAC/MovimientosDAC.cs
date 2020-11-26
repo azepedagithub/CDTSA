@@ -106,6 +106,7 @@ namespace ControlBancario.DAC
             oAdaptador.UpdateCommand.Transaction = (Activo) ? ConnectionManager.Tran : null;
             oAdaptador.DeleteCommand.Transaction = (Activo) ? ConnectionManager.Tran : null;
             oAdaptador.InsertCommand.Transaction = (Activo) ? ConnectionManager.Tran : null;
+			oAdaptador.SelectCommand.Transaction = (Activo) ? ConnectionManager.Tran : null;
         }
 
         private static DataSet CreateDataSet()
@@ -146,7 +147,7 @@ namespace ControlBancario.DAC
         }
 
 
-        public static DataSet GetDatosByCriterio(DateTime FechaInicial,DateTime FechaFinal,int IDRuc,String NombreRuc,String AliasRUC,int IdTipo,int IdSubTipo,String PagaderoA,int Anulado,String Referencia,String ConceptoContable)
+        public static DataSet GetDatosByCriterio(DateTime FechaInicial,DateTime FechaFinal,int IDRuc,String NombreRuc,String AliasRUC,int IdTipo,int IdSubTipo,String PagaderoA,int Anulado,String Numero,String ConceptoContable)
         {
 
             DataSet DS = new DataSet();
@@ -169,6 +170,7 @@ namespace ControlBancario.DAC
                 oCmd.Parameters.Add("@PagaderoA", SqlDbType.VarChar,200).Value = PagaderoA;
                 oCmd.Parameters.Add("@Anulado", SqlDbType.Int, 50).Value = Anulado;
                 oCmd.Parameters.Add("@ConceptoContable", SqlDbType.VarChar, 50).Value = ConceptoContable;
+				oCmd.Parameters.Add("@Numero", SqlDbType.NVarChar, 250).Value = Numero;
                 
                 oAdapatadorTmp.Fill(DS, "Data");
 
@@ -188,7 +190,7 @@ namespace ControlBancario.DAC
 
         }
 
-        public static String GenerarAsientoContable(int Numero, int IDCuentaBanco,int IDTipo,int IDSubTipo, String Usuario)
+        public static String GenerarAsientoContable(String Numero, int IDCuentaBanco,int IDTipo,int IDSubTipo, String Usuario)
         {
             String strSQL = "dbo.cbGenerarAsientoContableCheque";
             //bool Result = false;
@@ -196,8 +198,8 @@ namespace ControlBancario.DAC
             String Asiento = "";
             SqlConnection oConn = ConnectionManager.GetConnection();
             SqlCommand oCmd = new SqlCommand(strSQL, oConn);
-            //if (ConnectionManager.Tran !=null)
-            //    oCmd.Transaction = ConnectionManager.Tran;
+			//if (ConnectionManager.Tran != null)
+			//	oCmd.Transaction = ConnectionManager.Tran;
             try
             {
 
@@ -265,7 +267,7 @@ namespace ControlBancario.DAC
         }
 
 
-        public static bool RevierteAsientoContable(int Numero, int IDCuentaBanco, int IDTipo, int IDSubTipo, String Usuario)
+        public static bool RevierteAsientoContable(String Numero, int IDCuentaBanco, int IDTipo, int IDSubTipo, String Usuario)
         {
             String strSQL = "dbo.cbAnularAsientoContableCheque";
             bool Result = false;
@@ -282,14 +284,16 @@ namespace ControlBancario.DAC
                 oCmd.Parameters.Add(new SqlParameter("@Usuario", Usuario));
 
                 oCmd.CommandType = CommandType.StoredProcedure;
-                oCmd.Connection.Open();
+				oCmd.Transaction = ConnectionManager.Tran;
+                if (oCmd.Connection.State == ConnectionState.Closed) 
+					oCmd.Connection.Open();
                 oCmd.ExecuteNonQuery();
 
                 Result = true;
             }
             catch (Exception)
             {
-                throw;
+                 throw;
             }
             finally
             {
