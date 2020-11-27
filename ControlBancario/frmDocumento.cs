@@ -624,7 +624,7 @@ namespace ControlBancario
         private void btnImprimir_ItemClick_1(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             String path ="";
-            if (_currentRow["Asiento"].ToString()!="")
+            if (_currentRow["Asiento"].ToString()!="" && _currentRow["IDTipo"].ToString() =="1")
             {
                 //Obtener el listado de formatos
                 DataSet dsFormatos =  CuentaFormatoChequeDAC.GetData(Convert.ToInt32(_currentRow["IDCuentaBanco"]),-1);
@@ -723,7 +723,8 @@ namespace ControlBancario
 					String Asiento;
 					using (var scope = new TransactionScope())
 					{
-						 Asiento = MovimientosDAC.GenerarAsientoContable(_currentRow["Numero"].ToString(), Convert.ToInt32(_currentRow["IDCuentaBanco"]), Convert.ToInt32(_currentRow["IDTipo"]), Convert.ToInt32(_currentRow["IDSubTipo"]), sUsuario);
+						Asiento = MovimientosDAC.GenerarAsientoContable(_currentRow["Numero"].ToString(), Convert.ToInt32(_currentRow["IDCuentaBanco"]), Convert.ToInt32(_currentRow["IDTipo"]), Convert.ToInt32(_currentRow["IDSubTipo"]), sUsuario);
+						DAC.CuentaBancariaDAC.ActualizarSaldoLibro(Convert.ToInt32(_currentRow["IDCuentaBanco"]), DateTime.Now,1, Convert.ToInt32(_currentRow["IDMovimiento"]));
 						if (Asiento == "")
 						{
 							MessageBox.Show("Ha ocurrido un error tratando de generar el asiento contable del cheque");

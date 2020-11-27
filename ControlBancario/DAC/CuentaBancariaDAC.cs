@@ -161,6 +161,114 @@ namespace ControlBancario.DAC
 
         }
 
+
+		public static bool ActualizarSaldoLibro(int IDCuentaBanco, DateTime FechaCorte, int IDAccion, int IDMovimiento=-1)
+		{
+			String strSQL = "dbo.cbActualizaSaldoBancoLibros";
+			bool Result = false;
+			
+			SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
+			try
+			{
+
+				oCmd.Parameters.Add(new SqlParameter("@IDCuentaBanco", IDCuentaBanco));
+				oCmd.Parameters.Add(new SqlParameter("@FechaCorte", FechaCorte));
+				oCmd.Parameters.Add(new SqlParameter("@IDMovimiento", IDMovimiento));
+				oCmd.Parameters.Add(new SqlParameter("@IDAccion", IDAccion));
+
+				oCmd.CommandType = CommandType.StoredProcedure;
+
+				oCmd.Connection.Open();
+				oCmd.ExecuteNonQuery();
+				Result = true;
+
+			}
+			catch (Exception)
+			{
+				throw;
+			}
+			finally
+			{
+				if (oCmd.Connection.State == ConnectionState.Open)
+					oCmd.Connection.Close();
+			}
+			return Result;
+		}
+
+		public static Decimal GetSaldoCuentaLibro(int IDCuentaBanco,DateTime FechaCorte,int IDAccion)
+		{
+			Decimal Saldo = 0;
+			
+			SqlCommand oCmd = new SqlCommand("dbo.cbGetSaldoCuentaLibros", ConnectionManager.GetConnection());
+			SqlConnection oConn = oCmd.Connection;
+			try
+			{
+
+								 
+				oCmd.CommandType = CommandType.StoredProcedure;
+				oCmd.Parameters.Add("@IDCuentaBanco", SqlDbType.Int).Value = IDCuentaBanco;
+				oCmd.Parameters.Add("@FechaCorte", SqlDbType.DateTime).Value  = FechaCorte;
+				oCmd.Parameters.Add("@IDAccion", SqlDbType.Int).Value = IDAccion;
+
+
+				SqlDataAdapter oAdap = new SqlDataAdapter(oCmd);
+				DataSet DS = CreateDataSet();
+
+				oAdap.Fill(DS.Tables["Data"]);
+
+				Saldo = Convert.ToDecimal(DS.Tables[0].Rows[0][0]);
+
+			}
+			catch (Exception)
+			{
+				throw;
+			}
+			finally
+			{
+				if (oConn.State == ConnectionState.Open)
+					oConn.Close();
+
+			}
+			return Saldo;
+
+		}
+
+		public static Decimal GetSaldoCuentaBanco(int IDCuentaBanco, DateTime FechaCorte)
+		{
+			Decimal Saldo = 0;
+
+			SqlCommand oCmd = new SqlCommand("dbo.cbGetSaldoCuentaBanco", ConnectionManager.GetConnection());
+			SqlConnection oConn = oCmd.Connection;
+			try
+			{
+
+
+				oCmd.CommandType = CommandType.StoredProcedure;
+				oCmd.Parameters.Add("@IDCuentaBanco", SqlDbType.Int).Value = IDCuentaBanco;
+				oCmd.Parameters.Add("@FechaCorte", SqlDbType.DateTime).Value = FechaCorte;
+
+
+				SqlDataAdapter oAdap = new SqlDataAdapter(oCmd);
+				DataSet DS = CreateDataSet();
+
+				oAdap.Fill(DS.Tables["Data"]);
+
+				Saldo = Convert.ToDecimal(DS.Tables[0].Rows[0][0]);
+
+			}
+			catch (Exception)
+			{
+				throw;
+			}
+			finally
+			{
+				if (oConn.State == ConnectionState.Open)
+					oConn.Close();
+
+			}
+			return Saldo;
+
+		}
        
     }
 }

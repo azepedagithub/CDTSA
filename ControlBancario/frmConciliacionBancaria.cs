@@ -318,7 +318,19 @@ namespace ControlBancario
 			{
 				CargarMovimientosLibros();
 				HabilitarBtnAsociacion();
+				CargarSaldoLibros();
 			}
+		}
+
+		private void CargarSaldoLibros() {
+			Decimal Saldo = DAC.CuentaBancariaDAC.GetSaldoCuentaLibro(Convert.ToInt32(this.slkupCuentaBancaria.EditValue), Convert.ToDateTime(this.dtpFechaSaldo.EditValue), 2);
+			this.txtSaldoLibro.EditValue = Saldo;
+		}
+
+		private void CargarSaldoBancos()
+		{
+			Decimal Saldo = DAC.CuentaBancariaDAC.GetSaldoCuentaBanco(Convert.ToInt32(this.slkupCuentaBancaria.EditValue), Convert.ToDateTime(this.dtpFechaSaldo.EditValue));
+			this.txtSaldoBanco.EditValue = Saldo;
 		}
 
 		private void btnImportar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)

@@ -281,7 +281,7 @@ VALUES (2, 'DOLAR', 'DOLAR', '$' ,0 )
 GO
 
 Create Table dbo.cbCuentaBancaria ( IDCuentaBanco int not null, Codigo nvarchar(25), Descr nvarchar(250),
-IDBanco int not null, IDMoneda int not null, SaldoInicial decimal(28,4 ) default 0, FechaCreacion date,
+IDBanco int not null, IDMoneda int not null, SaldoInicial decimal(28,4 ) default 0,SaldoInicialBanco decimal(28,4 ) default 0, FechaCreacion date,
 IDTipo int not null, 
 SaldoLibro decimal(28,4 ) default 0, SaldoBanco decimal(28,4 ) default 0, ConsecCheque int default 0,
 Limite decimal(28,4 ) default 0, 
@@ -785,8 +785,6 @@ SELECT  @IDEjercicio=IDEjercicio, @Periodo=Periodo
 
 
 
-
-
 SELECT @Asiento = (tipo + RIGHT( replicate('0', @LongAsiento ) + cast (Consecutivo + 1 as nvarchar(20)), @LongAsiento ) ),
  				@Consecutivo = Consecutivo + 1     
 				FROM dbo.cntTipoAsiento (UPDLOCK)                             
@@ -837,6 +835,8 @@ VALUES  ( @Asiento , -- Asiento - nvarchar(20)
  
 ----Actualizar consecutivo del Cheque
 --UPDATE dbo.cbCuentaBancaria SET ConsecCheque = @Numero WHERE IDCuentaBanco=@IDCuentaBanco
+
+--Actualizar los saldos de las cuentas
 
 UPDATE dbo.cbMovimientos SET Asiento=@Asiento, FechaAprobacion = GETDATE(), usuarioAprobacion = @Usuario, IDEstado=1 WHERE IDCuentaBanco=@IDCuentaBanco AND IDSubTipo=@IDSubTipo AND IDTipo=@IDTipo AND Numero=@Numero
 
@@ -1144,6 +1144,185 @@ AS
 	UPDATE dbo.cbConcMovBanco SET  MatchNumber = NULL  WHERE MatchNumber=@MatchNumber
 	
 GO
+
+
+CREATE PROCEDURE  dbo.cbActualizaSaldoBancoLibros @IDCuentaBanco INT,@FechaCorte DATETIME, @IDMovimiento INT, @IDAccion INT
+AS 
+/* 
+IDAccion : 
+	1 - Actualiza Saldo
+	2 - Regenera Saldo
+	3 - En base a la ultima conciliacion
+*/
+
+set @FechaCorte = CAST(SUBSTRING(CAST(@FechaCorte AS CHAR),1,11) + ' 23:59:59.998' AS DATETIME)
+
+DECLARE @Saldo DECIMAL(28,8)
+DECLARE @MontoMov DECIMAL(28,8)
+DECLARE @CansobreGiro BIT
+DECLARE @IDTipo INT
+
+-- Actualiza Saldo
+IF (@IDAccion = 1 )
+BEGIN
+	
+	SELECT @Saldo = ISNULL(SaldoLibro,0), @CansobreGiro = Sobregiro, @IDTipo = IDTipo  FROM dbo.cbCuentaBancaria WHERE IDCuentaBanco = @IDCuentaBanco
+	SET @MontoMov = (SELECT ISNULL((B.Factor * A.Monto),0)  FROM dbo.cbMovimientos A
+	INNER JOIN dbo.cbTipoDocumento B ON A.IDTipo = B.IDTipo
+	WHERE IDMovimiento = @IDMovimiento)
+	
+	SET @Saldo = @Saldo + @MontoMov
+	IF (@Saldo < 0 AND @CansobreGiro = 0 )
+	BEGIN
+		RAISERROR ( 'La cuenta no se puede sobregirar por favor verifique', 16, 1) ;
+		return				
+	END 
+	
+END
+
+--Regenera Saldo
+IF (@IDAccion =2)
+BEGIN 
+	SET @Saldo = (SELECT ISNULL(SUM(B.Factor * A.Monto),0) Saldo FROM dbo.cbMovimientos A
+	INNER JOIN dbo.cbTipoDocumento B ON A.IDTipo =  B.IDTipo
+	WHERE Fecha<=@FechaCorte AND IDCuentaBanco=@IDCuentaBanco AND Anulado = 0 AND IDEstado=1)
+END
+
+--En base a la ultima conciliacion
+IF (@IDAccion = 3)
+BEGIN
+	
+	DECLARE @IDConciliacion INT
+	DECLARE @FechaInicial DATETIME
+	
+	SET @IDConciliacion = (SELECT ISNULL(MAX(IDConciliacion),-1) FROM dbo.cbConciliacion WHERE IDCuentaBanco = @IDCuentaBanco)
+	
+	SELECT @Saldo = ISNULL(SaldoFinalLibro,0), @FechaInicial = DATEADD(DAY,1,FechaFin)   FROM dbo.cbConciliacion WHERE IDConciliacion = @IDConciliacion
+	SET @FechaInicial = CAST(SUBSTRING(CAST(@FechaInicial AS CHAR),1,11) + ' 00:00:00.000' AS DATETIME)
+	
+	SET @MontoMov = (SELECT ISNULL(SUM(Monto * Factor),0)  FROM dbo.cbMovimientos A
+	INNER JOIN dbo.cbTipoDocumento B ON A.IDTipo = B.IDTipo
+	WHERE IDCuentaBanco = @IDCuentaBanco AND Fecha BETWEEN @FechaInicial AND @FechaCorte AND IDEstado=2 AND Anulado=0)
+	
+	SET @Saldo = @Saldo + @MontoMov
+	
+END	 
+
+
+UPDATE dbo.cbCuentaBancaria SET SaldoLibro = @Saldo WHERE IDCuentaBanco = @IDCuentaBanco
+IF (@IDAccion = 1 AND @IDTipo = 0 )
+	UPDATE dbo.cbCuentaBancaria SET SaldoInicial = @MontoMov WHERE IDCuentaBanco = @IDCuentaBanco
+
+
+GO
+
+
+CREATE  PROCEDURE  dbo.cbGetSaldoCuentaLibros @IDCuentaBanco INT,@FechaCorte DATETIME, @IDAccion INT
+AS 
+/* 
+IDAccion : 
+	1 - Regenera Saldo
+	2 - En base a la ultima conciliacion
+*/
+
+set @FechaCorte = CAST(SUBSTRING(CAST(@FechaCorte AS CHAR),1,11) + ' 23:59:59.998' AS DATETIME)
+
+DECLARE @Saldo DECIMAL(28,8)
+DECLARE @MontoMov DECIMAL(28,8)
+DECLARE @CansobreGiro BIT
+DECLARE @IDTipo INT
+
+-- Regenera Saldo
+IF (@IDAccion = 1 )
+BEGIN 
+	SET @Saldo = (SELECT ISNULL(SUM(B.Factor * A.Monto),0) Saldo FROM dbo.cbMovimientos A
+	INNER JOIN dbo.cbTipoDocumento B ON A.IDTipo =  B.IDTipo
+	WHERE Fecha<=@FechaCorte AND IDCuentaBanco=@IDCuentaBanco AND Anulado = 0 AND IDEstado=1)
+END
+
+--En base a la ultima conciliacion
+IF (@IDAccion = 2)
+BEGIN
+	
+	DECLARE @IDConciliacion INT
+	DECLARE @FechaInicial DATETIME
+	
+	SET @IDConciliacion = (SELECT ISNULL(MAX(IDConciliacion),-1) FROM dbo.cbConciliacion WHERE IDCuentaBanco = @IDCuentaBanco)
+	
+	SELECT @Saldo = ISNULL(SaldoFinalLibro,0), @FechaInicial = DATEADD(DAY,1,FechaFin)   FROM dbo.cbConciliacion WHERE IDConciliacion = @IDConciliacion
+	SET @FechaInicial = CAST(SUBSTRING(CAST(@FechaInicial AS CHAR),1,11) + ' 00:00:00.000' AS DATETIME)
+	
+	SET @MontoMov = (SELECT ISNULL(SUM(Monto * Factor),0)  FROM dbo.cbMovimientos A
+	INNER JOIN dbo.cbTipoDocumento B ON A.IDTipo = B.IDTipo
+	WHERE IDCuentaBanco = @IDCuentaBanco AND Fecha BETWEEN @FechaInicial AND @FechaCorte AND IDEstado=2 AND Anulado=0)
+	
+	SET @Saldo = @Saldo + @MontoMov
+	
+END	 
+
+
+SELECT @Saldo SaldoLibro
+
+GO
+
+CREATE PROCEDURE  dbo.cbGetSaldoCuentaBancos @IDCuentaBanco INT,@FechaCorte DATETIME
+AS 
+/* 
+IDAccion : 
+	1 - Regenera Saldo
+	2 - En base a la ultima conciliacion
+*/
+
+set @FechaCorte = CAST(SUBSTRING(CAST(@FechaCorte AS CHAR),1,11) + ' 23:59:59.998' AS DATETIME)
+
+DECLARE @Saldo DECIMAL(28,8)
+DECLARE @MontoMov DECIMAL(28,8)
+DECLARE @CansobreGiro BIT
+DECLARE @IDTipo INT
+
+
+	
+	DECLARE @IDConciliacion INT
+	DECLARE @FechaInicial DATETIME
+	
+	SET @IDConciliacion = (SELECT ISNULL(MAX(IDConciliacion),-1) FROM dbo.cbConciliacion WHERE IDCuentaBanco = @IDCuentaBanco)
+	IF (@IDConciliacion <> -1)
+		SELECT @Saldo = ISNULL(SaldoFinalBanco,0), @FechaInicial = DATEADD(DAY,1,FechaFin)   FROM dbo.cbConciliacion WHERE IDConciliacion = @IDConciliacion
+	ELSE
+		SELECT @Saldo = ISNULL(SaldoInicialBanco, 0)  FROM dbo.cbCuentaBancaria WHERE IDCuenta=@IDCuentaBanco
+		SELECT *  FROM dbo.cbCuentaBancaria
+		
+	SET @FechaInicial = CAST(SUBSTRING(CAST(@FechaInicial AS CHAR),1,11) + ' 00:00:00.000' AS DATETIME)
+	
+	SET @MontoMov = (SELECT ISNULL(SUM(Monto * Factor),0)  FROM dbo.cbConcMovBanco 
+	WHERE IDCuentaBanco = @IDCuentaBanco AND Fecha BETWEEN @FechaInicial AND @FechaCorte )
+	
+	SET @Saldo = @Saldo + @MontoMov
+	
+
+
+SELECT @Saldo SaldoBanco
+
+GO
+
+
+
+CREATE PROCEDURE dbo.cbGetTipoDocumento (@IDTipo INT)
+AS 
+
+DECLARE @IDTipoEx AS INT
+SET @IDTipoEx = 0
+IF EXISTS (SELECT TOP 1 IDCuentaBanco   FROM dbo.cbMovimientos) 
+	SET @IDTipoEx = 0
+ELSE 
+	SET @IDTipoEx = -1
+	
+SELECT IDTipo,Tipo,Descr,Activo  FROM dbo.cbTipoDocumento 
+where (IDTipo=@IDTipo or @IDTipo=-1) AND IDTipo NOT IN (@IDTipoEx)
+
+
+GO
+
 
 
 

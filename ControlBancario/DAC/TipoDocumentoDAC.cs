@@ -15,7 +15,7 @@ namespace ControlBancario.DAC
 
         private static SqlDataAdapter InicializarAdaptador()
         {
-            String getSQL = "SELECT IDTipo,Tipo,Descr,Activo  FROM dbo.cbTipoDocumento where (IDTipo=@IDTipo or @IDTipo=-1)";
+			String getSQL = "dbo.cbGetTipoDocumento";
             String InsertSQL = "[dbo].[cbUpdateTipoDocumento]";
             String UpdateSQL = "[dbo].[cbUpdateTipoDocumento]";
             String DeleteSQL = "[dbo].[cbUpdateTipoDocumento]";
@@ -31,6 +31,7 @@ namespace ControlBancario.DAC
                 };
 
                 //Paremetros Select 
+				oAdaptador.SelectCommand.CommandType = CommandType.StoredProcedure;
                 oAdaptador.SelectCommand.Parameters.Add("@IDTipo", SqlDbType.Int).SourceColumn = "IDTipo";
 
 
@@ -90,8 +91,7 @@ namespace ControlBancario.DAC
         {
             DataSet DS = CreateDataSet();
             oAdaptador.SelectCommand.Parameters["@IDTipo"].Value = IDTipo;
-            
-
+ 
             oAdaptador.Fill(DS.Tables["Data"]);
             return DS;
         }
