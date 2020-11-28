@@ -216,7 +216,7 @@ namespace ControlBancario.DAC
 
 				oAdap.Fill(DS.Tables["Data"]);
 
-				Saldo = Convert.ToDecimal(DS.Tables[0].Rows[0][0]);
+				Saldo = Convert.ToDecimal(DS.Tables[0].Rows[0][0].ToString() == "" ? "0": DS.Tables[0].Rows[0][0] );
 
 			}
 			catch (Exception)
@@ -237,7 +237,7 @@ namespace ControlBancario.DAC
 		{
 			Decimal Saldo = 0;
 
-			SqlCommand oCmd = new SqlCommand("dbo.cbGetSaldoCuentaBanco", ConnectionManager.GetConnection());
+			SqlCommand oCmd = new SqlCommand("dbo.cbGetSaldoCuentaBancos", ConnectionManager.GetConnection());
 			SqlConnection oConn = oCmd.Connection;
 			try
 			{
@@ -253,7 +253,7 @@ namespace ControlBancario.DAC
 
 				oAdap.Fill(DS.Tables["Data"]);
 
-				Saldo = Convert.ToDecimal(DS.Tables[0].Rows[0][0]);
+				Saldo = Convert.ToDecimal(DS.Tables[0].Rows[0][0].ToString() == "" ? "0" :DS.Tables[0].Rows[0][0]);
 
 			}
 			catch (Exception)

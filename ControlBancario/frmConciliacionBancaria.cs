@@ -319,6 +319,7 @@ namespace ControlBancario
 				CargarMovimientosLibros();
 				HabilitarBtnAsociacion();
 				CargarSaldoLibros();
+				CargarSaldoBancos();
 			}
 		}
 
