@@ -258,8 +258,8 @@ namespace ControlBancario
 
                 currentRow["Descr"] = this.txtDescr.EditValue;
                 currentRow["Activo"] = this.chkActivo.EditValue;
-                currentRow["IDTipo"] = this.slkupSubTipoDocumento.EditValue;
-                currentRow["SubTipo"] = this.txtSubTipo.EditValue;
+				currentRow["IDTipo"] = this.txtSubTipo.EditValue;
+				currentRow["IDSubTipo"] = this.slkupSubTipoDocumento.EditValue;
                 currentRow["Activo"] = this.chkActivo.EditValue;
                
                 
@@ -316,9 +316,8 @@ namespace ControlBancario
 
                 currentRow["Descr"] = this.txtDescr.EditValue;
                 currentRow["Activo"] = this.chkActivo.EditValue;
-                currentRow["IDTipo"] = this.slkupSubTipoDocumento.EditValue;
-                currentRow["SubTipo"] = this.txtSubTipo.EditValue;
-                
+				currentRow["IDTipo"] = this.txtSubTipo.EditValue;
+				currentRow["IDSubTipo"] = this.slkupSubTipoDocumento.EditValue;
                
                 currentRow["Activo"] = this.chkActivo.EditValue;
                
@@ -386,6 +385,8 @@ namespace ControlBancario
                 }
             }
         }
+
+		
 
     }
 }
