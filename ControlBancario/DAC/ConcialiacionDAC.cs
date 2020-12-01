@@ -127,6 +127,17 @@ namespace ControlBancario.DAC
 			return Convert.ToDecimal(DS.Tables[0].Rows[0]["SaldoInicialLibro"]);
 		}
 
+		public static int ExisteConciliacionEnProceso()
+		{
+			DataSet DS = CreateDataSet();
+			SqlCommand ocmd = new SqlCommand("dbo.cbExistConciliacionInProcess", ConnectionManager.GetConnection());
+			
+			ocmd.CommandType = CommandType.StoredProcedure;
+			SqlDataAdapter oTempAdaptador = new SqlDataAdapter(ocmd);
+			oTempAdaptador.Fill(DS, "data");
+			return Convert.ToInt32(DS.Tables[0].Rows[0]["Result"]);
+		}
+
 
 		public static DataTable GetMovimientoLibrosContables(int IDCuentaBancaria, DateTime FechaInicial,DateTime FechaFinal)
 		{
@@ -139,6 +150,19 @@ namespace ControlBancario.DAC
 			SqlDataAdapter oTempAdaptador = new SqlDataAdapter(ocmd);
 			oTempAdaptador.Fill(DS, "data");
 			return DS.Tables[0];
+		}
+
+		public static DataSet GetConciliacionByQuery(int IDCuentaBancaria, DateTime FechaInicial, DateTime FechaFinal)
+		{
+			DataSet DS = CreateDataSet();
+			SqlCommand ocmd = new SqlCommand("dbo.cbGetConciliacionByQuery", ConnectionManager.GetConnection());
+			ocmd.Parameters.Add(new SqlParameter("@IDCuentaBanco", IDCuentaBancaria));
+			ocmd.Parameters.Add(new SqlParameter("@FechaInicial", FechaInicial));
+			ocmd.Parameters.Add(new SqlParameter("@FechaFinal", FechaFinal));
+			ocmd.CommandType = CommandType.StoredProcedure;
+			SqlDataAdapter oTempAdaptador = new SqlDataAdapter(ocmd);
+			oTempAdaptador.Fill(DS, "data");
+			return DS;
 		}
 
 		public static String CanAddConciliacionBancaria() {

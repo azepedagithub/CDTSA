@@ -61,6 +61,8 @@ namespace ControlBancario
 			{
 				CargarEstados();
 
+				//ValidarConciliacionesEnProceso();
+
 				this.gridViewMovBanco.FocusedRowChanged += gridViewMovBanco_FocusedRowChanged;
 				this.gridViewMovLibros.FocusedRowChanged += gridViewMovLibros_FocusedRowChanged;
 
@@ -77,6 +79,16 @@ namespace ControlBancario
 				MessageBox.Show("Han ocurrido los siguientes errores" + ex.Message);
 			}
 
+		}
+
+		private void ValidarConciliacionesEnProceso()
+		{
+			if (DAC.ConciliacionDAC.ExisteConciliacionEnProceso() == 1) {
+				MessageBox.Show("Existe una conciliación en proceso, hasta que finalice la actual puede proceder a realizar una nueva conciliació");
+				//Cerrar el formulario
+				this.Close();
+			
+			}
 		}
 
 		void gridViewMovLibros_FocusedRowChanged(object sender, DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
@@ -174,6 +186,8 @@ namespace ControlBancario
 				if (this.dtpFechaSaldo.EditValue != null || this.dtpFechaSaldo.EditValue.ToString() != "")
 				{
 					CargarMovimientosLibros();
+					CargarSaldoLibros();
+					CargarSaldoBancos();
 
 				}
 				if (LoadEdit)
@@ -318,8 +332,7 @@ namespace ControlBancario
 			{
 				CargarMovimientosLibros();
 				HabilitarBtnAsociacion();
-				CargarSaldoLibros();
-				CargarSaldoBancos();
+				
 			}
 		}
 
@@ -681,6 +694,8 @@ namespace ControlBancario
 		{
 			LoadData();
 		}
+
+
 
 		
 		

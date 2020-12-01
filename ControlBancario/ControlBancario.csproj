@@ -166,6 +166,12 @@
     <Compile Include="frmListadoBanco.Designer.cs">
       <DependentUpon>frmListadoBanco.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmListadoConciliacionesBancarias.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListadoConciliacionesBancarias.Designer.cs">
+      <DependentUpon>frmListadoConciliacionesBancarias.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmListadoCuentaBancaria.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -238,6 +244,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmListadoBanco.resx">
       <DependentUpon>frmListadoBanco.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListadoConciliacionesBancarias.resx">
+      <DependentUpon>frmListadoConciliacionesBancarias.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmListadoCuentaBancaria.resx">
       <DependentUpon>frmListadoCuentaBancaria.cs</DependentUpon>

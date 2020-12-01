@@ -1017,7 +1017,8 @@ begin
 end
 
 if upper(@Operacion) = 'D'
-begin
+BEGIN
+	DELETE FROM dbo.cbConcMovBanco WHERE IDConciliacion = @IDConciliacion
 	DELETE  FROM dbo.cbConciliacion WHERE  IDConciliacion =@IDConciliacion
 end
 
@@ -1232,6 +1233,7 @@ DECLARE @MontoMov DECIMAL(28,8)
 DECLARE @CansobreGiro BIT
 DECLARE @IDTipo INT
 
+SET @Saldo = 0
 -- Regenera Saldo
 IF (@IDAccion = 1 )
 BEGIN 
@@ -1265,6 +1267,7 @@ SELECT @Saldo SaldoLibro
 
 GO
 
+
 CREATE PROCEDURE  dbo.cbGetSaldoCuentaBancos @IDCuentaBanco INT,@FechaCorte DATETIME
 AS 
 /* 
@@ -1284,13 +1287,13 @@ DECLARE @IDTipo INT
 	
 	DECLARE @IDConciliacion INT
 	DECLARE @FechaInicial DATETIME
-	
+	SET @Saldo = 0	
 	SET @IDConciliacion = (SELECT ISNULL(MAX(IDConciliacion),-1) FROM dbo.cbConciliacion WHERE IDCuentaBanco = @IDCuentaBanco)
 	IF (@IDConciliacion <> -1)
 		SELECT @Saldo = ISNULL(SaldoFinalBanco,0), @FechaInicial = DATEADD(DAY,1,FechaFin)   FROM dbo.cbConciliacion WHERE IDConciliacion = @IDConciliacion
 	ELSE
 		SELECT @Saldo = ISNULL(SaldoInicialBanco, 0)  FROM dbo.cbCuentaBancaria WHERE IDCuenta=@IDCuentaBanco
-		SELECT *  FROM dbo.cbCuentaBancaria
+		
 		
 	SET @FechaInicial = CAST(SUBSTRING(CAST(@FechaInicial AS CHAR),1,11) + ' 00:00:00.000' AS DATETIME)
 	
@@ -1300,8 +1303,7 @@ DECLARE @IDTipo INT
 	SET @Saldo = @Saldo + @MontoMov
 	
 
-
-SELECT @Saldo SaldoBanco
+	SELECT @Saldo SaldoBanco
 
 GO
 
@@ -1319,6 +1321,33 @@ ELSE
 	
 SELECT IDTipo,Tipo,Descr,Activo  FROM dbo.cbTipoDocumento 
 where (IDTipo=@IDTipo or @IDTipo=-1) AND IDTipo NOT IN (@IDTipoEx)
+
+
+GO
+
+
+CREATE PROCEDURE dbo.cbExistConciliacionInProcess
+AS 
+IF EXISTS(SELECT TOP 1 * FROM dbo.cbConciliacion WHERE Estado='P')
+	SELECT 1 Result
+ELSE
+	SELECT 0 Result
+	
+GO
+
+CREATE  PROCEDURE dbo.cbGetConciliacionByQuery (@IDCuentaBanco INT, @FechaInicial DATETIME , @FechaFinal DATETIME)
+AS 
+--DECLARE @FechaInicial DATETIME, @FechaFinal DATETIME	
+
+--SET @FechaInicial = '20200101'
+--SET @FechaFinal = '20201231'
+SET @FechaInicial = CAST(SUBSTRING(CAST(@FechaInicial AS CHAR),1,11) + ' 00:00:00.000' AS DATETIME)
+set @FechaFinal = CAST(SUBSTRING(CAST(@FechaFinal AS CHAR),1,11) + ' 23:59:59.998' AS DATETIME)
+
+
+SELECT IDConciliacion, A.IDCuentaBanco ,B.Descr DescrCuenta,SaldoFinalBanco,SaldoFinalLibro,Estado,Usuario, FechaInicio,FechaFin  FROM dbo.cbConciliacion A
+INNER JOIN dbo.cbCuentaBancaria B ON A.IDCuentaBanco = B.IDCuentaBanco
+WHERE FechaInicio >= @FechaInicial AND FechaFin>= @FechaFinal AND  (@IDCuentaBanco = -1 OR A.IDCuentaBanco = @IDCuentaBanco)
 
 
 GO
