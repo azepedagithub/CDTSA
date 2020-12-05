@@ -29,14 +29,14 @@
 		private void InitializeComponent()
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmConciliacionBancaria));
+			DevExpress.XtraGrid.GridFormatRule gridFormatRule5 = new DevExpress.XtraGrid.GridFormatRule();
+			DevExpress.XtraEditors.FormatConditionRuleContains formatConditionRuleContains5 = new DevExpress.XtraEditors.FormatConditionRuleContains();
+			DevExpress.XtraGrid.GridFormatRule gridFormatRule6 = new DevExpress.XtraGrid.GridFormatRule();
+			DevExpress.XtraEditors.FormatConditionRuleContains formatConditionRuleContains6 = new DevExpress.XtraEditors.FormatConditionRuleContains();
 			DevExpress.XtraGrid.GridFormatRule gridFormatRule1 = new DevExpress.XtraGrid.GridFormatRule();
 			DevExpress.XtraEditors.FormatConditionRuleContains formatConditionRuleContains1 = new DevExpress.XtraEditors.FormatConditionRuleContains();
 			DevExpress.XtraGrid.GridFormatRule gridFormatRule2 = new DevExpress.XtraGrid.GridFormatRule();
 			DevExpress.XtraEditors.FormatConditionRuleContains formatConditionRuleContains2 = new DevExpress.XtraEditors.FormatConditionRuleContains();
-			DevExpress.XtraGrid.GridFormatRule gridFormatRule3 = new DevExpress.XtraGrid.GridFormatRule();
-			DevExpress.XtraEditors.FormatConditionRuleContains formatConditionRuleContains3 = new DevExpress.XtraEditors.FormatConditionRuleContains();
-			DevExpress.XtraGrid.GridFormatRule gridFormatRule4 = new DevExpress.XtraGrid.GridFormatRule();
-			DevExpress.XtraEditors.FormatConditionRuleContains formatConditionRuleContains4 = new DevExpress.XtraEditors.FormatConditionRuleContains();
 			this.colSelectedBanco = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colCheck = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.ribbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
@@ -237,6 +237,7 @@
 			this.btnConciliar.Id = 3;
 			this.btnConciliar.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnConciliar.LargeGlyph")));
 			this.btnConciliar.Name = "btnConciliar";
+			this.btnConciliar.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnConciliar_ItemClick);
 			// 
 			// btnCancelar
 			// 
@@ -302,6 +303,7 @@
 			// btnAsociarSimilares
 			// 
 			this.btnAsociarSimilares.Caption = "Asociar Sugerida";
+			this.btnAsociarSimilares.Enabled = false;
 			this.btnAsociarSimilares.Glyph = ((System.Drawing.Image)(resources.GetObject("btnAsociarSimilares.Glyph")));
 			this.btnAsociarSimilares.Id = 6;
 			this.btnAsociarSimilares.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnAsociarSimilares.LargeGlyph")));
@@ -473,24 +475,24 @@
             this.colMontoBanco,
             this.colSelectedBanco,
             this.colMatchNumberBanco});
-			gridFormatRule1.ApplyToRow = true;
-			gridFormatRule1.Column = this.colSelectedBanco;
-			gridFormatRule1.Enabled = false;
-			gridFormatRule1.Name = "Format0";
-			formatConditionRuleContains1.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-			formatConditionRuleContains1.Appearance.Options.UseBackColor = true;
-			formatConditionRuleContains1.Values = ((System.Collections.IList)(resources.GetObject("formatConditionRuleContains1.Values")));
-			gridFormatRule1.Rule = formatConditionRuleContains1;
-			gridFormatRule2.ApplyToRow = true;
-			gridFormatRule2.Column = this.colSelectedBanco;
-			gridFormatRule2.Enabled = false;
-			gridFormatRule2.Name = "Format1";
-			formatConditionRuleContains2.Appearance.BackColor = System.Drawing.Color.PaleGreen;
-			formatConditionRuleContains2.Appearance.Options.UseBackColor = true;
-			formatConditionRuleContains2.Values = ((System.Collections.IList)(resources.GetObject("formatConditionRuleContains2.Values")));
-			gridFormatRule2.Rule = formatConditionRuleContains2;
-			this.gridViewMovBanco.FormatRules.Add(gridFormatRule1);
-			this.gridViewMovBanco.FormatRules.Add(gridFormatRule2);
+			gridFormatRule5.ApplyToRow = true;
+			gridFormatRule5.Column = this.colSelectedBanco;
+			gridFormatRule5.Enabled = false;
+			gridFormatRule5.Name = "Format0";
+			formatConditionRuleContains5.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+			formatConditionRuleContains5.Appearance.Options.UseBackColor = true;
+			formatConditionRuleContains5.Values = ((System.Collections.IList)(resources.GetObject("formatConditionRuleContains5.Values")));
+			gridFormatRule5.Rule = formatConditionRuleContains5;
+			gridFormatRule6.ApplyToRow = true;
+			gridFormatRule6.Column = this.colSelectedBanco;
+			gridFormatRule6.Enabled = false;
+			gridFormatRule6.Name = "Format1";
+			formatConditionRuleContains6.Appearance.BackColor = System.Drawing.Color.PaleGreen;
+			formatConditionRuleContains6.Appearance.Options.UseBackColor = true;
+			formatConditionRuleContains6.Values = ((System.Collections.IList)(resources.GetObject("formatConditionRuleContains6.Values")));
+			gridFormatRule6.Rule = formatConditionRuleContains6;
+			this.gridViewMovBanco.FormatRules.Add(gridFormatRule5);
+			this.gridViewMovBanco.FormatRules.Add(gridFormatRule6);
 			this.gridViewMovBanco.GridControl = this.gridMovBanco;
 			this.gridViewMovBanco.Name = "gridViewMovBanco";
 			this.gridViewMovBanco.OptionsView.ShowGroupPanel = false;
@@ -557,24 +559,24 @@
             this.colMonto,
             this.colCheck,
             this.colMatchNumber});
-			gridFormatRule3.ApplyToRow = true;
-			gridFormatRule3.Column = this.colCheck;
-			gridFormatRule3.Enabled = false;
-			gridFormatRule3.Name = "Format0";
-			formatConditionRuleContains3.Appearance.BackColor = System.Drawing.Color.PaleGreen;
-			formatConditionRuleContains3.Appearance.Options.UseBackColor = true;
-			formatConditionRuleContains3.Values = ((System.Collections.IList)(resources.GetObject("formatConditionRuleContains3.Values")));
-			gridFormatRule3.Rule = formatConditionRuleContains3;
-			gridFormatRule4.ApplyToRow = true;
-			gridFormatRule4.Column = this.colCheck;
-			gridFormatRule4.Enabled = false;
-			gridFormatRule4.Name = "Format1";
-			formatConditionRuleContains4.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-			formatConditionRuleContains4.Appearance.Options.UseBackColor = true;
-			formatConditionRuleContains4.Values = ((System.Collections.IList)(resources.GetObject("formatConditionRuleContains4.Values")));
-			gridFormatRule4.Rule = formatConditionRuleContains4;
-			this.gridViewMovLibros.FormatRules.Add(gridFormatRule3);
-			this.gridViewMovLibros.FormatRules.Add(gridFormatRule4);
+			gridFormatRule1.ApplyToRow = true;
+			gridFormatRule1.Column = this.colCheck;
+			gridFormatRule1.Enabled = false;
+			gridFormatRule1.Name = "Format0";
+			formatConditionRuleContains1.Appearance.BackColor = System.Drawing.Color.PaleGreen;
+			formatConditionRuleContains1.Appearance.Options.UseBackColor = true;
+			formatConditionRuleContains1.Values = ((System.Collections.IList)(resources.GetObject("formatConditionRuleContains1.Values")));
+			gridFormatRule1.Rule = formatConditionRuleContains1;
+			gridFormatRule2.ApplyToRow = true;
+			gridFormatRule2.Column = this.colCheck;
+			gridFormatRule2.Enabled = false;
+			gridFormatRule2.Name = "Format1";
+			formatConditionRuleContains2.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+			formatConditionRuleContains2.Appearance.Options.UseBackColor = true;
+			formatConditionRuleContains2.Values = ((System.Collections.IList)(resources.GetObject("formatConditionRuleContains2.Values")));
+			gridFormatRule2.Rule = formatConditionRuleContains2;
+			this.gridViewMovLibros.FormatRules.Add(gridFormatRule1);
+			this.gridViewMovLibros.FormatRules.Add(gridFormatRule2);
 			this.gridViewMovLibros.GridControl = this.gridMobLibros;
 			this.gridViewMovLibros.Name = "gridViewMovLibros";
 			this.gridViewMovLibros.OptionsBehavior.EditingMode = DevExpress.XtraGrid.Views.Grid.GridEditingMode.Inplace;
@@ -1012,7 +1014,6 @@
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Conciliación Bancaria";
 			this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
 			this.layoutControl1.ResumeLayout(false);

@@ -167,6 +167,7 @@ namespace ControlBancario
             this.slkupRuc.EditValue =_currentRow["IDRuc"].ToString();
             this.txtPagaderoA.Text = _currentRow["Pagadero_a"].ToString();
             this.txtUsuario.EditValue = _currentRow["Usuario"].ToString();
+			this.txtFechaCreacion.EditValue = _currentRow["Fecha"].ToString();
             this.txtUsuarioAnulacion.EditValue = _currentRow["UsuarioAnulacion"].ToString();
             this.txtFechaAnulacion.EditValue = _currentRow["FechaAnulacion"].ToString();
             this.txtUsuarioAprobacion.EditValue = _currentRow["UsuarioAprobacion"].ToString();
@@ -422,6 +423,7 @@ namespace ControlBancario
                     _currentRow["Monto"] = this.txtMonto.EditValue;
                     _currentRow["ConceptoContable"] = this.txtConcepto.EditValue;
                     _currentRow["Usuario"] = this.txtUsuario.EditValue;
+					_currentRow["IDMovimiento"] = -1;
 
 
                     _currentRow.EndEdit();
@@ -486,6 +488,7 @@ namespace ControlBancario
                 _currentRow["Monto"] = this.txtMonto.EditValue;
                 _currentRow["ConceptoContable"] = this.txtConcepto.EditValue;
                 _currentRow["Usuario"] = this.txtUsuario.EditValue;
+				_currentRow["IDMovimiento"] = -1;
                 _dtDocumento.Rows.Add(_currentRow);
                 try
                 {

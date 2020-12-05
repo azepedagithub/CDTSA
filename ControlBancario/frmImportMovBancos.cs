@@ -260,7 +260,7 @@ namespace ControlBancario
 						nuevaFila["IDCuentaBanco"] = fila.IDCuentaBanco;
 						nuevaFila["IDConciliacion"] = fila.IDConciliacion;
 						nuevaFila["Referencia"] = fila.Referencia;
-						nuevaFila["Monto"] = fila.Monto;
+						nuevaFila["Monto"] = Math.Abs( fila.Monto);
 						nuevaFila["Factor"] = fila.Factor;
 						nuevaFila["Usuario"] = fila.Usuario;
 						nuevaFila["Estado"] = fila.Estado;

@@ -51,6 +51,8 @@ namespace ControlBancario.DAC
                 oAdaptador.InsertCommand.CommandType = CommandType.StoredProcedure;
                 oAdaptador.InsertCommand.Parameters.Add("@Operacion", SqlDbType.NChar).Value = "I";
                 oAdaptador.InsertCommand.Parameters.Add("@IDCuentaBanco", SqlDbType.Int).SourceColumn = "IDCuentaBanco";
+				oAdaptador.InsertCommand.Parameters.Add("@IDMovimiento", SqlDbType.Int).SourceColumn = "IDMovimiento";
+				oAdaptador.InsertCommand.Parameters["@IDMovimiento"].Direction = ParameterDirection.Output;
                 oAdaptador.InsertCommand.Parameters.Add("@Fecha", SqlDbType.Date).SourceColumn = "Fecha";
                 oAdaptador.InsertCommand.Parameters.Add("@IDTipo", SqlDbType.Int).SourceColumn = "IDTipo";
                 oAdaptador.InsertCommand.Parameters.Add("@IDSubTipo", SqlDbType.Int).SourceColumn = "IDSubTipo";
@@ -65,6 +67,8 @@ namespace ControlBancario.DAC
                 oAdaptador.UpdateCommand.CommandType = CommandType.StoredProcedure;
                 oAdaptador.UpdateCommand.Parameters.Add("@Operacion", SqlDbType.NChar).Value = "U";
                 oAdaptador.UpdateCommand.Parameters.Add("@IDCuentaBanco", SqlDbType.Int).SourceColumn = "IDCuentaBanco";
+				oAdaptador.UpdateCommand.Parameters.Add("@IDMovimiento", SqlDbType.Int).SourceColumn = "IDMovimiento";
+				oAdaptador.UpdateCommand.Parameters["@IDMovimiento"].Direction = ParameterDirection.Output;
                 oAdaptador.UpdateCommand.Parameters.Add("@Fecha", SqlDbType.Date).SourceColumn = "Fecha";
                 oAdaptador.UpdateCommand.Parameters.Add("@IDTipo", SqlDbType.Int).SourceColumn = "IDTipo";
                 oAdaptador.UpdateCommand.Parameters.Add("@IDSubTipo", SqlDbType.Int).SourceColumn = "IDSubTipo";
@@ -81,6 +85,8 @@ namespace ControlBancario.DAC
                 oAdaptador.DeleteCommand.CommandType = CommandType.StoredProcedure;
                 oAdaptador.DeleteCommand.Parameters.Add("@Operacion", SqlDbType.NChar).Value = "D";
                 oAdaptador.DeleteCommand.Parameters.Add("@IDCuentaBanco", SqlDbType.Int).SourceColumn = "IDCuentaBanco";
+				oAdaptador.DeleteCommand.Parameters.Add("@IDMovimiento", SqlDbType.Int).SourceColumn = "IDMovimiento";
+				oAdaptador.DeleteCommand.Parameters["@IDMovimiento"].Direction = ParameterDirection.Output;
                 oAdaptador.DeleteCommand.Parameters.Add("@Fecha", SqlDbType.Date).SourceColumn = "Fecha";
                 oAdaptador.DeleteCommand.Parameters.Add("@IDTipo", SqlDbType.Int).SourceColumn = "IDTipo";
                 oAdaptador.DeleteCommand.Parameters.Add("@IDSubTipo", SqlDbType.Int).SourceColumn = "IDSubTipo";
@@ -119,7 +125,7 @@ namespace ControlBancario.DAC
 
         public static DataSet GetDataEmpty()
         {
-            String strSQL = "SELECT  IDCuentaBanco ,Fecha ,IDTipo ,IDSubTipo ,IDRuc,Numero ,Pagadero_a ,Monto ,Asiento ,Anulado ,AsientoAnulacion ,Usuario ,UsuarioAnulacion, UsuarioAprobacion,FechaAprobacion,UsuarioImpresion,FechaImpresion,Impreso ,FechaAnulacion ,ConceptoContable  FROM dbo.cbMovimientos WHERE 1=2";
+            String strSQL = "SELECT  IDCuentaBanco ,Fecha ,IDTipo ,IDSubTipo ,IDRuc,Numero ,Pagadero_a ,Monto ,Asiento ,Anulado ,AsientoAnulacion ,Usuario ,UsuarioAnulacion, UsuarioAprobacion,FechaAprobacion,UsuarioImpresion,FechaImpresion,Impreso ,FechaAnulacion ,ConceptoContable,IDMovimiento  FROM dbo.cbMovimientos WHERE 1=2";
 
             SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
             SqlDataAdapter oAdaptador = new SqlDataAdapter(oCmd);

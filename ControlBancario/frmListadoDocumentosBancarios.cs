@@ -210,6 +210,11 @@ namespace ControlBancario
         {
             if (_currentRow != null)
             {
+				if (_currentRow["IDEstado"].ToString() != "0")
+				{
+					MessageBox.Show("El documento no se puede eliminar, ya se encuentra procesado a anulado");
+					return;
+				}
 				if (MessageBox.Show("Esta seguro que desea eliminar el movimiento de Banco? ", "Movimientos de Bancos", MessageBoxButtons.YesNo) == DialogResult.Yes)
 				{
 

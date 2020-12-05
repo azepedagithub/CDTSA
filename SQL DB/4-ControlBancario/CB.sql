@@ -601,14 +601,16 @@ GO
 
 --DROP Procedure [dbo].[cbUpdateMovimientos]
 CREATE  Procedure [dbo].[cbUpdateMovimientos] @Operacion nvarchar(1), @IDCuentaBanco int,@Fecha DATE,@IDTipo INT,@IDSubTipo INT,@IDRuc int,@Numero NVARCHAR(250),
-		@Pagaderoa nvarchar(250),@Monto DECIMAL(28,4),@Usuario NVARCHAR(20),@ConceptoContable NVARCHAR(200)
+		@Pagaderoa nvarchar(250),@Monto DECIMAL(28,4),@Usuario NVARCHAR(20),@ConceptoContable NVARCHAR(200),@IDMovimiento INT OUTPUT
 as
 set nocount on 
 
 if upper(@Operacion) = 'I'
 BEGIN
-	INSERT INTO dbo.cbMovimientos( IDCuentaBanco ,Fecha ,IDTipo ,IDSubTipo,IDRuc ,Numero ,Pagadero_a ,Monto   ,Usuario    ,ConceptoContable)
-	VALUES  ( @IDCuentaBanco,@Fecha,@IDTipo,@IDSubTipo,@IDRuc,@Numero,@Pagaderoa,@Monto,@Usuario,@ConceptoContable)
+	INSERT INTO dbo.cbMovimientos( IDCuentaBanco ,Fecha ,IDTipo ,IDSubTipo,IDRuc ,Numero ,Pagadero_a ,Monto   ,Usuario    ,ConceptoContable, MatchNumber)
+	VALUES  ( @IDCuentaBanco,@Fecha,@IDTipo,@IDSubTipo,@IDRuc,@Numero,@Pagaderoa,@Monto,@Usuario,@ConceptoContable, NULL)
+	
+	SET @IDMovimiento = @@identity	
 	
 	--CK
 	IF (@IDTipo=1)
@@ -947,7 +949,7 @@ alter table  dbo.cbConciliacion add constraint pkConciliacion primary key ( IDCo
 go
 -- Se debe crear un proceso que importe el estado de cuenta del banco a esta tabla.
 Create table dbo.cbConcMovBanco (IDMovBanco int identity (1,1) not null, IDCuentaBanco int not null, Fecha date, IDConciliacion int,
-Referencia nvarchar(255), Monto decimal (28, 4) default 0, Factor int, MatchNumber int default 0, Usuario nvarchar(20), Estado nvarchar(1)  ) 
+Referencia nvarchar(255), Monto decimal (28, 4) default 0, Factor int, MatchNumber int , Usuario nvarchar(20), Estado nvarchar(1)  ) 
 go
 
 Alter table dbo.cbMovimientos add IDConciliacion int, MatchNumber int default 0, UsuarioConciliacion nvarchar(20), EstadoConciliacion nvarchar(1),
@@ -1051,13 +1053,13 @@ SELECT ISNULL(@SaldoInicialLibro,0) SaldoInicialLibro
 GO
 
 
-CREATE PROCEDURE dbo.cbGetMovLibrosContable @IDCuentaBancaria INT, @FechaInicial DATETIME, @FechaFinal DATETIME
+CREATE  PROCEDURE dbo.cbGetMovLibrosContable @IDCuentaBancaria INT, @FechaInicial DATETIME, @FechaFinal DATETIME
 AS 
 
 set @FechaInicial = CAST(SUBSTRING(CAST(@FechaInicial AS CHAR),1,11) + ' 00:00:00.000' AS DATETIME)
 set @FechaFinal = CAST(SUBSTRING(CAST(@FechaFinal AS CHAR),1,11) + ' 23:59:59.998' AS DATETIME)
 
-SELECT IDMovimiento, Fecha,Numero Referencia,T.Descr TipoMov,ConceptoContable,Monto,CAST(CASE WHEN MatchNumber IS NOT NULl THEN 1 ELSE 0 END AS BIT) Selected, MatchNumber
+SELECT IDMovimiento, Fecha,Numero Referencia,T.Descr TipoMov,ConceptoContable,Monto * T.Factor Monto,CAST(CASE WHEN MatchNumber IS NOT NULl THEN 1 ELSE 0 END AS BIT) Selected, MatchNumber
 FROM dbo.cbMovimientos M
 INNER JOIN dbo.cbTipoDocumento T ON M.IDTipo = T.IDTipo
 WHERE Fecha BETWEEN @FechaInicial and @FechaFinal AND IDCuentaBanco = @IDCuentaBancaria
@@ -1088,9 +1090,9 @@ END
 GO
 
 
-CREATE PROCEDURE  dbo.cbGetConcMovBanco(@IDConciliacion INT, @IDCuentaBanco INT)
+CREATE  PROCEDURE  dbo.cbGetConcMovBanco(@IDConciliacion INT, @IDCuentaBanco INT)
 AS
-SELECT  IDMovBanco ,IDCuentaBanco ,Fecha ,IDConciliacion ,Referencia ,Monto ,Factor ,CASE WHEN MatchNumber =0 THEN NULL ELSE  MatchNumber END MatchNumber, CAST(CASE WHEN MatchNumber >0 THEN 1 ELSE 0 END AS BIT) Selected ,Usuario ,Estado  
+SELECT  IDMovBanco ,IDCuentaBanco ,Fecha ,IDConciliacion ,Referencia ,Monto * Factor Monto, Factor ,CASE WHEN MatchNumber =0 THEN NULL ELSE  MatchNumber END MatchNumber, CAST(CASE WHEN MatchNumber >0 THEN 1 ELSE 0 END AS BIT) Selected ,Usuario ,Estado  
 FROM dbo.cbConcMovBanco WHERE (IDConciliacion=@IDConciliacion OR @IDConciliacion =-1)	 AND (IDCuentaBanco = @IDCuentaBanco OR @IDCuentaBanco=-1)
 
 GO
@@ -1353,5 +1355,85 @@ WHERE FechaInicio >= @FechaInicial AND FechaFin>= @FechaFinal AND  (@IDCuentaBan
 GO
 
 
+CREATE PROCEDURE dbo.cbDeleteAsociacionMovLibros @IDConciliacion INT
+AS 
+update dbo.cbMovimientos SET IDConciliacion= NULL, MatchNumber=NULL WHERE IDConciliacion = @IDConciliacion
 
 
+GO
+
+
+
+CREATE PROCEDURE  dbo.CerrarConciliacionBancaria @IDConciliacion INT
+AS 
+--SET @IDConciliacion= 1
+
+DECLARE @FechaInicial DATETIME	,@FechaFinal DATETIME
+DECLARE @SalidasBanco DECIMAL(28,8), @EntradasBanco DECIMAL(28,8),
+		@SalidasLibro DECIMAL(28,8), @EntradasLibro DECIMAL(28,8),
+		@SaldoFinalBanco DECIMAL(28,8), @SaldoFinalLibro  DECIMAL(28,8),
+		@SaldoInicialBanco DECIMAL(28,8), @SaldoInicialLibro DECIMAL(28,8)
+
+
+SET @EntradasLibro = 0
+SET @SalidasLibro =0
+SET @EntradasBanco = 0 
+SET @SalidasBanco = 0
+SET @SaldoFinalBanco = 0 
+SET @SaldoFinalLibro= 0
+SET @SaldoInicialBanco = 0
+SET @SaldoInicialLibro = 0		
+
+SELECT @FechaInicial= FechaInicio, @FechaFinal = FechaFin , @SaldoInicialBanco= SaldoInicialBanco, @SaldoInicialLibro = SaldoInicialLibro
+FROM dbo.cbConciliacion WHERE IDConciliacion=@IDConciliacion
+
+SET @FechaInicial = CAST(SUBSTRING(CAST(@FechaInicial AS CHAR),1,11) + ' 00:00:00.000' AS DATETIME)
+set @FechaFinal = CAST(SUBSTRING(CAST(@FechaFinal AS CHAR),1,11) + ' 23:59:59.998' AS DATETIME)
+
+
+--movimientos de Libros
+SELECT 
+	@SalidasLibro = SUM(Salidas),
+	@EntradasLibro = SUM(Entradas)  
+FROM 
+	(SELECT
+		CASE WHEN B.Factor =1  THEN ISNULL(Monto,0) ELSE 0 END Entradas, 
+		CASE WHEN B.Factor=-1 THEN ISNULL(Monto,0) ELSE 0 END Salidas
+	FROM dbo.cbMovimientos A
+	INNER JOIN dbo.cbTipoDocumento B ON  A.IDTipo = B.IDTipo
+	WHERE Fecha BETWEEN @FechaInicial AND @FechaFinal	
+	) A
+
+
+
+--movimientos de bancos
+SELECT 
+	 @EntradasBanco = SUM(Entradas), 
+	 @SalidasBanco= SUM(salidas) 
+FROM  (
+	SELECT 
+		CASE WHEN Factor =1  THEN ISNULL(Monto,0) ELSE 0 END Entradas, 
+		CASE WHEN Factor=-1 THEN ISNULL(Monto,0) ELSE 0 END Salidas
+	FROM dbo.cbConcMovBanco 
+	WHERE Fecha BETWEEN @FechaInicial AND @FechaFinal ) B
+
+
+SET @SaldoFinalBanco = @SaldoInicialBanco + @EntradasBanco - @SalidasBanco
+SET @SaldoFinalLibro = @SaldoInicialLibro + @EntradasLibro - @SalidasLibro
+
+
+IF (@SaldoFinalBanco <> @SaldoFinalLibro) 
+BEGIN
+	RAISERROR ( 'El saldo de Libros Contables y Bancos deben ser iguales.', 16, 1) ;
+	return				
+END
+--SELECT @SaldoInicialLibro,@SaldoInicialBanco, @EntradasLibro Entradas, @SalidasLibro Salidas,@EntradasBanco,@SalidasBanco,@SaldoFinalLibro,@SaldoFinalBanco
+
+UPDATE dbo.cbConciliacion SET SaldoFinalBanco = @SaldoFinalBanco, SaldoFinalLibro = @SaldoFinalLibro, 
+							  TotalIngresosLibro = @EntradasLibro, TotalSalidasLibro = @SalidasLibro,
+							  TotalIngresosBanco = @EntradasBanco , TotalSalidasBanco = @SalidasBanco,
+							  Estado= 'F'
+WHERE IDConciliacion = @IDConciliacion
+
+
+GO

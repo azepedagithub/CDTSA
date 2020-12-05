@@ -218,5 +218,45 @@ namespace ControlBancario.DAC
 			return bresult;
 		}
 
+		public static bool ClearMatchNumberMovLibros(int IDConciliacion,  SqlTransaction tran)
+		{
+			bool bresult = false;
+			long result;
+			String strSQL = "dbo.cbDeleteAsociacionMovLibros";
+
+			SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
+
+			oCmd.Parameters.Add(new SqlParameter("@IDConciliacion", IDConciliacion));
+			
+			oCmd.CommandType = CommandType.StoredProcedure;
+			oCmd.Transaction = tran;
+			if (oCmd.Connection.State != ConnectionState.Open)
+				oCmd.Connection.Open();
+			result = oCmd.ExecuteNonQuery();
+			bresult = (result != 0) ? true : false;
+			return bresult;
+		}
+
+
+		public static bool CerrarConciliacion(int IDConciliacion, SqlTransaction tran)
+		{
+			bool bresult = false;
+			long result;
+			String strSQL = "dbo.CerrarConciliacionBancaria";
+
+			SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
+
+			oCmd.Parameters.Add(new SqlParameter("@IDConciliacion", IDConciliacion));
+
+			oCmd.CommandType = CommandType.StoredProcedure;
+			oCmd.Transaction = tran;
+			if (oCmd.Connection.State != ConnectionState.Open)
+				oCmd.Connection.Open();
+			result = oCmd.ExecuteNonQuery();
+			bresult = (result != 0) ? true : false;
+			return bresult;
+		}
+
+
 	}
 }

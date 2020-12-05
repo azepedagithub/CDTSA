@@ -73,12 +73,54 @@ namespace ControlBancario
 				Util.Util.ConfigLookupEditSetViewColumns(this.slkupCuentaBancaria, "[{'ColumnCaption':'Codigo','ColumnField':'Codigo','width':30},{'ColumnCaption':'Descr','ColumnField':'Descr','width':70}]");
 
 				LoadData();
+
+				CalcularTotales();
+
+				ActivarControles();
 			}
 			catch (Exception ex)
 			{
 				MessageBox.Show("Han ocurrido los siguientes errores" + ex.Message);
 			}
 
+		}
+
+		private void ActivarControles()
+		{
+			if (this.dtConciliacion.Rows[0]["Estado"].ToString() == "F")
+			{
+				//desactivar todo 
+				this.gridViewMovLibros.OptionsBehavior.ReadOnly = true;
+				this.gridViewMovBanco.OptionsBehavior.ReadOnly = true;
+				this.btnAsociar.Enabled = false;
+				this.btnConciliar.Enabled = false;
+				this.btnDesAsociar.Enabled = false;
+				this.btnEliminar.Enabled = false;
+				this.btnGuardar.Enabled = false;
+				this.btnAsociarSimilares.Enabled = false;
+				this.slkupCuentaBancaria.Properties.ReadOnly = true;
+				this.slkupTypeView.Properties.ReadOnly = true;
+				this.dtpFechaInicial.Properties.ReadOnly = true;
+				this.dtpFechaFinal.Properties.ReadOnly = true;
+				this.dtpFechaSaldo.Properties.ReadOnly = true;
+
+			}
+			else
+			{
+				this.gridViewMovLibros.OptionsBehavior.ReadOnly = false;
+				this.gridViewMovBanco.OptionsBehavior.ReadOnly = false;
+				this.btnAsociar.Enabled = true;
+				this.btnConciliar.Enabled = true;
+				this.btnDesAsociar.Enabled = true;
+				this.btnEliminar.Enabled = true;
+				this.btnGuardar.Enabled = true;
+				this.btnAsociarSimilares.Enabled = true;
+				this.slkupCuentaBancaria.Properties.ReadOnly = false;
+				this.slkupTypeView.Properties.ReadOnly = false;
+				this.dtpFechaInicial.Properties.ReadOnly = false;
+				this.dtpFechaFinal.Properties.ReadOnly = false;
+				this.dtpFechaSaldo.Properties.ReadOnly = false;
+			}
 		}
 
 		private void ValidarConciliacionesEnProceso()
@@ -375,11 +417,21 @@ namespace ControlBancario
 		{
 			frmImportMovBancos ofrmImport = (frmImportMovBancos) sender;
 			if (ofrmImport.DialogResult == System.Windows.Forms.DialogResult.OK) {
-				//dtMovBanco = ofrmImport.dtMovBancos;
-				CargarMovimientoBancos();
-				HabilitarBtnAsociacion();
-				this.btnRefrescar.Enabled = true;
-				this.btnFormato.Enabled = true;
+				try
+				{
+					//dtMovBanco = ofrmImport.dtMovBancos;
+					ConnectionManager.BeginTran();
+					DAC.ConciliacionDAC.ClearMatchNumberMovLibros(this.IDConciliacion, ConnectionManager.Tran);
+					ConnectionManager.CommitTran();
+					CargarMovimientoBancos();
+					HabilitarBtnAsociacion();
+					this.btnRefrescar.Enabled = true;
+					this.btnFormato.Enabled = true;
+				}
+				catch (Exception ex) {
+					ConnectionManager.RollBackTran();
+					MessageBox.Show("Han ocurrido los siguientes errores por favor revise \n\r " + ex.Message);
+				}
 				
 			}
 		}
@@ -443,11 +495,16 @@ namespace ControlBancario
 
 			CargarMovimientosLibros();
 			CargarMovimientoBancos();
+			CalcularTotales();
+			ValidarElementosToAsociar();
+		}
+
+		private void CalcularTotales()
+		{
 			CalcularTotalesMovBanco();
 			CalcularTotalesMovLibros();
 			CalcularTotalesSelectMovBanco();
 			CalcularTotalesSelectMovLibros();
-			ValidarElementosToAsociar();
 		}
 	
 		private void btnAsociar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -666,9 +723,12 @@ namespace ControlBancario
 			bool hasMatch = false;
 			foreach (DataRow filaBanco in this.dtMovBanco.Rows)
 			{
-				if (Convert.ToBoolean(filaBanco["Selected"]) == false ) {
+				//if (Convert.ToBoolean(filaBanco["Selected"]) == false && filaBanco["MatchNumber"].ToString() == ""  ) {
+				if ( filaBanco["MatchNumber"].ToString() == "")
+				{
 					foreach (DataRow filaLibro in this.dtMovLibros.Rows) {
-						if (Convert.ToBoolean(filaLibro["Selected"]) == false ) { 
+						//if (Convert.ToBoolean(filaLibro["Selected"]) == false && filaLibro["MatchNumber"].ToString() =="") { 
+						if (filaLibro["MatchNumber"].ToString() =="") { 
 							if (filaBanco["Referencia"].ToString() == filaLibro["Referencia"].ToString() &&  Convert.ToDecimal(filaBanco["Monto"]) == Convert.ToDecimal(filaLibro["Monto"])) {
 								filaLibro["Selected"] = true;
 								hasFound = true;
@@ -693,6 +753,25 @@ namespace ControlBancario
 		private void btnRefrescar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
 		{
 			LoadData();
+			ActivarControles();
+		}
+
+		private void btnConciliar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+		{
+			if (IDMovBancoSelected != -1 || IDMovimientoSelected != -1)
+			{
+				Security.ConnectionManager.BeginTran();
+				DAC.ConciliacionDAC.CerrarConciliacion(this.IDConciliacion,  Security.ConnectionManager.Tran);
+				Security.ConnectionManager.CommitTran();
+			}
+			CargarMovimientosLibros();
+			CargarMovimientoBancos();
+
+			CalcularTotalesMovBanco();
+			CalcularTotalesMovLibros();
+			CalcularTotalesSelectMovBanco();
+			CalcularTotalesSelectMovLibros();
+			ValidarElementosToAsociar();
 		}
 
 
