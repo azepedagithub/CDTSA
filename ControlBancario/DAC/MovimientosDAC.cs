@@ -196,6 +196,43 @@ namespace ControlBancario.DAC
 
         }
 
+
+		public static String GetNotaFromMovimiento(int IDMovimiento)
+        {
+
+            DataSet DS = new DataSet();
+
+            SqlCommand oCmd = new SqlCommand("dbo.getNotaMovLibro", ConnectionManager.GetConnection());
+            SqlConnection oConn = oCmd.Connection;
+            try
+            {
+
+
+                oCmd.CommandType = CommandType.StoredProcedure;
+                SqlDataAdapter oAdapatadorTmp = new SqlDataAdapter(oCmd);
+                oCmd.Parameters.Add("@IDMovimiento", SqlDbType.Int, 50).Value = IDMovimiento;
+
+				oAdapatadorTmp.Fill(DS, "Data"); 
+
+				
+
+				
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                if (oConn.State == ConnectionState.Open)
+                    oConn.Close();
+
+            }
+			return DS.Tables[0].Rows[0]["NotaConciliacion"].ToString();
+
+        }
+
         public static String GenerarAsientoContable(String Numero, int IDCuentaBanco,int IDTipo,int IDSubTipo, String Usuario)
         {
             String strSQL = "dbo.cbGenerarAsientoContableCheque";
@@ -236,7 +273,37 @@ namespace ControlBancario.DAC
             }
             return Asiento;
         }
+		
+		public static bool SetNotaMovimiento(int IDMovimiento, String sNota) 
+        {
+            String strSQL = "dbo.cbSetNotaMovLibro";
+            bool Result = false;
 
+            SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
+            try
+            {
+
+
+				oCmd.Parameters.Add(new SqlParameter("@IDMovimiento", IDMovimiento));
+				oCmd.Parameters.Add(new SqlParameter("@Nota", sNota));
+                
+                oCmd.CommandType = CommandType.StoredProcedure;
+                oCmd.Connection.Open();
+                oCmd.ExecuteNonQuery();
+
+                Result = true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                if (oCmd.Connection.State == ConnectionState.Open)
+                    oCmd.Connection.Close();
+            }
+            return Result;
+        }
 
         public static bool SetChequeImpreso(int Numero, int IDCuentaBanco, int IDTipo, int IDSubTipo, String Usuario)
         {

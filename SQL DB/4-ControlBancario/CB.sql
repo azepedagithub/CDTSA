@@ -1437,3 +1437,15 @@ WHERE IDConciliacion = @IDConciliacion
 
 
 GO
+
+
+
+CREATE PROCEDURE dbo.cbSetNotaMovLibro @IDMovimiento INT, @Nota AS NVARCHAR(250)
+AS
+UPDATE dbo.cbMovimientos SET  NotaConciliacion = @Nota WHERE IDMovimiento = @IDMovimiento
+
+GO
+
+CREATE PROCEDURE dbo.getNotaMovLibro @IDMovimiento INT
+AS 
+SELECT NotaConciliacion  FROM dbo.cbMovimientos WHERE IDMovimiento = @IDMovimiento

@@ -774,6 +774,23 @@ namespace ControlBancario
 			ValidarElementosToAsociar();
 		}
 
+		private void btnMensaje_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+		{
+			int index = (int)this.gridViewMovLibros.FocusedRowHandle;
+			if (index > -1)
+			{
+				DataRow ele = this.gridViewMovLibros.GetDataRow(Convert.ToInt32(index));
+				int iMov = Convert.ToInt32(ele["IDMovimiento"]);
+				if (iMov != -1)
+				{
+					frmMensaje ofrmMensaje = new frmMensaje(this.IDMovimientoSelected);
+					ofrmMensaje.ShowDialog();
+				}
+				
+			}
+			
+		}
+
 
 
 		

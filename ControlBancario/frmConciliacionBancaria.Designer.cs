@@ -29,14 +29,14 @@
 		private void InitializeComponent()
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmConciliacionBancaria));
-			DevExpress.XtraGrid.GridFormatRule gridFormatRule5 = new DevExpress.XtraGrid.GridFormatRule();
-			DevExpress.XtraEditors.FormatConditionRuleContains formatConditionRuleContains5 = new DevExpress.XtraEditors.FormatConditionRuleContains();
-			DevExpress.XtraGrid.GridFormatRule gridFormatRule6 = new DevExpress.XtraGrid.GridFormatRule();
-			DevExpress.XtraEditors.FormatConditionRuleContains formatConditionRuleContains6 = new DevExpress.XtraEditors.FormatConditionRuleContains();
 			DevExpress.XtraGrid.GridFormatRule gridFormatRule1 = new DevExpress.XtraGrid.GridFormatRule();
 			DevExpress.XtraEditors.FormatConditionRuleContains formatConditionRuleContains1 = new DevExpress.XtraEditors.FormatConditionRuleContains();
 			DevExpress.XtraGrid.GridFormatRule gridFormatRule2 = new DevExpress.XtraGrid.GridFormatRule();
 			DevExpress.XtraEditors.FormatConditionRuleContains formatConditionRuleContains2 = new DevExpress.XtraEditors.FormatConditionRuleContains();
+			DevExpress.XtraGrid.GridFormatRule gridFormatRule3 = new DevExpress.XtraGrid.GridFormatRule();
+			DevExpress.XtraEditors.FormatConditionRuleContains formatConditionRuleContains3 = new DevExpress.XtraEditors.FormatConditionRuleContains();
+			DevExpress.XtraGrid.GridFormatRule gridFormatRule4 = new DevExpress.XtraGrid.GridFormatRule();
+			DevExpress.XtraEditors.FormatConditionRuleContains formatConditionRuleContains4 = new DevExpress.XtraEditors.FormatConditionRuleContains();
 			this.colSelectedBanco = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colCheck = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.ribbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
@@ -112,6 +112,8 @@
 			this.layoutControlItem17 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.emptySpaceItem8 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.emptySpaceItem9 = new DevExpress.XtraLayout.EmptySpaceItem();
+			this.colNotaConciliacion = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.btnMensaje = new DevExpress.XtraBars.BarButtonItem();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
 			this.layoutControl1.SuspendLayout();
@@ -184,6 +186,7 @@
 			this.colCheck.OptionsColumn.ImmediateUpdateRowPosition = DevExpress.Utils.DefaultBoolean.True;
 			this.colCheck.Visible = true;
 			this.colCheck.VisibleIndex = 5;
+			this.colCheck.Width = 61;
 			// 
 			// ribbonControl
 			// 
@@ -200,9 +203,10 @@
             this.btnRefrescar,
             this.btnFormato,
             this.btnGuardar,
-            this.btnAsociarSimilares});
+            this.btnAsociarSimilares,
+            this.btnMensaje});
 			this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-			this.ribbonControl.MaxItemId = 7;
+			this.ribbonControl.MaxItemId = 8;
 			this.ribbonControl.Name = "ribbonControl";
 			this.ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -329,6 +333,7 @@
 			this.ribbonPageGroup1.ItemLinks.Add(this.btnGuardar);
 			this.ribbonPageGroup1.ItemLinks.Add(this.btnFormato);
 			this.ribbonPageGroup1.ItemLinks.Add(this.btnAsociarSimilares);
+			this.ribbonPageGroup1.ItemLinks.Add(this.btnMensaje);
 			this.ribbonPageGroup1.Name = "ribbonPageGroup1";
 			this.ribbonPageGroup1.Text = "Acciones";
 			// 
@@ -475,24 +480,24 @@
             this.colMontoBanco,
             this.colSelectedBanco,
             this.colMatchNumberBanco});
-			gridFormatRule5.ApplyToRow = true;
-			gridFormatRule5.Column = this.colSelectedBanco;
-			gridFormatRule5.Enabled = false;
-			gridFormatRule5.Name = "Format0";
-			formatConditionRuleContains5.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-			formatConditionRuleContains5.Appearance.Options.UseBackColor = true;
-			formatConditionRuleContains5.Values = ((System.Collections.IList)(resources.GetObject("formatConditionRuleContains5.Values")));
-			gridFormatRule5.Rule = formatConditionRuleContains5;
-			gridFormatRule6.ApplyToRow = true;
-			gridFormatRule6.Column = this.colSelectedBanco;
-			gridFormatRule6.Enabled = false;
-			gridFormatRule6.Name = "Format1";
-			formatConditionRuleContains6.Appearance.BackColor = System.Drawing.Color.PaleGreen;
-			formatConditionRuleContains6.Appearance.Options.UseBackColor = true;
-			formatConditionRuleContains6.Values = ((System.Collections.IList)(resources.GetObject("formatConditionRuleContains6.Values")));
-			gridFormatRule6.Rule = formatConditionRuleContains6;
-			this.gridViewMovBanco.FormatRules.Add(gridFormatRule5);
-			this.gridViewMovBanco.FormatRules.Add(gridFormatRule6);
+			gridFormatRule1.ApplyToRow = true;
+			gridFormatRule1.Column = this.colSelectedBanco;
+			gridFormatRule1.Enabled = false;
+			gridFormatRule1.Name = "Format0";
+			formatConditionRuleContains1.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+			formatConditionRuleContains1.Appearance.Options.UseBackColor = true;
+			formatConditionRuleContains1.Values = ((System.Collections.IList)(resources.GetObject("formatConditionRuleContains1.Values")));
+			gridFormatRule1.Rule = formatConditionRuleContains1;
+			gridFormatRule2.ApplyToRow = true;
+			gridFormatRule2.Column = this.colSelectedBanco;
+			gridFormatRule2.Enabled = false;
+			gridFormatRule2.Name = "Format1";
+			formatConditionRuleContains2.Appearance.BackColor = System.Drawing.Color.PaleGreen;
+			formatConditionRuleContains2.Appearance.Options.UseBackColor = true;
+			formatConditionRuleContains2.Values = ((System.Collections.IList)(resources.GetObject("formatConditionRuleContains2.Values")));
+			gridFormatRule2.Rule = formatConditionRuleContains2;
+			this.gridViewMovBanco.FormatRules.Add(gridFormatRule1);
+			this.gridViewMovBanco.FormatRules.Add(gridFormatRule2);
 			this.gridViewMovBanco.GridControl = this.gridMovBanco;
 			this.gridViewMovBanco.Name = "gridViewMovBanco";
 			this.gridViewMovBanco.OptionsView.ShowGroupPanel = false;
@@ -558,25 +563,26 @@
             this.colConcepto,
             this.colMonto,
             this.colCheck,
-            this.colMatchNumber});
-			gridFormatRule1.ApplyToRow = true;
-			gridFormatRule1.Column = this.colCheck;
-			gridFormatRule1.Enabled = false;
-			gridFormatRule1.Name = "Format0";
-			formatConditionRuleContains1.Appearance.BackColor = System.Drawing.Color.PaleGreen;
-			formatConditionRuleContains1.Appearance.Options.UseBackColor = true;
-			formatConditionRuleContains1.Values = ((System.Collections.IList)(resources.GetObject("formatConditionRuleContains1.Values")));
-			gridFormatRule1.Rule = formatConditionRuleContains1;
-			gridFormatRule2.ApplyToRow = true;
-			gridFormatRule2.Column = this.colCheck;
-			gridFormatRule2.Enabled = false;
-			gridFormatRule2.Name = "Format1";
-			formatConditionRuleContains2.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-			formatConditionRuleContains2.Appearance.Options.UseBackColor = true;
-			formatConditionRuleContains2.Values = ((System.Collections.IList)(resources.GetObject("formatConditionRuleContains2.Values")));
-			gridFormatRule2.Rule = formatConditionRuleContains2;
-			this.gridViewMovLibros.FormatRules.Add(gridFormatRule1);
-			this.gridViewMovLibros.FormatRules.Add(gridFormatRule2);
+            this.colMatchNumber,
+            this.colNotaConciliacion});
+			gridFormatRule3.ApplyToRow = true;
+			gridFormatRule3.Column = this.colCheck;
+			gridFormatRule3.Enabled = false;
+			gridFormatRule3.Name = "Format0";
+			formatConditionRuleContains3.Appearance.BackColor = System.Drawing.Color.PaleGreen;
+			formatConditionRuleContains3.Appearance.Options.UseBackColor = true;
+			formatConditionRuleContains3.Values = ((System.Collections.IList)(resources.GetObject("formatConditionRuleContains3.Values")));
+			gridFormatRule3.Rule = formatConditionRuleContains3;
+			gridFormatRule4.ApplyToRow = true;
+			gridFormatRule4.Column = this.colCheck;
+			gridFormatRule4.Enabled = false;
+			gridFormatRule4.Name = "Format1";
+			formatConditionRuleContains4.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+			formatConditionRuleContains4.Appearance.Options.UseBackColor = true;
+			formatConditionRuleContains4.Values = ((System.Collections.IList)(resources.GetObject("formatConditionRuleContains4.Values")));
+			gridFormatRule4.Rule = formatConditionRuleContains4;
+			this.gridViewMovLibros.FormatRules.Add(gridFormatRule3);
+			this.gridViewMovLibros.FormatRules.Add(gridFormatRule4);
 			this.gridViewMovLibros.GridControl = this.gridMobLibros;
 			this.gridViewMovLibros.Name = "gridViewMovLibros";
 			this.gridViewMovLibros.OptionsBehavior.EditingMode = DevExpress.XtraGrid.Views.Grid.GridEditingMode.Inplace;
@@ -595,6 +601,7 @@
 			this.colFecha.OptionsColumn.ReadOnly = true;
 			this.colFecha.Visible = true;
 			this.colFecha.VisibleIndex = 0;
+			this.colFecha.Width = 122;
 			// 
 			// colTipoMov
 			// 
@@ -604,6 +611,7 @@
 			this.colTipoMov.OptionsColumn.ReadOnly = true;
 			this.colTipoMov.Visible = true;
 			this.colTipoMov.VisibleIndex = 1;
+			this.colTipoMov.Width = 143;
 			// 
 			// colReferencia
 			// 
@@ -613,6 +621,7 @@
 			this.colReferencia.OptionsColumn.ReadOnly = true;
 			this.colReferencia.Visible = true;
 			this.colReferencia.VisibleIndex = 2;
+			this.colReferencia.Width = 163;
 			// 
 			// colConcepto
 			// 
@@ -622,6 +631,7 @@
 			this.colConcepto.OptionsColumn.ReadOnly = true;
 			this.colConcepto.Visible = true;
 			this.colConcepto.VisibleIndex = 3;
+			this.colConcepto.Width = 177;
 			// 
 			// colMonto
 			// 
@@ -631,6 +641,7 @@
 			this.colMonto.OptionsColumn.ReadOnly = true;
 			this.colMonto.Visible = true;
 			this.colMonto.VisibleIndex = 4;
+			this.colMonto.Width = 170;
 			// 
 			// colMatchNumber
 			// 
@@ -640,6 +651,7 @@
 			this.colMatchNumber.OptionsColumn.ReadOnly = true;
 			this.colMatchNumber.Visible = true;
 			this.colMatchNumber.VisibleIndex = 6;
+			this.colMatchNumber.Width = 66;
 			// 
 			// txtSaldoBanco
 			// 
@@ -1002,6 +1014,24 @@
 			this.emptySpaceItem9.TextSize = new System.Drawing.Size(85, 0);
 			this.emptySpaceItem9.TextVisible = true;
 			// 
+			// colNotaConciliacion
+			// 
+			this.colNotaConciliacion.Caption = "Nota Conciliación";
+			this.colNotaConciliacion.FieldName = "NotaConciliacion";
+			this.colNotaConciliacion.Name = "colNotaConciliacion";
+			this.colNotaConciliacion.Visible = true;
+			this.colNotaConciliacion.VisibleIndex = 7;
+			this.colNotaConciliacion.Width = 228;
+			// 
+			// btnMensaje
+			// 
+			this.btnMensaje.Caption = "Agregar Mensaje";
+			this.btnMensaje.Glyph = ((System.Drawing.Image)(resources.GetObject("btnMensaje.Glyph")));
+			this.btnMensaje.Id = 7;
+			this.btnMensaje.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnMensaje.LargeGlyph")));
+			this.btnMensaje.Name = "btnMensaje";
+			this.btnMensaje.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnMensaje_ItemClick);
+			// 
 			// frmConciliacionBancaria
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1150,5 +1180,7 @@
 		private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem8;
 		private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem9;
 		private DevExpress.XtraBars.BarButtonItem btnAsociarSimilares;
+		private DevExpress.XtraGrid.Columns.GridColumn colNotaConciliacion;
+		private DevExpress.XtraBars.BarButtonItem btnMensaje;
 	}
 }
