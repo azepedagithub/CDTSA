@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmConciliacionBancaria));
 			DevExpress.XtraGrid.GridFormatRule gridFormatRule1 = new DevExpress.XtraGrid.GridFormatRule();
 			DevExpress.XtraEditors.FormatConditionRuleContains formatConditionRuleContains1 = new DevExpress.XtraEditors.FormatConditionRuleContains();
@@ -51,6 +52,7 @@
 			this.btnFormato = new DevExpress.XtraBars.BarButtonItem();
 			this.btnGuardar = new DevExpress.XtraBars.BarButtonItem();
 			this.btnAsociarSimilares = new DevExpress.XtraBars.BarButtonItem();
+			this.btnMensaje = new DevExpress.XtraBars.BarButtonItem();
 			this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
@@ -77,6 +79,7 @@
 			this.colConcepto = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colMonto = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colMatchNumber = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colNotaConciliacion = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.txtSaldoBanco = new DevExpress.XtraEditors.TextEdit();
 			this.txtSaldoLibro = new DevExpress.XtraEditors.TextEdit();
 			this.dtpFechaSaldo = new DevExpress.XtraEditors.DateEdit();
@@ -112,8 +115,7 @@
 			this.layoutControlItem17 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.emptySpaceItem8 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.emptySpaceItem9 = new DevExpress.XtraLayout.EmptySpaceItem();
-			this.colNotaConciliacion = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.btnMensaje = new DevExpress.XtraBars.BarButtonItem();
+			this.imgCollection = new DevExpress.Utils.ImageCollection(this.components);
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
 			this.layoutControl1.SuspendLayout();
@@ -168,6 +170,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem17)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem8)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem9)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.imgCollection)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// colSelectedBanco
@@ -313,6 +316,15 @@
 			this.btnAsociarSimilares.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnAsociarSimilares.LargeGlyph")));
 			this.btnAsociarSimilares.Name = "btnAsociarSimilares";
 			this.btnAsociarSimilares.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnAsociarSimilares_ItemClick);
+			// 
+			// btnMensaje
+			// 
+			this.btnMensaje.Caption = "Agregar Notas";
+			this.btnMensaje.Glyph = ((System.Drawing.Image)(resources.GetObject("btnMensaje.Glyph")));
+			this.btnMensaje.Id = 7;
+			this.btnMensaje.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnMensaje.LargeGlyph")));
+			this.btnMensaje.Name = "btnMensaje";
+			this.btnMensaje.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnMensaje_ItemClick);
 			// 
 			// ribbonPage1
 			// 
@@ -587,11 +599,13 @@
 			this.gridViewMovLibros.Name = "gridViewMovLibros";
 			this.gridViewMovLibros.OptionsBehavior.EditingMode = DevExpress.XtraGrid.Views.Grid.GridEditingMode.Inplace;
 			this.gridViewMovLibros.OptionsView.ShowGroupPanel = false;
+			this.gridViewMovLibros.CustomDrawCell += new DevExpress.XtraGrid.Views.Base.RowCellCustomDrawEventHandler(this.gridViewMovLibros_CustomDrawCell);
 			this.gridViewMovLibros.RowCellStyle += new DevExpress.XtraGrid.Views.Grid.RowCellStyleEventHandler(this.gridView_RowCellStyle);
 			this.gridViewMovLibros.RowStyle += new DevExpress.XtraGrid.Views.Grid.RowStyleEventHandler(this.gridView_RowStyle);
 			this.gridViewMovLibros.ShowingEditor += new System.ComponentModel.CancelEventHandler(this.gridViewMovLibros_ShowingEditor);
 			this.gridViewMovLibros.HiddenEditor += new System.EventHandler(this.gridViewMovLibros_HiddenEditor);
 			this.gridViewMovLibros.ShownEditor += new System.EventHandler(this.gridViewMovLibros_ShownEditor);
+			this.gridViewMovLibros.DoubleClick += new System.EventHandler(this.gridViewMovLibros_DoubleClick);
 			// 
 			// colFecha
 			// 
@@ -652,6 +666,16 @@
 			this.colMatchNumber.Visible = true;
 			this.colMatchNumber.VisibleIndex = 6;
 			this.colMatchNumber.Width = 66;
+			// 
+			// colNotaConciliacion
+			// 
+			this.colNotaConciliacion.Caption = "Nota Conciliación";
+			this.colNotaConciliacion.FieldName = "NotaConciliacion";
+			this.colNotaConciliacion.Image = ((System.Drawing.Image)(resources.GetObject("colNotaConciliacion.Image")));
+			this.colNotaConciliacion.Name = "colNotaConciliacion";
+			this.colNotaConciliacion.Visible = true;
+			this.colNotaConciliacion.VisibleIndex = 7;
+			this.colNotaConciliacion.Width = 228;
 			// 
 			// txtSaldoBanco
 			// 
@@ -1014,23 +1038,11 @@
 			this.emptySpaceItem9.TextSize = new System.Drawing.Size(85, 0);
 			this.emptySpaceItem9.TextVisible = true;
 			// 
-			// colNotaConciliacion
+			// imgCollection
 			// 
-			this.colNotaConciliacion.Caption = "Nota Conciliación";
-			this.colNotaConciliacion.FieldName = "NotaConciliacion";
-			this.colNotaConciliacion.Name = "colNotaConciliacion";
-			this.colNotaConciliacion.Visible = true;
-			this.colNotaConciliacion.VisibleIndex = 7;
-			this.colNotaConciliacion.Width = 228;
-			// 
-			// btnMensaje
-			// 
-			this.btnMensaje.Caption = "Agregar Mensaje";
-			this.btnMensaje.Glyph = ((System.Drawing.Image)(resources.GetObject("btnMensaje.Glyph")));
-			this.btnMensaje.Id = 7;
-			this.btnMensaje.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnMensaje.LargeGlyph")));
-			this.btnMensaje.Name = "btnMensaje";
-			this.btnMensaje.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnMensaje_ItemClick);
+			this.imgCollection.ImageStream = ((DevExpress.Utils.ImageCollectionStreamer)(resources.GetObject("imgCollection.ImageStream")));
+			this.imgCollection.InsertGalleryImage("pielabelstooltips_16x16.png", "images/chart/pielabelstooltips_16x16.png", DevExpress.Images.ImageResourceCache.Default.GetImage("images/chart/pielabelstooltips_16x16.png"), 0);
+			this.imgCollection.Images.SetKeyName(0, "pielabelstooltips_16x16.png");
 			// 
 			// frmConciliacionBancaria
 			// 
@@ -1098,6 +1110,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem17)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem8)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem9)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.imgCollection)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -1182,5 +1195,6 @@
 		private DevExpress.XtraBars.BarButtonItem btnAsociarSimilares;
 		private DevExpress.XtraGrid.Columns.GridColumn colNotaConciliacion;
 		private DevExpress.XtraBars.BarButtonItem btnMensaje;
+		private DevExpress.Utils.ImageCollection imgCollection;
 	}
 }

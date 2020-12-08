@@ -1,5 +1,7 @@
 ﻿using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.ViewInfo;
 using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using Security;
 using System;
 using System.Collections.Generic;
@@ -788,6 +790,41 @@ namespace ControlBancario
 				}
 				
 			}
+			
+		}
+
+		private void gridViewMovLibros_DoubleClick(object sender, EventArgs e)
+		{
+			
+			int index = (int)this.gridViewMovLibros.FocusedRowHandle;
+			if (index > -1)
+			{
+				DataRow ele = this.gridViewMovLibros.GetDataRow(Convert.ToInt32(index));
+				int iMov = Convert.ToInt32(ele["IDMovimiento"]);
+				if (iMov != -1)
+				{
+					frmMensaje ofrmMensaje = new frmMensaje(this.IDMovimientoSelected);
+					ofrmMensaje.ShowDialog();
+				}
+
+			}
+		}
+
+		private void gridViewMovLibros_CustomDrawCell(object sender, DevExpress.XtraGrid.Views.Base.RowCellCustomDrawEventArgs e)
+		{
+			if (e.Column == colNotaConciliacion)
+			{
+				//e.DefaultDraw();
+				if (Convert.ToString(e.CellValue) != "")
+				{
+
+					GridCellInfo gci = e.Cell as GridCellInfo;
+					TextEditViewInfo info = gci.ViewInfo as TextEditViewInfo;
+					info.ContextImage = this.imgCollection.Images[0];
+					info.CalcViewInfo();
+				}
+			}
+	
 			
 		}
 

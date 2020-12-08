@@ -38,13 +38,13 @@
 			// 
 			this.txtMensaje.Location = new System.Drawing.Point(2, 31);
 			this.txtMensaje.Name = "txtMensaje";
-			this.txtMensaje.Size = new System.Drawing.Size(496, 121);
+			this.txtMensaje.Size = new System.Drawing.Size(399, 90);
 			this.txtMensaje.TabIndex = 0;
 			this.txtMensaje.Text = "";
 			// 
 			// btnCancelar
 			// 
-			this.btnCancelar.Location = new System.Drawing.Point(342, 158);
+			this.btnCancelar.Location = new System.Drawing.Point(245, 127);
 			this.btnCancelar.Name = "btnCancelar";
 			this.btnCancelar.Size = new System.Drawing.Size(75, 23);
 			this.btnCancelar.TabIndex = 1;
@@ -53,7 +53,7 @@
 			// 
 			// btnGuardar
 			// 
-			this.btnGuardar.Location = new System.Drawing.Point(423, 158);
+			this.btnGuardar.Location = new System.Drawing.Point(326, 127);
 			this.btnGuardar.Name = "btnGuardar";
 			this.btnGuardar.Size = new System.Drawing.Size(75, 23);
 			this.btnGuardar.TabIndex = 1;
@@ -72,14 +72,14 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(500, 189);
+			this.ClientSize = new System.Drawing.Size(409, 156);
 			this.Controls.Add(this.labelControl1);
 			this.Controls.Add(this.btnGuardar);
 			this.Controls.Add(this.btnCancelar);
 			this.Controls.Add(this.txtMensaje);
 			this.Name = "frmMensaje";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "Mensaje";
+			this.Text = "Notas";
 			this.Load += new System.EventHandler(this.frmMensaje_Load);
 			this.ResumeLayout(false);
 			this.PerformLayout();
