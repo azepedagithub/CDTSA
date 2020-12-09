@@ -191,6 +191,7 @@
     <Compile Include="DAC\clsPaqueteDAC.cs" />
     <Compile Include="DAC\clsClasificacionDAC.cs" />
     <Compile Include="DAC\clsProductoDAC.cs" />
+    <Compile Include="DAC\clsTransaccionPrestamoDAC.cs" />
     <Compile Include="DAC\clsUnidadMedidaDAC.cs" />
     <Compile Include="DAC\globalTipoImpuestoDAC.cs" />
     <Compile Include="Consultas\frmConsultaTransacciones.cs">
@@ -282,6 +283,12 @@
     </Compile>
     <Compile Include="frmListadoProducto.Designer.cs">
       <DependentUpon>frmListadoProducto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmPagoPrestamo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPagoPrestamo.Designer.cs">
+      <DependentUpon>frmPagoPrestamo.cs</DependentUpon>
     </Compile>
     <Compile Include="frmPaquetes.cs">
       <SubType>Form</SubType>
@@ -398,6 +405,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmLote.resx">
       <DependentUpon>frmLote.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPagoPrestamo.resx">
+      <DependentUpon>frmPagoPrestamo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmPaquetes.resx">
       <DependentUpon>frmPaquetes.cs</DependentUpon>

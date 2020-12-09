@@ -715,6 +715,7 @@ CREATE  TABLE [dbo].[invTransaccion](
 	[Aplicado] [bit] NULL DEFAULT 0,
 	[UniqueValue] [uniqueidentifier] NULL,
 	[EsTraslado] [bit] NULL DEFAULT 0,
+	[IsPrestamoPagado] [bit] NULL DEFAULT 0,
 	[IDTraslado] [bigint] NULL,
 	[CreateDate] [datetime] NULL DEFAULT (GETDATE()),
  CONSTRAINT [pkinvTransaccion] PRIMARY KEY CLUSTERED 
@@ -740,6 +741,7 @@ GO
 
 --ALTER TABLE [dbo].[invTransaccion] CHECK CONSTRAINT [fkinvTransaccion]
 
+
 GO
 
 CREATE TABLE [dbo].[invTransaccionLinea](
@@ -752,6 +754,7 @@ CREATE TABLE [dbo].[invTransaccionLinea](
 	[Naturaleza] [nvarchar](1) NOT NULL,
 	[Factor] [smallint] NOT NULL DEFAULT 0,
 	[Cantidad] [decimal](28, 4) NULL DEFAULT 0,
+	[CantPagoPrestamo] [decimal](28, 4) NULL DEFAULT 0,
 	[CostoUntLocal] [decimal](28, 4) NULL DEFAULT 0,
 	[CostoUntDolar] [decimal](28, 4) NULL DEFAULT 0,
 	[PrecioUntLocal] [decimal](28, 4) NULL DEFAULT 0,
@@ -816,6 +819,79 @@ GO
 
 --ALTER TABLE [dbo].[invTransaccionLinea] CHECK CONSTRAINT [chktranlineaTransaccion]
 --GO
+
+
+CREATE TABLE [dbo].[invTransaccionPrestamo](
+	[IDPrestamo][int] NOT NULL IDENTITY(1,1),
+	[IDTransaccion] [bigint] NOT NULL,
+	[IDProducto] [bigint] NOT NULL,
+	[IDLote] [int] NOT NULL,
+	[IDTipoTran] [int] NOT NULL,
+	[IDBodega] [int] NOT NULL,
+	[IDTraslado] [bigint] NULL,
+	[Naturaleza] [nvarchar](1) NOT NULL,
+	[Factor] [smallint] NOT NULL DEFAULT 0,
+	[Cantidad] [decimal](28, 4) NULL DEFAULT 0,
+	
+	[CostoUntLocal] [decimal](28, 4) NULL DEFAULT 0,
+	[CostoUntDolar] [decimal](28, 4) NULL DEFAULT 0,
+	[PrecioUntLocal] [decimal](28, 4) NULL DEFAULT 0,
+	[PrecioUntDolar] [decimal](28, 4) NULL DEFAULT 0,
+	[Transaccion] [nvarchar](3) NOT NULL,
+	[TipoCambio] [decimal](28, 4) NULL DEFAULT 0
+ CONSTRAINT [pkTransaccionPrestamo] PRIMARY KEY CLUSTERED 
+(
+	[IDPrestamo] ASC,
+	[IDTransaccion] ASC,
+	[IDProducto] ASC,
+	[IDLote] ASC,
+	[IDTipoTran] ASC,
+	[IDBodega] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[invTransaccionPrestamo]  WITH CHECK ADD  CONSTRAINT [fkTransaccionPrestamo_invLote] FOREIGN KEY([IDLote],[IDProducto])
+REFERENCES [dbo].[invLote] ([IDLote],[IDProducto])
+GO
+
+ALTER TABLE [dbo].[invTransaccionPrestamo] CHECK CONSTRAINT [fkTransaccionPrestamo_invLote]
+GO
+
+ALTER TABLE [dbo].[invTransaccionPrestamo]  WITH CHECK ADD  CONSTRAINT [fkTransaccionPrestamoBod] FOREIGN KEY([IDBodega])
+REFERENCES [dbo].[invBodega] ([IDBodega])
+GO
+
+ALTER TABLE [dbo].[invTransaccionPrestamo] CHECK CONSTRAINT [fkTransaccionPrestamoBod]
+GO
+
+
+ALTER TABLE [dbo].[invTransaccionPrestamo]  WITH CHECK ADD  CONSTRAINT [fkTransaccionPrestamo_globalTipoTran] FOREIGN KEY([IDTipoTran])
+REFERENCES [dbo].[globalTipoTran] ([IDTipoTran])
+GO
+
+ALTER TABLE [dbo].[invTransaccionPrestamo] CHECK CONSTRAINT [fkTransaccionPrestamo_globalTipoTran]
+GO
+
+ALTER TABLE [dbo].[invTransaccionPrestamo]  WITH CHECK ADD  CONSTRAINT [fkTransaccionPrestamoTrans] FOREIGN KEY([IDTransaccion])
+REFERENCES [dbo].[invTransaccion] ([IDTransaccion])
+GO
+
+ALTER TABLE [dbo].[invTransaccionPrestamo] CHECK CONSTRAINT [fkTransaccionPrestamoTrans]
+GO
+
+ALTER TABLE [dbo].[invTransaccionPrestamo]  WITH NOCHECK ADD  CONSTRAINT [chktranPrestamoFactor] CHECK  (([FACTOR]=(1) OR [FACTOR]=(-1)))
+GO
+
+ALTER TABLE [dbo].[invTransaccionPrestamo] CHECK CONSTRAINT [chktranPrestamoFactor]
+GO
+
+ALTER TABLE [dbo].[invTransaccionPrestamo]  WITH NOCHECK ADD  CONSTRAINT [chktranPrestamoNaturaleza] CHECK  (([Naturaleza]='E' OR [Naturaleza]='S'))
+GO
+
+ALTER TABLE [dbo].[invTransaccionPrestamo] CHECK CONSTRAINT [chktranPrestamoNaturaleza]
+GO
 
 
 CREATE TABLE [dbo].[cppProveedor](
@@ -971,6 +1047,11 @@ VALUES ('DV','Devolución sobre Ventas')
 
 GO
 
+INSERT INTO dbo.globalClaseTipoTran(Transaccion,Descr)
+VALUES ('PR','Prestamos entre Empresa')
+
+GO
+
 INSERT INTO dbo.globalTipoTran( IDTipoTran ,Descr ,Transaccion ,Naturaleza ,Factor ,Orden ,SystemReadOnly ,EsTraslado ,
           EsFisico ,EsConsumo ,EsCompra ,EsVenta ,EsAjuste ,EsCosto ,EsRequisable ,DobleMovimiento)
 VALUES  ( 1 ,N'SALIDA POR INVENTARIO FISICO (-)' , N'FI' , N'S' , -1 , 1 , 1 , 0 , 1 ,0 , 0 ,0 , 0 ,0 , 0 , 0 )
@@ -1010,6 +1091,22 @@ VALUES  ( 9 ,N'VENTA (-)' , N'VT' , N'S' , -1 , 7 , 1 , 0 , 0 ,0 , 0 ,1 , 0 ,0 ,
 
 GO
 
+INSERT INTO dbo.globalTipoTran( IDTipoTran ,Descr ,Transaccion ,Naturaleza ,Factor ,Orden ,SystemReadOnly ,EsTraslado ,
+          EsFisico ,EsConsumo ,EsCompra ,EsVenta ,EsAjuste ,EsCosto ,EsRequisable ,DobleMovimiento)
+VALUES  ( 10 ,N'DEVOLUCIONES SOBRE VENTA (+)' , N'DV' , N'E' , 1 , 8, 1 , 0 , 0 ,0 , 0 ,1 , 0 ,0 , 0, 0 )
+
+GO
+
+INSERT INTO dbo.globalTipoTran( IDTipoTran ,Descr ,Transaccion ,Naturaleza ,Factor ,Orden ,SystemReadOnly ,EsTraslado ,
+          EsFisico ,EsConsumo ,EsCompra ,EsVenta ,EsAjuste ,EsCosto ,EsRequisable ,DobleMovimiento)
+VALUES  ( 11 ,N'PRESTAMO (+)' , N'PR' , N'E' , 1 , 8 , 1 , 0 , 0 ,0 , 0 ,0 , 1 ,0 , 0, 0 )
+GO
+INSERT INTO dbo.globalTipoTran( IDTipoTran ,Descr ,Transaccion ,Naturaleza ,Factor ,Orden ,SystemReadOnly ,EsTraslado ,
+          EsFisico ,EsConsumo ,EsCompra ,EsVenta ,EsAjuste ,EsCosto ,EsRequisable ,DobleMovimiento)
+VALUES  ( 12 ,N'PRESTAMO (-)' , N'PR' , N'S' , -1 , 9 , 1 , 0 , 0 ,0 , 0 ,0 , 1 ,0 , 0, 0 )
+
+GO
+
 
 INSERT INTO DBO.globalConsecutivos( Descr ,Prefijo ,Consecutivo ,Documento ,Activo)
 VALUES ('CONSECUTIVO FACTURA','FAC',1,'FAC00000001',1)
@@ -1038,6 +1135,10 @@ go
 INSERT INTO DBO.globalConsecutivos( Descr ,Prefijo ,Consecutivo ,Documento ,Activo)
 VALUES ('CONSECUTIVO TRASLADOS','MOV',1,'MOV00000001',1)
 
+GO
+
+INSERT INTO DBO.globalConsecutivos( Descr ,Prefijo ,Consecutivo ,Documento ,Activo)
+VALUES ('CONSECUTIVO PRESTAMOS','PRE',1,'PRE00000001',1)
 
 GO
 
@@ -1059,15 +1160,14 @@ VALUES ('MUE','MUESTRAS',8,'AJ',1,1)
 GO
 INSERT INTO DBO.invPaquete( PAQUETE ,Descr ,IDConsecutivo ,Transaccion ,Activo,isReadOnly)
 VALUES ('MOV','TRASLADOS',9,'TR',1,1)
+GO
 
+INSERT INTO DBO.invPaquete( PAQUETE ,Descr ,IDConsecutivo ,Transaccion ,Activo,isReadOnly)
+VALUES ('PRE','Prestamos',10,'PR',1,1)
 
 
 
 GO
-
-INSERT INTO dbo.globalTipoTran( IDTipoTran ,Descr ,Transaccion ,Naturaleza ,Factor ,Orden ,SystemReadOnly ,EsTraslado ,
-          EsFisico ,EsConsumo ,EsCompra ,EsVenta ,EsAjuste ,EsCosto ,EsRequisable ,DobleMovimiento)
-VALUES  ( 10 ,N'DEVOLUCIONES SOBRE VENTA (+)' , N'DV' , N'E' , 1 , 8, 1 , 0 , 0 ,0 , 0 ,1 , 0 ,0 , 0, 0 )
 
 --PENDIENTE AJUSTE AL COSTO
 GO
@@ -3615,3 +3715,21 @@ LEFT JOIN dbo.invClasificacion C6 ON P.Clasif6 = C6.IDClasificacion  AND C6.IDGr
 WHERE A.Existencia >0 AND (A.IDBodega = @IDBodega OR @IDBodega =-1) AND (p.Clasif1 = @IDC1 OR @IDC1 = -1)
 AND (p.Clasif2 = @IDC2 OR @IDC2 = -1) AND (p.Clasif3 = @IDC3 OR @IDC3 = -1) AND (p.Clasif4= @IDC4 OR @IDC4 = -1)
 AND (p.Clasif5 = @IDC5 OR @IDC5 = -1) AND (p.Clasif6 = @IDC6 OR @IDC6 = -1) AND (p.IDProveedor = @IDProveedor OR @IDProveedor =-1)
+
+
+GO
+
+CREATE PROCEDURE dbo.invGetDetallePrestamos @IDTransaccion INT
+AS 
+--DECLARE @IDTransaccion AS INT
+--SET @IdTransaccion = 6
+
+SELECT PR.IDProducto,PR.Descr DescrProducto,L.IDLote, L.LoteProveedor, A.Cantidad,ISNULL(P.Cantidad,0) CantPagada, A.Cantidad - ISNULL(P.Cantidad,0) Pendiente  FROM dbo.invTransaccionLinea  A
+LEFT  JOIN (
+	SELECT IDBodega,IDProducto,IDLote,IDTransaccion,SUM(ISNULL(Cantidad,0)) Cantidad  
+	FROM  dbo.invTransaccionPrestamo 
+	GROUP BY IDBodega,IDProducto,IDLote,IDTransaccion
+) P ON A.IDBodega = P.IDBodega AND A.IDLote = P.IDLote AND A.IDProducto = P.IDProducto AND A.IDTransaccion = P.IDTransaccion
+LEFT  JOIN dbo.invProducto PR ON A.IDProducto = PR.IDProducto
+LEFT  JOIN dbo.invLote L ON A.IDLote = L.IDLote AND A.IDProducto = L.IDProducto
+WHERE A.IDTransaccion = @IDTransaccion

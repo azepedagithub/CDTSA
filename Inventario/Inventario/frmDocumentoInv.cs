@@ -641,6 +641,12 @@ namespace CI
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupBodegaDestino, "[{'ColumnCaption':'IDBodega','ColumnField':'IDBodega','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");
 				this.slkupBodegaDestino.Properties.View.OptionsView.ShowAutoFilterRow = true;
 
+				if (_dtPaquete.Rows[0]["Transaccion"].ToString() == "PRE" && Convert.ToInt32(this.txtIDTransaccion.EditValue) != -1)
+				{
+					this.btnPagoPrestamos.Enabled = true;
+				}
+				else
+					this.btnPagoPrestamos.Enabled = true;
                 
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupProducto, "[{'ColumnCaption':'IdProducto','ColumnField':'IDProducto','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");
 				this.slkupProducto.Properties.View.OptionsView.ShowAutoFilterRow = true;
@@ -756,7 +762,7 @@ namespace CI
                         this.txtPrecioLocal.Enabled = true;
                         this.txtPrecioLocal.TabStop = true;
                     }
-					else if ((Convert.ToBoolean(dr["EsAjuste"]) && Convert.ToInt32(dr["Factor"]) > 0 && Convert.ToBoolean(_dtPaquete.Rows[0]["IsReadOnly"]) == false) || Convert.ToBoolean(dr["EsCompra"]))
+					else if ((Convert.ToBoolean(dr["EsAjuste"]) && Convert.ToInt32(dr["Factor"]) > 0 ) || Convert.ToBoolean(dr["EsCompra"]))
                     {
                         this.txtCostoDolar.Enabled = true;
                         this.txtCostoDolar.TabStop = true;
@@ -1259,6 +1265,12 @@ namespace CI
         {
 
         }
+
+		private void btnPagoPrestamos_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+		{
+			frmPagoPrestamo ofrmPago = new frmPagoPrestamo(Convert.ToInt32(this.txtIDTransaccion.EditValue));
+			ofrmPago.ShowDialog();
+		}
     
 
     
