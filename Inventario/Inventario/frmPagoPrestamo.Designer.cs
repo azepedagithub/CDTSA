@@ -39,7 +39,6 @@
 			this.txtReferencia = new DevExpress.XtraEditors.MemoEdit();
 			this.dtgDetallePrestamos = new DevExpress.XtraGrid.GridControl();
 			this.dtgViewPrestados = new DevExpress.XtraGrid.Views.Grid.GridView();
-			this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
 			this.ColIDProducto = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colDescrProd = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colIDLote = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -47,6 +46,7 @@
 			this.colCantidad = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colCantPagada = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colCantPendiente = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.btnGuardar = new DevExpress.XtraEditors.SimpleButton();
 			((System.ComponentModel.ISupportInitialize)(this.txtDocumento.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtAsiento.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dtpFecha.Properties.CalendarTimeProperties)).BeginInit();
@@ -144,15 +144,6 @@
 			this.dtgViewPrestados.GridControl = this.dtgDetallePrestamos;
 			this.dtgViewPrestados.Name = "dtgViewPrestados";
 			// 
-			// simpleButton1
-			// 
-			this.simpleButton1.Image = ((System.Drawing.Image)(resources.GetObject("simpleButton1.Image")));
-			this.simpleButton1.Location = new System.Drawing.Point(589, 412);
-			this.simpleButton1.Name = "simpleButton1";
-			this.simpleButton1.Size = new System.Drawing.Size(75, 23);
-			this.simpleButton1.TabIndex = 5;
-			this.simpleButton1.Text = "Guardar";
-			// 
 			// ColIDProducto
 			// 
 			this.ColIDProducto.Caption = "ID Producto";
@@ -216,12 +207,22 @@
 			this.colCantPendiente.Visible = true;
 			this.colCantPendiente.VisibleIndex = 6;
 			// 
+			// btnGuardar
+			// 
+			this.btnGuardar.Image = ((System.Drawing.Image)(resources.GetObject("btnGuardar.Image")));
+			this.btnGuardar.Location = new System.Drawing.Point(589, 412);
+			this.btnGuardar.Name = "btnGuardar";
+			this.btnGuardar.Size = new System.Drawing.Size(75, 23);
+			this.btnGuardar.TabIndex = 5;
+			this.btnGuardar.Text = "Guardar";
+			this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
+			// 
 			// frmPagoPrestamo
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(677, 443);
-			this.Controls.Add(this.simpleButton1);
+			this.Controls.Add(this.btnGuardar);
 			this.Controls.Add(this.dtgDetallePrestamos);
 			this.Controls.Add(this.txtReferencia);
 			this.Controls.Add(this.dtpFecha);
@@ -259,7 +260,7 @@
 		private DevExpress.XtraEditors.MemoEdit txtReferencia;
 		private DevExpress.XtraGrid.GridControl dtgDetallePrestamos;
 		private DevExpress.XtraGrid.Views.Grid.GridView dtgViewPrestados;
-		private DevExpress.XtraEditors.SimpleButton simpleButton1;
+		private DevExpress.XtraEditors.SimpleButton btnGuardar;
 		private DevExpress.XtraGrid.Columns.GridColumn ColIDProducto;
 		private DevExpress.XtraGrid.Columns.GridColumn colDescrProd;
 		private DevExpress.XtraGrid.Columns.GridColumn colIDLote;

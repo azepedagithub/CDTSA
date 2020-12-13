@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDocumentoInv));
 			this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
 			this.hlblAsiento = new DevExpress.XtraEditors.HyperlinkLabelControl();
@@ -109,18 +110,20 @@
 			this.layoutControlItem20 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem24 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.barManager1 = new DevExpress.XtraBars.BarManager();
+			this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
 			this.bar1 = new DevExpress.XtraBars.Bar();
 			this.btnAddDoc = new DevExpress.XtraBars.BarButtonItem();
 			this.btnSaveDoc = new DevExpress.XtraBars.BarButtonItem();
 			this.btnCancelDoc = new DevExpress.XtraBars.BarButtonItem();
 			this.btnPrintDoc = new DevExpress.XtraBars.BarButtonItem();
+			this.btnPagoPrestamos = new DevExpress.XtraBars.BarButtonItem();
+			this.btnFinalizarPrestamo = new DevExpress.XtraBars.BarButtonItem();
+			this.btnVisalizarDetallePrestamos = new DevExpress.XtraBars.BarButtonItem();
 			this.bar3 = new DevExpress.XtraBars.Bar();
 			this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
-			this.btnPagoPrestamos = new DevExpress.XtraBars.BarButtonItem();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
 			this.layoutControl1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.txtPaquete.Properties)).BeginInit();
@@ -1175,8 +1178,10 @@
             this.btnSaveDoc,
             this.btnCancelDoc,
             this.btnPrintDoc,
-            this.btnPagoPrestamos});
-			this.barManager1.MaxItemId = 6;
+            this.btnPagoPrestamos,
+            this.btnFinalizarPrestamo,
+            this.btnVisalizarDetallePrestamos});
+			this.barManager1.MaxItemId = 8;
 			this.barManager1.StatusBar = this.bar3;
 			// 
 			// bar1
@@ -1190,7 +1195,9 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.btnSaveDoc),
             new DevExpress.XtraBars.LinkPersistInfo(this.btnCancelDoc),
             new DevExpress.XtraBars.LinkPersistInfo(this.btnPrintDoc),
-            new DevExpress.XtraBars.LinkPersistInfo(this.btnPagoPrestamos)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.btnPagoPrestamos),
+            new DevExpress.XtraBars.LinkPersistInfo(this.btnFinalizarPrestamo),
+            new DevExpress.XtraBars.LinkPersistInfo(this.btnVisalizarDetallePrestamos)});
 			this.bar1.Text = "Tools";
 			// 
 			// btnAddDoc
@@ -1228,6 +1235,33 @@
 			this.btnPrintDoc.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnPrintDoc.LargeGlyph")));
 			this.btnPrintDoc.Name = "btnPrintDoc";
 			this.btnPrintDoc.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnPrintDoc_ItemClick);
+			// 
+			// btnPagoPrestamos
+			// 
+			this.btnPagoPrestamos.Caption = "Pago";
+			this.btnPagoPrestamos.Glyph = ((System.Drawing.Image)(resources.GetObject("btnPagoPrestamos.Glyph")));
+			this.btnPagoPrestamos.Id = 5;
+			this.btnPagoPrestamos.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnPagoPrestamos.LargeGlyph")));
+			this.btnPagoPrestamos.Name = "btnPagoPrestamos";
+			this.btnPagoPrestamos.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnPagoPrestamos_ItemClick);
+			// 
+			// btnFinalizarPrestamo
+			// 
+			this.btnFinalizarPrestamo.Caption = "Pagar Pretamo";
+			this.btnFinalizarPrestamo.Glyph = ((System.Drawing.Image)(resources.GetObject("btnFinalizarPrestamo.Glyph")));
+			this.btnFinalizarPrestamo.Id = 6;
+			this.btnFinalizarPrestamo.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnFinalizarPrestamo.LargeGlyph")));
+			this.btnFinalizarPrestamo.Name = "btnFinalizarPrestamo";
+			this.btnFinalizarPrestamo.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnFinalizarPrestamo_ItemClick);
+			// 
+			// btnVisalizarDetallePrestamos
+			// 
+			this.btnVisalizarDetallePrestamos.Caption = "Detalle de Pagos";
+			this.btnVisalizarDetallePrestamos.Glyph = ((System.Drawing.Image)(resources.GetObject("btnVisalizarDetallePrestamos.Glyph")));
+			this.btnVisalizarDetallePrestamos.Id = 7;
+			this.btnVisalizarDetallePrestamos.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnVisalizarDetallePrestamos.LargeGlyph")));
+			this.btnVisalizarDetallePrestamos.Name = "btnVisalizarDetallePrestamos";
+			this.btnVisalizarDetallePrestamos.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnVisalizarDetallePrestamos_ItemClick);
 			// 
 			// bar3
 			// 
@@ -1268,15 +1302,6 @@
 			this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
 			this.barDockControlRight.Location = new System.Drawing.Point(784, 31);
 			this.barDockControlRight.Size = new System.Drawing.Size(0, 550);
-			// 
-			// btnPagoPrestamos
-			// 
-			this.btnPagoPrestamos.Caption = "Pago";
-			this.btnPagoPrestamos.Glyph = ((System.Drawing.Image)(resources.GetObject("btnPagoPrestamos.Glyph")));
-			this.btnPagoPrestamos.Id = 5;
-			this.btnPagoPrestamos.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnPagoPrestamos.LargeGlyph")));
-			this.btnPagoPrestamos.Name = "btnPagoPrestamos";
-			this.btnPagoPrestamos.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnPagoPrestamos_ItemClick);
 			// 
 			// frmDocumentoInv
 			// 
@@ -1467,6 +1492,8 @@
         private DevExpress.XtraEditors.HyperlinkLabelControl hlblAsiento;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem24;
 		private DevExpress.XtraBars.BarButtonItem btnPagoPrestamos;
+		private DevExpress.XtraBars.BarButtonItem btnFinalizarPrestamo;
+		private DevExpress.XtraBars.BarButtonItem btnVisalizarDetallePrestamos;
 
 
     }

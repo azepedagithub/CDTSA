@@ -717,6 +717,7 @@ CREATE  TABLE [dbo].[invTransaccion](
 	[EsTraslado] [bit] NULL DEFAULT 0,
 	[IsPrestamoPagado] [bit] NULL DEFAULT 0,
 	[IDTraslado] [bigint] NULL,
+	[isChildPrestamo] BIT DEFAULT 0,
 	[CreateDate] [datetime] NULL DEFAULT (GETDATE()),
  CONSTRAINT [pkinvTransaccion] PRIMARY KEY CLUSTERED 
 (
@@ -822,76 +823,32 @@ GO
 
 
 CREATE TABLE [dbo].[invTransaccionPrestamo](
-	[IDPrestamo][int] NOT NULL IDENTITY(1,1),
+	[IDTransaccionPrestamo][bigint] NOT NULL,
 	[IDTransaccion] [bigint] NOT NULL,
-	[IDProducto] [bigint] NOT NULL,
-	[IDLote] [int] NOT NULL,
-	[IDTipoTran] [int] NOT NULL,
-	[IDBodega] [int] NOT NULL,
-	[IDTraslado] [bigint] NULL,
-	[Naturaleza] [nvarchar](1) NOT NULL,
-	[Factor] [smallint] NOT NULL DEFAULT 0,
-	[Cantidad] [decimal](28, 4) NULL DEFAULT 0,
-	
-	[CostoUntLocal] [decimal](28, 4) NULL DEFAULT 0,
-	[CostoUntDolar] [decimal](28, 4) NULL DEFAULT 0,
-	[PrecioUntLocal] [decimal](28, 4) NULL DEFAULT 0,
-	[PrecioUntDolar] [decimal](28, 4) NULL DEFAULT 0,
-	[Transaccion] [nvarchar](3) NOT NULL,
-	[TipoCambio] [decimal](28, 4) NULL DEFAULT 0
+	[Nota][nvarchar](250) NOT NULL,
  CONSTRAINT [pkTransaccionPrestamo] PRIMARY KEY CLUSTERED 
 (
-	[IDPrestamo] ASC,
-	[IDTransaccion] ASC,
-	[IDProducto] ASC,
-	[IDLote] ASC,
-	[IDTipoTran] ASC,
-	[IDBodega] ASC
+	[IDTransaccionPrestamo] ASC,
+	[IDTransaccion] ASC
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
 GO
 
-ALTER TABLE [dbo].[invTransaccionPrestamo]  WITH CHECK ADD  CONSTRAINT [fkTransaccionPrestamo_invLote] FOREIGN KEY([IDLote],[IDProducto])
-REFERENCES [dbo].[invLote] ([IDLote],[IDProducto])
+ALTER TABLE [dbo].[invTransaccionPrestamo]  WITH CHECK ADD  CONSTRAINT [fkinvTransaccionPrestamoTransaccionPrestamo] FOREIGN KEY([IDTransaccionPrestamo])
+REFERENCES [dbo].[invTransaccion] (IDTransaccion)
 GO
 
-ALTER TABLE [dbo].[invTransaccionPrestamo] CHECK CONSTRAINT [fkTransaccionPrestamo_invLote]
+ALTER TABLE [dbo].[invTransaccionPrestamo] CHECK CONSTRAINT [fkinvTransaccionPrestamoTransaccionPrestamo]
 GO
 
-ALTER TABLE [dbo].[invTransaccionPrestamo]  WITH CHECK ADD  CONSTRAINT [fkTransaccionPrestamoBod] FOREIGN KEY([IDBodega])
-REFERENCES [dbo].[invBodega] ([IDBodega])
+ALTER TABLE [dbo].[invTransaccionPrestamo]  WITH CHECK ADD  CONSTRAINT [fkinvTransaccionPrestamoTransaccion] FOREIGN KEY([IDTransaccionPrestamo])
+REFERENCES [dbo].[invTransaccion] (IDTransaccion)
 GO
 
-ALTER TABLE [dbo].[invTransaccionPrestamo] CHECK CONSTRAINT [fkTransaccionPrestamoBod]
+ALTER TABLE [dbo].[invTransaccionPrestamo] CHECK CONSTRAINT [fkinvTransaccionPrestamoTransaccion]
 GO
 
-
-ALTER TABLE [dbo].[invTransaccionPrestamo]  WITH CHECK ADD  CONSTRAINT [fkTransaccionPrestamo_globalTipoTran] FOREIGN KEY([IDTipoTran])
-REFERENCES [dbo].[globalTipoTran] ([IDTipoTran])
-GO
-
-ALTER TABLE [dbo].[invTransaccionPrestamo] CHECK CONSTRAINT [fkTransaccionPrestamo_globalTipoTran]
-GO
-
-ALTER TABLE [dbo].[invTransaccionPrestamo]  WITH CHECK ADD  CONSTRAINT [fkTransaccionPrestamoTrans] FOREIGN KEY([IDTransaccion])
-REFERENCES [dbo].[invTransaccion] ([IDTransaccion])
-GO
-
-ALTER TABLE [dbo].[invTransaccionPrestamo] CHECK CONSTRAINT [fkTransaccionPrestamoTrans]
-GO
-
-ALTER TABLE [dbo].[invTransaccionPrestamo]  WITH NOCHECK ADD  CONSTRAINT [chktranPrestamoFactor] CHECK  (([FACTOR]=(1) OR [FACTOR]=(-1)))
-GO
-
-ALTER TABLE [dbo].[invTransaccionPrestamo] CHECK CONSTRAINT [chktranPrestamoFactor]
-GO
-
-ALTER TABLE [dbo].[invTransaccionPrestamo]  WITH NOCHECK ADD  CONSTRAINT [chktranPrestamoNaturaleza] CHECK  (([Naturaleza]='E' OR [Naturaleza]='S'))
-GO
-
-ALTER TABLE [dbo].[invTransaccionPrestamo] CHECK CONSTRAINT [chktranPrestamoNaturaleza]
-GO
 
 
 CREATE TABLE [dbo].[cppProveedor](
@@ -1530,7 +1487,7 @@ GO
 
 
 CREATE  PROCEDURE dbo.invUpdateDocumentoInv(@Operacion NVARCHAR(1),@IDTransaccion AS INT OUTPUT,@ModuloOrigen NVARCHAR(4),@IDPaquete AS INT,@Fecha AS DATETIME,  @Usuario AS NVARCHAR(20),
-											@Referencia AS NVARCHAR(250),@Documento NVARCHAR(250) OUTPUT,@Aplicado AS BIT,@EsTraslado AS BIT,@IDTraslado AS INT)
+											@Referencia AS NVARCHAR(250),@Documento NVARCHAR(250) OUTPUT,@Aplicado AS BIT,@EsTraslado AS BIT,@IDTraslado AS INT,@Is)
 AS 
 if upper(@Operacion) = 'I'
 BEGIN
@@ -1598,7 +1555,7 @@ END
 
 GO
 
-CREATE   PROCEDURE dbo.invGetTransaccionCabecera(@IdTransaccion AS INT)
+CREATE  PROCEDURE dbo.invGetTransaccionCabecera(@IdTransaccion AS INT)
 AS 
 SELECT  IDTransaccion ,
         ModuloOrigen ,
@@ -1612,7 +1569,7 @@ SELECT  IDTransaccion ,
         UniqueValue ,
         EsTraslado ,
         IDTraslado ,
-        CreateDate  FROM dbo.invTransaccion WHERE IDTransaccion =@IDTransaccion
+        CreateDate,isChildPrestamo  FROM dbo.invTransaccion WHERE IDTransaccion =@IDTransaccion
  
 GO
 
@@ -3719,17 +3676,77 @@ AND (p.Clasif5 = @IDC5 OR @IDC5 = -1) AND (p.Clasif6 = @IDC6 OR @IDC6 = -1) AND 
 
 GO
 
-CREATE PROCEDURE dbo.invGetDetallePrestamos @IDTransaccion INT
+CREATE  PROCEDURE dbo.invGetDetallePrestamos @IDTransaccion INT
 AS 
 --DECLARE @IDTransaccion AS INT
 --SET @IdTransaccion = 6
 
-SELECT PR.IDProducto,PR.Descr DescrProducto,L.IDLote, L.LoteProveedor, A.Cantidad,ISNULL(P.Cantidad,0) CantPagada, A.Cantidad - ISNULL(P.Cantidad,0) Pendiente  FROM dbo.invTransaccionLinea  A
+SELECT PR.IDProducto,PR.Descr DescrProducto,L.IDLote, L.LoteProveedor,A.IDTipoTran,A.IDBodega, A.Cantidad,ISNULL(P.Cantidad,0) CantPagada, A.Cantidad - ISNULL(P.Cantidad,0) Pendiente ,
+ A.CostoUntLocal,A.CostoUntDolar,A.PrecioUntLocal,A.PrecioUntDolar,Transaccion,TipoCambio
+FROM dbo.invTransaccionLinea  A
 LEFT  JOIN (
-	SELECT IDBodega,IDProducto,IDLote,IDTransaccion,SUM(ISNULL(Cantidad,0)) Cantidad  
-	FROM  dbo.invTransaccionPrestamo 
-	GROUP BY IDBodega,IDProducto,IDLote,IDTransaccion
-) P ON A.IDBodega = P.IDBodega AND A.IDLote = P.IDLote AND A.IDProducto = P.IDProducto AND A.IDTransaccion = P.IDTransaccion
+	SELECT  A.IDTransaccionPrestamo, C.IDProducto ,
+        C.IDLote ,
+        C.IDBodega,
+        ISNULL(SUM(C.Cantidad),0) Cantidad
+          FROM dbo.invTransaccionPrestamo A
+	LEFT JOIN dbo.invTransaccion B ON A.IDTransaccion = B.IDTransaccion
+	INNER JOIN dbo.invTransaccionLinea C ON B.IDTransaccion = C.IDTransaccion 
+	GROUP BY C.IDProducto,C.IDLote,C.IDBodega,A.IDTransaccionPrestamo
+) P ON A.IDBodega = P.IDBodega AND A.IDLote = P.IDLote AND A.IDProducto = P.IDProducto AND A.IDTransaccion = P.IDTransaccionPrestamo
 LEFT  JOIN dbo.invProducto PR ON A.IDProducto = PR.IDProducto
 LEFT  JOIN dbo.invLote L ON A.IDLote = L.IDLote AND A.IDProducto = L.IDProducto
 WHERE A.IDTransaccion = @IDTransaccion
+
+GO
+
+
+CREATE  PROCEDURE dbo.invUpdateTransaccionPrestamo @Operacion NVARCHAR(1), @IDTransaccionPrestamo BIGINT, @IDTransaccion BIGINT, @Nota NVARCHAR(250)
+AS 
+IF (@Operacion = 'I')
+BEGIN
+	INSERT INTO dbo.invTransaccionPrestamo(IDTransaccionPrestamo, IDTransaccion, Nota )
+	VALUES  (@IDTransaccionPrestamo,@IDTransaccion,@Nota)
+	
+	IF NOT EXISTS (SELECT L2.IDProducto,AVG(L2.Cantidad)-SUM(L.Cantidad)  FROM dbo.invTransaccionPrestamo A
+				INNER JOIN dbo.invTransaccionLinea L ON A.IDTransaccion = L.IDTransaccion
+				INNER JOIN dbo.invTransaccionLinea L2 ON A.IDTransaccionPrestamo = L2.IDTransaccion
+				GROUP BY L2.IDProducto
+				HAVING AVG(L2.Cantidad)-SUM(L.Cantidad)>0 )
+	BEGIN
+		--Actualizamos el prestamos como cancelado
+		UPDATE dbo.invTransaccion SET  IsPrestamoPagado = 1 WHERE IDTransaccion = @IDTransaccionPrestamo
+	END
+	
+	
+END
+IF (@Operacion = 'U')
+BEGIN
+	UPDATE dbo.invtransaccionPrestamo SET Nota = @Nota WHERE IDTransaccion = @IDTransaccion AND IDTransaccionPrestamo = @IDTransaccionPrestamo
+END
+IF (@Operacion = 'D')
+BEGIN
+	DELETE FROM dbo.invTransaccionPrestamo WHERE (IDTransaccion = @IDTransaccion OR @IDTransaccion = -1)  AND IDTransaccionPrestamo = @IDTransaccionPrestamo
+END
+
+GO
+
+CREATE  PROCEDURE dbo.invGetTransaccionPrestamo (@IDTransaccionPrestamo bigint )
+AS 
+SELECT  A.IDTransaccionPrestamo ,
+        C.IDTransaccion ,
+        C.Documento,C.Fecha,C.Asiento,C.Referencia
+        Nota  
+FROM dbo.invTransaccionPrestamo A
+INNER JOIN dbo.invTransaccion B ON A.IDTransaccionPrestamo = B.IDTransaccion
+INNER JOIN dbo.invTransaccion C ON A.IDTransaccion = C.IDTransaccion
+WHERE IDTransaccionPrestamo = @IDTransaccionPrestamo 
+
+GO
+
+CREATE PROCEDURE dbo.invUpdatePrestamos(@IDTransaccion BIGINT, @IsPrestamoPagado BIT, @IsChildPrestamo BIT)
+AS
+UPDATE dbo.invTransaccion  SET IsPrestamoPagado = @IsPrestamoPagado, isChildPrestamo = @IsChildPrestamo
+WHERE IDTransaccion= @IDTransaccion
+
+GO

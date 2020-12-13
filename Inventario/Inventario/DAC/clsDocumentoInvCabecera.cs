@@ -235,6 +235,24 @@ namespace CI.DAC
     
         }
 
+
+		public static bool UpdateDatosPrestamos(long IDTransaccion, bool isPrestamoPagado, bool isChildPrestamo, SqlTransaction tran)
+		{
+			bool result = false;
+			String strSql = "dbo.invUpdatePrestamos";
+
+			SqlCommand oCmd = new SqlCommand(strSql, Security.ConnectionManager.GetConnection());
+			oCmd.Parameters.Add(new SqlParameter("@IDTransaccion", IDTransaccion));
+			oCmd.Parameters.Add(new SqlParameter("@IsPrestamoPagado", isPrestamoPagado));
+			oCmd.Parameters.Add(new SqlParameter("@IsChildPrestamo", isChildPrestamo));
+
+			oCmd.CommandType = CommandType.StoredProcedure;
+			oCmd.Transaction = tran;
+			oCmd.ExecuteNonQuery();
+			result = true;
+			return result;
+		}
+
         public static String GeneraAsientoTransaccion(long IDTransaccion, string Usuario, SqlTransaction tran)
         {
             String Asiento = "";

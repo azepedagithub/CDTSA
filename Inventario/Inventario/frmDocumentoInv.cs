@@ -641,12 +641,7 @@ namespace CI
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupBodegaDestino, "[{'ColumnCaption':'IDBodega','ColumnField':'IDBodega','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");
 				this.slkupBodegaDestino.Properties.View.OptionsView.ShowAutoFilterRow = true;
 
-				if (_dtPaquete.Rows[0]["Transaccion"].ToString() == "PRE" && Convert.ToInt32(this.txtIDTransaccion.EditValue) != -1)
-				{
-					this.btnPagoPrestamos.Enabled = true;
-				}
-				else
-					this.btnPagoPrestamos.Enabled = true;
+				
                 
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupProducto, "[{'ColumnCaption':'IdProducto','ColumnField':'IDProducto','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");
 				this.slkupProducto.Properties.View.OptionsView.ShowAutoFilterRow = true;
@@ -658,6 +653,19 @@ namespace CI
                 Util.Util.SetFormatTextEdit(txtPrecioLocal, Util.Util.FormatType.MonedaLocal);
                 BotoneriaSuperior();
                 UpdateControlsFromDataRow(_currentRow);
+
+				if (_dtPaquete.Rows[0]["Transaccion"].ToString() == "PR" && Convert.ToInt32(this.txtIDTransaccion.EditValue) != -1 && Convert.ToBoolean(_currentRow["IsChildPrestamo"]) == false)
+				{
+					this.btnPagoPrestamos.Enabled = true;
+					this.btnFinalizarPrestamo.Enabled = true;
+					this.btnVisalizarDetallePrestamos.Enabled = true;
+				}
+				else
+				{
+					this.btnPagoPrestamos.Enabled = false;
+					this.btnFinalizarPrestamo.Enabled = false;
+					this.btnVisalizarDetallePrestamos.Enabled = false;
+				}
 
                 if (Accion == "New")
                 {
@@ -1270,6 +1278,29 @@ namespace CI
 		{
 			frmPagoPrestamo ofrmPago = new frmPagoPrestamo(Convert.ToInt32(this.txtIDTransaccion.EditValue));
 			ofrmPago.ShowDialog();
+		}
+
+		private void btnFinalizarPrestamo_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+		{
+			try
+			{
+				ConnectionManager.BeginTran();
+				clsDocumentoInvCabecera.SetTransactionToAdaptador(true);
+				DAC.clsDocumentoInvCabecera.UpdateDatosPrestamos(Convert.ToInt64(this.txtIDTransaccion), true, false, ConnectionManager.Tran);
+				ConnectionManager.CommitTran();
+			}
+			catch (Exception ex)
+			{
+				ConnectionManager.RollBackTran();
+				MessageBox.Show(ex.Message);
+			}
+		}
+
+		private void btnVisalizarDetallePrestamos_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+		{
+			frmDetallesPrestamos ofrmDetalle = new frmDetallesPrestamos(Convert.ToInt64(this.txtIDTransaccion.EditValue));
+			ofrmDetalle.ShowDialog();
+
 		}
     
 

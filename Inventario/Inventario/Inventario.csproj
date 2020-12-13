@@ -242,6 +242,12 @@
     <Compile Include="frmConsecutivos.Designer.cs">
       <DependentUpon>frmConsecutivos.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmDetallesPrestamos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDetallesPrestamos.Designer.cs">
+      <DependentUpon>frmDetallesPrestamos.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmDocumentoInv.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -381,6 +387,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmConsecutivos.resx">
       <DependentUpon>frmConsecutivos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmDetallesPrestamos.resx">
+      <DependentUpon>frmDetallesPrestamos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmDocumentoInv.resx">
       <DependentUpon>frmDocumentoInv.cs</DependentUpon>
