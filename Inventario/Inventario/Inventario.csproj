@@ -191,6 +191,7 @@
     <Compile Include="DAC\clsPaqueteDAC.cs" />
     <Compile Include="DAC\clsClasificacionDAC.cs" />
     <Compile Include="DAC\clsProductoDAC.cs" />
+    <Compile Include="DAC\clsTransaccionPrestamoDAC.cs" />
     <Compile Include="DAC\clsUnidadMedidaDAC.cs" />
     <Compile Include="DAC\globalTipoImpuestoDAC.cs" />
     <Compile Include="Consultas\frmConsultaTransacciones.cs">
@@ -241,6 +242,12 @@
     <Compile Include="frmConsecutivos.Designer.cs">
       <DependentUpon>frmConsecutivos.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmDetallesPrestamos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDetallesPrestamos.Designer.cs">
+      <DependentUpon>frmDetallesPrestamos.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmDocumentoInv.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -282,6 +289,12 @@
     </Compile>
     <Compile Include="frmListadoProducto.Designer.cs">
       <DependentUpon>frmListadoProducto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmPagoPrestamo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPagoPrestamo.Designer.cs">
+      <DependentUpon>frmPagoPrestamo.cs</DependentUpon>
     </Compile>
     <Compile Include="frmPaquetes.cs">
       <SubType>Form</SubType>
@@ -375,6 +388,9 @@
     <EmbeddedResource Include="frmConsecutivos.resx">
       <DependentUpon>frmConsecutivos.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmDetallesPrestamos.resx">
+      <DependentUpon>frmDetallesPrestamos.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmDocumentoInv.resx">
       <DependentUpon>frmDocumentoInv.cs</DependentUpon>
     </EmbeddedResource>
@@ -398,6 +414,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmLote.resx">
       <DependentUpon>frmLote.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPagoPrestamo.resx">
+      <DependentUpon>frmPagoPrestamo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmPaquetes.resx">
       <DependentUpon>frmPaquetes.cs</DependentUpon>
