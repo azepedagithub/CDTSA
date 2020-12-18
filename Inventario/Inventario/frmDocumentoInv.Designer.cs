@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDocumentoInv));
 			this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
 			this.hlblAsiento = new DevExpress.XtraEditors.HyperlinkLabelControl();
@@ -110,7 +109,7 @@
 			this.layoutControlItem20 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem24 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
+			this.barManager1 = new DevExpress.XtraBars.BarManager();
 			this.bar1 = new DevExpress.XtraBars.Bar();
 			this.btnAddDoc = new DevExpress.XtraBars.BarButtonItem();
 			this.btnSaveDoc = new DevExpress.XtraBars.BarButtonItem();

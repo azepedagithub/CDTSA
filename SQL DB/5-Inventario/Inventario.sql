@@ -1092,6 +1092,10 @@ go
 INSERT INTO DBO.globalConsecutivos( Descr ,Prefijo ,Consecutivo ,Documento ,Activo)
 VALUES ('CONSECUTIVO TRASLADOS','MOV',1,'MOV00000001',1)
 
+
+INSERT INTO DBO.globalConsecutivos( Descr ,Prefijo ,Consecutivo ,Documento ,Activo)
+VALUES ('CONSECUTIVO DEVOLUCIONES VENTA','DEV',1,'DEV00000001',1)
+
 GO
 
 INSERT INTO DBO.globalConsecutivos( Descr ,Prefijo ,Consecutivo ,Documento ,Activo)
@@ -1121,6 +1125,11 @@ GO
 
 INSERT INTO DBO.invPaquete( PAQUETE ,Descr ,IDConsecutivo ,Transaccion ,Activo,isReadOnly)
 VALUES ('PRE','Prestamos',10,'PR',1,1)
+
+GO
+
+INSERT INTO DBO.invPaquete( PAQUETE ,Descr ,IDConsecutivo ,Transaccion ,Activo,isReadOnly)
+VALUES ('DEVFA','DEVOLUCION FACTURA',11,'DV',1,1)
 
 
 
@@ -1569,9 +1578,11 @@ SELECT  IDTransaccion ,
         UniqueValue ,
         EsTraslado ,
         IDTraslado ,
-        CreateDate,isChildPrestamo  FROM dbo.invTransaccion WHERE IDTransaccion =@IDTransaccion
+        CreateDate,isChildPrestamo, IsPrestamoPagado  FROM dbo.invTransaccion WHERE IDTransaccion =@IDTransaccion
  
 GO
+
+
 
 CREATE  PROCEDURE dbo.invGetTransaccionCabeceraByCriterio(@FechaInicio AS DATETIME,@FechaFinal AS DATETIME	, @Referencia AS NVARCHAR(250),
 						@Documento AS NVARCHAR(250),@IDPaquete AS INT,@EsTraslado AS INT,@IDTraslado AS INT,@AsientoContable NVARCHAR(20),@Usuario AS NVARCHAR(20))
@@ -2521,6 +2532,80 @@ BEGIN
 	WHERE A.IDFactura=@IDDocumento
 
 END  
+
+GO
+
+CREATE PROCEDURE [dbo].[invCreaPaqueteInvDevFactura] (@Modulo AS NVARCHAR(4),@IDDocumento AS INT,@Usuario AS NVARCHAR(50),@IDTransaccion AS BIGINT OUTPUT)
+AS 
+/*SET @Modulo = 'FAC'
+SET @IDDocumento= 2
+SET @Usuario= 'jespinoza'
+*/
+DECLARE @IDConsecutivo  AS INT
+DECLARE @DocumentoInv AS NVARCHAR(20)
+DECLARE @FechaDocumento DATE
+DECLARE @Referencia AS NVARCHAR(250)
+DECLARE @Documento AS NVARCHAR(20) --//Numero del documento Fisico
+DECLARE @Transaccion AS NVARCHAR(2)
+DECLARE @IDTipoTran AS INT
+DECLARE @Factor AS INT
+DECLARE @IDPaquete AS INT 
+DECLARE @TipoCambioCont AS NVARCHAR(4)
+DECLARE @TipoCambio AS DECIMAL(28,4)	
+DECLARE @Naturaleza AS NVARCHAR(1)
+DECLARE @Bodega AS INT
+
+
+IF (@Modulo = 'DEVFA')
+BEGIN
+	--//Leer parametros de configuración
+	SELECT TOP	1 @IDPaquete = IDPaqueteDevolucion  FROM dbo.fafParametros
+
+	
+	IF (@IDPaquete IS NULL)
+	BEGIN
+		RAISERROR ( 'GENERACIÓN DEL DOCUMENTO: Revise los parametros de Factura, si el paquete de inventario se encuentra establecido', 16, 1) ;
+		return		
+	END
+	
+
+	
+	SELECT @FechaDocumento = A.Fecha, @Referencia = 'Devolución Factura: ' + B.Factura , @Documento = Devolucion,@TipoCambio=A.TipoCambio, @Bodega= IDBodega
+	 FROM dbo.fafdevolucion A
+	 INNER JOIN dbo.fafFactura B ON A.IDFactura = B.IDFactura
+	 WHERE A.IDFactura =@IDDocumento 
+	
+
+	
+	SET  @Documento =  CAST(@Bodega AS NVARCHAR(10)) + '-' + RIGHT('00000000' + RTRIM(LTRIM(@Documento)),8)
+	
+	--//Crear la cabecera del Documento  
+	EXEC  dbo.invUpdateDocumentoInv  @Operacion = N'I', -- nvarchar(1)
+	    @IDTransaccion = @IDTransaccion OUTPUT, -- int
+	    @ModuloOrigen = @Modulo, -- nvarchar(4)
+	    @IDPaquete =@IDPaquete, -- int
+	    @Fecha = @FechaDocumento, -- datetime
+	    @Usuario =@Usuario, -- nvarchar(20)
+	    @Referencia = @Referencia, -- nvarchar(250)
+	    @Documento = @Documento OUTPUT, -- nvarchar(250)
+	    @Aplicado = 1, -- bit
+	    @EsTraslado = 0, -- bit
+	    @IDTraslado = -1 -- int
+	
+	--//Obtener las transacciones asociadas al Paquete.
+	SELECT @IDTipoTran =IDTipoTran, @Factor = Factor,@Naturaleza = Naturaleza, @Transaccion=Transaccion  FROM dbo.globalTipoTran WHERE  Transaccion = (SELECT Transaccion  FROM dbo.invPaquete WHERE IDPaquete=@IDPaquete) 
+
+	--//Insertar el detalle del documento
+	INSERT INTO dbo.invTransaccionLinea( IDTransaccion ,IDProducto ,IDLote ,IDTipoTran ,IDBodega ,IDTraslado , Naturaleza ,Factor ,Cantidad ,CostoUntLocal ,CostoUntDolar ,PrecioUntLocal ,PrecioUntDolar ,Transaccion ,TipoCambio)
+	SELECT @IDTransaccion, A.IDProducto,B.IDLote,@IDTipoTran,A.IDBodega,-1 IDTranslado,@Naturaleza,@Factor ,B.Cantidad, P.CostoPromLocal,CostoPromDolar,A.PrecioLocal,A.PrecioDolar,@Transaccion, @TipoCambio
+	 FROM dbo.fafFacturaProd A
+	INNER JOIN dbo.fafFacturaProdLote B ON A.IDFacturaProd = B.IDFacturaProd
+	INNER JOIN dbo.invProducto P ON A.IDProducto=P.IDProducto
+	WHERE A.IDFactura=@IDDocumento
+
+END  
+
+
 
 GO
 
@@ -3750,3 +3835,5 @@ UPDATE dbo.invTransaccion  SET IsPrestamoPagado = @IsPrestamoPagado, isChildPres
 WHERE IDTransaccion= @IDTransaccion
 
 GO
+
+

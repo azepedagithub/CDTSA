@@ -656,8 +656,16 @@ namespace CI
 
 				if (_dtPaquete.Rows[0]["Transaccion"].ToString() == "PR" && Convert.ToInt32(this.txtIDTransaccion.EditValue) != -1 && Convert.ToBoolean(_currentRow["IsChildPrestamo"]) == false)
 				{
-					this.btnPagoPrestamos.Enabled = true;
-					this.btnFinalizarPrestamo.Enabled = true;
+					if (Convert.ToBoolean(_currentRow["IsPrestamoPagado"]) == true)
+					{
+						this.btnPagoPrestamos.Enabled = false;
+						this.btnFinalizarPrestamo.Enabled = false;
+					}
+					else
+					{
+						this.btnPagoPrestamos.Enabled = true;
+						this.btnFinalizarPrestamo.Enabled = true;
+					}
 					this.btnVisalizarDetallePrestamos.Enabled = true;
 				}
 				else
@@ -1284,10 +1292,14 @@ namespace CI
 		{
 			try
 			{
-				ConnectionManager.BeginTran();
-				clsDocumentoInvCabecera.SetTransactionToAdaptador(true);
-				DAC.clsDocumentoInvCabecera.UpdateDatosPrestamos(Convert.ToInt64(this.txtIDTransaccion), true, false, ConnectionManager.Tran);
-				ConnectionManager.CommitTran();
+				if (MessageBox.Show("El prestamos procederá a finalizarse, esta seguro que desea realizar la operación ? ", "Finalizar Prestamos", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+				{
+					ConnectionManager.BeginTran();
+					clsDocumentoInvCabecera.SetTransactionToAdaptador(true);
+					DAC.clsDocumentoInvCabecera.UpdateDatosPrestamos(Convert.ToInt64(this.txtIDTransaccion.EditValue), true, false, ConnectionManager.Tran);
+					ConnectionManager.CommitTran();
+					MessageBox.Show("El Prestamo ha sido Pagado!!!");
+				}
 			}
 			catch (Exception ex)
 			{
