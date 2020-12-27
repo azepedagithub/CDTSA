@@ -33,6 +33,7 @@
 			this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
 			this.colIDTransaccion = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colDocumento = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colLinkDocumento = new DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit();
 			this.colFecha = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colAsiento = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colReferencia = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -41,14 +42,17 @@
 			this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
+			this.colLinkAsiento = new DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
 			this.layoutControl1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dtgDetallePrestamos)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.colLinkDocumento)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.colLinkAsiento)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// layoutControl1
@@ -68,6 +72,9 @@
 			this.dtgDetallePrestamos.Location = new System.Drawing.Point(12, 12);
 			this.dtgDetallePrestamos.MainView = this.gridView1;
 			this.dtgDetallePrestamos.Name = "dtgDetallePrestamos";
+			this.dtgDetallePrestamos.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.colLinkDocumento,
+            this.colLinkAsiento});
 			this.dtgDetallePrestamos.Size = new System.Drawing.Size(506, 203);
 			this.dtgDetallePrestamos.TabIndex = 4;
 			this.dtgDetallePrestamos.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -83,7 +90,9 @@
             this.colReferencia});
 			this.gridView1.GridControl = this.dtgDetallePrestamos;
 			this.gridView1.Name = "gridView1";
+			this.gridView1.OptionsBehavior.ReadOnly = true;
 			this.gridView1.OptionsView.ShowGroupPanel = false;
+			this.gridView1.Click += new System.EventHandler(this.gridView1_Click);
 			// 
 			// colIDTransaccion
 			// 
@@ -96,10 +105,17 @@
 			// colDocumento
 			// 
 			this.colDocumento.Caption = "Documento";
+			this.colDocumento.ColumnEdit = this.colLinkDocumento;
 			this.colDocumento.FieldName = "Documento";
 			this.colDocumento.Name = "colDocumento";
 			this.colDocumento.Visible = true;
 			this.colDocumento.VisibleIndex = 1;
+			// 
+			// colLinkDocumento
+			// 
+			this.colLinkDocumento.AutoHeight = false;
+			this.colLinkDocumento.Name = "colLinkDocumento";
+			this.colLinkDocumento.Tag = "";
 			// 
 			// colFecha
 			// 
@@ -112,6 +128,7 @@
 			// colAsiento
 			// 
 			this.colAsiento.Caption = "Asiento";
+			this.colAsiento.ColumnEdit = this.colLinkAsiento;
 			this.colAsiento.FieldName = "Asiento";
 			this.colAsiento.Name = "colAsiento";
 			this.colAsiento.Visible = true;
@@ -120,7 +137,7 @@
 			// colReferencia
 			// 
 			this.colReferencia.Caption = "Referencia";
-			this.colReferencia.FieldName = "Referencia";
+			this.colReferencia.FieldName = "Nota";
 			this.colReferencia.Name = "colReferencia";
 			this.colReferencia.Visible = true;
 			this.colReferencia.VisibleIndex = 4;
@@ -177,6 +194,11 @@
 			this.emptySpaceItem1.Size = new System.Drawing.Size(405, 26);
 			this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
 			// 
+			// colLinkAsiento
+			// 
+			this.colLinkAsiento.AutoHeight = false;
+			this.colLinkAsiento.Name = "colLinkAsiento";
+			// 
 			// frmDetallesPrestamos
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -191,10 +213,12 @@
 			this.layoutControl1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dtgDetallePrestamos)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.colLinkDocumento)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.colLinkAsiento)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -214,6 +238,8 @@
 		private DevExpress.XtraGrid.Columns.GridColumn colFecha;
 		private DevExpress.XtraGrid.Columns.GridColumn colAsiento;
 		private DevExpress.XtraGrid.Columns.GridColumn colReferencia;
+		private DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit colLinkDocumento;
+		private DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit colLinkAsiento;
 
 	}
 }

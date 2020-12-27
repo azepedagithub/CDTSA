@@ -304,7 +304,7 @@ namespace CI
             bool result = true;
             String sMensaje = "";
 
-            if (this.txtIDProducto.EditValue == null)
+            if (this.txtIDProducto.EditValue == null || this.txtIDProducto.Text.Trim() =="")
                 sMensaje = sMensaje + "     • Ingrese el Código del Producto. \n\r";
             if (this.txtDescr.EditValue == null)
                 sMensaje = sMensaje + "     • Ingrese la descripción del Producto. \n\r";
@@ -352,7 +352,7 @@ namespace CI
                     _currentRow.BeginEdit();
 
                     //_dsProducto.Tables[0].Rows.Add(_currentRow);
-                    _currentRow["IDProducto"] = this.txtIDProducto.Text.Trim();
+                    _currentRow["IDProducto"] = Convert.ToInt64(this.txtIDProducto.Text.Trim());
                     _currentRow["Descr"] = this.txtDescr.Text.Trim();
                     _currentRow["Alias"] = this.txtAlias.Text.Trim();
 					_currentRow["Generico"] = this.txtGenerico.Text.Trim();
@@ -431,7 +431,7 @@ namespace CI
                 else {
 
                     _currentRow = _dtProducto.NewRow();
-                    _currentRow["IDProducto"] = this.txtIDProducto.Text.Trim();
+                    _currentRow["IDProducto"] = Convert.ToInt64(this.txtIDProducto.Text.Trim());
                     _currentRow["Descr"] = this.txtDescr.Text.Trim();
                     _currentRow["Alias"] = this.txtAlias.Text.Trim();
 					_currentRow["Generico"] = this.txtGenerico.Text.Trim();
@@ -621,10 +621,10 @@ namespace CI
                 Util.Util.ConfigLookupEdit(this.slkupClasif6, clsClasificacionDAC.GetData(-1, 6, "*").Tables[0], "Descr", "IDClasificacion");
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupClasif6, "[{'ColumnCaption':'Clasificacion','ColumnField':'IDClasificacion','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");
 
-                Util.Util.ConfigLookupEdit(this.slkupProveedor,CI.DAC.clsProductoDAC.GetlstProvedores(-1, "*",-1).Tables[0], "Nombre", "IDProveedor");
+                Util.Util.ConfigLookupEdit(this.slkupProveedor,CI.DAC.clsProductoDAC.GetlstProvedores(-1, "*",-1).Tables[0], "Nombre", "IDProveedor",400,300);
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupProveedor, "[{'ColumnCaption':'ID Proveedor','ColumnField':'IDProveedor','width':30},{'ColumnCaption':'Nombre','ColumnField':'Nombre','width':70}]");
 
-                Util.Util.ConfigLookupEdit(this.slkupCuentaArticulo, CI.DAC.clsInvCuentaInventarioDAC.GetData(-1,"*").Tables[0] , "Descr", "IDCuenta");
+                Util.Util.ConfigLookupEdit(this.slkupCuentaArticulo, CI.DAC.clsInvCuentaInventarioDAC.GetData(-1,"*").Tables[0] , "Descr", "IDCuenta",400,300);
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupCuentaArticulo, "[{'ColumnCaption':'IDCuenta','ColumnField':'IDCuenta','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");
                 
                 

@@ -106,11 +106,10 @@ namespace CI
                 _iClasificacion6 = -1;
 				_IDProveedor = -1;
 
-
-                sSql = "SELECT IDProducto,Descr ,Alias ,Clasif1 ,Clasif2 ,Clasif3 ,Clasif4 ,Clasif5 ,Clasif6 ,CodigoBarra ,IDUnidad ,FactorEmpaque,IDCuentaContable ,TipoImpuesto ," +
-                        "EsMuestra ,EsControlado ,EsEtico,IDProveedor," +
-                        " Activo ,UserInsert ,UserUpdate  ,UpdateDate,CreateDate  FROM dbo.invProducto";
-              
+				sSql = "Select IDProducto,Descr , Generico,Alias ,Clasif1 ,Clasif2 ,Clasif3 ,Clasif4 ,Clasif5 ,Clasif6 ,CodigoBarra,IDProveedor,IDCuentaContable ,IDUnidad ,FactorEmpaque ,TipoImpuesto , " +
+						"EsMuestra ,EsControlado ,EsEtico,EsGenerico, CostoUltLocal,CostoUltDolar,CostoPromLocal,CostoPromDolar,Activo,Bonifica,NumRegSanitario,FechaVencimientoRegistro,UserInsert ,UserUpdate  ,UpdateDate,CreateDate " +
+						"FROM dbo.invProducto ";
+                
 
                 this.gridView.FocusedRowChanged += GridView_FocusedRowChanged;
                 this.gridView.DoubleClick += GridView_DoubleClick;

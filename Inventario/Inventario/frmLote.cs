@@ -217,6 +217,7 @@ namespace CI
                 lblStatus.Caption = "";
             isEdition = true;
             HabilitarControles(true);
+			this.slkupProducto.Properties.ReadOnly = true;
 
 
             //lblStatus.Caption = "Editando el registro : " + currentRow["Descr"].ToString();
