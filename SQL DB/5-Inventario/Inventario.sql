@@ -1487,12 +1487,7 @@ if @Resultado is null
 RETURN @Resultado
 END
 
-
-
-
-
 GO
-
 
 
 CREATE  PROCEDURE dbo.invUpdateDocumentoInv(@Operacion NVARCHAR(1),@IDTransaccion AS INT OUTPUT,@ModuloOrigen NVARCHAR(4),@IDPaquete AS INT,@Fecha AS DATETIME,  @Usuario AS NVARCHAR(20),
@@ -1501,7 +1496,7 @@ AS
 if upper(@Operacion) = 'I'
 BEGIN
 	--Obtener el siguiente consecutivo
-	IF (@ModuloOrigen<>'FAC')
+	IF (@ModuloOrigen<>'FA')
 	BEGIN
 		DECLARE @IDConsecutivo AS BIGINT
 		
@@ -2535,7 +2530,7 @@ END
 
 GO
 
-CREATE PROCEDURE [dbo].[invCreaPaqueteInvDevFactura] (@Modulo AS NVARCHAR(4),@IDDocumento AS INT,@Usuario AS NVARCHAR(50),@IDTransaccion AS BIGINT OUTPUT)
+CREATE PROCEDURE [dbo].[invCreaPaqueteInvDevFactura] (@IDDocumento AS INT,@Usuario AS NVARCHAR(50),@IDTransaccion AS BIGINT OUTPUT)
 AS 
 /*SET @Modulo = 'FAC'
 SET @IDDocumento= 2
@@ -2556,8 +2551,6 @@ DECLARE @Naturaleza AS NVARCHAR(1)
 DECLARE @Bodega AS INT
 
 
-IF (@Modulo = 'DEVFA')
-BEGIN
 	--//Leer parametros de configuración
 	SELECT TOP	1 @IDPaquete = IDPaqueteDevolucion  FROM dbo.fafParametros
 
@@ -2570,10 +2563,10 @@ BEGIN
 	
 
 	
-	SELECT @FechaDocumento = A.Fecha, @Referencia = 'Devolución Factura: ' + B.Factura , @Documento = Devolucion,@TipoCambio=A.TipoCambio, @Bodega= IDBodega
+	SELECT @FechaDocumento = A.Fecha, @Referencia = 'Devolución Factura: ' + B.Factura , @Documento = Devolucion,@TipoCambio=A.TipoCambio, @Bodega= A.IDBodega
 	 FROM dbo.fafdevolucion A
 	 INNER JOIN dbo.fafFactura B ON A.IDFactura = B.IDFactura
-	 WHERE A.IDFactura =@IDDocumento 
+	 WHERE A.IDDevolucion =@IDDocumento 
 	
 
 	
@@ -2582,7 +2575,7 @@ BEGIN
 	--//Crear la cabecera del Documento  
 	EXEC  dbo.invUpdateDocumentoInv  @Operacion = N'I', -- nvarchar(1)
 	    @IDTransaccion = @IDTransaccion OUTPUT, -- int
-	    @ModuloOrigen = @Modulo, -- nvarchar(4)
+	    @ModuloOrigen = 'FAC', -- nvarchar(4)
 	    @IDPaquete =@IDPaquete, -- int
 	    @Fecha = @FechaDocumento, -- datetime
 	    @Usuario =@Usuario, -- nvarchar(20)
@@ -2594,17 +2587,17 @@ BEGIN
 	
 	--//Obtener las transacciones asociadas al Paquete.
 	SELECT @IDTipoTran =IDTipoTran, @Factor = Factor,@Naturaleza = Naturaleza, @Transaccion=Transaccion  FROM dbo.globalTipoTran WHERE  Transaccion = (SELECT Transaccion  FROM dbo.invPaquete WHERE IDPaquete=@IDPaquete) 
-
+	DECLARE @IDMonedaNac INT 
+	SET @IDMonedaNac  = ( SELECT TOP 1 IDMoneda FROM dbo.globalMoneda WHERE Nacional=1)
 	--//Insertar el detalle del documento
 	INSERT INTO dbo.invTransaccionLinea( IDTransaccion ,IDProducto ,IDLote ,IDTipoTran ,IDBodega ,IDTraslado , Naturaleza ,Factor ,Cantidad ,CostoUntLocal ,CostoUntDolar ,PrecioUntLocal ,PrecioUntDolar ,Transaccion ,TipoCambio)
-	SELECT @IDTransaccion, A.IDProducto,B.IDLote,@IDTipoTran,A.IDBodega,-1 IDTranslado,@Naturaleza,@Factor ,B.Cantidad, P.CostoPromLocal,CostoPromDolar,A.PrecioLocal,A.PrecioDolar,@Transaccion, @TipoCambio
-	 FROM dbo.fafFacturaProd A
-	INNER JOIN dbo.fafFacturaProdLote B ON A.IDFacturaProd = B.IDFacturaProd
+	SELECT @IDTransaccion, A.IDProducto,A.IDLote,@IDTipoTran,C.IDBodega,-1 IDTranslado,@Naturaleza,@Factor ,A.Cantidad, P.CostoPromLocal,CostoPromDolar,CASE WHEN B.IDMoneda = @IDMonedaNac  THEN A.Precio ELSE A.Precio * B.TipoCambio END   PrecioLocal,CASE WHEN B.IDMoneda = @IDMonedaNac THEN  A.Precio /B.TipoCambio ELSE A.Precio END PrecioDolar,@Transaccion, @TipoCambio
+	 FROM dbo.fafDevDetalle A
+	INNER JOIN dbo.fafDevolucion B ON A.IDDevolucion=B.IDDevolucion
+	 INNER JOIN DBO.fafFACTURA C ON B.IDFactura = C.IDFactura
 	INNER JOIN dbo.invProducto P ON A.IDProducto=P.IDProducto
-	WHERE A.IDFactura=@IDDocumento
-
-END  
-
+	WHERE A.IDDevolucion=@IDDocumento
+	
 
 
 GO

@@ -195,12 +195,14 @@ namespace CI
                {
                    this.slkupBodegaDestino.ReadOnly = !Activo;
                    this.slkupBodegaDestino.TabStop = Activo;
+				   this.gridViewDetalle.Columns["DescrBodegaDestino"].Visible = true;
                    
                }
                else
                {
                    this.slkupBodegaDestino.ReadOnly = true;
                    this.slkupBodegaDestino.TabStop = false;
+				   this.gridViewDetalle.Columns["DescrBodegaDestino"].Visible = false;
                    
                }
 
