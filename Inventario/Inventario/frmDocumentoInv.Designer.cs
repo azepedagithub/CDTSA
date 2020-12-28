@@ -123,6 +123,8 @@
 			this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
+			this.btnAgregarLote = new DevExpress.XtraEditors.SimpleButton();
+			this.layoutControlItem25 = new DevExpress.XtraLayout.LayoutControlItem();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
 			this.layoutControl1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.txtPaquete.Properties)).BeginInit();
@@ -197,6 +199,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem24)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem25)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// layoutControl1
@@ -461,6 +464,7 @@
 			// 
 			// layoutControl3
 			// 
+			this.layoutControl3.Controls.Add(this.btnAgregarLote);
 			this.layoutControl3.Controls.Add(this.separatorControl2);
 			this.layoutControl3.Controls.Add(this.separatorControl1);
 			this.layoutControl3.Controls.Add(this.slkupLote);
@@ -510,7 +514,7 @@
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
 			this.slkupLote.Properties.NullText = "-- --";
 			this.slkupLote.Properties.View = this.searchLookUpEdit1View;
-			this.slkupLote.Size = new System.Drawing.Size(323, 20);
+			this.slkupLote.Size = new System.Drawing.Size(224, 20);
 			this.slkupLote.StyleController = this.layoutControl3;
 			this.slkupLote.TabIndex = 8;
 			this.slkupLote.KeyDown += new System.Windows.Forms.KeyEventHandler(this.slkupcontrol_KeyDown);
@@ -701,7 +705,7 @@
 			this.slkupTransaccion.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
 			this.slkupTransaccion.Properties.View = this.gridView5;
-			this.slkupTransaccion.Size = new System.Drawing.Size(322, 20);
+			this.slkupTransaccion.Size = new System.Drawing.Size(316, 20);
 			this.slkupTransaccion.StyleController = this.layoutControl3;
 			this.slkupTransaccion.TabIndex = 3;
 			this.slkupTransaccion.Spin += new DevExpress.XtraEditors.Controls.SpinEventHandler(this.slkupTransaccion_Spin);
@@ -745,7 +749,7 @@
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
 			this.slkupBodegaOrigen.Properties.NullText = "-- --";
 			this.slkupBodegaOrigen.Properties.View = this.gridView4;
-			this.slkupBodegaOrigen.Size = new System.Drawing.Size(322, 20);
+			this.slkupBodegaOrigen.Size = new System.Drawing.Size(316, 20);
 			this.slkupBodegaOrigen.StyleController = this.layoutControl3;
 			this.slkupBodegaOrigen.TabIndex = 4;
 			this.slkupBodegaOrigen.KeyDown += new System.Windows.Forms.KeyEventHandler(this.slkupcontrol_KeyDown);
@@ -806,13 +810,13 @@
 			// 
 			// slkupBodegaDestino
 			// 
-			this.slkupBodegaDestino.Location = new System.Drawing.Point(517, 236);
+			this.slkupBodegaDestino.Location = new System.Drawing.Point(511, 236);
 			this.slkupBodegaDestino.Name = "slkupBodegaDestino";
 			this.slkupBodegaDestino.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
 			this.slkupBodegaDestino.Properties.NullText = "-- --";
 			this.slkupBodegaDestino.Properties.View = this.gridView3;
-			this.slkupBodegaDestino.Size = new System.Drawing.Size(323, 20);
+			this.slkupBodegaDestino.Size = new System.Drawing.Size(329, 20);
 			this.slkupBodegaDestino.StyleController = this.layoutControl3;
 			this.slkupBodegaDestino.TabIndex = 5;
 			this.slkupBodegaDestino.EditValueChanged += new System.EventHandler(this.slkupBodegaDestino_EditValueChanged);
@@ -870,7 +874,8 @@
             this.layoutControlItem14,
             this.layoutControlItem22,
             this.layoutControlItem23,
-            this.layoutControlItem17});
+            this.layoutControlItem17,
+            this.layoutControlItem25});
 			this.LayoutDetalleDocumento.Location = new System.Drawing.Point(0, 158);
 			this.LayoutDetalleDocumento.Name = "LayoutDetalleDocumento";
 			this.LayoutDetalleDocumento.Size = new System.Drawing.Size(845, 255);
@@ -884,7 +889,7 @@
 			this.layoutControlItem9.Location = new System.Drawing.Point(0, 0);
 			this.layoutControlItem9.Name = "layoutControlItem9";
 			this.layoutControlItem9.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
-			this.layoutControlItem9.Size = new System.Drawing.Size(410, 26);
+			this.layoutControlItem9.Size = new System.Drawing.Size(404, 26);
 			this.layoutControlItem9.Text = "Transacción:";
 			this.layoutControlItem9.TextSize = new System.Drawing.Size(79, 13);
 			// 
@@ -924,9 +929,9 @@
 			// emptySpaceItem1
 			// 
 			this.emptySpaceItem1.AllowHotTrack = false;
-			this.emptySpaceItem1.Location = new System.Drawing.Point(410, 0);
+			this.emptySpaceItem1.Location = new System.Drawing.Point(404, 0);
 			this.emptySpaceItem1.Name = "emptySpaceItem1";
-			this.emptySpaceItem1.Size = new System.Drawing.Size(411, 26);
+			this.emptySpaceItem1.Size = new System.Drawing.Size(417, 26);
 			this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
 			// 
 			// layoutControlItem11
@@ -936,7 +941,7 @@
 			this.layoutControlItem11.Location = new System.Drawing.Point(0, 26);
 			this.layoutControlItem11.Name = "layoutControlItem11";
 			this.layoutControlItem11.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
-			this.layoutControlItem11.Size = new System.Drawing.Size(410, 26);
+			this.layoutControlItem11.Size = new System.Drawing.Size(404, 26);
 			this.layoutControlItem11.Text = "Bodega:";
 			this.layoutControlItem11.TextSize = new System.Drawing.Size(79, 13);
 			// 
@@ -946,7 +951,7 @@
 			this.layoutControlItem21.Location = new System.Drawing.Point(410, 102);
 			this.layoutControlItem21.Name = "layoutControlItem21";
 			this.layoutControlItem21.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
-			this.layoutControlItem21.Size = new System.Drawing.Size(411, 26);
+			this.layoutControlItem21.Size = new System.Drawing.Size(312, 26);
 			this.layoutControlItem21.Text = "Lote:";
 			this.layoutControlItem21.TextSize = new System.Drawing.Size(79, 13);
 			// 
@@ -1005,10 +1010,10 @@
 			// 
 			this.layoutControlItem17.Control = this.slkupBodegaDestino;
 			this.layoutControlItem17.CustomizationFormText = "Bodega Destino:";
-			this.layoutControlItem17.Location = new System.Drawing.Point(410, 26);
+			this.layoutControlItem17.Location = new System.Drawing.Point(404, 26);
 			this.layoutControlItem17.Name = "layoutControlItem17";
 			this.layoutControlItem17.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
-			this.layoutControlItem17.Size = new System.Drawing.Size(411, 26);
+			this.layoutControlItem17.Size = new System.Drawing.Size(417, 26);
 			this.layoutControlItem17.Text = "Bodega Destino:";
 			this.layoutControlItem17.TextSize = new System.Drawing.Size(79, 13);
 			// 
@@ -1302,6 +1307,27 @@
 			this.barDockControlRight.Location = new System.Drawing.Point(897, 31);
 			this.barDockControlRight.Size = new System.Drawing.Size(0, 550);
 			// 
+			// btnAgregarLote
+			// 
+			this.btnAgregarLote.Enabled = false;
+			this.btnAgregarLote.Image = ((System.Drawing.Image)(resources.GetObject("btnAgregarLote.Image")));
+			this.btnAgregarLote.Location = new System.Drawing.Point(746, 311);
+			this.btnAgregarLote.Name = "btnAgregarLote";
+			this.btnAgregarLote.Size = new System.Drawing.Size(95, 22);
+			this.btnAgregarLote.StyleController = this.layoutControl3;
+			this.btnAgregarLote.TabIndex = 21;
+			this.btnAgregarLote.Text = "Agregar Lote";
+			this.btnAgregarLote.Click += new System.EventHandler(this.btnAgregarLote_Click);
+			// 
+			// layoutControlItem25
+			// 
+			this.layoutControlItem25.Control = this.btnAgregarLote;
+			this.layoutControlItem25.Location = new System.Drawing.Point(722, 102);
+			this.layoutControlItem25.Name = "layoutControlItem25";
+			this.layoutControlItem25.Size = new System.Drawing.Size(99, 26);
+			this.layoutControlItem25.TextSize = new System.Drawing.Size(0, 0);
+			this.layoutControlItem25.TextVisible = false;
+			// 
 			// frmDocumentoInv
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1392,6 +1418,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem24)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem25)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -1493,6 +1520,8 @@
 		private DevExpress.XtraBars.BarButtonItem btnPagoPrestamos;
 		private DevExpress.XtraBars.BarButtonItem btnFinalizarPrestamo;
 		private DevExpress.XtraBars.BarButtonItem btnVisalizarDetallePrestamos;
+		private DevExpress.XtraEditors.SimpleButton btnAgregarLote;
+		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem25;
 
 
     }

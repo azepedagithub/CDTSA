@@ -779,6 +779,8 @@ namespace CI
                         this.txtPrecioDolar.TabStop = true;
                         this.txtPrecioLocal.Enabled = true;
                         this.txtPrecioLocal.TabStop = true;
+						this.btnAgregarLote.Enabled = false;
+						
                     }
 					else if ((Convert.ToBoolean(dr["EsAjuste"]) && Convert.ToInt32(dr["Factor"]) > 0 ) || Convert.ToBoolean(dr["EsCompra"]))
                     {
@@ -790,6 +792,9 @@ namespace CI
                         this.txtPrecioDolar.TabStop = false;
                         this.txtPrecioLocal.Enabled = false;
                         this.txtPrecioLocal.TabStop = false;
+						if (this.slkupProducto.EditValue != null ) {
+							this.btnAgregarLote.Enabled = true;
+						}
                     }
                     else
                     {
@@ -801,6 +806,7 @@ namespace CI
                         this.txtPrecioDolar.TabStop = false;
                         this.txtPrecioLocal.Enabled = false;
                         this.txtPrecioLocal.TabStop = false;
+						this.btnAgregarLote.Enabled = false;
                     }
 
 
@@ -826,11 +832,14 @@ namespace CI
 						DataTable dtTempProd = clsProductoDAC.GetProductoByID(Convert.ToInt64(slkupProducto.EditValue), "*").Tables[0];
 						this.txtCostoLocal.EditValue = Convert.ToDecimal(dtTempProd.Rows[0]["CostoPromLocal"]);
 						this.txtCostoDolar.EditValue = Convert.ToDecimal(dtTempProd.Rows[0]["CostoPromDolar"]);
-					}
+						this.btnAgregarLote.Enabled = true;
+					}	else 
+						this.btnAgregarLote.Enabled = false;
 				}
             }
             else {
                 this.slkupLote.Enabled = false;
+				this.btnAgregarLote.Enabled = false;
             }
         }
 
@@ -1315,6 +1324,23 @@ namespace CI
 			frmDetallesPrestamos ofrmDetalle = new frmDetallesPrestamos(Convert.ToInt64(this.txtIDTransaccion.EditValue));
 			ofrmDetalle.ShowDialog();
 
+		}
+
+		private void btnAgregarLote_Click(object sender, EventArgs e)
+		{
+			frmLote ofrmLotes = new frmLote(Convert.ToInt64(this.slkupProducto.EditValue));
+			ofrmLotes.FormClosed += ofrmLotes_FormClosed;
+			ofrmLotes.ShowDialog();
+		}
+
+		void ofrmLotes_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			frmLote ofrmLote = (frmLote)sender;
+			if (ofrmLote.DialogResult == System.Windows.Forms.DialogResult.OK) {
+				Util.Util.ConfigLookupEdit(this.slkupLote, clsLoteDAC.GetData(-1, Convert.ToInt32(slkupProducto.EditValue), "*", "*").Tables[0], "LoteProveedor", "IDLote", 350);
+				Util.Util.ConfigLookupEditSetViewColumns(this.slkupLote, "[{'ColumnCaption':'IDLote','ColumnField':'IDLote','width':20},{'ColumnCaption':'Lote','ColumnField':'LoteProveedor','width':60},{'ColumnCaption':'F.V','ColumnField':'FechaVencimiento','width':20}]");
+				this.slkupLote.EditValue =  DAC.clsLoteDAC.GetData(-1, Convert.ToInt32(slkupProducto.EditValue), ofrmLote.LoteAdd, "*").Tables[0].Rows[0]["IDLote"];
+			}
 		}
     
 

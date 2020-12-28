@@ -213,7 +213,7 @@ namespace CI
             }
             else
             {
-                this.Height = 581;
+                this.Height = 615;
             }
 
 			this.slkupProveedor.EditValue = this.IDProveedor;

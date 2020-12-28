@@ -735,7 +735,7 @@ namespace MainMenu
                     nodeConsecutivos.Tag = "frmConsecutivos";
                     TreeListNode nodeClasificaciones = tl.AppendNode(new object[] { "Clasificaciones" }, nodeAdministracion.Id, 11, 11, 11);
                     nodeClasificaciones.Tag = "frmCatalogoClasificaciones";
-                    TreeListNode nodeUnidadesMedida = tl.AppendNode(new object[] { "Unidad de Presentación" }, nodeAdministracion.Id, 11, 11, 11);
+                    TreeListNode nodeUnidadesMedida = tl.AppendNode(new object[] { "Unidades de Medida" }, nodeAdministracion.Id, 11, 11, 11);
                     nodeUnidadesMedida.Tag = "frmUnidadMedida";
                     TreeListNode nodePaquetes = tl.AppendNode(new object[] { "Paquetes" }, nodeAdministracion.Id, 11, 11, 11);
                     nodePaquetes.Tag = "frmPaquetes";

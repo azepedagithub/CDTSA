@@ -303,34 +303,34 @@
 			// 
 			// txtUnidadMedida
 			// 
-			this.txtUnidadMedida.Location = new System.Drawing.Point(97, 65);
+			this.txtUnidadMedida.Location = new System.Drawing.Point(105, 65);
 			this.txtUnidadMedida.Name = "txtUnidadMedida";
 			this.txtUnidadMedida.ReadOnly = true;
-			this.txtUnidadMedida.Size = new System.Drawing.Size(165, 20);
+			this.txtUnidadMedida.Size = new System.Drawing.Size(157, 20);
 			this.txtUnidadMedida.TabIndex = 7;
 			// 
 			// txtCodigoBarra
 			// 
-			this.txtCodigoBarra.Location = new System.Drawing.Point(471, 39);
+			this.txtCodigoBarra.Location = new System.Drawing.Point(479, 39);
 			this.txtCodigoBarra.Name = "txtCodigoBarra";
 			this.txtCodigoBarra.ReadOnly = true;
-			this.txtCodigoBarra.Size = new System.Drawing.Size(222, 20);
+			this.txtCodigoBarra.Size = new System.Drawing.Size(214, 20);
 			this.txtCodigoBarra.TabIndex = 6;
 			// 
 			// txtTipoImpuesto
 			// 
-			this.txtTipoImpuesto.Location = new System.Drawing.Point(97, 39);
+			this.txtTipoImpuesto.Location = new System.Drawing.Point(105, 39);
 			this.txtTipoImpuesto.Name = "txtTipoImpuesto";
 			this.txtTipoImpuesto.ReadOnly = true;
-			this.txtTipoImpuesto.Size = new System.Drawing.Size(165, 20);
+			this.txtTipoImpuesto.Size = new System.Drawing.Size(157, 20);
 			this.txtTipoImpuesto.TabIndex = 5;
 			// 
 			// txtAlias
 			// 
-			this.txtAlias.Location = new System.Drawing.Point(97, 13);
+			this.txtAlias.Location = new System.Drawing.Point(105, 13);
 			this.txtAlias.Name = "txtAlias";
 			this.txtAlias.ReadOnly = true;
-			this.txtAlias.Size = new System.Drawing.Size(596, 20);
+			this.txtAlias.Size = new System.Drawing.Size(588, 20);
 			this.txtAlias.TabIndex = 4;
 			// 
 			// layoutControlGroup2
@@ -358,7 +358,7 @@
 			this.layoutControlItem5.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
 			this.layoutControlItem5.Size = new System.Drawing.Size(686, 26);
 			this.layoutControlItem5.Text = "Alias:";
-			this.layoutControlItem5.TextSize = new System.Drawing.Size(81, 13);
+			this.layoutControlItem5.TextSize = new System.Drawing.Size(89, 13);
 			// 
 			// layoutControlItem6
 			// 
@@ -368,7 +368,7 @@
 			this.layoutControlItem6.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
 			this.layoutControlItem6.Size = new System.Drawing.Size(255, 26);
 			this.layoutControlItem6.Text = "Tipo Impuesto:";
-			this.layoutControlItem6.TextSize = new System.Drawing.Size(81, 13);
+			this.layoutControlItem6.TextSize = new System.Drawing.Size(89, 13);
 			// 
 			// layoutControlItem7
 			// 
@@ -378,7 +378,7 @@
 			this.layoutControlItem7.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
 			this.layoutControlItem7.Size = new System.Drawing.Size(312, 234);
 			this.layoutControlItem7.Text = "Codigo de Barra:";
-			this.layoutControlItem7.TextSize = new System.Drawing.Size(81, 13);
+			this.layoutControlItem7.TextSize = new System.Drawing.Size(89, 13);
 			// 
 			// layoutControlItem8
 			// 
@@ -387,8 +387,8 @@
 			this.layoutControlItem8.Name = "layoutControlItem8";
 			this.layoutControlItem8.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
 			this.layoutControlItem8.Size = new System.Drawing.Size(255, 26);
-			this.layoutControlItem8.Text = "Presentación:";
-			this.layoutControlItem8.TextSize = new System.Drawing.Size(81, 13);
+			this.layoutControlItem8.Text = "Unidad de Medida:";
+			this.layoutControlItem8.TextSize = new System.Drawing.Size(89, 13);
 			// 
 			// layoutControlItem10
 			// 
@@ -879,7 +879,7 @@
 			this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.ribbonPageGroup1});
 			this.ribbonPage1.Name = "ribbonPage1";
-			this.ribbonPage1.Text = "Operaciones Centro Costo";
+			this.ribbonPage1.Text = "Operaciones";
 			// 
 			// ribbonPageGroup1
 			// 

@@ -52,6 +52,8 @@
 			this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
+			this.btnCancel = new DevExpress.XtraEditors.SimpleButton();
+			this.btnOk = new DevExpress.XtraEditors.SimpleButton();
 			this.pictureEdit1 = new DevExpress.XtraEditors.PictureEdit();
 			this.dtpFechaIngreso = new DevExpress.XtraEditors.DateEdit();
 			this.dtpFechaFabricacion = new DevExpress.XtraEditors.DateEdit();
@@ -82,7 +84,10 @@
 			this.txtLoteProveedor = new DevExpress.XtraEditors.TextEdit();
 			this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.item0 = new DevExpress.XtraLayout.LayoutControlGroup();
-			this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.layoutGrid = new DevExpress.XtraLayout.LayoutControlItem();
+			this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
+			this.emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
+			this.layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlGroup3 = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -91,10 +96,9 @@
 			this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.emptySpaceItem4 = new DevExpress.XtraLayout.EmptySpaceItem();
-			this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
-			this.emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
-			this.layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.emptySpaceItem3 = new DevExpress.XtraLayout.EmptySpaceItem();
+			this.LayoutOk = new DevExpress.XtraLayout.LayoutControlItem();
+			this.layoutCancelar = new DevExpress.XtraLayout.LayoutControlItem();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
@@ -115,7 +119,10 @@
 			((System.ComponentModel.ISupportInitialize)(this.txtLoteProveedor.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.item0)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutGrid)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup3)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
@@ -124,10 +131,9 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.LayoutOk)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutCancelar)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// ribbonControl
@@ -336,6 +342,8 @@
 			// 
 			// layoutControl1
 			// 
+			this.layoutControl1.Controls.Add(this.btnCancel);
+			this.layoutControl1.Controls.Add(this.btnOk);
 			this.layoutControl1.Controls.Add(this.pictureEdit1);
 			this.layoutControl1.Controls.Add(this.dtpFechaIngreso);
 			this.layoutControl1.Controls.Add(this.dtpFechaFabricacion);
@@ -347,11 +355,31 @@
 			this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.layoutControl1.Location = new System.Drawing.Point(0, 130);
 			this.layoutControl1.Name = "layoutControl1";
-			this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(677, 346, 250, 350);
+			this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(753, 256, 250, 350);
 			this.layoutControl1.Root = this.layoutControlGroup1;
-			this.layoutControl1.Size = new System.Drawing.Size(687, 412);
+			this.layoutControl1.Size = new System.Drawing.Size(687, 427);
 			this.layoutControl1.TabIndex = 1;
 			this.layoutControl1.Text = "layoutControl1";
+			// 
+			// btnCancel
+			// 
+			this.btnCancel.Location = new System.Drawing.Point(441, 393);
+			this.btnCancel.Name = "btnCancel";
+			this.btnCancel.Size = new System.Drawing.Size(112, 22);
+			this.btnCancel.StyleController = this.layoutControl1;
+			this.btnCancel.TabIndex = 16;
+			this.btnCancel.Text = "Cancelar";
+			this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+			// 
+			// btnOk
+			// 
+			this.btnOk.Location = new System.Drawing.Point(557, 393);
+			this.btnOk.Name = "btnOk";
+			this.btnOk.Size = new System.Drawing.Size(118, 22);
+			this.btnOk.StyleController = this.layoutControl1;
+			this.btnOk.TabIndex = 15;
+			this.btnOk.Text = "Ok";
+			this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
 			// 
 			// pictureEdit1
 			// 
@@ -417,7 +445,7 @@
 			this.dtgDetalle.MainView = this.gridView2;
 			this.dtgDetalle.MenuManager = this.ribbonControl2;
 			this.dtgDetalle.Name = "dtgDetalle";
-			this.dtgDetalle.Size = new System.Drawing.Size(663, 163);
+			this.dtgDetalle.Size = new System.Drawing.Size(663, 178);
 			this.dtgDetalle.TabIndex = 4;
 			this.dtgDetalle.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView2});
@@ -671,7 +699,7 @@
 			this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
 			this.layoutControlGroup1.Name = "Root";
 			this.layoutControlGroup1.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
-			this.layoutControlGroup1.Size = new System.Drawing.Size(687, 412);
+			this.layoutControlGroup1.Size = new System.Drawing.Size(687, 427);
 			this.layoutControlGroup1.TextVisible = false;
 			// 
 			// item0
@@ -680,28 +708,72 @@
 			this.item0.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
 			this.item0.GroupBordersVisible = false;
 			this.item0.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.layoutControlItem1,
+            this.layoutGrid,
             this.emptySpaceItem1,
             this.emptySpaceItem2,
             this.layoutControlItem9,
             this.layoutControlGroup3,
-            this.emptySpaceItem3});
+            this.emptySpaceItem3,
+            this.LayoutOk,
+            this.layoutCancelar});
 			this.item0.Location = new System.Drawing.Point(0, 0);
 			this.item0.Name = "item0";
-			this.item0.Size = new System.Drawing.Size(687, 412);
+			this.item0.Size = new System.Drawing.Size(687, 427);
 			this.item0.Spacing = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
 			this.item0.Text = "Root";
 			this.item0.TextVisible = false;
 			// 
-			// layoutControlItem1
+			// layoutGrid
 			// 
-			this.layoutControlItem1.Control = this.dtgDetalle;
-			this.layoutControlItem1.CustomizationFormText = "layoutControlItem1";
-			this.layoutControlItem1.Location = new System.Drawing.Point(0, 199);
-			this.layoutControlItem1.Name = "layoutControlItem1";
-			this.layoutControlItem1.Size = new System.Drawing.Size(667, 167);
-			this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
-			this.layoutControlItem1.TextVisible = false;
+			this.layoutGrid.Control = this.dtgDetalle;
+			this.layoutGrid.CustomizationFormText = "layoutControlItem1";
+			this.layoutGrid.Location = new System.Drawing.Point(0, 199);
+			this.layoutGrid.Name = "layoutGrid";
+			this.layoutGrid.Size = new System.Drawing.Size(667, 182);
+			this.layoutGrid.TextSize = new System.Drawing.Size(0, 0);
+			this.layoutGrid.TextVisible = false;
+			// 
+			// emptySpaceItem1
+			// 
+			this.emptySpaceItem1.AllowHotTrack = false;
+			this.emptySpaceItem1.CustomizationFormText = "emptySpaceItem1";
+			this.emptySpaceItem1.Location = new System.Drawing.Point(0, 381);
+			this.emptySpaceItem1.MaxSize = new System.Drawing.Size(0, 26);
+			this.emptySpaceItem1.MinSize = new System.Drawing.Size(10, 26);
+			this.emptySpaceItem1.Name = "emptySpaceItem1";
+			this.emptySpaceItem1.Size = new System.Drawing.Size(429, 26);
+			this.emptySpaceItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+			this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
+			// 
+			// emptySpaceItem2
+			// 
+			this.emptySpaceItem2.AllowHotTrack = false;
+			this.emptySpaceItem2.AppearanceItemCaption.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.emptySpaceItem2.AppearanceItemCaption.ForeColor = System.Drawing.Color.Black;
+			this.emptySpaceItem2.AppearanceItemCaption.Options.UseFont = true;
+			this.emptySpaceItem2.AppearanceItemCaption.Options.UseForeColor = true;
+			this.emptySpaceItem2.AppearanceItemCaption.Options.UseTextOptions = true;
+			this.emptySpaceItem2.AppearanceItemCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+			this.emptySpaceItem2.Location = new System.Drawing.Point(49, 0);
+			this.emptySpaceItem2.MaxSize = new System.Drawing.Size(0, 36);
+			this.emptySpaceItem2.MinSize = new System.Drawing.Size(194, 36);
+			this.emptySpaceItem2.Name = "emptySpaceItem2";
+			this.emptySpaceItem2.Size = new System.Drawing.Size(618, 36);
+			this.emptySpaceItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+			this.emptySpaceItem2.Text = "Listado de Lotes";
+			this.emptySpaceItem2.TextSize = new System.Drawing.Size(90, 0);
+			this.emptySpaceItem2.TextVisible = true;
+			// 
+			// layoutControlItem9
+			// 
+			this.layoutControlItem9.Control = this.pictureEdit1;
+			this.layoutControlItem9.Location = new System.Drawing.Point(0, 0);
+			this.layoutControlItem9.MinSize = new System.Drawing.Size(24, 24);
+			this.layoutControlItem9.Name = "layoutControlItem9";
+			this.layoutControlItem9.Size = new System.Drawing.Size(49, 36);
+			this.layoutControlItem9.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+			this.layoutControlItem9.TextSize = new System.Drawing.Size(0, 0);
+			this.layoutControlItem9.TextVisible = false;
 			// 
 			// layoutControlGroup3
 			// 
@@ -793,48 +865,6 @@
 			this.emptySpaceItem4.Size = new System.Drawing.Size(322, 26);
 			this.emptySpaceItem4.TextSize = new System.Drawing.Size(0, 0);
 			// 
-			// emptySpaceItem1
-			// 
-			this.emptySpaceItem1.AllowHotTrack = false;
-			this.emptySpaceItem1.CustomizationFormText = "emptySpaceItem1";
-			this.emptySpaceItem1.Location = new System.Drawing.Point(0, 366);
-			this.emptySpaceItem1.MaxSize = new System.Drawing.Size(0, 26);
-			this.emptySpaceItem1.MinSize = new System.Drawing.Size(10, 26);
-			this.emptySpaceItem1.Name = "emptySpaceItem1";
-			this.emptySpaceItem1.Size = new System.Drawing.Size(667, 26);
-			this.emptySpaceItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-			this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
-			// 
-			// emptySpaceItem2
-			// 
-			this.emptySpaceItem2.AllowHotTrack = false;
-			this.emptySpaceItem2.AppearanceItemCaption.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.emptySpaceItem2.AppearanceItemCaption.ForeColor = System.Drawing.Color.Black;
-			this.emptySpaceItem2.AppearanceItemCaption.Options.UseFont = true;
-			this.emptySpaceItem2.AppearanceItemCaption.Options.UseForeColor = true;
-			this.emptySpaceItem2.AppearanceItemCaption.Options.UseTextOptions = true;
-			this.emptySpaceItem2.AppearanceItemCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
-			this.emptySpaceItem2.Location = new System.Drawing.Point(49, 0);
-			this.emptySpaceItem2.MaxSize = new System.Drawing.Size(0, 36);
-			this.emptySpaceItem2.MinSize = new System.Drawing.Size(194, 36);
-			this.emptySpaceItem2.Name = "emptySpaceItem2";
-			this.emptySpaceItem2.Size = new System.Drawing.Size(618, 36);
-			this.emptySpaceItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-			this.emptySpaceItem2.Text = "Listado de Lotes";
-			this.emptySpaceItem2.TextSize = new System.Drawing.Size(90, 0);
-			this.emptySpaceItem2.TextVisible = true;
-			// 
-			// layoutControlItem9
-			// 
-			this.layoutControlItem9.Control = this.pictureEdit1;
-			this.layoutControlItem9.Location = new System.Drawing.Point(0, 0);
-			this.layoutControlItem9.MinSize = new System.Drawing.Size(24, 24);
-			this.layoutControlItem9.Name = "layoutControlItem9";
-			this.layoutControlItem9.Size = new System.Drawing.Size(49, 36);
-			this.layoutControlItem9.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-			this.layoutControlItem9.TextSize = new System.Drawing.Size(0, 0);
-			this.layoutControlItem9.TextVisible = false;
-			// 
 			// emptySpaceItem3
 			// 
 			this.emptySpaceItem3.AllowHotTrack = false;
@@ -846,11 +876,29 @@
 			this.emptySpaceItem3.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
 			this.emptySpaceItem3.TextSize = new System.Drawing.Size(0, 0);
 			// 
+			// LayoutOk
+			// 
+			this.LayoutOk.Control = this.btnOk;
+			this.LayoutOk.Location = new System.Drawing.Point(545, 381);
+			this.LayoutOk.Name = "LayoutOk";
+			this.LayoutOk.Size = new System.Drawing.Size(122, 26);
+			this.LayoutOk.TextSize = new System.Drawing.Size(0, 0);
+			this.LayoutOk.TextVisible = false;
+			// 
+			// layoutCancelar
+			// 
+			this.layoutCancelar.Control = this.btnCancel;
+			this.layoutCancelar.Location = new System.Drawing.Point(429, 381);
+			this.layoutCancelar.Name = "layoutCancelar";
+			this.layoutCancelar.Size = new System.Drawing.Size(116, 26);
+			this.layoutCancelar.TextSize = new System.Drawing.Size(0, 0);
+			this.layoutCancelar.TextVisible = false;
+			// 
 			// frmLote
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(687, 542);
+			this.ClientSize = new System.Drawing.Size(687, 557);
 			this.Controls.Add(this.layoutControl1);
 			this.Controls.Add(this.ribbonControl);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -878,7 +926,10 @@
 			((System.ComponentModel.ISupportInitialize)(this.txtLoteProveedor.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.item0)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutGrid)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup3)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
@@ -887,10 +938,9 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.LayoutOk)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutCancelar)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -940,7 +990,7 @@
         private DevExpress.XtraEditors.TextEdit txtLoteProveedor;
         private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
         private DevExpress.XtraLayout.LayoutControlGroup item0;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
+        private DevExpress.XtraLayout.LayoutControlItem layoutGrid;
         private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup3;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
@@ -964,5 +1014,9 @@
         private DevExpress.XtraGrid.Columns.GridColumn colDescrProducto;
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem3;
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem4;
+		private DevExpress.XtraEditors.SimpleButton btnCancel;
+		private DevExpress.XtraEditors.SimpleButton btnOk;
+		private DevExpress.XtraLayout.LayoutControlItem LayoutOk;
+		private DevExpress.XtraLayout.LayoutControlItem layoutCancelar;
     }
 }

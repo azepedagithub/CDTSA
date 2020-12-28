@@ -58,7 +58,6 @@
 			this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
 			this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -66,6 +65,7 @@
 			this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
 			this.layoutControl1.SuspendLayout();
@@ -79,7 +79,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
@@ -87,6 +86,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// ribbonControl
@@ -177,7 +177,7 @@
 			this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.ribbonPageGroup1});
 			this.ribbonPage1.Name = "ribbonPage1";
-			this.ribbonPage1.Text = "Operaciones Concsecutivos";
+			this.ribbonPage1.Text = "Operaciones Concecutivos";
 			// 
 			// ribbonPageGroup1
 			// 
@@ -425,16 +425,6 @@
 			this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem1.TextVisible = false;
 			// 
-			// layoutControlItem2
-			// 
-			this.layoutControlItem2.Control = this.gridControl;
-			this.layoutControlItem2.Location = new System.Drawing.Point(0, 103);
-			this.layoutControlItem2.Name = "layoutControlItem2";
-			this.layoutControlItem2.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
-			this.layoutControlItem2.Size = new System.Drawing.Size(704, 232);
-			this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
-			this.layoutControlItem2.TextVisible = false;
-			// 
 			// layoutControlItem3
 			// 
 			this.layoutControlItem3.Control = this.txtDescripcion;
@@ -508,6 +498,16 @@
 			this.layoutControlItem6.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem6.TextVisible = false;
 			// 
+			// layoutControlItem2
+			// 
+			this.layoutControlItem2.Control = this.gridControl;
+			this.layoutControlItem2.Location = new System.Drawing.Point(0, 103);
+			this.layoutControlItem2.Name = "layoutControlItem2";
+			this.layoutControlItem2.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
+			this.layoutControlItem2.Size = new System.Drawing.Size(704, 232);
+			this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
+			this.layoutControlItem2.TextVisible = false;
+			// 
 			// frmConsecutivos
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -532,7 +532,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
@@ -540,6 +539,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

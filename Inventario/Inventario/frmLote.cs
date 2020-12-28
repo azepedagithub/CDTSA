@@ -27,6 +27,10 @@ namespace CI
         const String _tituloVentana = "Listado de Lotes";
         private bool isEdition = false;
 
+		private long IDProducto;
+		public String LoteAdd;
+		private bool IsFormReduced =false;
+
         public frmLote()
         {
             InitializeComponent();
@@ -37,7 +41,29 @@ namespace CI
           true);
             this.ribbonControl.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonControlStyle.Office2010;
             this.StartPosition = FormStartPosition.CenterScreen;
+			this.emptySpaceItem1.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
+			this.layoutCancelar.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
+			this.LayoutOk.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
         }
+
+		public frmLote(long IDProducto)
+		{
+			InitializeComponent();
+			this.SetStyle(
+			ControlStyles.AllPaintingInWmPaint |
+			ControlStyles.UserPaint |
+			ControlStyles.DoubleBuffer,
+			true);
+			this.ribbonPage1.Visible = false;
+			this.layoutGrid.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
+			this.IDProducto = IDProducto;
+			this.StartPosition = FormStartPosition.CenterScreen;
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+			this.Height = this.Height - 240;
+			
+			this.IsFormReduced = true;
+
+		}
 
         private void CargarPrivilegios()
         {
@@ -121,7 +147,16 @@ namespace CI
             Util.Util.ConfigLookupEdit(this.slkupProducto, clsProductoDAC.GetData(-1,"*","*",-1,-1,-1,-1,-1,-1,"*",-1,-1,-1).Tables[0], "Descr", "IDProducto",400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupProducto, "[{'ColumnCaption':'IDProducto','ColumnField':'IDProducto','width':30},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':70}]");
 			this.slkupProducto.Properties.View.OptionsView.ShowAutoFilterRow = true;
-
+			if (IsFormReduced) {
+				
+				isEdition = true;
+				HabilitarControles(true);
+				this.slkupProducto.Properties.ReadOnly = true;
+				ClearControls();
+				this.slkupProducto.EditValue = this.IDProducto;
+				currentRow = null;
+				this.txtLote.Focus();
+			}
             
         }
 
@@ -251,116 +286,121 @@ namespace CI
             return result;
         }
 
+		private void Guardar() {
+			try
+			{
+				//ValidarDatos
+				if (!ValidarDatos())
+					return;
+
+				if (currentRow != null)
+				{
+					lblStatus.Caption = "Actualizando : " + currentRow["LoteProveedor"].ToString();
+
+					Application.DoEvents();
+					currentRow.BeginEdit();
+
+					currentRow["LoteInterno"] = this.txtLote.Text;
+					currentRow["LoteProveedor"] = this.txtLoteProveedor.Text;
+					currentRow["IDProducto"] = this.slkupProducto.EditValue;
+					currentRow["FechaFabricacion"] = this.dtpFechaFabricacion.EditValue;
+					currentRow["FechaIngreso"] = this.dtpFechaIngreso.EditValue;
+					currentRow["FechaVencimiento"] = this.dtpFechaVence.EditValue;
+
+
+					currentRow.EndEdit();
+
+					DataSet _dsChanged = _dsLote.GetChanges(DataRowState.Modified);
+
+					bool okFlag = true;
+					if (_dsChanged.HasErrors)
+					{
+						okFlag = false;
+						string msg = "Error en la fila con el tipo Id";
+
+						foreach (DataTable tb in _dsChanged.Tables)
+						{
+							if (tb.HasErrors)
+							{
+								DataRow[] errosRow = tb.GetErrors();
+
+								foreach (DataRow dr in errosRow)
+								{
+									msg = msg + dr["LoteProveedor"].ToString();
+								}
+							}
+						}
+
+						lblStatus.Caption = msg;
+					}
+
+					//Si no hay errores
+
+					if (okFlag)
+					{
+						clsLoteDAC.oAdaptador.Update(_dsChanged, "Data");
+						lblStatus.Caption = "Actualizado " + currentRow["LoteProveedor"].ToString();
+						Application.DoEvents();
+						isEdition = false;
+						_dsLote.AcceptChanges();
+						PopulateGrid();
+						SetCurrentRow();
+						HabilitarControles(false);
+						AplicarPrivilegios();
+					}
+					else
+					{
+						_dsLote.RejectChanges();
+
+					}
+				}
+				else
+				{
+					//nuevo registro
+					currentRow = _dtLote.NewRow();
+
+					currentRow["LoteInterno"] = this.txtLote.Text;
+					currentRow["LoteProveedor"] = this.txtLoteProveedor.Text;
+					currentRow["IDProducto"] = this.slkupProducto.EditValue;
+					currentRow["FechaFabricacion"] = this.dtpFechaFabricacion.EditValue;
+					currentRow["FechaIngreso"] = this.dtpFechaIngreso.EditValue;
+					currentRow["FechaVencimiento"] = this.dtpFechaVence.EditValue;
+
+					_dtLote.Rows.Add(currentRow);
+					try
+					{
+						clsLoteDAC.oAdaptador.Update(_dsLote, "Data");
+						_dsLote.AcceptChanges();
+						
+						isEdition = false;
+						lblStatus.Caption = "Se ha ingresado un nuevo registro";
+						Application.DoEvents();
+						PopulateGrid();
+						SetCurrentRow();
+						HabilitarControles(false);
+						AplicarPrivilegios();
+						ColumnView view = this.gridView2;
+						view.MoveLast();
+					}
+					catch (System.Data.SqlClient.SqlException ex)
+					{
+						_dsLote.RejectChanges();
+						currentRow = null;
+						MessageBox.Show(ex.Message);
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				_dsLote.RejectChanges();
+				currentRow = null;
+				MessageBox.Show(ex.Message);
+			}
+		}
+
         private void btnGuardar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            try
-            {
-                //ValidarDatos
-                if (!ValidarDatos())
-                    return;
-
-                if (currentRow != null)
-                {
-                    lblStatus.Caption = "Actualizando : " + currentRow["LoteProveedor"].ToString();
-
-                    Application.DoEvents();
-                    currentRow.BeginEdit();
-
-                    currentRow["LoteInterno"] = this.txtLote.Text;
-                    currentRow["LoteProveedor"] = this.txtLoteProveedor.Text;
-                    currentRow["IDProducto"] = this.slkupProducto.EditValue;
-                    currentRow["FechaFabricacion"] = this.dtpFechaFabricacion.EditValue;
-                    currentRow["FechaIngreso"] = this.dtpFechaIngreso.EditValue;
-                    currentRow["FechaVencimiento"] = this.dtpFechaVence.EditValue;
-
-
-                    currentRow.EndEdit();
-
-                    DataSet _dsChanged = _dsLote.GetChanges(DataRowState.Modified);
-
-                    bool okFlag = true;
-                    if (_dsChanged.HasErrors)
-                    {
-                        okFlag = false;
-                        string msg = "Error en la fila con el tipo Id";
-
-                        foreach (DataTable tb in _dsChanged.Tables)
-                        {
-                            if (tb.HasErrors)
-                            {
-                                DataRow[] errosRow = tb.GetErrors();
-
-                                foreach (DataRow dr in errosRow)
-                                {
-                                    msg = msg + dr["LoteProveedor"].ToString();
-                                }
-                            }
-                        }
-
-                        lblStatus.Caption = msg;
-                    }
-
-                    //Si no hay errores
-
-                    if (okFlag)
-                    {
-                        clsLoteDAC.oAdaptador.Update(_dsChanged, "Data");
-                        lblStatus.Caption = "Actualizado " + currentRow["LoteProveedor"].ToString();
-                        Application.DoEvents();
-                        isEdition = false;
-                        _dsLote.AcceptChanges();
-                        PopulateGrid();
-                        SetCurrentRow();
-                        HabilitarControles(false);
-                        AplicarPrivilegios();
-                    }
-                    else
-                    {
-                        _dsLote.RejectChanges();
-
-                    }
-                }
-                else
-                {
-                    //nuevo registro
-                    currentRow = _dtLote.NewRow();
-
-                    currentRow["LoteInterno"] = this.txtLote.Text;
-                    currentRow["LoteProveedor"] = this.txtLoteProveedor.Text;
-                    currentRow["IDProducto"] = this.slkupProducto.EditValue;
-                    currentRow["FechaFabricacion"] = this.dtpFechaFabricacion.EditValue;
-                    currentRow["FechaIngreso"] = this.dtpFechaIngreso.EditValue;
-                    currentRow["FechaVencimiento"] = this.dtpFechaVence.EditValue;
-
-                    _dtLote.Rows.Add(currentRow);
-                    try
-                    {
-                        clsLoteDAC.oAdaptador.Update(_dsLote, "Data");
-                        _dsLote.AcceptChanges();
-                        isEdition = false;
-                        lblStatus.Caption = "Se ha ingresado un nuevo registro";
-                        Application.DoEvents();
-                        PopulateGrid();
-                        SetCurrentRow();
-                        HabilitarControles(false);
-                        AplicarPrivilegios();
-                        ColumnView view = this.gridView2;
-                        view.MoveLast();
-                    }
-                    catch (System.Data.SqlClient.SqlException ex)
-                    {
-                        _dsLote.RejectChanges();
-                        currentRow = null;
-                        MessageBox.Show(ex.Message);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                _dsLote.RejectChanges();
-                currentRow = null;
-                MessageBox.Show(ex.Message);
-            }
+			Guardar();
         }
 
         private void btnCancelar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -417,6 +457,21 @@ namespace CI
             }
         }
 
+		private void btnCancel_Click(object sender, EventArgs e)
+		{
+			this.DialogResult =  System.Windows.Forms.DialogResult.Cancel;
+			this.Close();
+		}
+
+		private void btnOk_Click(object sender, EventArgs e)
+		{
+			this.LoteAdd = this.txtLote.Text.Trim();
+			Guardar();
+			this.DialogResult = System.Windows.Forms.DialogResult.OK;
+			this.Close();
+		}
+
+		
         
     }
 }

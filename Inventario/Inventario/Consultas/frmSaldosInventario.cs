@@ -58,6 +58,7 @@ namespace CI.Consultas
         private void btnFiltrar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             frmFiltroConsultaExistencia ofrmFiltro = new frmFiltroConsultaExistencia("SaldosInventario", sProductos, sLotes, sBodegas,-1, sClasif1, sClasif2, sClasif3, sClasif4, sClasif5, sClasif6,"*","*","*","*",Fecha,Fecha, bDetallaLote);
+			ofrmFiltro.Text = "Filtro de Saldos de Inventario";
                ofrmFiltro.FormClosed += ofrmFiltro_FormClosed;
             ofrmFiltro.ShowDialog();
         }

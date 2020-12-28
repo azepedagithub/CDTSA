@@ -41,6 +41,7 @@
 			this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
+			this.chkBodegaMuestra = new DevExpress.XtraEditors.CheckEdit();
 			this.pictureEdit1 = new DevExpress.XtraEditors.PictureEdit();
 			this.slkupPaqueteFactura = new DevExpress.XtraEditors.SearchLookUpEdit();
 			this.searchLookUpEdit1View = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -80,11 +81,11 @@
 			this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.chkBodegaMuestra = new DevExpress.XtraEditors.CheckEdit();
 			this.layoutControlItem10 = new DevExpress.XtraLayout.LayoutControlItem();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
 			this.layoutControl1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.chkBodegaMuestra.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureEdit1.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.slkupPaqueteFactura.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit1View)).BeginInit();
@@ -107,7 +108,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.chkBodegaMuestra.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -200,7 +200,7 @@
 			this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.ribbonPageGroup1});
 			this.ribbonPage1.Name = "ribbonPage1";
-			this.ribbonPage1.Text = "Operaciones Concsecutivos";
+			this.ribbonPage1.Text = "Operaciones";
 			// 
 			// ribbonPageGroup1
 			// 
@@ -234,6 +234,17 @@
 			this.layoutControl1.Size = new System.Drawing.Size(758, 348);
 			this.layoutControl1.TabIndex = 1;
 			this.layoutControl1.Text = "layoutControl1";
+			// 
+			// chkBodegaMuestra
+			// 
+			this.chkBodegaMuestra.Location = new System.Drawing.Point(622, 108);
+			this.chkBodegaMuestra.MenuManager = this.ribbonControl;
+			this.chkBodegaMuestra.Name = "chkBodegaMuestra";
+			this.chkBodegaMuestra.Properties.Caption = "Es Bodega Muestra";
+			this.chkBodegaMuestra.Size = new System.Drawing.Size(114, 19);
+			this.chkBodegaMuestra.StyleController = this.layoutControl1;
+			this.chkBodegaMuestra.TabIndex = 16;
+			this.chkBodegaMuestra.CheckedChanged += new System.EventHandler(this.chkBodegaMuestra_CheckedChanged);
 			// 
 			// pictureEdit1
 			// 
@@ -664,17 +675,6 @@
 			this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem2.TextVisible = false;
 			// 
-			// chkBodegaMuestra
-			// 
-			this.chkBodegaMuestra.Location = new System.Drawing.Point(622, 108);
-			this.chkBodegaMuestra.MenuManager = this.ribbonControl;
-			this.chkBodegaMuestra.Name = "chkBodegaMuestra";
-			this.chkBodegaMuestra.Properties.Caption = "Es Bodega Muestra";
-			this.chkBodegaMuestra.Size = new System.Drawing.Size(114, 19);
-			this.chkBodegaMuestra.StyleController = this.layoutControl1;
-			this.chkBodegaMuestra.TabIndex = 16;
-			this.chkBodegaMuestra.CheckedChanged += new System.EventHandler(this.chkBodegaMuestra_CheckedChanged);
-			// 
 			// layoutControlItem10
 			// 
 			this.layoutControlItem10.Control = this.chkBodegaMuestra;
@@ -699,6 +699,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
 			this.layoutControl1.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.chkBodegaMuestra.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureEdit1.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.slkupPaqueteFactura.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit1View)).EndInit();
@@ -721,7 +722,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.chkBodegaMuestra.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();

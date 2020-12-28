@@ -118,6 +118,24 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnAgregarLote.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAbdEVYdFRpdGxlAEZvb3RlcjtBZGQgRm9vdGVyO0FkZERN7R4AAAK4SURBVDhPZZLrS5NhGMZf
+        NJd2+Bua/Q1REQWBXwqCvgWFGJQHUIIKwxOKE5u1uU2bh7E5dc3ZspObqJg6D3NzupzZNyEy6oOmOd2c
+        bu9OV/fzaLXygd97P8/De133/d7vLQiCkNbW+3FCZ/2EduvSPi+WQHecVoaFsYiWnkU86/ZOkiYdgMBg
+        K529mLqSdEjSI0mPvzGJBB2aTQtMJUk1OKI1+7je0LcIfZ8Pupc+qmKBsn5Ai8ULrXke8vYpxONJqIxe
+        ZnD0H4Mmkw8sq38niq0gQ4Sfov9PpH1ARDSegMLgOWSQoeqc46W29nrpO+d5xubnc1SuB5puD9RdHsi0
+        ExBjCarEzQwyUyvIUBiYQRIbgQh+MrYjfL/B4raI9a0I1mkfiSZQp3UeMpDI29y8QU0H2VSdHjQaZ6Hs
+        IAxuKPRuVKvHEBYTFKeYQVZqBZJa7Qw3+OEPExGsUcY1FunM4yaLYYTCcVQoHYcNajSTSCSSKRldeKp3
+        4YluBg2MdieCIREK6zzy5EO4VWebvCmzCzdq+vkcHK1QOBAng03qOoN/NycCfyhK3Wf/CMitH4RzNQgS
+        Quf6Llwve80NMh81jCJGLzW7TkPDyYbaJYV6RoqQuA65eRaUkYQ2tEx/AwlxrfQVrty3jnODh/UjZJBA
+        I4kaSaSclkIxxTjFMzMhy6xxfIVqfAXKsRUo3n9BTomFz3LWPdkwovSPawekqLVLUW3LRtU7KSrfShHY
+        W4XM6KSMfbj6wIrHQ5+RU2zB5SIzLuabhrlBSfUgH5LgXgzB3RgCuzSNoRhNpogduqP28JVT3IOa/mVc
+        KjCR+bJw/raR90CSX/7GUVQ1gMIqOwor7cgvt6OgwrZPmQ13ia3tMEqbRnHhThfO5XWMnM3rEM7k6rlB
+        GjMhjhHHDzhB8X9OHtxlMs3vQfoF0bCqCuZ+FwAAAAAASUVORK5CYII=
+</value>
+  </data>
   <data name="LayoutDetalleDocumento.CustomHeaderButtons" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8

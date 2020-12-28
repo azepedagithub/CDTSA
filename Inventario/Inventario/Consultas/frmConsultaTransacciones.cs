@@ -40,7 +40,8 @@ namespace CI
         private void btnFiltrar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             frmFiltroConsultaExistencia ofrmFiltro = new frmFiltroConsultaExistencia("Transacciones", sProductos, sLotes, sBodegas,IDProveedor, sClasif1, sClasif2, sClasif3, sClasif4, sClasif5, sClasif6,sPaquete,sTransaccion,sReferencia,sAplicacion,FechaInicial,FechaFinal, bDetallaLote);
-               ofrmFiltro.FormClosed += ofrmFiltro_FormClosed;
+			ofrmFiltro.Text = "Filtro de Consulta de Transacciones";
+            ofrmFiltro.FormClosed += ofrmFiltro_FormClosed;
             ofrmFiltro.ShowDialog();
         }
 

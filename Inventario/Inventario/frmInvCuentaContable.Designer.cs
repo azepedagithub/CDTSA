@@ -105,6 +105,8 @@
 			this.gridView6 = new DevExpress.XtraGrid.Views.Grid.GridView();
 			this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.emptySpaceItem3 = new DevExpress.XtraLayout.EmptySpaceItem();
+			this.layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlGroup5 = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.tabbedControlGroup1 = new DevExpress.XtraLayout.TabbedControlGroup();
 			this.layoutControlGroup2 = new DevExpress.XtraLayout.LayoutControlGroup();
@@ -136,8 +138,6 @@
 			this.emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.emptySpaceItem3 = new DevExpress.XtraLayout.EmptySpaceItem();
-			this.layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
@@ -194,6 +194,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.gridView6)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup5)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.tabbedControlGroup1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).BeginInit();
@@ -225,8 +227,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -318,7 +318,7 @@
 			this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.ribbonPageGroup1});
 			this.ribbonPage1.Name = "ribbonPage1";
-			this.ribbonPage1.Text = "Operaciones Centro Costo";
+			this.ribbonPage1.Text = "Operaciones ";
 			// 
 			// ribbonPageGroup1
 			// 
@@ -994,6 +994,33 @@
 			this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem1.TextVisible = false;
 			// 
+			// emptySpaceItem3
+			// 
+			this.emptySpaceItem3.AllowHotTrack = false;
+			this.emptySpaceItem3.AppearanceItemCaption.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.emptySpaceItem3.AppearanceItemCaption.ForeColor = System.Drawing.Color.Black;
+			this.emptySpaceItem3.AppearanceItemCaption.Options.UseFont = true;
+			this.emptySpaceItem3.AppearanceItemCaption.Options.UseForeColor = true;
+			this.emptySpaceItem3.CustomizationFormText = "Listado Centro de Costos";
+			this.emptySpaceItem3.Location = new System.Drawing.Point(50, 0);
+			this.emptySpaceItem3.MaxSize = new System.Drawing.Size(0, 36);
+			this.emptySpaceItem3.MinSize = new System.Drawing.Size(204, 36);
+			this.emptySpaceItem3.Name = "emptySpaceItem3";
+			this.emptySpaceItem3.Size = new System.Drawing.Size(866, 36);
+			this.emptySpaceItem3.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+			this.emptySpaceItem3.Text = "Listado Cuentas Contables de Inventario";
+			this.emptySpaceItem3.TextSize = new System.Drawing.Size(100, 0);
+			this.emptySpaceItem3.TextVisible = true;
+			// 
+			// layoutControlItem7
+			// 
+			this.layoutControlItem7.Control = this.pictureEdit1;
+			this.layoutControlItem7.Location = new System.Drawing.Point(0, 0);
+			this.layoutControlItem7.Name = "layoutControlItem7";
+			this.layoutControlItem7.Size = new System.Drawing.Size(50, 36);
+			this.layoutControlItem7.TextSize = new System.Drawing.Size(0, 0);
+			this.layoutControlItem7.TextVisible = false;
+			// 
 			// layoutControlGroup5
 			// 
 			this.layoutControlGroup5.CustomizationFormText = "layoutControlGroup2";
@@ -1340,33 +1367,6 @@
 			this.layoutControlItem3.Text = "ID Cuenta:";
 			this.layoutControlItem3.TextSize = new System.Drawing.Size(100, 13);
 			// 
-			// emptySpaceItem3
-			// 
-			this.emptySpaceItem3.AllowHotTrack = false;
-			this.emptySpaceItem3.AppearanceItemCaption.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.emptySpaceItem3.AppearanceItemCaption.ForeColor = System.Drawing.Color.Black;
-			this.emptySpaceItem3.AppearanceItemCaption.Options.UseFont = true;
-			this.emptySpaceItem3.AppearanceItemCaption.Options.UseForeColor = true;
-			this.emptySpaceItem3.CustomizationFormText = "Listado Centro de Costos";
-			this.emptySpaceItem3.Location = new System.Drawing.Point(50, 0);
-			this.emptySpaceItem3.MaxSize = new System.Drawing.Size(0, 36);
-			this.emptySpaceItem3.MinSize = new System.Drawing.Size(204, 36);
-			this.emptySpaceItem3.Name = "emptySpaceItem3";
-			this.emptySpaceItem3.Size = new System.Drawing.Size(866, 36);
-			this.emptySpaceItem3.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-			this.emptySpaceItem3.Text = "Listado Cuentas Contables de Inventario";
-			this.emptySpaceItem3.TextSize = new System.Drawing.Size(100, 0);
-			this.emptySpaceItem3.TextVisible = true;
-			// 
-			// layoutControlItem7
-			// 
-			this.layoutControlItem7.Control = this.pictureEdit1;
-			this.layoutControlItem7.Location = new System.Drawing.Point(0, 0);
-			this.layoutControlItem7.Name = "layoutControlItem7";
-			this.layoutControlItem7.Size = new System.Drawing.Size(50, 36);
-			this.layoutControlItem7.TextSize = new System.Drawing.Size(0, 0);
-			this.layoutControlItem7.TextVisible = false;
-			// 
 			// emptySpaceItem1
 			// 
 			this.emptySpaceItem1.AllowHotTrack = false;
@@ -1443,6 +1443,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.gridView6)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup5)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.tabbedControlGroup1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).EndInit();
@@ -1474,8 +1476,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();

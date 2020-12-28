@@ -61,13 +61,13 @@
 			this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.layoutControlGroup2 = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
 			this.layoutControl1.SuspendLayout();
@@ -86,13 +86,13 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// ribbonControl
@@ -183,7 +183,7 @@
 			this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.ribbonPageGroup1});
 			this.ribbonPage1.Name = "ribbonPage1";
-			this.ribbonPage1.Text = "Operaciones Centro Costo";
+			this.ribbonPage1.Text = "Operaciones";
 			// 
 			// ribbonPageGroup1
 			// 
@@ -447,6 +447,17 @@
 			this.layoutControlItem7.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem7.TextVisible = false;
 			// 
+			// emptySpaceItem2
+			// 
+			this.emptySpaceItem2.AllowHotTrack = false;
+			this.emptySpaceItem2.Location = new System.Drawing.Point(0, 36);
+			this.emptySpaceItem2.MaxSize = new System.Drawing.Size(0, 15);
+			this.emptySpaceItem2.MinSize = new System.Drawing.Size(10, 15);
+			this.emptySpaceItem2.Name = "emptySpaceItem2";
+			this.emptySpaceItem2.Size = new System.Drawing.Size(869, 15);
+			this.emptySpaceItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+			this.emptySpaceItem2.TextSize = new System.Drawing.Size(0, 0);
+			// 
 			// layoutControlGroup2
 			// 
 			this.layoutControlGroup2.AppearanceGroup.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -511,17 +522,6 @@
 			this.layoutControlItem3.Text = "Descripción:";
 			this.layoutControlItem3.TextSize = new System.Drawing.Size(63, 13);
 			// 
-			// emptySpaceItem2
-			// 
-			this.emptySpaceItem2.AllowHotTrack = false;
-			this.emptySpaceItem2.Location = new System.Drawing.Point(0, 36);
-			this.emptySpaceItem2.MaxSize = new System.Drawing.Size(0, 15);
-			this.emptySpaceItem2.MinSize = new System.Drawing.Size(10, 15);
-			this.emptySpaceItem2.Name = "emptySpaceItem2";
-			this.emptySpaceItem2.Size = new System.Drawing.Size(869, 15);
-			this.emptySpaceItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-			this.emptySpaceItem2.TextSize = new System.Drawing.Size(0, 0);
-			// 
 			// frmPaquetes
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -551,13 +551,13 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
