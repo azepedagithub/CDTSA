@@ -11,8 +11,8 @@ using System.Windows.Forms;
 
 namespace CI.Consultas
 {
-    public partial class frmSaldosInventario : Form
-    {
+	public partial class frmSaldosInventario : DevExpress.XtraBars.Ribbon.RibbonForm
+	{
        
         private String sProductos = "";
         private String sLotes = "";

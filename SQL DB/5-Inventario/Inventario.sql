@@ -188,7 +188,9 @@ CREATE  TABLE [dbo].[invCuentaContable](
     [CtrDevVentas] [int], 
     [CtaDevVentas] [bigint],
     [CtrConsumo] [int],
-    [CtaConsumo] [bigint]
+    [CtaConsumo] [bigint],
+    [CtrPrestamos] [int],
+    [CtaPratmos] [bigint]
  CONSTRAINT [pkinvCuentaContable] PRIMARY KEY CLUSTERED 
 (
 	[IDCuenta] ASC
@@ -273,6 +275,13 @@ GO
 ALTER TABLE [dbo].[invCuentaContable] CHECK CONSTRAINT [fkinvCuentaContable_CtrConsumo]
 GO
 
+
+ALTER TABLE [dbo].[invCuentaContable]  WITH CHECK ADD  CONSTRAINT [fkinvCuentaContable_CtrPrestamo] FOREIGN KEY(CtrPrestamo)
+REFERENCES dbo.cntCentroCosto ([IDCentro])
+GO
+
+ALTER TABLE [dbo].[invCuentaContable] CHECK CONSTRAINT [fkinvCuentaContable_CtrPrestamo]
+GO
 
 
 ALTER TABLE [dbo].[invProducto]  WITH CHECK ADD  CONSTRAINT [fkinvProductoCuentaContable] FOREIGN KEY([IDCuentaContable])
@@ -361,6 +370,15 @@ GO
 
 ALTER TABLE [dbo].[invCuentaContable] CHECK CONSTRAINT [fkinvCuentaContable_CtaConsumo]
 GO
+
+
+ALTER TABLE [dbo].[invCuentaContable]  WITH CHECK ADD  CONSTRAINT [fkinvCuentaContable_CtaPrestamo] FOREIGN KEY(CtaPrestamo)
+REFERENCES dbo.cntCuenta (IDCuenta)
+GO
+
+ALTER TABLE [dbo].[invCuentaContable] CHECK CONSTRAINT [fkinvCuentaContable_CtaPrestamo]
+GO
+
 
 
 --//End
@@ -1735,10 +1753,10 @@ SELECT  IDLote ,
 GO 
 
 
-CREATE   PROCEDURE dbo.invUpdateCuentaContableInv(@Operacion NVARCHAR(1),@IDCuenta AS INT OUTPUT,@Descr NVARCHAR(250),@CtrInventario AS INT,@CtaInventario AS BIGINT,  @CtrVenta AS INT,
+CREATE PROCEDURE dbo.invUpdateCuentaContableInv(@Operacion NVARCHAR(1),@IDCuenta AS INT OUTPUT,@Descr NVARCHAR(250),@CtrInventario AS INT,@CtaInventario AS BIGINT,  @CtrVenta AS INT,
 											@CtaVenta AS BIGINT,@CtrCompra as INT,@CtaCompra AS BIGINT,@CtrDescVenta AS INT,@CtaDescVenta AS BIGINT, @CtrCostoVenta AS INT,@CtaCostoVenta AS BIGINT,@CtrVariacionCosto AS INT, @CtaVariacionCosto AS BIGINT,
 											@CtrSobranteInvFisico AS INT,@CtaSobranteInvFisico AS BIGINT,@CtrFaltanteInvFisico AS INT,@CtaFaltanteInvFisico AS BIGINT,
-											@CtrDescBonificacion AS int	,@CtaDescBonificacion AS BIGINT	,@CtrDevVentas AS int	,@CtaDevVentas AS BIGINT,@CtrConsumo AS INT,@CtaConsumo AS BIGINT	)
+											@CtrDescBonificacion AS int	,@CtaDescBonificacion AS BIGINT	,@CtrDevVentas AS int	,@CtaDevVentas AS BIGINT,@CtrConsumo AS INT,@CtaConsumo AS BIGINT, @CtrPrestamo AS INT, @CtaPrestamo AS BIGINT)
 AS 
 if upper(@Operacion) = 'I'
 BEGIN
@@ -1753,7 +1771,7 @@ BEGIN
 	INSERT INTO dbo.invCuentaContable(IDCuenta ,Descr ,CtrInventario ,CtaInventario ,CtrVenta , CtaVenta ,CtrCompra ,CtaCompra ,
 	          CtrDescVenta ,CtaDescVenta ,CtrCostoVenta ,CtaCostoVenta, CtrVariacionCosto,CtaVariacionCosto ,CtrSobranteInvFisico ,CtaSobranteInvFisico ,
 	          CtrFaltanteInvFisico ,CtaFaltanteInvFisico ,CtrDescBonificacion ,
-	          CtaDescBonificacion ,CtrDevVentas ,CtaDevVentas,CtrConsumo,CtaConsumo)
+	          CtaDescBonificacion ,CtrDevVentas ,CtaDevVentas,CtrConsumo,CtaConsumo,CtrPrestamo,CtaPrestamo)
 	VALUES  ( @IDCuenta , -- IDCuenta - bigint
 	          @Descr , -- Descr - nvarchar(250)
 	          @CtrInventario , -- CtrInventario - int
@@ -1777,7 +1795,9 @@ BEGIN
 	          @CtrDevVentas , -- CtrDevVentas - int
 	          @CtaDevVentas,  -- CtaDevVentas - int
 	          @CtrConsumo,
-	          @CtaConsumo
+	          @CtaConsumo,
+	          @CtrPrestamo,
+	          @CtaPrestamo
 	        )
 	
 END
@@ -1811,14 +1831,16 @@ BEGIN
 		CtrDevVentas = @CtrDevVentas,
 		CtaDevVentas = @CtaDevVentas,
 		CtrConsumo = @CtrConsumo,
-		CtaConsumo = @CtaConsumo
+		CtaConsumo = @CtaConsumo,
+		CtrPrestamo = @CtrPrestamo,
+		CtaPrestamo = @CtaPrestamo
 	WHERE IDCuenta=@IDCuenta
 END
 
 
 GO 
 
-CREATE   PROCEDURE dbo.invGetCuentaContableInv (@IDCuentaContable AS BIGINT,@Descr AS NVARCHAR(250))
+CREATE  PROCEDURE dbo.invGetCuentaContableInv (@IDCuentaContable AS BIGINT,@Descr AS NVARCHAR(250))
 AS 
 SELECT  IDCuenta ,
         Descr ,
@@ -1843,7 +1865,9 @@ SELECT  IDCuenta ,
         CtrDevVentas ,
         CtaDevVentas,
         CtrConsumo,
-        CtaConsumo  FROM dbo.invCuentaContable WHERE (IDCuenta = @IDCuentaContable OR @IDCuentaContable = -1)
+        CtaConsumo,
+        CtrPrestamo,
+        CtaPrestamo  FROM dbo.invCuentaContable WHERE (IDCuenta = @IDCuentaContable OR @IDCuentaContable = -1)
 AND (Descr  LIKE '%' + @Descr + '%' OR  @Descr = '*')
 
 
@@ -2821,7 +2845,7 @@ DROP TABLE #tmpFactura
 
 go
 
-CREATE   PROCEDURE  dbo.invGeneraAsientoTransaccion  @IDDocumento AS INT, @Usuario AS NVARCHAR(50),@Asiento NVARCHAR(20) OUTPUT
+CREATE PROCEDURE  dbo.invGeneraAsientoTransaccion  @IDDocumento AS INT, @Usuario AS NVARCHAR(50),@Asiento NVARCHAR(20) OUTPUT
 
 AS 
 
@@ -2859,7 +2883,7 @@ END
 
 --//Generar la cabecera del Asiento
 
- EXEC [dbo].globalGetNextConsecutivo 'IN', @Asiento OUTPUT
+EXEC [dbo].globalGetNextConsecutivo 'IN', @Asiento OUTPUT
 
 DECLARE @DescrPaquete NVARCHAR(256)
 SELECT @DescrPaquete = Descr FROM dbo.invPaquete WHERE IDPaquete = @IDPaquete
@@ -2888,6 +2912,7 @@ DECLARE @IDProducto AS BIGINT,@IDBodega AS INT,@IDLote AS INT,@Cantidad AS DECIM
 @CtaVariacionCosto AS BIGINT, @CtrVariacionCosto AS INT,
 @CtaCompra AS BIGINT,@CtrCompra AS INT,
 @CtaConsumo AS BIGINT ,@CtrConsumo AS INT,
+@CtaPrestamo AS BIGINT , @CtrPrestamo AS INT,
 @IDTipoTran AS INT
 
 ALTER TABLE #tmpDocumento ADD	 ID INT IDENTITY(1,1)
@@ -2908,6 +2933,7 @@ BEGIN
 	@CtaVariacionCosto = CtaVariacionCosto, @CtrVariacionCosto = CtrVariacionCosto,
 	@CtaCompra = CtaCompra,@CtrCompra = CtrCompra,
 	@CtaConsumo =  CtaConsumo,@CtrConsumo = CtrConsumo,
+	@CtaPrestamo = CtaPrestamo, @CtrPrestamo = CtrPrestamo,
 	@IDTipoTran = IDTipoTran
 	  FROM #tmpDocumento WHERE ID =@i
 
@@ -2918,14 +2944,15 @@ BEGIN
 											@CtaFaltanteInvFisico + @CtrFaltanteInvFisico +
 											@CtaVariacionCosto + @CtrVariacionCosto +
 											@CtaCompra + @CtrCompra +
-											@CtaConsumo + @CtrConsumo 
+											@CtaConsumo + @CtrConsumo  + 
+											@CtaPrestamo + @CtrPrestamo
 											
 	 IF (@ValidacionDatos IS NULL ) 
 	 BEGIN
 		RAISERROR ( 'El Asiento contable no se puede generar. Por favor verifique que la familia contable del producto, tenga la cuentas contables asociadas.', 16, 1) ;
 		RETURN
 	END
-SELECT *  FROM dbo.globalTipoTran
+
 	  --//Salida de inventario Fisico
 	  IF (@IDTipoTran =1)
 	  BEGIN
@@ -3003,6 +3030,34 @@ SELECT *  FROM dbo.globalTipoTran
 			SET @Linea = @Linea + 1 
 			INSERT INTO dbo.cntAsientoDetalle( Asiento ,Linea ,IDCentro ,IDCuenta ,Referencia ,Debito ,Credito ,Documento ,daterecord)
 			VALUES (@Asiento,@Linea,@CtrCompra,@CtaCompra,'Salida por Ajuste de Inventario' + CAST(@IDProducto AS NVARCHAR(20)) + 'CI-' + @Documento,0,@CostoPromLocal * @Cantidad,@Documento,GETDATE())
+			
+			 --//Inventario
+			SET @Linea = @Linea + 1 
+			INSERT INTO dbo.cntAsientoDetalle( Asiento ,Linea ,IDCentro ,IDCuenta ,Referencia ,Debito ,Credito ,Documento ,daterecord)
+			VALUES (@Asiento,@Linea,@CtrInventario,@CtaInventario,'Inventario: Salida ' + CAST(@IDProducto AS NVARCHAR(20)) + 'CI-' + @Documento,@CostoPromLocal * @Cantidad,0,@Documento,GETDATE())
+	 END  
+	 
+	 	--//Ingreso por Prestamo
+	  IF (@IDTipoTran =11)
+	  BEGIN
+			 --//Compras Locales
+			SET @Linea = @Linea + 1 
+			INSERT INTO dbo.cntAsientoDetalle( Asiento ,Linea ,IDCentro ,IDCuenta ,Referencia ,Debito ,Credito ,Documento ,daterecord)
+			VALUES (@Asiento,@Linea,@CtrPrestamo,@CtaPrestamo,'Ingreso por Prestamo' + CAST(@IDProducto AS NVARCHAR(20)) + 'CI-' + @Documento,@CostoUntLocal * @Cantidad,0,@Documento,GETDATE())
+			
+			 --//Inventario
+			SET @Linea = @Linea + 1 
+			INSERT INTO dbo.cntAsientoDetalle( Asiento ,Linea ,IDCentro ,IDCuenta ,Referencia ,Debito ,Credito ,Documento ,daterecord)
+			VALUES (@Asiento,@Linea,@CtrInventario,@CtaInventario,'Inventario: Ingreso ' + CAST(@IDProducto AS NVARCHAR(20)) + 'CI-' + @Documento,0,@CostoUntLocal * @Cantidad,@Documento,GETDATE())
+	 END  
+	 
+	 	--//Salida por Prestamo
+	  IF (@IDTipoTran =12)
+	  BEGIN
+			 --//Compras Locales
+			SET @Linea = @Linea + 1 
+			INSERT INTO dbo.cntAsientoDetalle( Asiento ,Linea ,IDCentro ,IDCuenta ,Referencia ,Debito ,Credito ,Documento ,daterecord)
+			VALUES (@Asiento,@Linea,@CtrPrestamo,@CtaPrestamo,'Salida por Ajuste de Inventario' + CAST(@IDProducto AS NVARCHAR(20)) + 'CI-' + @Documento,0,@CostoPromLocal * @Cantidad,@Documento,GETDATE())
 			
 			 --//Inventario
 			SET @Linea = @Linea + 1 

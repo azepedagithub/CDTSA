@@ -40,6 +40,7 @@
 			this.btnAplicar = new DevExpress.XtraBars.BarButtonItem();
 			this.btnImprimirBoletas = new DevExpress.XtraBars.BarButtonItem();
 			this.btnImprimirDiferencias = new DevExpress.XtraBars.BarButtonItem();
+			this.btnCaptacion = new DevExpress.XtraBars.BarButtonItem();
 			this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
@@ -87,7 +88,6 @@
 			this.layoutControlItem12 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem13 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.btnCaptacion = new DevExpress.XtraBars.BarButtonItem();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
 			this.layoutControl1.SuspendLayout();
@@ -233,12 +233,21 @@
 			this.btnImprimirDiferencias.Name = "btnImprimirDiferencias";
 			this.btnImprimirDiferencias.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnImprimirDiferencias_ItemClick);
 			// 
+			// btnCaptacion
+			// 
+			this.btnCaptacion.Caption = "Formato de Captación";
+			this.btnCaptacion.Glyph = ((System.Drawing.Image)(resources.GetObject("btnCaptacion.Glyph")));
+			this.btnCaptacion.Id = 12;
+			this.btnCaptacion.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnCaptacion.LargeGlyph")));
+			this.btnCaptacion.Name = "btnCaptacion";
+			this.btnCaptacion.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnCaptacion_ItemClick);
+			// 
 			// ribbonPage1
 			// 
 			this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.ribbonPageGroup1});
 			this.ribbonPage1.Name = "ribbonPage1";
-			this.ribbonPage1.Text = "Operaciones Concsecutivos";
+			this.ribbonPage1.Text = "Operaciones";
 			// 
 			// ribbonPageGroup1
 			// 
@@ -748,15 +757,6 @@
 			this.layoutControlItem9.Size = new System.Drawing.Size(90, 26);
 			this.layoutControlItem9.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem9.TextVisible = false;
-			// 
-			// btnCaptacion
-			// 
-			this.btnCaptacion.Caption = "Formato de Captación";
-			this.btnCaptacion.Glyph = ((System.Drawing.Image)(resources.GetObject("btnCaptacion.Glyph")));
-			this.btnCaptacion.Id = 12;
-			this.btnCaptacion.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnCaptacion.LargeGlyph")));
-			this.btnCaptacion.Name = "btnCaptacion";
-			this.btnCaptacion.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnCaptacion_ItemClick);
 			// 
 			// frmBoleta
 			// 

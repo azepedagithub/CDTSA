@@ -139,6 +139,12 @@
 			this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
+			this.slkupCtroPrestamo = new DevExpress.XtraEditors.SearchLookUpEdit();
+			this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.gridView5 = new DevExpress.XtraGrid.Views.Grid.GridView();
+			this.slkupCtaPrestamos = new DevExpress.XtraEditors.SearchLookUpEdit();
+			this.layoutControlItem13 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.gridView8 = new DevExpress.XtraGrid.Views.Grid.GridView();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
 			this.layoutControl1.SuspendLayout();
@@ -228,6 +234,12 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.slkupCtroPrestamo.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.gridView5)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.slkupCtaPrestamos.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem13)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.gridView8)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// ribbonControl
@@ -334,6 +346,8 @@
 			// 
 			// layoutControl1
 			// 
+			this.layoutControl1.Controls.Add(this.slkupCtaPrestamos);
+			this.layoutControl1.Controls.Add(this.slkupCtroPrestamo);
 			this.layoutControl1.Controls.Add(this.slkupCtaConsumo);
 			this.layoutControl1.Controls.Add(this.slkupCtroConsumo);
 			this.layoutControl1.Controls.Add(this.pictureEdit1);
@@ -747,11 +761,11 @@
 			// 
 			// dtgDetalle
 			// 
-			this.dtgDetalle.Location = new System.Drawing.Point(12, 340);
+			this.dtgDetalle.Location = new System.Drawing.Point(12, 364);
 			this.dtgDetalle.MainView = this.gridViewDetalle;
 			this.dtgDetalle.MenuManager = this.ribbonControl;
 			this.dtgDetalle.Name = "dtgDetalle";
-			this.dtgDetalle.Size = new System.Drawing.Size(912, 198);
+			this.dtgDetalle.Size = new System.Drawing.Size(912, 174);
 			this.dtgDetalle.TabIndex = 4;
 			this.dtgDetalle.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridViewDetalle});
@@ -986,10 +1000,10 @@
 			// layoutControlItem1
 			// 
 			this.layoutControlItem1.Control = this.dtgDetalle;
-			this.layoutControlItem1.Location = new System.Drawing.Point(0, 328);
+			this.layoutControlItem1.Location = new System.Drawing.Point(0, 352);
 			this.layoutControlItem1.MinSize = new System.Drawing.Size(104, 24);
 			this.layoutControlItem1.Name = "layoutControlItem1";
-			this.layoutControlItem1.Size = new System.Drawing.Size(916, 202);
+			this.layoutControlItem1.Size = new System.Drawing.Size(916, 178);
 			this.layoutControlItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
 			this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem1.TextVisible = false;
@@ -1030,7 +1044,7 @@
             this.layoutControlItem3});
 			this.layoutControlGroup5.Location = new System.Drawing.Point(0, 36);
 			this.layoutControlGroup5.Name = "layoutControlGroup5";
-			this.layoutControlGroup5.Size = new System.Drawing.Size(916, 292);
+			this.layoutControlGroup5.Size = new System.Drawing.Size(916, 316);
 			this.layoutControlGroup5.Text = "Cuentas  Contables de Inventario";
 			// 
 			// tabbedControlGroup1
@@ -1039,7 +1053,7 @@
 			this.tabbedControlGroup1.Name = "tabbedControlGroup1";
 			this.tabbedControlGroup1.SelectedTabPage = this.layoutControlGroup2;
 			this.tabbedControlGroup1.SelectedTabPageIndex = 0;
-			this.tabbedControlGroup1.Size = new System.Drawing.Size(892, 198);
+			this.tabbedControlGroup1.Size = new System.Drawing.Size(892, 222);
 			this.tabbedControlGroup1.TabPages.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlGroup2,
             this.layoutControlGroup3});
@@ -1058,10 +1072,12 @@
             this.layoutControlItem25,
             this.layoutControlItem30,
             this.emptySpaceItem4,
-            this.emptySpaceItem5});
+            this.emptySpaceItem5,
+            this.layoutControlItem8,
+            this.layoutControlItem13});
 			this.layoutControlGroup2.Location = new System.Drawing.Point(0, 0);
 			this.layoutControlGroup2.Name = "layoutControlGroup2";
-			this.layoutControlGroup2.Size = new System.Drawing.Size(868, 152);
+			this.layoutControlGroup2.Size = new System.Drawing.Size(868, 176);
 			this.layoutControlGroup2.Text = "General";
 			// 
 			// layoutControlItem4
@@ -1212,7 +1228,7 @@
             this.emptySpaceItem2});
 			this.layoutControlGroup3.Location = new System.Drawing.Point(0, 0);
 			this.layoutControlGroup3.Name = "layoutControlGroup3";
-			this.layoutControlGroup3.Size = new System.Drawing.Size(868, 152);
+			this.layoutControlGroup3.Size = new System.Drawing.Size(868, 176);
 			this.layoutControlGroup3.Text = "Venta / Compras";
 			// 
 			// layoutControlItem9
@@ -1255,7 +1271,7 @@
 			this.layoutControlItem12.Location = new System.Drawing.Point(0, 78);
 			this.layoutControlItem12.Name = "layoutControlItem12";
 			this.layoutControlItem12.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
-			this.layoutControlItem12.Size = new System.Drawing.Size(255, 74);
+			this.layoutControlItem12.Size = new System.Drawing.Size(255, 98);
 			this.layoutControlItem12.Text = "Costo de Venta:";
 			this.layoutControlItem12.TextSize = new System.Drawing.Size(100, 13);
 			// 
@@ -1295,7 +1311,7 @@
 			this.layoutControlItem22.Location = new System.Drawing.Point(255, 78);
 			this.layoutControlItem22.Name = "layoutControlItem22";
 			this.layoutControlItem22.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
-			this.layoutControlItem22.Size = new System.Drawing.Size(189, 74);
+			this.layoutControlItem22.Size = new System.Drawing.Size(189, 98);
 			this.layoutControlItem22.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem22.TextVisible = false;
 			// 
@@ -1325,7 +1341,7 @@
 			this.layoutControlItem28.Location = new System.Drawing.Point(460, 26);
 			this.layoutControlItem28.Name = "layoutControlItem28";
 			this.layoutControlItem28.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
-			this.layoutControlItem28.Size = new System.Drawing.Size(264, 126);
+			this.layoutControlItem28.Size = new System.Drawing.Size(264, 150);
 			this.layoutControlItem28.Text = "Desc. Bonificacíon:";
 			this.layoutControlItem28.TextSize = new System.Drawing.Size(100, 13);
 			// 
@@ -1335,7 +1351,7 @@
 			this.layoutControlItem34.Location = new System.Drawing.Point(724, 26);
 			this.layoutControlItem34.Name = "layoutControlItem34";
 			this.layoutControlItem34.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
-			this.layoutControlItem34.Size = new System.Drawing.Size(144, 126);
+			this.layoutControlItem34.Size = new System.Drawing.Size(144, 150);
 			this.layoutControlItem34.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem34.TextVisible = false;
 			// 
@@ -1344,7 +1360,7 @@
 			this.emptySpaceItem2.AllowHotTrack = false;
 			this.emptySpaceItem2.Location = new System.Drawing.Point(444, 0);
 			this.emptySpaceItem2.Name = "emptySpaceItem2";
-			this.emptySpaceItem2.Size = new System.Drawing.Size(16, 152);
+			this.emptySpaceItem2.Size = new System.Drawing.Size(16, 176);
 			this.emptySpaceItem2.TextSize = new System.Drawing.Size(0, 0);
 			// 
 			// layoutControlItem2
@@ -1374,6 +1390,62 @@
 			this.emptySpaceItem1.Name = "emptySpaceItem1";
 			this.emptySpaceItem1.Size = new System.Drawing.Size(186, 240);
 			this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
+			// 
+			// slkupCtroPrestamo
+			// 
+			this.slkupCtroPrestamo.Location = new System.Drawing.Point(139, 316);
+			this.slkupCtroPrestamo.MenuManager = this.ribbonControl;
+			this.slkupCtroPrestamo.Name = "slkupCtroPrestamo";
+			this.slkupCtroPrestamo.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+			this.slkupCtroPrestamo.Properties.View = this.gridView5;
+			this.slkupCtroPrestamo.Size = new System.Drawing.Size(267, 20);
+			this.slkupCtroPrestamo.StyleController = this.layoutControl1;
+			this.slkupCtroPrestamo.TabIndex = 36;
+			// 
+			// layoutControlItem8
+			// 
+			this.layoutControlItem8.Control = this.slkupCtroPrestamo;
+			this.layoutControlItem8.Location = new System.Drawing.Point(0, 152);
+			this.layoutControlItem8.Name = "layoutControlItem8";
+			this.layoutControlItem8.Size = new System.Drawing.Size(374, 24);
+			this.layoutControlItem8.Text = "Prestamos:";
+			this.layoutControlItem8.TextSize = new System.Drawing.Size(100, 13);
+			// 
+			// gridView5
+			// 
+			this.gridView5.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+			this.gridView5.Name = "gridView5";
+			this.gridView5.OptionsSelection.EnableAppearanceFocusedCell = false;
+			this.gridView5.OptionsView.ShowGroupPanel = false;
+			// 
+			// slkupCtaPrestamos
+			// 
+			this.slkupCtaPrestamos.Location = new System.Drawing.Point(410, 316);
+			this.slkupCtaPrestamos.MenuManager = this.ribbonControl;
+			this.slkupCtaPrestamos.Name = "slkupCtaPrestamos";
+			this.slkupCtaPrestamos.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+			this.slkupCtaPrestamos.Properties.View = this.gridView8;
+			this.slkupCtaPrestamos.Size = new System.Drawing.Size(490, 20);
+			this.slkupCtaPrestamos.StyleController = this.layoutControl1;
+			this.slkupCtaPrestamos.TabIndex = 37;
+			// 
+			// layoutControlItem13
+			// 
+			this.layoutControlItem13.Control = this.slkupCtaPrestamos;
+			this.layoutControlItem13.Location = new System.Drawing.Point(374, 152);
+			this.layoutControlItem13.Name = "layoutControlItem13";
+			this.layoutControlItem13.Size = new System.Drawing.Size(494, 24);
+			this.layoutControlItem13.TextSize = new System.Drawing.Size(0, 0);
+			this.layoutControlItem13.TextVisible = false;
+			// 
+			// gridView8
+			// 
+			this.gridView8.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+			this.gridView8.Name = "gridView8";
+			this.gridView8.OptionsSelection.EnableAppearanceFocusedCell = false;
+			this.gridView8.OptionsView.ShowGroupPanel = false;
 			// 
 			// frmInvCuentaContable
 			// 
@@ -1477,6 +1549,12 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.slkupCtroPrestamo.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.gridView5)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.slkupCtaPrestamos.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem13)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.gridView8)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -1594,5 +1672,11 @@
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem30;
 				private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem4;
 				private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem5;
+				private DevExpress.XtraEditors.SearchLookUpEdit slkupCtaPrestamos;
+				private DevExpress.XtraGrid.Views.Grid.GridView gridView8;
+				private DevExpress.XtraEditors.SearchLookUpEdit slkupCtroPrestamo;
+				private DevExpress.XtraGrid.Views.Grid.GridView gridView5;
+				private DevExpress.XtraLayout.LayoutControlItem layoutControlItem8;
+				private DevExpress.XtraLayout.LayoutControlItem layoutControlItem13;
     }
 }
