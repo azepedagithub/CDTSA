@@ -23,7 +23,10 @@ namespace CG
         public bool CuadreTemporal { get; set; }
         bool showAsiento = false;
 
+		public bool isFromMayor { get; set; }
+
         char sCaracterConcatenacion = '~';
+		
 
         public frmParametrosFiltroAsiento()
         {
@@ -108,6 +111,17 @@ namespace CG
                 this.chkCuadreTemporal.Enabled = false;
                 this.layoutAsiento.Enabled = true;
             }
+
+			if (isFromMayor)
+			{
+				this.chkMayorizado.Enabled = false;
+				this.chkMayorizado.EditValue = true;
+			}
+			else
+			{
+				this.chkMayorizado.Enabled = false;
+				this.chkMayorizado.EditValue = false;
+			}
 
         }
 
@@ -203,6 +217,8 @@ namespace CG
                 this.lstChkModuloFuente.UnCheckAll();
 
         }
+
+		
 
         
     }

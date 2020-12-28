@@ -579,6 +579,13 @@ namespace MainMenu
                     ShowPagesRibbonMan(false);
                     ofrmListadoAsientoDiario.Show();
                     break;
+				case "frmListadoAsientoMayor":
+					frmListadoAsientoMayor ofrmListadoAsientoMayor = new frmListadoAsientoMayor();
+					ofrmListadoAsientoMayor.MdiParent = this;
+					ofrmListadoAsientoMayor.WindowState = FormWindowState.Maximized;
+					ShowPagesRibbonMan(false);
+					ofrmListadoAsientoMayor.Show();
+					break;
                 case "frmConsultaSaldoCuenta":
                     frmConsultaSaldoCuenta ofrmConsultaSaldoCuenta = new frmConsultaSaldoCuenta();
                     ofrmConsultaSaldoCuenta.MdiParent = this;
@@ -849,6 +856,10 @@ namespace MainMenu
                     //Items
                     TreeListNode nodeTransaccionesDiario = tl.AppendNode(new object[] { "Diario" }, nodeTransaccionesContabilidad.Id, 11, 11, 11);
                     nodeTransaccionesDiario.Tag = "frmListadoAsientoDiario";
+					TreeListNode nodeTransaccionesMayor = tl.AppendNode(new object[] { "Mayor" }, nodeTransaccionesContabilidad.Id, 11, 11, 11);
+					nodeTransaccionesMayor.Tag = "frmListadoAsientoMayor";
+
+					
                     //TreeListNode nodeTransaccionesRecurrente = tl.AppendNode(new object[] { "Recurrente" }, nodeTransaccionesContabilidad.Id, 11, 11, 11);
                     //nodeTransaccionesRecurrente.Tag = "optTransaccionesRecurrente";
                     //TreeListNode nodeTransaccionesAnulacion = tl.AppendNode(new object[] { "Anulación" }, nodeTransaccionesContabilidad.Id, 11, 11, 11);
