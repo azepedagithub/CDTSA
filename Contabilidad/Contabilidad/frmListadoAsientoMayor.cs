@@ -56,25 +56,13 @@ namespace CG
 
                 EnlazarEventos();
                 PopulateGrid();
-                CargarPrivilegios();
+                
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
 		}
-
-        private void CargarPrivilegios()
-        {
-            DataSet DS = new DataSet();
-            DataTable DT = new DataTable();
-            DS = UsuarioDAC.GetAccionModuloFromRole(0, _sUsuario);
-            DT = DS.Tables[0];
-          
-            if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosContableType.EliminarAsientodeDiario, DT))
-                this.btnEliminar.Enabled = false;
-
-        }
 
 
     
