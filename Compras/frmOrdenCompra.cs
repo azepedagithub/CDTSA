@@ -1380,7 +1380,7 @@ namespace CO
 				nuevaFila["IDProducto"] = fila["IDProducto"];
 				nuevaFila["DescrProducto"] = fila["DescrProducto"];
 				nuevaFila["Cantidad"] = fila["Cantidad"];
-				nuevaFila["PrecioUnitario"] = 0;
+				nuevaFila["PrecioUnitario"] = fila["PrecioUnitario"];
 				nuevaFila["MontoDesc"] = 0;
 				//if (Convert.ToDecimal(fila["PorcDesc"]) > 0)
 				//{
