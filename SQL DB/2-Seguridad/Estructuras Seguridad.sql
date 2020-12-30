@@ -104,6 +104,63 @@ REFERENCES [dbo].[secMODULO] ([IDModulo])
 go 
 
 
+alter table dbo.secACCION add AccionPRG nvarchar(50) null
+go
+
+Create index idxAccion on dbo.secAccion  (AccionPRG)
+go
+
+Create trigger trgInsUpsecAccion on dbo.secAccion
+For Insert, Update
+as
+declare @AccionPRG nvarchar(20)
+Select @AccionPRG = i.AccionPRG
+from inserted i
+
+if (Select COUNT(*) FROM dbo.secACCION WHERE AccionPRG IN (@AccionPRG)) >1 
+BEGIN
+declare @msg nvarchar(255)
+set @msg = 'La constante de Accion PRG : ' + @AccionPRG + ' ya Existe... debe ser única'
+   RAISERROR (@msg , 16, 1)
+   ROLLBACK TRANSACTION
+END
+go
+
+Create Procedure dbo.secGetPrivilegioUsuario @Usuario as nvarchar(20), @AccionPRG as nvarchar(50)
+as
+if @AccionPRG is null
+	set @AccionPRG = '*'
+
+Select UR.IDMODULO, M.DESCR DescrModulo,  UR.IDROLE, R.DESCR DESCROLE,  UR.USUARIO, RA.IDACCION, A.Descr DescrAccion, A.AccionPRG
+From dbo.secUSUARIOROLE UR INNER JOIN dbo.secROLEACCION RA
+ON UR.IDMODULO = RA.IDMODULO AND UR.IDROLE = RA.IDROLE 
+INNER JOIN DBO.secACCION A ON RA.IDACCION = A.IDAccion 
+INNER JOIN DBO.secROLE R ON UR.IDROLE = R.IDROLE AND RA.IDROLE = R.IDROLE 
+INNER JOIN DBO.secMODULO M ON UR.IDMODULO = M.IDModulo AND RA.IDMODULO = M.IDModulo AND RA.IDMODULO = M.IDModulo 
+Where UR.USUARIO = @Usuario AND (A.ACCIONPRG = @AccionPRG or @AccionPRG = '*')
+go
+
+Create Function dbo.secUsuarioTieneAcceso (@Usuario as nvarchar(20), @AccionPRG as nvarchar(50))
+returns bit
+begin
+declare @Acceso bit 
+set @Acceso = 0 
+if exists (Select UR.IDMODULO, M.DESCR DescrModulo,  UR.IDROLE, R.DESCR DESCROLE,  UR.USUARIO, RA.IDACCION, A.Descr DescrAccion, A.AccionPRG
+			From dbo.secUSUARIOROLE UR INNER JOIN dbo.secROLEACCION RA
+			ON UR.IDMODULO = RA.IDMODULO AND UR.IDROLE = RA.IDROLE 
+			INNER JOIN DBO.secACCION A ON RA.IDACCION = A.IDAccion 
+			INNER JOIN DBO.secROLE R ON UR.IDROLE = R.IDROLE AND RA.IDROLE = R.IDROLE 
+			INNER JOIN DBO.secMODULO M ON UR.IDMODULO = M.IDModulo AND RA.IDMODULO = M.IDModulo AND RA.IDMODULO = M.IDModulo 
+			Where UR.USUARIO = @Usuario AND A.ACCIONPRG = @AccionPRG 
+		)
+	set @Acceso = 1
+else
+	set @Acceso = 0
+return @Acceso
+end
+go
+
+
 
 create view [dbo].[vsecModuloRoleAccion]
 as
