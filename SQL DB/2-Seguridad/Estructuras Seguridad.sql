@@ -375,3 +375,72 @@ values (1, 'admin', 100)
 
 GO
 
+CREATE PROCEDURE dbo.secGetArbolAcciones
+AS 
+ SELECT  A.IDModulo ,
+		B.Descr DescrModulo,
+        A.IDAccion ,
+        A.Descr  FROM dbo.secACCION A
+INNER JOIN dbo.secMODULO B ON A.IDModulo = B.IDModulo
+
+GO
+
+
+CREATE PROCEDURE dbo.secUpdateRole(@Accion nvarchar(1), @IDRole int OUTPUT, @Descr nvarchar(50), @DescrLarga  nvarchar(250))
+AS 
+IF (@Accion ='I')
+BEGIN
+	SET @IDRole = (select ISNULL(MAX(IDROLE),0)  FROM dbo.secROLE) +1
+	INSERT INTO dbo.secROLE
+	        ( IDROLE, DESCR, DescrLarga )
+	VALUES  (@IDRole,@Descr,@DescrLarga)
+END
+IF (@Accion='U')
+BEGIN
+	UPDATE dbo.secROLE SET DESCR=@Descr, DescrLarga = @DescrLarga WHERE IDROLE=@IDRole
+END
+IF (@Accion='D')
+BEGIN
+	DELETE dbo.secUSUARIOROLE WHERE IDROLE=@IDRole
+	DELETE dbo.secROLEACCION WHERE IDROLE=@IDRole
+	DELETE dbo.secROLE WHERE IDROLE=@IDRole
+END
+
+GO
+
+
+CREATE PROCEDURE dbo.secUpdateRoleAccion (@Accion NVARCHAR(1), @IDModulo INT, @IDRole INT, @IDAccion INT )
+AS 
+IF (@Accion='I')
+BEGIN	
+	INSERT INTO dbo.secROLEACCION
+        ( IDMODULO, IDROLE, IDACCION )
+	VALUES  ( @IDModulo,@IDRole, @IDAccion)
+END	
+IF (@Accion='D')
+BEGIN	
+	DELETE dbo.secROLEACCION WHERE IDRole = @IDRole AND (IDAccion = @IDAccion OR @IDAccion=-1)
+END	
+
+GO
+
+
+CREATE PROCEDURE dbo.secGetAccionByRole (@IDRole INT )
+AS 
+SELECT  IDMODULO ,IDROLE ,IDACCION  FROM dbo.secROLEACCION WHERE IDROLE=@IDRole
+
+GO
+
+
+CREATE PROCEDURE dbo.secGetRole(@IDRole INT)
+AS 
+SELECT  IDROLE ,
+        DESCR ,
+        DescrLarga  
+FROM dbo.secROLE WHERE (IDROLE = @IDRole OR  @IDRole = -1)
+
+GO
+
+
+
+

@@ -273,6 +273,10 @@
       <Project>{0b0488ef-45c5-4594-aecc-b6aec89fbbd5}</Project>
       <Name>Util</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Seguridad\Seguridad.csproj">
+      <Project>{92a8fefd-aa8a-405d-bae6-0c6050f75da4}</Project>
+      <Name>Seguridad</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
