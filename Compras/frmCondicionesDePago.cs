@@ -36,7 +36,7 @@ namespace CO
 		private void CargarPrivilegios()
 		{
 			DataSet DS = new DataSet();
-			DS = UsuarioDAC.GetAccionModuloFromRole(0, _sUsuario);
+			DS = UsuarioDAC.GetAccionModuloFromRole(400, _sUsuario);
 			_dtSecurity = DS.Tables[0];
 
 			AplicarPrivilegios();
@@ -44,11 +44,11 @@ namespace CO
 
 		private void AplicarPrivilegios()
 		{
-			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosContableType.AgregarCentroCosto, _dtSecurity))
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosComprasType.AgregarCondicionesdePagos, _dtSecurity))
 				this.btnAgregar.Enabled = false;
-			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosContableType.EditarCentroCosto, _dtSecurity))
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosComprasType.EditarCondicionesdePagos, _dtSecurity))
 				this.btnEditar.Enabled = false;
-			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosContableType.EliminarCentroCosto, _dtSecurity))
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosComprasType.EliminarCondiciondePago, _dtSecurity))
 				this.btnEliminar.Enabled = false;
 		}
 

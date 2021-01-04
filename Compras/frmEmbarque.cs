@@ -36,6 +36,7 @@ namespace CO
         DataTable dtProductos = new DataTable();
         DataTable dtOrdenCompra = new DataTable();
         DataTable dtPresentacion = new DataTable();
+		private DataTable _dtSecurity;
        
 
         //Datos de la Factura
@@ -60,6 +61,7 @@ namespace CO
         double TipoCambio;
 
         private string Accion = "Add";
+		string _sUsuario = (UsuarioDAC._DS.Tables.Count > 0) ? UsuarioDAC._DS.Tables[0].Rows[0]["Usuario"].ToString() : "azepeda";
 
         public frmEmbarque(long IDOrdenCompra)
         {
@@ -84,6 +86,31 @@ namespace CO
             get { return this.IDEmbarque; }
             set { this.IDEmbarque = value; }
         }
+
+
+		private void CargarPrivilegios()
+		{
+			DataSet DS = new DataSet();
+			DS = UsuarioDAC.GetAccionModuloFromRole(400, _sUsuario);
+			_dtSecurity = DS.Tables[0];
+
+			AplicarPrivilegios();
+		}
+
+		//TODO: validar que los privilegios no se cambien en otras opciones
+		private void AplicarPrivilegios()
+		{
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosComprasType.EditarEmbarque, _dtSecurity))
+				this.btnEditar.Enabled = false;
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosComprasType.EliminarEmbarque, _dtSecurity))
+				this.btnEliminar.Enabled = false;
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosComprasType.LiquidarEmbarque, _dtSecurity))
+				this.btnAplicar.Enabled = false;
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosComprasType.ConfirmarEmbarque, _dtSecurity))
+				this.btnConfirmar.Enabled = false;
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosComprasType.RecepcionarMercaderia, _dtSecurity))
+				this.btnRecepcionMercaderia.Enabled = false;
+		}
 
 
         

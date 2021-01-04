@@ -158,6 +158,51 @@ namespace Security
 			EliminarPresentacionesdeProducto = 337,
 			ExportarPresentecionesdeProducto = 338
 		}
+
+		public enum PrivilegiosComprasType
+		{
+			AccesoalModulo = 400,
+			AgregarCondicionesdePagos = 401,
+			EditarCondicionesdePagos = 402,
+			ExportarCondicionesdePagos = 403,
+			AgregarEmbarque = 404,
+			EliminarEmbarque = 405,
+			LiquidarEmbarque = 406,
+			ConfirmarEmbarque = 407,
+			RecepcionarMercaderia = 408,
+			AgregarCatalogodeGastosdeLiquidación = 409,
+			EditarCatalogodeGastosdeLiquidacion = 410,
+			EliminarCatalogodeGastosdeLiquidacion = 411,
+			ExportarCatalogodeGastosdeLiquidacion = 412,
+			ImportarEmbarquedesdeExcel = 413,
+			EditarLiquidacion = 414,
+			ImprimirLiquidacion = 415,
+			EliminarLiquidacion = 416,
+			ProcesodeLiquidarEmbarque = 417,
+			AgregarOrdendeCompra = 418,
+			EditarOrdendeCompra = 419,
+			EliminarOrdendeCompra = 420,
+			ExportarOrdendeCompra = 421,
+			ImprimirOrdendeCompra = 422,
+			ConfirmarOrdendeCompra = 423,
+			DesConfirmarOrdendecompra = 424,
+			AnularOrdendeCompra = 425,
+			EmbarcarOrdendeCompra = 426,
+			CargarPedidoSugeridodeCompra = 427,
+			AgregarPaises = 428,
+			EditarPaises = 429,
+			EliminarPaises = 430,
+			ExportarPaises = 431,
+			AccesoaParametrosdeCompras = 432,
+			AgregarProveedores = 433,
+			EditarProveedores = 434,
+			EliminarProveedores = 435,
+			GuardarResepciondeMercaderia = 436	,
+			EliminarCondiciondePago = 437,
+			EditarEmbarque=438,
+			ExportarEmbarque= 439,
+			ExportarProveedores = 440
+		}
 		
 
         

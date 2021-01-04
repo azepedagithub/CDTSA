@@ -28,6 +28,7 @@ namespace CO
         private String _Liquidacion="";
         private bool _GroupedGastos = false;
         private bool _isMonedaNacional = false;
+		private DataTable _dtSecurity;
 
         private String OrdenCompra, Embarque;
 
@@ -44,6 +45,7 @@ namespace CO
         private DataTable dtMoneda = new DataTable();
         private int IDEstado = 0;
         private String sAccion = "Add";
+		string _sUsuario = (UsuarioDAC._DS.Tables.Count > 0) ? UsuarioDAC._DS.Tables[0].Rows[0]["Usuario"].ToString() : "azepeda";
         
  
         public frmLiquidacion(int IDLiquidacion)
@@ -63,6 +65,28 @@ namespace CO
             this.OrdenCompra = OrdenCompra;
             this.Embarque = Embarque;
         }
+
+		private void CargarPrivilegios()
+		{
+			DataSet DS = new DataSet();
+			DS = UsuarioDAC.GetAccionModuloFromRole(400, _sUsuario);
+			_dtSecurity = DS.Tables[0];
+
+			AplicarPrivilegios();
+		}
+
+		private void AplicarPrivilegios()
+		{
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosComprasType.EditarLiquidacion, _dtSecurity))
+				this.btnEditar.Enabled = false;
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosComprasType.EliminarLiquidacion, _dtSecurity))
+				this.btnEliminar.Enabled = false;
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosComprasType.ProcesodeLiquidarEmbarque, _dtSecurity))
+				this.btnLiquidar.Enabled = false;
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosComprasType.ImprimirLiquidacion, _dtSecurity))
+				this.btnImpresion.Enabled = false;
+
+		}
 
         
         private void CargarLiquidacion(long IDLiquidacion, long IDOrdenCompra, long IDEmbarque)
@@ -293,6 +317,8 @@ namespace CO
                 SetStatusLiquidacion();
                 HabilitarBotoneriaPrincipal();
                 HabilitarControles();
+
+				CargarPrivilegios();
 
             }
             catch (Exception ex)

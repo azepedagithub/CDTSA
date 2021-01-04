@@ -35,7 +35,7 @@ namespace CO
 			private void CargarPrivilegios()
 		{
 			DataSet DS = new DataSet();
-			DS = UsuarioDAC.GetAccionModuloFromRole(0, _sUsuario);
+			DS = UsuarioDAC.GetAccionModuloFromRole(400, _sUsuario);
 			_dtSecurity = DS.Tables[0];
 
 			AplicarPrivilegios();
@@ -43,12 +43,14 @@ namespace CO
 
 		private void AplicarPrivilegios()
 		{
-			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosContableType.AgregarCentroCosto, _dtSecurity))
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosComprasType.AgregarCatalogodeGastosdeLiquidación, _dtSecurity))
 				this.btnAgregar.Enabled = false;
-			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosContableType.EditarCentroCosto, _dtSecurity))
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosComprasType.EditarCatalogodeGastosdeLiquidacion, _dtSecurity))
 				this.btnEditar.Enabled = false;
-			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosContableType.EliminarCentroCosto, _dtSecurity))
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosComprasType.EliminarCatalogodeGastosdeLiquidacion, _dtSecurity))
 				this.btnEliminar.Enabled = false;
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosComprasType.ExportarCatalogodeGastosdeLiquidacion, _dtSecurity))
+				this.btnExportar.Enabled = false;
 		}
 
 		private void EnlazarEventos()

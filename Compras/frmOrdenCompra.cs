@@ -31,6 +31,7 @@ namespace CO
         DateTime FechaOrden, FechaRequerida, FechaRequeridaEmbarque, FechaCotizacion, FechaEmision;
         int IDEstado, IDProveedor, IDBodega, IDCondicionPago, IDMoneda,IDBodegaDefault;
         Decimal Descuento, Flete, Seguro, Anticipos, Impuesto;
+		private DataTable _dtSecurity;
         String  OrdenCompra;
         String sUsuario = (UsuarioDAC._DS.Tables.Count > 0) ? UsuarioDAC._DS.Tables[0].Rows[0]["Usuario"].ToString() : "azepeda";
         DataTable dtDetalleOrden = new DataTable();
@@ -60,6 +61,40 @@ namespace CO
             this.IDOrdenCompra = IDOrdenCompra;
             this.Accion = Accion;
         }
+
+
+		private void CargarPrivilegios()
+		{
+			DataSet DS = new DataSet();
+			DS = UsuarioDAC.GetAccionModuloFromRole(400, sUsuario);
+			_dtSecurity = DS.Tables[0];
+
+			AplicarPrivilegios();
+		}
+
+		//TODO: Validar que los botones no sean cambiados en otra area
+		private void AplicarPrivilegios()
+		{
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosComprasType.AgregarOrdendeCompra, _dtSecurity))
+				this.btnAgregar.Enabled = false;
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosComprasType.EditarOrdendeCompra, _dtSecurity))
+				this.btnEditar.Enabled = false;
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosComprasType.EliminarOrdendeCompra, _dtSecurity))
+				this.btnEliminar.Enabled = false;
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosComprasType.ConfirmarOrdendeCompra, _dtSecurity))
+				this.btnConfirmar.Enabled = false;
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosComprasType.DesConfirmarOrdendecompra, _dtSecurity))
+				this.btnDesconfirmar.Enabled = false;
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosComprasType.AnularOrdendeCompra, _dtSecurity))
+				this.btnAnular.Enabled = false;
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosComprasType.EmbarcarOrdendeCompra, _dtSecurity))
+				this.btnEmbarque.Enabled = false;
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosComprasType.ImprimirOrdendeCompra, _dtSecurity))
+				this.btnImprimir.Enabled = false;
+
+		}
+
+
 
         private void InicializarNuevoElement()
         {
@@ -444,6 +479,7 @@ namespace CO
 
 
                 LoadData();
+				CargarPrivilegios();
             }
             catch (Exception ex)
             {
