@@ -61,12 +61,14 @@ namespace CI
             DataTable DT = new DataTable();
             DS = UsuarioDAC.GetAccionModuloFromRole(0, _sUsuario);
             DT = DS.Tables[0];
-            if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosContableType.AgregarAsientodeDiario, DT))
+            if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosInventarioType.AgregarProductos, DT))
                 this.btnAgregar.Enabled = false;
-            if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosContableType.EditarAsientodeDiario, DT))
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosInventarioType.EditarProductos, DT))
                 this.btnEditar.Enabled = false;
-            if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosContableType.EliminarAsientodeDiario, DT))
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosInventarioType.EliminarProductos, DT))
                 this.btnEliminar.Enabled = false;
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosInventarioType.ExportarProductos, DT))
+				this.btnExportar.Enabled = false;
 
         }
 

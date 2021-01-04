@@ -28,7 +28,7 @@ namespace CI
         private void CargarPrivilegios()
         {
             DataSet DS = new DataSet();
-            DS = UsuarioDAC.GetAccionModuloFromRole(0,_sUsuario );
+            DS = UsuarioDAC.GetAccionModuloFromRole(300,_sUsuario );
             _dtSecurity = DS.Tables[0];
 
             AplicarPrivilegios();
@@ -49,12 +49,14 @@ namespace CI
 
         private void AplicarPrivilegios()
         {
-            if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosContableType.AgregarCentroCosto, _dtSecurity))
+            if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosInventarioType.AgregarPresentacionesdeProducto, _dtSecurity))
                 this.btnAgregar.Enabled = false;
-            if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosContableType.EditarCentroCosto, _dtSecurity))
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosInventarioType.EditarPresentacionesdeProducto, _dtSecurity))
                 this.btnEditar.Enabled = false;
-            if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosContableType.EliminarCentroCosto, _dtSecurity))
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosInventarioType.EliminarPresentacionesdeProducto, _dtSecurity))
                 this.btnEliminar.Enabled = false;
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosInventarioType.ExportarPresentecionesdeProducto, _dtSecurity))
+				this.btnExportar.Enabled = false;
         }
 
         private void EnlazarEventos()

@@ -77,12 +77,14 @@ namespace CI
 
         private void AplicarPrivilegios()
         {
-            if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosContableType.AgregarCentroCosto, _dtSecurity))
+            if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosInventarioType.AgregarLotes, _dtSecurity))
                 this.btnAgregar.Enabled = false;
-            if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosContableType.EditarCentroCosto, _dtSecurity))
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosInventarioType.EditarLotes, _dtSecurity))
                 this.btnEditar.Enabled = false;
-            if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosContableType.EliminarCentroCosto, _dtSecurity))
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosInventarioType.EliminarLotes, _dtSecurity))
                 this.btnEliminar.Enabled = false;
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosInventarioType.ExportarLotes, _dtSecurity))
+				this.btnExportar.Enabled = false;
         }
 
 

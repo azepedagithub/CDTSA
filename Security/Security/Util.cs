@@ -116,6 +116,48 @@ namespace Security
 		}
 
 
+		public enum PrivilegiosInventarioType
+		{
+			AccesoalModulo = 300,
+			AgregarBodegas = 301,
+			EditarBodegas = 302,
+			EliminarBodegas = 303,
+			ExportarBodegas = 304,
+			AgregarClasificaciones = 305,
+			EditarClasificaciones = 306,
+			EliminarClasificaciones = 307,
+			ExportarClasificaciones = 308,
+			MostrarGrupodeClasificaciones = 309,
+			AgregarConsecutivos = 310,
+			EditarConsecutivos = 311,
+			EliminarConsecutivos = 312,
+			AgregarCuentasContablesdeInventario = 313,
+			EditarCuentasContablesdeInventario = 314,
+			EliminarCuentasContablesdeInventario = 315,
+			ExportarCuentasContablesdeInventario = 316,
+			AgregarDocumentodeInventario = 317,
+			AplicarDocumentodeInventario = 318,
+			AplicarCancelaciondePrestamos = 319,
+			PagodePrestamos = 320,
+			DetalledePrestamos = 321,
+			ExportarDocumentodeInventario = 322,
+			AgregarProductos = 323,
+			EditarProductos = 324,
+			EliminarProductos = 325,
+			ExportarProductos = 326,
+			AgregarLotes = 327,
+			EditarLotes = 328,
+			EliminarLotes = 329,
+			ExportarLotes = 330,
+			AgregarPaquete = 331,
+			EditarPaquete = 332,
+			EliminarPaquete = 333,
+			ExportarPaquetes = 334,
+			AgregarPresentacionesdeProducto = 335,
+			EditarPresentacionesdeProducto = 336,
+			EliminarPresentacionesdeProducto = 337,
+			ExportarPresentecionesdeProducto = 338
+		}
 		
 
         

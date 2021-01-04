@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CI.DAC;
+using Security;
 
 
 namespace CI
@@ -16,9 +17,11 @@ namespace CI
     {
         private DataSet _dsProducto;
         private DataTable _dtProducto;
+		private DataTable _dtSecurity;
 
         DataRow _currentRow = null;
         const String _tituloVentana = "Listado de Documentos";
+		string _sUsuario = (UsuarioDAC._DS.Tables.Count > 0) ? UsuarioDAC._DS.Tables[0].Rows[0]["Usuario"].ToString() : "azepeda";
 
         private static frmListadoDocumentos ints;
 
@@ -32,8 +35,27 @@ namespace CI
                 }
                 return ints;
             }
+
         }
 
+		private void CargarPrivilegios()
+		{
+			DataSet DS = new DataSet();
+			DS = UsuarioDAC.GetAccionModuloFromRole(300, _sUsuario);
+			_dtSecurity = DS.Tables[0];
+
+			AplicarPrivilegios();
+		}
+
+		private void AplicarPrivilegios()
+		{
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosInventarioType.AgregarDocumentodeInventario, _dtSecurity))
+				this.btnAgregar.Enabled = false;
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosInventarioType.ExportarDocumentodeInventario, _dtSecurity))
+				this.btnExportar.Enabled = false;
+			
+
+		}
 
         private void EnlazarEventos()
         {

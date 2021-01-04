@@ -40,7 +40,7 @@ namespace CI
         private void CargarPrivilegios()
         {
             DataSet DS = new DataSet();
-            DS = UsuarioDAC.GetAccionModuloFromRole(0, _sUsuario);
+            DS = UsuarioDAC.GetAccionModuloFromRole(300, _sUsuario);
             _dtSecurity = DS.Tables[0];
 
             AplicarPrivilegios();
@@ -49,12 +49,16 @@ namespace CI
 
         private void AplicarPrivilegios()
         {
-            if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosContableType.AgregarCentroCosto, _dtSecurity))
+            if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosInventarioType.AgregarClasificaciones, _dtSecurity))
                 this.btnAgregar.Enabled = false;
-            if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosContableType.EditarCentroCosto, _dtSecurity))
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosInventarioType.EditarClasificaciones, _dtSecurity))
                 this.btnEditar.Enabled = false;
-            if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosContableType.EliminarCentroCosto, _dtSecurity))
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosInventarioType.EliminarClasificaciones, _dtSecurity))
                 this.btnEliminar.Enabled = false;
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosInventarioType.ExportarClasificaciones, _dtSecurity))
+				this.btnExportar.Enabled = false;
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosInventarioType.MostrarGrupodeClasificaciones, _dtSecurity))
+				this.btnGrupos.Enabled = false;
         }
 
 

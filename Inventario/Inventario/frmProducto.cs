@@ -61,7 +61,7 @@ namespace CI
         {
             DataSet DS = new DataSet();
             DataTable DT = new DataTable();
-            DS = UsuarioDAC.GetAccionModuloFromRole(0, sUsuario);
+            DS = UsuarioDAC.GetAccionModuloFromRole(300, sUsuario);
             _dtSecurity = DS.Tables[0];
 
         }
@@ -70,25 +70,15 @@ namespace CI
         private void AplicarPrivilegios()
         {
 
-            //if (UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosContableType.EditarAsientodeDiario, _dtSecurity))
-            //{
-            //    if (_dsProducto.Tables[0].Rows.Count > 0 )
-            //        this.btnEditar.Enabled = false;
-            //    else
-            //        this.btnEditar.Enabled = true;
-            //}
-            //else
-            //    this.btnEditar.Enabled = false;
-
-            //if (UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosContableType.EliminarAsientodeDiario, _dtSecurity))
-            //{
-            //    if (_dsProducto.Tables[0].Rows.Count > 0)
-            //        this.btnEliminar.Enabled = false;
-            //    else
-            //        this.btnEliminar.Enabled = true;
-            //}
-            //else
-            //    this.btnEliminar.Enabled = false;
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosInventarioType.AgregarProductos, _dtSecurity))
+				this.btnAgregar.Enabled = false;
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosInventarioType.EditarProductos, _dtSecurity))
+				this.btnEditar.Enabled = false;
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosInventarioType.EliminarProductos, _dtSecurity))
+				this.btnEliminar.Enabled = false;
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosInventarioType.ExportarProductos, _dtSecurity))
+				this.btnExportar.Enabled = false;
+           
 
         }
 

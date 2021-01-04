@@ -16,6 +16,7 @@ using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraEditors;
 
 
+
 namespace CI
 {
     public partial class frmDocumentoInv : Form
@@ -90,8 +91,9 @@ namespace CI
         {
             DataSet DS = new DataSet();
             DataTable DT = new DataTable();
-            DS = UsuarioDAC.GetAccionModuloFromRole(0, sUsuario);
+            DS = UsuarioDAC.GetAccionModuloFromRole(300, sUsuario);
             _dtSecurity = DS.Tables[0];
+			AplicarPrivilegios();
 
         }
         
@@ -739,25 +741,12 @@ namespace CI
         private void AplicarPrivilegios()
         {
 
-            //if (UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosContableType.EditarAsientodeDiario, _dtSecurity))
-            //{
-            //    if (_dsProducto.Tables[0].Rows.Count > 0)
-            //        this.btnEditar.Enabled = false;
-            //    else
-            //        this.btnEditar.Enabled = true;
-            //}
-            //else
-            //    this.btnEditar.Enabled = false;
-
-            //if (UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosContableType.EliminarAsientodeDiario, _dtSecurity))
-            //{
-            //    if (_dsProducto.Tables[0].Rows.Count > 0)
-            //        this.btnEliminar.Enabled = false;
-            //    else
-            //        this.btnEliminar.Enabled = true;
-            //}
-            //else
-            //    this.btnEliminar.Enabled = false;
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosInventarioType.AplicarCancelaciondePrestamos, _dtSecurity))
+				this.btnFinalizarPrestamo.Enabled = false;
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosInventarioType.PagodePrestamos, _dtSecurity))
+				this.btnPagoPrestamos.Enabled = false;
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosInventarioType.DetalledePrestamos, _dtSecurity))
+				this.btnVisalizarDetallePrestamos.Enabled = false;
 
         }
 
