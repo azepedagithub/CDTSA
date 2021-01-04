@@ -475,6 +475,17 @@ namespace MainMenu
                     ShowPagesRibbonMan(false);
                     ofrmReportDesigner.Show();
                     break;
+				case "frmRoles":
+
+					Seguridad.frmRoles ofrmRoles = new Seguridad.frmRoles();
+					ShowPagesRibbonMan(false);
+					ofrmRoles.Show();
+					break;
+				case "frmListadoUsuario":
+					Seguridad.frmListadoUsuario ofrmListado = new Seguridad.frmListadoUsuario();
+					ShowPagesRibbonMan(false);
+					ofrmListado.Show();
+					break;
 
                   
             }
@@ -763,6 +774,13 @@ namespace MainMenu
 										nodePaises.Tag = "frmPaises";
                     TreeListNode nodeReportDesigner = tl.AppendNode(new object[] { "Diseñador de Reportes" }, -1, 11, 11, 11);
                     nodeReportDesigner.Tag = "frmDesigner";
+
+					TreeListNode nodeSeguridad = tl.AppendNode(new object[] { "Seguridad" }, -1, 9, 10, 9);
+					TreeListNode nodeRolesUsuario = tl.AppendNode(new object[] { "Roles" }, nodeSeguridad.Id, 11, 11, 11);
+					nodeRolesUsuario.Tag = "frmRoles";
+
+					TreeListNode nodeListadoUsuario = tl.AppendNode(new object[] { "Usuarios" }, nodeSeguridad.Id, 11, 11, 11);
+					nodeListadoUsuario.Tag = "frmListadoUsuario";
 
                     break;
                 case "treeListControlBancario":
