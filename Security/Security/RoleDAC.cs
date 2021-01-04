@@ -180,28 +180,7 @@ namespace Security
 			return DS;
 		}
 
-		public static long InsertUpdateUsuarioRole(string Accion, int IDModulo, int IDRole,string Usuario, SqlTransaction tran)
-		{
-			long result = -1;
-			String strSQL = "dbo.secInsertUpdateUsuarioRole";
-
-			SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
-
-			oCmd.Parameters.Add(new SqlParameter("@Accion", Accion));
-			oCmd.Parameters.Add(new SqlParameter("@IDModulo", IDModulo));
-			oCmd.Parameters.Add(new SqlParameter("@IDRole", IDRole));
-			oCmd.Parameters.Add(new SqlParameter("@Usuario", Usuario));
-
-
-			oCmd.CommandType = CommandType.StoredProcedure;
-			oCmd.Transaction = tran;
-			result = oCmd.ExecuteNonQuery();
-
-			return result;
-
-		}
-
-
+		
 		public static long InsertUpdateUsuario(string Accion, string Usuario, string Descr, bool Activo, string Password, SqlTransaction tran)
 		{
 			long result = -1;
@@ -214,6 +193,28 @@ namespace Security
 			oCmd.Parameters.Add(new SqlParameter("@Descr", Descr));
 			oCmd.Parameters.Add(new SqlParameter("@Activo", Activo));
 			oCmd.Parameters.Add(new SqlParameter("@Password", Password));
+
+
+			oCmd.CommandType = CommandType.StoredProcedure;
+			oCmd.Transaction = tran;
+			result = oCmd.ExecuteNonQuery();
+
+			return result;
+
+		}
+
+
+		public static long InsertUpdateUsuarioRole(string Accion, int IDModulo, int IDRole, string Usuario, SqlTransaction tran)
+		{
+			long result = -1;
+			String strSQL = "dbo.secInsertUpdateUsuarioRole";
+
+			SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
+
+			oCmd.Parameters.Add(new SqlParameter("@Accion", Accion));
+			oCmd.Parameters.Add(new SqlParameter("@IDModulo", IDModulo));
+			oCmd.Parameters.Add(new SqlParameter("@IDRole", IDRole));
+			oCmd.Parameters.Add(new SqlParameter("@Usuario", Usuario));
 
 
 			oCmd.CommandType = CommandType.StoredProcedure;
