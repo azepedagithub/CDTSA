@@ -21,6 +21,7 @@ namespace ControlBancario
 		DataTable dtConciliacion = new DataTable();
 		DataTable dtMovLibros = new DataTable();
 		DataTable dtMovBanco = new DataTable();
+		private DataTable _dtSecurity;
 
 		int IDMovBancoSelected = -1;
 		int IDMovimientoSelected = -1;
@@ -34,6 +35,27 @@ namespace ControlBancario
 		DataRow currentRow;
 		bool LoadEdit = false;
 		String sUsuario = (UsuarioDAC._DS.Tables.Count > 0) ? UsuarioDAC._DS.Tables[0].Rows[0]["Usuario"].ToString() : "azepeda";
+
+		private void CargarPrivilegios()
+		{
+			DataSet DS = new DataSet();
+			DataTable DT = new DataTable();
+			DS = UsuarioDAC.GetAccionModuloFromRole(200, sUsuario);
+			_dtSecurity = DS.Tables[0];
+
+		}
+
+
+		private void AplicarPrivilegios()
+		{
+			if (UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosControlBancarioType.Conciliar, _dtSecurity))
+				this.btnConciliar.Enabled = true;
+			else
+				this.btnConciliar.Enabled = false;
+
+			
+		}
+
 
 		private void CargarEstados() {
 			lstEstados.Clear();
@@ -77,6 +99,8 @@ namespace ControlBancario
 				LoadData();
 
 				CalcularTotales();
+
+				AplicarPrivilegios();
 
 				ActivarControles();
 			}

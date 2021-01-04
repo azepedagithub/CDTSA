@@ -66,8 +66,54 @@ namespace Security
             AgregarGrupoEstadosFinancieros =122,
             EditarGrupoEstadosFinancieros=123,
             EliminarGrupoEstadosFinancieros =124,
-            CuentaGrupoEstadosFinancieros =125
+            CuentaGrupoEstadosFinancieros =125 ,
+			
         }
+
+
+		public enum PrivilegiosControlBancarioType
+		{
+			//Modulo de Control Bancario
+			AccesoalModulo = 200,
+			ListadoConciliaciónBancaria = 201,
+			AgregarConciliación = 202,
+			EditarConciliación = 203,
+			EliminarConciliación = 204,
+			ExportarConciliación = 205,
+			Conciliar = 206,
+			ListadodeDocumentosBancarios = 207,
+			AgregarDocumentoBancario = 208,
+			EditarDocumentoBancario = 209,
+			EliminarDocumentoBancario = 210,
+			ImprimirDocumentoBancario = 211,
+			AnularDocumentoBancario = 212,
+			AprobarDocumentoBancario = 213,
+			AgregarBancos = 214,
+			EditarBancos = 215,
+			EliminarBancos = 216,
+			ExportarBancos = 217,
+			AgregarCuentasBancarias = 218,
+			EditarCuentasBancarias = 219,
+			EliminarCuentasBancarias = 220,
+			ExportarCuentasBancarias = 221,
+			FormatodeImpresion = 222,
+			AgregarSubTipoDocumento = 223,
+			EditarSubTipoDocumento = 224,
+			EliminarSubTipoDocumento = 225,
+			ExportarSubTipoDocumento = 226,
+			AgregarNIT = 227,
+			EditarNIT = 228,
+			EliminarNIT = 229,
+			ExportarNIT = 230,
+			AgregarTiposdeCuenta = 231,
+			EditarTipodeCuenta = 232,
+			EliminarTiposdeCuenta = 233,
+			ExportarTiposdeCuenta = 234,
+			AgregarTiposdeDocumento = 235,
+			EditarTiposdeDocumento = 236,
+			EliminartiposdeDocumento = 237,
+			ExportarTiposdeDocumentos = 238,
+		}
 
 
 		

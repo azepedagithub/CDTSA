@@ -36,7 +36,7 @@ namespace CI
         private void CargarPrivilegios()
         {
             DataSet DS = new DataSet();
-            DS = UsuarioDAC.GetAccionModuloFromRole(0, _sUsuario);
+            DS = UsuarioDAC.GetAccionModuloFromRole(200, _sUsuario);
             _dtSecurity = DS.Tables[0];
 
             AplicarPrivilegios();

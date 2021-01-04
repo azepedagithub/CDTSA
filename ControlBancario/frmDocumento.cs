@@ -47,7 +47,7 @@ namespace ControlBancario
         {
             DataSet DS = new DataSet();
             DataTable DT = new DataTable();
-            DS = UsuarioDAC.GetAccionModuloFromRole(0, sUsuario);
+            DS = UsuarioDAC.GetAccionModuloFromRole(200, sUsuario);
             _dtSecurity = DS.Tables[0];
 
         }
@@ -58,8 +58,6 @@ namespace ControlBancario
             InitializeComponent();
 			this.Accion = "View";
             CargarDocumento(pIDCuentaBanco, pIDTipo, pIDSubTipo,IdRuc, pNumero);
-
-
         }
 
 
@@ -67,21 +65,35 @@ namespace ControlBancario
 
         private void AplicarPrivilegios()
         {
+			if (UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosControlBancarioType.AgregarDocumentoBancario, _dtSecurity))
+				this.btnAgregar.Enabled = true;
+			else
+				this.btnAgregar.Enabled = false;
 
-            if (UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosContableType.EditarAsientodeDiario, _dtSecurity))
-
+            if (UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosControlBancarioType.EditarDocumentoBancario, _dtSecurity))
                 this.btnEditar.Enabled = true;
             else
                 this.btnEditar.Enabled = false;
 
-            if (UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosContableType.EliminarAsientodeDiario, _dtSecurity))
+			if (UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosControlBancarioType.EliminarDocumentoBancario, _dtSecurity))
                 this.btnEliminar.Enabled = true;
             else
                 this.btnEliminar.Enabled = false;
 
+			if (UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosControlBancarioType.ImprimirDocumentoBancario, _dtSecurity))
+				this.btnImprimir.Enabled = true;
+			else
+				this.btnImprimir.Enabled = false;
 
+			if (UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosControlBancarioType.AprobarDocumentoBancario, _dtSecurity))
+				this.btnAprobar.Enabled = true;
+			else
+				this.btnAprobar.Enabled = false;
 
-
+			if (UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosControlBancarioType.AnularDocumentoBancario, _dtSecurity))
+				this.btnAnular.Enabled = true;
+			else
+				this.btnAnular.Enabled = false;
 
         }
 

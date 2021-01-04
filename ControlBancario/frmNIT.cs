@@ -43,7 +43,7 @@ namespace ControlBancario
         private void CargarPrivilegios()
         {
             DataSet DS = new DataSet();
-            DS = UsuarioDAC.GetAccionModuloFromRole(0, _sUsuario);
+            DS = UsuarioDAC.GetAccionModuloFromRole(200, _sUsuario);
             _dtSecurity = DS.Tables[0];
 
             AplicarPrivilegios();
@@ -51,12 +51,14 @@ namespace ControlBancario
 
         private void AplicarPrivilegios()
         {
-            if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosContableType.AgregarCentroCosto, _dtSecurity))
+            if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosControlBancarioType.AgregarNIT, _dtSecurity))
                 this.btnAgregar.Enabled = false;
-            if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosContableType.EditarCentroCosto, _dtSecurity))
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosControlBancarioType.EditarNIT, _dtSecurity))
                 this.btnEditar.Enabled = false;
-            if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosContableType.EliminarCentroCosto, _dtSecurity))
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosControlBancarioType.EliminarNIT, _dtSecurity))
                 this.btnEliminar.Enabled = false;
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosControlBancarioType.ExportarNIT, _dtSecurity))
+				this.btnExportar.Enabled = false;
         }
 
         private void EnlazarEventos()

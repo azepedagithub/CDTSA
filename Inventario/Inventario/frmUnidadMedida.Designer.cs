@@ -325,7 +325,7 @@
 			this.emptySpaceItem1.Location = new System.Drawing.Point(0, 0);
 			this.emptySpaceItem1.Name = "emptySpaceItem1";
 			this.emptySpaceItem1.Size = new System.Drawing.Size(716, 23);
-			this.emptySpaceItem1.Text = "Listado de Unidades de Medida";
+			this.emptySpaceItem1.Text = "Listado de Presentaciones";
 			this.emptySpaceItem1.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
 			this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
 			this.emptySpaceItem1.TextVisible = true;

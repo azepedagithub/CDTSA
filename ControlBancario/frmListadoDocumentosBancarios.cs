@@ -47,14 +47,16 @@ namespace ControlBancario
         {
             DataSet DS = new DataSet();
             DataTable DT = new DataTable();
-            DS = UsuarioDAC.GetAccionModuloFromRole(0, _sUsuario);
+            DS = UsuarioDAC.GetAccionModuloFromRole(200, _sUsuario);
             DT = DS.Tables[0];
-            if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosContableType.AgregarAsientodeDiario, DT))
+            if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosControlBancarioType.AgregarDocumentoBancario, DT))
                 this.btnAgregar.Enabled = false;
-            if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosContableType.EditarAsientodeDiario, DT))
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosControlBancarioType.EliminarDocumentoBancario, DT))
+                this.btnEliminar.Enabled = false;
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosControlBancarioType.AnularDocumentoBancario, DT))
                 this.btnAnular.Enabled = false;
-            if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosContableType.EliminarAsientodeDiario, DT))
-                this.btnAnular.Enabled = false;
+			if (!UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosControlBancarioType.AprobarDocumentoBancario, DT))
+				this.btnAprobar.Enabled = false;
 
         }
 
