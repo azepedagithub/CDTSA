@@ -4,7 +4,7 @@ create TABLE [dbo].[secUSUARIO](
 	[USUARIO] [nvarchar](20) NOT NULL,
 	[DESCR] [nvarchar](200) NULL,
 	[ACTIVO] [bit] NULL,
-	[PASSWORD] [nvarchar](20) NULL
+	[PASSWORD] [nvarchar](250) NULL
 )
 alter table [dbo].[secUSUARIO] add
  CONSTRAINT [PK_secUSUARIO] PRIMARY KEY CLUSTERED 
@@ -442,5 +442,69 @@ FROM dbo.secROLE WHERE (IDROLE = @IDRole OR  @IDRole = -1)
 GO
 
 
+
+CREATE  PROCEDURE dbo.secGetUsuarioRole(@IDRole int )
+AS 
+SELECT DISTINCT  A.USUARIO, B.DESCR FROM dbo.secUSUARIOROLE A
+INNER JOIN dbo.secUSUARIO B ON	A.USUARIO = B.USUARIO
+WHERE (IDROLE = @IDRole OR @IDRole=-1) AND ACTIVO=1
+
+
+GO
+
+CREATE PROCEDURE dbo.secInsertUpdateUsuarioRole(@Accion NVARCHAR(1),@IDRole AS INT, @Usuario NVARCHAR(50), @IDModulo INT)
+AS 
+IF @Accion = 'I'
+BEGIN
+	INSERT INTO dbo.secUSUARIOROLE( IDROLE, USUARIO, IDMODULO )
+	VALUES  ( @IDRole ,@Usuario,@IDModulo)
+END	
+IF @Accion = 'D'
+BEGIN
+	DELETE dbo.secUSUARIOROLE WHERE IDMODULO=@IDModulo AND IDROLE=@IDRole AND USUARIO=@Usuario AND IDMODULO=@IDModulo
+END
+
+
+GO
+
+CREATE PROCEDURE dbo.secGetUsuariosNotInRole(@IDRole INT)
+AS 
+SELECT USUARIO,DESCR  FROM dbo.secUSUARIO
+WHERE USUARIO NOT IN (
+SELECT USUARIO  FROM dbo.secUSUARIOROLE WHERE IDROLE=@IDRole)
+
+AS
+
+CREATE PROCEDURE dbo.secGetUsuario(@Usuario nvarchar(50))
+AS 
+SELECT  USUARIO ,
+        DESCR ,
+        ACTIVO ,
+       [PASSWORD]  FROM dbo.secUSUARIO WHERE (USUARIO=@Usuario OR @Usuario = '*')
+       
+AS 
+
+CREATE PROCEDURE dbo.secInsertUpdateSecUsuario(@Accion nvarchar(1), @Usuario nvarchar(50), @Descr nvarchar(250),@Activo bit, @PassWord nvarchar(50))
+AS 
+IF (@Accion = 'I')
+BEGIN
+	INSERT INTO dbo.secUSUARIO( USUARIO, DESCR, ACTIVO, PASSWORD )
+	VALUES  ( @Usuario,@Descr,@Activo,@Password)
+END
+IF (@Accion ='U')
+BEGIN
+	UPDATE dbo.secUSUARIO SET  DESCR=@Descr, ACTIVO=@Activo,PASSWORD=@Password WHERE USUARIO=@Usuario
+END
+IF (@Accion ='D')
+BEGIN
+	IF (@Usuario = 'admin')
+	BEGIN
+		RAISERROR ( 'El usuario administrador no puede ser eliminado.', 16, 1) ;
+		return		
+	END
+	DELETE dbo.secUSUARIO WHERE USUARIO=@Usuario
+END
+
+GO
 
 

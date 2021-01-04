@@ -54,6 +54,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmListadoUsuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListadoUsuario.Designer.cs">
+      <DependentUpon>frmListadoUsuario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmCatalogoUsuarios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCatalogoUsuarios.Designer.cs">
+      <DependentUpon>frmCatalogoUsuarios.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmRoles.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -62,6 +74,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="frmListadoUsuario.resx">
+      <DependentUpon>frmListadoUsuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCatalogoUsuarios.resx">
+      <DependentUpon>frmCatalogoUsuarios.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmRoles.resx">
       <DependentUpon>frmRoles.cs</DependentUpon>
     </EmbeddedResource>
@@ -93,6 +111,10 @@
     <ProjectReference Include="..\..\..\Security\Security\Security.csproj">
       <Project>{fdbe1059-0197-4f16-a0cf-d9ecb8ef8aa6}</Project>
       <Name>Security</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Util\Util\Util.csproj">
+      <Project>{0b0488ef-45c5-4594-aecc-b6aec89fbbd5}</Project>
+      <Name>Util</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Security;
 using DevExpress.XtraGrid.Views.Grid;
+using System.Linq;
 
 namespace Seguridad
 {
@@ -19,6 +20,7 @@ namespace Seguridad
 
 		DataTable dtAccionesSeleccionadas = new DataTable();
 		DataTable dtRoles = new DataTable();
+		DataTable dtUsuario = new DataTable();
 		bool isEditing = false;
 		private DataRow CurrentRowRole;
 
@@ -87,6 +89,7 @@ namespace Seguridad
 			this.txtDescr.ReadOnly = true;
 			this.txtDescrLarga.ReadOnly = true;
 			this.dtgRoles.Enabled = true;
+			this.dtgUsuarios.Enabled = true;
 			this.gridViewAcciones.OptionsBehavior.ReadOnly = true;
 		}
 
@@ -100,6 +103,7 @@ namespace Seguridad
 			this.txtDescr.ReadOnly = false;
 			this.txtDescrLarga.ReadOnly = false;
 			this.dtgRoles.Enabled = false;
+			this.dtgUsuarios.Enabled = false;
 			this.gridViewAcciones.OptionsBehavior.ReadOnly = false;
 		}
 
@@ -123,7 +127,13 @@ namespace Seguridad
 			{
 				CurrentRowRole = gridView2.GetDataRow(index);
 				UpdateControlsFromCurrentRowRole(CurrentRowRole);
+				CargarUsuariosRoles(Convert.ToInt32(CurrentRowRole["IDRole"]));
 			}
+		}
+
+		private void CargarUsuariosRoles(int IDRole) {
+			dtUsuario = Security.RoleDAC.GetUsuarioRole(IDRole,null).Tables[0];
+			this.dtgUsuarios.DataSource = dtUsuario;
 		}
 
 		private void UpdateControlsFromCurrentRowRole(DataRow Row)
@@ -257,10 +267,90 @@ namespace Seguridad
 			}
 		}
 
-		private void gridViewAcciones_CellValueChanging(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
+		private void btnAgregar_Click(object sender, EventArgs e)
 		{
-			MessageBox.Show("Paso");
+			frmCatalogoUsuarios ofrmUsuarios = new frmCatalogoUsuarios(Convert.ToInt32(CurrentRowRole["IDRole"]));
+			ofrmUsuarios.FormClosed += ofrmUsuarios_FormClosed;
+			ofrmUsuarios.ShowDialog();
 		}
+
+		void ofrmUsuarios_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			frmCatalogoUsuarios oCatalogo = (frmCatalogoUsuarios)sender;
+			try
+			{
+				if (oCatalogo.DialogResult == System.Windows.Forms.DialogResult.OK)
+				{
+					DataRow drUsuario = oCatalogo.drElemento;
+					Security.ConnectionManager.BeginTran();
+					List<int> lstModulos = new List<int>();
+					//Recorrer todos los modulos
+					foreach (int i in this.gridViewAcciones.GetSelectedRows()) {
+						clsAcciones CurrentAction = (clsAcciones)gridViewAcciones.GetRow(i);
+						if (CurrentAction != null)
+						{
+							lstModulos.Add(Convert.ToInt32(CurrentAction.IDModulo));
+						}
+					}
+
+					var elementos = lstModulos.Distinct().ToList();
+					foreach (var ele in elementos) {
+						Security.RoleDAC.InsertUpdateUsuarioRole("I", Convert.ToInt32(ele), Convert.ToInt32(CurrentRowRole["IDRole"]), drUsuario["Usuario"].ToString(), Security.ConnectionManager.Tran);
+					}
+
+				
+					Security.ConnectionManager.CommitTran();
+					CargarUsuariosRoles(Convert.ToInt32(CurrentRowRole["IDRole"]));
+				}
+			}
+			catch (Exception ex) {
+				MessageBox.Show("Han ocurrido los siguientes errores: \n\r" + ex.Message);
+				if (Security.ConnectionManager.Tran != null)
+					Security.ConnectionManager.RollBackTran();
+			}
+
+		}
+
+		private void btnEliminar_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				if (this.gridViewUsuarios.GetSelectedRows().Count() > 0)
+				{
+					DataRow drUsuario = this.gridViewUsuarios.GetDataRow((int)this.gridViewUsuarios.GetSelectedRows()[0]);
+					if (MessageBox.Show("Esta seguro que desea quitar el usuario del role seleccionado? ", "Eliminar Usuario de Role", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+					{
+						Security.ConnectionManager.BeginTran();
+						Security.RoleDAC.InsertUpdateUsuarioRole("D", Convert.ToInt32(CurrentRowRole["IDModulo"]), Convert.ToInt32(CurrentRowRole["IDRole"]), drUsuario["Usuario"].ToString(), Security.ConnectionManager.Tran);
+						Security.ConnectionManager.CommitTran();
+					}
+				}
+			}
+			catch (Exception ex) {
+				MessageBox.Show("Han ocurrido los siguientes errores: /n/r" + ex.Message);
+ 				if (Security.ConnectionManager.Tran != null) {
+					Security.ConnectionManager.RollBackTran();
+				}
+			}
+		}
+
+		
+
+	
+	
+
+		//private void gridViewAcciones_SelectionChanged(object sender, DevExpress.Data.SelectionChangedEventArgs e)
+		//{
+		//	if (e.Action == null)
+		//		return;
+		//	if (!isEditing) {
+				
+		//		if (e.Action == CollectionChangeAction.Add)
+		//			((GridView)sender).UnselectRow(e.ControllerRow);
+		//		else
+		//			((GridView)sender).SelectRow(e.ControllerRow);
+		//	}
+		//}
 
 		
 
