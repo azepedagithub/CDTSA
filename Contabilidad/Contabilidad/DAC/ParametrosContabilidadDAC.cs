@@ -16,7 +16,7 @@ namespace CG
         private static SqlDataAdapter InicializarAdaptador()
         {
             String getSQL = "SELECT TOP 1 ID,UsaSeparadorCta,SeparadorCta,UsaPredecesor,charPredecesor,CantCharNivel1,CantCharNivel2,CantCharNivel3, " +
-                            "CantCharNivel4,CantCharNivel5,CantCharNivel6,IDCtaUtilidadPeriodo,IDCtaUtilidadAcumulada,MesInicioPeriodoFiscal, " +
+							"CantCharNivel4,CantCharNivel5,CantCharNivel6,IDCtaUtilidadAcumulada,IDCtaUtilidadPeriodoIngresos,IDCtaUtilidadPeriodoGastos,IDCtaUtilidadPeriodoCostos,MesInicioPeriodoFiscal, " +
 			                "MesFinalPeriodoFiscal,UsaSeparadorCentro,SeparadorCentro,UsaPredecesorCentro,charPredecesorCentro,LongAsiento,TipoCambio " +
                             "FROM dbo.cntParametros";
             String InsertSQL = "[dbo].[cntUpdateParametrosContabilidad]";
@@ -49,7 +49,9 @@ namespace CG
                 oAdaptador.InsertCommand.Parameters.Add("@CantCharNivel5", SqlDbType.NVarChar).SourceColumn = "CantCharNivel5";
                 oAdaptador.InsertCommand.Parameters.Add("@CantCharNivel6", SqlDbType.NVarChar).SourceColumn = "CantCharNivel6";
                 oAdaptador.InsertCommand.Parameters.Add("@IDCtaUtilidadAcumulada", SqlDbType.BigInt).SourceColumn = "IDCtaUtilidadAcumulada";
-                oAdaptador.InsertCommand.Parameters.Add("@IDCtaUtilidadPeriodo", SqlDbType.BigInt).SourceColumn = "IDCtaUtilidadPeriodo";
+				oAdaptador.InsertCommand.Parameters.Add("@IDCtaUtilidadPeriodoIngresos", SqlDbType.BigInt).SourceColumn = "IDCtaUtilidadPeriodoIngresos";
+				oAdaptador.InsertCommand.Parameters.Add("@IDCtaUtilidadPeriodoGastos", SqlDbType.BigInt).SourceColumn = "IDCtaUtilidadPeriodoGastos";
+				oAdaptador.InsertCommand.Parameters.Add("@IDCtaUtilidadPeriodoCostos", SqlDbType.BigInt).SourceColumn = "IDCtaUtilidadPeriodoCostos";
                 oAdaptador.InsertCommand.Parameters.Add("@MesInicioPeriodoFiscal", SqlDbType.Int).SourceColumn = "MesInicioPeriodoFiscal";
                 oAdaptador.InsertCommand.Parameters.Add("@MesFinalPeriodoFiscal", SqlDbType.Int).SourceColumn = "MesFinalPeriodoFiscal";
                 oAdaptador.InsertCommand.Parameters.Add("@UsaSeparadorCentro", SqlDbType.Int).SourceColumn = "UsaSeparadorCentro";
@@ -75,7 +77,9 @@ namespace CG
                 oAdaptador.UpdateCommand.Parameters.Add("@CantCharNivel5", SqlDbType.NVarChar).SourceColumn = "CantCharNivel5";
                 oAdaptador.UpdateCommand.Parameters.Add("@CantCharNivel6", SqlDbType.NVarChar).SourceColumn = "CantCharNivel6";
                 oAdaptador.UpdateCommand.Parameters.Add("@IDCtaUtilidadAcumulada", SqlDbType.BigInt).SourceColumn = "IDCtaUtilidadAcumulada";
-                oAdaptador.UpdateCommand.Parameters.Add("@IDCtaUtilidadPeriodo", SqlDbType.BigInt).SourceColumn = "IDCtaUtilidadPeriodo";
+				oAdaptador.UpdateCommand.Parameters.Add("@IDCtaUtilidadPeriodoIngresos", SqlDbType.BigInt).SourceColumn = "IDCtaUtilidadPeriodoIngresos";
+				oAdaptador.UpdateCommand.Parameters.Add("@IDCtaUtilidadPeriodoGastos", SqlDbType.BigInt).SourceColumn = "IDCtaUtilidadPeriodoGastos";
+				oAdaptador.UpdateCommand.Parameters.Add("@IDCtaUtilidadPeriodoCostos", SqlDbType.BigInt).SourceColumn = "IDCtaUtilidadPeriodoCostos";
                 oAdaptador.UpdateCommand.Parameters.Add("@MesInicioPeriodoFiscal", SqlDbType.Int).SourceColumn = "MesInicioPeriodoFiscal";
                 oAdaptador.UpdateCommand.Parameters.Add("@MesFinalPeriodoFiscal", SqlDbType.Int).SourceColumn = "MesFinalPeriodoFiscal";
                 oAdaptador.UpdateCommand.Parameters.Add("@UsaSeparadorCentro", SqlDbType.Int).SourceColumn = "UsaSeparadorCentro";

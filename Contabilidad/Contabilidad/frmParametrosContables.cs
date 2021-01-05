@@ -49,7 +49,9 @@ namespace CG
             _CurrentRow["CantCharNivel5"]= this.txtCantNivel5.EditValue;
             _CurrentRow["CantCharNivel6"] = this.txtCantNivel6.EditValue;
             _CurrentRow["IDCtaUtilidadAcumulada"]= this.slkupCuentaUtilidadAcumulada.EditValue;
-            _CurrentRow["IDCtaUtilidadPeriodo"]= this.slkupCuentaUtilidadPeriodo.EditValue;
+            _CurrentRow["IDCtaUtilidadPeriodoIngresos"]= this.slkupCuentaUtilidadPeriodoIngresos.EditValue;
+			_CurrentRow["IDCtaUtilidadPeriodoGastos"] = this.slkupCuentaUtilidadPeriodoGastos.EditValue;
+			_CurrentRow["IDCtaUtilidadPeriodoCostos"] = this.slkupCuentaUtilidadPeriodoCostos.EditValue;
             _CurrentRow["MesInicioPeriodoFiscal"]= this.dtpMesInicioPeriodoFiscal.EditValue;
             _CurrentRow["MesFinalPeriodoFiscal"]= this.dtpMesFinPeriodoFiscal.EditValue;
             _CurrentRow["UsaSeparadorCentro"]= this.chkUsaSeparadorCentro.EditValue;
@@ -140,7 +142,9 @@ namespace CG
                 this.txtCantNivel5.EditValue = _CurrentRow["CantCharNivel5"].ToString();
                 this.txtCantNivel6.EditValue = _CurrentRow["CantCharNivel6"].ToString();
                 this.slkupCuentaUtilidadAcumulada.EditValue = _CurrentRow["IDCtaUtilidadAcumulada"];
-                this.slkupCuentaUtilidadPeriodo.EditValue = _CurrentRow["IDCtaUtilidadPeriodo"];
+                this.slkupCuentaUtilidadPeriodoIngresos.EditValue = _CurrentRow["IDCtaUtilidadPeriodoIngresos"];
+				this.slkupCuentaUtilidadPeriodoCostos.EditValue = _CurrentRow["IDCtaUtilidadPeriodoCostos"];
+				this.slkupCuentaUtilidadPeriodoGastos.EditValue = _CurrentRow["IDCtaUtilidadPeriodoGastos"];
                 this.dtpMesInicioPeriodoFiscal.EditValue = Convert.ToInt32(_CurrentRow["MesInicioPeriodoFiscal"]);
                 this.dtpMesFinPeriodoFiscal.EditValue = Convert.ToInt32(_CurrentRow["MesFinalPeriodoFiscal"]);
                 this.chkUsaSeparadorCentro.EditValue = Convert.ToBoolean(_CurrentRow["UsaSeparadorCentro"]);
@@ -167,14 +171,20 @@ namespace CG
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupCuentaUtilidadAcumulada, "[{'ColumnCaption':'Cuenta','ColumnField':'Cuenta','width':30},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':70}]");
 
 
-            Util.Util.ConfigLookupEdit(this.slkupCuentaUtilidadPeriodo, _lstCuentasContable, "Descr", "IDCuenta");
-            Util.Util.ConfigLookupEditSetViewColumns(this.slkupCuentaUtilidadPeriodo, "[{'ColumnCaption':'Cuenta','ColumnField':'Cuenta','width':30},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':70}]");
+            Util.Util.ConfigLookupEdit(this.slkupCuentaUtilidadPeriodoIngresos, _lstCuentasContable, "Descr", "IDCuenta");
+            Util.Util.ConfigLookupEditSetViewColumns(this.slkupCuentaUtilidadPeriodoIngresos, "[{'ColumnCaption':'Cuenta','ColumnField':'Cuenta','width':30},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':70}]");
+
+			Util.Util.ConfigLookupEdit(this.slkupCuentaUtilidadPeriodoCostos, _lstCuentasContable, "Descr", "IDCuenta");
+			Util.Util.ConfigLookupEditSetViewColumns(this.slkupCuentaUtilidadPeriodoCostos, "[{'ColumnCaption':'Cuenta','ColumnField':'Cuenta','width':30},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':70}]");
+
+			Util.Util.ConfigLookupEdit(this.slkupCuentaUtilidadPeriodoGastos, _lstCuentasContable, "Descr", "IDCuenta");
+			Util.Util.ConfigLookupEditSetViewColumns(this.slkupCuentaUtilidadPeriodoGastos, "[{'ColumnCaption':'Cuenta','ColumnField':'Cuenta','width':30},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':70}]");
 
             Util.Util.ConfigLookupEdit(this.slkupTipoCambio, TipoCambioDAC.GetData("*").Tables[0], "Descr", "IDTipoCambio");
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupTipoCambio, "[{'ColumnCaption':'ID','ColumnField':'IDTipoCambio','width':30},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':70}]");
 
             this.slkupCuentaUtilidadAcumulada.Properties.ShowClearButton = true;
-            this.slkupCuentaUtilidadPeriodo.Properties.ShowClearButton = true;
+            this.slkupCuentaUtilidadPeriodoIngresos.Properties.ShowClearButton = true;
 
         }
     }

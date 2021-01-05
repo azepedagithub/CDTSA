@@ -456,6 +456,10 @@ INSERT INTO dbo.secACCION( IDModulo, IDAccion, Descr ) VALUES  ( 400,433,'Agrega
 INSERT INTO dbo.secACCION( IDModulo, IDAccion, Descr ) VALUES  ( 400,434,'Editar Proveedores')
 INSERT INTO dbo.secACCION( IDModulo, IDAccion, Descr ) VALUES  ( 400,435,'Eliminar Proveedores')
 INSERT INTO dbo.secACCION( IDModulo, IDAccion, Descr ) VALUES  ( 400,436,'Guardar Resepcion de Mercaderia')
+INSERT INTO dbo.secACCION( IDModulo, IDAccion, Descr ) VALUES  ( 400,437,'Eliminar Condicion de Pago')
+INSERT INTO dbo.secACCION( IDModulo, IDAccion, Descr ) VALUES  ( 400,438,'Editar Embarque')
+INSERT INTO dbo.secACCION( IDModulo, IDAccion, Descr ) VALUES  ( 400,439,'Exportar Embarque')
+INSERT INTO dbo.secACCION( IDModulo, IDAccion, Descr ) VALUES  ( 400,440,'Exportar Proveedores')
 
 
 GO
