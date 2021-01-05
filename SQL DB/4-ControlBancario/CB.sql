@@ -337,14 +337,19 @@ VALUES  ( 2, 'Anulado',1)
 GO
 
 --drop table dbo.cbMovimientos
-Create Table dbo.cbMovimientos (IDCuentaBanco int not null, Fecha date not null, IDTipo int not null, IDSubTipo int not null, 
+CREATE Table dbo.cbMovimientos (IDMovimiento BIGINT IDENTITY (1,1), IDCuentaBanco int not null, Fecha date not null, IDTipo int not null, IDSubTipo int not null, 
 IDRuc int not null, 
 Numero NVARCHAR(250) not null, Pagadero_a nvarchar(250), Monto decimal(28,4) default 0, Asiento nvarchar(20), Anulado bit default 0, AsientoAnulacion nvarchar(20),
 Usuario nvarchar(20), UsuarioAnulacion nvarchar(20), FechaAnulacion date,UsuarioAprobacion nvarchar(20), FechaAprobacion date,UsuarioImpresion nvarchar(20),
-FechaImpresion date,Impreso bit DEFAULT(0), ConceptoContable nvarchar(255),IDEstado INT DEFAULT 0 )
+FechaImpresion date,Impreso bit DEFAULT(0), ConceptoContable nvarchar(255),IDEstado INT DEFAULT 0, IDConciliacion int, MatchNumber int default 0, UsuarioConciliacion nvarchar(20), EstadoConciliacion nvarchar(1),
+NotaConciliacion nvarchar(255) )
 go
 
-ALTER TABLE dbo.cbMovimientos ADD IDMovimiento BIGINT IDENTITY (1,1)
+--Alter table dbo.cbMovimientos add IDConciliacion int, MatchNumber int default 0, UsuarioConciliacion nvarchar(20), EstadoConciliacion nvarchar(1), NotaConciliacion nvarchar(255)
+--go
+
+
+--ALTER TABLE dbo.cbMovimientos ADD IDMovimiento BIGINT IDENTITY (1,1)
 
 GO
 
@@ -951,11 +956,6 @@ go
 Create table dbo.cbConcMovBanco (IDMovBanco int identity (1,1) not null, IDCuentaBanco int not null, Fecha date, IDConciliacion int,
 Referencia nvarchar(255), Monto decimal (28, 4) default 0, Factor int, MatchNumber int , Usuario nvarchar(20), Estado nvarchar(1)  ) 
 go
-
-Alter table dbo.cbMovimientos add IDConciliacion int, MatchNumber int default 0, UsuarioConciliacion nvarchar(20), EstadoConciliacion nvarchar(1),
-NotaConciliacion nvarchar(255)
-go
-
 
 alter table dbo.cbConcMovBanco add constraint pkMovBanco primary key (IDMovBanco)
 go

@@ -1596,7 +1596,7 @@ BEGIN
 END
 
 UPDATE dbo.coEmbarque SET  AsientoInv = @Asiento WHERE IDEmbarque = @IDEmbarque
-UPDATE dbo.invTransaccion SET  Asiento=@Asinete WHERE Documento=@DocumentoInv
+UPDATE dbo.invTransaccion SET  Asiento=@Asiento WHERE Documento=@DocumentoInv
 
 
 DROP TABLE #tmpEmbarque

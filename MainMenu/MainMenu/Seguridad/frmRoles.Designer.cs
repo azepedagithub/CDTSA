@@ -66,6 +66,7 @@
 			this.layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
+			this.colSeleccionado = new DevExpress.XtraGrid.Columns.GridColumn();
 			((System.ComponentModel.ISupportInitialize)(this.dtgAcciones)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridViewAcciones)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
@@ -104,12 +105,15 @@
 			// 
 			this.gridViewAcciones.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colModulo,
-            this.colAccion});
+            this.colAccion,
+            this.colSeleccionado});
 			this.gridViewAcciones.GridControl = this.dtgAcciones;
 			this.gridViewAcciones.GroupCount = 1;
 			this.gridViewAcciones.Name = "gridViewAcciones";
+			this.gridViewAcciones.OptionsSelection.EnableAppearanceFocusedCell = false;
 			this.gridViewAcciones.OptionsSelection.MultiSelect = true;
 			this.gridViewAcciones.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CheckBoxRowSelect;
+			this.gridViewAcciones.OptionsSelection.ResetSelectionClickOutsideCheckboxSelector = true;
 			this.gridViewAcciones.OptionsSelection.ShowCheckBoxSelectorInGroupRow = DevExpress.Utils.DefaultBoolean.True;
 			this.gridViewAcciones.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colModulo, DevExpress.Data.ColumnSortOrder.Ascending)});
@@ -187,6 +191,7 @@
 			this.gridViewUsuarios.GridControl = this.dtgUsuarios;
 			this.gridViewUsuarios.Name = "gridViewUsuarios";
 			this.gridViewUsuarios.OptionsBehavior.ReadOnly = true;
+			this.gridViewUsuarios.OptionsSelection.EnableAppearanceFocusedCell = false;
 			this.gridViewUsuarios.OptionsView.ShowGroupPanel = false;
 			// 
 			// barManager1
@@ -344,6 +349,7 @@
 			this.gridView2.GridControl = this.dtgRoles;
 			this.gridView2.Name = "gridView2";
 			this.gridView2.OptionsBehavior.ReadOnly = true;
+			this.gridView2.OptionsSelection.EnableAppearanceFocusedCell = false;
 			this.gridView2.OptionsView.ShowGroupPanel = false;
 			this.gridView2.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gridView2_FocusedRowChanged);
 			// 
@@ -467,6 +473,14 @@
 			this.emptySpaceItem2.Size = new System.Drawing.Size(198, 26);
 			this.emptySpaceItem2.TextSize = new System.Drawing.Size(0, 0);
 			// 
+			// colSeleccionado
+			// 
+			this.colSeleccionado.Caption = "Seleccionado";
+			this.colSeleccionado.FieldName = "Seleccionado";
+			this.colSeleccionado.Name = "colSeleccionado";
+			this.colSeleccionado.Visible = true;
+			this.colSeleccionado.VisibleIndex = 2;
+			// 
 			// frmRoles
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -547,5 +561,6 @@
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem8;
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem9;
 		private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem2;
+		private DevExpress.XtraGrid.Columns.GridColumn colSeleccionado;
 	}
 }

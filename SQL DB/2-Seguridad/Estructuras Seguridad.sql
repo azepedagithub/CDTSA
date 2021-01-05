@@ -613,7 +613,7 @@ SELECT USUARIO,DESCR  FROM dbo.secUSUARIO
 WHERE USUARIO NOT IN (
 SELECT USUARIO  FROM dbo.secUSUARIOROLE WHERE IDROLE=@IDRole)
 
-AS
+GO
 
 CREATE PROCEDURE dbo.secGetUsuario(@Usuario nvarchar(50))
 AS 
@@ -622,7 +622,7 @@ SELECT  USUARIO ,
         ACTIVO ,
        [PASSWORD]  FROM dbo.secUSUARIO WHERE (USUARIO=@Usuario OR @Usuario = '*')
        
-AS 
+GO
 
 CREATE PROCEDURE dbo.secInsertUpdateSecUsuario(@Accion nvarchar(1), @Usuario nvarchar(50), @Descr nvarchar(250),@Activo bit, @PassWord nvarchar(50))
 AS 

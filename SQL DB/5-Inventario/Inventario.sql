@@ -190,7 +190,7 @@ CREATE  TABLE [dbo].[invCuentaContable](
     [CtrConsumo] [int],
     [CtaConsumo] [bigint],
     [CtrPrestamos] [int],
-    [CtaPratmos] [bigint]
+    [CtaPrestamos] [bigint]
  CONSTRAINT [pkinvCuentaContable] PRIMARY KEY CLUSTERED 
 (
 	[IDCuenta] ASC
@@ -276,7 +276,7 @@ ALTER TABLE [dbo].[invCuentaContable] CHECK CONSTRAINT [fkinvCuentaContable_CtrC
 GO
 
 
-ALTER TABLE [dbo].[invCuentaContable]  WITH CHECK ADD  CONSTRAINT [fkinvCuentaContable_CtrPrestamo] FOREIGN KEY(CtrPrestamo)
+ALTER TABLE [dbo].[invCuentaContable]  WITH CHECK ADD  CONSTRAINT [fkinvCuentaContable_CtrPrestamo] FOREIGN KEY(CtrPrestamos)
 REFERENCES dbo.cntCentroCosto ([IDCentro])
 GO
 
@@ -372,7 +372,7 @@ ALTER TABLE [dbo].[invCuentaContable] CHECK CONSTRAINT [fkinvCuentaContable_CtaC
 GO
 
 
-ALTER TABLE [dbo].[invCuentaContable]  WITH CHECK ADD  CONSTRAINT [fkinvCuentaContable_CtaPrestamo] FOREIGN KEY(CtaPrestamo)
+ALTER TABLE [dbo].[invCuentaContable]  WITH CHECK ADD  CONSTRAINT [fkinvCuentaContable_CtaPrestamo] FOREIGN KEY(CtaPrestamos)
 REFERENCES dbo.cntCuenta (IDCuenta)
 GO
 
@@ -1509,7 +1509,7 @@ GO
 
 
 CREATE  PROCEDURE dbo.invUpdateDocumentoInv(@Operacion NVARCHAR(1),@IDTransaccion AS INT OUTPUT,@ModuloOrigen NVARCHAR(4),@IDPaquete AS INT,@Fecha AS DATETIME,  @Usuario AS NVARCHAR(20),
-											@Referencia AS NVARCHAR(250),@Documento NVARCHAR(250) OUTPUT,@Aplicado AS BIT,@EsTraslado AS BIT,@IDTraslado AS INT,@Is)
+											@Referencia AS NVARCHAR(250),@Documento NVARCHAR(250) OUTPUT,@Aplicado AS BIT,@EsTraslado AS BIT,@IDTraslado AS INT)
 AS 
 if upper(@Operacion) = 'I'
 BEGIN
@@ -1771,7 +1771,7 @@ BEGIN
 	INSERT INTO dbo.invCuentaContable(IDCuenta ,Descr ,CtrInventario ,CtaInventario ,CtrVenta , CtaVenta ,CtrCompra ,CtaCompra ,
 	          CtrDescVenta ,CtaDescVenta ,CtrCostoVenta ,CtaCostoVenta, CtrVariacionCosto,CtaVariacionCosto ,CtrSobranteInvFisico ,CtaSobranteInvFisico ,
 	          CtrFaltanteInvFisico ,CtaFaltanteInvFisico ,CtrDescBonificacion ,
-	          CtaDescBonificacion ,CtrDevVentas ,CtaDevVentas,CtrConsumo,CtaConsumo,CtrPrestamo,CtaPrestamo)
+	          CtaDescBonificacion ,CtrDevVentas ,CtaDevVentas,CtrConsumo,CtaConsumo,CtrPrestamos,CtaPrestamos)
 	VALUES  ( @IDCuenta , -- IDCuenta - bigint
 	          @Descr , -- Descr - nvarchar(250)
 	          @CtrInventario , -- CtrInventario - int
@@ -1832,8 +1832,8 @@ BEGIN
 		CtaDevVentas = @CtaDevVentas,
 		CtrConsumo = @CtrConsumo,
 		CtaConsumo = @CtaConsumo,
-		CtrPrestamo = @CtrPrestamo,
-		CtaPrestamo = @CtaPrestamo
+		CtrPrestamos = @CtrPrestamo,
+		CtaPrestamos = @CtaPrestamo
 	WHERE IDCuenta=@IDCuenta
 END
 
@@ -1866,8 +1866,8 @@ SELECT  IDCuenta ,
         CtaDevVentas,
         CtrConsumo,
         CtaConsumo,
-        CtrPrestamo,
-        CtaPrestamo  FROM dbo.invCuentaContable WHERE (IDCuenta = @IDCuentaContable OR @IDCuentaContable = -1)
+        CtrPrestamos,
+        CtaPrestamos  FROM dbo.invCuentaContable WHERE (IDCuenta = @IDCuentaContable OR @IDCuentaContable = -1)
 AND (Descr  LIKE '%' + @Descr + '%' OR  @Descr = '*')
 
 
@@ -1968,7 +1968,7 @@ WHERE (IDProducto IN (SELECT *  FROM dbo.ConvertListToTable(@lstProducto,',')) O
 
 GO
 
-CREATE ALTER PROCEDURE dbo.invGetBodegaSplit(@lstBodega NVARCHAR(2000),@ShowMuestra BIT)
+CREATE PROCEDURE dbo.invGetBodegaSplit(@lstBodega NVARCHAR(2000),@ShowMuestra BIT)
 AS 
 /*
 DECLARE @lstProducto  AS NVARCHAR(2000)
@@ -3321,7 +3321,7 @@ GO
 
 
 
-CREATE ALTER PROCEDURE [dbo].[invGetExistenciaProductoCorte] @Fecha DATETIME,@IDBodega AS INT, @IDProducto AS BIGINT,
+CREATE  PROCEDURE [dbo].[invGetExistenciaProductoCorte] @Fecha DATETIME,@IDBodega AS INT, @IDProducto AS BIGINT,
 							@IDLote AS  INT,@DetallaLote BIT=0
 							
 AS 

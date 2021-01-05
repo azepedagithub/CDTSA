@@ -41,7 +41,7 @@ namespace Seguridad
 					IDModulo = Convert.ToInt32(row["IDModulo"]),
 					IDAccion = Convert.ToInt32(row["IDAccion"]),
 					DescrModulo = row["DescrModulo"].ToString(),
-					DescrAccion = row["Descr"].ToString()
+					DescrAccion = row["Descr"].ToString() ,
 				};
 				lstAcciones.Add(det);
 			}
@@ -55,7 +55,6 @@ namespace Seguridad
 			gridViewAcciones.OptionsView.ShowGroupedColumns = true;
 			gridViewAcciones.OptionsView.ShowGroupPanel = false;
 			this.gridViewAcciones.OptionsBehavior.AutoExpandAllGroups = true;
-			//this.gridViewAcciones.OptionsView.AllowCellMerge = true;
 			this.gridViewAcciones.OptionsView.ShowGroupPanel = false;
 			this.gridViewAcciones.OptionsView.ShowVerticalLines = DevExpress.Utils.DefaultBoolean.False;
 			this.gridViewAcciones.OptionsSelection.ShowCheckBoxSelectorInGroupRow  = DevExpress.Utils.DefaultBoolean.True;
@@ -68,7 +67,6 @@ namespace Seguridad
 			ConfigurarGrilla();
 			DeshabilitarControles();
 			CargarRoles();
-			//if (dtRoles.Rows.Count>0)
 			CargarAcciones();
 			SetCurrentRowRole();
 		}
@@ -91,6 +89,9 @@ namespace Seguridad
 			this.dtgRoles.Enabled = true;
 			this.dtgUsuarios.Enabled = true;
 			this.gridViewAcciones.OptionsBehavior.ReadOnly = true;
+			this.gridViewAcciones.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.RowSelect;
+			this.gridViewAcciones.Columns["Seleccionado"].Visible = true;
+
 		}
 
 		private void HabilitarControles() {
@@ -104,7 +105,10 @@ namespace Seguridad
 			this.txtDescrLarga.ReadOnly = false;
 			this.dtgRoles.Enabled = false;
 			this.dtgUsuarios.Enabled = false;
-			this.gridViewAcciones.OptionsBehavior.ReadOnly = false;
+			this.gridViewAcciones.OptionsBehavior.ReadOnly = true;
+			this.gridViewAcciones.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CheckBoxRowSelect;
+			this.gridViewAcciones.OptionsSelection.ShowCheckBoxSelectorInGroupRow = DevExpress.Utils.DefaultBoolean.True;
+			this.gridViewAcciones.Columns["Seleccionado"].Visible = false;
 		}
 
 
@@ -126,8 +130,9 @@ namespace Seguridad
 			if (index > -1)
 			{
 				CurrentRowRole = gridView2.GetDataRow(index);
-				UpdateControlsFromCurrentRowRole(CurrentRowRole);
 				CargarUsuariosRoles(Convert.ToInt32(CurrentRowRole["IDRole"]));
+				UpdateControlsFromCurrentRowRole(CurrentRowRole);
+				
 			}
 		}
 
@@ -147,14 +152,52 @@ namespace Seguridad
 					DataTable dt = Security.RoleDAC.GetAccionesByRole(Convert.ToInt32(Row["IDRole"])).Tables[0];
 					int CountGroup = this.gridViewAcciones.GroupCount + 1;
 					this.gridViewAcciones.ClearSelection();
-					foreach (DataRow fila in dt.Rows)
+
+					//foreach (DataRow fila in dt.Rows)
+					//{
+					//	for (int i = 0; i < this.gridViewAcciones.RowCount - CountGroup; i++)
+					//	{
+					//		if (this.gridViewAcciones.GetRowCellValue(i, "IDAccion") == null)
+					//			continue;
+
+					//		if (this.gridViewAcciones.GetRowCellValue(i, "IDAccion").ToString() == fila["IDAccion"].ToString())
+					//		{
+					//			clsAcciones oAccion = (clsAcciones)gridViewAcciones.GetRow(i);
+					//			oAccion.Seleccionado = true;
+					//			gridViewAcciones.SelectRow(i);
+					//		}
+
+					//	}
+					//}
+
+					for (int i = 0; i < this.gridViewAcciones.RowCount - CountGroup; i++)
 					{
-						for (int i = 0; i < this.gridViewAcciones.RowCount - CountGroup; i++)
-						{
-							if (this.gridViewAcciones.GetRowCellValue(i, "IDAccion").ToString() == fila["IDAccion"].ToString())
-								gridViewAcciones.SelectRow(i);
+						if (this.gridViewAcciones.GetRowCellValue(i, "IDAccion") == null)
+							continue;
+						clsAcciones oAccion = (clsAcciones)gridViewAcciones.GetRow(i);
+						oAccion.Seleccionado = false;
+					}
+
+					for (int i = 0; i < this.gridViewAcciones.RowCount - CountGroup; i++)
+					{
+						foreach (DataRow fila in dt.Rows) { 
+						   if (this.gridViewAcciones.GetRowCellValue(i, "IDAccion") == null)
+							   continue;
+
+						   clsAcciones oAccion = (clsAcciones)gridViewAcciones.GetRow(i);
+						   if (this.gridViewAcciones.GetRowCellValue(i, "IDAccion").ToString() == fila["IDAccion"].ToString())
+						   {
+
+							   oAccion.Seleccionado = true;
+							   gridViewAcciones.SelectRow(i);
+						   }
+						 
 						}
 					}
+
+					this.gridView2.RefreshData();
+					this.dtgAcciones.Refresh();
+					this.dtgAcciones.RefreshDataSource();
 				}
 			}
 			catch (Exception ex) {
@@ -208,7 +251,7 @@ namespace Seguridad
 						RoleDAC.InsertUpdateRole("I", ref IDRole, this.txtDescr.Text.Trim(), this.txtDescrLarga.Text.Trim(), Security.ConnectionManager.Tran);
 
 					int[] filasSeleccionadas = this.gridViewAcciones.GetSelectedRows();
-					foreach (int i in filasSeleccionadas)
+					foreach (int i in filasSeleccionadas.Where(a=>a >= 0).ToList())
 					{
 						int IDAccion = Convert.ToInt32(gridViewAcciones.GetRowCellValue(i, "IDAccion"));
 						int IDModulo = Convert.ToInt32(this.gridViewAcciones.GetRowCellValue(i, "IDModulo"));
@@ -241,7 +284,12 @@ namespace Seguridad
 		private void btnCancelar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
 		{
 			DeshabilitarControles();
-			CargarRoles();
+			
+			//CargarRoles();
+			if (this.dtRoles.Rows.Count == 1)
+			{
+				SetCurrentRowRole();
+			}
 			isEditing = false;
 		}
 
@@ -333,38 +381,6 @@ namespace Seguridad
 				}
 			}
 		}
-
-		
-
-	
-	
-
-		//private void gridViewAcciones_SelectionChanged(object sender, DevExpress.Data.SelectionChangedEventArgs e)
-		//{
-		//	if (e.Action == null)
-		//		return;
-		//	if (!isEditing) {
-				
-		//		if (e.Action == CollectionChangeAction.Add)
-		//			((GridView)sender).UnselectRow(e.ControllerRow);
-		//		else
-		//			((GridView)sender).SelectRow(e.ControllerRow);
-		//	}
-		//}
-
-		
-
-
-		 //foreach (SucursalVendedor suc in lstSucursalVendedor.Where(a=>a.Seleccionado==true))
-		 //   {
-
-		 //	   Task TaskAplicarRolling = new Task(new Action(() => AplicarRolling(suc.IDRolling, suc.IDTipoRolling, suc.CodSucursal, suc.CodVendedor)));
-		 //	   TaskAplicarRolling.Start();
-		 //   }
-
-		 //   MessageBox.Show("El rolling se ha aplicado con éxito!!");
-		 //   //this.Close();
-		 //   CargarDatos();
 	}
 
 	public class clsAcciones

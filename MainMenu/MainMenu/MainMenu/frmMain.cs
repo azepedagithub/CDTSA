@@ -68,9 +68,17 @@ namespace MainMenu
             this.BackgroundImageLayout = ImageLayout.Center;
         }
 
+		private void InicializarControles() 
+		{
+			this.lblFecha.Caption = "Fecha: --";
+			this.lblTipoCambio.Caption = "TC: --";
+			this.lblCompania.Caption = "Compañia: ";
+		}
+
         void frmMain_Load(object sender, EventArgs e)
         {
             CargarImagenFondo();
+			InicializarControles();
             enlazarEventos();
             CargarPrivilegios();
             CargarParametrosSistema();
@@ -158,10 +166,7 @@ namespace MainMenu
 
                     if (sMensaje != "")
                     {
-
-                        this.lblFecha.Caption = "Fecha: --";
-                        this.lblTipoCambio.Caption = "TC: --";
-                        this.lblCompania.Caption = "Compañia: ";
+						InicializarControles();
                         MessageBox.Show("Por favor notifique a su administrador del sistema la validación de los siguientes campos: \n\r " + sMensaje);
                         this.treeListContabilidad.DoubleClick -= treeListContabilidad_DoubleClick;
                     }
@@ -181,6 +186,7 @@ namespace MainMenu
                 else
                 {
                     MessageBox.Show("Los parámetros generales de la aplicacion estan incompletos, por favor contacte al administrador del sistema");
+					
                     //Quitar  todas las acciones a los menus.
                     this.treeListContabilidad.DoubleClick -= treeListContabilidad_DoubleClick;
                 }
