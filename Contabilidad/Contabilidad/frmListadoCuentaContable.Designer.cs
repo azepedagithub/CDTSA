@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmListadoCuentaContable));
-			DevExpress.XtraGrid.GridFormatRule gridFormatRule2 = new DevExpress.XtraGrid.GridFormatRule();
-			DevExpress.XtraEditors.FormatConditionRuleValue formatConditionRuleValue2 = new DevExpress.XtraEditors.FormatConditionRuleValue();
+			DevExpress.XtraGrid.GridFormatRule gridFormatRule1 = new DevExpress.XtraGrid.GridFormatRule();
+			DevExpress.XtraEditors.FormatConditionRuleValue formatConditionRuleValue1 = new DevExpress.XtraEditors.FormatConditionRuleValue();
 			this.Descripcion = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.EsMayor = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.ribbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
@@ -48,6 +48,7 @@
 			this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
 			this.barStaticItem1 = new DevExpress.XtraBars.BarStaticItem();
 			this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
+			this.txtNivel6 = new DevExpress.XtraEditors.TextEdit();
 			this.txtNivel5 = new DevExpress.XtraEditors.TextEdit();
 			this.txtNivel4 = new DevExpress.XtraEditors.TextEdit();
 			this.txtNivel3 = new DevExpress.XtraEditors.TextEdit();
@@ -105,11 +106,11 @@
 			this.layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.txtNivel6 = new DevExpress.XtraEditors.TextEdit();
 			this.layoutControlItem19 = new DevExpress.XtraLayout.LayoutControlItem();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
 			this.layoutControl1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.txtNivel6.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtNivel5.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtNivel4.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtNivel3.Properties)).BeginInit();
@@ -157,7 +158,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.txtNivel6.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem19)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -335,11 +335,20 @@
 			this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.layoutControl1.Location = new System.Drawing.Point(0, 143);
 			this.layoutControl1.Name = "layoutControl1";
-			this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(847, 217, 250, 553);
+			this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(586, 137, 250, 553);
 			this.layoutControl1.Root = this.layoutControlGroup1;
 			this.layoutControl1.Size = new System.Drawing.Size(735, 469);
 			this.layoutControl1.TabIndex = 3;
 			this.layoutControl1.Text = "layoutControl1";
+			// 
+			// txtNivel6
+			// 
+			this.txtNivel6.Location = new System.Drawing.Point(666, 420);
+			this.txtNivel6.MenuManager = this.ribbonControl;
+			this.txtNivel6.Name = "txtNivel6";
+			this.txtNivel6.Size = new System.Drawing.Size(57, 20);
+			this.txtNivel6.StyleController = this.layoutControl1;
+			this.txtNivel6.TabIndex = 100007;
 			// 
 			// txtNivel5
 			// 
@@ -592,16 +601,16 @@
             this.EsMayor,
             this.AceptaDatos,
             this.Activo});
-			gridFormatRule2.Column = this.Descripcion;
-			gridFormatRule2.ColumnApplyTo = this.Descripcion;
-			gridFormatRule2.Name = "NegritaWhenIsMayor";
-			formatConditionRuleValue2.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			formatConditionRuleValue2.Appearance.Options.UseFont = true;
-			formatConditionRuleValue2.Condition = DevExpress.XtraEditors.FormatCondition.Expression;
-			formatConditionRuleValue2.Expression = "[EsMayor] = True";
-			formatConditionRuleValue2.PredefinedName = "Bold Text";
-			gridFormatRule2.Rule = formatConditionRuleValue2;
-			this.gridView.FormatRules.Add(gridFormatRule2);
+			gridFormatRule1.Column = this.Descripcion;
+			gridFormatRule1.ColumnApplyTo = this.Descripcion;
+			gridFormatRule1.Name = "NegritaWhenIsMayor";
+			formatConditionRuleValue1.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			formatConditionRuleValue1.Appearance.Options.UseFont = true;
+			formatConditionRuleValue1.Condition = DevExpress.XtraEditors.FormatCondition.Expression;
+			formatConditionRuleValue1.Expression = "[EsMayor] = True";
+			formatConditionRuleValue1.PredefinedName = "Bold Text";
+			gridFormatRule1.Rule = formatConditionRuleValue1;
+			this.gridView.FormatRules.Add(gridFormatRule1);
 			this.gridView.GridControl = this.dtg;
 			this.gridView.Name = "gridView";
 			// 
@@ -908,6 +917,7 @@
 			this.layoutControlItem5.Size = new System.Drawing.Size(97, 24);
 			this.layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem5.TextVisible = false;
+			this.layoutControlItem5.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
 			// 
 			// layoutControlItem6
 			// 
@@ -917,6 +927,7 @@
 			this.layoutControlItem6.Size = new System.Drawing.Size(133, 24);
 			this.layoutControlItem6.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem6.TextVisible = false;
+			this.layoutControlItem6.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
 			// 
 			// layoutControlItem7
 			// 
@@ -936,6 +947,7 @@
 			this.layoutControlItem8.Size = new System.Drawing.Size(169, 24);
 			this.layoutControlItem8.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem8.TextVisible = false;
+			this.layoutControlItem8.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
 			// 
 			// layoutControlItem9
 			// 
@@ -945,15 +957,7 @@
 			this.layoutControlItem9.Size = new System.Drawing.Size(61, 24);
 			this.layoutControlItem9.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem9.TextVisible = false;
-			// 
-			// txtNivel6
-			// 
-			this.txtNivel6.Location = new System.Drawing.Point(666, 420);
-			this.txtNivel6.MenuManager = this.ribbonControl;
-			this.txtNivel6.Name = "txtNivel6";
-			this.txtNivel6.Size = new System.Drawing.Size(57, 20);
-			this.txtNivel6.StyleController = this.layoutControl1;
-			this.txtNivel6.TabIndex = 100007;
+			this.layoutControlItem9.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
 			// 
 			// layoutControlItem19
 			// 
@@ -963,6 +967,7 @@
 			this.layoutControlItem19.Size = new System.Drawing.Size(61, 24);
 			this.layoutControlItem19.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem19.TextVisible = false;
+			this.layoutControlItem19.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
 			// 
 			// frmListadoCuentaContable
 			// 
@@ -982,6 +987,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
 			this.layoutControl1.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.txtNivel6.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtNivel5.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtNivel4.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtNivel3.Properties)).EndInit();
@@ -1029,7 +1035,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.txtNivel6.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem19)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();

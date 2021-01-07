@@ -171,16 +171,16 @@ namespace CG
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupCuentaUtilidadAcumulada, "[{'ColumnCaption':'Cuenta','ColumnField':'Cuenta','width':30},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':70}]");
 
 
-            Util.Util.ConfigLookupEdit(this.slkupCuentaUtilidadPeriodoIngresos, _lstCuentasContable, "Descr", "IDCuenta");
+            Util.Util.ConfigLookupEdit(this.slkupCuentaUtilidadPeriodoIngresos, _lstCuentasContable, "Descr", "IDCuenta",400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupCuentaUtilidadPeriodoIngresos, "[{'ColumnCaption':'Cuenta','ColumnField':'Cuenta','width':30},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':70}]");
 
-			Util.Util.ConfigLookupEdit(this.slkupCuentaUtilidadPeriodoCostos, _lstCuentasContable, "Descr", "IDCuenta");
+			Util.Util.ConfigLookupEdit(this.slkupCuentaUtilidadPeriodoCostos, _lstCuentasContable, "Descr", "IDCuenta",400,300);
 			Util.Util.ConfigLookupEditSetViewColumns(this.slkupCuentaUtilidadPeriodoCostos, "[{'ColumnCaption':'Cuenta','ColumnField':'Cuenta','width':30},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':70}]");
 
-			Util.Util.ConfigLookupEdit(this.slkupCuentaUtilidadPeriodoGastos, _lstCuentasContable, "Descr", "IDCuenta");
+			Util.Util.ConfigLookupEdit(this.slkupCuentaUtilidadPeriodoGastos, _lstCuentasContable, "Descr", "IDCuenta",400,300);
 			Util.Util.ConfigLookupEditSetViewColumns(this.slkupCuentaUtilidadPeriodoGastos, "[{'ColumnCaption':'Cuenta','ColumnField':'Cuenta','width':30},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':70}]");
 
-            Util.Util.ConfigLookupEdit(this.slkupTipoCambio, TipoCambioDAC.GetData("*").Tables[0], "Descr", "IDTipoCambio");
+            Util.Util.ConfigLookupEdit(this.slkupTipoCambio, TipoCambioDAC.GetData("*").Tables[0], "Descr", "IDTipoCambio",400,300);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupTipoCambio, "[{'ColumnCaption':'ID','ColumnField':'IDTipoCambio','width':30},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':70}]");
 
             this.slkupCuentaUtilidadAcumulada.Properties.ShowClearButton = true;

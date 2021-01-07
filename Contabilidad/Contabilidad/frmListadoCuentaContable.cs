@@ -112,14 +112,14 @@ namespace CG
 
         private void PopulateDataSearchLookup()
         {
-            Util.Util.ConfigLookupEdit(this.slkupCuentaAnterior, _dtCuenta, "Descr", "IDCuenta",400,300);
+            Util.Util.ConfigLookupEdit(this.slkupCuentaAnterior, _dtCuenta, "Descr", "IDCuenta",300,200);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupCuentaAnterior, "[{'ColumnCaption':'Cuenta','ColumnField':'Cuenta','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");
 
             DataView dvCuentaMayor = new DataView();
             dvCuentaMayor.Table = _dtCuenta;
             dvCuentaMayor.RowFilter = "EsMayor=1";
 
-            Util.Util.ConfigLookupEdit(this.slkupCuentaMayor, dvCuentaMayor.ToTable(), "Descr", "IDCuenta",400,300);
+            Util.Util.ConfigLookupEdit(this.slkupCuentaMayor, dvCuentaMayor.ToTable(), "Descr", "IDCuenta",400,400);
             Util.Util.ConfigLookupEditSetViewColumns(this.slkupCuentaMayor, "[{'ColumnCaption':'Cuenta','ColumnField':'Cuenta','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");
         }
 
@@ -137,13 +137,13 @@ namespace CG
 
                 PopulateGrid();
 
-                Util.Util.ConfigLookupEdit(this.slkupGrupo, _dtGrupo, "Descr", "IDGrupo");
+                Util.Util.ConfigLookupEdit(this.slkupGrupo, _dtGrupo, "Descr", "IDGrupo",400,400);
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupGrupo, "[{'ColumnCaption':'IDGrupo','ColumnField':'IDGrupo','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");
 
-                Util.Util.ConfigLookupEdit(this.slkupTipo, _dtTipo, "Descr", "IDTipo");
+                Util.Util.ConfigLookupEdit(this.slkupTipo, _dtTipo, "Descr", "IDTipo",400,400);
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupTipo, "[{'ColumnCaption':'IDTipo','ColumnField':'IDTipo','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");
 
-                Util.Util.ConfigLookupEdit(this.slkupSubTipo, _dtSubTipo, "Descr", "IDSubTipo");
+                Util.Util.ConfigLookupEdit(this.slkupSubTipo, _dtSubTipo, "Descr", "IDSubTipo",400,400);
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupSubTipo, "[{'ColumnCaption':'IDSubTipo','ColumnField':'IDSubTipo','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");
 
                 
@@ -280,6 +280,11 @@ namespace CG
                 this.txtDescripcion.Text = Row["Descr"].ToString();
                 this.slkupCuentaMayor.EditValue = Row["IDCuentaMayor"].ToString();
                 this.slkupCuentaAnterior.EditValue = Row["IDCuentaAnterior"].ToString();
+
+				if ((bool)this.chkEsMayor.EditValue == true)
+					this.txtDescripcion.Properties.CharacterCasing = CharacterCasing.Upper;
+				else
+					this.txtDescripcion.Properties.CharacterCasing = CharacterCasing.Lower;
             }
         }
 
@@ -301,6 +306,7 @@ namespace CG
             ClearControls();
             HabilitarControles(true);
             currentRow = null;
+			this.txtDescripcion.Properties.CharacterCasing = CharacterCasing.Normal;
             this.slkupCuentaMayor.ReadOnly = true;
             this.slkupGrupo.Focus();
         }
@@ -564,7 +570,7 @@ namespace CG
 
         private void chkEsMayor_CheckStateChanged(object sender, EventArgs e)
         {
-            if (!isEdition)
+            if (!isEdition)				   
                 return;
             if (this.chkEsMayor.EditValue == null)
                 return;
@@ -573,14 +579,14 @@ namespace CG
                 this.chkAceptaDatos.Enabled = false;
                 this.chkAceptaDatos.EditValue = false;
                 this.chkUsaCentroCosto.Enabled = false;
-								this.txtDescripcion.Properties.CharacterCasing = CharacterCasing.Upper;
+				this.txtDescripcion.Properties.CharacterCasing = CharacterCasing.Upper;
             }
             else
             {
                 this.chkAceptaDatos.Enabled = true;
                 this.chkAceptaDatos.EditValue = true;
                 this.chkUsaCentroCosto.Enabled = true;
-								this.txtDescripcion.Properties.CharacterCasing = CharacterCasing.Normal;
+				this.txtDescripcion.Properties.CharacterCasing = CharacterCasing.Normal;
             }
         }
 
@@ -649,7 +655,7 @@ namespace CG
 
                     DataView dvCuentaMayor = new DataView() { Table = _dtCuenta, RowFilter = "EsMayor=1 and Nivel1= " + dt.Rows[0]["Nivel1"].ToString() };
 
-                    Util.Util.ConfigLookupEdit(this.slkupCuentaMayor, dvCuentaMayor.ToTable(), "Descr", "IDCuenta");
+                    Util.Util.ConfigLookupEdit(this.slkupCuentaMayor, dvCuentaMayor.ToTable(), "Descr", "IDCuenta",400,300);
                     Util.Util.ConfigLookupEditSetViewColumns(this.slkupCuentaMayor, "[{'ColumnCaption':'Cuenta','ColumnField':'Cuenta','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");
 
                     this.slkupCuentaMayor.ReadOnly = false;
