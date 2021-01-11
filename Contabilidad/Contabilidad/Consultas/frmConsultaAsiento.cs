@@ -14,16 +14,18 @@ namespace CG
 {
     public partial class frmConsultaAsiento : DevExpress.XtraEditors.XtraForm
     {
-        private DataRow drFila;
+        private DataRow drCentro;
+		private DataRow drCuenta;
         DateTime FechaInicial, FechaFinal;
         Decimal TC = 0;
         String sTipoMoneda="L";
         DataTable dtDetallado = new DataTable();    
 
-        public frmConsultaAsiento(DataRow Fila,DateTime FechaInicial ,DateTime FechaFinal,Decimal pTC)
+        public frmConsultaAsiento(DataRow Centro,DataRow Cuenta,DateTime FechaInicial ,DateTime FechaFinal,Decimal pTC)
         {
             InitializeComponent();
-            drFila = Fila;
+            drCentro = Centro;
+			drCuenta = Cuenta;
             this.FechaInicial = FechaInicial;
             this.FechaFinal = FechaFinal;
             this.TC = pTC;
@@ -32,26 +34,26 @@ namespace CG
         private void  ShowData(){
             try
             {
-                this.txtCentroCosto.Text = drFila["Centro"].ToString();
-                this.txtDescrCentroCosto.Text = drFila["DescrCentroCosto"].ToString();
-                this.txtCuentaContable.Text = drFila["Cuenta"].ToString();
-                this.txtDescrCuentaContable.Text = drFila["DescrCuenta"].ToString();
+				this.txtCentroCosto.Text = (drCentro != null) ? drCentro["Centro"].ToString(): "";
+                this.txtDescrCentroCosto.Text = (drCentro != null) ? drCentro["Descr"].ToString() : "";
+                this.txtCuentaContable.Text = drCuenta["Cuenta"].ToString();
+                this.txtDescrCuentaContable.Text = drCuenta["Descr"].ToString();
 
                 Util.Util.SetFormatTextEdit(this.txtSaldoInicial, (sTipoMoneda == "L") ? Util.Util.FormatType.MonedaLocal : Util.Util.FormatType.MonedaExtrangera, "");
                 Util.Util.SetFormatTextEdit(this.txtTotalCredito, (sTipoMoneda == "L") ? Util.Util.FormatType.MonedaLocal : Util.Util.FormatType.MonedaExtrangera, "");
                 Util.Util.SetFormatTextEdit(this.txtTotalDebito, (sTipoMoneda == "L") ? Util.Util.FormatType.MonedaLocal : Util.Util.FormatType.MonedaExtrangera, "");
                 Util.Util.SetFormatTextEdit(this.txtSaldoFinal, (sTipoMoneda == "L") ? Util.Util.FormatType.MonedaLocal : Util.Util.FormatType.MonedaExtrangera, "");
 
-                this.txtSaldoInicial.Text = drFila[(sTipoMoneda == "L") ? "SaldoAnteriorLocal" : "SaldoAnteriorDolar"].ToString();
-                this.txtTotalCredito.Text = drFila[(sTipoMoneda == "L") ? "CreditoLocal" : "CreditoDolar"].ToString();
-                this.txtTotalDebito.Text = drFila[(sTipoMoneda == "L") ? "DebitoLocal" : "DebitoDolar"].ToString();
-                this.txtSaldoFinal.Text = drFila[(sTipoMoneda == "L") ? "SaldoLocal" : "SaldoDolar"].ToString();
+				//this.txtSaldoInicial.Text = drFila[(sTipoMoneda == "L") ? "SaldoAnteriorLocal" : "SaldoAnteriorDolar"].ToString();
+				//this.txtTotalCredito.Text = drFila[(sTipoMoneda == "L") ? "CreditoLocal" : "CreditoDolar"].ToString();
+				//this.txtTotalDebito.Text = drFila[(sTipoMoneda == "L") ? "DebitoLocal" : "DebitoDolar"].ToString();
+				//this.txtSaldoFinal.Text = drFila[(sTipoMoneda == "L") ? "SaldoLocal" : "SaldoDolar"].ToString();
 
                 Util.Util.SetFormatTextEditGrid(this.txtGridCredito, (sTipoMoneda == "L") ? Util.Util.FormatType.MonedaLocal : Util.Util.FormatType.MonedaExtrangera, "");
                 Util.Util.SetFormatTextEditGrid(this.txtGridDebito, (sTipoMoneda == "L") ? Util.Util.FormatType.MonedaLocal : Util.Util.FormatType.MonedaExtrangera, "");
                 Util.Util.SetFormatTextEdit(this.txtTotalCredito, (sTipoMoneda == "L") ? Util.Util.FormatType.MonedaLocal : Util.Util.FormatType.MonedaExtrangera, "");
-                this.gridView1.Columns[8].FieldName = (sTipoMoneda == "L") ? "CreditoLocal" : "CreditoDolar";
-                this.gridView1.Columns[7].FieldName = (sTipoMoneda == "L") ? "DebitoLocal" : "DebitoDolar";
+				this.gridView1.Columns[8].FieldName = (sTipoMoneda == "L") ? "CreditoLocal" : "CreditoDolar";
+				this.gridView1.Columns[7].FieldName = (sTipoMoneda == "L") ? "DebitoLocal" : "DebitoDolar";
 
                 this.txtTC.Text = "$" + this.TC.ToString("N2");
 
@@ -59,8 +61,8 @@ namespace CG
                 this.txtAl.Text = this.FechaFinal.ToShortDateString();
 
 
-                int idCentro = Convert.ToInt32(drFila["IDCentro"]);
-                int idCuenta = Convert.ToInt32(drFila["IDCuenta"]);
+                int idCentro = Convert.ToInt32(drCentro != null ? drCentro["IDCentro"] : -1);
+                int idCuenta = Convert.ToInt32(drCuenta != null ? drCuenta["IDCuenta"] : -1);
 
 
                 DataSet DS = new DataSet();
@@ -98,10 +100,10 @@ namespace CG
             //this.gridView1.Columns[5].FieldName = (sTipoMoneda == "L") ? "SaldoLocal" : "SaldoDolar";
             //this.gridView1.RefreshData();
 
-             this.txtSaldoInicial.Text = drFila[(sTipoMoneda == "L") ? "SaldoAnteriorLocal" : "SaldoAnteriorDolar"].ToString();
-             this.txtTotalCredito.Text = drFila[(sTipoMoneda == "L") ? "CreditoLocal" : "CreditoDolar"].ToString();
-             this.txtTotalDebito.Text = drFila[(sTipoMoneda == "L") ? "DebitoLocal" : "DebitoDolar"].ToString();
-             this.txtSaldoFinal.Text = drFila[(sTipoMoneda == "L") ? "SaldoLocal" : "SaldoDolar"].ToString();
+			//this.txtSaldoInicial.Text = drFila[(sTipoMoneda == "L") ? "SaldoAnteriorLocal" : "SaldoAnteriorDolar"].ToString();
+			//this.txtTotalCredito.Text = drFila[(sTipoMoneda == "L") ? "CreditoLocal" : "CreditoDolar"].ToString();
+			//this.txtTotalDebito.Text = drFila[(sTipoMoneda == "L") ? "DebitoLocal" : "DebitoDolar"].ToString();
+			//this.txtSaldoFinal.Text = drFila[(sTipoMoneda == "L") ? "SaldoLocal" : "SaldoDolar"].ToString();
 
         }
 

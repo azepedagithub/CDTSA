@@ -147,6 +147,12 @@
     <Compile Include="Consultas\frmConsultaAsientoDiario.Designer.cs">
       <DependentUpon>frmConsultaAsientoDiario.cs</DependentUpon>
     </Compile>
+    <Compile Include="Consultas\frmConsultaCuentaCentroHijas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Consultas\frmConsultaCuentaCentroHijas.Designer.cs">
+      <DependentUpon>frmConsultaCuentaCentroHijas.cs</DependentUpon>
+    </Compile>
     <Compile Include="Consultas\frmConsultaDetalleDiario.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -402,6 +408,9 @@
     </Compile>
     <EmbeddedResource Include="Consultas\frmConsultaAsientoDiario.resx">
       <DependentUpon>frmConsultaAsientoDiario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Consultas\frmConsultaCuentaCentroHijas.resx">
+      <DependentUpon>frmConsultaCuentaCentroHijas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Consultas\frmConsultaDetalleDiario.resx">
       <DependentUpon>frmConsultaDetalleDiario.cs</DependentUpon>

@@ -26,10 +26,72 @@ namespace CG.DAC
             SqlDataAdapter oAdap = new SqlDataAdapter(oCmd);
             DataSet DS = new DataSet();
             oAdap.Fill(DS);
-            DS.Tables[0].TableName = "Consolidado";
-            DS.Tables[1].TableName = "Detalle";
+           // DS.Tables[0].TableName = "Consolidado";
+            DS.Tables[0].TableName = "Detalle";
             return DS;
         }
+
+
+		public static DataSet GetCuentaByCentroCosto( int IDCentro, DateTime FechaInicial, DateTime FechaFinal)
+		{
+			String strSQL = "dbo.cntGetCuentaByCentroCosto";
+
+			SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
+
+			oCmd.Parameters.Add(new SqlParameter("@IdCentroCosto", IDCentro));
+			oCmd.Parameters.Add(new SqlParameter("@FechaInicial", FechaInicial));
+			oCmd.Parameters.Add(new SqlParameter("@FechaFinal", FechaFinal));
+			oCmd.CommandType = CommandType.StoredProcedure;
+
+			SqlDataAdapter oAdap = new SqlDataAdapter(oCmd);
+			DataSet DS = new DataSet();
+			oAdap.Fill(DS);
+			// DS.Tables[0].TableName = "Consolidado";
+			DS.Tables[0].TableName = "Detalle";
+			return DS;
+		}
+
+		public static DataSet GetCentroByCuenta(long IDCuenta, DateTime FechaInicial, DateTime FechaFinal)
+		{
+			String strSQL = "dbo.cntGetCentroByCuenta";
+
+			SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
+
+			oCmd.Parameters.Add(new SqlParameter("@IDCuenta", IDCuenta));
+			oCmd.Parameters.Add(new SqlParameter("@FechaInicial", FechaInicial));
+			oCmd.Parameters.Add(new SqlParameter("@FechaFinal", FechaFinal));
+			oCmd.CommandType = CommandType.StoredProcedure;
+
+			SqlDataAdapter oAdap = new SqlDataAdapter(oCmd);
+			DataSet DS = new DataSet();
+			oAdap.Fill(DS);
+			// DS.Tables[0].TableName = "Consolidado";
+			DS.Tables[0].TableName = "Detalle";
+			return DS;
+		}
+
+
+		public static DataSet GetSaldoCuentasHijas(long IDCuenta, int IDCentro, DateTime FechaInicial, DateTime FechaFinal, int TipoView)
+		{
+			String strSQL = "dbo.cntGetSaldoCuentasHijas";
+
+			SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
+
+			oCmd.Parameters.Add(new SqlParameter("@IDCuenta", IDCuenta));
+			oCmd.Parameters.Add(new SqlParameter("@IDCentro", IDCentro));
+			oCmd.Parameters.Add(new SqlParameter("@FechaInicial", FechaInicial));
+			oCmd.Parameters.Add(new SqlParameter("@FechaFinal", FechaFinal));
+			oCmd.Parameters.Add(new SqlParameter("@TipoView", TipoView));
+		
+			oCmd.CommandType = CommandType.StoredProcedure;
+
+			SqlDataAdapter oAdap = new SqlDataAdapter(oCmd);
+			DataSet DS = new DataSet();
+			oAdap.Fill(DS);
+			// DS.Tables[0].TableName = "Consolidado";
+			DS.Tables[0].TableName = "Detalle";
+			return DS;
+		}
 
 
             public static DataSet GetMovimientosByCentroCuenta(long IdCuenta,int IDCentro,DateTime FechaInicial, DateTime FechaFinal)

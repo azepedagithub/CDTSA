@@ -18,7 +18,6 @@ namespace CG
     {
         DataTable _dtCentroCosto = new DataTable();
         String sTipoMoneda = "L";
-        DataTable dtConsolidado = new DataTable();
         DataTable dtDetallado = new DataTable();    
 
         public frmConsultaSaldoCuenta()
@@ -43,7 +42,7 @@ namespace CG
 
                 _dtCentroCosto = CentroCostoDAC.GetData(-1, "*", "*", "*", "*","*", 0).Tables[0]; //No estamos tomando los acumuladores
 
-                Util.Util.ConfigLookupEdit(this.slkupCentroCosto, _dtCentroCosto, "Descr", "IDCentro");
+                Util.Util.ConfigLookupEdit(this.slkupCentroCosto, _dtCentroCosto, "Descr", "IDCentro",400,300);
                 Util.Util.ConfigLookupEditSetViewColumns(this.slkupCentroCosto, "[{'ColumnCaption':'Centro','ColumnField':'Centro','width':30},{'ColumnCaption':'Descripcion','ColumnField':'Descr','width':70}]");
                 this.slkupCentroCosto.Properties.ShowClearButton = true;
                 this.slkupCentroCosto.Properties.PopupFormSize = new Size(400, 300);
@@ -63,68 +62,16 @@ namespace CG
 
             DataSet DS = new DataSet();
             
-            DS = ConsultasDAC.GetSaldosByCentroCuenta(-1, idCentro, Convert.ToDateTime(this.dtDesde.EditValue), Convert.ToDateTime(this.dtHasta.EditValue));
-            dtConsolidado = DS.Tables[0];
-            dtDetallado = DS.Tables[1];
+            
+			DS = ConsultasDAC.GetCuentaByCentroCosto(idCentro, Convert.ToDateTime(this.dtDesde.EditValue), Convert.ToDateTime(this.dtHasta.EditValue));
 
-           
-
-            //this.gridView1.Columns["Debitos"].FieldName = (sTipoMoneda == "L") ? "DebitoLocal" : "DebitoDolar";
-            //this.gridView1.Columns["Creditos"].FieldName =(sTipoMoneda == "L") ? "CreditoLocal" : "CreditoDolar";
-            //this.gridView1.Columns["SaldoInicial"].FieldName = (sTipoMoneda == "L") ? "SaldoAnteriorLocal" : "SaldoAnteriorDolar";
-            //this.gridView1.Columns["SaldoLocal"].FieldName = (sTipoMoneda == "L") ? "SaldoLocal" : "SaldoDolar";
-
-            //if (dtConsolidado.Rows.Count > 0)
-            //{
-            //    this.txtSaldoInicial.Text = dtConsolidado.Rows[0][(sTipoMoneda=="L")? "SaldoAnteriorLocal" : "SaldoAnteriorDolar"].ToString();
-            //    this.txtSaldoFinal.Text = dtConsolidado.Rows[0][(sTipoMoneda=="L")? "SaldoLocal":"SaldoDolar"].ToString();
-            //    this.txtTotalCredito.Text = dtConsolidado.Rows[0][(sTipoMoneda=="L")? "CreditoLocal":"CreditoDolar"].ToString();
-            //    this.txtTotalDebitos.Text = dtConsolidado.Rows[0][(sTipoMoneda=="L")? "DebitoLocal":"DebitoDolar"].ToString();
-            //}
+            dtDetallado = DS.Tables[0];
             this.grid.DataSource = dtDetallado;
-            CargarDatosSegunMoneda(dtConsolidado);
-        }
-
-        private void CargarDatosSegunMoneda(DataTable dt) {
-            Util.Util.SetFormatTextEdit(this.txtSaldoInicial, (sTipoMoneda == "L") ? Util.Util.FormatType.MonedaLocal : Util.Util.FormatType.MonedaExtrangera, "");
-            Util.Util.SetFormatTextEdit(this.txtTotalCredito, (sTipoMoneda == "L") ? Util.Util.FormatType.MonedaLocal : Util.Util.FormatType.MonedaExtrangera, "");
-            Util.Util.SetFormatTextEdit(this.txtTotalDebitos, (sTipoMoneda == "L") ? Util.Util.FormatType.MonedaLocal : Util.Util.FormatType.MonedaExtrangera, "");
-            Util.Util.SetFormatTextEdit(this.txtSaldoFinal, (sTipoMoneda == "L") ? Util.Util.FormatType.MonedaLocal : Util.Util.FormatType.MonedaExtrangera, "");
-
-            Util.Util.SetFormatTextEditGrid(this.txtGridSaldoInicial, (sTipoMoneda == "L") ? Util.Util.FormatType.MonedaLocal : Util.Util.FormatType.MonedaExtrangera, "");
-            Util.Util.SetFormatTextEditGrid(this.txtGridCredito, (sTipoMoneda == "L") ? Util.Util.FormatType.MonedaLocal : Util.Util.FormatType.MonedaExtrangera, "");
-            Util.Util.SetFormatTextEditGrid(this.txtGridDebito, (sTipoMoneda == "L") ? Util.Util.FormatType.MonedaLocal : Util.Util.FormatType.MonedaExtrangera, "");
-            Util.Util.SetFormatTextEditGrid(this.txtGridSaldoFinal, (sTipoMoneda == "L") ? Util.Util.FormatType.MonedaLocal : Util.Util.FormatType.MonedaExtrangera, "");
-
-
-            this.gridView1.Columns[5].FieldName = (sTipoMoneda == "L") ? "DebitoLocal" : "DebitoDolar";
-            this.gridView1.Columns[6].FieldName = (sTipoMoneda == "L") ? "CreditoLocal" : "CreditoDolar";
-            this.gridView1.Columns[4].FieldName = (sTipoMoneda == "L") ? "SaldoAnteriorLocal" : "SaldoAnteriorDolar";
-            this.gridView1.Columns[7].FieldName = (sTipoMoneda == "L") ? "SaldoLocal" : "SaldoDolar";
-            this.gridView1.RefreshData();
-
-            if (dt.Rows.Count > 0)
-            {
-                this.txtSaldoInicial.Text = dt.Rows[0][(sTipoMoneda == "L") ? "SaldoAnteriorLocal" : "SaldoAnteriorDolar"].ToString();
-                this.txtSaldoFinal.Text = dt.Rows[0][(sTipoMoneda == "L") ? "SaldoLocal" : "SaldoDolar"].ToString();
-                this.txtTotalCredito.Text = dt.Rows[0][(sTipoMoneda == "L") ? "CreditoLocal" : "CreditoDolar"].ToString();
-                this.txtTotalDebitos.Text = dt.Rows[0][(sTipoMoneda == "L") ? "DebitoLocal" : "DebitoDolar"].ToString();
-            }
+            
         }
 
      
-
-        private void btnMonedaLocal_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
-        {
-            sTipoMoneda = "L";
-            CargarDatosSegunMoneda(dtDetallado);
-        }
-
-        private void btnMonedaDolar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
-        {
-            sTipoMoneda = "D";
-            CargarDatosSegunMoneda(dtDetallado);
-        }
+      
 
         private void btnExportar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
@@ -158,9 +105,18 @@ namespace CG
             if (info.InRow || info.InRowCell)
             {
                 DataRow dr = view.GetDataRow(view.GetSelectedRows()[0]);
-                frmConsultaAsiento frmConsultaAsiento = new frmConsultaAsiento(dr, Convert.ToDateTime(this.dtDesde.EditValue), Convert.ToDateTime(this.dtHasta.EditValue), Convert.ToDecimal(this.txtTasaCambio.Text));
-                frmConsultaAsiento.ShowDialog();
-                
+				DataRowView drCentro = (this.slkupCentroCosto.EditValue != null) ? (DataRowView)this.slkupCentroCosto.GetSelectedDataRow() : null;
+				if (Convert.ToBoolean(dr["EsMayor"]) == true)
+				{
+					Consultas.frmConsultaCuentaCentroHijas ofrmConsulta = new Consultas.frmConsultaCuentaCentroHijas((drCentro != null ) ? drCentro.Row :null,dr, Convert.ToDateTime(this.dtDesde.EditValue), Convert.ToDateTime(this.dtHasta.EditValue), Convert.ToDecimal(this.txtTasaCambio.Text),1);
+					ofrmConsulta.ShowDialog();
+				}
+				else
+				{
+					frmConsultaAsiento frmConsultaAsiento = new frmConsultaAsiento((drCentro != null ) ? drCentro.Row : null,dr, Convert.ToDateTime(this.dtDesde.EditValue), Convert.ToDateTime(this.dtHasta.EditValue), Convert.ToDecimal(this.txtTasaCambio.Text));
+					frmConsultaAsiento.ShowDialog();
+				}
+				
             }
         }
 
