@@ -202,6 +202,7 @@ namespace ControlBancario
             
             isEdition = true;
             HabilitarControles(true);
+			this.txtCodigo.ReadOnly = true;
             
             lblStatus.Caption = "Editando el registro : " + currentRow["Descr"].ToString();
             this.txtCodigo.Focus();

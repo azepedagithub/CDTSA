@@ -108,6 +108,7 @@
 			this.btnEditar.Id = 2;
 			this.btnEditar.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnEditar.LargeGlyph")));
 			this.btnEditar.Name = "btnEditar";
+			
 			// 
 			// btnGuardar
 			// 

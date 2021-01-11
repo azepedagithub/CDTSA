@@ -109,7 +109,7 @@ namespace ControlBancario
                 
                 _dtTipo = TipoCuentaDAC.GetData(-1).Tables["Data"];
                 _dtBanco = BancoDAC.GetData(-1).Tables["Data"];
-                _dtCuenta = CG.CuentaContableDAC.GetData(-1,-1, -1,"*","*","*","*","*","*","*",-1,-1,-1,1,-1,-1).Tables["Data"];
+                _dtCuenta = CG.CuentaContableDAC.GetData(-1,-1, -1,"*","*","*","*","*","*","*",-1,0,1,1,-1,-1).Tables["Data"];
                 _dtMoneda = MonedaDAC.GetMoneda(-1).Tables[0];
                 Util.Util.SetDefaultBehaviorControls(this.gridView1, false, this.gridCuenta, _tituloVentana, this);
 
@@ -165,6 +165,7 @@ namespace ControlBancario
             this.slkupCuentaContable.EditValue = DBNull.Value;
             this.chkActivo.EditValue = true;
             this.txtLimite.EditValue = DBNull.Value;
+			this.dtFechaCreacion.EditValue = DateTime.Now;
 
 
 
@@ -181,6 +182,7 @@ namespace ControlBancario
             this.chkActivo.ReadOnly = !Activo;
             this.chkActivo.ReadOnly = !Activo;
             this.txtCodigo.ReadOnly = !Activo;
+			this.dtFechaCreacion.ReadOnly = !Activo;
 
             this.gridCuenta.Enabled = !Activo;
 
@@ -237,6 +239,7 @@ namespace ControlBancario
             HabilitarControles(true);
             ClearControls();
             currentRow = null;
+			this.dtFechaCreacion.EditValue = DateTime.Now;
             this.txtCodigo.Focus();
         }
 

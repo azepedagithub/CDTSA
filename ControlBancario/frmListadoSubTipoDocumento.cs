@@ -183,7 +183,7 @@ namespace ControlBancario
         private void UpdateControlsFromCurrentRow(DataRow Row)
         {
             this.slkupSubTipoDocumento.EditValue = Row["IDSubTipo"].ToString();
-            this.txtSubTipo.EditValue = Row["IDTipo"].ToString();
+            this.txtSubTipo.EditValue = Row["SubTipo"].ToString();
             this.txtDescr.Text = Row["Descr"].ToString();
             this.chkActivo.EditValue = Convert.ToBoolean(Row["Activo"]);
             this.chkReadOnly.EditValue = Convert.ToBoolean(Row["ReadOnlySys"]);
@@ -219,6 +219,8 @@ namespace ControlBancario
             
             isEdition = true;
             HabilitarControles(true);
+			this.txtSubTipo.ReadOnly = true;
+			this.slkupSubTipoDocumento.ReadOnly = true;
             
             lblStatus.Caption = "Editando el registro : " + currentRow["Descr"].ToString();
             this.txtDescr.Focus();
@@ -260,8 +262,8 @@ namespace ControlBancario
 
                 currentRow["Descr"] = this.txtDescr.EditValue;
                 currentRow["Activo"] = this.chkActivo.EditValue;
-				currentRow["IDTipo"] = this.txtSubTipo.EditValue;
-				currentRow["IDSubTipo"] = this.slkupSubTipoDocumento.EditValue;
+				currentRow["SubTipo"] = this.txtSubTipo.EditValue;
+				currentRow["IDTipo"] = this.slkupSubTipoDocumento.EditValue;
                 currentRow["Activo"] = this.chkActivo.EditValue;
                
                 
@@ -318,8 +320,9 @@ namespace ControlBancario
 
                 currentRow["Descr"] = this.txtDescr.EditValue;
                 currentRow["Activo"] = this.chkActivo.EditValue;
-				currentRow["IDTipo"] = this.txtSubTipo.EditValue;
-				currentRow["IDSubTipo"] = this.slkupSubTipoDocumento.EditValue;
+				currentRow["IDSubTipo"] = -1;
+				currentRow["SubTipo"] = this.txtSubTipo.EditValue;
+				currentRow["IDTipo"] = this.slkupSubTipoDocumento.EditValue;
                
                 currentRow["Activo"] = this.chkActivo.EditValue;
                
