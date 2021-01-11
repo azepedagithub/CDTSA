@@ -1,4 +1,4 @@
---Estructura de Privilegios
+secGetUsuarioRole--Estructura de Privilegios
 
 create TABLE [dbo].[secUSUARIO](
 	[USUARIO] [nvarchar](20) NOT NULL,
@@ -601,7 +601,8 @@ BEGIN
 END	
 IF @Accion = 'D'
 BEGIN
-	DELETE dbo.secUSUARIOROLE WHERE IDMODULO=@IDModulo AND IDROLE=@IDRole AND USUARIO=@Usuario AND IDMODULO=@IDModulo
+	DELETE dbo.secUSUARIOROLE WHERE IDROLE=@IDRole AND (USUARIO=@Usuario OR @Usuario='*')
+	 AND (IDMODULO=@IDModulo OR @IDModulo=-1)
 END
 
 

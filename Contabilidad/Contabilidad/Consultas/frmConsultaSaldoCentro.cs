@@ -152,7 +152,7 @@ namespace CG
             if (this.dtpFechaFinal.EditValue != null)
             {
                 DateTime Fecha = Convert.ToDateTime(this.dtpFechaFinal.EditValue);
-                if (Fecha.Month + 1 < 13)
+                if (Fecha.Month + 1 < 13)																		             
                 { Fecha = new DateTime(Fecha.Year, Fecha.Month + 1, 1).AddDays(-1); }
                 else
                 { Fecha = new DateTime(Convert.ToInt32(Fecha.Year) + 1, 1, 1).AddDays(-1); }

@@ -249,15 +249,31 @@ namespace Seguridad
 					}
 					else
 						RoleDAC.InsertUpdateRole("I", ref IDRole, this.txtDescr.Text.Trim(), this.txtDescrLarga.Text.Trim(), Security.ConnectionManager.Tran);
-
+					//Obtener los usuarios
+					DataTable tmpDtUsuarios = (DataTable)this.dtgUsuarios.DataSource;
 					int[] filasSeleccionadas = this.gridViewAcciones.GetSelectedRows();
+					//Eliminar los usuarios
+					RoleDAC.InsertUpdateUsuarioRole("D", -1, IDRole, "*", Security.ConnectionManager.Tran);
+					List<int> lstModulos = new List<int>();
 					foreach (int i in filasSeleccionadas.Where(a=>a >= 0).ToList())
 					{
 						int IDAccion = Convert.ToInt32(gridViewAcciones.GetRowCellValue(i, "IDAccion"));
 						int IDModulo = Convert.ToInt32(this.gridViewAcciones.GetRowCellValue(i, "IDModulo"));
+						lstModulos.Add(IDModulo);
 						//Insertar en Tabla
 						RoleDAC.InsertUpdateRoleAccion("I", IDModulo, IDRole, IDAccion, Security.ConnectionManager.Tran);
+						
 					}
+
+					foreach (int IDModulo in lstModulos.Distinct())
+					{
+						foreach (DataRow fila in tmpDtUsuarios.Rows)
+						{
+							RoleDAC.InsertUpdateUsuarioRole("I", IDModulo, IDRole, fila["Usuario"].ToString(), Security.ConnectionManager.Tran);
+						}
+					}
+
+					
 					MessageBox.Show("El role ha sido guardardo con Exito");
 					Security.ConnectionManager.CommitTran();
 					isEditing = false;
@@ -299,7 +315,7 @@ namespace Seguridad
 			{
 				if (MessageBox.Show("Esta seguro de eliminar el role?", "Administración de Usuarios", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
 				{
-					int IDRole = Convert.ToInt32(CurrentRowRole["IDRole"]);
+			   		int IDRole = Convert.ToInt32(CurrentRowRole["IDRole"]);
 					Security.ConnectionManager.BeginTran();
 					RoleDAC.InsertUpdateRole("D", ref IDRole, "", "", Security.ConnectionManager.Tran);
 					Security.ConnectionManager.CommitTran();
@@ -369,7 +385,7 @@ namespace Seguridad
 					if (MessageBox.Show("Esta seguro que desea quitar el usuario del role seleccionado? ", "Eliminar Usuario de Role", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
 					{
 						Security.ConnectionManager.BeginTran();
-						Security.RoleDAC.InsertUpdateUsuarioRole("D", Convert.ToInt32(CurrentRowRole["IDModulo"]), Convert.ToInt32(CurrentRowRole["IDRole"]), drUsuario["Usuario"].ToString(), Security.ConnectionManager.Tran);
+						Security.RoleDAC.InsertUpdateUsuarioRole("D", -1, Convert.ToInt32(CurrentRowRole["IDRole"]), drUsuario["Usuario"].ToString(), Security.ConnectionManager.Tran);
 						Security.ConnectionManager.CommitTran();
 					}
 				}
