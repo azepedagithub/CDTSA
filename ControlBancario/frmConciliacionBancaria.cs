@@ -114,7 +114,7 @@ namespace ControlBancario
 
 		private void ActivarControles()
 		{
-			if (this.dtConciliacion.Rows[0]["Estado"].ToString() == "F")
+			if (this.dtConciliacion.Rows.Count> 0 && this.dtConciliacion.Rows[0]["Estado"].ToString() == "F")
 			{
 				//desactivar todo 
 				this.gridViewMovLibros.OptionsBehavior.ReadOnly = true;

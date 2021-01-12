@@ -98,6 +98,76 @@ namespace CG
         }
 
 
+		public static bool EsPeriodoTrece()
+		{
+
+			DataSet DS = new DataSet();
+			bool bresult;
+
+			SqlCommand oCmd = new SqlCommand("dbo.cntValidarPerioroTrece", ConnectionManager.GetConnection());
+			SqlConnection oConn = oCmd.Connection;
+			try
+			{
+
+
+				oCmd.CommandType = CommandType.StoredProcedure;
+				SqlDataAdapter oAdapatadorTmp = new SqlDataAdapter(oCmd);
+				oAdapatadorTmp.Fill(DS, "Data");
+				bresult =  (DS.Tables.Count> 0 ) ?Convert.ToBoolean(DS.Tables[0].Rows[0]["AjustesCierreFiscal"]) : false;
+
+
+			}
+			catch (Exception)
+			{
+				throw;
+			}
+			finally
+			{
+				if (oConn.State == ConnectionState.Open)
+					oConn.Close();
+
+			}
+			return bresult;
+
+		}
+
+		
+		public static bool ProcesoGeneracionCierreFiscal(int IDEjercicio, String sUsuario)
+        {
+            bool result  = false;
+            DataSet DS = new DataSet();
+
+            SqlCommand oCmd = new SqlCommand("dbo.cntCierreFiscal", ConnectionManager.GetConnection());
+            SqlConnection oConn = oCmd.Connection;
+            try
+            {
+     
+                oCmd.CommandType = CommandType.StoredProcedure;
+                oCmd.Parameters.Add("@IDEjercicio", SqlDbType.Int, 50).Value = IDEjercicio;
+                oCmd.Parameters.Add("@Usuario", SqlDbType.NChar, 50).Value = sUsuario;
+                
+                
+             
+                if (oConn.State == ConnectionState.Closed)
+                    oConn.Open();
+                 oCmd.ExecuteNonQuery();
+                result = true;
+                
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                if (oConn.State == ConnectionState.Open)
+                    oConn.Close();
+
+            }
+            return result;
+
+        }
+
         public static bool CreaEjercicio(DateTime FechaInicio, bool InicioOperaciones , int MesInicioOperaciones)
         {
             bool result  = false;

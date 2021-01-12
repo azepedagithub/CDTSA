@@ -195,6 +195,12 @@
     <Compile Include="frmCerrarPeriodo.Designer.cs">
       <DependentUpon>frmCerrarPeriodo.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmGenerarDocumentosCierrePeriodoFiscal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGenerarDocumentosCierrePeriodoFiscal.Designer.cs">
+      <DependentUpon>frmGenerarDocumentosCierrePeriodoFiscal.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmGrupoEstadosFinancieros.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -429,6 +435,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmCerrarPeriodo.resx">
       <DependentUpon>frmCerrarPeriodo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGenerarDocumentosCierrePeriodoFiscal.resx">
+      <DependentUpon>frmGenerarDocumentosCierrePeriodoFiscal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmGrupoEstadosFinancieros.resx">
       <DependentUpon>frmGrupoEstadosFinancieros.cs</DependentUpon>

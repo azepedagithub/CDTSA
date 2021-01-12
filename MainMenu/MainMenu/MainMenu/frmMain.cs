@@ -710,6 +710,12 @@ namespace MainMenu
                     ShowPagesRibbonMan(false);
                     ofrmCierre.Show();
                     break;
+				case "frmGenerarDocumentosCierrePeriodoFiscal":
+					frmGenerarDocumentosCierrePeriodoFiscal ofrmGenDocCierreFiscal = new frmGenerarDocumentosCierrePeriodoFiscal();
+					ofrmGenDocCierreFiscal.MdiParent = this;
+					ShowPagesRibbonMan(false);
+					ofrmGenDocCierreFiscal.Show();
+					break;
             }
 
 
@@ -933,6 +939,10 @@ namespace MainMenu
                     //TreeListNode nodeConsultasDelDiarioTransacciones = tl.AppendNode(new object[] { "Transacciones" }, nodeConsultasDelDiario.Id, 11, 11, 11);
                     //nodeConsultasDelDiarioTransacciones.Tag = "optConsultasDelDiarioTransacciones";
 
+					//Carpeta
+					TreeListNode nodeProcesosContab = tl.AppendNode(new object[] { "Proceso" }, -1, 9, 10, 9);
+					TreeListNode nodeProcesosCierreFiscal = tl.AppendNode(new object[] { "Generación de Asientos de Cierre Fiscal" }, nodeProcesosContab.Id, 11, 11, 11);
+					nodeProcesosCierreFiscal.Tag = "frmGenerarDocumentosCierrePeriodoFiscal";
                     //Carpeta
                     TreeListNode nodeReportesContabilidad = tl.AppendNode(new object[] { "Reportes" }, -1, 9, 10, 9);
                     //Carpeta
