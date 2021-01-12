@@ -52,18 +52,21 @@ namespace CG
             }
         }
 
+		private void RefrescarDatos() {
+			long idCuenta = (this.slkupCuenta.EditValue == null) ? -1 : Convert.ToInt64(this.slkupCuenta.EditValue);
+
+			DataSet DS = new DataSet();
+
+			DS = ConsultasDAC.GetCentroByCuenta(idCuenta, Convert.ToDateTime(this.dtpFechaInicial.EditValue), Convert.ToDateTime(this.dtpFechaFinal.EditValue));
+			dtDetallado = DS.Tables[0];
+			this.grid.DataSource = dtDetallado;
+
+			this.gridView1.Columns[0].SortOrder = DevExpress.Data.ColumnSortOrder.Ascending;
+		}
+
         private void btnRefrescar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-
-            long idCuenta = (this.slkupCuenta.EditValue == null) ? -1 : Convert.ToInt64(this.slkupCuenta.EditValue);
-
-            DataSet DS = new DataSet();
-           
-			DS = ConsultasDAC.GetCentroByCuenta(idCuenta, Convert.ToDateTime(this.dtpFechaInicial.EditValue), Convert.ToDateTime(this.dtpFechaFinal.EditValue));
-            dtDetallado = DS.Tables[0];
-            this.grid.DataSource = dtDetallado;
-           
-            this.gridView1.Columns[0].SortOrder = DevExpress.Data.ColumnSortOrder.Ascending;
+			RefrescarDatos();
         }
 
        
@@ -161,6 +164,11 @@ namespace CG
                 this.txtTipoCambio.Text = TipoCambio.ToString();
             }
         }
+
+		private void slkupCuenta_EditValueChanged(object sender, EventArgs e)
+		{
+			RefrescarDatos();
+		}
     
     }
 }

@@ -314,6 +314,7 @@
 			this.slkupCentroCosto.Size = new System.Drawing.Size(773, 20);
 			this.slkupCentroCosto.StyleController = this.layoutControl1;
 			this.slkupCentroCosto.TabIndex = 4;
+			this.slkupCentroCosto.EditValueChanged += new System.EventHandler(this.slkupCentroCosto_EditValueChanged);
 			// 
 			// searchLookUpEdit1View
 			// 

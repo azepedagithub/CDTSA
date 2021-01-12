@@ -649,7 +649,7 @@ SELECT @NextConsecutivo= ISNULL(ConsecCheque,0) + 1 FROM dbo.cbCuentaBancaria WH
 
 GO
 
-CREATE   Procedure [dbo].[cbUpdateRUC] @Operacion nvarchar(1), @IDRuc int, @IDTipoRuc INT ,@Ruc nvarchar(20), @Nombre nvarchar(200),@Alias nvarchar(200),@Activo BIT
+CREATE Procedure [dbo].[cbUpdateRUC] @Operacion nvarchar(1), @IDRuc int, @IDTipoRuc INT ,@Ruc nvarchar(20), @Nombre nvarchar(200),@Alias nvarchar(200),@Activo BIT
 as
 set nocount on 
 
@@ -681,7 +681,7 @@ end
 
 if upper(@Operacion) = 'U' 
 BEGIN
-	UPDATE dbo.cbRUC SET  Nombre = @Nombre,Alias =@Alias,Activo=@Activo,IDTipoRuc=@IDTipoRuc WHERE IDRuc=@IDRuc
+	UPDATE dbo.cbRUC SET  Nombre = @Nombre,RUC = @Ruc,Alias =@Alias,Activo=@Activo,IDTipoRuc=@IDTipoRuc WHERE IDRuc=@IDRuc
 
 end
 

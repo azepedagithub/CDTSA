@@ -531,18 +531,7 @@ namespace ControlBancario
 
         private void btnCancelar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-
-            if (Accion == "Edit")
-            {
-                HabilitarControles(false, true);
-                AplicarPrivilegios();
-                //CargarAsiento(_currentRow["Asiento"].ToString());
-                UpdateControlsFromDataRow(_currentRow);
-
-            }
-            else
-                this.Close();
-
+		    this.Close();
         }
 
         private void btnEliminar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -792,13 +781,16 @@ namespace ControlBancario
 			{
 				if (_currentRow["Asiento"].ToString() != "")
 				{
-					using (var scope = new TransactionScope())
+					if (MessageBox.Show("Esta seguro que desea anular el documento ? ", "Anulación de Documentos", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
 					{
-						MovimientosDAC.RevierteAsientoContable(_currentRow["Numero"].ToString(), Convert.ToInt32(_currentRow["IDCuentaBanco"]), Convert.ToInt32(_currentRow["IDTipo"]), Convert.ToInt32(_currentRow["IDSubTipo"]), sUsuario);
-						MessageBox.Show("El cheque y su transaccion contable se ha anulado");
-						CargarReloadData();
-						scope.Complete();
-						
+						using (var scope = new TransactionScope())
+						{
+							MovimientosDAC.RevierteAsientoContable(_currentRow["Numero"].ToString(), Convert.ToInt32(_currentRow["IDCuentaBanco"]), Convert.ToInt32(_currentRow["IDTipo"]), Convert.ToInt32(_currentRow["IDSubTipo"]), sUsuario);
+							MessageBox.Show("El Documento y su transaccion contable se ha anulado");
+							CargarReloadData();
+							scope.Complete();
+
+						}
 					}
 				}
 			}

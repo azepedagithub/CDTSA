@@ -53,21 +53,24 @@ namespace CG
             }
         }
 
-        private void btnRefrescar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
-        {
+		private void RefrescarDatos()
+		{
+			//Validar los datos
 
-            //Validar los datos
-            
-            int idCentro =  (this.slkupCentroCosto.EditValue== null) ? -1: Convert.ToInt32( this.slkupCentroCosto.EditValue);
+			int idCentro = (this.slkupCentroCosto.EditValue == null) ? -1 : Convert.ToInt32(this.slkupCentroCosto.EditValue);
 
-            DataSet DS = new DataSet();
-            
-            
+			DataSet DS = new DataSet();
+
+
 			DS = ConsultasDAC.GetCuentaByCentroCosto(idCentro, Convert.ToDateTime(this.dtDesde.EditValue), Convert.ToDateTime(this.dtHasta.EditValue));
 
-            dtDetallado = DS.Tables[0];
-            this.grid.DataSource = dtDetallado;
-            
+			dtDetallado = DS.Tables[0];
+			this.grid.DataSource = dtDetallado;
+		}
+
+        private void btnRefrescar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+			RefrescarDatos();
         }
 
      
@@ -146,6 +149,11 @@ namespace CG
                 this.txtTasaCambio.Text = TipoCambio.ToString();
             }
         }
+
+		private void slkupCentroCosto_EditValueChanged(object sender, EventArgs e)
+		{
+			RefrescarDatos();
+		}
      
     }
 }

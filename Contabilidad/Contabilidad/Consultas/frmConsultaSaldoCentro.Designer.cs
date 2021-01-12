@@ -334,6 +334,7 @@
 			this.slkupCuenta.Size = new System.Drawing.Size(629, 20);
 			this.slkupCuenta.StyleController = this.layoutControl1;
 			this.slkupCuenta.TabIndex = 4;
+			this.slkupCuenta.EditValueChanged += new System.EventHandler(this.slkupCuenta_EditValueChanged);
 			// 
 			// searchLookUpEdit1View
 			// 

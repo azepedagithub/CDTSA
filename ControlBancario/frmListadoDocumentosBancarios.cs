@@ -117,6 +117,23 @@ namespace ControlBancario
             if (index > -1)
             {
                 _currentRow = gridView1.GetDataRow(index);
+				if (_currentRow != null) {
+					if (_currentRow["IDEstado"].ToString() == "2")
+					{
+						this.btnAnular.Enabled = false;
+						this.btnAprobar.Enabled = false;
+					}
+					else  if (_currentRow["IDEstado"].ToString() == "1")
+					{
+						this.btnAnular.Enabled = true;
+						this.btnAprobar.Enabled = false;
+					}
+					else  if (_currentRow["IDEstado"].ToString() == "0")
+					{
+						this.btnAnular.Enabled = false;
+						this.btnAprobar.Enabled = true;
+					}
+				}
                 
             }
             else _currentRow = null;
@@ -137,15 +154,18 @@ namespace ControlBancario
 			//Preguntar por restricciones de anulacion
 			try
 			{
-				if (_currentRow["Asiento"].ToString() != "")
+				if (_currentRow["Asiento"].ToString() != "" && _currentRow["IDEstado"].ToString() != "2")
 				{
-					using (var scope = new TransactionScope())
+					if (MessageBox.Show("Esta seguro de anular el documento seleccionado ? ", "Anulación de Documentos", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
 					{
-						MovimientosDAC.RevierteAsientoContable(_currentRow["Numero"].ToString(), Convert.ToInt32(_currentRow["IDCuentaBanco"]), Convert.ToInt32(_currentRow["IDTipo"]), Convert.ToInt32(_currentRow["IDSubTipo"]), _sUsuario);
-						MessageBox.Show("El cheque y su transaccion contable se ha anulado");
-						PopulateGrid();
-						scope.Complete();
+						using (var scope = new TransactionScope())
+						{
+							MovimientosDAC.RevierteAsientoContable(_currentRow["Numero"].ToString(), Convert.ToInt32(_currentRow["IDCuentaBanco"]), Convert.ToInt32(_currentRow["IDTipo"]), Convert.ToInt32(_currentRow["IDSubTipo"]), _sUsuario);
+							MessageBox.Show("El Documento y su transaccion contable se ha anulado");
+							PopulateGrid();
+							scope.Complete();
 
+						}
 					}
 				}
 			}
@@ -332,6 +352,11 @@ namespace ControlBancario
 				view.Appearance.FocusedCell.BackColor = color;
 
 			}
+		}
+
+		private void btnCancelar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+		{
+			this.Close();
 		}
 
 		

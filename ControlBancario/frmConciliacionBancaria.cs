@@ -48,6 +48,7 @@ namespace ControlBancario
 
 		private void AplicarPrivilegios()
 		{
+			CargarPrivilegios();
 			if (UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosControlBancarioType.Conciliar, _dtSecurity))
 				this.btnConciliar.Enabled = true;
 			else
