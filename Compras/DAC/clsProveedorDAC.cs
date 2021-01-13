@@ -34,7 +34,7 @@ namespace CO.DAC
             DateTime FechaIngreso,String Contacto,String Telefono,int IDCategoria,int IDCondicionPago,decimal PorcDescuento,decimal PorcInteresMora, 
             string Email,string Direccion, bool Multimoneda, bool PagosCongelados, bool IsLocal, bool Bonifica, SqlTransaction    oTran ){
             long result = -1;
-            String strSQL = "dbo.invUpdateProveedor";
+            String strSQL = "dbo.coUpdateProveedor";
 
             SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
 
@@ -68,7 +68,6 @@ namespace CO.DAC
             {
                 result = (long)oCmd.Parameters["@IDProveedor"].Value;
             }
-            oCmd.ExecuteNonQuery();
 
             return result; 
         }

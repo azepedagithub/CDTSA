@@ -65,8 +65,8 @@ namespace CI.DAC
                 oAdaptador.InsertCommand.Parameters.Add("@CtaDevVentas", SqlDbType.BigInt).SourceColumn = "CtaDevVentas";
                 oAdaptador.InsertCommand.Parameters.Add("@CtrConsumo", SqlDbType.Int).SourceColumn = "CtrConsumo";
                 oAdaptador.InsertCommand.Parameters.Add("@CtaConsumo", SqlDbType.BigInt).SourceColumn = "CtaConsumo";
-				oAdaptador.InsertCommand.Parameters.Add("@CtrPrestamo", SqlDbType.Int).SourceColumn = "CtrPrestamo";
-				oAdaptador.InsertCommand.Parameters.Add("@CtaPrestamo", SqlDbType.BigInt).SourceColumn = "CtaPrestamo";
+				oAdaptador.InsertCommand.Parameters.Add("@CtrPrestamo", SqlDbType.Int).SourceColumn = "CtrPrestamos";
+				oAdaptador.InsertCommand.Parameters.Add("@CtaPrestamo", SqlDbType.BigInt).SourceColumn = "CtaPrestamos";
 
                 
 
@@ -97,8 +97,8 @@ namespace CI.DAC
                 oAdaptador.UpdateCommand.Parameters.Add("@CtaDevVentas", SqlDbType.BigInt).SourceColumn = "CtaDevVentas";
                 oAdaptador.UpdateCommand.Parameters.Add("@CtrConsumo", SqlDbType.Int).SourceColumn = "CtrConsumo";
                 oAdaptador.UpdateCommand.Parameters.Add("@CtaConsumo", SqlDbType.BigInt).SourceColumn = "CtaConsumo";
-				oAdaptador.UpdateCommand.Parameters.Add("@CtrPrestamo", SqlDbType.Int).SourceColumn = "CtrPrestamo";
-				oAdaptador.UpdateCommand.Parameters.Add("@CtaPrestamo", SqlDbType.BigInt).SourceColumn = "CtaPrestamo";
+				oAdaptador.UpdateCommand.Parameters.Add("@CtrPrestamo", SqlDbType.Int).SourceColumn = "CtrPrestamos";
+				oAdaptador.UpdateCommand.Parameters.Add("@CtaPrestamo", SqlDbType.BigInt).SourceColumn = "CtaPrestamos";
 
 
 
@@ -129,8 +129,8 @@ namespace CI.DAC
                 oAdaptador.DeleteCommand.Parameters.Add("@CtaDevVentas", SqlDbType.BigInt).SourceColumn = "CtaDevVentas";
                 oAdaptador.DeleteCommand.Parameters.Add("@CtrConsumo", SqlDbType.Int).SourceColumn = "CtrConsumo";
                 oAdaptador.DeleteCommand.Parameters.Add("@CtaConsumo", SqlDbType.BigInt).SourceColumn = "CtaConsumo";
-				oAdaptador.DeleteCommand.Parameters.Add("@CtrPrestamo", SqlDbType.Int).SourceColumn = "CtrPrestamo";
-				oAdaptador.DeleteCommand.Parameters.Add("@CtaPrestamo", SqlDbType.BigInt).SourceColumn = "CtaPrestamo";
+				oAdaptador.DeleteCommand.Parameters.Add("@CtrPrestamo", SqlDbType.Int).SourceColumn = "CtrPrestamos";
+				oAdaptador.DeleteCommand.Parameters.Add("@CtaPrestamo", SqlDbType.BigInt).SourceColumn = "CtaPrestamos";
                 return oAdaptador;
             }
             catch (Exception)
