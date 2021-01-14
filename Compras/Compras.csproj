@@ -192,6 +192,12 @@
     <Compile Include="frmListadoProveedores.Designer.cs">
       <DependentUpon>frmListadoProveedores.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmListadoRetenciones.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListadoRetenciones.Designer.cs">
+      <DependentUpon>frmListadoRetenciones.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmListdoSolicitudCompra.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -289,6 +295,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmListadoProveedores.resx">
       <DependentUpon>frmListadoProveedores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListadoRetenciones.resx">
+      <DependentUpon>frmListadoRetenciones.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmListdoSolicitudCompra.resx">
       <DependentUpon>frmListdoSolicitudCompra.cs</DependentUpon>

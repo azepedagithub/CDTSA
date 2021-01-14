@@ -849,6 +849,9 @@ namespace MainMenu
 					TreeListNode nodeCategoriaProveedor = tl.AppendNode(new object[] { "Categoria Proveedor" }, -1, 11, 11, 11);
 					nodeCategoriaProveedor.Tag = "frmCategoriaProveedor";
                    
+					TreeListNode nodeRetenciones = tl.AppendNode(new object[] { "Catálogo de Retenciones" }, -1, 11, 11, 11);
+					nodeRetenciones.Tag = "frmListadoRetenciones";
+                   
                     break;
 
                 case "treeListFactura":
@@ -1193,33 +1196,41 @@ namespace MainMenu
             node = ((TreeList)sender).FocusedNode;
             if (node.Tag == null)
                 return;
-            switch (node.Tag.ToString())
-            {
-                case "frmDocumento":
-                    CP.frmDocumento ofrmDoc = new CP.frmDocumento();
-                    ofrmDoc.MdiParent = this;
-                    ofrmDoc.WindowState = FormWindowState.Maximized;
-                    ShowPagesRibbonMan(false);
-                    ofrmDoc.Show();
-                    break;
-								case "frmCategoriaProveedor":
-										CP.frmCategoriaProveedor ofrmCategoriaProveedor = new CP.frmCategoriaProveedor();
-										ofrmCategoriaProveedor.MdiParent = this;
-										ofrmCategoriaProveedor.WindowState = FormWindowState.Maximized;
-										ShowPagesRibbonMan(false);
-										ofrmCategoriaProveedor.Show();
-										break;
+			switch (node.Tag.ToString())
+			{
+				case "frmDocumento":
+					CP.frmDocumento ofrmDoc = new CP.frmDocumento();
+					ofrmDoc.MdiParent = this;
+					ofrmDoc.WindowState = FormWindowState.Maximized;
+					ShowPagesRibbonMan(false);
+					ofrmDoc.Show();
+					break;
+				case "frmCategoriaProveedor":
+					CP.frmCategoriaProveedor ofrmCategoriaProveedor = new CP.frmCategoriaProveedor();
+					ofrmCategoriaProveedor.MdiParent = this;
+					ofrmCategoriaProveedor.WindowState = FormWindowState.Maximized;
+					ShowPagesRibbonMan(false);
+					ofrmCategoriaProveedor.Show();
+					break;
 
-								case "frmCondicionPago":
-										CO.frmCondicionesDePago ofrmCondicionPago = new CO.frmCondicionesDePago();
-										ofrmCondicionPago.MdiParent = this;
-										ofrmCondicionPago.WindowState = FormWindowState.Maximized;
-										ShowPagesRibbonMan(false);
-										ofrmCondicionPago.Show();
-										break;
+				case "frmCondicionPago":
+					CO.frmCondicionesDePago ofrmCondicionPago = new CO.frmCondicionesDePago();
+					ofrmCondicionPago.MdiParent = this;
+					ofrmCondicionPago.WindowState = FormWindowState.Maximized;
+					ShowPagesRibbonMan(false);
+					ofrmCondicionPago.Show();
 
-               
-            }
+					break;
+				case "frmListadoRetenciones":
+					CO.frmListadoRetenciones ofrmRetenciones = new CO.frmListadoRetenciones();
+					ofrmRetenciones.MdiParent = this;
+					ofrmRetenciones.WindowState = FormWindowState.Maximized;
+					ShowPagesRibbonMan(false);
+					ofrmRetenciones.Show();
+					break;
+
+
+			}
 
         }
 
