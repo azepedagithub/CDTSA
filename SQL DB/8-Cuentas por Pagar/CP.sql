@@ -3273,3 +3273,97 @@ where 1=2
 
 GO
 
+
+
+
+--################################################### CAMBIOS ALFONZO ############
+
+Create Table dbo.cppRetencion (IDRetencion int not null, Descr nvarchar (250), Porcentaje decimal (28,2) default 0, 
+AplicaTotalFactura bit default 0, 
+AplicaSubTotal bit default 0, 
+AplicaSubTotalMenosDesc bit default 0,
+IDCentroRet int, IDCuentaRet bigint, MontoMinimo decimal(28,2) default 0, Activo bit default 1  )
+go
+
+alter table dbo.cppRetencion add constraint pkRetencion primary key (IDRetencion)
+go
+
+alter table dbo.cppRetencion add constraint chkAplica check ((cast(AplicaTotalFactura as int) + cast(AplicaSubTotal as int) + cast(AplicaSubTotalMenosDesc as int ) = 1 ))
+go
+
+alter table dbo.cppRetencion add constraint fkRetCentro foreign key (IDCentroRet) references dbo.cntCentroCosto (IDCentro)
+go
+alter table dbo.cppRetencion add constraint fkRetCuenta foreign key (IDCuentaRet) references dbo.cntCuenta (IDCuenta)
+go
+
+Create table dbo.cppProveedorRetencion (IDProveedor int not null, IDRetencion int not null)
+go
+
+alter table dbo.cppProveedorRetencion add constraint pkProvRet primary key (IDProveedor, IDRetencion)
+go
+
+
+
+
+CREATE PROCEDURE dbo.cppUpdateRetencion @Operacion nvarchar(1), @IDRetencion int, @Descr nvarchar(250),@Porcentaje decimal(28,2),@AplicaTotalFactura bit, 
+				@AplicaSubTotal bit, @AplicaSubTotalMenosDesc bit,@IDCentroRet int, @IDCuentaRet bigint ,
+				@MontoMinimo decimal(28,2),@Activo bit
+AS
+IF (@Operacion = 'I')
+BEGIN
+	SET @IDRetencion = (SELECT ISNULL(MAX(IDRetencion),0) + 1 FROM dbo.cppRetencion)
+	INSERT INTO dbo.cppRetencion( IDRetencion ,Descr ,Porcentaje ,AplicaTotalFactura ,AplicaSubTotal ,AplicaSubTotalMenosDesc ,IDCentroRet ,IDCuentaRet ,MontoMinimo ,Activo)
+	VALUES  (@IDRetencion, @Descr, @Porcentaje, @AplicaTotalFactura,@AplicaSubTotal,@AplicaSubTotalMenosDesc,@IDCentroRet,@IDCuentaRet,@MontoMinimo,@Activo)
+END				
+IF (@Operacion='U')
+BEGIN	
+	UPDATE dbo.cppRetencion SET Descr = @Descr, Porcentaje = @Porcentaje, AplicaTotalFactura = @AplicaTotalFactura,AplicaSubTotal = @AplicaSubTotal,AplicaSubTotalMenosDesc = @AplicaSubTotalMenosDesc,
+	IDCentroRet = @IDCentroRet,IDCuentaRet = @IDCuentaRet,MontoMinimo = @MontoMinimo, Activo = @Activo
+	WHERE IDRetencion = @IDRetencion
+END	
+IF (@Operacion ='D')
+BEGIN	
+	DELETE FROM dbo.cppRetencion WHERE IDRetencion = @IDRetencion
+END
+
+GO
+
+CREATE PROCEDURE dbo.cppGetRetencion @IDRetencion INT, @Descr NVARCHAR(20)
+AS 
+SELECT  IDRetencion ,
+        Descr ,
+        Porcentaje ,
+        AplicaTotalFactura ,
+        AplicaSubTotal ,
+        AplicaSubTotalMenosDesc ,
+        IDCentroRet ,
+        IDCuentaRet ,
+        MontoMinimo ,
+        Activo  FROM dbo.cppRetencion WHERE (IDRetencion=@IDRetencion OR @IDRetencion=-1)
+AND (Descr LIKE '$' + @Descr +'$' OR @Descr='*')
+	
+	
+GO 
+
+CREATE  PROCEDURE dbo.cppUpdateProveedorRetencion @Operacion NVARCHAR(1), @IDProveedor INT , @IDRetencion INT
+AS 
+IF (@Operacion='I')
+BEGIN
+	INSERT INTO dbo.cppProveedorRetencion( IDProveedor, IDRetencion )
+	VALUES  ( @IDProveedor,@IDRetencion )
+END
+IF (@Operacion='D')
+BEGIN
+	DELETE FROM dbo.cppProveedorRetencion WHERE IDProveedor=@IDProveedor AND IDRetencion=@IDRetencion
+END
+
+GO
+
+
+CREATE PROCEDURE dbo.cppGetProveedorRetencion @IDProveedor INT ,@IDRetencion INT
+AS
+SELECT A.IDProveedor, R.IDRetencion,R.Descr ,R.Porcentaje,R.MontoMinimo,R.AplicaSubTotal,R.AplicaSubTotalMenosDesc,R.AplicaTotalFactura FROM dbo.cppProveedorRetencion A
+INNER JOIN dbo.cppRetencion R ON  A.IDRetencion = R.IDRetencion
+WHERE (IDProveedor = @IDProveedor OR @IDProveedor=-1) AND (A.IDRetencion = @IDRetencion OR @IDRetencion = -1)
+
+GO

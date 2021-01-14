@@ -117,6 +117,7 @@
     <Compile Include="DAC\clsObligacionDetalleDAC.cs" />
     <Compile Include="DAC\clsObligacionProveedorDAC.cs" />
     <Compile Include="DAC\clsParametrosDAC.cs" />
+    <Compile Include="DAC\clsProveedorRetencion.cs" />
     <Compile Include="DAC\clsRecepcionMercaderiaDAC.cs" />
     <Compile Include="DAC\clsCondicionPagoDAC.cs" />
     <Compile Include="DAC\clsEmbarqueDAC.cs" />
@@ -128,6 +129,7 @@
     <Compile Include="DAC\clsDetalleSolicitudCompraDAC.cs" />
     <Compile Include="DAC\clsOrdenCompraDetalleDAC.cs" />
     <Compile Include="DAC\clsProveedorDAC.cs" />
+    <Compile Include="DAC\clsRetencionesDAC.cs" />
     <Compile Include="DAC\clsSolicitudCompraDAC.cs" />
     <Compile Include="DAC\clsUtilDAC.cs" />
     <Compile Include="frmCondicionesDePago.cs">
