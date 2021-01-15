@@ -99,7 +99,7 @@ namespace CO
         private void InicializarNuevoElement()
         {
 			DataTable dtBodegaDefault = clsUtilDAC.GetParametroCompra("IDBodegaDefault").Tables[0];
-			IDBodegaDefault = (dtBodegaDefault.Rows[0][0] != null || dtBodegaDefault.Rows[0][0].ToString() != "") ? Convert.ToInt32(dtBodegaDefault.Rows[0][0]) : -1;
+			IDBodegaDefault = (dtBodegaDefault.Rows[0][0] != DBNull.Value || dtBodegaDefault.Rows[0][0].ToString() != "" ) ? Convert.ToInt32(dtBodegaDefault.Rows[0][0]) : -1;
 
             this.txtOrdenCompra.Text = "--";
             this.dtpFechaOrden.EditValue = DateTime.Now;
@@ -264,7 +264,7 @@ namespace CO
             //Estado Inicial
             if  (IDEstado == 0)
             {
-                this.btnConfirmar.Enabled = true;
+                this.btnConfirmar.Enabled = false;
                 this.btnDesconfirmar.Enabled = false;
                 this.btnAnular.Enabled = false;
                 this.btnEmbarque.Enabled = false;
@@ -1228,15 +1228,23 @@ namespace CO
 
         private void btnConfirmar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            ConnectionManager.BeginTran();
-            clsOrdenCompraDAC.ConfirmarOrdenCompra(this.IDOrdenCompra, ConnectionManager.Tran);
-            dtOrdenCompra.Rows[0]["IDEstado"] = 1;
-			dtOrdenCompra.Rows[0]["DescrEstado"] = "CONFIRMADA";
-			this.txtEstado.Text = "CONFIRMADA";
-            ConnectionManager.CommitTran();
-            this.IDEstado = 1;
-            HabilitarBotones(this.dtOrdenCompra);
-            MessageBox.Show("La Orden ha sido Confirmada correctamente");
+			try
+			{
+				ConnectionManager.BeginTran();
+				clsOrdenCompraDAC.ConfirmarOrdenCompra(this.IDOrdenCompra, ConnectionManager.Tran);
+				dtOrdenCompra.Rows[0]["IDEstado"] = 1;
+				dtOrdenCompra.Rows[0]["DescrEstado"] = "CONFIRMADA";
+				this.txtEstado.Text = "CONFIRMADA";
+				ConnectionManager.CommitTran();
+				this.IDEstado = 1;
+				HabilitarBotones(this.dtOrdenCompra);
+				MessageBox.Show("La Orden ha sido Confirmada correctamente");
+			}
+			catch (Exception ex) {
+				if (ConnectionManager.Tran != null)
+					ConnectionManager.RollBackTran();
+				MessageBox.Show("Ha ocurrido un error, " + ex.Message);
+			}
         }
 
         private void btnDesconfirmar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)

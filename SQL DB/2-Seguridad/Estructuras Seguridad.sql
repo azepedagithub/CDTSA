@@ -1,4 +1,4 @@
-secGetUsuarioRole--Estructura de Privilegios
+--Estructura de Privilegios
 
 create TABLE [dbo].[secUSUARIO](
 	[USUARIO] [nvarchar](20) NOT NULL,
