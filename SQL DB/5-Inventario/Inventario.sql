@@ -34,7 +34,7 @@ ALTER TABLE [dbo].[invClasificacion] CHECK CONSTRAINT [fkinvClasificacion]
 GO
 
 CREATE TABLE [dbo].[invUnidadMedida](
-	[IDUnidad] [int] IDENTITY(1,1) NOT NULL,
+	[IDUnidad] [int] NOT NULL,
 	[Descr] [nvarchar](250) NULL,
 	[Activo] [bit] NOT NULL DEFAULT 1,
  CONSTRAINT [pkinvUnidadMedida] PRIMARY KEY CLUSTERED 
@@ -954,12 +954,12 @@ GO
 INSERT INTO dbo.globalImpuesto(Descr,Porc,Activo)
 VALUES ('IGV',15,1)
 
---Unidad de Medida
-INSERT INTO dbo.invUnidadMedida
-        ( Descr, Activo )
-VALUES  ( N'UND', -- Descr - nvarchar(250)
-          1  -- Activo - bit
-          )
+----Unidad de Medida
+--INSERT INTO dbo.invUnidadMedida
+--        ( IDUnidad,Descr, Activo )
+--VALUES  (1, N'UND', -- Descr - nvarchar(250)
+--          1  -- Activo - bit
+--          )
 
 GO
 /* INSERT DE CLASIFICACIONES */
@@ -1249,9 +1249,10 @@ as
 set nocount on 
 
 if upper(@Operacion) = 'I'
-begin
-	INSERT INTO dbo.invUnidadMedida( Descr, Activo )
-	VALUES (@Descr,@Activo)
+BEGIN
+	SET @IDUnidad  = (SELECT ISNULL(MAX(IDUnidad),0) + 1  FROM dbo.invUnidadMedida)
+	INSERT INTO dbo.invUnidadMedida(IDUnidad, Descr, Activo )
+	VALUES (@IDUnidad,@Descr,@Activo)
 end
 
 if upper(@Operacion) = 'D'
