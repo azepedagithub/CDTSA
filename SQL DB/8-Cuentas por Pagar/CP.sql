@@ -3305,7 +3305,7 @@ go
 
 
 
-CREATE PROCEDURE dbo.cppUpdateRetencion @Operacion nvarchar(1), @IDRetencion int, @Descr nvarchar(250),@Porcentaje decimal(28,2),@AplicaTotalFactura bit, 
+CREATE PROCEDURE dbo.cppUpdateRetencion @Operacion nvarchar(1), @IDRetencion INT OUTPUT, @Descr nvarchar(250),@Porcentaje decimal(28,2),@AplicaTotalFactura bit, 
 				@AplicaSubTotal bit, @AplicaSubTotalMenosDesc bit,@IDCentroRet int, @IDCuentaRet bigint ,
 				@MontoMinimo decimal(28,2),@Activo bit
 AS
@@ -3360,10 +3360,47 @@ END
 GO
 
 
-CREATE PROCEDURE dbo.cppGetProveedorRetencion @IDProveedor INT ,@IDRetencion INT
+CREATE  PROCEDURE dbo.cppGetProveedorRetencion @IDProveedor INT ,@IDRetencion INT
 AS
 SELECT A.IDProveedor, R.IDRetencion,R.Descr ,R.Porcentaje,R.MontoMinimo,R.AplicaSubTotal,R.AplicaSubTotalMenosDesc,R.AplicaTotalFactura FROM dbo.cppProveedorRetencion A
 INNER JOIN dbo.cppRetencion R ON  A.IDRetencion = R.IDRetencion
-WHERE (IDProveedor = @IDProveedor OR @IDProveedor=-1) AND (A.IDRetencion = @IDRetencion OR @IDRetencion = -1)
+WHERE (IDProveedor = @IDProveedor OR @IDProveedor=-1) AND (A.IDRetencion = @IDRetencion OR @IDRetencion = -1) AND R.Activo=1
 
 GO
+
+
+CREATE PROCEDURE dbo.cppGetRetencionesNoAsociadas @IDProveedor INT
+AS 
+SELECT  A.IDRetencion ,
+        A.Descr ,
+        A.Porcentaje ,
+        A.AplicaTotalFactura ,
+        A.AplicaSubTotal ,
+        A.AplicaSubTotalMenosDesc ,
+        A.IDCentroRet ,
+        A.IDCuentaRet ,
+        A.MontoMinimo ,
+        A.Activo  FROM dbo.cppRetencion A
+        LEFT JOIN (SELECT *  FROM  dbo.cppProveedorRetencion  WHERE IDProveedor=@IDProveedor) B ON A.IDRetencion = B.IDRetencion 
+        WHERE B.IDRetencion IS NULL  
+        
+GO
+
+
+SELECT *  FROM dbo.cppProveedorRetencion
+SELECT * FROM dbo.cppRetencion
+
+
+SELECT  A.IDRetencion ,
+        A.Descr ,
+        A.Porcentaje ,
+        A.AplicaTotalFactura ,
+        A.AplicaSubTotal ,
+        A.AplicaSubTotalMenosDesc ,
+        A.IDCentroRet ,
+        A.IDCuentaRet ,
+        A.MontoMinimo ,
+        A.Activo  FROM dbo.cppRetencion A
+        LEFT JOIN dbo.cppProveedorRetencion B ON A.IDRetencion = B.IDRetencion
+        WHERE B.IDRetencion IS NULL  AND B.IDProveedor = 1
+        

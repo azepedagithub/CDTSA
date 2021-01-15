@@ -110,7 +110,8 @@ namespace CO
 
         private void ClearControls()
         {
-            this.txtNombreProveedor.EditValue = null;
+			this.txtIDProveedor.EditValue = null;
+			this.txtNombreProveedor.EditValue = null;
             this.chkActivo.Checked = false;
             this.chkBonifica.Checked = false;   
             this.dtpFechaIngreso.EditValue = null;
@@ -362,6 +363,13 @@ namespace CO
                 MessageBox.Show(ex.Message);
             }
         }
+
+		private void btnRetenciones_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+		{
+			frmRetencionProveedor ofrmRetenciones = new frmRetencionProveedor((int)IDProveedor);
+			ofrmRetenciones.ShowDialog();
+
+		}
 
 		
     }

@@ -36,6 +36,7 @@
 			this.btnGuardar = new DevExpress.XtraBars.BarButtonItem();
 			this.btnCancelar = new DevExpress.XtraBars.BarButtonItem();
 			this.btnEliminar = new DevExpress.XtraBars.BarButtonItem();
+			this.btnRetenciones = new DevExpress.XtraBars.BarButtonItem();
 			this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
@@ -223,9 +224,10 @@
             this.btnEditar,
             this.btnGuardar,
             this.btnCancelar,
-            this.btnEliminar});
+            this.btnEliminar,
+            this.btnRetenciones});
 			this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-			this.ribbonControl1.MaxItemId = 1;
+			this.ribbonControl1.MaxItemId = 2;
 			this.ribbonControl1.Name = "ribbonControl1";
 			this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -272,6 +274,15 @@
 			this.btnEliminar.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnEliminar.LargeGlyph")));
 			this.btnEliminar.Name = "btnEliminar";
 			// 
+			// btnRetenciones
+			// 
+			this.btnRetenciones.Caption = "Retenciones";
+			this.btnRetenciones.Glyph = ((System.Drawing.Image)(resources.GetObject("btnRetenciones.Glyph")));
+			this.btnRetenciones.Id = 1;
+			this.btnRetenciones.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnRetenciones.LargeGlyph")));
+			this.btnRetenciones.Name = "btnRetenciones";
+			this.btnRetenciones.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnRetenciones_ItemClick);
+			// 
 			// ribbonPage1
 			// 
 			this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -292,6 +303,7 @@
 			this.ribbonPageGroup1.ItemLinks.Add(this.btnGuardar);
 			this.ribbonPageGroup1.ItemLinks.Add(this.btnCancelar);
 			this.ribbonPageGroup1.ItemLinks.Add(this.btnEliminar);
+			this.ribbonPageGroup1.ItemLinks.Add(this.btnRetenciones);
 			this.ribbonPageGroup1.Name = "ribbonPageGroup1";
 			// 
 			// layoutControl1
@@ -1328,5 +1340,6 @@
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem17;
         private DevExpress.XtraEditors.CheckEdit chkBonifica;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem9;
+		private DevExpress.XtraBars.BarButtonItem btnRetenciones;
     }
 }

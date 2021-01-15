@@ -43,6 +43,8 @@ namespace CO.DAC
 			return result;
 
 		}
+
+
 		public static DataSet Get(int IDRetencion, String Descr)
 		{
 			String strSQL = "dbo.cppGetRetencion";

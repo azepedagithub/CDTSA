@@ -9,7 +9,7 @@ using Security;
 
 namespace CO.DAC
 {
-	class clsProveedorRetencion
+	class clsProveedorRetencionDAC
 	{
 		public static long InsertUpdate(string Operacion, int IDProveedor, int IDRetencion, SqlTransaction tran)
 		{
@@ -19,7 +19,7 @@ namespace CO.DAC
 			SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
 
 			oCmd.Parameters.Add(new SqlParameter("@Operacion", Operacion));
-			oCmd.Parameters.Add(new SqlParameter("@IDProveedor", IDRetencion));
+			oCmd.Parameters.Add(new SqlParameter("@IDProveedor", IDProveedor));
 			oCmd.Parameters.Add(new SqlParameter("@IDRetencion", IDRetencion));
 			
 			oCmd.CommandType = CommandType.StoredProcedure;
@@ -29,6 +29,8 @@ namespace CO.DAC
 			return result;
 
 		}
+
+
 		public static DataSet Get(int IDProveedor, int IDRetencion)
 		{
 			String strSQL = "dbo.cppGetProveedorRetencion";
@@ -39,6 +41,22 @@ namespace CO.DAC
 			oCmd.Parameters.Add(new SqlParameter("@IDProveedor", IDProveedor));
 			oCmd.Parameters.Add(new SqlParameter("@IDRetencion", IDRetencion));
 			 
+
+			SqlDataAdapter oAdap = new SqlDataAdapter(oCmd);
+			DataSet DS = new DataSet();
+
+			oAdap.Fill(DS, "Data");
+			return DS;
+		}
+
+		public static DataSet GetRetencionesNoAsociadas(int IDProveedor)
+		{
+			String strSQL = "dbo.cppGetRetencionesNoAsociadas";
+
+			SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
+
+			oCmd.CommandType = CommandType.StoredProcedure;
+			oCmd.Parameters.Add(new SqlParameter("@IDProveedor", IDProveedor));
 
 			SqlDataAdapter oAdap = new SqlDataAdapter(oCmd);
 			DataSet DS = new DataSet();

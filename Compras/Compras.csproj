@@ -117,7 +117,7 @@
     <Compile Include="DAC\clsObligacionDetalleDAC.cs" />
     <Compile Include="DAC\clsObligacionProveedorDAC.cs" />
     <Compile Include="DAC\clsParametrosDAC.cs" />
-    <Compile Include="DAC\clsProveedorRetencion.cs" />
+    <Compile Include="DAC\clsProveedorRetencionDAC.cs" />
     <Compile Include="DAC\clsRecepcionMercaderiaDAC.cs" />
     <Compile Include="DAC\clsCondicionPagoDAC.cs" />
     <Compile Include="DAC\clsEmbarqueDAC.cs" />
@@ -132,6 +132,12 @@
     <Compile Include="DAC\clsRetencionesDAC.cs" />
     <Compile Include="DAC\clsSolicitudCompraDAC.cs" />
     <Compile Include="DAC\clsUtilDAC.cs" />
+    <Compile Include="frmAsociarRetencionProveedor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAsociarRetencionProveedor.Designer.cs">
+      <DependentUpon>frmAsociarRetencionProveedor.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmCondicionesDePago.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -234,6 +240,12 @@
     <Compile Include="frmRecepcionMercaderia.Designer.cs">
       <DependentUpon>frmRecepcionMercaderia.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmRetencionProveedor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmRetencionProveedor.Designer.cs">
+      <DependentUpon>frmRetencionProveedor.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmSolicitudCompra.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -266,6 +278,9 @@
     <Compile Include="Reportes\rptSubRptGastos.Designer.cs">
       <DependentUpon>rptSubRptGastos.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="frmAsociarRetencionProveedor.resx">
+      <DependentUpon>frmAsociarRetencionProveedor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmCondicionesDePago.resx">
       <DependentUpon>frmCondicionesDePago.cs</DependentUpon>
     </EmbeddedResource>
@@ -316,6 +331,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmRecepcionMercaderia.resx">
       <DependentUpon>frmRecepcionMercaderia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmRetencionProveedor.resx">
+      <DependentUpon>frmRetencionProveedor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmSolicitudCompra.resx">
       <DependentUpon>frmSolicitudCompra.cs</DependentUpon>
