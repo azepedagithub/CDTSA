@@ -1839,7 +1839,7 @@ Create Table dbo.fafParametros ( [IDParametros] [int] IDENTITY(1,1) NOT NULL,
 	[TipoCambioFact] [nvarchar](20) NULL,
 	[TipoCambioCont] [nvarchar](20) NULL,
 	[NumeroLineasFact] [int] NULL,
-	[IntegracionCont] [bit] NULL,
+	[IntegracionCont] [bit] NULL, 
 	[AutorizaPrecioPorFactura] [bit] NULL,
 	[IDPaquete] [int] NULL,
 	[CtrImpuesto] [int] NULL,
@@ -1853,7 +1853,8 @@ Create Table dbo.fafParametros ( [IDParametros] [int] IDENTITY(1,1) NOT NULL,
 	[TipoEntregaDefault] [int] NULL,
 	[EditaPrecioPedidoenFactura] [bit] NULL,
 	[EditaCantidadPedidoenFactura] [bit] NULL,
-	[DigitosDecimales] [int] NULL
+	[DigitosDecimales] [int] NULL,
+	[IDPaqueteDevolucion] [int] NULL
 ) 
 go
 
@@ -1870,6 +1871,9 @@ alter table dbo.fafParametros add constraint fkglobalestcfac foreign key (TipoCa
 go
 
 alter table dbo.fafParametros add constraint fkglobalestcont foreign key (TipoCambioCont) references dbo.globalTipoCambio (IDTipoCambio)
+go
+
+alter table dbo.fafParametros add constraint fkglobalestDev foreign key (IDPaqueteDevolucion) references dbo.invPaquete (IDPaquete)
 go
 
 --alter table dbo.fafParametros add constraint fkparamCtaflet foreign key (IDCuentaFlete) references dbo.cntCuenta (IDCuenta)
