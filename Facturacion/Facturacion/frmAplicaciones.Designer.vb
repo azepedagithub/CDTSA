@@ -34,33 +34,33 @@ Partial Class frmAplicaciones
         Me.Vencimiento = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.Saldo = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.DiasVenc = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.Cheque = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.chkPosF = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.FechaChk = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.FechaCobro = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.Descuento = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.Retencion = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.Abono = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.LayoutControlGroup5 = New DevExpress.XtraLayout.LayoutControlGroup()
         Me.LayoutControlGroup6 = New DevExpress.XtraLayout.LayoutControlGroup()
         Me.LayoutControlItem18 = New DevExpress.XtraLayout.LayoutControlItem()
-        Me.Retencion = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.Descuento = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.FechaChk = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.chkPosF = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.Cheque = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.FechaCobro = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.LayoutControl1 = New DevExpress.XtraLayout.LayoutControl()
-        Me.LayoutControlGroup1 = New DevExpress.XtraLayout.LayoutControlGroup()
-        Me.TextEdit1 = New DevExpress.XtraEditors.TextEdit()
-        Me.SearchLookUpEdit1 = New DevExpress.XtraEditors.SearchLookUpEdit()
-        Me.GridView1 = New DevExpress.XtraGrid.Views.Grid.GridView()
-        Me.TextEdit2 = New DevExpress.XtraEditors.TextEdit()
-        Me.TextEdit3 = New DevExpress.XtraEditors.TextEdit()
-        Me.DateEdit1 = New DevExpress.XtraEditors.DateEdit()
-        Me.TextEdit4 = New DevExpress.XtraEditors.TextEdit()
-        Me.TextEdit5 = New DevExpress.XtraEditors.TextEdit()
-        Me.SimpleButton2 = New DevExpress.XtraEditors.SimpleButton()
-        Me.RadioGroup1 = New DevExpress.XtraEditors.RadioGroup()
         Me.SearchLookUpEdit2 = New DevExpress.XtraEditors.SearchLookUpEdit()
         Me.GridView2 = New DevExpress.XtraGrid.Views.Grid.GridView()
+        Me.TextEdit1 = New DevExpress.XtraEditors.TextEdit()
+        Me.TextEdit2 = New DevExpress.XtraEditors.TextEdit()
         Me.TextEdit6 = New DevExpress.XtraEditors.TextEdit()
+        Me.SimpleButton2 = New DevExpress.XtraEditors.SimpleButton()
         Me.SearchLookUpEdit3 = New DevExpress.XtraEditors.SearchLookUpEdit()
         Me.GridView3 = New DevExpress.XtraGrid.Views.Grid.GridView()
+        Me.SearchLookUpEdit1 = New DevExpress.XtraEditors.SearchLookUpEdit()
+        Me.GridView1 = New DevExpress.XtraGrid.Views.Grid.GridView()
+        Me.DateEdit1 = New DevExpress.XtraEditors.DateEdit()
+        Me.TextEdit5 = New DevExpress.XtraEditors.TextEdit()
+        Me.RadioGroup1 = New DevExpress.XtraEditors.RadioGroup()
+        Me.TextEdit4 = New DevExpress.XtraEditors.TextEdit()
+        Me.TextEdit3 = New DevExpress.XtraEditors.TextEdit()
+        Me.LayoutControlGroup1 = New DevExpress.XtraLayout.LayoutControlGroup()
         Me.LayoutControlGroup4 = New DevExpress.XtraLayout.LayoutControlGroup()
         Me.LayoutControlItem8 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem17 = New DevExpress.XtraLayout.LayoutControlItem()
@@ -73,9 +73,9 @@ Partial Class frmAplicaciones
         Me.LayoutControlItem4 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem6 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem3 = New DevExpress.XtraLayout.LayoutControlItem()
-        Me.LayoutControlItem5 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem7 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.EmptySpaceItem1 = New DevExpress.XtraLayout.EmptySpaceItem()
+        Me.LayoutControlItem5 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.EmptySpaceItem3 = New DevExpress.XtraLayout.EmptySpaceItem()
         Me.SimpleButton3 = New DevExpress.XtraEditors.SimpleButton()
         CType(Me.LayoutControl3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -87,22 +87,22 @@ Partial Class frmAplicaciones
         CType(Me.LayoutControlItem18, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.LayoutControl1.SuspendLayout()
-        CType(Me.LayoutControlGroup1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.TextEdit1.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.SearchLookUpEdit1.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.GridView1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.TextEdit2.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.TextEdit3.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DateEdit1.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DateEdit1.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.TextEdit4.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.TextEdit5.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RadioGroup1.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SearchLookUpEdit2.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridView2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.TextEdit1.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.TextEdit2.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TextEdit6.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SearchLookUpEdit3.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridView3, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.SearchLookUpEdit1.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DateEdit1.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DateEdit1.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.TextEdit5.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RadioGroup1.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.TextEdit4.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.TextEdit3.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.LayoutControlGroup1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlGroup4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem8, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem17, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -115,9 +115,9 @@ Partial Class frmAplicaciones
         CType(Me.LayoutControlItem4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem6, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem3, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.LayoutControlItem5, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem7, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.EmptySpaceItem1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.LayoutControlItem5, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.EmptySpaceItem3, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -142,7 +142,7 @@ Partial Class frmAplicaciones
         'LayoutControl3
         '
         Me.LayoutControl3.Controls.Add(Me.datagrid)
-        Me.LayoutControl3.Location = New System.Drawing.Point(3, 225)
+        Me.LayoutControl3.Location = New System.Drawing.Point(14, 225)
         Me.LayoutControl3.Name = "LayoutControl3"
         Me.LayoutControl3.Root = Me.LayoutControlGroup5
         Me.LayoutControl3.Size = New System.Drawing.Size(928, 325)
@@ -227,6 +227,58 @@ Partial Class frmAplicaciones
         Me.DiasVenc.VisibleIndex = 4
         Me.DiasVenc.Width = 55
         '
+        'Cheque
+        '
+        Me.Cheque.Caption = "Cheque"
+        Me.Cheque.Name = "Cheque"
+        Me.Cheque.Visible = True
+        Me.Cheque.VisibleIndex = 6
+        Me.Cheque.Width = 61
+        '
+        'chkPosF
+        '
+        Me.chkPosF.Caption = "ChequePos"
+        Me.chkPosF.Name = "chkPosF"
+        Me.chkPosF.Visible = True
+        Me.chkPosF.VisibleIndex = 7
+        Me.chkPosF.Width = 67
+        '
+        'FechaChk
+        '
+        Me.FechaChk.Caption = "FechaChk"
+        Me.FechaChk.DisplayFormat.FormatString = "d"
+        Me.FechaChk.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime
+        Me.FechaChk.Name = "FechaChk"
+        Me.FechaChk.Visible = True
+        Me.FechaChk.VisibleIndex = 8
+        Me.FechaChk.Width = 62
+        '
+        'FechaCobro
+        '
+        Me.FechaCobro.Caption = "FechaCobro"
+        Me.FechaCobro.DisplayFormat.FormatString = "d"
+        Me.FechaCobro.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime
+        Me.FechaCobro.Name = "FechaCobro"
+        Me.FechaCobro.Visible = True
+        Me.FechaCobro.VisibleIndex = 9
+        Me.FechaCobro.Width = 68
+        '
+        'Descuento
+        '
+        Me.Descuento.Caption = "Descuento"
+        Me.Descuento.Name = "Descuento"
+        Me.Descuento.Visible = True
+        Me.Descuento.VisibleIndex = 10
+        Me.Descuento.Width = 60
+        '
+        'Retencion
+        '
+        Me.Retencion.Caption = "Retencion"
+        Me.Retencion.Name = "Retencion"
+        Me.Retencion.Visible = True
+        Me.Retencion.VisibleIndex = 11
+        Me.Retencion.Width = 64
+        '
         'Abono
         '
         Me.Abono.AppearanceCell.Options.UseTextOptions = True
@@ -267,58 +319,6 @@ Partial Class frmAplicaciones
         Me.LayoutControlItem18.TextSize = New System.Drawing.Size(0, 0)
         Me.LayoutControlItem18.TextVisible = False
         '
-        'Retencion
-        '
-        Me.Retencion.Caption = "Retencion"
-        Me.Retencion.Name = "Retencion"
-        Me.Retencion.Visible = True
-        Me.Retencion.VisibleIndex = 11
-        Me.Retencion.Width = 64
-        '
-        'Descuento
-        '
-        Me.Descuento.Caption = "Descuento"
-        Me.Descuento.Name = "Descuento"
-        Me.Descuento.Visible = True
-        Me.Descuento.VisibleIndex = 10
-        Me.Descuento.Width = 60
-        '
-        'FechaChk
-        '
-        Me.FechaChk.Caption = "FechaChk"
-        Me.FechaChk.DisplayFormat.FormatString = "d"
-        Me.FechaChk.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime
-        Me.FechaChk.Name = "FechaChk"
-        Me.FechaChk.Visible = True
-        Me.FechaChk.VisibleIndex = 8
-        Me.FechaChk.Width = 62
-        '
-        'chkPosF
-        '
-        Me.chkPosF.Caption = "ChequePos"
-        Me.chkPosF.Name = "chkPosF"
-        Me.chkPosF.Visible = True
-        Me.chkPosF.VisibleIndex = 7
-        Me.chkPosF.Width = 67
-        '
-        'Cheque
-        '
-        Me.Cheque.Caption = "Cheque"
-        Me.Cheque.Name = "Cheque"
-        Me.Cheque.Visible = True
-        Me.Cheque.VisibleIndex = 6
-        Me.Cheque.Width = 61
-        '
-        'FechaCobro
-        '
-        Me.FechaCobro.Caption = "FechaCobro"
-        Me.FechaCobro.DisplayFormat.FormatString = "d"
-        Me.FechaCobro.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime
-        Me.FechaCobro.Name = "FechaCobro"
-        Me.FechaCobro.Visible = True
-        Me.FechaCobro.VisibleIndex = 9
-        Me.FechaCobro.Width = 68
-        '
         'LayoutControl1
         '
         Me.LayoutControl1.Controls.Add(Me.SearchLookUpEdit2)
@@ -340,84 +340,48 @@ Partial Class frmAplicaciones
         Me.LayoutControl1.TabIndex = 16
         Me.LayoutControl1.Text = "LayoutControl1"
         '
-        'LayoutControlGroup1
+        'SearchLookUpEdit2
         '
-        Me.LayoutControlGroup1.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.[True]
-        Me.LayoutControlGroup1.GroupBordersVisible = False
-        Me.LayoutControlGroup1.Items.AddRange(New DevExpress.XtraLayout.BaseLayoutItem() {Me.LayoutControlGroup4})
-        Me.LayoutControlGroup1.Location = New System.Drawing.Point(0, 0)
-        Me.LayoutControlGroup1.Name = "LayoutControlGroup1"
-        Me.LayoutControlGroup1.Size = New System.Drawing.Size(854, 204)
-        Me.LayoutControlGroup1.TextVisible = False
+        Me.SearchLookUpEdit2.Location = New System.Drawing.Point(112, 42)
+        Me.SearchLookUpEdit2.Name = "SearchLookUpEdit2"
+        Me.SearchLookUpEdit2.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.SearchLookUpEdit2.Properties.View = Me.GridView2
+        Me.SearchLookUpEdit2.Size = New System.Drawing.Size(200, 20)
+        Me.SearchLookUpEdit2.StyleController = Me.LayoutControl1
+        Me.SearchLookUpEdit2.TabIndex = 0
+        '
+        'GridView2
+        '
+        Me.GridView2.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus
+        Me.GridView2.Name = "GridView2"
+        Me.GridView2.OptionsSelection.EnableAppearanceFocusedCell = False
+        Me.GridView2.OptionsView.ShowGroupPanel = False
         '
         'TextEdit1
         '
-        Me.TextEdit1.Location = New System.Drawing.Point(660, 42)
+        Me.TextEdit1.Location = New System.Drawing.Point(659, 42)
         Me.TextEdit1.Name = "TextEdit1"
-        Me.TextEdit1.Size = New System.Drawing.Size(170, 20)
+        Me.TextEdit1.Size = New System.Drawing.Size(171, 20)
         Me.TextEdit1.StyleController = Me.LayoutControl1
         Me.TextEdit1.TabIndex = 4
         '
-        'SearchLookUpEdit1
-        '
-        Me.SearchLookUpEdit1.Location = New System.Drawing.Point(113, 97)
-        Me.SearchLookUpEdit1.Name = "SearchLookUpEdit1"
-        Me.SearchLookUpEdit1.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
-        Me.SearchLookUpEdit1.Properties.View = Me.GridView1
-        Me.SearchLookUpEdit1.Size = New System.Drawing.Size(171, 20)
-        Me.SearchLookUpEdit1.StyleController = Me.LayoutControl1
-        Me.SearchLookUpEdit1.TabIndex = 5
-        '
-        'GridView1
-        '
-        Me.GridView1.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus
-        Me.GridView1.Name = "GridView1"
-        Me.GridView1.OptionsSelection.EnableAppearanceFocusedCell = False
-        Me.GridView1.OptionsView.ShowGroupPanel = False
-        '
         'TextEdit2
         '
-        Me.TextEdit2.Location = New System.Drawing.Point(318, 71)
+        Me.TextEdit2.Location = New System.Drawing.Point(317, 71)
         Me.TextEdit2.Name = "TextEdit2"
         Me.TextEdit2.Properties.ReadOnly = True
-        Me.TextEdit2.Size = New System.Drawing.Size(512, 20)
+        Me.TextEdit2.Size = New System.Drawing.Size(513, 20)
         Me.TextEdit2.StyleController = Me.LayoutControl1
         Me.TextEdit2.TabIndex = 13
         '
-        'TextEdit3
+        'TextEdit6
         '
-        Me.TextEdit3.Location = New System.Drawing.Point(113, 145)
-        Me.TextEdit3.Name = "TextEdit3"
-        Me.TextEdit3.Size = New System.Drawing.Size(717, 20)
-        Me.TextEdit3.StyleController = Me.LayoutControl1
-        Me.TextEdit3.TabIndex = 10
-        '
-        'DateEdit1
-        '
-        Me.DateEdit1.EditValue = Nothing
-        Me.DateEdit1.Location = New System.Drawing.Point(287, 121)
-        Me.DateEdit1.Name = "DateEdit1"
-        Me.DateEdit1.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
-        Me.DateEdit1.Properties.CalendarTimeProperties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
-        Me.DateEdit1.Size = New System.Drawing.Size(81, 20)
-        Me.DateEdit1.StyleController = Me.LayoutControl1
-        Me.DateEdit1.TabIndex = 7
-        '
-        'TextEdit4
-        '
-        Me.TextEdit4.Location = New System.Drawing.Point(113, 121)
-        Me.TextEdit4.Name = "TextEdit4"
-        Me.TextEdit4.Size = New System.Drawing.Size(81, 20)
-        Me.TextEdit4.StyleController = Me.LayoutControl1
-        Me.TextEdit4.TabIndex = 8
-        '
-        'TextEdit5
-        '
-        Me.TextEdit5.Location = New System.Drawing.Point(461, 121)
-        Me.TextEdit5.Name = "TextEdit5"
-        Me.TextEdit5.Size = New System.Drawing.Size(96, 20)
-        Me.TextEdit5.StyleController = Me.LayoutControl1
-        Me.TextEdit5.TabIndex = 9
+        Me.TextEdit6.Location = New System.Drawing.Point(160, 71)
+        Me.TextEdit6.Name = "TextEdit6"
+        Me.TextEdit6.Properties.ReadOnly = True
+        Me.TextEdit6.Size = New System.Drawing.Size(65, 20)
+        Me.TextEdit6.StyleController = Me.LayoutControl1
+        Me.TextEdit6.TabIndex = 13
         '
         'SimpleButton2
         '
@@ -429,49 +393,13 @@ Partial Class frmAplicaciones
         Me.SimpleButton2.TabIndex = 14
         Me.SimpleButton2.Text = "F3"
         '
-        'RadioGroup1
-        '
-        Me.RadioGroup1.Location = New System.Drawing.Point(405, 42)
-        Me.RadioGroup1.Name = "RadioGroup1"
-        Me.RadioGroup1.Properties.Columns = 2
-        Me.RadioGroup1.Properties.Items.AddRange(New DevExpress.XtraEditors.Controls.RadioGroupItem() {New DevExpress.XtraEditors.Controls.RadioGroupItem(Nothing, "Manual"), New DevExpress.XtraEditors.Controls.RadioGroupItem(Nothing, "Automatica")})
-        Me.RadioGroup1.Size = New System.Drawing.Size(152, 25)
-        Me.RadioGroup1.StyleController = Me.LayoutControl1
-        Me.RadioGroup1.TabIndex = 6
-        '
-        'SearchLookUpEdit2
-        '
-        Me.SearchLookUpEdit2.Location = New System.Drawing.Point(113, 42)
-        Me.SearchLookUpEdit2.Name = "SearchLookUpEdit2"
-        Me.SearchLookUpEdit2.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
-        Me.SearchLookUpEdit2.Properties.View = Me.GridView2
-        Me.SearchLookUpEdit2.Size = New System.Drawing.Size(199, 20)
-        Me.SearchLookUpEdit2.StyleController = Me.LayoutControl1
-        Me.SearchLookUpEdit2.TabIndex = 0
-        '
-        'GridView2
-        '
-        Me.GridView2.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus
-        Me.GridView2.Name = "GridView2"
-        Me.GridView2.OptionsSelection.EnableAppearanceFocusedCell = False
-        Me.GridView2.OptionsView.ShowGroupPanel = False
-        '
-        'TextEdit6
-        '
-        Me.TextEdit6.Location = New System.Drawing.Point(161, 71)
-        Me.TextEdit6.Name = "TextEdit6"
-        Me.TextEdit6.Properties.ReadOnly = True
-        Me.TextEdit6.Size = New System.Drawing.Size(64, 20)
-        Me.TextEdit6.StyleController = Me.LayoutControl1
-        Me.TextEdit6.TabIndex = 13
-        '
         'SearchLookUpEdit3
         '
-        Me.SearchLookUpEdit3.Location = New System.Drawing.Point(377, 97)
+        Me.SearchLookUpEdit3.Location = New System.Drawing.Point(376, 97)
         Me.SearchLookUpEdit3.Name = "SearchLookUpEdit3"
         Me.SearchLookUpEdit3.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
         Me.SearchLookUpEdit3.Properties.View = Me.GridView3
-        Me.SearchLookUpEdit3.Size = New System.Drawing.Size(180, 20)
+        Me.SearchLookUpEdit3.Size = New System.Drawing.Size(181, 20)
         Me.SearchLookUpEdit3.StyleController = Me.LayoutControl1
         Me.SearchLookUpEdit3.TabIndex = 4
         '
@@ -481,6 +409,78 @@ Partial Class frmAplicaciones
         Me.GridView3.Name = "GridView3"
         Me.GridView3.OptionsSelection.EnableAppearanceFocusedCell = False
         Me.GridView3.OptionsView.ShowGroupPanel = False
+        '
+        'SearchLookUpEdit1
+        '
+        Me.SearchLookUpEdit1.Location = New System.Drawing.Point(112, 97)
+        Me.SearchLookUpEdit1.Name = "SearchLookUpEdit1"
+        Me.SearchLookUpEdit1.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.SearchLookUpEdit1.Properties.View = Me.GridView1
+        Me.SearchLookUpEdit1.Size = New System.Drawing.Size(172, 20)
+        Me.SearchLookUpEdit1.StyleController = Me.LayoutControl1
+        Me.SearchLookUpEdit1.TabIndex = 5
+        '
+        'GridView1
+        '
+        Me.GridView1.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus
+        Me.GridView1.Name = "GridView1"
+        Me.GridView1.OptionsSelection.EnableAppearanceFocusedCell = False
+        Me.GridView1.OptionsView.ShowGroupPanel = False
+        '
+        'DateEdit1
+        '
+        Me.DateEdit1.EditValue = Nothing
+        Me.DateEdit1.Location = New System.Drawing.Point(286, 121)
+        Me.DateEdit1.Name = "DateEdit1"
+        Me.DateEdit1.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.DateEdit1.Properties.CalendarTimeProperties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.DateEdit1.Size = New System.Drawing.Size(82, 20)
+        Me.DateEdit1.StyleController = Me.LayoutControl1
+        Me.DateEdit1.TabIndex = 7
+        '
+        'TextEdit5
+        '
+        Me.TextEdit5.Location = New System.Drawing.Point(460, 121)
+        Me.TextEdit5.Name = "TextEdit5"
+        Me.TextEdit5.Size = New System.Drawing.Size(97, 20)
+        Me.TextEdit5.StyleController = Me.LayoutControl1
+        Me.TextEdit5.TabIndex = 9
+        '
+        'RadioGroup1
+        '
+        Me.RadioGroup1.Location = New System.Drawing.Point(404, 42)
+        Me.RadioGroup1.Name = "RadioGroup1"
+        Me.RadioGroup1.Properties.Columns = 2
+        Me.RadioGroup1.Properties.Items.AddRange(New DevExpress.XtraEditors.Controls.RadioGroupItem() {New DevExpress.XtraEditors.Controls.RadioGroupItem(Nothing, "Manual"), New DevExpress.XtraEditors.Controls.RadioGroupItem(Nothing, "Automatica")})
+        Me.RadioGroup1.Size = New System.Drawing.Size(153, 25)
+        Me.RadioGroup1.StyleController = Me.LayoutControl1
+        Me.RadioGroup1.TabIndex = 6
+        '
+        'TextEdit4
+        '
+        Me.TextEdit4.Location = New System.Drawing.Point(112, 121)
+        Me.TextEdit4.Name = "TextEdit4"
+        Me.TextEdit4.Size = New System.Drawing.Size(82, 20)
+        Me.TextEdit4.StyleController = Me.LayoutControl1
+        Me.TextEdit4.TabIndex = 8
+        '
+        'TextEdit3
+        '
+        Me.TextEdit3.Location = New System.Drawing.Point(112, 145)
+        Me.TextEdit3.Name = "TextEdit3"
+        Me.TextEdit3.Size = New System.Drawing.Size(718, 20)
+        Me.TextEdit3.StyleController = Me.LayoutControl1
+        Me.TextEdit3.TabIndex = 10
+        '
+        'LayoutControlGroup1
+        '
+        Me.LayoutControlGroup1.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.[True]
+        Me.LayoutControlGroup1.GroupBordersVisible = False
+        Me.LayoutControlGroup1.Items.AddRange(New DevExpress.XtraLayout.BaseLayoutItem() {Me.LayoutControlGroup4})
+        Me.LayoutControlGroup1.Location = New System.Drawing.Point(0, 0)
+        Me.LayoutControlGroup1.Name = "LayoutControlGroup1"
+        Me.LayoutControlGroup1.Size = New System.Drawing.Size(854, 204)
+        Me.LayoutControlGroup1.TextVisible = False
         '
         'LayoutControlGroup4
         '
@@ -538,7 +538,6 @@ Partial Class frmAplicaciones
         Me.LayoutControlItem11.Location = New System.Drawing.Point(0, 29)
         Me.LayoutControlItem11.Name = "LayoutControlItem11"
         Me.LayoutControlItem11.Size = New System.Drawing.Size(48, 26)
-        Me.LayoutControlItem11.Text = "LayoutControlItem11"
         Me.LayoutControlItem11.TextSize = New System.Drawing.Size(0, 0)
         Me.LayoutControlItem11.TextVisible = False
         '
@@ -549,7 +548,6 @@ Partial Class frmAplicaciones
         Me.EmptySpaceItem2.Location = New System.Drawing.Point(537, 0)
         Me.EmptySpaceItem2.Name = "EmptySpaceItem2"
         Me.EmptySpaceItem2.Size = New System.Drawing.Size(10, 29)
-        Me.EmptySpaceItem2.Text = "EmptySpaceItem2"
         Me.EmptySpaceItem2.TextSize = New System.Drawing.Size(0, 0)
         '
         'LayoutControlItem1
@@ -602,16 +600,6 @@ Partial Class frmAplicaciones
         Me.LayoutControlItem3.Text = "Tipo de Aplicación"
         Me.LayoutControlItem3.TextSize = New System.Drawing.Size(85, 13)
         '
-        'LayoutControlItem5
-        '
-        Me.LayoutControlItem5.Control = Me.TextEdit4
-        Me.LayoutControlItem5.CustomizationFormText = "Número R/C "
-        Me.LayoutControlItem5.Location = New System.Drawing.Point(0, 79)
-        Me.LayoutControlItem5.Name = "LayoutControlItem5"
-        Me.LayoutControlItem5.Size = New System.Drawing.Size(174, 24)
-        Me.LayoutControlItem5.Text = "Número R/C "
-        Me.LayoutControlItem5.TextSize = New System.Drawing.Size(85, 13)
-        '
         'LayoutControlItem7
         '
         Me.LayoutControlItem7.Control = Me.TextEdit3
@@ -629,6 +617,16 @@ Partial Class frmAplicaciones
         Me.EmptySpaceItem1.Name = "EmptySpaceItem1"
         Me.EmptySpaceItem1.Size = New System.Drawing.Size(273, 24)
         Me.EmptySpaceItem1.TextSize = New System.Drawing.Size(0, 0)
+        '
+        'LayoutControlItem5
+        '
+        Me.LayoutControlItem5.Control = Me.TextEdit4
+        Me.LayoutControlItem5.CustomizationFormText = "Número R/C "
+        Me.LayoutControlItem5.Location = New System.Drawing.Point(0, 79)
+        Me.LayoutControlItem5.Name = "LayoutControlItem5"
+        Me.LayoutControlItem5.Size = New System.Drawing.Size(174, 24)
+        Me.LayoutControlItem5.Text = "Número R/C "
+        Me.LayoutControlItem5.TextSize = New System.Drawing.Size(85, 13)
         '
         'EmptySpaceItem3
         '
@@ -669,22 +667,22 @@ Partial Class frmAplicaciones
         CType(Me.LayoutControlItem18, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.LayoutControl1.ResumeLayout(False)
-        CType(Me.LayoutControlGroup1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.TextEdit1.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.SearchLookUpEdit1.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.GridView1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.TextEdit2.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.TextEdit3.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DateEdit1.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DateEdit1.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.TextEdit4.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.TextEdit5.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RadioGroup1.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.SearchLookUpEdit2.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridView2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.TextEdit1.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.TextEdit2.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TextEdit6.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.SearchLookUpEdit3.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridView3, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.SearchLookUpEdit1.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DateEdit1.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DateEdit1.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.TextEdit5.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RadioGroup1.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.TextEdit4.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.TextEdit3.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.LayoutControlGroup1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlGroup4, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem8, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem17, System.ComponentModel.ISupportInitialize).EndInit()
@@ -697,9 +695,9 @@ Partial Class frmAplicaciones
         CType(Me.LayoutControlItem4, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem6, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem3, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.LayoutControlItem5, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem7, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.EmptySpaceItem1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.LayoutControlItem5, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.EmptySpaceItem3, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 

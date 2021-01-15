@@ -21,35 +21,35 @@ Public Class frmAsignaLote
     Public gbBonifica As Boolean = False
     Public gbBonificaProd As Boolean = False
     Public gdTotalBonificado As Decimal = 0
+    Public gdTotalBonificadoPrecio As Decimal = 0
+    Public gdTotalFacturado As Decimal = 0
+    Public gbUsaPedido As Boolean
     Dim gbErrorEnLote As Boolean = False
-
-    Private Sub frmAsignaLote_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
- 
-    End Sub
 
 
     Private Sub frmAsignaLote_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim lbok As Boolean
         Try
             gbLotesAsignados = False
-            Me.chkBonifica.Enabled = True
-            Me.chkBonifProd.Enabled = True
-            FormatNumbers()
-            If gsCantidadBonifPedido <> "" And Val(gsCantidadBonifPedido) <> 0 Then
-                Me.lblBonifPedido.Visible = True
-                Me.txtBonifPedido.Visible = True
-                Me.txtBonifPedido.EditValue = CDec(gsCantidadBonifPedido)
-                'Me.chkBonifica.Checked = True
-                'Me.chkBonifProd.Checked = True
-            Else
-                Me.lblBonifPedido.Visible = False
-                Me.txtBonifPedido.Visible = False
-                'Me.chkBonifica.Checked = False
-                'Me.chkBonifProd.Checked = False
-            End If
-            txtProducto.Text = gsDescr
-            txtCantidad.EditValue = CDec(gsCantidad)
 
+            Me.chkBonifica.Enabled = False
+            Me.chkBonifProd.Enabled = False
+
+            FormatNumbers()
+            'If gsCantidadBonifPedido <> "" And Val(gsCantidadBonifPedido) <> 0 Then
+            Me.lblBonifPedido.Visible = True
+            Me.txtBonifPedido.Visible = True
+            Me.txtBonifPedido.EditValue = gdTotalBonificado
+
+            'Else
+            'Me.lblBonifPedido.Visible = False
+            'Me.txtBonifPedido.Visible = False
+
+            'End If
+            txtCantPrecio.EditValue = CDec(gdTotalBonificadoPrecio)
+            txtProducto.Text = gsDescr
+            txtCantidad.EditValue = CDec(gsCantidad) '- Val(gsCantidadBonifPedido) ' inclui esta resta porque si proviene de pedido hay que restarlo 15/09/2020
+            ' gsCantidad = txtCantidad.EditValue
             If gbAsignaLotes = False Then ' Solamente quiere ver el detalle de lotes asignado y no asignar
                 tableData = cManager.ExecSPgetData("fafgetProductoLote", "-1111" & "," & "-1")
                 FiltraProducto(gsIDBodega, gsIDProducto)
@@ -82,8 +82,6 @@ Public Class frmAsignaLote
             Me.GridViewProducto.Columns("AsignadoBO").OptionsColumn.AllowEdit = False
             Me.chkBonifica.Checked = gbBonifica
             Me.chkBonifProd.Checked = gbBonificaProd
-            Me.chkBonifica.Enabled = False
-            Me.chkBonifProd.Enabled = False
 
         Catch ex As Exception
             MessageBox.Show(ex.Message)
@@ -94,6 +92,7 @@ Public Class frmAsignaLote
 
     Private Sub FormatNumbers()
         FormatControlNumber(txtTotalBO)
+        FormatControlNumber(txtTotalBOPrecio)
         FormatControlNumber(txtTotalExistencia)
         FormatControlNumber(txtTotalAsignado)
         FormatControlNumber(txtCantidad)
@@ -115,7 +114,7 @@ Public Class frmAsignaLote
                 r("Existencia") = Convert.ToDecimal(row("Existencia"))
                 r("AsignadoFA") = Convert.ToDecimal(row("AsignadoFA"))
                 r("AsignadoBO") = Convert.ToDecimal(row("AsignadoBO"))
-
+                r("AsignadoPrecio") = Convert.ToDecimal(row("AsignadoPrecio"))
                 tableData.Rows.Add(r)
             Next
             datagridLotes.DataSource = tableData
@@ -172,6 +171,7 @@ Public Class frmAsignaLote
         End If
         ' Me.GridViewProducto.Columns(8).DisplayFormat.FormatString = "n2"
         Me.GridViewProducto.Columns.AddField("AsignadoBO")
+        Me.GridViewProducto.Columns(9).Caption = "BonifProd"
         Me.GridViewProducto.Columns(9).Visible = True
         If gbAsignaLotes Then
             Me.GridViewProducto.Columns(9).OptionsColumn.AllowEdit = True
@@ -183,6 +183,16 @@ Public Class frmAsignaLote
         Me.GridViewProducto.Columns.AddField("LoteAsignado")
         Me.GridViewProducto.Columns(10).Visible = False
         Me.GridViewProducto.Columns(10).OptionsColumn.AllowEdit = False
+
+        Me.GridViewProducto.Columns.AddField("AsignadoPrecio")
+        Me.GridViewProducto.Columns(11).Caption = "BonifPrecio"
+        Me.GridViewProducto.Columns(11).Visible = True
+        If gbAsignaLotes Then
+            Me.GridViewProducto.Columns(11).OptionsColumn.AllowEdit = True
+        Else
+            Me.GridViewProducto.Columns(11).OptionsColumn.AllowEdit = False
+        End If
+        Me.GridViewProducto.Columns(11).DisplayFormat.FormatString = "n2"
 
     End Sub
 
@@ -212,6 +222,11 @@ Public Class frmAsignaLote
             dataColumn3.DataType = System.Type.GetType("System.Decimal")
             dataColumn3.DefaultValue = 0
             t.Columns.Add(dataColumn3)
+
+            Dim dataColumn4 As DataColumn = New DataColumn("AsignadoPrecio")
+            dataColumn4.DataType = System.Type.GetType("System.Decimal")
+            dataColumn4.DefaultValue = False
+            t.Columns.Add(dataColumn4)
             Dim dCantidad As Decimal = Convert.ToDecimal(gsCantidad)
             Dim dCantAsignada As Decimal = 0
             For Each row As DataRow In dt.Rows
@@ -236,6 +251,7 @@ Public Class frmAsignaLote
                 r("Existencia") = Convert.ToDecimal(row("Existencia"))
                 r("AsignadoFA") = Convert.ToDecimal(row("AsignadoFA"))
                 r("AsignadoBO") = Convert.ToDecimal(row("AsignadoBO"))
+                r("AsignadoPrecio") = Convert.ToDecimal(row("AsignadoPrecio"))
                 foundRow = t.Select("IDProducto =" & row("IDProducto").ToString() & " And IDLote = " & row("IDLote").ToString())
 
 
@@ -255,29 +271,79 @@ Public Class frmAsignaLote
 
     End Sub
 
-    Private Sub TotalizaGrid()
-        Dim Existencia As Decimal = 0
-        Dim Asignado As Decimal = 0
-        Dim Bonificado As Decimal = 0
-        If tableData.Rows.Count > 0 Then
-            Existencia = Me.tableData.Compute("Sum(Existencia)", "")
-            Asignado = tableData.Compute("Sum(AsignadoFA)", "")
-            Bonificado = tableData.Compute("Sum(AsignadoBO)", "")
-        End If
-        Me.txtTotalAsignado.EditValue = Asignado
-        Me.txtTotalExistencia.EditValue = Existencia
-        Me.txtTotalBO.EditValue = Bonificado
-        If Me.txtCantidad.EditValue > Asignado Then
-            MessageBox.Show("La cantidad asignada en los lotes no cubre la cantidad a Facturar", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
-        End If
 
-        If Asignado > Me.txtCantidad.EditValue Then
-            MessageBox.Show("La cantidad asignada en los lotes es mayor a la cantidad a Facturar", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
-            gbErrorEnLote = True
-        End If
-        If Me.txtTotalExistencia.EditValue < (Asignado + Bonificado) Then
-            MessageBox.Show("La cantidad existente en bodega es menor que la cantidad a Asignada y Bonificada, por favor revise", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
-        End If
+
+    'Private Sub SelectBonificados()
+    '    Dim strCriteria As String = "BonifProd='1' "
+    '    Dim drSelect As DataRow() = tableData.Select(strCriteria)
+    '    Dim localDataTable As DataTable = tableData.Clone
+    '    Dim mytable As New DataTable
+    '    If drSelect.Length > 0 Then
+    '        For Each drItem As DataRow In drSelect
+    '            Dim nrow As DataRow = drItem
+    '            localDataTable.ImportRow(nrow)
+    '        Next
+    '        mytable = localDataTable.Copy()
+    '    End If
+    'End Sub
+
+
+    Private Sub TotalizaGrid()
+        Try
+            Dim Existencia As Decimal = 0
+            Dim Asignado As Decimal = 0
+            Dim Bonificado As Decimal = 0.0
+            Dim BonificadoPrecio As Decimal = 0.0
+            Dim strCriteria As String = "IDProducto= " & gsIDProducto
+            Dim drSelect As DataRow() = tableData.Select(strCriteria)
+            If tableData.Rows.Count > 0 Then
+                If drSelect.Length > 0 Then
+                    For Each drItem As DataRow In drSelect
+                        Dim nrow As DataRow = drItem
+                        If CDec(nrow("Existencia")) > 0 Then
+                            Existencia = Existencia + CDec(nrow("Existencia"))
+                        End If
+                        If CDec(nrow("AsignadoFA")) > 0 Then
+                            Asignado = Asignado + CDec(nrow("AsignadoFA"))
+                        End If
+                        If CDec(nrow("AsignadoBO")) > 0 Then
+                            Bonificado = Bonificado + CDec(nrow("AsignadoBO"))
+                        End If
+                        If CDec(nrow("AsignadoPrecio")) > 0 Then
+                            BonificadoPrecio = BonificadoPrecio + CDec(nrow("AsignadoPrecio"))
+                        End If
+                    Next
+
+                End If
+
+            End If
+            Me.txtTotalAsignado.EditValue = Asignado
+            Me.txtTotalExistencia.EditValue = Existencia
+            Me.txtTotalBO.EditValue = Bonificado
+            Me.txtTotalBOPrecio.EditValue = BonificadoPrecio
+            If Me.txtCantidad.EditValue > (Asignado + Bonificado) Then
+                MessageBox.Show("La cantidad asignada en los lotes no cubre la cantidad a Facturar", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                'txtCantidad.EditValue = Asignado
+                'txtBonifPedido.EditValue = Bonificado
+                gbErrorEnLote = True 'new 15/09
+            End If
+
+            If (Asignado + Bonificado) > Me.txtCantidad.EditValue + Bonificado Then
+                MessageBox.Show("La cantidad asignada en los lotes es mayor a la cantidad a Facturar", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                gbErrorEnLote = True
+                'txtCantidad.EditValue = Asignado
+                'txtBonifPedido.EditValue = Bonificado
+            End If
+            'If Me.txtTotalExistencia.EditValue < (Asignado + Bonificado) Then
+            '    MessageBox.Show("La cantidad existente en bodega es menor que la cantidad a Asignada y Bonificada, por favor revise", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            '    txtCantidad.EditValue = Asignado
+            '    txtBonifPedido.EditValue = Bonificado
+            '    'gbErrorEnLote = True ' new 15/09
+            'End If
+
+        Catch ex As Exception
+            MessageBox.Show("Ha ocurrido un error  " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
 
     End Sub
 
@@ -287,15 +353,32 @@ Public Class frmAsignaLote
         Try
             Dim asignada As Decimal = Convert.ToDecimal(GridViewProducto.GetRowCellValue(e.RowHandle, "AsignadoFA"))
             Dim asignadaBO As Decimal = Convert.ToDecimal(GridViewProducto.GetRowCellValue(e.RowHandle, "AsignadoBO"))
+            Dim asignadaPrecio As Decimal = Convert.ToDecimal(GridViewProducto.GetRowCellValue(e.RowHandle, "AsignadoPrecio"))
             Dim Existencia As Decimal = Convert.ToDecimal(GridViewProducto.GetRowCellValue(e.RowHandle, "Existencia"))
+
+            'If asignadaBO > 0 Then
+            '    GridViewProducto.SetRowCellValue(e.RowHandle, "BonifProd", 1)
+            '    'Else
+            '    '    GridViewProducto.SetRowCellValue(e.RowHandle, "BonifProd", 0)
+            'End If
+
+            'If asignadaBO = 0 Then
+            '    GridViewProducto.SetRowCellValue(e.RowHandle, "BonifProd", 0)
+            'End If
+
             If (asignada + asignadaBO) > Existencia Then
                 MessageBox.Show("Ud no puede asignar más que la existencia en ese lote", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                GridViewProducto.SetRowCellValue(GridViewProducto.FocusedRowHandle, GridViewProducto.FocusedColumn, 0)
+                ' 15/09 lO quite porque puede ser que bonifiquen aunque no haya producto y en ese caso deben dar descuento en precio
+                'GridViewProducto.SetRowCellValue(GridViewProducto.FocusedRowHandle, GridViewProducto.FocusedColumn, 0)
+                Me.chkBonifProd.Checked = False
+                gbBonificaProd = False
                 gbErrorEnLote = True
             Else
                 gbErrorEnLote = False
                 TotalizaGrid()
             End If
+
+            
         Catch ex As Exception
             MessageBox.Show("Ha ocurrido un error  " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
@@ -376,9 +459,25 @@ Public Class frmAsignaLote
 
 
             End If
+
             GridViewProducto.SetRowCellValue(i, "AsignadoBO", valorBO)
+            GridViewProducto.SetRowCellValue(i, "AsignadoPrecio", txtCantPrecio.EditValue) ' agregado el 21/09/2020 9 pm
+            'If valorBO > 0 Then
+            '    GridViewProducto.SetRowCellValue(i, "BonifProd", 1)
+            'Else
+            '    GridViewProducto.SetRowCellValue(i, "BonifProd", 0)
+            'End If
             i = i + 1
         End While
+        If i > 0 And dCantBonif > 0 And valorBO = 0 Then ' 15/09 si no lo asigno porque no habia existencia ... poner a fuerza en el ultimo registros la cantidad bonificada
+            GridViewProducto.SetRowCellValue(i - 1, "AsignadoBO", dCantBonif)
+            'If dCantBonif > 0 Then
+            '    GridViewProducto.SetRowCellValue(i, "BonifProd", 1)
+            'Else
+            '    GridViewProducto.SetRowCellValue(i, "BonifProd", 0)
+            'End If
+
+        End If
     End Sub
 
 
@@ -391,19 +490,22 @@ Public Class frmAsignaLote
             MessageBox.Show("Ud no puede asignar más que la cantidad a Facturar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Exit Sub
         End If
-
+        ' esto fue cambiado el 15/09/2020 porque debe dejar pasar mas de lo existente cuando hay bonificacion para permitir descuentos 
         If (CDec(txtTotalAsignado.EditValue) + CDec(txtTotalBO.EditValue)) > CDec(txtTotalExistencia.EditValue) Then
-            MessageBox.Show("Ud no puede asignar más que la cantidad en Existencia ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            Exit Sub
+            MessageBox.Show("Ud está asignando una cantidad mayor que la que hay en Existencia ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            gbBonificaProd = False ' agregado el 15/09
+            'Exit Sub
         End If
         gdTotalBonificado = CDec(Me.txtTotalBO.EditValue)
+        gdTotalBonificadoPrecio = CDec(Me.txtTotalBOPrecio.EditValue)
+        gdTotalFacturado = CDec(Me.txtTotalAsignado.EditValue)
         gbLotesAsignados = True
         If chkBonifica.Checked Then
             gbBonifica = True
         End If
-        If chkBonifProd.Checked And chkBonifica.Checked Then
-            gbBonificaProd = True
-        End If
+        'If chkBonifProd.Checked And chkBonifica.Checked Then
+        '    gbBonificaProd = True
+        'End If
         CopyRows()
 
     End Sub
@@ -414,7 +516,7 @@ Public Class frmAsignaLote
     End Sub
 
     Private Sub CopyRows()
-        Dim strCriteria As String = "AsignadoFA> 0 or AsignadoBO>0"
+        Dim strCriteria As String = "AsignadoFA> 0 or AsignadoBO>0 or AsignadoPrecio>0"
         Dim drSelect As DataRow() = tableData.Select(strCriteria)
         Dim localDataTable As DataTable = tableData.Clone
 
@@ -475,10 +577,13 @@ Public Class frmAsignaLote
 
     Private Sub btnBonif_Click(sender As Object, e As EventArgs) Handles btnBonif.Click
         Dim frm As New frmPopupBonificacion()
-        frm.gsProductoID = gsIDProducto
+        'frm.gsProductoID = gsIDProducto
         frm.ShowDialog()
-        Me.txtRequerido.Text = frm.gdRequerido
-        Me.txtBono.Text = frm.gdBono
+        'Me.txtRequerido.Text = frm.gdRequerido
+        'Me.txtBono.Text = frm.gdBono
         frm.Dispose()
     End Sub
+
+
+
 End Class

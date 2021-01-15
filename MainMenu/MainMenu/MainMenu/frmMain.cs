@@ -18,6 +18,7 @@ using CI;
 using CO;
 using Facturacion;
 
+
 namespace MainMenu
 {
     public partial class frmMain : DevExpress.XtraBars.Ribbon.RibbonForm
@@ -839,8 +840,24 @@ namespace MainMenu
                     break;
 
                 case "treelstCuentasPorPagar":
-                    TreeListNode nodeDocumentosCP = tl.AppendNode(new object[] { "Documentos" }, -1, 11, 11, 11);
-                    nodeDocumentosCP.Tag = "frmDocumento";
+                    TreeListNode nodeDocumentosCP = tl.AppendNode(new object[] { "Transacciones" }, -1, 11, 11, 11);
+					nodeDocumentosCP.Tag = "frmCPConsultaDocs";
+
+					//Carpeta
+					TreeListNode nodeReportesCP = tl.AppendNode(new object[] { "Reportes" }, -1, 9, 10, 9);
+					TreeListNode nodeMoviProveedor = tl.AppendNode(new object[] { "Movimentos del Proveedor" }, nodeReportesCP.Id, 11, 11, 11);
+					nodeMoviProveedor.Tag = "frmCPFiltroReportes";
+
+					TreeListNode nodeDesglosePago = tl.AppendNode(new object[] { "Desglose de Pago" }, nodeReportesCP.Id, 11, 11, 11);
+					nodeDesglosePago.Tag = "frmCPFiltroReportesDesglosePago";
+
+					TreeListNode nodeDocxPagar = tl.AppendNode(new object[] { "Documentos por Pagar" }, nodeReportesCP.Id, 11, 11, 11);
+					nodeDocxPagar.Tag = "frmCPFiltroReportesDocXPagar";
+
+					TreeListNode nodeAnalisisVencPro = tl.AppendNode(new object[] { "Análisis de Vencimiento" }, nodeReportesCP.Id, 11, 11, 11);
+					nodeAnalisisVencPro.Tag = "frmCPFiltroReportesAnalisisVencimientoProv";
+
+					
 										
 					TreeListNode nodeCondicionPago = tl.AppendNode(new object[] { "Condición de Pago" }, -1, 11, 11, 11);
 					nodeCondicionPago.Tag = "frmCondicionPago";
@@ -1198,8 +1215,8 @@ namespace MainMenu
                 return;
 			switch (node.Tag.ToString())
 			{
-				case "frmDocumento":
-					CP.frmDocumento ofrmDoc = new CP.frmDocumento();
+				case "frmCPConsultaDocs":
+					CP.frmCPConsultaDocs ofrmDoc = new CP.frmCPConsultaDocs();
 					ofrmDoc.MdiParent = this;
 					ofrmDoc.WindowState = FormWindowState.Maximized;
 					ShowPagesRibbonMan(false);
@@ -1227,6 +1244,43 @@ namespace MainMenu
 					ofrmRetenciones.WindowState = FormWindowState.Maximized;
 					ShowPagesRibbonMan(false);
 					ofrmRetenciones.Show();
+					break;
+
+				case "frmCPFiltroReportes":
+					CP.frmCPFiltroReportes ofrmFiltroRep = new CP.frmCPFiltroReportes();
+					ofrmFiltroRep.MdiParent = this;
+					ofrmFiltroRep.WindowState = FormWindowState.Maximized;
+					ShowPagesRibbonMan(false);
+					ofrmFiltroRep.iReporte = CP.Unitbk.CrptMovimientos	;
+					ofrmFiltroRep.gsNombreReporte = "Reporte de Movimientos del Cliente";
+					ofrmFiltroRep.Show();
+					break;
+				case "frmCPFiltroReportesDesglosePago":
+					CP.frmCPFiltroReportes ofrmFiltroRep2 = new CP.frmCPFiltroReportes();
+					ofrmFiltroRep2.MdiParent = this;
+					ofrmFiltroRep2.WindowState = FormWindowState.Maximized;
+					ShowPagesRibbonMan(false);
+					ofrmFiltroRep2.iReporte = CP.Unitbk.CrptDesglosePagos;
+					ofrmFiltroRep2.gsNombreReporte = "Reporte Desglose de Pagos";
+					ofrmFiltroRep2.Show();
+					break;
+				case "frmCPFiltroReportesDocXPagar":
+					CP.frmCPFiltroReportes ofrmFiltroRep3 = new CP.frmCPFiltroReportes();
+					ofrmFiltroRep3.MdiParent = this;
+					ofrmFiltroRep3.WindowState = FormWindowState.Maximized;
+					ShowPagesRibbonMan(false);
+					ofrmFiltroRep3.iReporte = CP.Unitbk.CrptDocumentosPorPagar;
+					ofrmFiltroRep3.gsNombreReporte = "Reporte Documentos por Pagar";
+					ofrmFiltroRep3.Show();
+					break;
+				case "frmCPFiltroReportesAnalisisVencimientoProv":
+					CP.frmCPFiltroReportes ofrmFiltroRep4 = new CP.frmCPFiltroReportes();
+					ofrmFiltroRep4.MdiParent = this;
+					ofrmFiltroRep4.WindowState = FormWindowState.Maximized;
+					ShowPagesRibbonMan(false);
+					ofrmFiltroRep4.iReporte = CP.Unitbk.CrptAnalisisVencimiento;
+					ofrmFiltroRep4.gsNombreReporte = "Reporte Analisis de Vencimientos pro Proveedor";
+					ofrmFiltroRep4.Show();
 					break;
 
 

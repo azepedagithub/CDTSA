@@ -315,7 +315,7 @@
 			this.txtPorcentaje.Location = new System.Drawing.Point(112, 66);
 			this.txtPorcentaje.MenuManager = this.ribbonControl;
 			this.txtPorcentaje.Name = "txtPorcentaje";
-			this.txtPorcentaje.Properties.Mask.EditMask = "p";
+			this.txtPorcentaje.Properties.Mask.EditMask = "P";
 			this.txtPorcentaje.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
 			this.txtPorcentaje.Size = new System.Drawing.Size(287, 20);
 			this.txtPorcentaje.StyleController = this.layoutControl1;

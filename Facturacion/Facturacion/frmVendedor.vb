@@ -43,6 +43,7 @@ Public Class frmVendedor
     Sub CargagridLookUpsFromTables()
 
         CargagridLookUp(Me.gridlookupTipo, "fafTipoVendedor", "IDTipo, Descr, Activo", "", "IDTipo", "Descr", "IDTipo")
+        CargagridLookUp(Me.GridLookUpEditGrupo, "fafGrupoVendedor", "IDGrupo, Descr, Activo", "", "IDGrupo", "Descr", "IDGrupo")
 
     End Sub
 
@@ -53,13 +54,13 @@ Public Class frmVendedor
         Me.txtIDVendedor.Enabled = False
         Me.txtNombre.EditValue = tableData.Rows(0).Item("Nombre").ToString()
         Me.txtemail.EditValue = tableData.Rows(0).Item("email").ToString()
-        Me.chkActivo.EditValue = Convert.ToBoolean(tableData.Rows(0).Item("Activo"))
+        Me.chkActivo.EditValue = IIf((tableData.Rows(0).Item("Activo").ToString()) = "", False, Convert.ToBoolean(tableData.Rows(0).Item("Activo")))
       
         Me.txtTelefono.EditValue = tableData.Rows(0).Item("Telefono").ToString()
         Me.txtCelular.EditValue = tableData.Rows(0).Item("Celular").ToString()
         Me.txtCedula.EditValue = tableData.Rows(0).Item("Cedula").ToString()
         Me.gridlookupTipo.EditValue = CInt(tableData.Rows(0).Item("IDTipo"))
-
+        Me.GridLookUpEditGrupo.EditValue = CInt(tableData.Rows(0).Item("IDGrupo"))
 
     End Sub
 
@@ -74,7 +75,8 @@ Public Class frmVendedor
             sparameterValues = IIf(gbAdd = True, "'I',", "'U',")
             sparameterValues = sparameterValues & txtIDVendedor.Text & ",'"
             sparameterValues = sparameterValues & txtNombre.Text & "',"
-            sparameterValues = sparameterValues & Me.gridlookupTipo.EditValue & ",'"
+            sparameterValues = sparameterValues & Me.gridlookupTipo.EditValue & ","
+            sparameterValues = sparameterValues & Me.GridLookUpEditGrupo.EditValue & ",'"
             sparameterValues = sparameterValues & Me.MemoEditDireccion.EditValue & "','"
             sparameterValues = sparameterValues & Me.txtTelefono.EditValue.ToString() & "','"
             sparameterValues = sparameterValues & Me.txtCelular.EditValue.ToString() & "','"
@@ -91,7 +93,8 @@ Public Class frmVendedor
     Private Function DatosValidos() As Boolean
         If Len(txtIDVendedor.Text.Trim) = 0 Then MsgBox("Dato no Puede quedar en Balnco", MsgBoxStyle.Critical + MsgBoxStyle.OkOnly, "Ayuda") : txtIDVendedor.Focus() : Return False : Exit Function
         If Len(txtNombre.Text.Trim) = 0 Then MsgBox("Dato no Puede quedar en Balnco", MsgBoxStyle.Critical + MsgBoxStyle.OkOnly, "Ayuda") : txtNombre.Focus() : Return False : Exit Function
-        If gridlookupTipo.EditValue = Nothing Then MsgBox("Debe seleccionar un Tipo de Cliente", MsgBoxStyle.Critical + MsgBoxStyle.OkOnly, "Ayuda") : Me.gridlookupTipo.Focus() : Return False : Exit Function
+        If gridlookupTipo.EditValue = Nothing Then MsgBox("Debe seleccionar un Tipo de Vendedor", MsgBoxStyle.Critical + MsgBoxStyle.OkOnly, "Ayuda") : Me.gridlookupTipo.Focus() : Return False : Exit Function
+        If GridLookUpEditGrupo.EditValue = Nothing Then MsgBox("Debe seleccionar un Grupo de Vendedor", MsgBoxStyle.Critical + MsgBoxStyle.OkOnly, "Ayuda") : Me.GridLookUpEditGrupo.Focus() : Return False : Exit Function
         If Len(Me.MemoEditDireccion.Text.Trim) = 0 Then MsgBox("Dato no Puede quedar en Balnco", MsgBoxStyle.Critical + MsgBoxStyle.OkOnly, "Ayuda") : MemoEditDireccion.Focus() : Return False : Exit Function
         If Len(Me.txtCedula.Text.Trim) = 0 Then MsgBox("Dato no Puede quedar en Balnco", MsgBoxStyle.Critical + MsgBoxStyle.OkOnly, "Ayuda") : txtCedula.Focus() : Return False : Exit Function
         If Len(Me.txtemail.Text.Trim) = 0 Then MsgBox("Dato no Puede quedar en Balnco", MsgBoxStyle.Critical + MsgBoxStyle.OkOnly, "Ayuda") : txtemail.Focus() : Return False : Exit Function
@@ -115,5 +118,13 @@ Public Class frmVendedor
         Catch ex As Exception
             MessageBox.Show("Error " & ex.Message & " parametros ")
         End Try
+    End Sub
+
+    Private Sub BarButtonNuevo_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles BarButtonNuevo.ItemClick
+        gbAdd = True
+        gbEdit = False
+        If gbAdd Then
+            seteaControlsNewRecord()
+        End If
     End Sub
 End Class

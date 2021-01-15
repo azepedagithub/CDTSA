@@ -257,10 +257,10 @@ namespace CO
 				sMensaje = sMensaje + "     • Monto mínimo para poder aplicar la retencion. \n\r";
 			if (this.txtPorcentaje.Text == "")
 				sMensaje = sMensaje + "     • Porcentaje de la retencion. \n\r";
-			if (this.slkupCentroRetencion.EditValue == null)
-				sMensaje = sMensaje + "     • Centro de Costo de la retencion. \n\r";
-			if (this.slkupCuentaRetencion.EditValue == null)
-				sMensaje = sMensaje + "     • Cuenta Contable de la retencion. \n\r";
+			//if (this.slkupCentroRetencion.EditValue == null || this.slkupCentroRetencion.EditValue.ToString() =="")
+			//	sMensaje = sMensaje + "     • Centro de Costo de la retencion. \n\r";
+			//if (this.slkupCuentaRetencion.EditValue == null || this.slkupCuentaRetencion.EditValue.ToString() =="")
+			//	sMensaje = sMensaje + "     • Cuenta Contable de la retencion. \n\r";
 			if (this.rdgComportamiento.EditValue == null)
 				sMensaje = sMensaje + "     • Comportamiento de la retencion. \n\r";
 			//if (Convert.ToBoolean(this.chkAcumulador.EditValue) == true)
@@ -280,8 +280,8 @@ namespace CO
 			Porcentaje = Convert.ToDecimal(this.txtPorcentaje.Text.Trim());
 			MontoMinimo = Convert.ToDecimal(this.txtMontoMinimo.Text.Trim());
 			Activo = Convert.ToBoolean(this.chkActivo.Checked);
-			IDCentro = Convert.ToInt32(this.slkupCentroRetencion.EditValue);
-			IDCuenta = Convert.ToInt64(this.slkupCuentaRetencion.EditValue);
+			IDCentro = this.slkupCentroRetencion.EditValue.ToString() =="" ? -1 : Convert.ToInt32(this.slkupCentroRetencion.EditValue);
+			IDCuenta = this.slkupCuentaRetencion.EditValue.ToString() =="" ? -1 : Convert.ToInt64(this.slkupCuentaRetencion.EditValue);
 			int iComportamiento = Convert.ToInt32(this.rdgComportamiento.EditValue);
 			switch (iComportamiento) { 
 				case 1:

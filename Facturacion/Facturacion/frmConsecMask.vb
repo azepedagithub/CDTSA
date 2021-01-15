@@ -17,6 +17,9 @@ Public Class frmConsecMask
             Me.txtMascara.Properties.Mask.EditMask = "\\p{Lu}+"
             'Me.txtMascara.Properties.Mask.MaskType = Mask.MaskType.RegEx
             CargagridSearchLookUp(Me.SearchLookUpEditModulo, "secModulo", "IDModulo, Descr", "", "IDModulo", "Descr", "IDModulo")
+            If Not gbCodeNumeric Then
+                gsCodeValue = "'" + gsCodeValue + "'"
+            End If
             If gbAdd Then
                 seteaControlsNewRecord()
             End If

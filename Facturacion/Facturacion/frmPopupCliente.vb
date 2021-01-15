@@ -14,6 +14,8 @@ Public Class frmPopupCliente
     Public gsIDMoneda As String
     Public gsPlazo As String
     Public gsPorcInteres As String
+    Public gdLimite As Decimal
+    Public gdDisponible As Decimal
 
     Private Sub frmPopupCliente_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         RefreshGrid()
@@ -41,6 +43,9 @@ Public Class frmPopupCliente
             gsIDMoneda = dr("IDMoneda").ToString()
             gsPlazo = dr("Plazo").ToString()
             gsPorcInteres = dr("PorcInteres").ToString()
+            gsIDSucursal = dr("IDSucursal").ToString()
+            gdLimite = CDec(dr("LimiteCredito"))
+            gdDisponible = CDec(dr("DisponibleCredito"))
         End If
     End Sub
 

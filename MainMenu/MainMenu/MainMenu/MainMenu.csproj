@@ -122,6 +122,10 @@
     <Reference Include="DevExpress.XtraRichEdit.v15.2, Version=15.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraTreeList.v15.2, Version=15.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraVerticalGrid.v15.2, Version=15.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Facturacion\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
@@ -253,8 +257,12 @@
       <Project>{574dcf6a-79a5-4bd7-bddf-d5d2ac2ccd8e}</Project>
       <Name>ControlBancario</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\CxP\CP\CP.csproj">
+    <ProjectReference Include="..\..\..\CxP\CP\CPAux.csproj">
       <Project>{dca3f3c2-1618-492b-ab85-4117ed7aae52}</Project>
+      <Name>CPAux</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Facturacion\CP\CP.vbproj">
+      <Project>{5b9faf4e-7305-4110-822a-59554f5bcad4}</Project>
       <Name>CP</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Facturacion\Facturacion\Facturacion.vbproj">

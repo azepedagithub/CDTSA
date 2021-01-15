@@ -6,10 +6,14 @@ Public Class frmPopupProducto
     Dim currentRow As DataRow
     Public gsIDProducto As String = ""
     Public gsDescr As String = ""
+    Public gbBonifica As Boolean
     Public gdCostoPromLocal As Decimal = 0
     Public gdCostoPromDolar As Decimal = 0
+    Public gsIDNivel As String
+    Public gsIDMoneda As String
     Private Sub frmPopupProducto_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         RefreshGrid()
+        ShowBasico()
     End Sub
     Sub RefreshGrid()
         Try
@@ -29,10 +33,9 @@ Public Class frmPopupProducto
             gsDescr = dr("Descr").ToString()
             gdCostoPromLocal = dr("CostoPromLocal").ToString()
             gdCostoPromDolar = dr("CostoPromDolar").ToString()
+            gbBonifica = dr("Bonifica").ToString()
         End If
     End Sub
-
-
 
     Private Sub GridControl1_DoubleClick(sender As Object, e As EventArgs) Handles GridControl1.DoubleClick
         Me.Close()
@@ -45,31 +48,22 @@ Public Class frmPopupProducto
         End If
     End Sub
 
-    'Private Sub btn_ShowBonif_Click(sender As Object, e As EventArgs) Handles btn_ShowBonif.Click
-    '    MsgBox("entro")
-    '    Dim frm As New frmPopupBonificacion()
-    '    frm.ShowDialog()
-    '    frm.Dispose()
-    'End Sub
 
-    'Private Sub btn_ShowBonif_ButtonClick(sender As Object, e As DevExpress.XtraEditors.Controls.ButtonPressedEventArgs) Handles btn_ShowBonif.ButtonClick
-    '    MsgBox("entro")
-    '    Dim frm As New frmPopupBonificacion()
-    '    frm.ShowDialog()
-    '    frm.Dispose()
-    'End Sub
 
-    'Private Sub btnVerBonif_Click(sender As Object, e As EventArgs) Handles btnVerBonif.Click
-    '    Dim frm As New frmPopupBonificacion()
-    '    frm.ShowDialog()
-    '    frm.Dispose()
-    'End Sub
 
     Private Sub btnVerBonif_Click(sender As Object, e As EventArgs) Handles btnVerBonif.Click
-        Dim frm As New frmPopupBonificacion()
-        frm.gsProductoID = gsIDProducto
-        frm.ShowDialog()
-        frm.Dispose()
+        If gbBonifica Then
+            If gsIDProducto <> "" And Val(gsIDProducto) > 0 Then
+                Dim frm As New frmPopupBonificacion()
+                frm.gsProductoID = gsIDProducto
+                frm.gsIDNivel = gsIDNivel
+                frm.gsIDMoneda = gsIDMoneda
+                frm.ShowDialog()
+                frm.Dispose()
+            End If
+        Else
+            MessageBox.Show("El produto no Bonifica... No existe tabla de bonificación.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+        End If
     End Sub
 
     Private Sub frmPopupProducto_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
@@ -77,5 +71,23 @@ Public Class frmPopupProducto
             btnVerBonif_Click(sender, e)
             e.Handled = False
         End If
+    End Sub
+
+    Private Sub cmdBasico_Click(sender As Object, e As EventArgs) Handles cmdBasico.Click
+        ShowBasico()
+    End Sub
+    Private Sub ShowBasico()
+        GridViewProducto.Columns("Clasif4").Visible = False
+        GridViewProducto.Columns("Clasif5").Visible = False
+        GridViewProducto.Columns("Clasif6").Visible = False
+    End Sub
+    Private Sub ShowAll()
+        GridViewProducto.Columns("Clasif4").Visible = True
+        GridViewProducto.Columns("Clasif5").Visible = True
+        GridViewProducto.Columns("Clasif6").Visible = True
+    End Sub
+
+    Private Sub cmdAll_Click(sender As Object, e As EventArgs) Handles cmdAll.Click
+        ShowAll()
     End Sub
 End Class

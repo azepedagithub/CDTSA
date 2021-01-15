@@ -12,7 +12,10 @@ Public Class frmCatalogos
     Dim gsFieldsName As String
     Public gsWHere As String = ""
     Public gsOrder As String = ""
-
+    ' para el campo tipo check Extra
+    Public gbExtrachk As Boolean = False
+    Public gsExtrachkLableText As String = ""
+    Public gsFieldNameExtrachk As String = ""
     ' para el campo extra del extragrid 
 
     Public gbExtragridExiste As Boolean = False
@@ -25,12 +28,14 @@ Public Class frmCatalogos
     Public gbExtragridCodeNumeric As Boolean = True
     Public gsExtragridFiltro As String = ""
     Public gsExtragridLableText As String = ""
+    Public gbCatalogSistemaReadOnly As Boolean = False
     Dim bEdit As Boolean = False
     Dim bAdd As Boolean = False
     Dim sFieldsValueUpdate As String
     Private Sub frmCatalogo_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Text = gsCaptionFrm
         gsFieldsName = gsCodeName & " Codigo," & gsDescrName & IIf(gsFieldsRest <> "", "," & gsFieldsRest, "")
+        GridView1.Columns(1).FieldName = gsDescrName
         If gbExtragridExiste Then
             gsFieldsName = gsFieldsName & " IDExtra" ' alieas del ID del Campo Extra, asi lo conoce el Grid IDEXtra
             gsExtragridFieldsName = gsExtragridCodeName & " IDExtra, " & gsExtragridDescrName & "," & gsExtragridFieldsRest
@@ -40,10 +45,23 @@ Public Class frmCatalogos
             GridView1.Columns(3).Caption = gsExtragridCodeName
             GridView1.Columns(4).Caption = gsExtragridDescrName
         Else
-            GridView1.Columns(3).Visible = False
+            If gbExtrachk Then
+                Me.chkExtra.Visible = True
+                GridView1.Columns(3).FieldName = gsFieldNameExtrachk
+                GridView1.Columns(3).Caption = gsFieldNameExtrachk
+                GridView1.Columns(3).Visible = True
+            Else
+                GridView1.Columns(3).Visible = False
+            End If
+
             GridView1.Columns(4).Visible = False
         End If
+        If gbExtrachk Then
+            Me.chkExtra.Enabled = True
+            Me.chkExtra.Text = gsExtrachkLableText
+        End If
         RefreshGrid()
+        RefreshButonsInit()
     End Sub
 
     Sub RefreshGrid()
@@ -103,12 +121,20 @@ Public Class frmCatalogos
         txtDescr.Text = ""
         Me.gridLookUpEditExtra.EditValue = ""
         chkActivo.Checked = False
+        If gbExtrachk Then
+            Me.chkExtra.Visible = True
+            chkExtra.Checked = False
+        End If
     End Sub
 
     Private Sub EnableControls(bActiva As Boolean)
         txtCodigo.Enabled = bActiva
         txtDescr.Enabled = bActiva
         chkActivo.Enabled = bActiva
+        If gbExtrachk Then
+            Me.chkExtra.Visible = True
+            Me.chkExtra.Enabled = bActiva
+        End If
         If gbExtragridExiste Then
             Me.gridLookUpEditExtra.Enabled = bActiva
         End If
@@ -127,32 +153,37 @@ Public Class frmCatalogos
     End Sub
 
 
-    Private Sub btnEdit_Click(sender As Object, e As EventArgs) Handles btnEdit.Click
-        Try
+    Private Sub btnEdit_Click(sender As Object, e As EventArgs) Handles btnEdit.Click  
             PreparaEdicion()
-        Catch ex As Exception
-            MessageBox.Show("Ha ocurrido el siguiente error :" & ex.Message, "Error", MessageBoxButtons.OK)
-        End Try
-
     End Sub
 
     Sub PreparaEdicion()
-        bEdit = True
-        bAdd = False
-        EnableControls(True)
-        txtCodigo.Enabled = False
-        SetDataFromGridToCtrls()
+        Try
+            bEdit = True
+            bAdd = False
+            EnableControls(True)
+            txtCodigo.Enabled = False
+            SetDataFromGridToCtrls()
+        Catch ex As Exception
+            MessageBox.Show("Ha ocurrido el siguiente error :" & ex.Message, "Error", MessageBoxButtons.OK)
+        End Try
     End Sub
 
     Sub SetDataFromGridToCtrls()
         Dim dr As DataRow = GridView1.GetFocusedDataRow()
-        txtCodigo.Text = dr(0).ToString()
-        txtDescr.Text = dr(1).ToString()
-        If gbExtragridExiste Then
-            Me.gridLookUpEditExtra.EditValue = CInt(dr(3)) '.ToString() '  CInt(tableData.Rows(0).Item("IDExtra"))
-            Me.gridLookUpEditExtra.Refresh()
+        If dr IsNot Nothing Then
+            txtCodigo.Text = dr(0).ToString()
+            txtDescr.Text = dr(1).ToString()
+            If gbExtragridExiste Then
+                Me.gridLookUpEditExtra.EditValue = CInt(dr(3)) '.ToString() '  CInt(tableData.Rows(0).Item("IDExtra"))
+                Me.gridLookUpEditExtra.Refresh()
+            End If
+            chkActivo.Checked = CBool(dr(2))
+            If gbExtrachk Then
+                Me.chkExtra.Visible = True
+                Me.chkExtra.Checked = CBool(dr(3))
+            End If
         End If
-        chkActivo.Checked = CBool(dr(2))
     End Sub
 
 
@@ -168,10 +199,18 @@ Public Class frmCatalogos
 
 
     Sub RefreshButonsInit()
-        btnAdd.Enabled = True
-        btnDelete.Enabled = True
-        btnEdit.Enabled = True
-        btnsave.Enabled = False
+        If gbCatalogSistemaReadOnly = False Then
+            btnAdd.Enabled = True
+            btnDelete.Enabled = True
+            btnEdit.Enabled = True
+            btnsave.Enabled = False
+        Else
+            btnAdd.Enabled = False
+            btnDelete.Enabled = False
+            btnEdit.Enabled = False
+            btnsave.Enabled = False
+
+        End If
 
     End Sub
 
@@ -253,6 +292,9 @@ Public Class frmCatalogos
             Else
                 sFieldsValueUpdate = gsDescrName & " = '" & txtDescr.Text & "', Activo = " & IIf(chkActivo.Checked = True, 1, 0).ToString()
             End If
+            If gbExtrachk Then
+                sFieldsValueUpdate = sFieldsValueUpdate & "," & gsFieldNameExtrachk & "=" & IIf(chkExtra.Checked = True, 1, 0).ToString()
+            End If
             cManager.Update(gsTableName, sFieldsValueUpdate, sWhere)
         End If
     End Sub
@@ -262,12 +304,13 @@ Public Class frmCatalogos
         Dim sInsertFields As String
         Dim sCodeName As String
         Dim sValueExtra As String
+
         If bAdd Then
-            sInsertFields = gsCodeName & "," & gsDescrName & " ," & " Activo " & IIf(gbExtragridExiste = True, "," & IIf(gbCodeNumeric = True, "", "'") & gsExtragridCodeName & IIf(gbCodeNumeric = True, "", "'"), "")
+            sInsertFields = gsCodeName & "," & gsDescrName & " ," & " Activo " & IIf(gbExtrachk = True, "," & gsFieldNameExtrachk, "") & IIf(gbExtragridExiste = True, "," & IIf(gbCodeNumeric = True, "", "'") & gsExtragridCodeName & IIf(gbCodeNumeric = True, "", "'"), "")
             sCodeName = IIf(gbCodeNumeric = True, txtCodigo.Text, "'" & txtCodigo.Text & "'")
 
             sValueExtra = getValueIDExtra()
-            sInsertValues = sCodeName & ",'" & txtDescr.Text & "'," & IIf(chkActivo.Checked = True, 1, 0).ToString() & IIf(gbExtragridExiste = True, "," & IIf(gbExtragridCodeNumeric = True, "", "'") & sValueExtra & IIf(gbExtragridCodeNumeric = True, "", "'"), "")
+            sInsertValues = sCodeName & ",'" & txtDescr.Text & "'," & IIf(chkActivo.Checked = True, 1, 0).ToString() & IIf(gbExtrachk = True, "," & IIf(chkExtra.Checked = True, 1, 0).ToString(), "") & IIf(gbExtragridExiste = True, "," & IIf(gbExtragridCodeNumeric = True, "", "'") & sValueExtra & IIf(gbExtragridCodeNumeric = True, "", "'"), "")
             cManager.Insert(gsTableName, sInsertFields, sInsertValues)
         End If
     End Sub
@@ -292,9 +335,9 @@ Public Class frmCatalogos
 
 
 
-    Private Sub GridControl1_Click(sender As Object, e As EventArgs) Handles GridControl1.Click
-
-    End Sub
+    'Private Sub GridControl1_Click(sender As Object, e As EventArgs) Handles GridControl1.Click
+    '    PreparaEdicion()
+    'End Sub
 
 
 End Class

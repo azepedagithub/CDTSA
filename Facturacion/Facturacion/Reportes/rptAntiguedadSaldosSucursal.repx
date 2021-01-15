@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XtraReportsLayoutSerializer SerializerVersion="15.2.7.0" Ref="1" ControlType="DevExpress.XtraReports.UI.XtraReport, DevExpress.XtraReports.v15.2, Version=15.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Name="rptAntiguedadSaldosSucursal" Landscape="true" Margins="100, 100, 0, 100" PageWidth="1100" PageHeight="850" ScriptLanguage="VisualBasic" Version="15.2" DataMember="ccfrptAntiguedadSaldosPorSucursal" DataSource="#Ref-0">
+  <Parameters>
+    <Item1 Ref="3" Visible="false" Description="piIDBodega" ValueInfo="0" Name="piIDBodega" Type="#Ref-2" />
+    <Item2 Ref="4" Visible="false" Description="piIDCliente" ValueInfo="0" Name="piIDCliente" Type="#Ref-2" />
+    <Item3 Ref="6" Visible="false" Description="pdFechaFinal" Name="pdFechaFinal" Type="#Ref-5" />
+    <Item4 Ref="8" Visible="false" Description="PbDolar" ValueInfo="False" Name="pbDolar" Type="#Ref-7" />
+    <Item5 Ref="10" Visible="false" Description="psEmpresa" Name="psEmpresa" />
+    <Item6 Ref="11" Visible="false" Description="Parameter1" Name="psMoneda" />
+  </Parameters>
+  <Bands>
+    <Item1 Ref="12" ControlType="DetailBand" Name="Detail" HeightF="25.00001" TextAlignment="TopLeft" StyleName="DataField" Padding="0,0,0,0,100">
+      <Controls>
+        <Item1 Ref="13" ControlType="XRLabel" Name="XrLabel14" Text="XrLabel14" SizeF="71.51324,15" LocationFloat="113.4985, 0" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="14" FormatString="{0:n2}" PropertyName="Text" DataMember="ccfrptAntiguedadSaldosPorSucursal.Saldoa30" />
+          </DataBindings>
+        </Item1>
+        <Item2 Ref="15" ControlType="XRLabel" Name="XrLabel15" Text="XrLabel15" SizeF="80.28989,15" LocationFloat="210.1042, 0" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="16" FormatString="{0:n2}" PropertyName="Text" DataMember="ccfrptAntiguedadSaldosPorSucursal.Saldo31a60" />
+          </DataBindings>
+        </Item2>
+        <Item3 Ref="17" ControlType="XRLabel" Name="XrLabel16" Text="XrLabel16" SizeF="83.25174,15" LocationFloat="304.8692, 0" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="18" FormatString="{0:n2}" PropertyName="Text" DataMember="ccfrptAntiguedadSaldosPorSucursal.Saldo61a90" />
+          </DataBindings>
+        </Item3>
+        <Item4 Ref="19" ControlType="XRLabel" Name="XrLabel17" Text="XrLabel17" SizeF="90.40536,15" LocationFloat="400.2025, 0" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="20" FormatString="{0:n2}" PropertyName="Text" DataMember="ccfrptAntiguedadSaldosPorSucursal.Saldo91a120" />
+          </DataBindings>
+        </Item4>
+        <Item5 Ref="21" ControlType="XRLabel" Name="XrLabel18" Text="XrLabel18" SizeF="83.28607,15" LocationFloat="512.4645, 0" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="22" FormatString="{0:n2}" PropertyName="Text" DataMember="ccfrptAntiguedadSaldosPorSucursal.Saldo121a180" />
+          </DataBindings>
+        </Item5>
+        <Item6 Ref="23" ControlType="XRLabel" Name="XrLabel19" Text="XrLabel19" SizeF="77.03625,15" LocationFloat="615.4096, 0" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="24" FormatString="{0:n2}" PropertyName="Text" DataMember="ccfrptAntiguedadSaldosPorSucursal.Saldo181a600" />
+          </DataBindings>
+        </Item6>
+        <Item7 Ref="25" ControlType="XRLabel" Name="XrLabel20" Text="XrLabel20" SizeF="85.90029,15" LocationFloat="699.3481, 0" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="26" FormatString="{0:n2}" PropertyName="Text" DataMember="ccfrptAntiguedadSaldosPorSucursal.Saldomas600" />
+          </DataBindings>
+        </Item7>
+        <Item8 Ref="27" ControlType="XRLabel" Name="XrLabel21" Text="XrLabel21" SizeF="83.33325,15" LocationFloat="12.56704, 0" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="28" FormatString="{0:n2}" PropertyName="Text" DataMember="ccfrptAntiguedadSaldosPorSucursal.SaldoNovencido" />
+          </DataBindings>
+        </Item8>
+        <Item9 Ref="29" ControlType="XRLabel" Name="XrLabel22" Text="XrLabel22" SizeF="91.22388,15" LocationFloat="798.7761, 0" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="30" FormatString="{0:n2}" PropertyName="Text" DataMember="ccfrptAntiguedadSaldosPorSucursal.TotalCliente" />
+          </DataBindings>
+        </Item9>
+      </Controls>
+    </Item1>
+    <Item2 Ref="31" ControlType="TopMarginBand" Name="TopMargin" HeightF="0" TextAlignment="TopLeft" Padding="0,0,0,0,100" />
+    <Item3 Ref="32" ControlType="BottomMarginBand" Name="BottomMargin" HeightF="100" TextAlignment="TopLeft" Padding="0,0,0,0,100" />
+    <Item4 Ref="33" ControlType="GroupHeaderBand" Name="GroupHeaderBand1" RepeatEveryPage="true" HeightF="26" KeepTogether="true">
+      <GroupFields>
+        <Item1 Ref="34" FieldName="Bodega" />
+      </GroupFields>
+      <Controls>
+        <Item1 Ref="35" ControlType="XRLabel" Name="XrLabel2" Text="XrLabel2" SizeF="310.5,26" LocationFloat="265.6722, 0" StyleName="DataField" Font="Microsoft Sans Serif, 8.25pt, style=Bold, Italic, charSet=0" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="36" PropertyName="Text" DataMember="ccfrptAntiguedadSaldosPorSucursal.Bodega" />
+          </DataBindings>
+          <StylePriority Ref="37" UseFont="false" />
+        </Item1>
+        <Item2 Ref="38" ControlType="XRLabel" Name="XrLabel1" Text="Sucursal" SizeF="78.146,26" LocationFloat="109.269, 0" StyleName="FieldCaption" Font="Microsoft Sans Serif, 8.25pt, style=Bold, Italic, charSet=0" Padding="2,2,0,0,100">
+          <StylePriority Ref="39" UseFont="false" />
+        </Item2>
+        <Item3 Ref="40" ControlType="XRLabel" Name="XrLabel4" Text="XrLabel4" SizeF="64,26" LocationFloat="191.5506, 0" StyleName="DataField" Font="Microsoft Sans Serif, 8.25pt, style=Bold, Italic, charSet=0" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="41" PropertyName="Text" DataMember="ccfrptAntiguedadSaldosPorSucursal.IDBodega" />
+          </DataBindings>
+          <StylePriority Ref="42" UseFont="false" />
+        </Item3>
+      </Controls>
+    </Item4>
+    <Item5 Ref="43" ControlType="PageFooterBand" Name="PageFooterBand1" HeightF="81.37497">
+      <Controls>
+        <Item1 Ref="44" ControlType="XRLabel" Name="XrLabel3" Text="Totales Generales de Empresa" SizeF="414.2853,26" LocationFloat="8.579762, 1.04166663" StyleName="FieldCaption" Font="Microsoft Sans Serif, 8.25pt, style=Bold, Italic, charSet=0" Padding="2,2,0,0,100">
+          <StylePriority Ref="45" UseFont="false" />
+        </Item1>
+        <Item2 Ref="46" ControlType="XRLabel" Name="XrLabel39" SizeF="80.28989,18" LocationFloat="206.116684, 61.37498" StyleName="FieldCaption" Font="Times New Roman, 8.25pt, style=Bold, charSet=0" Padding="2,2,0,0,100">
+          <Summary Ref="47" FormatString="{0:n2}" Running="Report" />
+          <DataBindings>
+            <Item1 Ref="48" PropertyName="Text" DataMember="ccfrptAntiguedadSaldosPorSucursal.Saldo31a60" />
+          </DataBindings>
+          <StylePriority Ref="49" UseFont="false" />
+        </Item2>
+        <Item3 Ref="50" ControlType="XRLabel" Name="XrLabel38" SizeF="83.25174,18" LocationFloat="300.881836, 63.3749657" StyleName="FieldCaption" Font="Times New Roman, 8.25pt, style=Bold, charSet=0" Padding="2,2,0,0,100">
+          <Summary Ref="51" FormatString="{0:n2}" Running="Report" />
+          <DataBindings>
+            <Item1 Ref="52" PropertyName="Text" DataMember="ccfrptAntiguedadSaldosPorSucursal.Saldo61a90" />
+          </DataBindings>
+          <StylePriority Ref="53" UseFont="false" />
+        </Item3>
+        <Item4 Ref="54" ControlType="XRLabel" Name="XrLabel37" SizeF="90.40535,18" LocationFloat="396.215118, 63.3749657" StyleName="FieldCaption" Font="Times New Roman, 8.25pt, style=Bold, charSet=0" Padding="2,2,0,0,100">
+          <Summary Ref="55" FormatString="{0:n2}" Running="Report" />
+          <DataBindings>
+            <Item1 Ref="56" PropertyName="Text" DataMember="ccfrptAntiguedadSaldosPorSucursal.Saldo91a120" />
+          </DataBindings>
+          <StylePriority Ref="57" UseFont="false" />
+        </Item4>
+        <Item5 Ref="58" ControlType="XRLabel" Name="XrLabel36" SizeF="83.28601,18" LocationFloat="508.477264, 61.37498" StyleName="FieldCaption" Font="Times New Roman, 8.25pt, style=Bold, charSet=0" Padding="2,2,0,0,100">
+          <Summary Ref="59" FormatString="{0:n2}" Running="Report" />
+          <DataBindings>
+            <Item1 Ref="60" PropertyName="Text" DataMember="ccfrptAntiguedadSaldosPorSucursal.Saldo121a180" />
+          </DataBindings>
+          <StylePriority Ref="61" UseFont="false" />
+        </Item5>
+        <Item6 Ref="62" ControlType="XRLabel" Name="XrLabel35" SizeF="77.03632,18" LocationFloat="611.4221, 61.37498" StyleName="FieldCaption" Font="Times New Roman, 8.25pt, style=Bold, charSet=0" Padding="2,2,0,0,100">
+          <Summary Ref="63" FormatString="{0:n2}" Running="Report" />
+          <DataBindings>
+            <Item1 Ref="64" PropertyName="Text" DataMember="ccfrptAntiguedadSaldosPorSucursal.Saldo181a600" />
+          </DataBindings>
+          <StylePriority Ref="65" UseFont="false" />
+        </Item6>
+        <Item7 Ref="66" ControlType="XRLabel" Name="XrLabel34" SizeF="82.87653,18" LocationFloat="695.3607, 61.37498" StyleName="FieldCaption" Font="Times New Roman, 8.25pt, style=Bold, charSet=0" Padding="2,2,0,0,100">
+          <Summary Ref="67" FormatString="{0:n2}" Running="Report" />
+          <DataBindings>
+            <Item1 Ref="68" PropertyName="Text" DataMember="ccfrptAntiguedadSaldosPorSucursal.Saldomas600" />
+          </DataBindings>
+          <StylePriority Ref="69" UseFont="false" />
+        </Item7>
+        <Item8 Ref="70" ControlType="XRLabel" Name="XrLabel33" SizeF="85.90029,18" LocationFloat="6.01259851, 63.3749657" StyleName="FieldCaption" Font="Times New Roman, 8.25pt, style=Bold, charSet=0" Padding="2,2,0,0,100">
+          <Summary Ref="71" FormatString="{0:n2}" Running="Report" />
+          <DataBindings>
+            <Item1 Ref="72" PropertyName="Text" DataMember="ccfrptAntiguedadSaldosPorSucursal.SaldoNovencido" />
+          </DataBindings>
+          <StylePriority Ref="73" UseFont="false" />
+        </Item8>
+        <Item9 Ref="74" ControlType="XRLabel" Name="XrLabel24" SizeF="73.91647,18" LocationFloat="107.107796, 63.3749657" StyleName="FieldCaption" Font="Times New Roman, 8.25pt, style=Bold, charSet=0" Padding="2,2,0,0,100">
+          <Summary Ref="75" FormatString="{0:n2}" Running="Report" />
+          <DataBindings>
+            <Item1 Ref="76" PropertyName="Text" DataMember="ccfrptAntiguedadSaldosPorSucursal.Saldoa30" />
+          </DataBindings>
+          <StylePriority Ref="77" UseFont="false" />
+        </Item9>
+        <Item10 Ref="78" ControlType="XRLabel" Name="XrLabel40" SizeF="91.22382,18" LocationFloat="794.788757, 61.37498" StyleName="FieldCaption" Font="Times New Roman, 8.25pt, style=Bold, charSet=0" Padding="2,2,0,0,100">
+          <Summary Ref="79" FormatString="{0:n2}" Running="Report" />
+          <DataBindings>
+            <Item1 Ref="80" PropertyName="Text" DataMember="ccfrptAntiguedadSaldosPorSucursal.TotalCliente" />
+          </DataBindings>
+          <StylePriority Ref="81" UseFont="false" />
+        </Item10>
+        <Item11 Ref="82" ControlType="XRLabel" Name="XrLabel41" Text="Total Cliente" SizeF="80.26813,18" LocationFloat="800.9148, 36.2083435" Padding="2,2,0,0,100" />
+        <Item12 Ref="83" ControlType="XRLabel" Name="XrLabel12" Text="Saldoa30" SizeF="75.74263,18" LocationFloat="121.937622, 36.2083435" Padding="2,2,0,0,100" />
+        <Item13 Ref="84" ControlType="XRLabel" Name="XrLabel11" Text="Saldo31a60" SizeF="69.78761,18" LocationFloat="218.7694, 36.2083435" Padding="2,2,0,0,100" />
+        <Item14 Ref="85" ControlType="XRLabel" Name="XrLabel10" Text="Saldo61a90" SizeF="73.91107,18" LocationFloat="307.008, 36.2083435" Padding="2,2,0,0,100" />
+        <Item15 Ref="86" ControlType="XRLabel" Name="XrLabel9" Text="Saldo91a120" SizeF="89.20593,18" LocationFloat="389.3388, 36.2083435" Padding="2,2,0,0,100" />
+        <Item16 Ref="87" ControlType="XRLabel" Name="XrLabel8" Text="Saldo121a180" SizeF="89.2699,18" LocationFloat="492.728241, 36.2083435" Padding="2,2,0,0,100" />
+        <Item17 Ref="88" ControlType="XRLabel" Name="XrLabel7" Text="Saldo181a600" SizeF="94.47827,18" LocationFloat="600.1063, 36.2083435" Padding="2,2,0,0,100" />
+        <Item18 Ref="89" ControlType="XRLabel" Name="XrLabel6" Text="Saldomas600" SizeF="81.20685,18" LocationFloat="708.1262, 36.2083435" Padding="2,2,0,0,100" />
+        <Item19 Ref="90" ControlType="XRLabel" Name="XrLabel5" Text="Saldo Novencido" SizeF="103.0097,18" LocationFloat="10.84245, 36.2083435" Padding="2,2,0,0,100" />
+      </Controls>
+    </Item5>
+    <Item6 Ref="91" ControlType="PageHeaderBand" Name="PageHeader" HeightF="211.4583">
+      <Controls>
+        <Item1 Ref="92" ControlType="XRLabel" Name="XrLabel43" Text="Moneda :" SizeF="76.08339,23.00001" LocationFloat="74.57143, 107.4583" Font="Verdana, 9pt, style=Bold, charSet=0" Padding="2,2,0,0,100">
+          <StylePriority Ref="93" UseFont="false" />
+        </Item1>
+        <Item2 Ref="94" ControlType="XRLabel" Name="XrLabel42" Text="XrLabel42" SizeF="144.4595,23.00001" LocationFloat="169.8606, 107.4583" Font="Verdana, 9pt, style=Bold, charSet=0" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="96" Parameter="#Ref-11" PropertyName="Text" DataMember="psMoneda" />
+          </DataBindings>
+          <StylePriority Ref="97" UseFont="false" />
+        </Item2>
+        <Item3 Ref="98" ControlType="XRLabel" Name="XrLabel23" Text="Total Cliente" SizeF="80.26813,18" LocationFloat="782.7422, 176.1667" Padding="2,2,0,0,100" />
+        <Item4 Ref="99" ControlType="XRLabel" Name="XrLabel25" Text="Saldoa30" SizeF="75.74263,18" LocationFloat="109.2689, 176.1667" Padding="2,2,0,0,100" />
+        <Item5 Ref="100" ControlType="XRLabel" Name="XrLabel26" Text="Saldo31a60" SizeF="69.78761,18" LocationFloat="200.5968, 176.1667" Padding="2,2,0,0,100" />
+        <Item6 Ref="101" ControlType="XRLabel" Name="XrLabel27" Text="Saldo61a90" SizeF="73.91107,18" LocationFloat="288.8354, 176.1667" Padding="2,2,0,0,100" />
+        <Item7 Ref="102" ControlType="XRLabel" Name="XrLabel28" Text="Saldo91a120" SizeF="89.20593,18" LocationFloat="371.1662, 176.1667" Padding="2,2,0,0,100" />
+        <Item8 Ref="103" ControlType="XRLabel" Name="XrLabel29" Text="Saldo121a180" SizeF="89.2699,18" LocationFloat="474.5556, 176.1667" Padding="2,2,0,0,100" />
+        <Item9 Ref="104" ControlType="XRLabel" Name="XrLabel30" Text="Saldo181a600" SizeF="94.47827,18" LocationFloat="581.9337, 176.1667" Padding="2,2,0,0,100" />
+        <Item10 Ref="105" ControlType="XRLabel" Name="XrLabel31" Text="Saldomas600" SizeF="81.20685,18" LocationFloat="689.9536, 176.1667" Padding="2,2,0,0,100" />
+        <Item11 Ref="106" ControlType="XRLabel" Name="XrLabel32" Text="Saldo Novencido" SizeF="103.0097,18" LocationFloat="3.125, 176.1667" Padding="2,2,0,0,100" />
+        <Item12 Ref="107" ControlType="XRLabel" Name="lblNombreReporte" Text="Análisis de Vencimiento por Sucursal&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA; " TextAlignment="TopLeft" SizeF="271.1172,23.00001" LocationFloat="52.79575, 84.45832" Font="Times New Roman, 12pt, style=Bold" Padding="2,2,0,0,100">
+          <StylePriority Ref="108" UseFont="false" UseTextAlignment="false" />
+        </Item12>
+        <Item13 Ref="109" ControlType="XRLabel" Name="lblEmpresa" TextAlignment="TopCenter" SizeF="344.7917,23" LocationFloat="14.82975, 61.45833" Font="Times New Roman, 12pt, style=Bold" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="110" Parameter="#Ref-10" PropertyName="Text" DataMember="psEmpresa" />
+          </DataBindings>
+          <StylePriority Ref="111" UseFont="false" UseTextAlignment="false" />
+        </Item13>
+        <Item14 Ref="112" ControlType="XRLabel" Name="lblHasta" SizeF="120.2498,23" LocationFloat="191.5506, 130.4584" Font="Verdana, 9pt, style=Bold, charSet=0" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="113" Parameter="#Ref-6" FormatString="{0:dd/MM/yyyy}" PropertyName="Text" DataMember="pdFechaFinal" />
+          </DataBindings>
+          <StylePriority Ref="114" UseFont="false" />
+        </Item14>
+        <Item15 Ref="115" ControlType="XRLabel" Name="XrLabel13" Text="Cortado al :" SizeF="94.8334,23" LocationFloat="73.05075, 130.4584" Font="Verdana, 9pt, style=Bold, charSet=0" Padding="2,2,0,0,100">
+          <StylePriority Ref="116" UseFont="false" />
+        </Item15>
+        <Item16 Ref="117" ControlType="XRPageInfo" Name="XrPageInfo3" PageInfo="DateTime" Format="{0:dd/MM/yyyy HH:mm}" TextAlignment="TopRight" SizeF="141.1249,23" LocationFloat="729.2155, 96.54169" StyleName="PageInfo" Font="Times New Roman, 10pt" Padding="2,2,0,0,100">
+          <StylePriority Ref="118" UseFont="false" UseTextAlignment="false" />
+        </Item16>
+        <Item17 Ref="119" ControlType="XRPageInfo" Name="XrPageInfo4" Format="Page {0} of {1}" TextAlignment="TopRight" SizeF="81.74994,23" LocationFloat="788.5906, 73.54167" StyleName="PageInfo" Font="Times New Roman, 10pt" Padding="2,2,0,0,100">
+          <StylePriority Ref="120" UseFont="false" />
+        </Item17>
+      </Controls>
+    </Item6>
+  </Bands>
+  <StyleSheet>
+    <Item1 Ref="121" Name="Title" BorderStyle="Inset" Font="Times New Roman, 24pt" ForeColor="Black" BackColor="Transparent" BorderColor="Black" Sides="None" StringFormat="Near;Near;0;None;Character;Default" BorderWidthSerializable="1" />
+    <Item2 Ref="122" Name="FieldCaption" BorderStyle="Inset" Font="Times New Roman, 10pt, style=Bold" ForeColor="Black" BackColor="Transparent" BorderColor="Black" Sides="None" StringFormat="Near;Near;0;None;Character;Default" BorderWidthSerializable="1" />
+    <Item3 Ref="123" Name="PageInfo" BorderStyle="Inset" Font="Times New Roman, 8pt" ForeColor="Black" BackColor="Transparent" BorderColor="Black" Sides="None" StringFormat="Near;Near;0;None;Character;Default" BorderWidthSerializable="1" />
+    <Item4 Ref="124" Name="DataField" BorderStyle="Inset" Padding="2,2,0,0,100" Font="Times New Roman, 8pt" ForeColor="Black" BackColor="Transparent" BorderColor="Black" Sides="None" StringFormat="Near;Near;0;None;Character;Default" BorderWidthSerializable="1" />
+  </StyleSheet>
+  <ComponentStorage>
+    <Item1 Ref="0" ObjectType="DevExpress.DataAccess.Sql.SqlDataSource,DevExpress.DataAccess.v15.2" Name="SqlDataSource1" Base64="PFNxbERhdGFTb3VyY2U+PE5hbWU+U3FsRGF0YVNvdXJjZTE8L05hbWU+PENvbm5lY3Rpb24gTmFtZT0iQ2VkX0Nvbm5lY3Rpb24iIEZyb21BcHBDb25maWc9InRydWUiIC8+PFF1ZXJ5IFR5cGU9IlN0b3JlZFByb2NRdWVyeSIgTmFtZT0iY2NmcnB0QW50aWd1ZWRhZFNhbGRvc1BvclN1Y3Vyc2FsIj48UGFyYW1ldGVyIE5hbWU9IkBJREJvZGVnYSIgVHlwZT0iRGV2RXhwcmVzcy5EYXRhQWNjZXNzLkV4cHJlc3Npb24iPihTeXN0ZW0uSW50MzIsIG1zY29ybGliLCBWZXJzaW9uPTQuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjc3YTVjNTYxOTM0ZTA4OSkoW1BhcmFtZXRlcnMucGlJREJvZGVnYV0pPC9QYXJhbWV0ZXI+PFBhcmFtZXRlciBOYW1lPSJASURDbGllbnRlIiBUeXBlPSJTeXN0ZW0uSW50MzIiPjA8L1BhcmFtZXRlcj48UGFyYW1ldGVyIE5hbWU9IkBGZWNoYUNvcnRlIiBUeXBlPSJEZXZFeHByZXNzLkRhdGFBY2Nlc3MuRXhwcmVzc2lvbiI+KFN5c3RlbS5EYXRlVGltZSwgbXNjb3JsaWIsIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5KShbUGFyYW1ldGVycy5wZEZlY2hhRmluYWxdKTwvUGFyYW1ldGVyPjxQYXJhbWV0ZXIgTmFtZT0iQEVuRG9sYXIiIFR5cGU9IkRldkV4cHJlc3MuRGF0YUFjY2Vzcy5FeHByZXNzaW9uIj4oU3lzdGVtLkJvb2xlYW4sIG1zY29ybGliLCBWZXJzaW9uPTQuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjc3YTVjNTYxOTM0ZTA4OSkoW1BhcmFtZXRlcnMucGJEb2xhcl0pPC9QYXJhbWV0ZXI+PFByb2NOYW1lPmNjZnJwdEFudGlndWVkYWRTYWxkb3NQb3JTdWN1cnNhbDwvUHJvY05hbWU+PC9RdWVyeT48UmVzdWx0U2NoZW1hPjxEYXRhU2V0IE5hbWU9IlNxbERhdGFTb3VyY2UxIj48VmlldyBOYW1lPSJjY2ZycHRBbnRpZ3VlZGFkU2FsZG9zUG9yU3VjdXJzYWwiPjxGaWVsZCBOYW1lPSJJREJvZGVnYSIgVHlwZT0iSW50MzIiIC8+PEZpZWxkIE5hbWU9IkJvZGVnYSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJTYWxkb05vdmVuY2lkbyIgVHlwZT0iRGVjaW1hbCIgLz48RmllbGQgTmFtZT0iU2FsZG9hMzAiIFR5cGU9IkRlY2ltYWwiIC8+PEZpZWxkIE5hbWU9IlNhbGRvMzFhNjAiIFR5cGU9IkRlY2ltYWwiIC8+PEZpZWxkIE5hbWU9IlNhbGRvNjFhOTAiIFR5cGU9IkRlY2ltYWwiIC8+PEZpZWxkIE5hbWU9IlNhbGRvOTFhMTIwIiBUeXBlPSJEZWNpbWFsIiAvPjxGaWVsZCBOYW1lPSJTYWxkbzEyMWExODAiIFR5cGU9IkRlY2ltYWwiIC8+PEZpZWxkIE5hbWU9IlNhbGRvMTgxYTYwMCIgVHlwZT0iRGVjaW1hbCIgLz48RmllbGQgTmFtZT0iU2FsZG9tYXM2MDAiIFR5cGU9IkRlY2ltYWwiIC8+PEZpZWxkIE5hbWU9IlRvdGFsQ2xpZW50ZSIgVHlwZT0iRGVjaW1hbCIgLz48L1ZpZXc+PC9EYXRhU2V0PjwvUmVzdWx0U2NoZW1hPjwvU3FsRGF0YVNvdXJjZT4=" />
+  </ComponentStorage>
+  <ObjectStorage>
+    <Item1 ObjectType="DevExpress.XtraReports.Serialization.ObjectStorageInfo, DevExpress.XtraReports.v15.2" Ref="2" Content="System.Int32" Type="System.Type" />
+    <Item2 ObjectType="DevExpress.XtraReports.Serialization.ObjectStorageInfo, DevExpress.XtraReports.v15.2" Ref="5" Content="System.DateTime" Type="System.Type" />
+    <Item3 ObjectType="DevExpress.XtraReports.Serialization.ObjectStorageInfo, DevExpress.XtraReports.v15.2" Ref="7" Content="System.Boolean" Type="System.Type" />
+  </ObjectStorage>
+</XtraReportsLayoutSerializer>

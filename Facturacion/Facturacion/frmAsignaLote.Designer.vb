@@ -46,6 +46,10 @@ Partial Class frmAsignaLote
         Me.LabelControl3 = New DevExpress.XtraEditors.LabelControl()
         Me.LabelControl4 = New DevExpress.XtraEditors.LabelControl()
         Me.LabelControl5 = New DevExpress.XtraEditors.LabelControl()
+        Me.txtTotalBOPrecio = New DevExpress.XtraEditors.TextEdit()
+        Me.LabelControl6 = New DevExpress.XtraEditors.LabelControl()
+        Me.txtCantPrecio = New DevExpress.XtraEditors.TextEdit()
+        Me.Label2 = New System.Windows.Forms.Label()
         CType(Me.datagridLotes, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridViewProducto, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtProducto.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -56,6 +60,8 @@ Partial Class frmAsignaLote
         CType(Me.txtRequerido.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtBono.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtBonifPedido.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.txtTotalBOPrecio.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.txtCantPrecio.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'datagridLotes
@@ -63,7 +69,7 @@ Partial Class frmAsignaLote
         Me.datagridLotes.Location = New System.Drawing.Point(12, 73)
         Me.datagridLotes.MainView = Me.GridViewProducto
         Me.datagridLotes.Name = "datagridLotes"
-        Me.datagridLotes.Size = New System.Drawing.Size(831, 273)
+        Me.datagridLotes.Size = New System.Drawing.Size(918, 273)
         Me.datagridLotes.TabIndex = 0
         Me.datagridLotes.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GridViewProducto})
         '
@@ -86,25 +92,25 @@ Partial Class frmAsignaLote
         'lblCantidad
         '
         Me.lblCantidad.AutoSize = True
-        Me.lblCantidad.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblCantidad.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblCantidad.Location = New System.Drawing.Point(24, 41)
         Me.lblCantidad.Name = "lblCantidad"
-        Me.lblCantidad.Size = New System.Drawing.Size(141, 17)
+        Me.lblCantidad.Size = New System.Drawing.Size(106, 13)
         Me.lblCantidad.TabIndex = 2
         Me.lblCantidad.Text = "Cantidad a Facturar :"
         '
         'txtCantidad
         '
-        Me.txtCantidad.Location = New System.Drawing.Point(189, 38)
+        Me.txtCantidad.Location = New System.Drawing.Point(136, 38)
         Me.txtCantidad.Name = "txtCantidad"
-        Me.txtCantidad.Properties.Appearance.Font = New System.Drawing.Font("Tahoma", 10.0!)
+        Me.txtCantidad.Properties.Appearance.Font = New System.Drawing.Font("Tahoma", 8.0!)
         Me.txtCantidad.Properties.Appearance.Options.UseFont = True
         Me.txtCantidad.Properties.DisplayFormat.FormatString = "n2"
         Me.txtCantidad.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
         Me.txtCantidad.Properties.EditFormat.FormatString = "n2"
         Me.txtCantidad.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric
         Me.txtCantidad.Properties.ReadOnly = True
-        Me.txtCantidad.Size = New System.Drawing.Size(87, 22)
+        Me.txtCantidad.Size = New System.Drawing.Size(64, 20)
         Me.txtCantidad.TabIndex = 3
         '
         'txtTotalAsignado
@@ -164,7 +170,8 @@ Partial Class frmAsignaLote
         'chkBonifProd
         '
         Me.chkBonifProd.AutoSize = True
-        Me.chkBonifProd.Location = New System.Drawing.Point(667, 42)
+        Me.chkBonifProd.Enabled = False
+        Me.chkBonifProd.Location = New System.Drawing.Point(726, 43)
         Me.chkBonifProd.Name = "chkBonifProd"
         Me.chkBonifProd.Size = New System.Drawing.Size(176, 17)
         Me.chkBonifProd.TabIndex = 11
@@ -174,7 +181,8 @@ Partial Class frmAsignaLote
         'chkBonifica
         '
         Me.chkBonifica.AutoSize = True
-        Me.chkBonifica.Location = New System.Drawing.Point(530, 41)
+        Me.chkBonifica.Enabled = False
+        Me.chkBonifica.Location = New System.Drawing.Point(589, 42)
         Me.chkBonifica.Name = "chkBonifica"
         Me.chkBonifica.Size = New System.Drawing.Size(131, 17)
         Me.chkBonifica.TabIndex = 13
@@ -223,30 +231,30 @@ Partial Class frmAsignaLote
         'lblBonifPedido
         '
         Me.lblBonifPedido.AutoSize = True
-        Me.lblBonifPedido.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblBonifPedido.Location = New System.Drawing.Point(282, 40)
+        Me.lblBonifPedido.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblBonifPedido.Location = New System.Drawing.Point(206, 42)
         Me.lblBonifPedido.Name = "lblBonifPedido"
-        Me.lblBonifPedido.Size = New System.Drawing.Size(139, 17)
+        Me.lblBonifPedido.Size = New System.Drawing.Size(97, 13)
         Me.lblBonifPedido.TabIndex = 19
-        Me.lblBonifPedido.Text = "Bonificar en Pedido :"
+        Me.lblBonifPedido.Text = "Bonifica Producto :"
         '
         'txtBonifPedido
         '
-        Me.txtBonifPedido.Location = New System.Drawing.Point(420, 38)
+        Me.txtBonifPedido.Location = New System.Drawing.Point(312, 38)
         Me.txtBonifPedido.Name = "txtBonifPedido"
-        Me.txtBonifPedido.Properties.Appearance.Font = New System.Drawing.Font("Tahoma", 10.0!)
+        Me.txtBonifPedido.Properties.Appearance.Font = New System.Drawing.Font("Tahoma", 8.0!)
         Me.txtBonifPedido.Properties.Appearance.Options.UseFont = True
         Me.txtBonifPedido.Properties.DisplayFormat.FormatString = "n2"
         Me.txtBonifPedido.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
         Me.txtBonifPedido.Properties.EditFormat.FormatString = "n2"
         Me.txtBonifPedido.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric
         Me.txtBonifPedido.Properties.ReadOnly = True
-        Me.txtBonifPedido.Size = New System.Drawing.Size(87, 22)
+        Me.txtBonifPedido.Size = New System.Drawing.Size(73, 20)
         Me.txtBonifPedido.TabIndex = 20
         '
         'LabelControl3
         '
-        Me.LabelControl3.Location = New System.Drawing.Point(718, 352)
+        Me.LabelControl3.Location = New System.Drawing.Point(705, 352)
         Me.LabelControl3.Name = "LabelControl3"
         Me.LabelControl3.Size = New System.Drawing.Size(41, 13)
         Me.LabelControl3.TabIndex = 22
@@ -262,17 +270,62 @@ Partial Class frmAsignaLote
         '
         'LabelControl5
         '
-        Me.LabelControl5.Location = New System.Drawing.Point(796, 351)
+        Me.LabelControl5.Location = New System.Drawing.Point(760, 352)
         Me.LabelControl5.Name = "LabelControl5"
-        Me.LabelControl5.Size = New System.Drawing.Size(41, 13)
+        Me.LabelControl5.Size = New System.Drawing.Size(83, 13)
         Me.LabelControl5.TabIndex = 24
-        Me.LabelControl5.Text = "Bonificar"
+        Me.LabelControl5.Text = "Bonifica Producto"
+        '
+        'txtTotalBOPrecio
+        '
+        Me.txtTotalBOPrecio.Location = New System.Drawing.Point(854, 369)
+        Me.txtTotalBOPrecio.Name = "txtTotalBOPrecio"
+        Me.txtTotalBOPrecio.Properties.Appearance.Options.UseTextOptions = True
+        Me.txtTotalBOPrecio.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far
+        Me.txtTotalBOPrecio.Size = New System.Drawing.Size(67, 20)
+        Me.txtTotalBOPrecio.TabIndex = 25
+        '
+        'LabelControl6
+        '
+        Me.LabelControl6.Location = New System.Drawing.Point(854, 350)
+        Me.LabelControl6.Name = "LabelControl6"
+        Me.LabelControl6.Size = New System.Drawing.Size(69, 13)
+        Me.LabelControl6.TabIndex = 26
+        Me.LabelControl6.Text = "Bonifica Precio"
+        '
+        'txtCantPrecio
+        '
+        Me.txtCantPrecio.Location = New System.Drawing.Point(490, 38)
+        Me.txtCantPrecio.Name = "txtCantPrecio"
+        Me.txtCantPrecio.Properties.Appearance.Font = New System.Drawing.Font("Tahoma", 8.0!)
+        Me.txtCantPrecio.Properties.Appearance.Options.UseFont = True
+        Me.txtCantPrecio.Properties.DisplayFormat.FormatString = "n2"
+        Me.txtCantPrecio.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+        Me.txtCantPrecio.Properties.EditFormat.FormatString = "n2"
+        Me.txtCantPrecio.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+        Me.txtCantPrecio.Properties.ReadOnly = True
+        Me.txtCantPrecio.Size = New System.Drawing.Size(73, 20)
+        Me.txtCantPrecio.TabIndex = 27
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Location = New System.Drawing.Point(401, 41)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(84, 13)
+        Me.Label2.TabIndex = 28
+        Me.Label2.Text = "Bonifica Precio :"
         '
         'frmAsignaLote
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(855, 400)
+        Me.ClientSize = New System.Drawing.Size(933, 400)
+        Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.txtCantPrecio)
+        Me.Controls.Add(Me.LabelControl6)
+        Me.Controls.Add(Me.txtTotalBOPrecio)
         Me.Controls.Add(Me.LabelControl5)
         Me.Controls.Add(Me.LabelControl4)
         Me.Controls.Add(Me.LabelControl3)
@@ -309,6 +362,8 @@ Partial Class frmAsignaLote
         CType(Me.txtRequerido.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtBono.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtBonifPedido.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.txtTotalBOPrecio.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.txtCantPrecio.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -336,4 +391,8 @@ Partial Class frmAsignaLote
     Friend WithEvents LabelControl3 As DevExpress.XtraEditors.LabelControl
     Friend WithEvents LabelControl4 As DevExpress.XtraEditors.LabelControl
     Friend WithEvents LabelControl5 As DevExpress.XtraEditors.LabelControl
+    Friend WithEvents txtTotalBOPrecio As DevExpress.XtraEditors.TextEdit
+    Friend WithEvents LabelControl6 As DevExpress.XtraEditors.LabelControl
+    Friend WithEvents txtCantPrecio As DevExpress.XtraEditors.TextEdit
+    Friend WithEvents Label2 As System.Windows.Forms.Label
 End Class

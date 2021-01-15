@@ -215,6 +215,37 @@ Public Class ClassManager
     End Function
 
 
+    Public Function ExecAplicaRecibo(sNameStoreProc As String, tblPagos As DataTable, sUsuario As String, dTipoCambio As Double, bflgFlotante As Boolean) As Boolean
+        Dim bOk As Boolean
+        Dim i As Integer
+
+        Try
+            If conex.State = ConnectionState.Open Then
+                conex.Close()
+            End If
+            conex.Open()
+            sNameStoreProc = IIf(schemaName <> "", schemaName, "dbo" & "." & sNameStoreProc)
+            cmd = New SqlCommand()
+            cmd.Connection = conex
+            cmd.CommandText = sNameStoreProc
+            cmd.CommandType = CommandType.StoredProcedure
+            cmd.Parameters.AddWithValue("@Pagos", tblPagos).SqlDbType = SqlDbType.Structured
+            cmd.Parameters.AddWithValue("@Usuario", sUsuario)
+            cmd.Parameters.AddWithValue("@TipoCambio", dTipoCambio)
+            cmd.Parameters.AddWithValue("@flgFlotante", bflgFlotante)
+            i = cmd.ExecuteNonQuery()
+            conex.Close()
+            bOk = True
+        Catch ex As Exception
+            Throw
+            bOk = False
+        Finally
+
+        End Try
+        Return bOk
+
+    End Function
+
     Public Function ExecSP(sNameStoreProc As String, sParameters As String) As Boolean
         Dim sql As String
         Dim bOk As Boolean

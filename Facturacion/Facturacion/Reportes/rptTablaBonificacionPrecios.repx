@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XtraReportsLayoutSerializer SerializerVersion="15.2.7.0" Ref="1" ControlType="DevExpress.XtraReports.UI.XtraReport, DevExpress.XtraReports.v15.2, Version=15.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Name="rptTablaBonificacionPrecios" Landscape="true" Margins="49, 56, 50, 51" PageWidth="1100" PageHeight="850" ScriptLanguage="VisualBasic" Version="15.2" DataMember="fafprintTablaBonificacionPrecios" DataSource="#Ref-0" BorderDashStyle="DashDot">
+  <Parameters>
+    <Item1 Ref="3" Visible="false" Description="psEmpresa" Name="psEmpresa" />
+    <Item2 Ref="4" Visible="false" Description="psNivel" Name="psNivel" />
+    <Item3 Ref="5" Visible="false" Description="psMoneda" Name="psMoneda" />
+  </Parameters>
+  <Bands>
+    <Item1 Ref="6" ControlType="DetailBand" Name="Detail" HeightF="23.00002" TextAlignment="TopLeft" StyleName="DataField" Padding="0,0,0,0,100">
+      <Controls>
+        <Item1 Ref="7" ControlType="XRLabel" Name="XrLabel15" Text="XrLabel15" SizeF="58.71315,17" LocationFloat="0, 0" Font="Arial, 8pt" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="8" PropertyName="Text" DataMember="fafprintTablaBonificacionPrecios.IDProducto" />
+          </DataBindings>
+          <StylePriority Ref="9" UseFont="false" />
+        </Item1>
+        <Item2 Ref="10" ControlType="XRLabel" Name="XrLabel16" CanGrow="false" Text="XrLabel16" SizeF="257.226379,17" LocationFloat="58.71315, 0" Font="Arial, 8pt" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="11" PropertyName="Text" DataMember="fafprintTablaBonificacionPrecios.Descr" />
+          </DataBindings>
+          <StylePriority Ref="12" UseFont="false" />
+        </Item2>
+        <Item3 Ref="13" ControlType="XRLabel" Name="XrLabel17" CanGrow="false" Text="XrLabel17" SizeF="115.3585,17" LocationFloat="315.9395, 0" Font="Arial, 8pt" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="14" PropertyName="Text" DataMember="fafprintTablaBonificacionPrecios.Presentacion" />
+          </DataBindings>
+          <StylePriority Ref="15" UseFont="false" />
+        </Item3>
+        <Item4 Ref="16" ControlType="XRLabel" Name="XrLabel18" CanGrow="false" Text="XrLabel18" SizeF="92.86008,17" LocationFloat="443.443878, 0" Font="Arial, 8pt" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="17" PropertyName="Text" DataMember="fafprintTablaBonificacionPrecios.Generico" />
+          </DataBindings>
+          <StylePriority Ref="18" UseFont="false" />
+        </Item4>
+        <Item5 Ref="19" ControlType="XRLabel" Name="XrLabel19" Text="XrLabel19" TextAlignment="TopRight" SizeF="71.03842,17" LocationFloat="546.8886, 0" Font="Arial, 8pt" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="20" FormatString="{0:n2}" PropertyName="Text" DataMember="fafprintTablaBonificacionPrecios.Precio" />
+          </DataBindings>
+          <StylePriority Ref="21" UseFont="false" UseTextAlignment="false" />
+        </Item5>
+        <Item6 Ref="22" ControlType="XRLabel" Name="XrLabel20" Text="XrLabel20" TextAlignment="TopRight" SizeF="76.02606,17" LocationFloat="617.927, 0" Font="Arial, 8pt" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="23" FormatString="{0:n2}" PropertyName="Text" DataMember="fafprintTablaBonificacionPrecios.Publico" />
+          </DataBindings>
+          <StylePriority Ref="24" UseFont="false" UseTextAlignment="false" />
+        </Item6>
+        <Item7 Ref="25" ControlType="XRLabel" Name="XrLabel21" Text="XrLabel21" SizeF="63.37103,17" LocationFloat="701.601257, 0" Font="Arial, 8pt" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="26" FormatString="{0:n2}" PropertyName="Text" DataMember="fafprintTablaBonificacionPrecios.Escala1" />
+          </DataBindings>
+          <StylePriority Ref="27" UseFont="false" />
+        </Item7>
+        <Item8 Ref="28" ControlType="XRLabel" Name="XrLabel22" Text="XrLabel22" SizeF="61.28784,17" LocationFloat="767.553955, 0" Font="Arial, 8pt" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="29" PropertyName="Text" DataMember="fafprintTablaBonificacionPrecios.Escala2" />
+          </DataBindings>
+          <StylePriority Ref="30" UseFont="false" />
+        </Item8>
+        <Item9 Ref="31" ControlType="XRLabel" Name="XrLabel23" Text="XrLabel23" SizeF="61.8309937,17" LocationFloat="834.2146, 0" Font="Arial, 8pt" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="32" PropertyName="Text" DataMember="fafprintTablaBonificacionPrecios.Escala3" />
+          </DataBindings>
+          <StylePriority Ref="33" UseFont="false" />
+        </Item9>
+        <Item10 Ref="34" ControlType="XRLabel" Name="XrLabel24" CanGrow="false" Text="XrLabel24" SizeF="78.53772,17" LocationFloat="906.4623, 0" Font="Arial, 8pt" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="35" PropertyName="Text" DataMember="fafprintTablaBonificacionPrecios.Escala4" />
+          </DataBindings>
+          <StylePriority Ref="36" UseFont="false" />
+        </Item10>
+      </Controls>
+    </Item1>
+    <Item2 Ref="37" ControlType="TopMarginBand" Name="TopMargin" HeightF="50" TextAlignment="TopLeft" Padding="0,0,0,0,100" />
+    <Item3 Ref="38" ControlType="BottomMarginBand" Name="BottomMargin" HeightF="51" TextAlignment="TopLeft" Padding="0,0,0,0,100" />
+    <Item4 Ref="39" ControlType="PageHeaderBand" Name="PageHeaderBand1" HeightF="74.75001">
+      <Controls>
+        <Item1 Ref="40" ControlType="XRLabel" Name="XrLabel29" Text="Moneda :" SizeF="65.55292,18" LocationFloat="552.3741, 22.9999866" Font="Times New Roman, 9.75pt, style=Bold" Padding="2,2,0,0,100">
+          <StylePriority Ref="41" UseFont="false" />
+        </Item1>
+        <Item2 Ref="42" ControlType="XRLabel" Name="XrLabel28" Text="Nivel Precio :" SizeF="91.4000854,18" LocationFloat="328.237183, 25.0833187" Font="Times New Roman, 9.75pt, style=Bold" Padding="2,2,0,0,96">
+          <StylePriority Ref="43" UseFont="false" />
+        </Item2>
+        <Item3 Ref="44" ControlType="XRLabel" Name="XrLabel27" Text="XrLabel27" SizeF="100,18" LocationFloat="617.927, 22.9999866" Font="Times New Roman, 9.75pt, style=Bold" Padding="2,2,0,0,96">
+          <DataBindings>
+            <Item1 Ref="46" Parameter="#Ref-5" PropertyName="Text" DataMember="psMoneda" />
+          </DataBindings>
+          <StylePriority Ref="47" UseFont="false" />
+        </Item3>
+        <Item4 Ref="48" ControlType="XRLabel" Name="XrLabel26" Text="XrLabel26" SizeF="100,18" LocationFloat="419.63736, 22.9999866" Font="Times New Roman, 9.75pt, style=Bold" Padding="2,2,0,0,96">
+          <DataBindings>
+            <Item1 Ref="49" Parameter="#Ref-4" PropertyName="Text" DataMember="psNivel" />
+          </DataBindings>
+          <StylePriority Ref="50" UseFont="false" />
+        </Item4>
+        <Item5 Ref="51" ControlType="XRLabel" Name="XrLabel2" Text="XrLabel2" TextAlignment="TopCenter" SizeF="315.9395,23" LocationFloat="276.140442, 0" Font="Times New Roman, 12pt, style=Bold" Padding="2,2,0,0,96">
+          <DataBindings>
+            <Item1 Ref="52" Parameter="#Ref-3" PropertyName="Text" DataMember="psEmpresa" />
+          </DataBindings>
+          <StylePriority Ref="53" UseFont="false" UseTextAlignment="false" />
+        </Item5>
+        <Item6 Ref="54" ControlType="XRLabel" Name="XrLabel3" Text="IDProducto" SizeF="95.58814,16.125" LocationFloat="0, 48.0833359" StyleName="FieldCaption" Padding="2,2,0,0,100" />
+        <Item7 Ref="55" ControlType="XRLabel" Name="XrLabel4" Text="Descripción" SizeF="186.6741,14.125" LocationFloat="117.6048, 48.0833359" StyleName="FieldCaption" Padding="2,2,0,0,100" />
+        <Item8 Ref="56" ControlType="XRLabel" Name="XrLabel5" Text="Presentacion" SizeF="103.9001,14.125" LocationFloat="315.737183, 48.0833359" StyleName="FieldCaption" Padding="2,2,0,0,100" />
+        <Item9 Ref="57" ControlType="XRLabel" Name="XrLabel6" Text="Generico" SizeF="60.568512,14.125" LocationFloat="443.443878, 48.0833359" StyleName="FieldCaption" Padding="2,2,0,0,100" />
+        <Item10 Ref="58" ControlType="XRLabel" Name="XrLabel7" Text="Precio" TextAlignment="TopRight" SizeF="71.03839,14.125" LocationFloat="546.8886, 48.0833359" StyleName="FieldCaption" Padding="2,2,0,0,100">
+          <StylePriority Ref="59" UseTextAlignment="false" />
+        </Item10>
+        <Item11 Ref="60" ControlType="XRLabel" Name="XrLabel8" Text="Publico" TextAlignment="TopRight" SizeF="65.11084,14.125" LocationFloat="617.927, 48.0833359" StyleName="FieldCaption" Padding="2,2,0,0,100">
+          <StylePriority Ref="61" UseTextAlignment="false" />
+        </Item11>
+        <Item12 Ref="62" ControlType="XRLabel" Name="XrLabel9" Text="Escala1" SizeF="50.7892456,14.125" LocationFloat="701.601257, 48.0833359" StyleName="FieldCaption" Padding="2,2,0,0,100" />
+        <Item13 Ref="63" ControlType="XRLabel" Name="XrLabel10" Text="Escala2" SizeF="58.7061157,14.125" LocationFloat="764.9723, 48.0833359" StyleName="FieldCaption" Padding="2,2,0,0,100" />
+        <Item14 Ref="64" ControlType="XRLabel" Name="XrLabel11" Text="Escala3" SizeF="49.2719727,14.125001" LocationFloat="835.694153, 48.0833359" StyleName="FieldCaption" Padding="2,2,0,0,100" />
+        <Item15 Ref="65" ControlType="XRLabel" Name="XrLabel12" Text="Escala4" SizeF="47.4190674,14.125" LocationFloat="906.4623, 48.0833359" StyleName="FieldCaption" Padding="2,2,0,0,100" />
+        <Item16 Ref="66" ControlType="XRLine" Name="XrLine1" SizeF="968.0416,2" LocationFloat="0, 64.20838" />
+        <Item17 Ref="67" ControlType="XRPageInfo" Name="XrPageInfo2" Format="Pag {0} of {1}" TextAlignment="TopRight" SizeF="139.710571,20.08333" LocationFloat="796.2758, 22.9999866" StyleName="PageInfo" Padding="2,2,0,0,100" />
+        <Item18 Ref="68" ControlType="XRLabel" Name="XrLabel25" Text="Tabla de Bonificaciones y Precios" SizeF="315.9395,18" LocationFloat="0, 22.9999866" StyleName="Title" Font="Times New Roman, 12pt, style=Bold" Padding="2,2,0,0,100">
+          <StylePriority Ref="69" UseFont="false" />
+        </Item18>
+        <Item19 Ref="70" ControlType="XRPageInfo" Name="XrPageInfo1" PageInfo="DateTime" TextAlignment="TopRight" SizeF="144.063721,12.583333" LocationFloat="796.2759, 0" StyleName="PageInfo" Padding="2,2,0,0,100">
+          <StylePriority Ref="71" UseTextAlignment="false" />
+        </Item19>
+      </Controls>
+    </Item4>
+    <Item5 Ref="72" ControlType="GroupHeaderBand" Name="GroupHeaderBand1" RepeatEveryPage="true" PageBreak="BeforeBandExceptFirstEntry" HeightF="23" KeepTogether="true" StyleName="DataField">
+      <GroupFields>
+        <Item1 Ref="73" FieldName="IDProveedor" />
+      </GroupFields>
+      <Controls>
+        <Item1 Ref="74" ControlType="XRLabel" Name="XrLabel1" Text="Proveedor :" SizeF="105.2855,17" LocationFloat="49.94447, 0" StyleName="FieldCaption" Font="Times New Roman, 10pt, style=Italic" Padding="2,2,0,0,100">
+          <StylePriority Ref="75" UseFont="false" />
+        </Item1>
+        <Item2 Ref="76" ControlType="XRLabel" Name="XrLabel13" Text="XrLabel13" SizeF="105.2855,17" LocationFloat="155.2299, 0" Font="Arial, 9pt, style=Bold, Italic" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="77" PropertyName="Text" DataMember="fafprintTablaBonificacionPrecios.IDProveedor" />
+          </DataBindings>
+          <StylePriority Ref="78" UseFont="false" />
+        </Item2>
+        <Item3 Ref="79" ControlType="XRLabel" Name="XrLabel14" Text="XrLabel14" SizeF="327.6001,17" LocationFloat="276.1404, 0" Font="Arial, 9pt, style=Bold, Italic" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="80" PropertyName="Text" DataMember="fafprintTablaBonificacionPrecios.Nombre" />
+          </DataBindings>
+          <StylePriority Ref="81" UseFont="false" />
+        </Item3>
+      </Controls>
+    </Item5>
+    <Item6 Ref="82" ControlType="PageFooterBand" Name="PageFooterBand1" Expanded="false" HeightF="2.958329" />
+    <Item7 Ref="83" ControlType="ReportHeaderBand" Name="ReportHeaderBand1" HeightF="0" />
+  </Bands>
+  <DefaultPrinterSettingsUsing Ref="84" />
+  <StyleSheet>
+    <Item1 Ref="85" Name="Title" BorderStyle="Inset" Font="Times New Roman, 21pt" ForeColor="Black" BackColor="Transparent" BorderColor="Black" Sides="None" StringFormat="Near;Near;0;None;Character;Default" BorderWidthSerializable="1" />
+    <Item2 Ref="86" Name="FieldCaption" BorderStyle="Inset" Font="Times New Roman, 10pt" ForeColor="Black" BackColor="Transparent" BorderColor="Black" Sides="None" StringFormat="Near;Near;0;None;Character;Default" BorderWidthSerializable="1" />
+    <Item3 Ref="87" Name="PageInfo" BorderStyle="Inset" Font="Arial, 8pt" ForeColor="Black" BackColor="Transparent" BorderColor="Black" Sides="None" StringFormat="Near;Near;0;None;Character;Default" BorderWidthSerializable="1" />
+    <Item4 Ref="88" Name="DataField" BorderStyle="Inset" Padding="2,2,0,0,100" Font="Arial, 9pt" ForeColor="Black" BackColor="Transparent" BorderColor="Black" Sides="None" StringFormat="Near;Near;0;None;Character;Default" BorderWidthSerializable="1" />
+  </StyleSheet>
+  <ComponentStorage>
+    <Item1 Ref="0" ObjectType="DevExpress.DataAccess.Sql.SqlDataSource,DevExpress.DataAccess.v15.2" Name="SqlDataSource1" Base64="PFNxbERhdGFTb3VyY2U+PE5hbWU+U3FsRGF0YVNvdXJjZTE8L05hbWU+PENvbm5lY3Rpb24gTmFtZT0ibG9jYWxob3N0X0NFRDJfQ29ubmVjdGlvbiIgRnJvbUFwcENvbmZpZz0idHJ1ZSIgLz48UXVlcnkgVHlwZT0iU3RvcmVkUHJvY1F1ZXJ5IiBOYW1lPSJmYWZwcmludFRhYmxhQm9uaWZpY2FjaW9uUHJlY2lvcyI+PFBhcmFtZXRlciBOYW1lPSJAUHJvdmVlZG9yIiBUeXBlPSJTeXN0ZW0uSW50MzIiPjA8L1BhcmFtZXRlcj48UGFyYW1ldGVyIE5hbWU9IkBJRE5pdmVsUHJlY2lvIiBUeXBlPSJTeXN0ZW0uSW50MzIiPjA8L1BhcmFtZXRlcj48UGFyYW1ldGVyIE5hbWU9IkBJRE1vbmVkYSIgVHlwZT0iU3lzdGVtLkludDMyIj4wPC9QYXJhbWV0ZXI+PFByb2NOYW1lPmZhZnByaW50VGFibGFCb25pZmljYWNpb25QcmVjaW9zPC9Qcm9jTmFtZT48L1F1ZXJ5PjxSZXN1bHRTY2hlbWE+PERhdGFTZXQgTmFtZT0iU3FsRGF0YVNvdXJjZTEiPjxWaWV3IE5hbWU9ImZhZnByaW50VGFibGFCb25pZmljYWNpb25QcmVjaW9zIj48RmllbGQgTmFtZT0iSURQcm92ZWVkb3IiIFR5cGU9IkludDMyIiAvPjxGaWVsZCBOYW1lPSJOb21icmUiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iSURQcm9kdWN0byIgVHlwZT0iSW50NjQiIC8+PEZpZWxkIE5hbWU9IkRlc2NyIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IlByZXNlbnRhY2lvbiIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJHZW5lcmljbyIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJDb3N0b1Byb21Mb2NhbCIgVHlwZT0iRGVjaW1hbCIgLz48RmllbGQgTmFtZT0iQ29zdG9Qcm9tRG9sYXIiIFR5cGU9IkRlY2ltYWwiIC8+PEZpZWxkIE5hbWU9IlByZWNpbyIgVHlwZT0iRGVjaW1hbCIgLz48RmllbGQgTmFtZT0iUHVibGljbyIgVHlwZT0iRGVjaW1hbCIgLz48RmllbGQgTmFtZT0iRXNjYWxhMSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJFc2NhbGEyIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IkVzY2FsYTMiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iRXNjYWxhNCIgVHlwZT0iU3RyaW5nIiAvPjwvVmlldz48L0RhdGFTZXQ+PC9SZXN1bHRTY2hlbWE+PC9TcWxEYXRhU291cmNlPg==" />
+  </ComponentStorage>
+</XtraReportsLayoutSerializer>

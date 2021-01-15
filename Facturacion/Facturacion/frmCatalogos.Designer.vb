@@ -46,6 +46,7 @@ Partial Class frmCatalogos
         Me.LabelControl1 = New DevExpress.XtraEditors.LabelControl()
         Me.txtDescr = New DevExpress.XtraEditors.TextEdit()
         Me.txtCodigo = New DevExpress.XtraEditors.TextEdit()
+        Me.chkExtra = New DevExpress.XtraEditors.CheckEdit()
         CType(Me.GridControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.searchLookUpEdit, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -57,24 +58,25 @@ Partial Class frmCatalogos
         CType(Me.chkActivo.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtDescr.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtCodigo.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.chkExtra.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnAdd
         '
         Me.btnAdd.ButtonStyle = DevExpress.XtraEditors.Controls.BorderStyles.Style3D
         Me.btnAdd.Image = CType(resources.GetObject("btnAdd.Image"), System.Drawing.Image)
-        Me.btnAdd.Location = New System.Drawing.Point(553, 102)
+        Me.btnAdd.Location = New System.Drawing.Point(553, 130)
         Me.btnAdd.Name = "btnAdd"
         Me.btnAdd.Size = New System.Drawing.Size(42, 36)
         Me.btnAdd.TabIndex = 9
         '
         'GridControl1
         '
-        Me.GridControl1.Location = New System.Drawing.Point(26, 102)
+        Me.GridControl1.Location = New System.Drawing.Point(26, 103)
         Me.GridControl1.MainView = Me.GridView1
         Me.GridControl1.Name = "GridControl1"
         Me.GridControl1.RepositoryItems.AddRange(New DevExpress.XtraEditors.Repository.RepositoryItem() {Me.searchLookUpEdit})
-        Me.GridControl1.Size = New System.Drawing.Size(521, 361)
+        Me.GridControl1.Size = New System.Drawing.Size(521, 348)
         Me.GridControl1.TabIndex = 8
         Me.GridControl1.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GridView1})
         '
@@ -161,7 +163,7 @@ Partial Class frmCatalogos
         '
         Me.btnsave.ButtonStyle = DevExpress.XtraEditors.Controls.BorderStyles.Style3D
         Me.btnsave.Image = CType(resources.GetObject("btnsave.Image"), System.Drawing.Image)
-        Me.btnsave.Location = New System.Drawing.Point(553, 162)
+        Me.btnsave.Location = New System.Drawing.Point(553, 190)
         Me.btnsave.Name = "btnsave"
         Me.btnsave.Size = New System.Drawing.Size(42, 36)
         Me.btnsave.TabIndex = 15
@@ -170,7 +172,7 @@ Partial Class frmCatalogos
         '
         Me.btnDelete.ButtonStyle = DevExpress.XtraEditors.Controls.BorderStyles.Style3D
         Me.btnDelete.Image = CType(resources.GetObject("btnDelete.Image"), System.Drawing.Image)
-        Me.btnDelete.Location = New System.Drawing.Point(553, 216)
+        Me.btnDelete.Location = New System.Drawing.Point(553, 244)
         Me.btnDelete.Name = "btnDelete"
         Me.btnDelete.Size = New System.Drawing.Size(42, 36)
         Me.btnDelete.TabIndex = 16
@@ -179,7 +181,7 @@ Partial Class frmCatalogos
         '
         Me.btnEdit.ButtonStyle = DevExpress.XtraEditors.Controls.BorderStyles.Style3D
         Me.btnEdit.Image = CType(resources.GetObject("btnEdit.Image"), System.Drawing.Image)
-        Me.btnEdit.Location = New System.Drawing.Point(553, 273)
+        Me.btnEdit.Location = New System.Drawing.Point(553, 301)
         Me.btnEdit.Name = "btnEdit"
         Me.btnEdit.Size = New System.Drawing.Size(42, 36)
         Me.btnEdit.TabIndex = 17
@@ -188,13 +190,14 @@ Partial Class frmCatalogos
         '
         Me.btnCancel.ButtonStyle = DevExpress.XtraEditors.Controls.BorderStyles.Style3D
         Me.btnCancel.Image = CType(resources.GetObject("btnCancel.Image"), System.Drawing.Image)
-        Me.btnCancel.Location = New System.Drawing.Point(553, 329)
+        Me.btnCancel.Location = New System.Drawing.Point(553, 357)
         Me.btnCancel.Name = "btnCancel"
         Me.btnCancel.Size = New System.Drawing.Size(42, 36)
         Me.btnCancel.TabIndex = 18
         '
         'GroupControl1
         '
+        Me.GroupControl1.Controls.Add(Me.chkExtra)
         Me.GroupControl1.Controls.Add(Me.lblExtragridLookup)
         Me.GroupControl1.Controls.Add(Me.gridLookUpEditExtra)
         Me.GroupControl1.Controls.Add(Me.chkActivo)
@@ -204,12 +207,12 @@ Partial Class frmCatalogos
         Me.GroupControl1.Controls.Add(Me.txtCodigo)
         Me.GroupControl1.Location = New System.Drawing.Point(26, 4)
         Me.GroupControl1.Name = "GroupControl1"
-        Me.GroupControl1.Size = New System.Drawing.Size(569, 83)
+        Me.GroupControl1.Size = New System.Drawing.Size(569, 93)
         Me.GroupControl1.TabIndex = 19
         '
         'lblExtragridLookup
         '
-        Me.lblExtragridLookup.Location = New System.Drawing.Point(64, 60)
+        Me.lblExtragridLookup.Location = New System.Drawing.Point(18, 66)
         Me.lblExtragridLookup.Name = "lblExtragridLookup"
         Me.lblExtragridLookup.Size = New System.Drawing.Size(70, 13)
         Me.lblExtragridLookup.TabIndex = 21
@@ -218,11 +221,11 @@ Partial Class frmCatalogos
         '
         'gridLookUpEditExtra
         '
-        Me.gridLookUpEditExtra.Location = New System.Drawing.Point(154, 57)
+        Me.gridLookUpEditExtra.Location = New System.Drawing.Point(97, 63)
         Me.gridLookUpEditExtra.Name = "gridLookUpEditExtra"
         Me.gridLookUpEditExtra.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
         Me.gridLookUpEditExtra.Properties.View = Me.GridLookUpEdit1View
-        Me.gridLookUpEditExtra.Size = New System.Drawing.Size(313, 20)
+        Me.gridLookUpEditExtra.Size = New System.Drawing.Size(265, 20)
         Me.gridLookUpEditExtra.TabIndex = 20
         Me.gridLookUpEditExtra.Visible = False
         '
@@ -235,7 +238,7 @@ Partial Class frmCatalogos
         '
         'chkActivo
         '
-        Me.chkActivo.Location = New System.Drawing.Point(474, 32)
+        Me.chkActivo.Location = New System.Drawing.Point(474, 28)
         Me.chkActivo.Name = "chkActivo"
         Me.chkActivo.Properties.Caption = "Activo "
         Me.chkActivo.Size = New System.Drawing.Size(75, 19)
@@ -243,7 +246,7 @@ Partial Class frmCatalogos
         '
         'LabelControl2
         '
-        Me.LabelControl2.Location = New System.Drawing.Point(172, 34)
+        Me.LabelControl2.Location = New System.Drawing.Point(172, 30)
         Me.LabelControl2.Name = "LabelControl2"
         Me.LabelControl2.Size = New System.Drawing.Size(61, 13)
         Me.LabelControl2.TabIndex = 18
@@ -251,7 +254,7 @@ Partial Class frmCatalogos
         '
         'LabelControl1
         '
-        Me.LabelControl1.Location = New System.Drawing.Point(18, 34)
+        Me.LabelControl1.Location = New System.Drawing.Point(18, 30)
         Me.LabelControl1.Name = "LabelControl1"
         Me.LabelControl1.Size = New System.Drawing.Size(40, 13)
         Me.LabelControl1.TabIndex = 17
@@ -259,17 +262,26 @@ Partial Class frmCatalogos
         '
         'txtDescr
         '
-        Me.txtDescr.Location = New System.Drawing.Point(239, 31)
+        Me.txtDescr.Location = New System.Drawing.Point(239, 27)
         Me.txtDescr.Name = "txtDescr"
         Me.txtDescr.Size = New System.Drawing.Size(228, 20)
         Me.txtDescr.TabIndex = 16
         '
         'txtCodigo
         '
-        Me.txtCodigo.Location = New System.Drawing.Point(64, 31)
+        Me.txtCodigo.Location = New System.Drawing.Point(64, 27)
         Me.txtCodigo.Name = "txtCodigo"
         Me.txtCodigo.Size = New System.Drawing.Size(83, 20)
         Me.txtCodigo.TabIndex = 15
+        '
+        'chkExtra
+        '
+        Me.chkExtra.Location = New System.Drawing.Point(368, 63)
+        Me.chkExtra.Name = "chkExtra"
+        Me.chkExtra.Properties.Caption = "chkExtra"
+        Me.chkExtra.Size = New System.Drawing.Size(170, 19)
+        Me.chkExtra.TabIndex = 22
+        Me.chkExtra.Visible = False
         '
         'frmCatalogos
         '
@@ -299,6 +311,7 @@ Partial Class frmCatalogos
         CType(Me.chkActivo.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtDescr.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtCodigo.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.chkExtra.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -325,4 +338,5 @@ Partial Class frmCatalogos
     Friend WithEvents searchLookUpEdit As DevExpress.XtraEditors.Repository.RepositoryItemSearchLookUpEdit
     Friend WithEvents RepositoryItemSearchLookUpEdit1View As DevExpress.XtraGrid.Views.Grid.GridView
     Friend WithEvents GridColumnIDExtra As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents chkExtra As DevExpress.XtraEditors.CheckEdit
 End Class

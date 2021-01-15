@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XtraReportsLayoutSerializer SerializerVersion="15.2.7.0" Ref="1" ControlType="DevExpress.XtraReports.UI.XtraReport, DevExpress.XtraReports.v15.2, Version=15.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Name="rptFacturaFinal" Margins="73, 50, 107, 100" PageWidth="850" PageHeight="1100" ScriptLanguage="VisualBasic" Version="15.2" DataMember="fafPrintFacturaLote" DataSource="#Ref-0">
+  <Parameters>
+    <Item1 Ref="3" Visible="false" ValueInfo="12" Name="IDFactura" Type="#Ref-2" />
+    <Item2 Ref="5" Visible="false" Description="Monto en Letras" Name="psMontoEnLetras" />
+  </Parameters>
+  <CalculatedFields>
+    <Item1 Ref="6" Name="Dia" Expression="GetDay([Fecha])" DataMember="fafgetFacturaHeader" />
+    <Item2 Ref="7" Name="Mes" Expression="GetMonth([Fecha])" DataMember="fafgetFacturaHeader" />
+    <Item3 Ref="8" Name="Anio" Expression="GetYear([Fecha])" DataMember="fafgetFacturaHeader" />
+    <Item4 Ref="9" Name="Hora" Expression="[Dateinsert]" DataMember="fafgetFacturaHeader" />
+    <Item5 Ref="10" Name="LoteCantidad" Expression=" [LoteProveedor]+ '- ' +ToStr(ToInt([CantidadLote]))+':' + ToStr(GetDay([FechaVencimiento]))+'/' + ToStr(GetMonth([FechaVencimiento]))+'/' + ToStr(GetYear([FechaVencimiento]))" DataMember="fafPrintFacturaLote" />
+    <Item6 Ref="11" Name="TotalDolares" Expression="Iif([TipoCambio]&gt;0, [TotalFinal]/[TipoCambio] , 0)" DataMember="fafgetFacturaHeader" />
+  </CalculatedFields>
+  <Bands>
+    <Item1 Ref="12" ControlType="DetailBand" Name="Detail" HeightF="37.5" TextAlignment="TopLeft" Padding="0,0,0,0,100">
+      <MultiColumn Ref="13" ColumnCount="4" Layout="AcrossThenDown" Mode="UseColumnCount" />
+      <Controls>
+        <Item1 Ref="14" ControlType="XRLabel" Name="XrLabel7" Text="XrLabel7" SizeF="138.3333,16.75" LocationFloat="10.0000067, 0" Font="Times New Roman, 8pt" Padding="2,2,0,0,96">
+          <DataBindings>
+            <Item1 Ref="15" PropertyName="Text" DataMember="fafPrintFacturaLote.LoteCantidad" />
+          </DataBindings>
+          <StylePriority Ref="16" UseFont="false" />
+        </Item1>
+      </Controls>
+    </Item1>
+    <Item2 Ref="17" ControlType="TopMarginBand" Name="TopMargin" HeightF="107" TextAlignment="TopLeft" Padding="0,0,0,0,100" />
+    <Item3 Ref="18" ControlType="BottomMarginBand" Name="BottomMargin" HeightF="100" TextAlignment="TopLeft" Padding="0,0,0,0,100" />
+    <Item4 Ref="19" ControlType="GroupHeaderBand" Name="GroupHeader1" HeightF="22.916666">
+      <GroupFields>
+        <Item1 Ref="20" FieldName="DescrProducto" />
+      </GroupFields>
+      <Controls>
+        <Item1 Ref="21" ControlType="XRLabel" Name="XrLabel5" Text="XrLabel5" SizeF="121.020782,17.0833263" LocationFloat="347.2084, 0.8749644" Font="Times New Roman, 8pt" Padding="2,2,0,0,96">
+          <DataBindings>
+            <Item1 Ref="22" PropertyName="Text" DataMember="fafPrintFacturaLote.DescrUnidad" />
+          </DataBindings>
+          <StylePriority Ref="23" UseFont="false" />
+        </Item1>
+        <Item2 Ref="24" ControlType="XRLabel" Name="XrLabel4" Text="XrLabel4" SizeF="52.0833321,13.0000134" LocationFloat="0, 3.04164886" Font="Times New Roman, 8pt" Padding="2,2,0,0,96">
+          <DataBindings>
+            <Item1 Ref="25" PropertyName="Text" DataMember="fafPrintFacturaLote.IDProducto" />
+          </DataBindings>
+          <StylePriority Ref="26" UseFont="false" />
+        </Item2>
+        <Item3 Ref="27" ControlType="XRLabel" Name="XrLabel13" SizeF="72.29169,13.0000134" LocationFloat="654.7083, 0" Font="Times New Roman, 8pt" Padding="2,2,0,0,100">
+          <Summary Ref="28" FormatString="{0:n2}" />
+          <DataBindings>
+            <Item1 Ref="29" FormatString="{0:n2}" PropertyName="Text" DataMember="fafPrintFacturaLote.TotalFinal" />
+          </DataBindings>
+          <StylePriority Ref="30" UseFont="false" />
+        </Item3>
+        <Item4 Ref="31" ControlType="XRLabel" Name="XrLabel11" SizeF="84.79166,13.0000134" LocationFloat="553.2291, 0" Font="Times New Roman, 8pt" Padding="2,2,0,0,100">
+          <Summary Ref="32" FormatString="{0:n2}" />
+          <DataBindings>
+            <Item1 Ref="33" FormatString="{0:n2}" PropertyName="Text" DataMember="fafPrintFacturaLote.SubTotal" />
+          </DataBindings>
+          <StylePriority Ref="34" UseFont="false" />
+        </Item4>
+        <Item5 Ref="35" ControlType="XRLabel" Name="XrLabel10" Text="XrLabel10" SizeF="69.79166,13.0000134" LocationFloat="470.937744, 0" Font="Times New Roman, 8pt" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="36" FormatString="{0:n2}" PropertyName="Text" DataMember="fafPrintFacturaLote.Precio" />
+          </DataBindings>
+          <StylePriority Ref="37" UseFont="false" />
+        </Item5>
+        <Item6 Ref="38" ControlType="XRLabel" Name="XrLabel8" TextAlignment="TopCenter" SizeF="40.6250038,13.0000134" LocationFloat="57.7082939, 4.08331537" Font="Times New Roman, 8pt" Padding="2,2,0,0,100">
+          <Summary Ref="39" FormatString="{0:n2}" />
+          <DataBindings>
+            <Item1 Ref="40" FormatString="{0:#,#}" PropertyName="Text" DataMember="fafPrintFacturaLote.Cantidad" />
+          </DataBindings>
+          <StylePriority Ref="41" UseFont="false" UseTextAlignment="false" />
+        </Item6>
+        <Item7 Ref="42" ControlType="XRLabel" Name="XrLabel6" Text="XrLabel6" SizeF="235.416672,13.0000134" LocationFloat="98.3333, 3.04164886" Font="Times New Roman, 8pt" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="43" PropertyName="Text" DataMember="fafPrintFacturaLote.DescrProducto" />
+          </DataBindings>
+          <StylePriority Ref="44" UseFont="false" />
+        </Item7>
+      </Controls>
+    </Item4>
+    <Item5 Ref="45" ControlType="PageHeaderBand" Name="PageHeader" HeightF="122.916664">
+      <Controls>
+        <Item1 Ref="46" ControlType="XRLabel" Name="XrLabel12" Text="XrLabel12" SizeF="35.416626,23" LocationFloat="440.729248, 8.43753052" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="47" PropertyName="Text" DataMember="fafgetFacturaHeader.Dia" />
+          </DataBindings>
+        </Item1>
+        <Item2 Ref="48" ControlType="XRLabel" Name="XrLabel14" Text="XrLabel14" SizeF="43.75009,23" LocationFloat="496.979248, 8.43753052" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="49" PropertyName="Text" DataMember="fafgetFacturaHeader.Mes" />
+          </DataBindings>
+        </Item2>
+        <Item3 Ref="50" ControlType="XRLabel" Name="XrLabel15" Text="XrLabel15" SizeF="46.875,23" LocationFloat="553.2292, 8.43753052" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="51" PropertyName="Text" DataMember="fafgetFacturaHeader.Anio" />
+          </DataBindings>
+        </Item3>
+        <Item4 Ref="52" ControlType="XRLabel" Name="XrLabel16" Text="XrLabel16" SizeF="273.958344,23" LocationFloat="24.479187, 8.437515" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="53" PropertyName="Text" DataMember="fafgetFacturaHeader.Nombre" />
+          </DataBindings>
+        </Item4>
+        <Item5 Ref="54" ControlType="XRLabel" Name="XrLabel17" Text="XrLabel17" SizeF="188.5416,48.583313" LocationFloat="43.229187, 31.4375172" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="55" PropertyName="Text" DataMember="fafgetFacturaHeader.Direccion" />
+          </DataBindings>
+        </Item5>
+        <Item6 Ref="56" ControlType="XRLabel" Name="XrLabel18" Text="XrLabel18" SizeF="72.291626,22.9999924" LocationFloat="553.2292, 68.5624847" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="57" FormatString="{0:hh:mm tt}" PropertyName="Text" DataMember="fafgetFacturaHeader.Hora" />
+          </DataBindings>
+        </Item6>
+        <Item7 Ref="58" ControlType="XRLabel" Name="XrLabel1" Text="XrLabel1" SizeF="89.58336,23" LocationFloat="255.729233, 68.5624847" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="59" PropertyName="Text" DataMember="fafgetFacturaHeader.DescrPlazo" />
+          </DataBindings>
+        </Item7>
+        <Item8 Ref="60" ControlType="XRLabel" Name="XrLabel2" Text="XrLabel2" SizeF="100,23" LocationFloat="368.2292, 68.5624847" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="61" PropertyName="Text" DataMember="fafgetFacturaHeader.DescrDepto" />
+          </DataBindings>
+        </Item8>
+        <Item9 Ref="62" ControlType="XRLabel" Name="XrLabel3" Text="XrLabel3" SizeF="55.2082825,23" LocationFloat="468.2292, 68.5624847" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="63" PropertyName="Text" DataMember="fafgetFacturaHeader.IDCliente" />
+          </DataBindings>
+        </Item9>
+      </Controls>
+    </Item5>
+    <Item6 Ref="64" ControlType="PageFooterBand" Name="PageFooter" HeightF="100" Font="Times New Roman, 8pt">
+      <Controls>
+        <Item1 Ref="65" ControlType="XRLabel" Name="XrLabel26" Text="XrLabel26" SizeF="71.35411,23" LocationFloat="160.416672, 69.1250458" Padding="2,2,0,0,96">
+          <DataBindings>
+            <Item1 Ref="66" FormatString="{0:#,###.00}" PropertyName="Text" DataMember="fafgetFacturaHeader.TotalDolares" />
+          </DataBindings>
+        </Item1>
+        <Item2 Ref="67" ControlType="XRLabel" Name="XrLabel27" Text="T/C :" SizeF="33.22911,23" LocationFloat="243.229111, 69.1250458" Font="Times New Roman, 8pt" Padding="2,2,0,0,100">
+          <StylePriority Ref="68" UseFont="false" />
+        </Item2>
+        <Item3 Ref="69" ControlType="XRLabel" Name="XrLabel25" Text="Equivalenes en Dolares a :" SizeF="123.854141,23" LocationFloat="24.4791832, 69.1250458" Font="Times New Roman, 8pt" Padding="2,2,0,0,96">
+          <StylePriority Ref="70" UseFont="false" />
+        </Item3>
+        <Item4 Ref="71" ControlType="XRLabel" Name="XrLabel24" Text="XrLabel24" SizeF="52.083313,20.8749466" LocationFloat="281.666656, 69.1250458" Font="Times New Roman, 8pt" Padding="2,2,0,0,96">
+          <DataBindings>
+            <Item1 Ref="72" FormatString="{0:#,###.0000}" PropertyName="Text" DataMember="fafgetFacturaHeader.TipoCambio" />
+          </DataBindings>
+          <StylePriority Ref="73" UseFont="false" />
+        </Item4>
+        <Item5 Ref="74" ControlType="XRLabel" Name="XrLabel21" TextAlignment="TopRight" SizeF="100,14.6666832" LocationFloat="617.000061, 46.125" Font="Times New Roman, 8pt" Padding="2,2,0,0,100">
+          <Summary Ref="75" FormatString="{0:n2}" />
+          <DataBindings>
+            <Item1 Ref="76" FormatString="{0:n2}" PropertyName="Text" DataMember="fafgetFacturaHeader.DescuentoEspecial" />
+          </DataBindings>
+          <StylePriority Ref="77" UseFont="false" UseTextAlignment="false" />
+        </Item5>
+        <Item6 Ref="78" ControlType="XRLabel" Name="XrLabel20" TextAlignment="TopRight" SizeF="100,15.7083206" LocationFloat="617.000061, 27.291647" Font="Times New Roman, 8pt" Padding="2,2,0,0,100">
+          <Summary Ref="79" FormatString="{0:n2}" />
+          <DataBindings>
+            <Item1 Ref="80" FormatString="{0:n2}" PropertyName="Text" DataMember="fafgetFacturaHeader.Descuento" />
+          </DataBindings>
+          <StylePriority Ref="81" UseFont="false" UseTextAlignment="false" />
+        </Item6>
+        <Item7 Ref="82" ControlType="XRLabel" Name="XrLabel19" TextAlignment="TopRight" SizeF="100,16.75" LocationFloat="617, 10.0000067" Font="Times New Roman, 8pt" Padding="2,2,0,0,100">
+          <Summary Ref="83" FormatString="{0:n2}" />
+          <DataBindings>
+            <Item1 Ref="84" FormatString="{0:n2}" PropertyName="Text" DataMember="fafgetFacturaHeader.SubTotal" />
+          </DataBindings>
+          <StylePriority Ref="85" UseFont="false" UseTextAlignment="false" />
+        </Item7>
+        <Item8 Ref="86" ControlType="XRLabel" Name="XrLabel22" TextAlignment="TopRight" SizeF="100,14.6666527" LocationFloat="617.000061, 63.9166832" Font="Times New Roman, 8pt" Padding="2,2,0,0,100">
+          <Summary Ref="87" FormatString="{0:n2}" />
+          <DataBindings>
+            <Item1 Ref="88" FormatString="{0:n2}" PropertyName="Text" DataMember="fafgetFacturaHeader.Impuesto" />
+          </DataBindings>
+          <StylePriority Ref="89" UseFont="false" UseTextAlignment="false" />
+        </Item8>
+        <Item9 Ref="90" ControlType="XRLabel" Name="XrLabel23" TextAlignment="TopRight" SizeF="100,15.7083817" LocationFloat="617.000061, 81.7083054" Font="Times New Roman, 8pt" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="91" FormatString="{0:n2}" PropertyName="Text" DataMember="fafgetFacturaHeader.TotalFinal" />
+          </DataBindings>
+          <StylePriority Ref="92" UseFont="false" UseTextAlignment="false" />
+        </Item9>
+        <Item10 Ref="93" ControlType="XRLabel" Name="XrLabel9" Text="XrLabel9" SizeF="487.499969,23" LocationFloat="24.4791832, 46.12503" Font="Times New Roman, 8pt" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="95" Parameter="#Ref-5" PropertyName="Text" DataMember="psMontoEnLetras" />
+          </DataBindings>
+          <StylePriority Ref="96" UseFont="false" />
+        </Item10>
+      </Controls>
+      <StylePriority Ref="97" UseFont="false" />
+    </Item6>
+  </Bands>
+  <ComponentStorage>
+    <Item1 Ref="0" ObjectType="DevExpress.DataAccess.Sql.SqlDataSource,DevExpress.DataAccess.v15.2" Name="SqlDataSource1" Base64="PFNxbERhdGFTb3VyY2U+PE5hbWU+U3FsRGF0YVNvdXJjZTE8L05hbWU+PENvbm5lY3Rpb24gTmFtZT0ibG9jYWxob3N0X2NlZGFfQ29ubmVjdGlvbiIgRnJvbUFwcENvbmZpZz0idHJ1ZSIgLz48UXVlcnkgVHlwZT0iU3RvcmVkUHJvY1F1ZXJ5IiBOYW1lPSJmYWZnZXRGYWN0dXJhSGVhZGVyIj48UGFyYW1ldGVyIE5hbWU9IkBJREZhY3R1cmEiIFR5cGU9IkRldkV4cHJlc3MuRGF0YUFjY2Vzcy5FeHByZXNzaW9uIj4oU3lzdGVtLkludDY0LCBtc2NvcmxpYiwgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkpKFtQYXJhbWV0ZXJzLklERmFjdHVyYV0pPC9QYXJhbWV0ZXI+PFByb2NOYW1lPmZhZmdldEZhY3R1cmFIZWFkZXI8L1Byb2NOYW1lPjwvUXVlcnk+PFF1ZXJ5IFR5cGU9IlN0b3JlZFByb2NRdWVyeSIgTmFtZT0iZmFmUHJpbnRGYWN0dXJhTG90ZSI+PFBhcmFtZXRlciBOYW1lPSJASURGYWN0dXJhIiBUeXBlPSJEZXZFeHByZXNzLkRhdGFBY2Nlc3MuRXhwcmVzc2lvbiI+KFN5c3RlbS5JbnQ2NCwgbXNjb3JsaWIsIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5KShbUGFyYW1ldGVycy5JREZhY3R1cmFdKTwvUGFyYW1ldGVyPjxQcm9jTmFtZT5mYWZQcmludEZhY3R1cmFMb3RlPC9Qcm9jTmFtZT48L1F1ZXJ5PjxSZWxhdGlvbiBNYXN0ZXI9ImZhZmdldEZhY3R1cmFIZWFkZXIiIERldGFpbD0iZmFmUHJpbnRGYWN0dXJhTG90ZSI+PEtleUNvbHVtbiBNYXN0ZXI9IklERmFjdHVyYSIgRGV0YWlsPSJJREZhY3R1cmEiIC8+PC9SZWxhdGlvbj48UmVzdWx0U2NoZW1hPjxEYXRhU2V0IE5hbWU9IlNxbERhdGFTb3VyY2UxIj48VmlldyBOYW1lPSJmYWZnZXRGYWN0dXJhSGVhZGVyIj48RmllbGQgTmFtZT0iSURGYWN0dXJhIiBUeXBlPSJJbnQ2NCIgLz48RmllbGQgTmFtZT0iRmFjdHVyYSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJGZWNoYSIgVHlwZT0iRGF0ZVRpbWUiIC8+PEZpZWxkIE5hbWU9IklEVGlwbyIgVHlwZT0iSW50MTYiIC8+PEZpZWxkIE5hbWU9IkRlc2NyVGlwbyIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJUaXBvQ2FtYmlvIiBUeXBlPSJEZWNpbWFsIiAvPjxGaWVsZCBOYW1lPSJJRFRpcG9FbnRyZWdhIiBUeXBlPSJJbnQzMiIgLz48RmllbGQgTmFtZT0iRGVzY3JFbnRyZWdhIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IklEQ2xpZW50ZSIgVHlwZT0iSW50MzIiIC8+PEZpZWxkIE5hbWU9Ik5vbWJyZSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJGYXJtYWNpYSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJJRFZlbmRlZG9yIiBUeXBlPSJJbnQzMiIgLz48RmllbGQgTmFtZT0iRXNUZWxlVmVudGEiIFR5cGU9IkJvb2xlYW4iIC8+PEZpZWxkIE5hbWU9IkFudWxhZGEiIFR5cGU9IkJvb2xlYW4iIC8+PEZpZWxkIE5hbWU9IkRlc2NyUGxhem8iIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iSURNb25lZGEiIFR5cGU9IkludDMyIiAvPjxGaWVsZCBOYW1lPSJEZXNjck1vbmVkYSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJTaW1ib2xvIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IklEQm9kZWdhIiBUeXBlPSJJbnQzMiIgLz48RmllbGQgTmFtZT0iRGVzY3JCb2RlZ2EiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iRGVzY3JEZXB0byIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJEaXJlY2Npb24iIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iRGF0ZWluc2VydCIgVHlwZT0iRGF0ZVRpbWUiIC8+PEZpZWxkIE5hbWU9IkRlc2N1ZW50byIgVHlwZT0iRGVjaW1hbCIgLz48RmllbGQgTmFtZT0iRGVzY3VlbnRvRXNwZWNpYWwiIFR5cGU9IkRlY2ltYWwiIC8+PEZpZWxkIE5hbWU9IlN1YlRvdGFsIiBUeXBlPSJEZWNpbWFsIiAvPjxGaWVsZCBOYW1lPSJJbXB1ZXN0byIgVHlwZT0iRGVjaW1hbCIgLz48RmllbGQgTmFtZT0iU3ViVG90YWxGaW5hbCIgVHlwZT0iRGVjaW1hbCIgLz48RmllbGQgTmFtZT0iVG90YWxGaW5hbCIgVHlwZT0iRGVjaW1hbCIgLz48L1ZpZXc+PFZpZXcgTmFtZT0iZmFmUHJpbnRGYWN0dXJhTG90ZSI+PEZpZWxkIE5hbWU9IklERmFjdHVyYSIgVHlwZT0iSW50NjQiIC8+PEZpZWxkIE5hbWU9IkZhY3R1cmEiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iRmVjaGEiIFR5cGU9IkRhdGVUaW1lIiAvPjxGaWVsZCBOYW1lPSJJRFRpcG8iIFR5cGU9IkludDE2IiAvPjxGaWVsZCBOYW1lPSJEZXNjclRpcG8iIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iVGlwb0NhbWJpbyIgVHlwZT0iRGVjaW1hbCIgLz48RmllbGQgTmFtZT0iSURUaXBvRW50cmVnYSIgVHlwZT0iSW50MzIiIC8+PEZpZWxkIE5hbWU9IkRlc2NyRW50cmVnYSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJJRENsaWVudGUiIFR5cGU9IkludDMyIiAvPjxGaWVsZCBOYW1lPSJOb21icmUiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iRXNUZWxlVmVudGEiIFR5cGU9IkJvb2xlYW4iIC8+PEZpZWxkIE5hbWU9IkFudWxhZGEiIFR5cGU9IkJvb2xlYW4iIC8+PEZpZWxkIE5hbWU9IklEUGxhem8iIFR5cGU9IkludDMyIiAvPjxGaWVsZCBOYW1lPSJEZXNjclBsYXpvIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IklETml2ZWwiIFR5cGU9IkludDMyIiAvPjxGaWVsZCBOYW1lPSJJRE1vbmVkYSIgVHlwZT0iSW50MzIiIC8+PEZpZWxkIE5hbWU9IkRlc2NyTW9uZWRhIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IlNpbWJvbG8iIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iSURCb2RlZ2EiIFR5cGU9IkludDMyIiAvPjxGaWVsZCBOYW1lPSJEZXNjckJvZGVnYSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJJRFZlbmRlZG9yIiBUeXBlPSJJbnQzMiIgLz48RmllbGQgTmFtZT0iTm9tYnJlVmVuZGVkb3IiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iSURQcm9kdWN0byIgVHlwZT0iSW50NjQiIC8+PEZpZWxkIE5hbWU9IkRlc2NyUHJvZHVjdG8iIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iRGVzY3JVbmlkYWQiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iQ2FudGlkYWQiIFR5cGU9IkRlY2ltYWwiIC8+PEZpZWxkIE5hbWU9IkNhbnRGYWN0dXJhZGEiIFR5cGU9IkRlY2ltYWwiIC8+PEZpZWxkIE5hbWU9IkNhbnRCb25pZmljYWRhIiBUeXBlPSJEZWNpbWFsIiAvPjxGaWVsZCBOYW1lPSJCb25pZmljYSIgVHlwZT0iQm9vbGVhbiIgLz48RmllbGQgTmFtZT0iQm9uaWZDb25Qcm9kIiBUeXBlPSJCb29sZWFuIiAvPjxGaWVsZCBOYW1lPSJQcmVjaW8iIFR5cGU9IkRlY2ltYWwiIC8+PEZpZWxkIE5hbWU9IkNvc3RvIiBUeXBlPSJEZWNpbWFsIiAvPjxGaWVsZCBOYW1lPSJEZXNjdWVudG8iIFR5cGU9IkRlY2ltYWwiIC8+PEZpZWxkIE5hbWU9IkRlc2N1ZW50b0VzcGVjaWFsIiBUeXBlPSJEZWNpbWFsIiAvPjxGaWVsZCBOYW1lPSJTdWJUb3RhbCIgVHlwZT0iRGVjaW1hbCIgLz48RmllbGQgTmFtZT0iSW1wdWVzdG8iIFR5cGU9IkRlY2ltYWwiIC8+PEZpZWxkIE5hbWU9IlN1YlRvdGFsRmluYWwiIFR5cGU9IkRlY2ltYWwiIC8+PEZpZWxkIE5hbWU9IlRvdGFsRmluYWwiIFR5cGU9IkRlY2ltYWwiIC8+PEZpZWxkIE5hbWU9IklETG90ZSIgVHlwZT0iSW50MzIiIC8+PEZpZWxkIE5hbWU9IkxvdGVJbnRlcm5vIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IkZlY2hhVmVuY2ltaWVudG8iIFR5cGU9IkRhdGVUaW1lIiAvPjxGaWVsZCBOYW1lPSJMb3RlUHJvdmVlZG9yIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IkNhbnRpZGFkTG90ZSIgVHlwZT0iRGVjaW1hbCIgLz48RmllbGQgTmFtZT0iQ2FudEFEZXYiIFR5cGU9IkRlY2ltYWwiIC8+PEZpZWxkIE5hbWU9IlBvcmNEZXNjQm9uaWYiIFR5cGU9IkRlY2ltYWwiIC8+PEZpZWxkIE5hbWU9InBvcmNEZXNjdWVudG9Fc3AiIFR5cGU9IkRlY2ltYWwiIC8+PC9WaWV3PjxSZWxhdGlvbiBNYXN0ZXI9ImZhZmdldEZhY3R1cmFIZWFkZXIiIERldGFpbD0iZmFmUHJpbnRGYWN0dXJhTG90ZSI+PEtleUNvbHVtbiBNYXN0ZXI9IklERmFjdHVyYSIgRGV0YWlsPSJJREZhY3R1cmEiIC8+PC9SZWxhdGlvbj48L0RhdGFTZXQ+PC9SZXN1bHRTY2hlbWE+PC9TcWxEYXRhU291cmNlPg==" />
+  </ComponentStorage>
+  <ObjectStorage>
+    <Item1 ObjectType="DevExpress.XtraReports.Serialization.ObjectStorageInfo, DevExpress.XtraReports.v15.2" Ref="2" Content="System.Int64" Type="System.Type" />
+  </ObjectStorage>
+</XtraReportsLayoutSerializer>

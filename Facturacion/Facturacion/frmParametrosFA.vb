@@ -35,12 +35,13 @@ Public Class frmParametrosFA
                 Me.txtAltoFactura.EditValue = tableData.Rows(0).Item("paginaFacturaAltura")
                 Me.txtAnchoFactura.EditValue = tableData.Rows(0).Item("paginaFacturaAncho")
                 Me.chkPersonalizada.EditValue = Convert.ToBoolean(tableData.Rows(0).Item("FacturaPersonalizada"))
-                Me.chkDefTipo.EditValue = Convert.ToBoolean(tableData.Rows(0).Item("DefaultTipoFact"))
+                Me.chkTipoFactDefault.EditValue = Convert.ToBoolean(tableData.Rows(0).Item("DefaultTipoFact"))
                 Me.SearchLookUpEditTipoFact.EditValue = tableData.Rows(0).Item("TipoFactDefault")
                 Me.chkDefTipEnt.EditValue = Convert.ToBoolean(tableData.Rows(0).Item("DefaultTipoEntrega"))
                 Me.SearchLookUpEditEntrega.EditValue = tableData.Rows(0).Item("TipoEntregaDefault")
                 Me.chkEditaPrecPedido.EditValue = Convert.ToBoolean(tableData.Rows(0).Item("EditaPrecioPedidoenFactura"))
                 Me.chkEditaCantidadPedFact.EditValue = Convert.ToBoolean(tableData.Rows(0).Item("EditaCantidadPedidoenFactura"))
+                Me.txtDigitosDecimales.EditValue = tableData.Rows(0).Item("DigitosDecimales")
             End If
         Catch ex As Exception
             MessageBox.Show("Error al obtener los Parámetros Globales " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -86,6 +87,7 @@ Public Class frmParametrosFA
             txtAltoFactura.Text = "0"
             txtAnchoFactura.Text = "0"
         End If
+        If Len(txtDigitosDecimales.Text.Trim) = 0 Or Val(txtDigitosDecimales.Text) = 0 Then MsgBox("El Numero de Dígitos Decimales en el Módulo no puede quedar vacio o Debe ser Mayor que Cero", MsgBoxStyle.Critical + MsgBoxStyle.OkOnly, "Ayuda") : txtLineasFac.Focus() : Return False : Exit Function
         Return True
     End Function
     Private Sub btnGuardar_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click
@@ -106,8 +108,8 @@ Public Class frmParametrosFA
              Me.SearchLookUpEditCondicionContado.EditValue.ToString() & ",'" & Me.SearchLookUpEditTCFacturacion.EditValue.ToString() & "','" & _
             Me.SearchLookUpEditTCContaibilidad.EditValue.ToString() & "'," & Me.txtLineasFac.EditValue.ToString() & "," & IIf(Me.chkIntContable.EditValue = True, "1", "0") & _
              ", " & Me.SearchLookUpEditPaquete.EditValue.ToString() & "," & Me.SearchLookUpEditCentroImp.EditValue.ToString() & "," & Me.SearchLookUpEditCtaImpuesto.EditValue.ToString() & "," & IIf(Me.chkEditAutorizaPrecioFac.EditValue = True, "1", "0") & _
-             ", " & Me.txtAltoFactura.EditValue.ToString() & ", " & Me.txtAnchoFactura.EditValue.ToString() & "," & IIf(Me.chkPersonalizada.EditValue = True, "1", "0") & "," & IIf(Me.chkDefTipo.EditValue = True, "1", "0") & "," & Me.SearchLookUpEditTipoFact.EditValue.ToString() & _
-            "," & IIf(Me.chkDefTipEnt.EditValue = True, "1", "0") & "," & Me.SearchLookUpEditEntrega.EditValue.ToString() & "," & IIf(Me.chkEditaPrecPedido.EditValue = True, "1", "0") & "," & IIf(Me.chkEditaCantidadPedFact.EditValue = True, "1", "0")
+             ", " & Me.txtAltoFactura.EditValue.ToString() & ", " & Me.txtAnchoFactura.EditValue.ToString() & "," & IIf(Me.chkPersonalizada.EditValue = True, "1", "0") & "," & IIf(Me.chkTipoFactDefault.EditValue = True, "1", "0") & "," & Me.SearchLookUpEditTipoFact.EditValue.ToString() & _
+            "," & IIf(Me.chkDefTipEnt.EditValue = True, "1", "0") & "," & Me.SearchLookUpEditEntrega.EditValue.ToString() & "," & IIf(Me.chkEditaPrecPedido.EditValue = True, "1", "0") & "," & IIf(Me.chkEditaCantidadPedFact.EditValue = True, "1", "0") & "," & txtDigitosDecimales.EditValue.ToString()
             If cManager.ExecSP("fafUpdateParametros", sParameters) Then
                 MessageBox.Show("Parámetros Globales actualizados exitosamente", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information)
             End If
@@ -135,8 +137,8 @@ Public Class frmParametrosFA
         End If
     End Sub
 
-    Private Sub chkDefTipo_CheckedChanged(sender As Object, e As EventArgs) Handles chkDefTipo.CheckedChanged
-        If chkDefTipo.Checked Then
+    Private Sub chkDefTipo_CheckedChanged(sender As Object, e As EventArgs) Handles chkTipoFactDefault.CheckedChanged
+        If chkTipoFactDefault.Checked Then
             Me.SearchLookUpEditTipoFact.Enabled = True
         Else
             Me.SearchLookUpEditTipoFact.Enabled = False
@@ -149,5 +151,9 @@ Public Class frmParametrosFA
         Else
             Me.SearchLookUpEditEntrega.Enabled = False
         End If
+    End Sub
+
+    Private Sub GroupBox1_Enter(sender As Object, e As EventArgs) Handles GroupBox1.Enter
+
     End Sub
 End Class

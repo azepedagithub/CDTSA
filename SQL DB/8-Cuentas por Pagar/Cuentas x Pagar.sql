@@ -1538,13 +1538,18 @@ if @FechaFin is null
 
 
 
- CREATE PROCEDURE dbo.cppUpdateRetencion @Operacion nvarchar(1), @IDRetencion INT OUTPUT, @Descr nvarchar(250),@Porcentaje decimal(28,2),@AplicaTotalFactura bit, 
+CREATE PROCEDURE dbo.cppUpdateRetencion @Operacion nvarchar(1), @IDRetencion INT OUTPUT, @Descr nvarchar(250),@Porcentaje decimal(28,2),@AplicaTotalFactura bit, 
 				@AplicaSubTotal bit, @AplicaSubTotalMenosDesc bit,@IDCentroRet int, @IDCuentaRet bigint ,
 				@MontoMinimo decimal(28,2),@Activo bit
 AS
+
+IF (@IDCentroRet=-1)  SET @IDCentroRet = NULL
+IF (@IDCuentaRet=-1)  SET @IDCuentaRet = NULL
+
 IF (@Operacion = 'I')
 BEGIN
 	SET @IDRetencion = (SELECT ISNULL(MAX(IDRetencion),0) + 1 FROM dbo.cppRetencion)
+	
 	INSERT INTO dbo.cppRetencion( IDRetencion ,Descr ,Porcentaje ,AplicaTotalFactura ,AplicaSubTotal ,AplicaSubTotalMenosDesc ,IDCentroRet ,IDCuentaRet ,MontoMinimo ,Activo)
 	VALUES  (@IDRetencion, @Descr, @Porcentaje, @AplicaTotalFactura,@AplicaSubTotal,@AplicaSubTotalMenosDesc,@IDCentroRet,@IDCuentaRet,@MontoMinimo,@Activo)
 END				

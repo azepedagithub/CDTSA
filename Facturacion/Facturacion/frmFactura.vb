@@ -9,8 +9,12 @@ Imports DevExpress.XtraGrid.Columns
 Imports DevExpress.XtraGrid.GridControl
 Imports DevExpress.Utils
 Imports DevExpress.XtraReports.UI
+Imports System.Collections.Generic
 Imports DevExpress.LookAndFeel
 Imports System.Globalization
+Imports DevExpress.DataAccess.Sql
+Imports System.Linq
+Imports DevExpress.DataAccess.ConnectionParameters
 
 Public Class frmFactura
     Dim cManager As New ClassManager
@@ -27,11 +31,18 @@ Public Class frmFactura
     Dim gbBonifConProd As Boolean = False
     Dim gbLoteAsignado As Boolean = False
     Dim gdTotalBonificado As Decimal = 0
+    Dim gdTotalBonificadoPrecio As Decimal = 0
+    Dim gdTotalFacturado As Decimal = 0
     Dim gdPorcInteres As Decimal = 0
     Dim gIDPlazo As Integer
+    Dim gbLoteAsignadoLinea As Boolean = False
     Public gsConsecMask As String
     Dim gsMascara As String
     Dim iNumeroLineasFactura As Integer = 0
+    Dim gdBonoProductoActual As Decimal = 0
+    Dim gbRequiereBonif As Boolean = False
+    Dim gdPorcDescPromFecha As Decimal = 0
+    Dim gdPorcDescPromEscala As Decimal = 0
 
 
     Sub CargagridLookUp(ByVal g As GridLookUpEdit, sTableName As String, sFieldsName As String, sWhere As String, sOrderBy As String, sDisplayMember As String, sValueMember As String)
@@ -43,79 +54,80 @@ Public Class frmFactura
 
     End Sub
 
-    'Private Sub InserttblRowFacturaLinea(bLoteAsignado As Boolean, iIDBodega As Integer, iIDProducto As Integer, sDescr As String, dCantidad As Decimal, dPrecio As Decimal, dDescuento As Decimal, dDescuentoEspecial As Decimal, dImpuesto As Decimal, dPorcImp As Decimal, dSubTotal As Decimal, dCantBonificada As Decimal, dCantFacturada As Decimal, dPorcDescuentoEsp As Decimal)
-    '    Dim dTotal As Decimal
-    '    dSubTotal = (dCantidad * dPrecio) - dDescuento - dDescuentoEspecial
-    '    dTotal = dSubTotal + dImpuesto
-    '    'dTotal = dSubTotal + (Convert.ToDecimal(IIf(txtPorcImp.Text = "", "0", txtPorcImp.Text)) / 100) * dSubTotal
-    '    dtFacturaLinea.Rows.Add(bLoteAsignado, iIDBodega, iIDProducto, sDescr, dCantidad, dPrecio, dDescuento, dDescuentoEspecial, dImpuesto, dPorcImp, dSubTotal, dTotal, False, False, dCantBonificada, dCantFacturada, dPorcDescuentoEsp)
-    'End Sub
+
 
     Private Sub InserttblRowFacturaLinea(bLoteAsignado As Boolean, iIDBodega As Integer, iIDProducto As Integer, sDescr As String, dCantidad As Decimal, dPrecio As Decimal, dDescuento As Decimal, dDescuentoEspecial As Decimal, _
-            dImpuesto As Decimal, dPorcImp As Decimal, dSubTotal As Decimal, dSubTotalFinal As Decimal, dTotal As Decimal, bBonifica As Boolean, bBonifConProd As Boolean, dCantBonificada As Decimal, dCantFacturada As Decimal, dPorcDescuentoEsp As Decimal)
+            dImpuesto As Decimal, dPorcImp As Decimal, dSubTotal As Decimal, dSubTotalFinal As Decimal, dTotal As Decimal, bBonifica As Boolean, bBonifConProd As Boolean, dCantBonificada As Decimal, dCantPrecio As Decimal, dCantFacturada As Decimal, dPorcDescuentoEsp As Decimal, dPrecioLista As Decimal, dAhorro As Decimal)
 
         dtFacturaLinea.Rows.Add(bLoteAsignado, iIDBodega, iIDProducto, sDescr, dCantidad, dPrecio, dDescuento, dDescuentoEspecial, dImpuesto, dPorcImp, dSubTotal,
-            dSubTotalFinal, dTotal, bBonifica, bBonifConProd, dCantBonificada, dCantFacturada, 0, 0, dPorcDescuentoEsp)
+            dSubTotalFinal, dTotal, bBonifica, bBonifConProd, dCantBonificada, dCantPrecio, dCantFacturada, 0, 0, dPorcDescuentoEsp, dPrecioLista, dAhorro)
     End Sub
 
     Private Sub FillTableFacturalinea()
         Dim dPrecio As Decimal, dDescuento As Decimal, dDescuentoEspecial As Decimal, _
-            dImpuesto As Decimal, dSubTotal As Decimal, dSubTotalFinal As Decimal, dTotal As Decimal
+            dImpuesto As Decimal, dSubTotal As Decimal, dSubTotalFinal As Decimal, dTotal As Decimal, dPorcImp As Decimal, dPrecioLista As Decimal, dAhorro As Decimal
         If gbUsaPedido Then
             For Each dr In tableData.Rows ' Me.dtFacturaLinea.Rows
                 If CBool(dr("Nacional")) Then
-                    dPrecio = CDec(dr("PrecioLocal"))
-                    dImpuesto = CDec(dr("ImpuestoLocal"))
-                    dSubTotal = CDec(dr("SubTotalLocal"))
-                    dSubTotalFinal = CDec(dr("SubTotalFinalLocal"))
-                    dDescuento = CDec(dr("DescuentoLocal"))
-                    dDescuentoEspecial = CDec(dr("DescuentoEspecialLocal"))
-                    dTotal = dSubTotalFinal + dImpuesto
+                    dPrecio = Redondear(If(dr("PrecioLocal") IsNot Nothing, CDec(dr("PrecioLocal")), 0), gParametros.DigitosDecimales)
+                    dImpuesto = Redondear(If(dr("ImpuestoLocal") IsNot Nothing, CDec(dr("ImpuestoLocal")), 0), gParametros.DigitosDecimales)
+                    dSubTotal = Redondear(If(dr("SubTotalLocal") IsNot Nothing, CDec(dr("SubTotalLocal")), 0), gParametros.DigitosDecimales)
+                    dSubTotalFinal = Redondear(If(dr("SubTotalFinalLocal") IsNot Nothing, CDec(dr("SubTotalFinalLocal")), 0), gParametros.DigitosDecimales)
+                    dDescuento = Redondear(If(dr("DescuentoLocal") IsNot Nothing, CDec(dr("DescuentoLocal")), 0), gParametros.DigitosDecimales)
+                    dDescuentoEspecial = Redondear(If(dr("DescuentoEspecialLocal") IsNot Nothing, CDec(dr("DescuentoEspecialLocal")), 0), gParametros.DigitosDecimales)
+                    dTotal = Redondear(dSubTotalFinal + dImpuesto, gParametros.DigitosDecimales)
                 Else
-                    dPrecio = CDec(dr("PrecioDolar"))
-                    dImpuesto = CDec(dr("ImpuestoDolar"))
-                    dSubTotal = CDec(dr("SubTotalDolar"))
-                    dSubTotalFinal = CDec(dr("SubTotalFinalDolar"))
-                    dDescuento = CDec(dr("DescuentoDolar"))
-                    dDescuentoEspecial = CDec(dr("DescuentoEspecialDolar"))
-                    dTotal = dSubTotalFinal + dImpuesto
+                    dPrecio = Redondear(If(dr("PrecioDolar") IsNot Nothing, CDec(dr("PrecioDolar")), 0), gParametros.DigitosDecimales)
+                    dImpuesto = Redondear(If(dr("ImpuestoDolar") IsNot Nothing, CDec(dr("ImpuestoDolar")), 0), gParametros.DigitosDecimales)
+                    dSubTotal = Redondear(If(dr("SubTotalDolar") IsNot Nothing, CDec(dr("SubTotalDolar")), 0), gParametros.DigitosDecimales)
+                    dSubTotalFinal = Redondear(If(dr("SubTotalFinalDolar") IsNot Nothing, CDec(dr("SubTotalFinalDolar")), 0), gParametros.DigitosDecimales)
+                    dDescuento = Redondear(If(dr("DescuentoDolar") IsNot Nothing, CDec(dr("DescuentoDolar")), 0), gParametros.DigitosDecimales)
+                    dDescuentoEspecial = Redondear(If(dr("DescuentoEspecialDolar") IsNot Nothing, CDec(dr("DescuentoEspecialDolar")), 0), gParametros.DigitosDecimales)
+                    dTotal = Redondear(dSubTotalFinal + dImpuesto, gParametros.DigitosDecimales)
                 End If
-
+                dPorcImp = Redondear(CDec(dr("PorcImp")), gParametros.DigitosDecimales)
+                dPrecioLista = Redondear(CDec(dr("PrecioLista")), gParametros.DigitosDecimales)
+                dAhorro = Redondear(CDec(dr("Ahorro")), gParametros.DigitosDecimales)
+                Dim dCantidad As Integer
+                dCantidad = Redondear(Convert.ToDecimal(dr("Cantidad")), gParametros.DigitosDecimales) '- Convert.ToDecimal(dr("CantBonificada"))
                 InserttblRowFacturaLinea(False, Convert.ToInt32(dr("IDBodega")), Convert.ToInt32(dr("IDProducto")), dr("Descr").ToString(), _
-                                        Convert.ToDecimal(dr("Cantidad")), dPrecio, _
+                                        dCantidad, dPrecio, _
                                         dDescuento, dDescuentoEspecial, _
-                                       dImpuesto, Convert.ToDecimal(dr("PorcImp")), _
+                                       dImpuesto, dPorcImp, _
                                         dSubTotal, dSubTotalFinal, dTotal, CBool(dr("Bonifica")), _
                                         CBool(dr("BonifConProd")), _
-                                Convert.ToDecimal(dr("CantBonificada")), 0, Convert.ToDecimal(dr("PorcDescuentoEsp")))
+                                Convert.ToDecimal(dr("CantBonificada")), Convert.ToDecimal(dr("CantPrecio")), dCantidad, Convert.ToDecimal(dr("PorcDescuentoEsp")), dPrecioLista, dAhorro)
             Next dr
         End If
+
     End Sub
 
     Private Sub InserttblRowFacturaLineaLote(iIDLote As Integer, iIDProducto As Integer, dCantidad As Decimal)
         dtFacturaLineaLote.Rows.Add(iIDLote, iIDProducto, dCantidad)
     End Sub
 
-    'Private Sub FillTableFacturaLineaLote(dtLotes As DataTable)
-    '    For Each dr In dtLotes.Rows
-    '        'InserttblRowFacturaLineaLote(Convert.ToInt32(dr("IDLote")), Convert.ToInt32(dr("IDProducto")), (Convert.ToDecimal(dr("AsignadoFA")) + Convert.ToDecimal(dr("AsignadoBO"))))
-    '        dtFacturaLineaLote.Rows.Add(Convert.ToInt32(dr("IDLote")), Convert.ToInt32(dr("IDProducto")), (Convert.ToDecimal(dr("AsignadoFA")) + Convert.ToDecimal(dr("AsignadoBO"))))
-    '    Next dr
-    'End Sub
+
 
     ' UpdateDatatable LInea de Factura
     Sub UpdateDataTableRowFacLin(strCriterio As String)
         Dim myRow() As Data.DataRow
+        Dim dCantidadBonificada As Decimal = 0, dCantidadPrecio As Decimal = 0
+
+        dCantidadBonificada = CDec(txtCantBonif.EditValue)
+        dCantidadPrecio = CDec(txtCantPrecio.EditValue)
         myRow = dtFacturaLinea.Select(strCriterio)
         If myRow.Count > 0 Then
-            txtDescLinea.EditValue = txtCantBonif.EditValue * CDbl(txtPrecio.EditValue)
-            myRow(0)("Precio") = txtPrecio.EditValue
-            myRow(0)("Impuesto") = CDbl(Me.txtImpuesto.EditValue)
-            myRow(0)("SubTotal") = CDbl(Me.txtPrecio.EditValue) * CDbl(txtCantidad.EditValue)
-            myRow(0)("DescuentoEspecial") = CDec(Me.txtDescEspLinea.EditValue)
-            myRow(0)("Descuento") = txtCantBonif.EditValue * CDbl(txtPrecio.EditValue)
+            txtDescLinea.EditValue = dCantidadBonificada * Redondear(CDbl(txtPrecio.EditValue), gParametros.DigitosDecimales)
+            myRow(0)("Precio") = Redondear(txtPrecio.EditValue, gParametros.DigitosDecimales)
+            myRow(0)("Impuesto") = Redondear(CDec(Me.txtImpuesto.EditValue), gParametros.DigitosDecimales)
+            myRow(0)("SubTotal") = Redondear(CDec(Me.txtPrecio.EditValue), gParametros.DigitosDecimales) * (CInt(txtCantidad.EditValue) + CInt(txtCantBonif.EditValue))
+            myRow(0)("DescuentoEspecial") = Redondear(CDec(Me.txtDescEspLinea.EditValue), gParametros.DigitosDecimales)
+            myRow(0)("Descuento") = dCantidadBonificada * Redondear(CDbl(txtPrecio.EditValue), gParametros.DigitosDecimales)
             myRow(0)("SubTotalFinal") = CDec(myRow(0)("SubTotal")) - CDec(myRow(0)("Descuento")) - CDec(myRow(0)("DescuentoEspecial"))
-            myRow(0)("Total") = CDec(myRow(0)("SubTotalFinal")) + CDec(Me.txtImpuesto.Text)
+            myRow(0)("Total") = CDec(myRow(0)("SubTotalFinal")) + Redondear(CDec(Me.txtImpuesto.EditValue), gParametros.DigitosDecimales)
+            myRow(0)("CantBonificada") = dCantidadBonificada ' nuevo 19/09/2020
+            myRow(0)("CantPrecio") = dCantidadPrecio  ' nuevo 21/09/2020
+
 
         End If
     End Sub
@@ -141,10 +153,13 @@ Public Class frmFactura
         dtFacturaLinea.Columns.Add("Bonifica", GetType(Boolean))
         dtFacturaLinea.Columns.Add("BonifConProd", GetType(Boolean))
         dtFacturaLinea.Columns.Add("CantBonificada", GetType(Decimal))
+        dtFacturaLinea.Columns.Add("CantPrecio", GetType(Decimal))
         dtFacturaLinea.Columns.Add("CantFacturada", GetType(Decimal))
         dtFacturaLinea.Columns.Add("CostoLocal", GetType(Decimal))
         dtFacturaLinea.Columns.Add("CostoDolar", GetType(Decimal))
         dtFacturaLinea.Columns.Add("PorcDescuentoEsp", GetType(Decimal))
+        dtFacturaLinea.Columns.Add("PrecioLista", GetType(Decimal))
+        dtFacturaLinea.Columns.Add("Ahorro", GetType(Decimal))
 
         'Lotes/fact/Bonificacion
         dtFacturaLineaLote.Columns.Add("IDBodega", GetType(Integer))
@@ -163,23 +178,14 @@ Public Class frmFactura
         dtFacturaLineaLote.Columns.Add("Existencia", GetType(Decimal))
         dtFacturaLineaLote.Columns.Add("AsignadoFA", GetType(Decimal))
         dtFacturaLineaLote.Columns.Add("AsignadoBO", GetType(Decimal))
-
+        dtFacturaLineaLote.Columns.Add("AsignadoPrecio", GetType(Decimal))
 
     End Sub
 
 
-    'Sub CargagridSearchLookUp(ByVal g As SearchLookUpEdit, sTableName As String, sFieldsName As String, sWhere As String, sOrderBy As String, sDisplayMember As String, sValueMember As String)
-    '    g.Properties.DataSource = cManager.GetDataTable(sTableName, sFieldsName, sWhere, sOrderBy)
-    '    g.Properties.DisplayMember = sDisplayMember
-    '    g.Properties.ValueMember = sValueMember
-    '    g.Properties.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFit 'DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup
-    '    g.Properties.PopupFormSize = New Size(250, 250)
-    '    g.Properties.NullText = ""
-    'End Sub
 
     Sub CargagridLookUpsFromTables()
 
-        'CargagridSearchLookUp(Me.SearchLookUpEditCliente, "vClientes", "IDCliente, Nombre, Telefono, Farmacia,Direccion, DescrTipo, DescrCategoria, Activo", "", "IDCliente", "Nombre", "IDCliente")
         CargagridSearchLookUp(Me.SearchLookUpEditPlazo, "ccfPlazo", "Plazo, Descr, Activo", "", "Plazo", "Descr", "Plazo")
         CargagridSearchLookUp(Me.SearchLookUpEditTipoFact, "fafTipoFactura", "IDTipo, Descr, Activo", "", "IDTipo", "Descr", "IDTipo")
         CargagridSearchLookUp(Me.SearchLookUpEditSucursal, "invBodega", "IDBodega, Descr, Activo", "", "IDBodega", "Descr", "IDBodega")
@@ -187,7 +193,7 @@ Public Class frmFactura
         CargagridSearchLookUp(Me.SearchLookUpEditTipoEntrega, "fafTipoEntrega", "IDTipoEntrega, Descr, Activo", "", "IDTipoEntrega", "Descr", "IDTipoEntrega")
         CargagridSearchLookUp(Me.SearchLookUpEditNivel, "fafNivelPrecio", "IDNivel, Descr, Activo", "", "IDNivel", "Descr", "IDNivel")
         CargagridSearchLookUp(Me.SearchLookUpEditMoneda, "globalMoneda", "IDMoneda, Descr, Activo", "", "IDMoneda", "Descr", "IDMoneda")
-        'CargagridSearchLookUp(Me.SearchLookUpEditProducto, "invProducto", "IDProducto, Descr, Activo", "", "IDProducto", "Descr", "IDProducto")
+
         Me.DateEditFecha.EditValue = Date.Now
         Me.txtTipoCambio.EditValue = getTipoCambio(Me.DateEditFecha.EditValue, gParametros.TipoCambioFact)
         Me.SearchLookUpEditSucursal.EditValue = gsSucursal
@@ -245,6 +251,8 @@ Public Class frmFactura
                 End If
                 gsPedidoID = frm.gsIDPedido
                 gsIDBodega = frm.gsIDBodega
+                txtLimite.EditValue = frm.gdLimite
+                txtDisponible.EditValue = frm.gdDisponible
                 Me.SearchLookUpEditSucursal.EditValue = CInt(gsIDBodega)
                 Me.SearchLookUpEditNivel.EditValue = frm.gsIDNivel
                 Me.SearchLookUpEditMoneda.EditValue = frm.gsIDMoneda
@@ -254,25 +262,32 @@ Public Class frmFactura
                 RefreshGrid()
                 TotalizaGrid()
                 frm.Dispose()
-
-
-
                 If gsPedidoID <> "" And gsIDBodega <> "" Then
                     gbUsaPedido = True
+                    txtCantidad.ReadOnly = True
+                    txtCantBonif.ReadOnly = True
+                    txtCantPrecio.ReadOnly = True
+                    EnableBotonesModificaFactura(False)
                 Else
                     gbUsaPedido = False
                 End If
             Else
                 gbUsaPedido = False
             End If
-
+            gbLoteAsignado = False
         Catch ex As Exception
             MessageBox.Show("Ha ocurrido un error al cargar el Pedido " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             gbUsaPedido = False
         End Try
     End Sub
 
+    Private Sub EnableBotonesModificaFactura(bEnable As Boolean)
+        btnAdd.Enabled = bEnable
+        btnNuevo.Enabled = bEnable
+        btnDelete.Enabled = bEnable
+        btnProducto.Enabled = bEnable
 
+    End Sub
     Sub RefreshGridFromPedido()
         Try
             If gbUsaPedido Then
@@ -398,20 +413,6 @@ Public Class frmFactura
         Me.GridViewProducto.Columns(5).AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far
 
     End Sub
-    Private Function getTipoCambio(dFecha As Date, sIDTipoCambio As String) As Decimal
-        Try
-            '  Dim cManager As New Clases.ClassManagerCDate(Me.DateEditFecha.EditValue).ToString("yyyyMMdd")
-            Dim t As DataTable
-            Dim sParameter As String
-            sParameter = "'" & dFecha.ToString("yyyyMMdd") & "','" & sIDTipoCambio & "'"
-            t = cManager.ExecFunction("globalGetLastTipoCambio", sParameter)
-            Return t.Rows(0).Item(0)
-        Catch ex As Exception
-            Return 0
-            MessageBox.Show("Error al Obtener el Tipo de Cambio", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
-        End Try
-    End Function
 
     Private Sub frmFactura_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
         Select Case e.KeyCode
@@ -458,8 +459,6 @@ Public Class frmFactura
         Me.txtFactura.EditValue = td.Rows(0)(0)
         td = cManager.ExecFunction("getMascaraFromConsecMask", sParameters)
         gsMascara = td.Rows(0)(0)
-
-
     End Sub
     Private Sub GridViewProducto_RowCellStyle(sender As Object, e As RowCellStyleEventArgs) Handles GridViewProducto.RowCellStyle
         Dim view As GridView = sender
@@ -472,27 +471,19 @@ Public Class frmFactura
         End If
     End Sub
 
-    'Sub(sender, e)
-    '    Dim view As GridView = TryCast(sender, GridView)
-    '    Dim _mark As Boolean = CBool(View.GetRowCellValue(e.RowHandle, "Mark"))
-    '    If e.Column.FieldName = "Name" Then
-    '        e.Appearance.BackColor = If(_mark, Color.LightGreen, Color.LightSalmon)
-    '        e.Appearance.TextOptions.HAlignment = If(_mark, HorzAlignment.Far, HorzAlignment.Near)
-    '    End If
-    'End Sub
 
     Private Sub TotalizaGrid()
         If dtFacturaLinea.Rows.Count > 0 Then
-            Dim SubTotal As Decimal = dtFacturaLinea.Compute("Sum(SubTotal)", "") 'Convert.ToDecimal(tableData.AsEnumerable().Sum(Function(row) row.Field(Of String)("SubTotal")))
-            Dim Impuesto As Decimal = dtFacturaLinea.Compute("Sum(Impuesto)", "") 'Convert.ToDouble(tableData.AsEnumerable().Sum(Function(row) row.Field(Of String)("Impuesto")))
+            Dim SubTotal As Decimal = dtFacturaLinea.Compute("Sum(SubTotal)", "")
+            Dim Impuesto As Decimal = dtFacturaLinea.Compute("Sum(Impuesto)", "")
             Dim Descuento As Decimal = dtFacturaLinea.Compute("Sum(Descuento)", "")
             Dim DescuentoEsp As Decimal = dtFacturaLinea.Compute("Sum(DescuentoEspecial)", "")
-            Me.txtSubTotal.EditValue = SubTotal
-            Me.txtSubTotalFinal.EditValue = (SubTotal - Descuento - DescuentoEsp)
-            Me.txtIGV.EditValue = Impuesto
-            Me.txtTotal.EditValue = (SubTotal - Descuento - DescuentoEsp) + Impuesto
-            Me.txtDcto.EditValue = Descuento
-            Me.txtDctoEsp.EditValue = DescuentoEsp
+            Me.txtSubTotal.EditValue = Redondear(SubTotal, gParametros.DigitosDecimales)
+            Me.txtSubTotalFinal.EditValue = Redondear((SubTotal - Descuento - DescuentoEsp), gParametros.DigitosDecimales)
+            Me.txtIGV.EditValue = Redondear(Impuesto, gParametros.DigitosDecimales)
+            Me.txtTotal.EditValue = Redondear((SubTotal - Descuento - DescuentoEsp) + Impuesto, gParametros.DigitosDecimales)
+            Me.txtDcto.EditValue = Redondear(Descuento, gParametros.DigitosDecimales)
+            Me.txtDctoEsp.EditValue = Redondear(DescuentoEsp, gParametros.DigitosDecimales)
 
         Else
             Me.txtSubTotal.EditValue = 0
@@ -515,6 +506,9 @@ Public Class frmFactura
         FormatControlNumber(txtDescEspLinea)
         FormatControlNumber(txtTotLinea)
         FormatControlNumber(txtPrecio)
+        FormatControlNumber(txtLimite)
+        FormatControlNumber(txtDisponible)
+        FormatControlNumber(txtAhorro)
         FormatControlNumber(txtSubTotal)
         FormatControlNumber(txtSubTotLin)
         FormatControlNumber(txtSubTotalFinalLin)
@@ -522,35 +516,43 @@ Public Class frmFactura
         FormatControlNumber(txtPorcImpt)
         FormatControlNumber(txtExistencia)
         FormatControlNumber(txtCantBonif)
+        FormatControlNumber(txtCantPrecio)
+
 
     End Sub
     Private Sub RefreshDataFromGridToControls()
         Dim dr As DataRow = GridViewProducto.GetFocusedDataRow()
         currentRow = dr
         If dr IsNot Nothing Then
+
+            Dim dCantidadBonificada As Decimal
+            dCantidadBonificada = CDec(dr("CantBonificada"))
             Me.txtCodigo.Text = dr("IDProducto").ToString()
-
+            gbLoteAsignadoLinea = CBool(dr("LoteAsignado"))
             Me.txtDescr.EditValue = dr("Descr")
-            Me.txtCantidad.EditValue = dr("Cantidad") ' String.Format("{0:0.00}", dr("Cantidad"))
-            Me.txtPorcImpt.EditValue = dr("PorcImp") ' String.Format("{0:0.00}", dr("PorcImp"))
-            Me.txtImpuesto.EditValue = dr("Impuesto") ' String.Format("{0:0.00}", dr("Impuesto"))
-            Me.txtDescLinea.EditValue = dr("CantBonificada") * dr("Precio") ' String.Format("{0:0.00}", dr("CantBonificada") * dr("Precio"))
-            Me.txtDescEspLinea.EditValue = dr("DescuentoEspecial") ' String.Format("{0:0.00}", dr("DescuentoEspecial"))
-            Me.txtCantBonif.EditValue = dr("CantBonificada") 'String.Format("{0:0.00}", dr("CantBonificada"))
-            'FormatControlNumber(txtSubTotLin)
-            'txtSubTotLin.Properties.DisplayFormat.FormatString = "#,###,##0.##"
-            Me.txtSubTotLin.EditValue = dr("SubTotal") 'String.Format("{0:n2}", dr("SubTotal"))
-            Me.txtSubTotalFinalLin.EditValue = dr("SubTotalFinal") ' String.Format("{0:0.00}", dr("SubTotalFinal")) ' CDec(dr("SubTotalFinal")).ToString("n2") ' String.Format("{0:0.00}", dr("SubTotalFinal"))
-
-
-            'txtTotLinea.Properties.DisplayFormat.FormatString = "#,###,##0.##"
-            Me.txtTotLinea.EditValue = dr("Total") 'String.Format("{0:0.00}", dr("Total"))
-            Me.txtCostoPromLocal.EditValue = dr("CostoLocal") '  String.Format("{0:0.00}", dr("CostoLocal"))
-            Me.txtCostoPromDolar.EditValue = dr("CostoDolar") 'String.Format("{0:0.00}", dr("CostoDolar"))
+            Me.txtCantidad.EditValue = Redondear(dr("Cantidad"), gParametros.DigitosDecimales)
+            Me.txtPorcImpt.EditValue = dr("PorcImp")
+            Me.txtImpuesto.EditValue = Redondear(dr("Impuesto"), gParametros.DigitosDecimales)
+            Me.txtDescLinea.EditValue = Redondear(dr("Descuento"), gParametros.DigitosDecimales)
+            Me.txtDescEspLinea.EditValue = Redondear(dr("DescuentoEspecial"), gParametros.DigitosDecimales)
+            Me.txtCantBonif.EditValue = dr("CantBonificada")
+            Me.txtCantPrecio.EditValue = dr("CantPrecio")
+            Me.txtSubTotLin.EditValue = Redondear(dr("SubTotal"), gParametros.DigitosDecimales)
+            Me.txtSubTotalFinalLin.EditValue = Redondear(dr("SubTotalFinal"), gParametros.DigitosDecimales)
+            Me.txtTotLinea.EditValue = Redondear(dr("Total"), gParametros.DigitosDecimales)
+            Me.txtCostoPromLocal.EditValue = Redondear(dr("CostoLocal"), gParametros.DigitosDecimales)
+            Me.txtCostoPromDolar.EditValue = Redondear(dr("CostoDolar"), gParametros.DigitosDecimales)
             Me.chkBonifica.Checked = Convert.ToBoolean(dr("Bonifica"))
             Me.chkBonificaProd.Checked = Convert.ToBoolean(dr("BonifConProd"))
-            Me.txtPorcDescEsp.EditValue = dr("PorcDescuentoEsp") ' String.Format("{0:0.00}", dr("PorcDescuentoEsp"))
-            Me.txtPrecio.EditValue = dr("Precio") ' String.Format("{0:0.00}", dr("Precio"))
+            Me.txtPorcDescEsp.EditValue = Redondear(dr("PorcDescuentoEsp"), gParametros.DigitosDecimales)
+            Me.txtPrecio.EditValue = Redondear(dr("Precio"), gParametros.DigitosDecimales)
+            Me.txtPrecioLista.EditValue = dr("PrecioLista")
+            Me.txtAhorro.EditValue = dr("Ahorro")
+            If txtAhorro.EditValue > 0 Then
+                txtAhorro.Visible = True
+            Else
+                txtAhorro.Visible = False
+            End If
 
             TotalizaGrid()
         End If
@@ -623,14 +625,17 @@ Public Class frmFactura
         gsIDBodega = sBodega ' row.Item("IDBodega").ToString()
         gsIDProducto = sIDProducto '  row.Item("IDProducto").ToString()
         Dim frm As New frmAsignaLote()
+        frm.gbUsaPedido = gbUsaPedido
         frm.gsIDBodega = gsIDBodega
         frm.gsIDProducto = gsIDProducto
         frm.gsCantidad = sCantidad  'row.Item("Cantidad").ToString()
         frm.gsDescr = sDescr ' row.Item("Descr").ToString()
         frm.gbAsignaLotes = bAsignaLotes
         frm.gsCantidadBonifPedido = sCantBonifPedido
-        frm.gbBonifica = bBonifica
-        frm.gbBonificaProd = bBonifConProd
+        frm.gdTotalBonificado = CDec(txtCantBonif.EditValue) ' new 21/09/2020
+        frm.gdTotalBonificadoPrecio = CDec(Me.txtCantPrecio.EditValue)
+        frm.gbBonifica = Me.chkBonifica.Checked
+        frm.gbBonificaProd = Me.chkBonificaProd.Checked
         frm.ShowDialog()
         If frm.gbLotesAsignados = True Then
             gbLoteAsignado = frm.gbLotesAsignados
@@ -639,6 +644,8 @@ Public Class frmFactura
             chkBonifica.Checked = gbBonifica
             chkBonificaProd.Checked = gbBonifConProd
             gdTotalBonificado = frm.gdTotalBonificado
+            gdTotalBonificadoPrecio = frm.gdTotalBonificadoPrecio
+            gdTotalFacturado = frm.gdTotalFacturado
             ' nuevo el dia 14 de octubre18
 
             ' LIMPIAR dtFacturaLineaLote. CON EL ID DEL PRODUCTO
@@ -652,22 +659,24 @@ Public Class frmFactura
             End If
             Dim bLoteAsignado As Boolean = False
             For Each row In frm.tableLotesAsignados.Rows
-                If CDec(row("AsignadoFA")) > 0 Or CDec(row("AsignadoBO")) > 0 Then
+                If CDec(row("AsignadoFA")) > 0 Or CDec(row("AsignadoBO")) > 0 Or CDec(row("AsignadoPrecio")) > 0 Then
                     dtFacturaLineaLote.Rows.Add(Convert.ToInt32(gsIDBodega), Convert.ToInt32(row("IDProducto")), Convert.ToInt32(row("IDLote")), Convert.ToDecimal(row("AsignadoFA")), Convert.ToDecimal(row("AsignadoBO")), (Convert.ToDecimal(row("AsignadoFA")) + Convert.ToDecimal(row("AsignadoBO"))), 0, 0, _
                                                 row("Descr").ToString(), row("LoteInterno").ToString(), row("LoteProveedor").ToString(), _
-                                                Convert.ToDateTime(row("FechaVencimiento")), Convert.ToDecimal(row("Existencia")), Convert.ToDecimal(row("AsignadoFA")), Convert.ToDecimal(row("AsignadoBO")))
+                                                Convert.ToDateTime(row("FechaVencimiento")), Convert.ToDecimal(row("Existencia")), Convert.ToDecimal(row("AsignadoFA")), Convert.ToDecimal(row("AsignadoBO")), Convert.ToDecimal(row("AsignadoPrecio")))
                     bLoteAsignado = True
-                    'FillTableFacturaLineaLote(frm.tableLotesAsignados)
-                    'Me.tableData.ImportRow(row)
-                    'MessageBox.Show(row("IDProducto").ToString() + " " + row("AsignadoFA").ToString() + " " + row("AsignadoBO").ToString())
-                    'GridControl1.DataSource = tableData
-                    'GridControl1.Refresh()
+
                 End If
             Next
+
             If bLoteAsignado Then
-                UpdateFieldsToGrid()
-                Me.txtCantBonif.EditValue = gdTotalBonificado
-                Me.txtDescLinea.EditValue = gdTotalBonificado * txtPrecio.EditValue
+
+                txtCantidad.EditValue = txtCantidad.EditValue
+                Me.txtCantBonif.EditValue = Redondear(gdTotalBonificado, gParametros.DigitosDecimales)
+                Me.txtCantPrecio.EditValue = Redondear(gdTotalBonificadoPrecio, gParametros.DigitosDecimales)
+                Me.txtDescLinea.EditValue = Redondear(txtCantBonif.EditValue * txtPrecio.EditValue, gParametros.DigitosDecimales) ' nuevo 19/09/2020
+                Me.txtCantPrecio.EditValue = Redondear(gdTotalBonificadoPrecio, gParametros.DigitosDecimales)
+                CalculaImpuesto() ' nuevo el 19/09/2020
+                UpdateFieldsToGrid() ' nuevo 19/09/2020 esta linea eataba al inicio la movi al final 
                 TotalizaGrid()
             End If
         End If
@@ -719,6 +728,8 @@ Public Class frmFactura
                 Me.SearchLookUpEditPlazo.EditValue = CInt(frm.gsPlazo)
                 gIDPlazo = CInt(frm.gsPlazo)
                 gdPorcInteres = CDec(frm.gsPorcInteres)
+                txtLimite.EditValue = frm.gdLimite
+                txtDisponible.EditValue = frm.gdDisponible
                 CalculaFechaVencimiento()
             End If
             frm.Dispose()
@@ -730,16 +741,37 @@ Public Class frmFactura
 
     Private Sub btnClientes_Click(sender As Object, e As EventArgs) Handles btnClientes.Click
         CallPopUpClientes()
+        If TieneDisponilidad(0) Then
+            Exit Sub
+        End If
+        EnableBotonesModificaFactura(True)
     End Sub
-
+    Private Function TieneDisponilidad(dTotalAFacturar As Decimal) As Boolean
+        Dim lbOK As Boolean = True
+        If txtIDCliente.Text <> "" Then
+            If txtDisponible.EditValue <= 0 Then
+                lbOK = False
+                'MessageBox.Show("El Cliente no tiene disponibilidad... por favor llame y solicite autorización ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End If
+        End If
+        If txtIDCliente.Text <> "" Then
+            If txtDisponible.EditValue > 0 And dTotalAFacturar > CDec(txtDisponible.EditValue) Then
+                lbOK = False
+                'MessageBox.Show("El Cliente no tiene sufiente Disponibilidad... por favor llame ysolicite autorización " & "Exede : "(dTotalAFacturar - CDec(txtDisponible.EditValue)).ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End If
+        End If
+        Return lbOK
+    End Function
     Private Sub CalculaFechaVencimiento()
         Me.DateEditVencimiento.EditValue = DateAdd(DateInterval.Day, CDbl(Me.SearchLookUpEditPlazo.EditValue), Me.DateEditFecha.EditValue)
         Me.DateEditVencimiento.Refresh()
     End Sub
     Private Sub txtCantidad_GotFocus(sender As Object, e As EventArgs) Handles txtCantidad.GotFocus
-        txtCantidad.SelectionStart = 0
-        txtCantidad.SelectionLength = txtCantidad.Text.Length
-        txtCantidad.SelectAll()
+        If Not gbUsaPedido Then
+            txtCantidad.SelectionStart = 0
+            txtCantidad.SelectionLength = txtCantidad.Text.Length
+            txtCantidad.SelectAll()
+        End If
     End Sub
 
     Private Sub txtCantidad_KeyDown(sender As Object, e As KeyEventArgs) Handles txtCantidad.KeyDown
@@ -750,13 +782,22 @@ Public Class frmFactura
     End Sub
 
     Private Sub TrataLote()
+        Dim iCantidad As Integer
         Try
             If gbUsaPedido Then
                 MessageBox.Show("No se puede alterar la cantidad en un pedido ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
-            PopUpAsignaLote(Me.SearchLookUpEditSucursal.EditValue.ToString(), txtCodigo.EditValue.ToString(), txtCantidad.EditValue.ToString(), txtDescr.EditValue.ToString(), True, CBool(chkBonifica.EditValue), CBool(chkBonificaProd.EditValue))
-
+            ' Hice el cambio aqui porque tenia que restar la Bonificacion 15/09/2020
+            If gbUsaPedido Then
+                iCantidad = (txtCantidad.EditValue - txtCantBonif.EditValue)
+            Else
+                iCantidad = txtCantidad.EditValue
+            End If
+            PopUpAsignaLote(Me.SearchLookUpEditSucursal.EditValue.ToString(), txtCodigo.EditValue.ToString(), iCantidad.ToString(), txtDescr.EditValue.ToString(), True, txtCantBonif.EditValue.ToString(), CBool(chkBonifica.EditValue), CBool(chkBonificaProd.EditValue))
+            If gbLoteAsignado = False Then
+                Exit Sub ' agregado el 21/09/2020
+            End If
             Me.txtDescEspLinea.EditValue = CDec(txtPorcDescEsp.EditValue) / 100 * CDec(txtCantidad.EditValue) * CDec(txtPrecio.EditValue)
             txtImpuesto.EditValue = CalculaImpuesto()
         Catch ex As Exception
@@ -764,8 +805,87 @@ Public Class frmFactura
         End Try
     End Sub
 
+    Private Sub getPrecioProducto()
+        Dim dPrecio As Decimal
+        Dim t As DataTable
+        ' para obtener el Precio
+        Dim sParametros As String
+        sParametros = txtIDCliente.Text & "," & Me.SearchLookUpEditNivel.EditValue.ToString() & "," & txtCodigo.Text & "," & Me.SearchLookUpEditMoneda.EditValue.ToString()
+        t = cManager.ExecFunction("fafGetPrecio", sParametros)
+        If t.Rows.Count > 0 Then
+            dPrecio = t.Rows(0).Item(0)
+        Else
+            dPrecio = 0
+        End If
+
+        txtPrecio.Text = dPrecio
+        txtPrecioLista.EditValue = txtPrecio.EditValue
+    End Sub
+
     Private Sub btnProducto_Click(sender As Object, e As EventArgs) Handles btnProducto.Click
-        CallPopUpProducto()
+        Try
+            If Not ControlsHeaderOk() Then
+                MessageBox.Show("Por favor revise los datos del Pedido, existe un campo incompleto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Me.SearchLookUpEditSucursal.Focus()
+                Return
+            End If
+
+            Dim frm As New frmPopupProducto()
+            frm.ShowDialog()
+            Me.txtCodigo.EditValue = frm.gsIDProducto
+            Me.txtDescr.EditValue = frm.gsDescr
+            Me.chkBonifica.Checked = frm.gbBonifica
+            Me.chkBonifica.Enabled = False
+            Me.chkBonificaProd.Enabled = False
+            If chkBonifica.Checked = False Then
+                txtCantBonif.Enabled = False
+                txtCantPrecio.Enabled = False
+            Else
+                txtCantBonif.Enabled = True
+                txtCantPrecio.Enabled = True
+
+            End If
+            Dim t As DataTable
+
+            t = cManager.ExecSPgetData("invGetExistenciaBodega", gsSucursal & "," & txtCodigo.EditValue.ToString() & ", -1 ")
+            If t.Rows.Count > 0 Then
+                txtExistencia.EditValue = t.Rows(0).Item("Existencia")
+            Else
+                txtExistencia.EditValue = 0
+            End If
+
+
+            t = cManager.ExecFunction("getPorcImpuestoFromProducto", txtCodigo.EditValue.ToString)
+            If t.Rows.Count > 0 Then
+                txtPorcImpt.EditValue = t.Rows(0).Item(0)
+            Else
+                txtPorcImpt.EditValue = 0
+            End If
+
+            getPrecioProducto()
+            ' para obtener el PorcDescuentoEspecial
+            Dim sparam As String = txtCodigo.EditValue.ToString() & ",'" & CDate(Me.DateEditFecha.EditValue).ToString("yyyyMMdd") & "'," & Me.txtIDCliente.EditValue.ToString()
+            t = cManager.ExecSPgetData("fafGetPorcDescuento", sparam)
+            If t.Rows.Count > 0 Then
+                Me.txtPorcDescEsp.EditValue = t.Rows(0).Item(0)
+                gdPorcDescPromFecha = CDec(t.Rows(0).Item(0))
+                gbRequiereBonif = CBool(t.Rows(0).Item(1))
+            Else
+                Me.txtPorcDescEsp.EditValue = 0
+                gbRequiereBonif = False
+                gdPorcDescPromFecha = 0
+            End If
+
+            txtCantidad.Text = ""
+            gdBonoProductoActual = 0
+            txtCantPrecio.EditValue = 0
+            txtCantidad.Focus()
+            frm.Dispose()
+        Catch ex As Exception
+            MessageBox.Show("Error al cargar el Producto ..." & Err.Description, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+
+        'CallPopUpProducto()
     End Sub
 
     Private Sub CallPopUpProducto()
@@ -789,7 +909,8 @@ Public Class frmFactura
 
             gsIDProducto = txtCodigo.EditValue
             GetImpuestoDescuentoEspecialPrecio()
-            txtCantidad.EditValue = ""
+            txtCantidad.EditValue = 0 ' antes ""
+            gdBonoProductoActual = 0
             Me.txtCantidad.Focus()
             frm.Dispose()
 
@@ -801,22 +922,12 @@ Public Class frmFactura
     Private Sub GetImpuestoDescuentoEspecialPrecio()
         Dim dPrecio As Decimal
         Dim t As DataTable
-        't = cManager.ExecFunction("getPorcImpuestoFromProducto", txtCodigo.EditValue.ToString)
-        'PorcImpuesto = t.Rows(0).Item(0)
-        'txtPorcImpt.Text = PorcImpuesto.ToString("n2")
-
-        '' para obtener el PorcDescuentoEspecial
-        'Dim sparam As String = txtCodigo.EditValue.ToString() & ",'" & CDate(Me.DateEditFecha.EditValue).ToString("yyyyMMdd") & "'"
-        't = cManager.ExecFunction("fafGetPorcDescuento", sparam)
-        'Me.txtPorcDescEsp.EditValue = t.Rows(0).Item(0)
-
         GetPorcImuestoYDescuentoEspecial()
-        ' para obtener el Precio
         Dim sParametros As String
         sParametros = txtIDCliente.Text & "," & Me.SearchLookUpEditNivel.EditValue.ToString() & "," & txtCodigo.Text & "," & Me.SearchLookUpEditMoneda.EditValue.ToString()
         t = cManager.ExecFunction("fafGetPrecio", sParametros)
         dPrecio = t.Rows(0).Item(0)
-        txtPrecio.EditValue = dPrecio
+        txtPrecio.EditValue = Redondear(dPrecio, gParametros.DigitosDecimales)
     End Sub
 
     Private Sub GetPorcImuestoYDescuentoEspecial()
@@ -824,13 +935,100 @@ Public Class frmFactura
         Dim t As DataTable
         t = cManager.ExecFunction("getPorcImpuestoFromProducto", txtCodigo.EditValue.ToString)
         PorcImpuesto = t.Rows(0).Item(0)
-        txtPorcImpt.EditValue = PorcImpuesto.ToString("n2")
+        txtPorcImpt.EditValue = PorcImpuesto '.ToString("n2") quitado el 19/09/2020
 
         ' para obtener el PorcDescuentoEspecial
-        Dim sparam As String = txtCodigo.EditValue.ToString() & ",'" & CDate(Me.DateEditFecha.EditValue).ToString("yyyyMMdd") & "'"
+        Dim sparam As String = txtCodigo.EditValue.ToString() & ",'" & CDate(Me.DateEditFecha.EditValue).ToString("yyyyMMdd") & "'," & txtIDCliente.EditValue.ToString()
         t = cManager.ExecFunction("fafGetPorcDescuento", sparam)
-        Me.txtPorcDescEsp.EditValue = t.Rows(0).Item(0)
+        Me.txtPorcDescEsp.EditValue = CDec(t.Rows(0).Item(0))
     End Sub
+
+    Private Sub ValidaLetraNumero(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) _
+    Handles txtCantidad.KeyPress, txtPrecio.KeyPress, txtExistencia.KeyPress, txtCantBonif.KeyPress, txtCantPrecio.KeyPress
+        Dim strListaControles As String
+        strListaControles = "txtCantidad , txtPrecio , txtExistencia, txtCantBonif, txtCantPrecio"
+        If strListaControles.Contains(sender.name) = True And Asc(e.KeyChar) <> Keys.Return Then
+            e.KeyChar = Chr(Solo_Numeros(Asc(e.KeyChar)))
+        End If
+        If sender.name = "txtCantidad" And Asc(e.KeyChar) = Keys.Return Then
+            txtPrecio.Focus()
+        End If
+        If sender.name = "txtCantBonif" And Asc(e.KeyChar) = Keys.Return Then
+            txtCantPrecio.Focus()
+        End If
+        If sender.name = "txtCantPrecio" And Asc(e.KeyChar) = Keys.Return Then
+            Me.btnAdd.Focus()
+
+        End If
+
+        If sender.name = "txtPrecio" And Asc(e.KeyChar) = Keys.Return Then
+            Me.btnAdd.Focus()
+        End If
+
+    End Sub
+
+    Private Sub TriggerCantBonif()
+        If Me.txtCantidad.Text = "" Or Me.txtCantBonif.Text = "" Or txtPrecio.Text = "" Or Not (Me.txtCantBonif.EditValue IsNot Nothing) Or Not (Me.txtPrecio.EditValue IsNot Nothing) Or Not (Me.txtCantidad.EditValue IsNot Nothing) Then
+            Return
+        End If
+        If Me.txtCantBonif.EditValue > 0 And txtCantidad.EditValue = 0 Then
+            MessageBox.Show("Ud Digitó la cantidad a Bonificar pero no digitó la cantidad a Facturar ...", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            ClearControlslinea()
+            txtCantBonif.Text = 0
+            txtCantidad.Focus()
+            Return
+        End If
+        ' cambio el 1 de Nov 2020
+        If gbRequiereBonif And txtCantBonif.EditValue = 0 And txtCantPrecio.EditValue = 0 Then
+            Me.txtPorcDescEsp.EditValue = 0
+        Else
+            txtPorcDescEsp.EditValue = gdPorcDescPromFecha + gdPorcDescPromEscala
+        End If
+        CalculaSubTotales()
+    End Sub
+
+    Private Sub TriggerCantBonifPrecio()
+        If Me.txtCantidad.Text = "" Or txtPrecio.Text = "" Or Not (Me.txtCantPrecio.EditValue IsNot Nothing) Or Not (Me.txtCantidad.EditValue IsNot Nothing) Then
+            Return
+        End If
+
+        If txtCantPrecio.Text = "" Then
+            txtCantPrecio.EditValue = 0
+        End If
+
+        If Me.txtCantPrecio.EditValue > 0 And txtCantidad.EditValue = 0 Then
+            MessageBox.Show("Ud Digitó la cantidad a Bonificar en Precio pero no digitó la cantidad a Facturar ...", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            ClearControlslinea()
+            txtCantPrecio.EditValue = 0
+            txtCantidad.Focus()
+            Return
+        End If
+
+        If Me.txtPrecio.EditValue = 0 Or txtCantPrecio.EditValue = 0 Then
+            txtPrecio.EditValue = txtPrecioLista.EditValue
+        End If
+
+        If CDec(txtCantPrecio.EditValue) <= gdBonoProductoActual Then
+            txtCantBonif.EditValue = gdBonoProductoActual - txtCantPrecio.EditValue
+        End If
+
+        If (CDec(txtCantPrecio.EditValue) > gdBonoProductoActual) Or txtCantPrecio.Text = "" Then
+            txtCantPrecio.EditValue = 0
+            txtPrecio.EditValue = txtPrecioLista.EditValue
+            txtCantBonif.EditValue = gdBonoProductoActual
+        End If
+
+        ' cambio el 1 de Nov 2020
+
+        If gbRequiereBonif And txtCantBonif.EditValue = 0 And txtCantPrecio.EditValue = 0 Then
+            Me.txtPorcDescEsp.EditValue = 0
+        Else
+            txtPorcDescEsp.EditValue = gdPorcDescPromFecha + gdPorcDescPromEscala
+        End If
+        CalculaSubTotales()
+
+    End Sub
+
 
     Private Sub UpdateFieldsToGrid()
         If dtFacturaLinea.Rows.Count > 0 Then
@@ -840,7 +1038,25 @@ Public Class frmFactura
                 customerRow(0)("LoteAsignado") = True
                 currentRow("Bonifica") = gbBonifica
                 currentRow("BonifConProd") = gbBonifConProd
-                currentRow("Descuento") = gdTotalBonificado * CDec(txtPrecio.EditValue)
+                Me.txtCantPrecio.EditValue = gdTotalBonificadoPrecio
+
+                If gbUsaPedido = True Then
+                    Me.txtPrecio.EditValue = CDec(customerRow(0)("Precio"))
+                Else
+
+                    Me.txtPrecio.EditValue = Redondear((CDec(txtPrecio.EditValue) * CDec(txtCantidad.EditValue)) / (CDec(txtCantidad.EditValue) + CDec(txtCantPrecio.EditValue)), gParametros.DigitosDecimales)
+                End If
+                If Not gbUsaPedido Then
+                    currentRow("Precio") = Me.txtPrecio.EditValue
+                End If
+
+
+                currentRow("SubTotal") = Me.txtSubTotLin.EditValue ' nuevo el 19/09/2020
+                currentRow("Descuento") = CDec(txtCantBonif.EditValue) * CDec(txtPrecio.EditValue)
+                currentRow("SubTotalFinal") = Redondear(CDec(currentRow("SubTotal")) - CDec(currentRow("Descuento")) - CDec(currentRow("DescuentoEspecial")), gParametros.DigitosDecimales)
+                currentRow("Total") = Redondear(CDec(currentRow("SubTotalFinal")) + CDec(Me.txtImpuesto.EditValue), gParametros.DigitosDecimales)
+
+
                 Me.chkBonifica.Checked = gbBonifica
                 Me.chkBonificaProd.Checked = gbBonifConProd
 
@@ -919,28 +1135,41 @@ Public Class frmFactura
     Sub AddDataToGrid()
         Try
             Dim r As DataRow = dtFacturaLinea.NewRow
+            Dim dCantidadBonificada As Decimal = 0
+            dCantidadBonificada = 0
+            If txtCantPrecio.Text = "" Then
+                txtCantPrecio.EditValue = 0
+            End If
+            Me.txtPrecio.EditValue = (CDec(txtPrecio.EditValue) * CDec(txtCantidad.EditValue)) / (CDec(txtCantidad.EditValue) + CDec(txtCantPrecio.EditValue))
+            If Me.chkBonifica.EditValue And chkBonificaProd.EditValue = True Then
+                dCantidadBonificada = CDbl(txtCantBonif.EditValue)
+            End If
 
-            r("IDProducto") = Me.txtCodigo.EditValue  ' Me.SearchLookUpEditProducto.EditValue
+            r("IDProducto") = Me.txtCodigo.EditValue
             r("Descr") = Me.txtDescr.EditValue
             r("IDBodega") = Me.SearchLookUpEditSucursal.EditValue
             r("Cantidad") = Me.txtCantidad.EditValue
-            r("Precio") = CDbl(Me.txtPrecio.EditValue)
-            r("Impuesto") = CDbl(Me.txtImpuesto.EditValue)
-            r("SubTotal") = CDbl(Me.txtPrecio.EditValue) * CDbl(txtCantidad.EditValue)
-            r("PorcImp") = CDbl(txtPorcImpt.EditValue)
+            r("Precio") = Redondear(CDec(Me.txtPrecio.EditValue), gParametros.DigitosDecimales)
+            r("CantFacturada") = CDec(r("Cantidad"))
+            r("CantBonificada") = gdTotalBonificado
+            r("CantPrecio") = gdTotalBonificadoPrecio ' nuevo el 21/09/2020
+            r("Impuesto") = Redondear(CDec(Me.txtImpuesto.EditValue), gParametros.DigitosDecimales)
+            r("SubTotal") = Redondear(CDec(Me.txtPrecio.EditValue) * (CInt(r("CantFacturada")) + CInt(r("CantBonificada"))), gParametros.DigitosDecimales)
+            r("PorcImp") = CDec(txtPorcImpt.EditValue)
 
             r("Bonifica") = CBool(chkBonifica.Checked)
             r("BonifConProd") = CBool(chkBonificaProd.Checked)
             r("LoteASignado") = gbLoteAsignado
-            r("DescuentoEspecial") = CDec(Me.txtDescEspLinea.EditValue)
-            r("Descuento") = gdTotalBonificado * CDbl(txtPrecio.EditValue)
-            r("CantFacturada") = CDec(r("Cantidad"))
-            r("CantBonificada") = gdTotalBonificado
-            r("CostoLocal") = CDec(Me.txtCostoPromLocal.EditValue)
-            r("CostoDolar") = CDec(Me.txtCostoPromDolar.EditValue)
+            r("DescuentoEspecial") = Redondear(CDec(Me.txtDescEspLinea.EditValue), gParametros.DigitosDecimales)
+            r("Descuento") = Redondear(CDec(txtCantBonif.EditValue) * CDec(txtPrecio.EditValue), gParametros.DigitosDecimales)
+
+            r("CostoLocal") = Redondear(CDec(Me.txtCostoPromLocal.EditValue), gParametros.DigitosDecimales)
+            r("CostoDolar") = Redondear(CDec(Me.txtCostoPromDolar.EditValue), gParametros.DigitosDecimales)
             r("PorcDescuentoEsp") = CDec(Me.txtPorcDescEsp.EditValue)
-            r("SubTotalFinal") = CDec(r("SubTotal")) - CDec(r("Descuento")) - CDec(r("DescuentoEspecial"))
-            r("Total") = CDec(r("SubTotalFinal")) + CDec(Me.txtImpuesto.EditValue)
+            r("SubTotalFinal") = Redondear(CDec(r("SubTotal")) - CDec(r("Descuento")) - CDec(r("DescuentoEspecial")), gParametros.DigitosDecimales)
+            r("Total") = Redondear(CDec(r("SubTotalFinal")) + CDec(Me.txtImpuesto.EditValue), gParametros.DigitosDecimales)
+            r("PrecioLista") = txtPrecioLista.EditValue
+            r("Ahorro") = txtAhorro.EditValue
             dtFacturaLinea.Rows.Add(r)
             Me.GridControl1.DataSource = Nothing
             Me.GridControl1.DataSource = dtFacturaLinea
@@ -958,11 +1187,19 @@ Public Class frmFactura
                 MessageBox.Show("Por favor revise los datos de la Factura, existe un campo incorrecto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Return
             End If
+            'If Not TieneDisponilidad(0) Then
+
+            '    Exit Sub
+            'End If
+
 
             If Not ControlsDetalleOk() Then
                 MessageBox.Show("Por favor revise los datos del producto, existe un campo incorrecto... revise Cantidad, Precio ...", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                Return
+                Exit Sub
             End If
+            'If Not TieneDisponilidad(CDec(txtTotLinea.EditValue)) Then
+            '    Exit Sub
+            'End If
             If iNumeroLineasFactura >= gParametros.NumeroLineasFact Then
                 MessageBox.Show("El número máximo de lineas de una factura es " & gParametros.NumeroLineasFact.ToString() & " ... No puede agregar más lineas a la Factura", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Return
@@ -970,6 +1207,9 @@ Public Class frmFactura
             End If
 
             TrataLote() ' se asignan los lotes
+            If gbLoteAsignado = False Then
+                Exit Sub ' agregado el 21/09/2020
+            End If
             If dtFacturaLinea.Rows.Count > 0 Then
                 Dim foundRow() As DataRow
                 foundRow = dtFacturaLinea.Select("IDProducto =" & Me.txtCodigo.EditValue.ToString())
@@ -980,10 +1220,20 @@ Public Class frmFactura
 
                 End If
             End If
-            Me.txtDescLinea.EditValue = CDec(txtCantBonif.EditValue) * CDec(txtPrecio.EditValue)
-            Me.txtSubTotLin.EditValue = CDec(Me.txtPrecio.EditValue) * CDec(txtCantidad.EditValue)
-            txtSubTotalFinalLin.EditValue = Me.txtSubTotLin.EditValue - Me.txtDescLinea.EditValue - Me.txtDescEspLinea.EditValue
-            txtImpuesto.EditValue = CalculaImpuesto()
+            ' hice un cambio el 7 de sept 2020 para incluir la cantidad bonificada a la facturada
+            Dim dCantidadBonificada As Decimal
+            If Me.chkBonificaProd.EditValue = False And Me.chkBonifica.EditValue Then
+                dCantidadBonificada = 0
+            End If
+            If Me.chkBonificaProd.EditValue = True And Me.chkBonifica.EditValue Then
+                dCantidadBonificada = CDec(txtCantBonif.EditValue)
+            End If
+
+            Me.txtDescLinea.EditValue = Redondear(dCantidadBonificada * CDec(txtPrecio.EditValue), gParametros.DigitosDecimales)
+
+            Me.txtSubTotLin.EditValue = Redondear(CDec(Me.txtPrecio.EditValue) * (CDec(txtCantidad.EditValue) + dCantidadBonificada), gParametros.DigitosDecimales)
+            txtSubTotalFinalLin.EditValue = Redondear(Me.txtSubTotLin.EditValue - Me.txtDescLinea.EditValue - Me.txtDescEspLinea.EditValue, gParametros.DigitosDecimales)
+            txtImpuesto.EditValue = Redondear(CalculaImpuesto(), gParametros.DigitosDecimales)
             AddDataToGrid()
 
             If dtFacturaLinea.Rows.Count > 0 Then
@@ -1005,34 +1255,36 @@ Public Class frmFactura
     End Sub
     Private Function CalculaImpuesto() As Double
         Dim dImpuesto As Double = 0
-        ' Me.txtSubTotalFinalLin.EditValue = Me.txtSubTotLin.EditValue - Me.txtDescLinea.EditValue - Me.txtDescEspLinea.EditValue
-        'dImpuesto = CDbl(If(String.IsNullOrEmpty(Me.txtCantidad.Text), 0, Me.txtCantidad.Text)) * CDbl(If(String.IsNullOrEmpty(Me.txtPrecio.Text), 0, Me.txtPrecio.Text)) * CDbl(If(String.IsNullOrEmpty(Me.txtPorcImpt.Text), 0, Me.txtPorcImpt.Text)) / 100
-        dImpuesto = CDbl(Me.txtSubTotalFinalLin.EditValue) * CDbl(If(String.IsNullOrEmpty(Me.txtPorcImpt.EditValue), 0, Me.txtPorcImpt.EditValue)) / 100
-        'txtImpuesto.EditValue = dImpuesto
+        dImpuesto = Redondear(CDec(Me.txtSubTotalFinalLin.EditValue), gParametros.DigitosDecimales) * CDbl(If(String.IsNullOrEmpty(Me.txtPorcImpt.EditValue), 0, Me.txtPorcImpt.EditValue)) / 100
         Return dImpuesto
     End Function
+
+    Private Sub txtPrecio_GotFocus(sender As Object, e As EventArgs) Handles txtPrecio.GotFocus
+
+    End Sub
     Private Sub txtPrecio_KeyDown(sender As Object, e As KeyEventArgs) Handles txtPrecio.KeyDown
         If e.KeyCode = Keys.Enter Then
             Me.txtImpuesto.EditValue = CalculaImpuesto()
         End If
     End Sub
 
-    Private Sub txtPrecio_EditValueChanged(sender As Object, e As EventArgs) Handles txtPrecio.EditValueChanged
-        Dim strCriterio As String
-        CalcDescuentoEspLinea()
-        If Not IsNothing(txtCodigo.EditValue) Then
-            strCriterio = "IDProducto = " & txtCodigo.EditValue.ToString()
-            UpdateDataTableRowFacLin(strCriterio)
-            TotalizaGrid()
-        End If
-    End Sub
+    'Private Sub txtPrecio_EditValueChanged(sender As Object, e As EventArgs) Handles txtPrecio.EditValueChanged
+    '    Dim strCriterio As String
+    '    CalcDescuentoEspLinea()
+    '    If Not IsNothing(txtCodigo.EditValue) Then
+    '        strCriterio = "IDProducto = " & txtCodigo.EditValue.ToString()
+    '        UpdateDataTableRowFacLin(strCriterio)
+    '        TotalizaGrid()
+    '    End If
+    'End Sub
 
-    Private Sub txtPrecio_LostFocus(sender As Object, e As EventArgs) Handles txtPrecio.LostFocus
-        If txtCodigo.Text Is Nothing Or String.IsNullOrEmpty(txtCodigo.Text) Then
-            Exit Sub
-        End If
-        txtImpuesto.EditValue = CalculaImpuesto()
-    End Sub
+    'Private Sub txtPrecio_LostFocus(sender As Object, e As EventArgs) Handles txtPrecio.LostFocus
+    '    TriggerCantidad()
+    '    'If txtCodigo.Text Is Nothing Or String.IsNullOrEmpty(txtCodigo.Text) Then
+    '    '    Exit Sub
+    '    'End If
+    '    'txtImpuesto.EditValue = CalculaImpuesto()
+    'End Sub
 
     Private Sub CalculaDatosLineaFactura()
         If txtCantidad.Text <> "0" Then
@@ -1069,15 +1321,19 @@ Public Class frmFactura
         Me.txtPorcImpt.EditValue = 0
         Me.txtIGV.EditValue = 0
         Me.txtImpuesto.EditValue = 0
+        Me.txtPorcDescEsp.EditValue = 0
         Me.txtPrecio.EditValue = 0
         Me.txtExistencia.EditValue = 0
         Me.txtSubTotLin.EditValue = 0
         Me.txtDescEspLinea.EditValue = 0
+        Me.txtPrecioLista.EditValue = 0
+        txtAhorro.EditValue = 0
         Me.txtDescLinea.EditValue = 0
         Me.txtTotLinea.EditValue = 0
         Me.txtSubTotalFinalLin.EditValue = 0
         Me.txtPorcDescEsp.EditValue = 0
         Me.txtCantBonif.EditValue = 0
+        Me.txtCantPrecio.EditValue = 0
         Me.txtCostoPromLocal.EditValue = 0
         Me.txtCostoPromDolar.EditValue = 0
         Me.btnProducto.Focus()
@@ -1170,15 +1426,43 @@ Public Class frmFactura
         EliminaItem()
     End Sub
 
+    Private Function InventarioDisponible() As Boolean
+        Dim lbok As Boolean = True
+        Dim iExistencia As Int16
+        Dim t As DataTable
+        If dtFacturaLinea.Rows.Count > 0 Then
+            For Each dr In dtFacturaLinea.Rows
+                t = cManager.ExecSPgetData("invGetExistenciaBodega", gsSucursal & "," & CInt(dr("IDProducto")).ToString() & ", -1 ")
+                If t.Rows.Count > 0 Then
+                    iExistencia = t.Rows(0).Item("Existencia")
+                Else
+                    iExistencia = 0
+                End If
+                If CDec(dr("Cantidad")) + CDec(dr("CantBonificada")) > iExistencia Then
+                    lbok = False
+                    MessageBox.Show("El Producto " & dr("Descr").ToString() & " No tiene suficiente existencia ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Return lbok
+                    Exit For
+                End If
+            Next
+        End If
+        Return lbok
+    End Function
+
     Private Sub GrabarFactura()
         Dim sSql As String
         Dim sParameters As String
         Dim dPrecioLocal As Decimal, dPrecioDolar As Decimal, dImpuestoLocal As Decimal, dImpuestoDolar As Decimal, dSubTotalLocal As Decimal, dSubTotalDolar As Decimal
-        Dim dSubTotalFinalLocal As Decimal, dSubTotalFinalDolar As Decimal
+        Dim dSubTotalFinalLocal As Decimal, dSubTotalFinalDolar As Decimal, lIDAutorizacion As Integer = 0
         Try
 
             If Not IsMaskOK(gsMascara, Me.txtFactura.EditValue) Then
                 Me.txtFactura.Focus()
+                Return
+            End If
+
+            If Me.txtTipoCambio.EditValue = 0 Then
+                MessageBox.Show("El tipo de Cambio es Cero, favor revise o llame al administrador del Sistema", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Return
             End If
 
@@ -1197,6 +1481,32 @@ Public Class frmFactura
             End If
 
             If dtFacturaLinea.Rows.Count > 0 Then
+                If Not TieneDisponilidad(CDec(txtTotal.EditValue)) Then
+                    Dim td As New DataTable
+                    Dim lbSinLimite As Boolean = True
+                    Dim lbConAutorizacion As Boolean = False
+                    sParameters = txtIDCliente.EditValue.ToString() & ",'" & CDate(Me.DateEditFecha.EditValue).ToString("yyyyMMdd") & "'"
+                    td = cManager.ExecSPgetData("ccfgetAutorizacion", sParameters)
+                    If td.Rows.Count > 0 Then
+
+                        If CDec(td.Rows(0)("SaldoLimite")) > 0 Then
+                            lbConAutorizacion = True
+                            lIDAutorizacion = CInt(td.Rows(0)("IDAutorizacion"))
+                        Else
+                            lbConAutorizacion = False
+                            lIDAutorizacion = 0
+                        End If
+                        If lbConAutorizacion And CDec(td.Rows(0)("SaldoLimite")) < CDec(txtTotal.EditValue) Then
+                            MessageBox.Show("Ese Cliente tiene una autorización (" & CDec(td.Rows(0)("SaldoLimite")).ToString() & ") por debajo del Monto de la Factura (" & CDec(txtTotal.EditValue).ToString() & "), lo sentimos... no se puede facturar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            Exit Sub
+                        End If
+
+                    End If
+                    If lbSinLimite And lbConAutorizacion = False Then
+                        MessageBox.Show("Ese Cliente No tiene Disponibilidad en su Crédito y tampoco tiene una Autorización,  lo sentimos... no se puede facturar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        Exit Sub
+                    End If
+                End If
                 Dim foundRow() As DataRow
                 foundRow = dtFacturaLinea.Select("LoteAsignado=0")
 
@@ -1204,6 +1514,10 @@ Public Class frmFactura
                     MessageBox.Show("Existe al menos un Producto al que Ud no ha asignado los lotes correspondientes, por favor revise", "Advertencia", MessageBoxButtons.OK)
                     Return
 
+                End If
+
+                If Not InventarioDisponible() Then
+                    Return
                 End If
             End If
             If dtFacturaLineaLote.Rows.Count <= 0 Then
@@ -1233,43 +1547,47 @@ Public Class frmFactura
             ' REcorrer las lineas de la Factura a nivel de Producto 
             Dim lbEsMonedaLocal As Boolean = EsMonedaLocal(CInt(Me.SearchLookUpEditMoneda.EditValue))
             Dim dPorcImp As Decimal
-            Dim dPorcDescuentoEsp As Decimal = 0, dCostoLocal As Decimal = 0, dCostoDolar As Decimal, dDescuentoLocal As Decimal, dDescuentoDolar As Decimal, dDescuentoEspLocal As Decimal, dDescuentoEspDolar As Decimal
+            Dim dPorcDescuentoEsp As Decimal = 0, dCostoLocal As Decimal = 0, dCostoDolar As Decimal, dDescuentoLocal As Decimal, dDescuentoDolar As Decimal,
+                dDescuentoEspLocal As Decimal, dDescuentoEspDolar As Decimal, dPrecioLista As Decimal, dAhorro As Decimal
             For Each dr In dtFacturaLinea.Rows
 
                 If lbEsMonedaLocal Then
-                    dPrecioLocal = CDec(dr("Precio"))
-                    dPrecioDolar = CDec(dr("Precio")) / CDec(txtTipoCambio.EditValue)
-                    dImpuestoLocal = CDec(dr("Impuesto"))
-                    dImpuestoDolar = CDec(dr("Impuesto")) / CDec(txtTipoCambio.EditValue)
-                    dSubTotalLocal = CDec(dr("SubTotal"))
-                    dSubTotalDolar = CDec(dr("SubTotal")) / CDec(txtTipoCambio.EditValue)
-                    dDescuentoLocal = CDec(dr("Descuento"))
-                    dDescuentoDolar = CDec(dr("Descuento")) / CDec(txtTipoCambio.EditValue)
-                    dDescuentoEspLocal = CDec(dr("DescuentoEspecial"))
-                    dDescuentoEspDolar = CDec(dr("DescuentoEspecial")) / CDec(txtTipoCambio.EditValue)
-                    dSubTotalFinalLocal = CDec(dr("SubTotalFinal"))
-                    dSubTotalFinalDolar = CDec(dr("SubTotalFinal")) / CDec(txtTipoCambio.EditValue)
+                    dPrecioLocal = Redondear(CDec(dr("Precio")), gParametros.DigitosDecimales)
+                    dPrecioDolar = Redondear(CDec(dr("Precio")) / CDec(txtTipoCambio.EditValue), gParametros.DigitosDecimales)
+                    dImpuestoLocal = Redondear(CDec(dr("Impuesto")), gParametros.DigitosDecimales)
+                    dImpuestoDolar = Redondear(CDec(dr("Impuesto")) / CDec(txtTipoCambio.EditValue), gParametros.DigitosDecimales)
+                    dSubTotalLocal = Redondear(CDec(dr("SubTotal")), gParametros.DigitosDecimales)
+                    dSubTotalDolar = Redondear(CDec(dr("SubTotal")) / CDec(txtTipoCambio.EditValue), gParametros.DigitosDecimales)
+                    dDescuentoLocal = Redondear(CDec(dr("Descuento")), gParametros.DigitosDecimales)
+                    dDescuentoDolar = Redondear(CDec(dr("Descuento")) / CDec(txtTipoCambio.EditValue), gParametros.DigitosDecimales)
+                    dDescuentoEspLocal = Redondear(CDec(dr("DescuentoEspecial")), gParametros.DigitosDecimales)
+                    dDescuentoEspDolar = Redondear(CDec(dr("DescuentoEspecial")) / CDec(txtTipoCambio.EditValue), gParametros.DigitosDecimales)
+                    dSubTotalFinalLocal = Redondear(CDec(dr("SubTotalFinal")), gParametros.DigitosDecimales)
+                    dSubTotalFinalDolar = Redondear(CDec(dr("SubTotalFinal")) / CDec(txtTipoCambio.EditValue), gParametros.DigitosDecimales)
                 Else
-                    dPrecioDolar = CDec(dr("Precio"))
-                    dPrecioLocal = CDec(dr("Precio")) * CDec(txtTipoCambio.EditValue)
-                    dImpuestoDolar = CDec(dr("Impuesto"))
-                    dImpuestoLocal = CDec(dr("Impuesto")) * CDec(txtTipoCambio.EditValue)
-                    dSubTotalDolar = CDec(dr("SubTotal"))
-                    dSubTotalLocal = CDec(dr("SubTotal")) * CDec(txtTipoCambio.EditValue)
-                    dDescuentoDolar = CDec(dr("Descuento"))
-                    dDescuentoLocal = CDec(dr("Descuento")) * CDec(txtTipoCambio.EditValue)
-                    dDescuentoEspDolar = CDec(dr("DescuentoEspecial"))
-                    dDescuentoEspLocal = CDec(dr("DescuentoEspecial")) * CDec(txtTipoCambio.EditValue)
-                    dSubTotalFinalDolar = CDec(dr("SubTotalFinal"))
-                    dSubTotalFinalLocal = CDec(dr("SubTotalFinal")) * CDec(txtTipoCambio.EditValue)
+                    dPrecioDolar = Redondear(CDec(dr("Precio")), gParametros.DigitosDecimales)
+                    dPrecioLocal = Redondear(CDec(dr("Precio")) * CDec(txtTipoCambio.EditValue), gParametros.DigitosDecimales)
+                    dImpuestoDolar = Redondear(CDec(dr("Impuesto")), gParametros.DigitosDecimales)
+                    dImpuestoLocal = Redondear(CDec(dr("Impuesto")) * CDec(txtTipoCambio.EditValue), gParametros.DigitosDecimales)
+                    dSubTotalDolar = Redondear(CDec(dr("SubTotal")), gParametros.DigitosDecimales)
+                    dSubTotalLocal = Redondear(CDec(dr("SubTotal")) * CDec(txtTipoCambio.EditValue), gParametros.DigitosDecimales)
+                    dDescuentoDolar = Redondear(CDec(dr("Descuento")), gParametros.DigitosDecimales)
+                    dDescuentoLocal = Redondear(CDec(dr("Descuento")) * CDec(txtTipoCambio.EditValue), gParametros.DigitosDecimales)
+                    dDescuentoEspDolar = Redondear(CDec(dr("DescuentoEspecial")), gParametros.DigitosDecimales)
+                    dDescuentoEspLocal = Redondear(CDec(dr("DescuentoEspecial")) * CDec(txtTipoCambio.EditValue), gParametros.DigitosDecimales)
+                    dSubTotalFinalDolar = Redondear(CDec(dr("SubTotalFinal")), gParametros.DigitosDecimales)
+                    dSubTotalFinalLocal = Redondear(CDec(dr("SubTotalFinal")) * CDec(txtTipoCambio.EditValue), gParametros.DigitosDecimales)
                 End If
+
                 dPorcImp = CDec(dr("PorcImp"))
                 dPorcDescuentoEsp = CDec(dr("PorcDescuentoEsp"))
+                dPrecioLista = CDec(dr("PrecioLista"))
+                dAhorro = CDec(dr("Ahorro"))
                 sParameters = "'I'" & ",@@Identity" & "," & Me.SearchLookUpEditSucursal.EditValue.ToString() & "," & dr("IDProducto").ToString() & "," & _
-                    IIf(CBool(dr("Bonifica")) = True, "1", "0") & ",0,0," & IIf(CBool(dr("BonifConProd")) = True, "1", "0") & "," & dr("CantBonificada").ToString() & "," & dr("CantFacturada").ToString() & "," & _
+                    IIf(CBool(dr("Bonifica")) = True, "1", "0") & ",0,0," & IIf(CBool(dr("BonifConProd")) = True, "1", "0") & "," & dr("CantBonificada").ToString() & "," & dr("CantFacturada").ToString() & "," & dr("CantPrecio").ToString() & "," & _
                 dPrecioLocal.ToString() & "," & dPrecioDolar.ToString() & "," & dCostoLocal.ToString() & "," & dCostoDolar.ToString() & "," & _
                 dDescuentoLocal.ToString() & "," & dDescuentoDolar.ToString() & "," & dDescuentoEspLocal.ToString() & "," & dDescuentoEspDolar.ToString() & "," & _
-                dSubTotalLocal.ToString() & "," & dSubTotalDolar.ToString() & "," & dSubTotalFinalLocal.ToString() & "," & dSubTotalFinalDolar.ToString() & "," & dImpuestoLocal.ToString() & "," & dImpuestoDolar.ToString() & ", 1," & dPorcDescuentoEsp.ToString() & "," & dPorcImp.ToString()
+                dSubTotalLocal.ToString() & "," & dSubTotalDolar.ToString() & "," & dSubTotalFinalLocal.ToString() & "," & dSubTotalFinalDolar.ToString() & "," & dImpuestoLocal.ToString() & "," & dImpuestoDolar.ToString() & ", 1," & dPorcDescuentoEsp.ToString() & "," & dPorcImp.ToString() & "," & dPrecioLista.ToString() & "," & dAhorro.ToString()
 
                 sSql = cManager.CreateStoreProcSql("fafUpdateFacturaProd", sParameters)
                 clase = New CbatchSQLIitem(sSql, True, True, True, True, "fafUpdateFactura", "fafUpdateFacturaProd")
@@ -1277,7 +1595,7 @@ Public Class frmFactura
                 cManager.batchSQLitem.Add(sSql)
                 cManager.batchSQLLista.Add(clase)
                 ' REcorrer las lineas de los productos  a nivel de Lotes asignados
-                Dim foundRowLotes = dtFacturaLineaLote.Select("IDProducto=" & dr("IDProducto").ToString())
+                Dim foundRowLotes = dtFacturaLineaLote.Select("IDProducto=" & dr("IDProducto").ToString() & " and (AsignadoBO>0 or AsignadoFA>0)")
                 For Each drl In foundRowLotes
                     sParameters = "'I'" & ",@@Identity" & "," & drl("IDLote").ToString() & "," & drl("CantBonificada").ToString() & "," & drl("CantFacturada").ToString()
                     sSql = cManager.CreateStoreProcSql("fafUpdateFacturaProdLote", sParameters)
@@ -1287,6 +1605,7 @@ Public Class frmFactura
                     cManager.batchSQLLista.Add(clase)
                 Next drl
             Next dr
+
 
             ' Actualizo el valor del consecutivo de la factura
             sSql = cManager.CreateUpdateSql("globalConsecMask", "CONSECUTIVO ='" & Me.txtFactura.EditValue.ToString() & "'", "Codigo='" & gsConsecMask & "'")
@@ -1302,13 +1621,16 @@ Public Class frmFactura
 
                 sParameters = "'I'," & " -1 , " & Me.txtIDCliente.EditValue.ToString & "," & Me.SearchLookUpEditSucursal.EditValue.ToString() & ","
                 sParameters = sParameters & "'D','FAC', 1, '" & Me.txtFactura.Text & "','" & CDate(Me.DateEditFecha.EditValue).ToString("yyyyMMdd") & "'," & dDiasVencimiento.ToString() & ","
-                sParameters = sParameters & txtTotal.EditValue.ToString() & "," & gdPorcInteres & ", 'FACTURA DE CREDITO','FACTURA DE CREDITO'" & ","
-                sParameters = sParameters & "'" & txtNombre.EditValue.ToString() & "','" & gsUsuario & "'," & txtTipoCambio.EditValue.ToString()
-                sSql = cManager.CreateStoreProcSql("ccfUpdateccfDocumentosCC", sParameters)
-                clase = New CbatchSQLIitem(sSql, False, False, False, False, "ccfUpdateccfDocumentosCC", "ccfUpdateccfDocumentosCC")
+                sParameters = sParameters & txtTotal.EditValue.ToString() & "," & gdPorcInteres & ", " & "'FAC : " & txtFactura.Text & " Cliente " & txtIDCliente.Text & " " & txtNombre.Text & " Generada desde Facturación',"
+                sParameters = sParameters & "'FAC : " & txtFactura.Text & " Cliente " & txtIDCliente.Text & " " & txtNombre.Text & " Generada desde Facturación'"
+                sParameters = sParameters & ",'" & gsUsuario & "'," & txtTipoCambio.EditValue.ToString() & "," & Me.SearchLookUpEditVendedor.EditValue.ToString() & ", 0,1"
+                sParameters = sParameters & ",'" & txtFactura.EditValue.ToString() & "'," & Me.SearchLookUpEditMoneda.EditValue.ToString()
+                sSql = cManager.CreateStoreProcSql("ccfUpdateccfDebitos", sParameters)
+                clase = New CbatchSQLIitem(sSql, False, False, False, False, "ccfUpdateccfDebitos", "ccfUpdateccfDebitos")
                 cManager.batchSQLLista.Add(clase)
                 cManager.batchSQLitem.Clear()
                 cManager.batchSQLitem.Add(sSql)
+
 
             End If
             If cManager.ExecCmdWithTransaction() Then
@@ -1318,8 +1640,36 @@ Public Class frmFactura
                 ' Actualizar Bitacora de Precios y Precios Cliente
                 sParameters = cManager.IDAutoFirstParent.ToString() & ",'" & gsUsuario & "'"
                 cManager.ExecSP("fafUpdateBitacoraPrecio", sParameters)
-                MessageBox.Show("La Factura ha sido Guardada Exitosamente la factura con ID " & cManager.IDAutoFirstParent.ToString(), "Exito", MessageBoxButtons.OK, MessageBoxIcon.Asterisk)
-                PrintReport(cManager.IDAutoFirstParent)
+
+                ' Actualizo el Inveentario
+                cManager.batchSQLitem.Clear()
+                cManager.batchSQLLista.Clear()
+                sParameters = "'FAC'," & cManager.IDAutoFirstParent.ToString() & ",'" & gsUsuario & "'"
+                sSql = cManager.CreateStoreProcSql("fafAplicaInventario ", sParameters)
+                clase = New CbatchSQLIitem(sSql, False, False, False, False, "", "")
+
+                cManager.batchSQLitem.Add(sSql)
+                cManager.batchSQLLista.Add(clase)
+                If Not cManager.ExecCmdWithTransaction Then
+
+                    MessageBox.Show("Hubo un error al grabar la factura con ID " & cManager.IDAutoFirstParent.ToString(), "error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Else
+                    MessageBox.Show("La Factura ha sido Guardada Exitosamente la factura con ID " & cManager.IDAutoFirstParent.ToString(), "Exito", MessageBoxButtons.OK, MessageBoxIcon.Asterisk)
+                End If
+                ' Actualiza las Autorizaciones 
+                If lIDAutorizacion > 0 Then
+                    sParameters = "'F'," & lIDAutorizacion.ToString() & "," & txtIDCliente.EditValue.ToString() & ",'" & CDate(Me.DateEditFecha.EditValue).ToString("yyyyMMdd") & "','" & gsUsuario & _
+                        "',0,0,1,0," & cManager.IDAutoFirstParent.ToString() & ",''," & txtTotal.EditValue.ToString()
+                    cManager.ExecSP("ccfUpdateAutorizacion", sParameters)
+                End If
+
+                Dim td As New DataTable
+                sParameters = "'" & txtTotal.EditValue.ToString() & "'"
+                td = cManager.ExecFunction("globalNumberToLetter", sParameters)
+                If td.Rows.Count <= 0 Then
+                    MessageBox.Show("No se pudo convertir a Letras el monto de la Factura ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End If
+                PrintReport(cManager.IDAutoFirstParent, td.Rows(0)(0).ToString())
                 Close()
             End If
 
@@ -1343,26 +1693,109 @@ Public Class frmFactura
     End Sub
 
     Private Sub CalcDescuentoEspecial()
-        Me.txtDescEspLinea.EditValue = CDec(txtPorcDescEsp.EditValue) / 100 * CDec(txtCantidad.EditValue) * CDec(txtPrecio.EditValue)
+        Me.txtDescEspLinea.EditValue = Redondear(CDec(txtPorcDescEsp.EditValue) / 100 * CDec(txtCantidad.EditValue) * CDec(txtPrecio.EditValue), gParametros.DigitosDecimales)
+    End Sub
+
+    Private Sub TriggerCantidad()
+        If Me.txtPorcDescEsp.Text = "" Or txtPrecio.Text = "" Or txtCantidad.Text = "" Or _
+        Not (Me.txtPorcDescEsp.EditValue IsNot Nothing) Or Not (Me.txtPrecio.EditValue IsNot Nothing) Or _
+        Not (Me.txtCantidad.EditValue IsNot Nothing) Then
+            Return
+        End If
+        RefrescaBonoProducto()
+        CalculaSubTotales()
     End Sub
 
 
-    Private Sub txtCantidad_EditValueChanged(sender As Object, e As EventArgs) Handles txtCantidad.EditValueChanged
-        CalcDescuentoEspLinea()
+    Private Sub CalculaSubTotales()
+        If CDec(Me.txtCantPrecio.EditValue) > 0 Then
+            Me.txtPrecio.EditValue = Redondear((CDec(txtPrecioLista.EditValue) * CDec(txtCantidad.EditValue)) / (CDec(txtCantidad.EditValue) + CDec(Me.txtCantPrecio.EditValue)), gParametros.DigitosDecimales)
+        End If
 
+        Me.txtSubTotLin.EditValue = Redondear(CDec(IIf(Me.txtPrecio.Text = "", 0, Me.txtPrecio.Text)) * (CDec(IIf(Me.txtCantidad.Text = "", 0, Me.txtCantidad.Text)) + CDec(IIf(Me.txtCantBonif.Text = "", 0, Me.txtCantBonif.Text))), gParametros.DigitosDecimales)
+        Me.txtDescLinea.EditValue = Redondear(CDec(IIf(Me.txtCantBonif.Text = "", 0, Me.txtCantBonif.Text)) * CDec(IIf(Me.txtPrecio.Text = "", 0, Me.txtPrecio.Text)), gParametros.DigitosDecimales)
+        Me.txtDescEspLinea.EditValue = Redondear(CDec(IIf(Me.txtPorcDescEsp.Text = "", 0, Me.txtPorcDescEsp.Text)) / 100 * CDec(IIf(Me.txtCantidad.Text = "", 0, Me.txtCantidad.Text)) * CDec(IIf(Me.txtPrecio.Text = "", 0, Me.txtPrecio.Text)), gParametros.DigitosDecimales)
+        Me.txtDescEspLinea.Text = String.Format("{0:0.00}", txtDescEspLinea.EditValue)
+
+        Me.txtSubTotalFinalLin.EditValue = Redondear(Me.txtSubTotLin.EditValue - Me.txtDescLinea.EditValue - Me.txtDescEspLinea.EditValue, gParametros.DigitosDecimales)
+
+        txtAhorro.EditValue = ((Me.txtPrecioLista.EditValue * (txtCantidad.EditValue + txtCantBonif.EditValue)) - Me.txtSubTotalFinalLin.EditValue)
+        If txtAhorro.EditValue > 0 Then
+            txtAhorro.Visible = True
+        Else
+            txtAhorro.Visible = False
+        End If
+        txtImpuesto.EditValue = Redondear(CalculaImpuesto(), gParametros.DigitosDecimales)
+        Me.txtTotLinea.EditValue = Redondear(Me.txtSubTotalFinalLin.EditValue + txtImpuesto.EditValue, gParametros.DigitosDecimales)
+    End Sub
+    Private Sub RefrescaBonoProducto()
+        Dim sParametros As String, dBono As Decimal
+        Dim t As New DataTable
+        If chkBonifica.Checked Then
+            chkBonificaProd.ReadOnly = False
+            chkBonificaProd.Checked = True
+            txtCantBonif.ReadOnly = False
+            If txtCantidad.EditValue > 0 Then
+                sParametros = txtCodigo.Text & "," & txtCantidad.Text
+                t = cManager.ExecFunction("fafGetBono", sParametros)
+                If t.Rows.Count > 0 Then
+                    dBono = t.Rows(0).Item(0)
+                Else
+                    dBono = 0
+                End If
+
+                gdBonoProductoActual = dBono
+                txtCantBonif.EditValue = Redondear(dBono, gParametros.DigitosDecimales)
+                ' cambio el 1 de Nov 2020
+                t = cManager.ExecFunction("fafgetDescuentoPorEscala", sParametros)
+                If t.Rows.Count > 0 Then
+                    gdPorcDescPromEscala = t.Rows(0).Item(0)
+                Else
+                    gdPorcDescPromEscala = 0
+                End If
+                If gbRequiereBonif And txtCantBonif.EditValue = 0 And Me.txtCantPrecio.EditValue = 0 Then
+                    Me.txtPorcDescEsp.EditValue = 0
+                Else
+                    txtPorcDescEsp.EditValue = gdPorcDescPromFecha + gdPorcDescPromEscala
+                End If
+
+            End If
+            'txtCantBonif.Focus()
+        Else
+            chkBonificaProd.ReadOnly = False
+            chkBonificaProd.Checked = False
+            txtCantBonif.Text = 0
+            txtCantBonif.ReadOnly = True
+
+        End If
     End Sub
 
+    'Private Sub txtCantidad_EditValueChanged(sender As Object, e As EventArgs) Handles txtCantidad.EditValueChanged
+    '    CalcDescuentoEspLinea()
 
-    Private Sub CalcDescuentoEspLinea()
-        Me.txtDescLinea.EditValue = CDec(IIf(Me.txtCantBonif.Text = "", 0, Me.txtCantBonif.Text)) * CDec(IIf(Me.txtPrecio.Text = "", 0, Me.txtPrecio.Text))
-        Me.txtDescEspLinea.EditValue = CDec(IIf(Me.txtPorcDescEsp.Text = "", 0, Me.txtPorcDescEsp.Text)) / 100 * CDec(IIf(Me.txtCantidad.Text = "", 0, Me.txtCantidad.Text)) * CDec(IIf(Me.txtPrecio.Text = "", 0, Me.txtPrecio.Text))
-        'Me.txtDescEspLinea.Text = String.Format("{0:0.00}", txtDescEspLinea.EditValue)
-        Me.txtSubTotLin.EditValue = CDbl(IIf(Me.txtPrecio.Text = "", 0, Me.txtPrecio.Text)) * CDbl(IIf(Me.txtCantidad.Text = "", 0, Me.txtCantidad.Text))
+    'End Sub
 
-        Me.txtSubTotalFinalLin.EditValue = Me.txtSubTotLin.EditValue - Me.txtDescLinea.EditValue - Me.txtDescEspLinea.EditValue
-        txtImpuesto.EditValue = CalculaImpuesto()
-        Me.txtTotLinea.EditValue = Me.txtSubTotalFinalLin.EditValue + txtImpuesto.EditValue
-    End Sub
+
+    'Private Sub CalcDescuentoEspLinea()
+    '    ' hice un cambio el 7 de sept 2020 para incluir la cantidad bonificada a la facturada
+    '    Dim dCantidadBonificada As Decimal
+    '    If Me.chkBonificaProd.EditValue = False And Me.chkBonifica.EditValue Then
+    '        dCantidadBonificada = 0
+    '    End If
+    '    If Me.chkBonificaProd.EditValue = True And Me.chkBonifica.EditValue Then
+    '        dCantidadBonificada = CDec(txtCantBonif.EditValue)
+    '    End If
+
+    '    Me.txtDescLinea.EditValue = dCantidadBonificada * Redondear(CDec(txtPrecio.EditValue), gParametros.DigitosDecimales)
+
+    '    Me.txtDescEspLinea.EditValue = CDec(txtPorcDescEsp.EditValue) / 100 * txtCantidad.EditValue * Redondear(CDec(txtPrecio.EditValue), gParametros.DigitosDecimales)
+
+    '    Me.txtSubTotLin.EditValue = Redondear(CDec(txtPrecio.EditValue), gParametros.DigitosDecimales) * (CDec(txtCantidad.EditValue) + CDec(txtCantBonif.EditValue))
+
+    '    Me.txtSubTotalFinalLin.EditValue = Redondear(CDec(Me.txtSubTotLin.EditValue) - CDec(Me.txtDescLinea.EditValue) - CDec(Me.txtDescEspLinea.EditValue), gParametros.DigitosDecimales)
+    '    txtImpuesto.EditValue = CalculaImpuesto()
+    '    Me.txtTotLinea.EditValue = Redondear(Me.txtSubTotalFinalLin.EditValue + txtImpuesto.EditValue, gParametros.DigitosDecimales)
+    'End Sub
 
     Private Sub txtSubTotalFinalLin_EditValueChanged(sender As Object, e As EventArgs)
         txtImpuesto.EditValue = CalculaImpuesto()
@@ -1371,16 +1804,47 @@ Public Class frmFactura
 
     Private Sub DateEditFecha_EditValueChanged(sender As Object, e As EventArgs) Handles DateEditFecha.EditValueChanged
         CalculaFechaVencimiento()
+        Me.txtTipoCambio.EditValue = getTipoCambio(Me.DateEditFecha.EditValue, gParametros.TipoCambioFact)
     End Sub
 
-    Private Sub PrintReport(pIDFactura As Int64)
-        tableData = cManager.ExecSPgetData("fafPrintFacturaLote", pIDFactura.ToString())
+    Private Sub PrintReport(pIDFactura As Int64, psMontoFactura As String)
+
+        'Dim sqlDataSource As SqlDataSource
+        'sqlDataSource.ConnectionParameters = New CustomStringConnectionParameters(connectionStringDynamic)
+        Dim tableDataLote As DataTable
+        tableDataLote = cManager.ExecSPgetData("fafPrintFacturaLote", pIDFactura.ToString())
+        tableDataLote.TableName = "fafPrintFacturaLote"
+        tableData = cManager.ExecSPgetData("fafgetFacturaHeader", pIDFactura.ToString())
+        tableData.TableName = "fafgetFacturaHeader"
+
         If tableData.Rows.Count > 0 Then
 
-            Dim report As DevExpress.XtraReports.UI.XtraReport = DevExpress.XtraReports.UI.XtraReport.FromFile("./Reportes/rptFacturaV2.repx", True)
+            Dim report As DevExpress.XtraReports.UI.XtraReport = DevExpress.XtraReports.UI.XtraReport.FromFile("./Reportes/rptFacturaFinal.repx", True)
+
+            Dim ds As New DataSet
+            ds.Tables.Add(tableDataLote)
+            ds.Tables.Add(tableData)
+
             report.DataSource = vbNull
-            report.DataSource = tableData
+            report.DataSource = ds
             report.DataMember = "fafPrintFacturaLote"
+            report.Parameters(0).Value = pIDFactura
+            report.Parameters(1).Value = psMontoFactura
+            'report.Parameters(0).Value = psMontoFactura
+
+            'Dim subReporte As XRSubreport
+            'subReporte = report.AllControls(Of XRSubreport).First()
+            'Dim subReporteSource As XtraReport
+            'subReporteSource = subReporte.Report
+            'subReporteSource.DataSource = vbNull
+
+            'subReporteSource.DataSource = tableData
+            'subReporteSource.DataMember = "fafPrintFactura"
+            'subReporteSource.Parameters(0).Value = psMontoFactura
+
+
+
+
             If gParametros.FacturaPersonalizada Then
                 report.PaperKind = System.Drawing.Printing.PaperKind.Custom
                 report.ReportUnit = ReportUnit.TenthsOfAMillimeter
@@ -1465,4 +1929,130 @@ Public Class frmFactura
     End Sub
 
 
+    Private Sub chkBonifica_CheckedChanged(sender As Object, e As EventArgs) Handles chkBonifica.CheckedChanged
+        If chkBonifica.EditValue Then
+            Me.chkBonificaProd.EditValue = True
+            Me.txtCantBonif.Enabled = True
+            Me.txtCantBonif.ReadOnly = False
+            Me.txtCantPrecio.Enabled = True
+            txtCantPrecio.ReadOnly = False
+            txtCantBonif.Focus()
+        Else
+            Me.chkBonificaProd.EditValue = False
+            Me.txtCantBonif.Enabled = False
+            Me.txtCantPrecio.Enabled = False
+        End If
+    End Sub
+
+    Private Sub ActualizaDetallePedido()
+        Try
+
+            Dim dCantidadBonificada As Decimal = 0
+            If Me.chkBonifica.EditValue And chkBonificaProd.EditValue = False Then
+
+                Me.txtPrecio.EditValue = Redondear(CDec(txtPrecio.EditValue), gParametros.DigitosDecimales) * (CDec(txtCantidad.EditValue)) / (CDec(txtCantidad.EditValue) + CDec(txtCantBonif.EditValue))
+            End If
+
+            'If Me.chkBonifica.EditValue And chkBonificaProd.EditValue = True Then
+            dCantidadBonificada = CDec(txtCantBonif.EditValue)
+            'End If
+
+            currentRow("IDProducto") = Me.txtCodigo.EditValue  ' Me.SearchLookUpEditProducto.EditValue
+            currentRow("Descr") = Me.txtDescr.EditValue
+            currentRow("IDBodega") = Me.SearchLookUpEditSucursal.EditValue
+            currentRow("Cantidad") = Me.txtCantidad.EditValue + dCantidadBonificada
+            currentRow("Precio") = Redondear(CDec(Me.txtPrecio.EditValue), gParametros.DigitosDecimales)
+            currentRow("Impuesto") = Redondear(CDec(Me.txtImpuesto.EditValue), gParametros.DigitosDecimales)
+            currentRow("SubTotal") = Redondear(CDec(Me.txtPrecio.EditValue), gParametros.DigitosDecimales) * (CDbl(txtCantidad.EditValue)) ' + dCantidadBonificada) cambio 17/09/2020 comentarie
+            currentRow("PorcImp") = CDec(txtPorcImpt.EditValue)
+
+            currentRow("Bonifica") = CBool(chkBonifica.Checked)
+            currentRow("BonifConProd") = CBool(chkBonificaProd.Checked)
+            currentRow("LoteASignado") = gbLoteAsignado
+            currentRow("DescuentoEspecial") = Redondear(CDec(Me.txtDescEspLinea.EditValue), gParametros.DigitosDecimales)
+            currentRow("Descuento") = dCantidadBonificada * CDbl(txtPrecio.EditValue) 'gdTotalBonificado * CDbl(txtPrecio.EditValue)
+            currentRow("CantFacturada") = CDec(currentRow("Cantidad"))
+            currentRow("CantBonificada") = gdTotalBonificado
+            currentRow("CostoLocal") = Redondear(CDec(Me.txtCostoPromLocal.EditValue), gParametros.DigitosDecimales)
+            currentRow("CostoDolar") = Redondear(CDec(Me.txtCostoPromDolar.EditValue), gParametros.DigitosDecimales)
+            currentRow("PorcDescuentoEsp") = CDec(Me.txtPorcDescEsp.EditValue)
+            currentRow("SubTotalFinal") = Redondear(CDec(currentRow("SubTotal")) - CDec(currentRow("Descuento")) - CDec(currentRow("DescuentoEspecial")), gParametros.DigitosDecimales)
+            currentRow("Total") = Redondear(CDec(currentRow("SubTotalFinal")) + CDec(Me.txtImpuesto.EditValue), gParametros.DigitosDecimales)
+            TotalizaGrid()
+            'Me.GridViewProducto.FocusedRowHandle
+            GridViewProducto.MoveFirst()
+            RefreshDataFromGridToControls()
+        Catch ex As Exception
+            MessageBox.Show("Ha ocurrido un error " & ex.Message)
+        End Try
+
+    End Sub
+
+    'Private Sub chkBonificaProd_CheckedChanged(sender As Object, e As EventArgs) Handles chkBonificaProd.CheckedChanged
+    '    If gbUsaPedido And gbLoteAsignado Then
+    '        If chkBonifica.Checked And chkBonificaProd.Checked = False Then
+    '            ActualizaDetallePedido()
+    '        End If
+    '    End If
+    'End Sub
+
+    'Private Sub txtCantPrecio_EditValueChanged(sender As Object, e As EventArgs) Handles txtCantPrecio.EditValueChanged
+    '    If chkBonifica.Checked And chkBonificaProd.Checked = False Then
+    '        ActualizaDetallePedido()
+    '    End If
+    'End Sub
+
+    Private Sub txtCantBonif_LostFocus(sender As Object, e As EventArgs) Handles txtCantBonif.LostFocus
+        If Not gbUsaPedido Then
+            TriggerCantBonif()
+        End If
+    End Sub
+
+    Private Sub txtCantPrecio_LostFocus(sender As Object, e As EventArgs) Handles txtCantPrecio.LostFocus
+        If Not gbUsaPedido Then
+            TriggerCantBonifPrecio()
+        End If
+
+    End Sub
+
+
+    Private Sub txtCantidad_LostFocus(sender As Object, e As EventArgs) Handles txtCantidad.LostFocus
+        If Not gbUsaPedido Then
+            TriggerCantidad()
+        End If
+    End Sub
+
+    Private Sub btnTablaBonif_Click(sender As Object, e As EventArgs) Handles btnTablaBonif.Click
+        If txtCodigo.Text <> "" And Val(txtCodigo.Text) > 0 Then
+            Dim frm As New frmPopupBonificacion()
+            frm.gsProductoID = Me.txtCodigo.Text
+            frm.gsIDNivel = Me.SearchLookUpEditNivel.EditValue.ToString()
+            frm.gsIDMoneda = Me.SearchLookUpEditMoneda.EditValue.ToString()
+            frm.ShowDialog()
+            frm.Dispose()
+        End If
+    End Sub
+
+
+    Private Sub btnDescuento_Click(sender As Object, e As EventArgs) Handles btnDescuento.Click
+        If txtCodigo.Text <> "" And Val(txtCodigo.Text) > 0 Then
+            Dim frm As New frmpopupDescuentoEscala()
+            frm.gsProductoID = Me.txtCodigo.Text
+            frm.gsIDNivel = Me.SearchLookUpEditNivel.EditValue.ToString()
+            frm.gsIDMoneda = Me.SearchLookUpEditMoneda.EditValue.ToString()
+            frm.ShowDialog()
+            frm.Dispose()
+        End If
+    End Sub
+
+    Private Sub btnDescProm_Click(sender As Object, e As EventArgs) Handles btnDescProm.Click
+        If txtCodigo.Text <> "" And Val(txtCodigo.Text) > 0 Then
+            Dim frm As New frmpopupPromociones()
+            frm.gsProductoID = Me.txtCodigo.Text
+            frm.gsIDNivel = Me.SearchLookUpEditNivel.EditValue.ToString()
+            frm.gsIDMoneda = Me.SearchLookUpEditMoneda.EditValue.ToString()
+            frm.ShowDialog()
+            frm.Dispose()
+        End If
+    End Sub
 End Class

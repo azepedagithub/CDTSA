@@ -26,19 +26,20 @@ Public Class frmRemision
                 Me.rbTodos.Checked = True
                 gbControlPesoOk = ControlPesoKG(dr("IDTipoEntrega"))
                 If Not CBool(dr("Remisionada")) Then
+                    gsIDFactura = CInt(dr("IDFactura"))
                     Me.cmdRemisionar.Enabled = True
                     If gbControlPesoOk Then
                         txtPesoKG.Enabled = True
-                        'Else
-                        '    txtPesoKG.Text = dr("PesoKG")
-                        '    txtPesoKG.Enabled = False
+                    Else
+                        txtPesoKG.Text = dr("PesoKG")
+                        txtPesoKG.Enabled = False
                     End If
                 Else
                     Me.cmdRemisionar.Enabled = False
-                    'If ControlPesoKG(dr("IDTipoEntrega")) Then
-                    '    txtPesoKG.Enabled = False
-                    'Else
-                    txtPesoKG.Enabled = False
+                    If ControlPesoKG(dr("IDTipoEntrega")) Then
+                        txtPesoKG.Text = dr("PesoKG")
+                        txtPesoKG.Enabled = False
+                    End If
                 End If
 
             End If
@@ -123,10 +124,12 @@ Public Class frmRemision
                 txtPesoKG.Text = "0"
             End If
             Dim sParameters As String
-            sParameters = gsIDFactura & "," & txtPesoKG.Text
-            cManager.ExecSP("fafUpdateFacturaRemision", sParameters)
-            RefreshGrid()
+            sParameters = gsIDFactura & "," & txtPesoKG.EditValue.ToString()
             MessageBox.Show("La Factura ha sido Marcada como remisionada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            cManager.ExecSP("fafUpdateFacturaRemision", sParameters)
+            PrintReport(CInt(gsIDFactura))
+            RefreshGrid()
+
         Catch ex As Exception
             MessageBox.Show("Ha ocurrido un error " & ex.Message)
         End Try

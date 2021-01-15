@@ -34,8 +34,14 @@ Partial Class frmPrecios
         Me.IDMoneda = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.DescrMoneda = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.Precio = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.Publico = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.btnProducto = New DevExpress.XtraEditors.SimpleButton()
         Me.LayoutControl1 = New DevExpress.XtraLayout.LayoutControl()
+        Me.txtPorcIncrementoPublico = New DevExpress.XtraEditors.TextEdit()
+        Me.cmdAplicaIncremento = New DevExpress.XtraEditors.SimpleButton()
+        Me.txtPorcIncremento = New DevExpress.XtraEditors.TextEdit()
+        Me.chkIncrementaPrecio = New DevExpress.XtraEditors.CheckEdit()
+        Me.txtPublico = New DevExpress.XtraEditors.TextEdit()
         Me.chkTodosNiveles = New DevExpress.XtraEditors.CheckEdit()
         Me.chkTodosProd = New DevExpress.XtraEditors.CheckEdit()
         Me.SearchLookUpEditProveedor = New DevExpress.XtraEditors.SearchLookUpEdit()
@@ -57,7 +63,6 @@ Partial Class frmPrecios
         Me.LayoutControlItem4 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem5 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem6 = New DevExpress.XtraLayout.LayoutControlItem()
-        Me.EmptySpaceItem3 = New DevExpress.XtraLayout.EmptySpaceItem()
         Me.EmptySpaceItem2 = New DevExpress.XtraLayout.EmptySpaceItem()
         Me.LayoutControlItem21 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem22 = New DevExpress.XtraLayout.LayoutControlItem()
@@ -65,6 +70,16 @@ Partial Class frmPrecios
         Me.LayoutControlItem19 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem20 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.EmptySpaceItem4 = New DevExpress.XtraLayout.EmptySpaceItem()
+        Me.LayoutControlItem29 = New DevExpress.XtraLayout.LayoutControlItem()
+        Me.EmptySpaceItem9 = New DevExpress.XtraLayout.EmptySpaceItem()
+        Me.EmptySpaceItem3 = New DevExpress.XtraLayout.EmptySpaceItem()
+        Me.LayoutControlItem32 = New DevExpress.XtraLayout.LayoutControlItem()
+        Me.EmptySpaceItem11 = New DevExpress.XtraLayout.EmptySpaceItem()
+        Me.EmptySpaceItem10 = New DevExpress.XtraLayout.EmptySpaceItem()
+        Me.LayoutControlItem31 = New DevExpress.XtraLayout.LayoutControlItem()
+        Me.LayoutControlItem30 = New DevExpress.XtraLayout.LayoutControlItem()
+        Me.EmptySpaceItem5 = New DevExpress.XtraLayout.EmptySpaceItem()
+        Me.LayoutControlItem33 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.btnExcel = New DevExpress.XtraEditors.SimpleButton()
         Me.btnEdit = New DevExpress.XtraEditors.SimpleButton()
         Me.btnAdd = New DevExpress.XtraEditors.SimpleButton()
@@ -122,13 +137,14 @@ Partial Class frmPrecios
         Me.EmptySpaceItem8 = New DevExpress.XtraLayout.EmptySpaceItem()
         Me.LayoutControlItem28 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem10 = New DevExpress.XtraLayout.LayoutControlItem()
-        Me.LabelControl1 = New DevExpress.XtraEditors.LabelControl()
         Me.btnAddCli = New DevExpress.XtraEditors.SimpleButton()
         Me.btnEditCli = New DevExpress.XtraEditors.SimpleButton()
         Me.btnDeletecli = New DevExpress.XtraEditors.SimpleButton()
         Me.btnExcelcli = New DevExpress.XtraEditors.SimpleButton()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.ListaPrecio = New System.Windows.Forms.TabPage()
+        Me.cmdBonifPrecio = New DevExpress.XtraEditors.SimpleButton()
+        Me.cmdPrint = New DevExpress.XtraEditors.SimpleButton()
         Me.AutorizacionPrecio = New System.Windows.Forms.TabPage()
         Me.Bitacora = New System.Windows.Forms.TabPage()
         Me.btnRefresh = New DevExpress.XtraEditors.SimpleButton()
@@ -150,23 +166,14 @@ Partial Class frmPrecios
         Me.GridColumn18 = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumn19 = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumn20 = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.txtPublico = New DevExpress.XtraEditors.TextEdit()
-        Me.LayoutControlItem29 = New DevExpress.XtraLayout.LayoutControlItem()
-        Me.Publico = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.chkIncrementaPrecio = New DevExpress.XtraEditors.CheckEdit()
-        Me.LayoutControlItem31 = New DevExpress.XtraLayout.LayoutControlItem()
-        Me.EmptySpaceItem9 = New DevExpress.XtraLayout.EmptySpaceItem()
-        Me.EmptySpaceItem5 = New DevExpress.XtraLayout.EmptySpaceItem()
-        Me.EmptySpaceItem10 = New DevExpress.XtraLayout.EmptySpaceItem()
-        Me.txtPorcIncremento = New DevExpress.XtraEditors.TextEdit()
-        Me.LayoutControlItem30 = New DevExpress.XtraLayout.LayoutControlItem()
-        Me.cmdAplicaIncremento = New DevExpress.XtraEditors.SimpleButton()
-        Me.LayoutControlItem32 = New DevExpress.XtraLayout.LayoutControlItem()
-        Me.EmptySpaceItem11 = New DevExpress.XtraLayout.EmptySpaceItem()
         CType(Me.GridControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridViewDetalle, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.LayoutControl1.SuspendLayout()
+        CType(Me.txtPorcIncrementoPublico.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.txtPorcIncremento.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.chkIncrementaPrecio.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.txtPublico.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.chkTodosNiveles.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.chkTodosProd.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SearchLookUpEditProveedor.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -187,7 +194,6 @@ Partial Class frmPrecios
         CType(Me.LayoutControlItem4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem5, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem6, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.EmptySpaceItem3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.EmptySpaceItem2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem21, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem22, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -195,6 +201,16 @@ Partial Class frmPrecios
         CType(Me.LayoutControlItem19, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem20, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.EmptySpaceItem4, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.LayoutControlItem29, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.EmptySpaceItem9, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.EmptySpaceItem3, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.LayoutControlItem32, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.EmptySpaceItem11, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.EmptySpaceItem10, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.LayoutControlItem31, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.LayoutControlItem30, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.EmptySpaceItem5, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.LayoutControlItem33, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgPrecioCliente, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridViewPrecioCliente, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControl2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -246,17 +262,6 @@ Partial Class frmPrecios
         CType(Me.DateEditDesde.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridControlBitacora, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridView4, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.txtPublico.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.LayoutControlItem29, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.chkIncrementaPrecio.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.LayoutControlItem31, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.EmptySpaceItem9, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.EmptySpaceItem5, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.EmptySpaceItem10, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.txtPorcIncremento.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.LayoutControlItem30, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.LayoutControlItem32, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.EmptySpaceItem11, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'GridControl1
@@ -281,6 +286,7 @@ Partial Class frmPrecios
         Me.GridViewDetalle.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.[False]
         Me.GridViewDetalle.OptionsBehavior.Editable = False
         Me.GridViewDetalle.OptionsFind.AlwaysVisible = True
+        Me.GridViewDetalle.OptionsView.AllowCellMerge = True
         Me.GridViewDetalle.OptionsView.GroupFooterShowMode = DevExpress.XtraGrid.Views.Grid.GroupFooterShowMode.Hidden
         Me.GridViewDetalle.OptionsView.ShowAutoFilterRow = True
         Me.GridViewDetalle.OptionsView.ShowGroupPanel = False
@@ -298,6 +304,7 @@ Partial Class frmPrecios
         Me.GridColumn22.Name = "GridColumn22"
         Me.GridColumn22.Visible = True
         Me.GridColumn22.VisibleIndex = 0
+        Me.GridColumn22.Width = 226
         '
         'IDProducto
         '
@@ -306,8 +313,8 @@ Partial Class frmPrecios
         Me.IDProducto.Name = "IDProducto"
         Me.IDProducto.OptionsColumn.AllowEdit = False
         Me.IDProducto.Visible = True
-        Me.IDProducto.VisibleIndex = 1
-        Me.IDProducto.Width = 90
+        Me.IDProducto.VisibleIndex = 3
+        Me.IDProducto.Width = 87
         '
         'Descr
         '
@@ -316,8 +323,8 @@ Partial Class frmPrecios
         Me.Descr.Name = "Descr"
         Me.Descr.OptionsColumn.AllowEdit = False
         Me.Descr.Visible = True
-        Me.Descr.VisibleIndex = 2
-        Me.Descr.Width = 349
+        Me.Descr.VisibleIndex = 4
+        Me.Descr.Width = 314
         '
         'IDNivel
         '
@@ -334,8 +341,8 @@ Partial Class frmPrecios
         Me.DescrNivel.FieldName = "DescrNivel"
         Me.DescrNivel.Name = "DescrNivel"
         Me.DescrNivel.Visible = True
-        Me.DescrNivel.VisibleIndex = 3
-        Me.DescrNivel.Width = 131
+        Me.DescrNivel.VisibleIndex = 1
+        Me.DescrNivel.Width = 136
         '
         'IDMoneda
         '
@@ -350,17 +357,26 @@ Partial Class frmPrecios
         Me.DescrMoneda.FieldName = "DescrMoneda"
         Me.DescrMoneda.Name = "DescrMoneda"
         Me.DescrMoneda.Visible = True
-        Me.DescrMoneda.VisibleIndex = 4
-        Me.DescrMoneda.Width = 133
+        Me.DescrMoneda.VisibleIndex = 2
+        Me.DescrMoneda.Width = 138
         '
         'Precio
         '
-        Me.Precio.Caption = "Precio"
+        Me.Precio.Caption = "Precio Farmacia"
         Me.Precio.FieldName = "Precio"
         Me.Precio.Name = "Precio"
         Me.Precio.Visible = True
         Me.Precio.VisibleIndex = 5
-        Me.Precio.Width = 112
+        Me.Precio.Width = 116
+        '
+        'Publico
+        '
+        Me.Publico.Caption = "Público"
+        Me.Publico.FieldName = "Publico"
+        Me.Publico.Name = "Publico"
+        Me.Publico.Visible = True
+        Me.Publico.VisibleIndex = 6
+        Me.Publico.Width = 93
         '
         'btnProducto
         '
@@ -373,6 +389,7 @@ Partial Class frmPrecios
         '
         'LayoutControl1
         '
+        Me.LayoutControl1.Controls.Add(Me.txtPorcIncrementoPublico)
         Me.LayoutControl1.Controls.Add(Me.cmdAplicaIncremento)
         Me.LayoutControl1.Controls.Add(Me.txtPorcIncremento)
         Me.LayoutControl1.Controls.Add(Me.chkIncrementaPrecio)
@@ -396,31 +413,77 @@ Partial Class frmPrecios
         Me.LayoutControl1.TabIndex = 30
         Me.LayoutControl1.Text = "LayoutControl1"
         '
+        'txtPorcIncrementoPublico
+        '
+        Me.txtPorcIncrementoPublico.Enabled = False
+        Me.txtPorcIncrementoPublico.Location = New System.Drawing.Point(656, 106)
+        Me.txtPorcIncrementoPublico.Name = "txtPorcIncrementoPublico"
+        Me.txtPorcIncrementoPublico.Size = New System.Drawing.Size(50, 20)
+        Me.txtPorcIncrementoPublico.StyleController = Me.LayoutControl1
+        Me.txtPorcIncrementoPublico.TabIndex = 20
+        '
+        'cmdAplicaIncremento
+        '
+        Me.cmdAplicaIncremento.Enabled = False
+        Me.cmdAplicaIncremento.Image = CType(resources.GetObject("cmdAplicaIncremento.Image"), System.Drawing.Image)
+        Me.cmdAplicaIncremento.Location = New System.Drawing.Point(710, 106)
+        Me.cmdAplicaIncremento.Name = "cmdAplicaIncremento"
+        Me.cmdAplicaIncremento.Size = New System.Drawing.Size(166, 22)
+        Me.cmdAplicaIncremento.StyleController = Me.LayoutControl1
+        Me.cmdAplicaIncremento.TabIndex = 19
+        Me.cmdAplicaIncremento.Text = "Aplica Incremento de Precios"
+        '
+        'txtPorcIncremento
+        '
+        Me.txtPorcIncremento.Enabled = False
+        Me.txtPorcIncremento.Location = New System.Drawing.Point(480, 106)
+        Me.txtPorcIncremento.Name = "txtPorcIncremento"
+        Me.txtPorcIncremento.Size = New System.Drawing.Size(50, 20)
+        Me.txtPorcIncremento.StyleController = Me.LayoutControl1
+        Me.txtPorcIncremento.TabIndex = 18
+        '
+        'chkIncrementaPrecio
+        '
+        Me.chkIncrementaPrecio.Location = New System.Drawing.Point(87, 106)
+        Me.chkIncrementaPrecio.Name = "chkIncrementaPrecio"
+        Me.chkIncrementaPrecio.Properties.Caption = "Incrementar Precios a todos los Productos del Nivel"
+        Me.chkIncrementaPrecio.Size = New System.Drawing.Size(267, 19)
+        Me.chkIncrementaPrecio.StyleController = Me.LayoutControl1
+        Me.chkIncrementaPrecio.TabIndex = 17
+        '
+        'txtPublico
+        '
+        Me.txtPublico.Location = New System.Drawing.Point(499, 62)
+        Me.txtPublico.Name = "txtPublico"
+        Me.txtPublico.Size = New System.Drawing.Size(65, 20)
+        Me.txtPublico.StyleController = Me.LayoutControl1
+        Me.txtPublico.TabIndex = 15
+        '
         'chkTodosNiveles
         '
         Me.chkTodosNiveles.Location = New System.Drawing.Point(578, 62)
         Me.chkTodosNiveles.Name = "chkTodosNiveles"
-        Me.chkTodosNiveles.Properties.Caption = "Todos los Niveles"
+        Me.chkTodosNiveles.Properties.Caption = "Uno/Todos los Niveles"
         Me.chkTodosNiveles.Size = New System.Drawing.Size(128, 19)
         Me.chkTodosNiveles.StyleController = Me.LayoutControl1
         Me.chkTodosNiveles.TabIndex = 14
         '
         'chkTodosProd
         '
-        Me.chkTodosProd.Location = New System.Drawing.Point(578, 36)
+        Me.chkTodosProd.Location = New System.Drawing.Point(580, 36)
         Me.chkTodosProd.Name = "chkTodosProd"
-        Me.chkTodosProd.Properties.Caption = "Todos los Productos"
-        Me.chkTodosProd.Size = New System.Drawing.Size(308, 19)
+        Me.chkTodosProd.Properties.Caption = "Uno/Todos los Productos"
+        Me.chkTodosProd.Size = New System.Drawing.Size(306, 19)
         Me.chkTodosProd.StyleController = Me.LayoutControl1
         Me.chkTodosProd.TabIndex = 13
         '
         'SearchLookUpEditProveedor
         '
-        Me.SearchLookUpEditProveedor.Location = New System.Drawing.Point(173, 12)
+        Me.SearchLookUpEditProveedor.Location = New System.Drawing.Point(177, 12)
         Me.SearchLookUpEditProveedor.Name = "SearchLookUpEditProveedor"
         Me.SearchLookUpEditProveedor.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
         Me.SearchLookUpEditProveedor.Properties.View = Me.GridView5
-        Me.SearchLookUpEditProveedor.Size = New System.Drawing.Size(391, 20)
+        Me.SearchLookUpEditProveedor.Size = New System.Drawing.Size(387, 20)
         Me.SearchLookUpEditProveedor.StyleController = Me.LayoutControl1
         Me.SearchLookUpEditProveedor.TabIndex = 12
         '
@@ -435,7 +498,7 @@ Partial Class frmPrecios
         '
         Me.chkTodos.Location = New System.Drawing.Point(578, 12)
         Me.chkTodos.Name = "chkTodos"
-        Me.chkTodos.Properties.Caption = "Todos los Proveedores"
+        Me.chkTodos.Properties.Caption = "Uno/Todos los Proveedores"
         Me.chkTodos.Size = New System.Drawing.Size(308, 19)
         Me.chkTodos.StyleController = Me.LayoutControl1
         Me.chkTodos.TabIndex = 11
@@ -494,16 +557,16 @@ Partial Class frmPrecios
         '
         'txtDescr
         '
-        Me.txtDescr.Location = New System.Drawing.Point(346, 36)
+        Me.txtDescr.Location = New System.Drawing.Point(354, 36)
         Me.txtDescr.Name = "txtDescr"
         Me.txtDescr.Properties.ReadOnly = True
-        Me.txtDescr.Size = New System.Drawing.Size(228, 20)
+        Me.txtDescr.Size = New System.Drawing.Size(222, 20)
         Me.txtDescr.StyleController = Me.LayoutControl1
         Me.txtDescr.TabIndex = 3
         '
         'txtIDProducto
         '
-        Me.txtIDProducto.Location = New System.Drawing.Point(174, 36)
+        Me.txtIDProducto.Location = New System.Drawing.Point(178, 36)
         Me.txtIDProducto.Name = "txtIDProducto"
         Me.txtIDProducto.Properties.ReadOnly = True
         Me.txtIDProducto.Size = New System.Drawing.Size(50, 20)
@@ -514,7 +577,7 @@ Partial Class frmPrecios
         '
         Me.LayoutControlGroup1.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.[True]
         Me.LayoutControlGroup1.GroupBordersVisible = False
-        Me.LayoutControlGroup1.Items.AddRange(New DevExpress.XtraLayout.BaseLayoutItem() {Me.LayoutControlItem2, Me.LayoutControlItem3, Me.LayoutControlItem1, Me.EmptySpaceItem1, Me.LayoutControlItem4, Me.LayoutControlItem5, Me.LayoutControlItem6, Me.EmptySpaceItem2, Me.LayoutControlItem21, Me.LayoutControlItem22, Me.LayoutControlItem18, Me.LayoutControlItem19, Me.LayoutControlItem20, Me.EmptySpaceItem4, Me.LayoutControlItem29, Me.EmptySpaceItem9, Me.EmptySpaceItem3, Me.LayoutControlItem32, Me.EmptySpaceItem11, Me.EmptySpaceItem10, Me.LayoutControlItem31, Me.LayoutControlItem30, Me.EmptySpaceItem5})
+        Me.LayoutControlGroup1.Items.AddRange(New DevExpress.XtraLayout.BaseLayoutItem() {Me.LayoutControlItem2, Me.LayoutControlItem3, Me.LayoutControlItem1, Me.EmptySpaceItem1, Me.LayoutControlItem4, Me.LayoutControlItem5, Me.LayoutControlItem6, Me.EmptySpaceItem2, Me.LayoutControlItem21, Me.LayoutControlItem22, Me.LayoutControlItem18, Me.LayoutControlItem19, Me.LayoutControlItem20, Me.EmptySpaceItem4, Me.LayoutControlItem29, Me.EmptySpaceItem9, Me.EmptySpaceItem3, Me.LayoutControlItem32, Me.EmptySpaceItem11, Me.EmptySpaceItem10, Me.LayoutControlItem31, Me.LayoutControlItem30, Me.EmptySpaceItem5, Me.LayoutControlItem33})
         Me.LayoutControlGroup1.Location = New System.Drawing.Point(0, 0)
         Me.LayoutControlGroup1.Name = "Root"
         Me.LayoutControlGroup1.Size = New System.Drawing.Size(898, 155)
@@ -525,18 +588,18 @@ Partial Class frmPrecios
         Me.LayoutControlItem2.Control = Me.txtIDProducto
         Me.LayoutControlItem2.Location = New System.Drawing.Point(44, 24)
         Me.LayoutControlItem2.Name = "LayoutControlItem2"
-        Me.LayoutControlItem2.Size = New System.Drawing.Size(172, 26)
+        Me.LayoutControlItem2.Size = New System.Drawing.Size(176, 26)
         Me.LayoutControlItem2.Text = "Producto"
-        Me.LayoutControlItem2.TextSize = New System.Drawing.Size(115, 13)
+        Me.LayoutControlItem2.TextSize = New System.Drawing.Size(119, 13)
         '
         'LayoutControlItem3
         '
         Me.LayoutControlItem3.Control = Me.txtDescr
-        Me.LayoutControlItem3.Location = New System.Drawing.Point(216, 24)
+        Me.LayoutControlItem3.Location = New System.Drawing.Point(220, 24)
         Me.LayoutControlItem3.Name = "LayoutControlItem3"
-        Me.LayoutControlItem3.Size = New System.Drawing.Size(350, 26)
+        Me.LayoutControlItem3.Size = New System.Drawing.Size(348, 26)
         Me.LayoutControlItem3.Text = "Descr"
-        Me.LayoutControlItem3.TextSize = New System.Drawing.Size(115, 13)
+        Me.LayoutControlItem3.TextSize = New System.Drawing.Size(119, 13)
         '
         'LayoutControlItem1
         '
@@ -591,16 +654,6 @@ Partial Class frmPrecios
         Me.LayoutControlItem6.TextSize = New System.Drawing.Size(29, 13)
         Me.LayoutControlItem6.TextToControlDistance = 5
         '
-        'EmptySpaceItem3
-        '
-        Me.EmptySpaceItem3.AllowHotTrack = False
-        Me.EmptySpaceItem3.CustomizationFormText = "EmptySpaceItem1"
-        Me.EmptySpaceItem3.Location = New System.Drawing.Point(868, 50)
-        Me.EmptySpaceItem3.Name = "EmptySpaceItem3"
-        Me.EmptySpaceItem3.Size = New System.Drawing.Size(10, 70)
-        Me.EmptySpaceItem3.Text = "EmptySpaceItem1"
-        Me.EmptySpaceItem3.TextSize = New System.Drawing.Size(0, 0)
-        '
         'EmptySpaceItem2
         '
         Me.EmptySpaceItem2.AllowHotTrack = False
@@ -634,14 +687,14 @@ Partial Class frmPrecios
         Me.LayoutControlItem18.Name = "LayoutControlItem18"
         Me.LayoutControlItem18.Size = New System.Drawing.Size(513, 24)
         Me.LayoutControlItem18.Text = "Proveedor "
-        Me.LayoutControlItem18.TextSize = New System.Drawing.Size(115, 13)
+        Me.LayoutControlItem18.TextSize = New System.Drawing.Size(119, 13)
         '
         'LayoutControlItem19
         '
         Me.LayoutControlItem19.Control = Me.chkTodosProd
-        Me.LayoutControlItem19.Location = New System.Drawing.Point(566, 24)
+        Me.LayoutControlItem19.Location = New System.Drawing.Point(568, 24)
         Me.LayoutControlItem19.Name = "LayoutControlItem19"
-        Me.LayoutControlItem19.Size = New System.Drawing.Size(312, 26)
+        Me.LayoutControlItem19.Size = New System.Drawing.Size(310, 26)
         Me.LayoutControlItem19.TextSize = New System.Drawing.Size(0, 0)
         Me.LayoutControlItem19.TextVisible = False
         '
@@ -661,6 +714,98 @@ Partial Class frmPrecios
         Me.EmptySpaceItem4.Name = "EmptySpaceItem4"
         Me.EmptySpaceItem4.Size = New System.Drawing.Size(43, 24)
         Me.EmptySpaceItem4.TextSize = New System.Drawing.Size(0, 0)
+        '
+        'LayoutControlItem29
+        '
+        Me.LayoutControlItem29.Control = Me.txtPublico
+        Me.LayoutControlItem29.Location = New System.Drawing.Point(446, 50)
+        Me.LayoutControlItem29.MinSize = New System.Drawing.Size(95, 24)
+        Me.LayoutControlItem29.Name = "LayoutControlItem29"
+        Me.LayoutControlItem29.Size = New System.Drawing.Size(110, 26)
+        Me.LayoutControlItem29.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom
+        Me.LayoutControlItem29.Text = "Público "
+        Me.LayoutControlItem29.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize
+        Me.LayoutControlItem29.TextSize = New System.Drawing.Size(36, 13)
+        Me.LayoutControlItem29.TextToControlDistance = 5
+        '
+        'EmptySpaceItem9
+        '
+        Me.EmptySpaceItem9.AllowHotTrack = False
+        Me.EmptySpaceItem9.Location = New System.Drawing.Point(556, 50)
+        Me.EmptySpaceItem9.Name = "EmptySpaceItem9"
+        Me.EmptySpaceItem9.Size = New System.Drawing.Size(10, 26)
+        Me.EmptySpaceItem9.TextSize = New System.Drawing.Size(0, 0)
+        '
+        'EmptySpaceItem3
+        '
+        Me.EmptySpaceItem3.AllowHotTrack = False
+        Me.EmptySpaceItem3.CustomizationFormText = "EmptySpaceItem1"
+        Me.EmptySpaceItem3.Location = New System.Drawing.Point(868, 50)
+        Me.EmptySpaceItem3.Name = "EmptySpaceItem3"
+        Me.EmptySpaceItem3.Size = New System.Drawing.Size(10, 70)
+        Me.EmptySpaceItem3.Text = "EmptySpaceItem1"
+        Me.EmptySpaceItem3.TextSize = New System.Drawing.Size(0, 0)
+        '
+        'LayoutControlItem32
+        '
+        Me.LayoutControlItem32.Control = Me.cmdAplicaIncremento
+        Me.LayoutControlItem32.Location = New System.Drawing.Point(698, 94)
+        Me.LayoutControlItem32.Name = "LayoutControlItem32"
+        Me.LayoutControlItem32.Size = New System.Drawing.Size(170, 26)
+        Me.LayoutControlItem32.TextSize = New System.Drawing.Size(0, 0)
+        Me.LayoutControlItem32.TextVisible = False
+        '
+        'EmptySpaceItem11
+        '
+        Me.EmptySpaceItem11.AllowHotTrack = False
+        Me.EmptySpaceItem11.Location = New System.Drawing.Point(0, 120)
+        Me.EmptySpaceItem11.Name = "EmptySpaceItem11"
+        Me.EmptySpaceItem11.Size = New System.Drawing.Size(878, 15)
+        Me.EmptySpaceItem11.TextSize = New System.Drawing.Size(0, 0)
+        '
+        'EmptySpaceItem10
+        '
+        Me.EmptySpaceItem10.AllowHotTrack = False
+        Me.EmptySpaceItem10.Location = New System.Drawing.Point(0, 94)
+        Me.EmptySpaceItem10.Name = "EmptySpaceItem10"
+        Me.EmptySpaceItem10.Size = New System.Drawing.Size(75, 26)
+        Me.EmptySpaceItem10.TextSize = New System.Drawing.Size(0, 0)
+        '
+        'LayoutControlItem31
+        '
+        Me.LayoutControlItem31.Control = Me.chkIncrementaPrecio
+        Me.LayoutControlItem31.Location = New System.Drawing.Point(75, 94)
+        Me.LayoutControlItem31.Name = "LayoutControlItem31"
+        Me.LayoutControlItem31.Size = New System.Drawing.Size(271, 26)
+        Me.LayoutControlItem31.TextSize = New System.Drawing.Size(0, 0)
+        Me.LayoutControlItem31.TextVisible = False
+        '
+        'LayoutControlItem30
+        '
+        Me.LayoutControlItem30.Control = Me.txtPorcIncremento
+        Me.LayoutControlItem30.CustomizationFormText = "% Incremento a Precio"
+        Me.LayoutControlItem30.Location = New System.Drawing.Point(346, 94)
+        Me.LayoutControlItem30.Name = "LayoutControlItem30"
+        Me.LayoutControlItem30.Size = New System.Drawing.Size(176, 26)
+        Me.LayoutControlItem30.Text = "% Incremento a Precios"
+        Me.LayoutControlItem30.TextSize = New System.Drawing.Size(119, 13)
+        '
+        'EmptySpaceItem5
+        '
+        Me.EmptySpaceItem5.AllowHotTrack = False
+        Me.EmptySpaceItem5.Location = New System.Drawing.Point(0, 76)
+        Me.EmptySpaceItem5.Name = "EmptySpaceItem5"
+        Me.EmptySpaceItem5.Size = New System.Drawing.Size(868, 18)
+        Me.EmptySpaceItem5.TextSize = New System.Drawing.Size(0, 0)
+        '
+        'LayoutControlItem33
+        '
+        Me.LayoutControlItem33.Control = Me.txtPorcIncrementoPublico
+        Me.LayoutControlItem33.Location = New System.Drawing.Point(522, 94)
+        Me.LayoutControlItem33.Name = "LayoutControlItem33"
+        Me.LayoutControlItem33.Size = New System.Drawing.Size(176, 26)
+        Me.LayoutControlItem33.Text = "% Incremento a Publicos"
+        Me.LayoutControlItem33.TextSize = New System.Drawing.Size(119, 13)
         '
         'btnExcel
         '
@@ -700,10 +845,10 @@ Partial Class frmPrecios
         '
         'dgPrecioCliente
         '
-        Me.dgPrecioCliente.Location = New System.Drawing.Point(15, 203)
+        Me.dgPrecioCliente.Location = New System.Drawing.Point(15, 173)
         Me.dgPrecioCliente.MainView = Me.GridViewPrecioCliente
         Me.dgPrecioCliente.Name = "dgPrecioCliente"
-        Me.dgPrecioCliente.Size = New System.Drawing.Size(861, 348)
+        Me.dgPrecioCliente.Size = New System.Drawing.Size(861, 378)
         Me.dgPrecioCliente.TabIndex = 39
         Me.dgPrecioCliente.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GridViewPrecioCliente})
         '
@@ -840,7 +985,7 @@ Partial Class frmPrecios
         Me.LayoutControl2.Controls.Add(Me.btnCliente)
         Me.LayoutControl2.Controls.Add(Me.txtNombre)
         Me.LayoutControl2.Controls.Add(Me.chktodosNvelesCli)
-        Me.LayoutControl2.Location = New System.Drawing.Point(15, 45)
+        Me.LayoutControl2.Location = New System.Drawing.Point(28, 15)
         Me.LayoutControl2.Name = "LayoutControl2"
         Me.LayoutControl2.Root = Me.LayoutControlGroup2
         Me.LayoutControl2.Size = New System.Drawing.Size(837, 152)
@@ -1010,7 +1155,7 @@ Partial Class frmPrecios
         Me.LayoutControlGroup2.GroupBordersVisible = False
         Me.LayoutControlGroup2.Items.AddRange(New DevExpress.XtraLayout.BaseLayoutItem() {Me.LayoutControlItem8, Me.LayoutControlItem7, Me.LayoutControlItem9, Me.LayoutControlItem13, Me.LayoutControlItem15, Me.LayoutControlItem12, Me.LayoutControlItem16, Me.LayoutControlItem17, Me.LayoutControlItem23, Me.LayoutControlItem24, Me.LayoutControlItem25, Me.EmptySpaceItem6, Me.LayoutControlItem26, Me.LayoutControlItem27, Me.LayoutControlItem14, Me.LayoutControlItem11, Me.EmptySpaceItem7, Me.EmptySpaceItem8, Me.LayoutControlItem28})
         Me.LayoutControlGroup2.Location = New System.Drawing.Point(0, 0)
-        Me.LayoutControlGroup2.Name = "LayoutControlGroup2"
+        Me.LayoutControlGroup2.Name = "Root"
         Me.LayoutControlGroup2.Size = New System.Drawing.Size(837, 152)
         Me.LayoutControlGroup2.TextVisible = False
         '
@@ -1189,49 +1334,40 @@ Partial Class frmPrecios
         Me.LayoutControlItem10.Size = New System.Drawing.Size(0, 0)
         Me.LayoutControlItem10.TextSize = New System.Drawing.Size(50, 20)
         '
-        'LabelControl1
-        '
-        Me.LabelControl1.Appearance.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold)
-        Me.LabelControl1.Location = New System.Drawing.Point(27, 29)
-        Me.LabelControl1.Name = "LabelControl1"
-        Me.LabelControl1.Size = New System.Drawing.Size(196, 13)
-        Me.LabelControl1.TabIndex = 44
-        Me.LabelControl1.Text = "Autorizacion de Precios a Clientes :"
-        '
         'btnAddCli
         '
         Me.btnAddCli.ButtonStyle = DevExpress.XtraEditors.Controls.BorderStyles.Style3D
         Me.btnAddCli.Image = CType(resources.GetObject("btnAddCli.Image"), System.Drawing.Image)
-        Me.btnAddCli.Location = New System.Drawing.Point(882, 207)
+        Me.btnAddCli.Location = New System.Drawing.Point(885, 194)
         Me.btnAddCli.Name = "btnAddCli"
-        Me.btnAddCli.Size = New System.Drawing.Size(42, 36)
+        Me.btnAddCli.Size = New System.Drawing.Size(42, 46)
         Me.btnAddCli.TabIndex = 45
         '
         'btnEditCli
         '
         Me.btnEditCli.ButtonStyle = DevExpress.XtraEditors.Controls.BorderStyles.Style3D
         Me.btnEditCli.Image = CType(resources.GetObject("btnEditCli.Image"), System.Drawing.Image)
-        Me.btnEditCli.Location = New System.Drawing.Point(882, 259)
+        Me.btnEditCli.Location = New System.Drawing.Point(888, 260)
         Me.btnEditCli.Name = "btnEditCli"
-        Me.btnEditCli.Size = New System.Drawing.Size(42, 36)
+        Me.btnEditCli.Size = New System.Drawing.Size(42, 40)
         Me.btnEditCli.TabIndex = 46
         '
         'btnDeletecli
         '
         Me.btnDeletecli.ButtonStyle = DevExpress.XtraEditors.Controls.BorderStyles.Style3D
         Me.btnDeletecli.Image = CType(resources.GetObject("btnDeletecli.Image"), System.Drawing.Image)
-        Me.btnDeletecli.Location = New System.Drawing.Point(882, 319)
+        Me.btnDeletecli.Location = New System.Drawing.Point(888, 323)
         Me.btnDeletecli.Name = "btnDeletecli"
-        Me.btnDeletecli.Size = New System.Drawing.Size(42, 36)
+        Me.btnDeletecli.Size = New System.Drawing.Size(42, 43)
         Me.btnDeletecli.TabIndex = 47
         '
         'btnExcelcli
         '
         Me.btnExcelcli.ButtonStyle = DevExpress.XtraEditors.Controls.BorderStyles.Style3D
         Me.btnExcelcli.Image = CType(resources.GetObject("btnExcelcli.Image"), System.Drawing.Image)
-        Me.btnExcelcli.Location = New System.Drawing.Point(882, 382)
+        Me.btnExcelcli.Location = New System.Drawing.Point(885, 390)
         Me.btnExcelcli.Name = "btnExcelcli"
-        Me.btnExcelcli.Size = New System.Drawing.Size(42, 39)
+        Me.btnExcelcli.Size = New System.Drawing.Size(42, 48)
         Me.btnExcelcli.TabIndex = 48
         '
         'TabControl1
@@ -1247,6 +1383,8 @@ Partial Class frmPrecios
         '
         'ListaPrecio
         '
+        Me.ListaPrecio.Controls.Add(Me.cmdBonifPrecio)
+        Me.ListaPrecio.Controls.Add(Me.cmdPrint)
         Me.ListaPrecio.Controls.Add(Me.LayoutControl1)
         Me.ListaPrecio.Controls.Add(Me.GridControl1)
         Me.ListaPrecio.Controls.Add(Me.btnDelete)
@@ -1261,12 +1399,29 @@ Partial Class frmPrecios
         Me.ListaPrecio.Text = "Lista de Precios"
         Me.ListaPrecio.UseVisualStyleBackColor = True
         '
+        'cmdBonifPrecio
+        '
+        Me.cmdBonifPrecio.Image = CType(resources.GetObject("cmdBonifPrecio.Image"), System.Drawing.Image)
+        Me.cmdBonifPrecio.Location = New System.Drawing.Point(882, 465)
+        Me.cmdBonifPrecio.Name = "cmdBonifPrecio"
+        Me.cmdBonifPrecio.Size = New System.Drawing.Size(42, 40)
+        Me.cmdBonifPrecio.TabIndex = 40
+        Me.cmdBonifPrecio.ToolTip = "Imprime Tabla de Bonificaciones y Precios"
+        '
+        'cmdPrint
+        '
+        Me.cmdPrint.Image = CType(resources.GetObject("cmdPrint.Image"), System.Drawing.Image)
+        Me.cmdPrint.Location = New System.Drawing.Point(882, 410)
+        Me.cmdPrint.Name = "cmdPrint"
+        Me.cmdPrint.Size = New System.Drawing.Size(42, 40)
+        Me.cmdPrint.TabIndex = 39
+        Me.cmdPrint.ToolTip = "Imprime Lista de Precios"
+        '
         'AutorizacionPrecio
         '
         Me.AutorizacionPrecio.Controls.Add(Me.LayoutControl2)
         Me.AutorizacionPrecio.Controls.Add(Me.dgPrecioCliente)
         Me.AutorizacionPrecio.Controls.Add(Me.btnExcelcli)
-        Me.AutorizacionPrecio.Controls.Add(Me.LabelControl1)
         Me.AutorizacionPrecio.Controls.Add(Me.btnDeletecli)
         Me.AutorizacionPrecio.Controls.Add(Me.btnAddCli)
         Me.AutorizacionPrecio.Controls.Add(Me.btnEditCli)
@@ -1479,123 +1634,6 @@ Partial Class frmPrecios
         Me.GridColumn20.VisibleIndex = 11
         Me.GridColumn20.Width = 57
         '
-        'txtPublico
-        '
-        Me.txtPublico.Location = New System.Drawing.Point(499, 62)
-        Me.txtPublico.Name = "txtPublico"
-        Me.txtPublico.Size = New System.Drawing.Size(65, 20)
-        Me.txtPublico.StyleController = Me.LayoutControl1
-        Me.txtPublico.TabIndex = 15
-        '
-        'LayoutControlItem29
-        '
-        Me.LayoutControlItem29.Control = Me.txtPublico
-        Me.LayoutControlItem29.Location = New System.Drawing.Point(446, 50)
-        Me.LayoutControlItem29.MinSize = New System.Drawing.Size(95, 24)
-        Me.LayoutControlItem29.Name = "LayoutControlItem29"
-        Me.LayoutControlItem29.Size = New System.Drawing.Size(110, 26)
-        Me.LayoutControlItem29.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom
-        Me.LayoutControlItem29.Text = "Público "
-        Me.LayoutControlItem29.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize
-        Me.LayoutControlItem29.TextSize = New System.Drawing.Size(36, 13)
-        Me.LayoutControlItem29.TextToControlDistance = 5
-        '
-        'Publico
-        '
-        Me.Publico.Caption = "Público"
-        Me.Publico.FieldName = "Publico"
-        Me.Publico.Name = "Publico"
-        Me.Publico.Visible = True
-        Me.Publico.VisibleIndex = 6
-        '
-        'chkIncrementaPrecio
-        '
-        Me.chkIncrementaPrecio.Location = New System.Drawing.Point(416, 106)
-        Me.chkIncrementaPrecio.Name = "chkIncrementaPrecio"
-        Me.chkIncrementaPrecio.Properties.Caption = "Incrementar Precios"
-        Me.chkIncrementaPrecio.Size = New System.Drawing.Size(118, 19)
-        Me.chkIncrementaPrecio.StyleController = Me.LayoutControl1
-        Me.chkIncrementaPrecio.TabIndex = 17
-        '
-        'LayoutControlItem31
-        '
-        Me.LayoutControlItem31.Control = Me.chkIncrementaPrecio
-        Me.LayoutControlItem31.Location = New System.Drawing.Point(404, 94)
-        Me.LayoutControlItem31.Name = "LayoutControlItem31"
-        Me.LayoutControlItem31.Size = New System.Drawing.Size(122, 26)
-        Me.LayoutControlItem31.TextSize = New System.Drawing.Size(0, 0)
-        Me.LayoutControlItem31.TextVisible = False
-        '
-        'EmptySpaceItem9
-        '
-        Me.EmptySpaceItem9.AllowHotTrack = False
-        Me.EmptySpaceItem9.Location = New System.Drawing.Point(556, 50)
-        Me.EmptySpaceItem9.Name = "EmptySpaceItem9"
-        Me.EmptySpaceItem9.Size = New System.Drawing.Size(10, 26)
-        Me.EmptySpaceItem9.TextSize = New System.Drawing.Size(0, 0)
-        '
-        'EmptySpaceItem5
-        '
-        Me.EmptySpaceItem5.AllowHotTrack = False
-        Me.EmptySpaceItem5.Location = New System.Drawing.Point(0, 76)
-        Me.EmptySpaceItem5.Name = "EmptySpaceItem5"
-        Me.EmptySpaceItem5.Size = New System.Drawing.Size(868, 18)
-        Me.EmptySpaceItem5.TextSize = New System.Drawing.Size(0, 0)
-        '
-        'EmptySpaceItem10
-        '
-        Me.EmptySpaceItem10.AllowHotTrack = False
-        Me.EmptySpaceItem10.Location = New System.Drawing.Point(0, 94)
-        Me.EmptySpaceItem10.Name = "EmptySpaceItem10"
-        Me.EmptySpaceItem10.Size = New System.Drawing.Size(404, 26)
-        Me.EmptySpaceItem10.TextSize = New System.Drawing.Size(0, 0)
-        '
-        'txtPorcIncremento
-        '
-        Me.txtPorcIncremento.Enabled = False
-        Me.txtPorcIncremento.Location = New System.Drawing.Point(656, 106)
-        Me.txtPorcIncremento.Name = "txtPorcIncremento"
-        Me.txtPorcIncremento.Size = New System.Drawing.Size(50, 20)
-        Me.txtPorcIncremento.StyleController = Me.LayoutControl1
-        Me.txtPorcIncremento.TabIndex = 18
-        '
-        'LayoutControlItem30
-        '
-        Me.LayoutControlItem30.Control = Me.txtPorcIncremento
-        Me.LayoutControlItem30.Location = New System.Drawing.Point(526, 94)
-        Me.LayoutControlItem30.Name = "LayoutControlItem30"
-        Me.LayoutControlItem30.Size = New System.Drawing.Size(172, 26)
-        Me.LayoutControlItem30.Text = "% Incremento a Precios"
-        Me.LayoutControlItem30.TextSize = New System.Drawing.Size(115, 13)
-        '
-        'cmdAplicaIncremento
-        '
-        Me.cmdAplicaIncremento.Enabled = False
-        Me.cmdAplicaIncremento.Image = CType(resources.GetObject("cmdAplicaIncremento.Image"), System.Drawing.Image)
-        Me.cmdAplicaIncremento.Location = New System.Drawing.Point(710, 106)
-        Me.cmdAplicaIncremento.Name = "cmdAplicaIncremento"
-        Me.cmdAplicaIncremento.Size = New System.Drawing.Size(166, 22)
-        Me.cmdAplicaIncremento.StyleController = Me.LayoutControl1
-        Me.cmdAplicaIncremento.TabIndex = 19
-        Me.cmdAplicaIncremento.Text = "Aplica Incremento de Precios"
-        '
-        'LayoutControlItem32
-        '
-        Me.LayoutControlItem32.Control = Me.cmdAplicaIncremento
-        Me.LayoutControlItem32.Location = New System.Drawing.Point(698, 94)
-        Me.LayoutControlItem32.Name = "LayoutControlItem32"
-        Me.LayoutControlItem32.Size = New System.Drawing.Size(170, 26)
-        Me.LayoutControlItem32.TextSize = New System.Drawing.Size(0, 0)
-        Me.LayoutControlItem32.TextVisible = False
-        '
-        'EmptySpaceItem11
-        '
-        Me.EmptySpaceItem11.AllowHotTrack = False
-        Me.EmptySpaceItem11.Location = New System.Drawing.Point(0, 120)
-        Me.EmptySpaceItem11.Name = "EmptySpaceItem11"
-        Me.EmptySpaceItem11.Size = New System.Drawing.Size(878, 15)
-        Me.EmptySpaceItem11.TextSize = New System.Drawing.Size(0, 0)
-        '
         'frmPrecios
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1610,6 +1648,10 @@ Partial Class frmPrecios
         CType(Me.GridViewDetalle, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.LayoutControl1.ResumeLayout(False)
+        CType(Me.txtPorcIncrementoPublico.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.txtPorcIncremento.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.chkIncrementaPrecio.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.txtPublico.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.chkTodosNiveles.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.chkTodosProd.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.SearchLookUpEditProveedor.Properties, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1630,7 +1672,6 @@ Partial Class frmPrecios
         CType(Me.LayoutControlItem4, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem5, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem6, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.EmptySpaceItem3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.EmptySpaceItem2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem21, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem22, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1638,6 +1679,16 @@ Partial Class frmPrecios
         CType(Me.LayoutControlItem19, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem20, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.EmptySpaceItem4, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.LayoutControlItem29, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.EmptySpaceItem9, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.EmptySpaceItem3, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.LayoutControlItem32, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.EmptySpaceItem11, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.EmptySpaceItem10, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.LayoutControlItem31, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.LayoutControlItem30, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.EmptySpaceItem5, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.LayoutControlItem33, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dgPrecioCliente, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridViewPrecioCliente, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControl2, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1682,7 +1733,6 @@ Partial Class frmPrecios
         Me.TabControl1.ResumeLayout(False)
         Me.ListaPrecio.ResumeLayout(False)
         Me.AutorizacionPrecio.ResumeLayout(False)
-        Me.AutorizacionPrecio.PerformLayout()
         Me.Bitacora.ResumeLayout(False)
         Me.Bitacora.PerformLayout()
         CType(Me.DateEditHasta.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1691,17 +1741,6 @@ Partial Class frmPrecios
         CType(Me.DateEditDesde.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridControlBitacora, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridView4, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.txtPublico.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.LayoutControlItem29, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.chkIncrementaPrecio.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.LayoutControlItem31, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.EmptySpaceItem9, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.EmptySpaceItem5, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.EmptySpaceItem10, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.txtPorcIncremento.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.LayoutControlItem30, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.LayoutControlItem32, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.EmptySpaceItem11, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1761,7 +1800,6 @@ Partial Class frmPrecios
     Friend WithEvents LayoutControlItem12 As DevExpress.XtraLayout.LayoutControlItem
     Friend WithEvents txtProdcli As DevExpress.XtraEditors.TextEdit
     Friend WithEvents LayoutControlItem13 As DevExpress.XtraLayout.LayoutControlItem
-    Friend WithEvents LabelControl1 As DevExpress.XtraEditors.LabelControl
     Friend WithEvents btnAddCli As DevExpress.XtraEditors.SimpleButton
     Friend WithEvents btnEditCli As DevExpress.XtraEditors.SimpleButton
     Friend WithEvents btnDeletecli As DevExpress.XtraEditors.SimpleButton
@@ -1845,4 +1883,8 @@ Partial Class frmPrecios
     Friend WithEvents EmptySpaceItem11 As DevExpress.XtraLayout.EmptySpaceItem
     Friend WithEvents EmptySpaceItem10 As DevExpress.XtraLayout.EmptySpaceItem
     Friend WithEvents LayoutControlItem30 As DevExpress.XtraLayout.LayoutControlItem
+    Friend WithEvents txtPorcIncrementoPublico As DevExpress.XtraEditors.TextEdit
+    Friend WithEvents LayoutControlItem33 As DevExpress.XtraLayout.LayoutControlItem
+    Friend WithEvents cmdPrint As DevExpress.XtraEditors.SimpleButton
+    Friend WithEvents cmdBonifPrecio As DevExpress.XtraEditors.SimpleButton
 End Class

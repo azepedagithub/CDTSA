@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XtraReportsLayoutSerializer SerializerVersion="15.2.7.0" Ref="1" ControlType="DevExpress.XtraReports.UI.XtraReport, DevExpress.XtraReports.v15.2, Version=15.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Name="rptDesglosePagos" ReportUnit="Pixels" Margins="45, 47, 28, 96" PageWidth="816" PageHeight="1056" ScriptLanguage="VisualBasic" Version="15.2" DataMember="ccfrptDesglosePagos" DataSource="#Ref-0" Dpi="96">
+  <Parameters>
+    <Item1 Ref="3" Visible="false" Description="Parameter1" Name="psEmpresa" />
+    <Item2 Ref="4" Visible="false" Description="Parameter1" Name="psCliente" />
+    <Item3 Ref="6" Visible="false" Description="Parameter1" ValueInfo="1" Name="piIDCliente" Type="#Ref-5" />
+    <Item4 Ref="7" Visible="false" Description="Parameter1" ValueInfo="1" Name="piIDBodega" Type="#Ref-5" />
+    <Item5 Ref="8" Visible="false" Description="Parameter1" ValueInfo="1" Name="piIDVendedor" Type="#Ref-5" />
+    <Item6 Ref="10" Visible="false" Description="Parameter1" ValueInfo="2020-02-01" Name="pdFechaInicial" Type="#Ref-9" />
+    <Item7 Ref="11" Visible="false" Description="Parameter1" ValueInfo="02/27/2020 10:21:01" Name="pdFechaFinal" Type="#Ref-9" />
+  </Parameters>
+  <Bands>
+    <Item1 Ref="12" ControlType="DetailBand" Name="Detail" HeightF="18.675745" TextAlignment="TopLeft" Dpi="96" StyleName="DataField" Padding="0,0,0,0,96">
+      <Controls>
+        <Item1 Ref="13" ControlType="XRLabel" Name="XrLabel37" Text="XrLabel37" SizeF="59.890213,14.3999977" LocationFloat="270.1823, 0" Dpi="96" Padding="2,2,0,0,96">
+          <DataBindings>
+            <Item1 Ref="14" FormatString="{0:dd/MM/yyyy}" PropertyName="Text" DataMember="ccfrptDesglosePagos.FechaDebito" />
+          </DataBindings>
+        </Item1>
+        <Item2 Ref="15" ControlType="XRLabel" Name="XrLabel32" SizeF="65.80798,14.4" LocationFloat="330.0725, 0" Dpi="96" Padding="2,2,0,0,96">
+          <DataBindings>
+            <Item1 Ref="16" FormatString="{0:dd/MM/yyyy}" PropertyName="Text" DataMember="ccfrptDesglosePagos.MonedaDebito" />
+          </DataBindings>
+        </Item2>
+        <Item3 Ref="17" ControlType="XRLabel" Name="XrLabel13" Text="XrLabel13" SizeF="32.03913,14.4" LocationFloat="51.82534, 0" Dpi="96" Padding="2,2,0,0,96">
+          <DataBindings>
+            <Item1 Ref="18" PropertyName="Text" DataMember="ccfrptDesglosePagos.IDClase" />
+          </DataBindings>
+        </Item3>
+        <Item4 Ref="19" ControlType="XRLabel" Name="XrLabel17" Text="XrLabel17" TextAlignment="TopRight" SizeF="70.109436,14.4" LocationFloat="97.36063, 0" Dpi="96" Padding="2,2,0,0,96">
+          <DataBindings>
+            <Item1 Ref="20" PropertyName="Text" DataMember="ccfrptDesglosePagos.IDDebito" />
+          </DataBindings>
+          <StylePriority Ref="21" UseTextAlignment="false" />
+        </Item4>
+        <Item5 Ref="22" ControlType="XRLabel" Name="XrLabel18" Text="XrLabel18" TextAlignment="TopRight" SizeF="86.85513,14.4" LocationFloat="168.9532, 0" Dpi="96" Padding="2,2,0,0,96">
+          <DataBindings>
+            <Item1 Ref="23" PropertyName="Text" DataMember="ccfrptDesglosePagos.DocDebito" />
+          </DataBindings>
+          <StylePriority Ref="24" UseTextAlignment="false" />
+        </Item5>
+        <Item6 Ref="25" ControlType="XRLabel" Name="XrLabel19" Text="XrLabel19" TextAlignment="TopCenter" SizeF="38.0573425,14.4" LocationFloat="489.3553, 0" Dpi="96" Padding="2,2,0,0,96">
+          <DataBindings>
+            <Item1 Ref="26" PropertyName="Text" DataMember="ccfrptDesglosePagos.DiasVencidos" />
+          </DataBindings>
+          <StylePriority Ref="27" UseTextAlignment="false" />
+        </Item6>
+        <Item7 Ref="28" ControlType="XRLabel" Name="XrLabel20" Text="XrLabel20" SizeF="65.38638,14.4" LocationFloat="403.026337, 0" Dpi="96" Padding="2,2,0,0,96">
+          <DataBindings>
+            <Item1 Ref="29" FormatString="{0:dd/MM/yyyy}" PropertyName="Text" DataMember="ccfrptDesglosePagos.Vencimiento" />
+          </DataBindings>
+        </Item7>
+        <Item8 Ref="30" ControlType="XRLabel" Name="XrLabel21" Text="XrLabel21" TextAlignment="TopRight" SizeF="82.15503,14.4" LocationFloat="547.928467, 0" Dpi="96" Padding="2,2,0,0,96">
+          <DataBindings>
+            <Item1 Ref="31" FormatString="{0:n2}" PropertyName="Text" DataMember="ccfrptDesglosePagos.Aplicado" />
+          </DataBindings>
+          <StylePriority Ref="32" UseTextAlignment="false" />
+        </Item8>
+        <Item9 Ref="33" ControlType="XRLabel" Name="XrLabel22" Text="XrLabel22" TextAlignment="TopRight" SizeF="70.11383,14.4" LocationFloat="644.0354, 0" Dpi="96" Padding="2,2,0,0,96">
+          <DataBindings>
+            <Item1 Ref="34" FormatString="{0:n2}" PropertyName="Text" DataMember="ccfrptDesglosePagos.AplicadoDolar" />
+          </DataBindings>
+          <StylePriority Ref="35" UseTextAlignment="false" />
+        </Item9>
+      </Controls>
+    </Item1>
+    <Item2 Ref="36" ControlType="TopMarginBand" Name="TopMargin" HeightF="28.1489334" TextAlignment="TopLeft" Dpi="96" Padding="0,0,0,0,96" />
+    <Item3 Ref="37" ControlType="BottomMarginBand" Name="BottomMargin" HeightF="96" TextAlignment="TopLeft" Dpi="96" Padding="0,0,0,0,96" />
+    <Item4 Ref="38" ControlType="GroupHeaderBand" Name="GroupHeaderBand1" Level="1" HeightF="32" Dpi="96">
+      <GroupFields>
+        <Item1 Ref="39" FieldName="DocCredito" />
+      </GroupFields>
+      <Controls>
+        <Item1 Ref="40" ControlType="XRLabel" Name="XrLabel6" Text="XrLabel6" SizeF="49.46353,14.4" LocationFloat="97.36063, 10" Dpi="96" Font="Times New Roman, 8.25pt, style=Italic, charSet=0" Padding="2,2,0,0,96">
+          <DataBindings>
+            <Item1 Ref="41" PropertyName="Text" DataMember="ccfrptDesglosePagos.IDClaseCredito" />
+          </DataBindings>
+          <StylePriority Ref="42" UseFont="false" />
+        </Item1>
+        <Item2 Ref="43" ControlType="XRLabel" Name="XrLabel2" Text="XrLabel2" TextAlignment="TopRight" SizeF="76.39671,14.4000015" LocationFloat="179.411621, 10" Dpi="96" StyleName="DataField" Font="Times New Roman, 8.25pt, style=Italic, charSet=0" Padding="2,2,0,0,96">
+          <DataBindings>
+            <Item1 Ref="44" PropertyName="Text" DataMember="ccfrptDesglosePagos.DocCredito" />
+          </DataBindings>
+          <StylePriority Ref="45" UseFont="false" UseTextAlignment="false" />
+        </Item2>
+        <Item3 Ref="46" ControlType="XRLabel" Name="XrLabel1" Text="Aplicado por" SizeF="68.33215,14.3999977" LocationFloat="8.823319, 10" Dpi="96" StyleName="FieldCaption" Font="Times New Roman, 8.25pt, style=Bold, Italic, charSet=0" Padding="2,2,0,0,96">
+          <StylePriority Ref="47" UseFont="false" />
+        </Item3>
+        <Item4 Ref="48" ControlType="XRPanel" Name="XrPanel1" SizeF="722.2979,28.9361687" LocationFloat="1.70212758, 2.55319142" Dpi="96" BackColor="Transparent" Borders="All">
+          <Controls>
+            <Item1 Ref="49" ControlType="XRLabel" Name="XrLabel5" Text="Total Pago" SizeF="76.4207458,14.4000015" LocationFloat="432.80838, 7.44680834" Dpi="96" Font="Times New Roman, 8.25pt, style=Bold, Italic, charSet=0" Padding="2,2,0,0,96" BorderColor="Transparent">
+              <StylePriority Ref="50" UseFont="false" UseBorderColor="false" />
+            </Item1>
+            <Item2 Ref="51" ControlType="XRLabel" Name="XrLabel31" SizeF="66.14993,17.28" LocationFloat="328.028473, 7.446809" Dpi="96" StyleName="DataField" Font="Times New Roman, 8.25pt, style=Italic, charSet=0" Padding="2,2,0,0,96">
+              <DataBindings>
+                <Item1 Ref="52" PropertyName="Text" DataMember="ccfrptDesglosePagos.MonedaCredito" />
+              </DataBindings>
+              <StylePriority Ref="53" UseFont="false" />
+            </Item2>
+            <Item3 Ref="54" ControlType="XRLabel" Name="XrLabel14" Text="XrLabel14" SizeF="56.9443054,14.4000015" LocationFloat="268.4802, 7.44680834" Dpi="96" Font="Times New Roman, 8.25pt, style=Italic, charSet=0" Padding="2,2,0,0,96" BorderColor="Transparent">
+              <DataBindings>
+                <Item1 Ref="55" FormatString="{0:dd/MM/yyyy}" PropertyName="Text" DataMember="ccfrptDesglosePagos.FechaCredito" />
+              </DataBindings>
+              <StylePriority Ref="56" UseFont="false" UseBorderColor="false" />
+            </Item3>
+            <Item4 Ref="57" ControlType="XRLabel" Name="XrLabel15" Text="XrLabel15" TextAlignment="TopRight" SizeF="83.18475,14.4000015" LocationFloat="516.7098, 7.44680834" Dpi="96" Font="Times New Roman, 8.25pt, style=Italic, charSet=0" Padding="2,2,0,0,96" BorderColor="Transparent">
+              <DataBindings>
+                <Item1 Ref="58" FormatString="{0:n2}" PropertyName="Text" DataMember="ccfrptDesglosePagos.TotalCredito" />
+              </DataBindings>
+              <StylePriority Ref="59" UseFont="false" UseBorderColor="false" UseTextAlignment="false" />
+            </Item4>
+          </Controls>
+          <StylePriority Ref="60" UseBackColor="false" UseBorders="false" />
+        </Item4>
+      </Controls>
+      <StylePriority Ref="61" UseBackColor="false" />
+    </Item4>
+    <Item5 Ref="62" ControlType="GroupHeaderBand" Name="GroupHeaderBand2" HeightF="0" Dpi="96" StyleName="FieldCaption" />
+    <Item6 Ref="63" ControlType="PageFooterBand" Name="PageFooterBand1" HeightF="45.10638" Dpi="96" />
+    <Item7 Ref="64" ControlType="GroupFooterBand" Name="GroupFooterBand2" Level="1" HeightF="19" Dpi="96">
+      <Controls>
+        <Item1 Ref="65" ControlType="XRLabel" Name="XrLabel24" Text="XrLabel24" TextAlignment="TopRight" SizeF="82.15503,17.28" LocationFloat="547.9284, 1.71999657" Dpi="96" StyleName="FieldCaption" Font="Times New Roman, 8.25pt, style=Bold, Italic, charSet=0" Padding="2,2,0,0,96">
+          <Summary Ref="66" FormatString="{0:n2}" Running="Group" />
+          <DataBindings>
+            <Item1 Ref="67" FormatString="{0:C2}" PropertyName="Text" DataMember="ccfrptDesglosePagos.Aplicado" />
+          </DataBindings>
+          <StylePriority Ref="68" UseFont="false" UseTextAlignment="false" />
+        </Item1>
+        <Item2 Ref="69" ControlType="XRLabel" Name="XrLabel25" TextAlignment="TopRight" SizeF="70.11377,17.28" LocationFloat="644.035461, 0" Dpi="96" StyleName="FieldCaption" Font="Times New Roman, 8.25pt, style=Bold, Italic, charSet=0" Padding="2,2,0,0,96">
+          <Summary Ref="70" FormatString="{0:n2}" Running="Group" />
+          <DataBindings>
+            <Item1 Ref="71" PropertyName="Text" DataMember="ccfrptDesglosePagos.AplicadoDolar" />
+          </DataBindings>
+          <StylePriority Ref="72" UseFont="false" UseTextAlignment="false" />
+        </Item2>
+        <Item3 Ref="73" ControlType="XRLabel" Name="XrLabel26" Text="Totales Aplicados en el Pago" SizeF="138.285385,17.28" LocationFloat="389.127228, 0" Dpi="96" StyleName="FieldCaption" Font="Times New Roman, 8.25pt, style=Bold, Italic, charSet=0" Padding="2,2,0,0,96">
+          <StylePriority Ref="74" UseFont="false" />
+        </Item3>
+      </Controls>
+    </Item7>
+    <Item8 Ref="75" ControlType="ReportFooterBand" Name="ReportFooterBand1" HeightF="38.0212669" Dpi="96">
+      <Controls>
+        <Item1 Ref="76" ControlType="XRLabel" Name="XrLabel27" Text="XrLabel27" TextAlignment="TopRight" SizeF="82.15497,17.28" LocationFloat="547.9285, 10" Dpi="96" StyleName="FieldCaption" Font="Times New Roman, 8pt, style=Bold" Padding="2,2,0,0,96">
+          <Summary Ref="77" FormatString="{0:n2}" Running="Report" />
+          <DataBindings>
+            <Item1 Ref="78" FormatString="{0:C2}" PropertyName="Text" DataMember="ccfrptDesglosePagos.Aplicado" />
+          </DataBindings>
+          <StylePriority Ref="79" UseFont="false" UseTextAlignment="false" />
+        </Item1>
+        <Item2 Ref="80" ControlType="XRLabel" Name="XrLabel28" Text="XrLabel28" TextAlignment="TopRight" SizeF="70.11383,17.2799988" LocationFloat="644.035461, 10" Dpi="96" StyleName="FieldCaption" Font="Times New Roman, 8pt, style=Bold" Padding="2,2,0,0,96">
+          <Summary Ref="81" FormatString="{0:n2}" Running="Report" />
+          <DataBindings>
+            <Item1 Ref="82" FormatString="{0:C2}" PropertyName="Text" DataMember="ccfrptDesglosePagos.AplicadoDolar" />
+          </DataBindings>
+          <StylePriority Ref="83" UseFont="false" UseTextAlignment="false" />
+        </Item2>
+        <Item3 Ref="84" ControlType="XRLabel" Name="XrLabel29" Text="Totales Generales" SizeF="92.9021149,17.28" LocationFloat="434.5105, 10" Dpi="96" StyleName="FieldCaption" Font="Times New Roman, 8pt, style=Bold" Padding="2,2,0,0,96">
+          <StylePriority Ref="85" UseFont="false" />
+        </Item3>
+      </Controls>
+    </Item8>
+    <Item9 Ref="86" ControlType="PageHeaderBand" Name="PageHeader" HeightF="133.212784" Dpi="96">
+      <Controls>
+        <Item1 Ref="87" ControlType="XRLabel" Name="XrLabel36" Text="Fecha" SizeF="43.97432,17.280014" LocationFloat="270.1823, 105.93277" Dpi="96" Font="Times New Roman, 9.75pt, style=Bold, charSet=0" Padding="2,2,0,0,96">
+          <StylePriority Ref="88" UseFont="false" />
+        </Item1>
+        <Item2 Ref="89" ControlType="XRLabel" Name="XrLabel33" Multiline="true" Text="Moneda" SizeF="52.0822449,17.2799988" LocationFloat="329.73056, 105.932793" Dpi="96" Font="Times New Roman, 9.75pt, style=Bold, charSet=0" Padding="2,2,0,0,96">
+          <StylePriority Ref="90" UseFont="false" />
+        </Item2>
+        <Item3 Ref="91" ControlType="XRLabel" Name="lblDesde" SizeF="92.60004,22.0800018" LocationFloat="218.153168, 44.16" Dpi="96" Font="Times New Roman, 9.75pt, style=Bold, charSet=0" Padding="2,2,0,0,96">
+          <DataBindings>
+            <Item1 Ref="93" Parameter="#Ref-10" FormatString="{0:dd/MM/yyyy}" PropertyName="Text" DataMember="pdFechaInicial" />
+          </DataBindings>
+          <StylePriority Ref="94" UseFont="false" />
+        </Item3>
+        <Item4 Ref="95" ControlType="XRLabel" Name="lblHasta" SizeF="115.439819,22.0800018" LocationFloat="373.5532, 44.16" Dpi="96" Font="Times New Roman, 9.75pt, style=Bold, charSet=0" Padding="2,2,0,0,96">
+          <DataBindings>
+            <Item1 Ref="96" Parameter="#Ref-11" FormatString="{0:dd/MM/yyyy}" PropertyName="Text" DataMember="pdFechaFinal" />
+          </DataBindings>
+          <StylePriority Ref="97" UseFont="false" />
+        </Item4>
+        <Item5 Ref="98" ControlType="XRLabel" Name="XrLabel23" Text="Desde " SizeF="49.2000046,22.0800018" LocationFloat="168.9532, 44.16" Dpi="96" Font="Times New Roman, 9.75pt, style=Bold, charSet=0" Padding="2,2,0,0,96">
+          <StylePriority Ref="99" UseFont="false" />
+        </Item5>
+        <Item6 Ref="100" ControlType="XRLabel" Name="XrLabel30" Text="Hasta" SizeF="47.48004,22.0800018" LocationFloat="322.273163, 44.16" Dpi="96" Font="Times New Roman, 9.75pt, style=Bold, charSet=0" Padding="2,2,0,0,96">
+          <StylePriority Ref="101" UseFont="false" />
+        </Item6>
+        <Item7 Ref="102" ControlType="XRPageInfo" Name="XrPageInfo4" Format="Page {0} of {1}" TextAlignment="TopRight" SizeF="78.47995,22.0800018" LocationFloat="621.568237, 10" Dpi="96" StyleName="PageInfo" Font="Times New Roman, 10pt" Padding="2,2,0,0,96">
+          <StylePriority Ref="103" UseFont="false" />
+        </Item7>
+        <Item8 Ref="104" ControlType="XRPageInfo" Name="XrPageInfo3" PageInfo="DateTime" Format="{0:dd/MM/yyyy HH:mm}" TextAlignment="TopRight" SizeF="135.479919,22.079998" LocationFloat="564.5683, 32.0800247" Dpi="96" StyleName="PageInfo" Font="Times New Roman, 10pt" Padding="2,2,0,0,96">
+          <StylePriority Ref="105" UseFont="false" UseTextAlignment="false" />
+        </Item8>
+        <Item9 Ref="106" ControlType="XRLabel" Name="XrLabel16" Text="Cliente :" SizeF="54.119957,22.0800018" LocationFloat="168.9532, 66.24001" Dpi="96" Font="Times New Roman, 9.75pt, style=Bold, charSet=0" Padding="2,2,0,0,96">
+          <StylePriority Ref="107" UseFont="false" />
+        </Item9>
+        <Item10 Ref="108" ControlType="XRLabel" Name="lblCliente" SizeF="468.4535,22.0799866" LocationFloat="226.409851, 66.24003" Dpi="96" Font="Times New Roman, 9.75pt, style=Bold, charSet=0" Padding="2,2,0,0,96">
+          <DataBindings>
+            <Item1 Ref="109" Parameter="#Ref-4" PropertyName="Text" DataMember="psCliente" />
+          </DataBindings>
+          <StylePriority Ref="110" UseFont="false" />
+        </Item10>
+        <Item11 Ref="111" ControlType="XRLabel" Name="lblNombreReporte" Text="Desglose de Pagos Recibidos" TextAlignment="TopLeft" SizeF="206.929535,22.08001" LocationFloat="226.409851, 22.0799866" Dpi="96" Font="Times New Roman, 12pt, style=Bold" Padding="2,2,0,0,96">
+          <StylePriority Ref="112" UseFont="false" UseTextAlignment="false" />
+        </Item11>
+        <Item12 Ref="113" ControlType="XRLabel" Name="lblEmpresa" TextAlignment="TopCenter" SizeF="331,22.079998" LocationFloat="152.90329, 0" Dpi="96" Font="Times New Roman, 12pt, style=Bold" Padding="2,2,0,0,96">
+          <DataBindings>
+            <Item1 Ref="114" Parameter="#Ref-3" PropertyName="Text" DataMember="psEmpresa" />
+          </DataBindings>
+          <StylePriority Ref="115" UseFont="false" UseTextAlignment="false" />
+        </Item12>
+        <Item13 Ref="116" ControlType="XRLabel" Name="XrLabel8" Text="Documento" SizeF="76.39673,17.280014" LocationFloat="179.411621, 105.93277" Dpi="96" Font="Times New Roman, 9.75pt, style=Bold, charSet=0" Padding="2,2,0,0,96">
+          <StylePriority Ref="117" UseFont="false" />
+        </Item13>
+        <Item14 Ref="118" ControlType="XRLabel" Name="XrLabel12" Text="Aplicado  $" TextAlignment="TopRight" SizeF="69.9646,15.3599854" LocationFloat="644.184631, 105.93277" Dpi="96" Font="Times New Roman, 9.75pt, style=Bold, charSet=0" Padding="2,2,0,0,96">
+          <StylePriority Ref="119" UseFont="false" UseTextAlignment="false" />
+        </Item14>
+        <Item15 Ref="120" ControlType="XRLabel" Name="XrLabel11" Text="Aplicado C$" TextAlignment="TopRight" SizeF="82.15509,15.35997" LocationFloat="547.928345, 105.93277" Dpi="96" Font="Times New Roman, 9.75pt, style=Bold, charSet=0" Padding="2,2,0,0,96">
+          <StylePriority Ref="121" UseFont="false" UseTextAlignment="false" />
+        </Item15>
+        <Item16 Ref="122" ControlType="XRLabel" Name="XrLabel10" Text="Vencimiento" SizeF="76.38635,17.2799988" LocationFloat="381.8128, 105.932793" Dpi="96" Font="Times New Roman, 9.75pt, style=Bold, charSet=0" Padding="2,2,0,0,96">
+          <StylePriority Ref="123" UseFont="false" />
+        </Item16>
+        <Item17 Ref="124" ControlType="XRLabel" Name="XrLabel9" Text="Dias Venc" TextAlignment="TopCenter" SizeF="69.21344,17.2799988" LocationFloat="468.5015, 105.93277" Dpi="96" Font="Times New Roman, 9.75pt, style=Bold, charSet=0" Padding="2,2,0,0,96">
+          <StylePriority Ref="125" UseFont="false" UseTextAlignment="false" />
+        </Item17>
+        <Item18 Ref="126" ControlType="XRLabel" Name="XrLabel7" Text="IDDebito" SizeF="59.04562,17.280014" LocationFloat="108.424431, 105.932793" Dpi="96" Font="Times New Roman, 9.75pt, style=Bold, charSet=0" Padding="2,2,0,0,96">
+          <StylePriority Ref="127" UseFont="false" />
+        </Item18>
+        <Item19 Ref="128" ControlType="XRLabel" Name="XrLabel3" Text="Clase" SizeF="38.7481422,17.280014" LocationFloat="45.11633, 105.93277" Dpi="96" Font="Times New Roman, 9.75pt, style=Bold, charSet=0" Padding="2,2,0,0,96">
+          <StylePriority Ref="129" UseFont="false" />
+        </Item19>
+      </Controls>
+    </Item9>
+  </Bands>
+  <StyleSheet>
+    <Item1 Ref="130" Name="Title" BorderStyle="Inset" Font="Times New Roman, 24pt" ForeColor="Black" BackColor="Transparent" BorderColor="Black" Sides="None" StringFormat="Near;Near;0;None;Character;Default" BorderWidthSerializable="1" />
+    <Item2 Ref="131" Name="FieldCaption" BorderStyle="Inset" Font="Times New Roman, 10pt, style=Bold" ForeColor="Black" BackColor="Transparent" BorderColor="Black" Sides="None" StringFormat="Near;Near;0;None;Character;Default" BorderWidthSerializable="1" />
+    <Item3 Ref="132" Name="PageInfo" BorderStyle="Inset" Font="Times New Roman, 8pt" ForeColor="Black" BackColor="Transparent" BorderColor="Black" Sides="None" StringFormat="Near;Near;0;None;Character;Default" BorderWidthSerializable="1" />
+    <Item4 Ref="133" Name="DataField" BorderStyle="Inset" Padding="2,2,0,0,96" Font="Times New Roman, 8pt" ForeColor="Black" BackColor="Transparent" BorderColor="Black" Sides="None" StringFormat="Near;Near;0;None;Character;Default" BorderWidthSerializable="1" />
+  </StyleSheet>
+  <ComponentStorage>
+    <Item1 Ref="0" ObjectType="DevExpress.DataAccess.Sql.SqlDataSource,DevExpress.DataAccess.v15.2" Name="SqlDataSource1" Base64="PFNxbERhdGFTb3VyY2U+PE5hbWU+U3FsRGF0YVNvdXJjZTE8L05hbWU+PENvbm5lY3Rpb24gTmFtZT0ibG9jYWxob3N0X0NFRDJfQ29ubmVjdGlvbiIgRnJvbUFwcENvbmZpZz0idHJ1ZSIgLz48UXVlcnkgVHlwZT0iU3RvcmVkUHJvY1F1ZXJ5IiBOYW1lPSJjY2ZycHREZXNnbG9zZVBhZ29zIj48UGFyYW1ldGVyIE5hbWU9IkBJRENsaWVudGUiIFR5cGU9IkRldkV4cHJlc3MuRGF0YUFjY2Vzcy5FeHByZXNzaW9uIj4oU3lzdGVtLkludDMyLCBtc2NvcmxpYiwgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkpKFtQYXJhbWV0ZXJzLnBpSURDbGllbnRlXSk8L1BhcmFtZXRlcj48UGFyYW1ldGVyIE5hbWU9IkBJREJvZGVnYSIgVHlwZT0iRGV2RXhwcmVzcy5EYXRhQWNjZXNzLkV4cHJlc3Npb24iPihTeXN0ZW0uSW50MzIsIG1zY29ybGliLCBWZXJzaW9uPTQuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjc3YTVjNTYxOTM0ZTA4OSkoW1BhcmFtZXRlcnMucGlJREJvZGVnYV0pPC9QYXJhbWV0ZXI+PFBhcmFtZXRlciBOYW1lPSJASURWZW5kZWRvciIgVHlwZT0iRGV2RXhwcmVzcy5EYXRhQWNjZXNzLkV4cHJlc3Npb24iPihTeXN0ZW0uSW50MzIsIG1zY29ybGliLCBWZXJzaW9uPTQuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjc3YTVjNTYxOTM0ZTA4OSkoW1BhcmFtZXRlcnMucGlJRFZlbmRlZG9yXSk8L1BhcmFtZXRlcj48UGFyYW1ldGVyIE5hbWU9IkBGRUNIQUlOSUNJQUwiIFR5cGU9IkRldkV4cHJlc3MuRGF0YUFjY2Vzcy5FeHByZXNzaW9uIj4oU3lzdGVtLkRhdGVUaW1lLCBtc2NvcmxpYiwgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkpKFtQYXJhbWV0ZXJzLnBkRmVjaGFJbmljaWFsXSk8L1BhcmFtZXRlcj48UGFyYW1ldGVyIE5hbWU9IkBGRUNIQUZJTkFMIiBUeXBlPSJEZXZFeHByZXNzLkRhdGFBY2Nlc3MuRXhwcmVzc2lvbiI+KFN5c3RlbS5EYXRlVGltZSwgbXNjb3JsaWIsIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5KShbUGFyYW1ldGVycy5wZEZlY2hhRmluYWxdKTwvUGFyYW1ldGVyPjxQcm9jTmFtZT5jY2ZycHREZXNnbG9zZVBhZ29zPC9Qcm9jTmFtZT48L1F1ZXJ5PjxSZXN1bHRTY2hlbWE+PERhdGFTZXQgTmFtZT0iU3FsRGF0YVNvdXJjZTEiPjxWaWV3IE5hbWU9ImNjZnJwdERlc2dsb3NlUGFnb3MiPjxGaWVsZCBOYW1lPSJJREJPREVHQSIgVHlwZT0iSW50MzIiIC8+PEZpZWxkIE5hbWU9IklEQ0xJRU5URSIgVHlwZT0iSW50MzIiIC8+PEZpZWxkIE5hbWU9IklEVkVOREVET1IiIFR5cGU9IkludDMyIiAvPjxGaWVsZCBOYW1lPSJJRENsYXNlQ3JlZGl0byIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJJRENyZWRpdG8iIFR5cGU9IkludDMyIiAvPjxGaWVsZCBOYW1lPSJGZWNoYSIgVHlwZT0iRGF0ZVRpbWUiIC8+PEZpZWxkIE5hbWU9IkZlY2hhQ3JlZGl0byIgVHlwZT0iRGF0ZVRpbWUiIC8+PEZpZWxkIE5hbWU9IlRvdGFsQ3JlZGl0byIgVHlwZT0iRGVjaW1hbCIgLz48RmllbGQgTmFtZT0iTkFDSU9OQUxDUkVESVRPIiBUeXBlPSJCb29sZWFuIiAvPjxGaWVsZCBOYW1lPSJNb25lZGFDcmVkaXRvIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9Ik5BQ0lPTkFMREVCSVRPIiBUeXBlPSJCb29sZWFuIiAvPjxGaWVsZCBOYW1lPSJNb25lZGFEZWJpdG8iIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iSURERUJJVE8iIFR5cGU9IkludDMyIiAvPjxGaWVsZCBOYW1lPSJJRENsYXNlIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IklEU1VCVElQTyIgVHlwZT0iSW50MzIiIC8+PEZpZWxkIE5hbWU9IkRPQ0NSRURJVE8iIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iRE9DREVCSVRPIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IkZlY2hhRGViaXRvIiBUeXBlPSJEYXRlVGltZSIgLz48RmllbGQgTmFtZT0iVkVOQ0lNSUVOVE8iIFR5cGU9IkRhdGVUaW1lIiAvPjxGaWVsZCBOYW1lPSJEaWFzVmVuY2lkb3MiIFR5cGU9IkludDMyIiAvPjxGaWVsZCBOYW1lPSJBUExJQ0FETyIgVHlwZT0iRGVjaW1hbCIgLz48RmllbGQgTmFtZT0iQVBMSUNBRE9ET0xBUiIgVHlwZT0iRGVjaW1hbCIgLz48L1ZpZXc+PC9EYXRhU2V0PjwvUmVzdWx0U2NoZW1hPjwvU3FsRGF0YVNvdXJjZT4=" />
+  </ComponentStorage>
+  <ObjectStorage>
+    <Item1 ObjectType="DevExpress.XtraReports.Serialization.ObjectStorageInfo, DevExpress.XtraReports.v15.2" Ref="5" Content="System.Int32" Type="System.Type" />
+    <Item2 ObjectType="DevExpress.XtraReports.Serialization.ObjectStorageInfo, DevExpress.XtraReports.v15.2" Ref="9" Content="System.DateTime" Type="System.Type" />
+  </ObjectStorage>
+</XtraReportsLayoutSerializer>

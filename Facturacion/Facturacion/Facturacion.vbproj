@@ -12,22 +12,6 @@
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>1</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <PublishWizardCompleted>true</PublishWizardCompleted>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -60,25 +44,6 @@
   </PropertyGroup>
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
-  </PropertyGroup>
-  <PropertyGroup>
-    <TargetZone>LocalIntranet</TargetZone>
-  </PropertyGroup>
-  <PropertyGroup>
-    <GenerateManifests>true</GenerateManifests>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ManifestCertificateThumbprint>9BBF27CF4DD8D0FDCFCB75638672A908DF33CF4F</ManifestCertificateThumbprint>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ManifestKeyFile>
-    </ManifestKeyFile>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Accessibility" />
@@ -121,6 +86,7 @@
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
@@ -131,15 +97,22 @@
     <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
     <Reference Include="System.Security" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Input.Manipulations" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="UIAutomationClient" />
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -155,6 +128,72 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmAplicacionesRC.Designer.vb">
+      <DependentUpon>frmAplicacionesRC.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmAplicacionesRC.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCCFConsultaAutorizacion.Designer.vb">
+      <DependentUpon>frmCCFConsultaAutorizacion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmCCFConsultaAutorizacion.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCCFConsultaChequesPos.Designer.vb">
+      <DependentUpon>frmCCFConsultaChequesPos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmCCFConsultaChequesPos.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCCFConsultaRC.Designer.vb">
+      <DependentUpon>frmCCFConsultaRC.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmCCFConsultaRC.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCCFAutorizacion.Designer.vb">
+      <DependentUpon>frmCCFAutorizacion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmCCFAutorizacion.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCCFCreaDocAnulado.Designer.vb">
+      <DependentUpon>frmCCFCreaDocAnulado.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmCCFCreaDocAnulado.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCCFpopupFacturas.Designer.vb">
+      <DependentUpon>frmCCFpopupFacturas.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmCCFpopupFacturas.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmChequePos.Designer.vb">
+      <DependentUpon>frmChequePos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmChequePos.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmConsultaDevoluciones.Designer.vb">
+      <DependentUpon>frmConsultaDevoluciones.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmConsultaDevoluciones.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDescuentos.Designer.vb">
+      <DependentUpon>frmDescuentos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmDescuentos.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmConsultaFacturas.Designer.vb">
+      <DependentUpon>frmConsultaFacturas.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmConsultaFacturas.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmAsignaLote.Designer.vb">
       <DependentUpon>frmAsignaLote.vb</DependentUpon>
     </Compile>
@@ -179,6 +218,42 @@
     <Compile Include="frmCatalogos.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmCategoriaCliente.Designer.vb">
+      <DependentUpon>frmCategoriaCliente.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmCategoriaCliente.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCCFAplicaCreditos.Designer.vb">
+      <DependentUpon>frmCCFAplicaCreditos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmCCFAplicaCreditos.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCCFConsultaDocs.Designer.vb">
+      <DependentUpon>frmCCFConsultaDocs.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmCCFConsultaDocs.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCCFDocumentos.Designer.vb">
+      <DependentUpon>frmCCFDocumentos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmCCFDocumentos.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCCFFiltroReportes.Designer.vb">
+      <DependentUpon>frmCCFFiltroReportes.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmCCFFiltroReportes.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCCFParametros.Designer.vb">
+      <DependentUpon>frmCCFParametros.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmCCFParametros.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmConsecMask.Designer.vb">
       <DependentUpon>frmConsecMask.vb</DependentUpon>
     </Compile>
@@ -189,6 +264,12 @@
       <DependentUpon>frmAplicaciones.vb</DependentUpon>
     </Compile>
     <Compile Include="frmAplicaciones.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCPConsultaDoc.Designer.vb">
+      <DependentUpon>frmCPConsultaDoc.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmCPConsultaDoc.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmDetalles.Designer.vb">
@@ -203,10 +284,22 @@
     <Compile Include="frmDevolucion.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmEscalasSinMaximo.Designer.vb">
+      <DependentUpon>frmEscalasSinMaximo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmEscalasSinMaximo.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmFactura.Designer.vb">
       <DependentUpon>frmFactura.vb</DependentUpon>
     </Compile>
     <Compile Include="frmFactura.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMenubackgroud.Designer.vb">
+      <DependentUpon>frmMenubackgroud.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmMenubackgroud.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmParametrosFA.Designer.vb">
@@ -239,10 +332,28 @@
     <Compile Include="frmPopupCliente.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmpopupDescuentoEscala.Designer.vb">
+      <DependentUpon>frmpopupDescuentoEscala.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmpopupDescuentoEscala.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPopupFactura.Designer.vb">
+      <DependentUpon>frmPopupFactura.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmPopupFactura.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmPopupProducto.Designer.vb">
       <DependentUpon>frmPopupProducto.vb</DependentUpon>
     </Compile>
     <Compile Include="frmPopupProducto.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmpopupPromociones.Designer.vb">
+      <DependentUpon>frmpopupPromociones.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmpopupPromociones.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmPrecios.Designer.vb">
@@ -255,6 +366,12 @@
       <DependentUpon>frmPromociones.vb</DependentUpon>
     </Compile>
     <Compile Include="frmPromociones.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmRecibos.Designer.vb">
+      <DependentUpon>frmRecibos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmRecibos.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmRemision.Designer.vb">
@@ -320,11 +437,113 @@
     <Compile Include="frmSubCatalogo.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Reportes\rptFacturaFinal.Designer.vb">
+      <DependentUpon>rptFacturaFinal.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\rptFacturaFinal.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\rptAnalisisVencimiento.Designer.vb">
+      <DependentUpon>rptAnalisisVencimiento.vb</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reportes\rptAnalisisVencimiento.vb">
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reportes\rptAntiguedadSaldosSucursal.Designer.vb">
+      <DependentUpon>rptAntiguedadSaldosSucursal.vb</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reportes\rptAntiguedadSaldosSucursal.vb">
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reportes\rptDesglosePagos.Designer.vb">
+      <DependentUpon>rptDesglosePagos.vb</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reportes\rptDesglosePagos.vb">
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reportes\rptDocumentosCobrar.Designer.vb">
+      <DependentUpon>rptDocumentosCobrar.vb</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reportes\rptDocumentosCobrar.vb">
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reportes\rptListaPreciosbyProveedor.Designer.vb">
+      <DependentUpon>rptListaPreciosbyProveedor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\rptListaPreciosbyProveedor.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\rptListaPreciobyProveedor.Designer.vb">
+      <DependentUpon>rptListaPreciobyProveedor.vb</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reportes\rptListaPreciobyProveedor.vb">
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reportes\rptLotesFactura.Designer.vb">
+      <DependentUpon>rptLotesFactura.vb</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reportes\rptLotesFactura.vb">
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reportes\rptMovimientos.Designer.vb">
+      <DependentUpon>rptMovimientos.vb</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reportes\rptMovimientos.vb">
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reportes\rptsample.Designer.vb">
+      <DependentUpon>rptsample.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\rptsample.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\rptTablaBonificacionPrecios.Designer.vb">
+      <DependentUpon>rptTablaBonificacionPrecios.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\rptTablaBonificacionPrecios.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\XtraReport1.Designer.vb">
+      <DependentUpon>XtraReport1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\XtraReport1.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reportes\XtraReportPedido.Designer.vb">
       <DependentUpon>XtraReportPedido.vb</DependentUpon>
     </Compile>
     <Compile Include="Reportes\XtraReportPedido.vb">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="rptDocumentoCCF.Designer.vb">
+      <DependentUpon>rptDocumentoCCF.vb</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="rptDocumentoCCF.vb">
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="rptFactura.Designer.vb">
+      <DependentUpon>rptFactura.vb</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="rptFactura.vb">
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="rptPedido.Designer.vb">
       <DependentUpon>rptPedido.vb</DependentUpon>
@@ -339,12 +558,6 @@
     <Compile Include="frmClientes.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="rptFactura.Designer.vb">
-      <DependentUpon>rptFactura.vb</DependentUpon>
-    </Compile>
-    <Compile Include="rptFactura.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="rptRemision.Designer.vb">
       <DependentUpon>rptRemision.vb</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -352,12 +565,6 @@
     <Compile Include="rptRemision.vb">
       <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="rptLotesFactura.Designer.vb">
-      <DependentUpon>rptLotesFactura.vb</DependentUpon>
-    </Compile>
-    <Compile Include="rptLotesFactura.vb">
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="rptFacturaV1.Designer.vb">
       <DependentUpon>rptFacturaV1.vb</DependentUpon>
@@ -373,6 +580,39 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="frmAplicacionesRC.resx">
+      <DependentUpon>frmAplicacionesRC.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCCFConsultaAutorizacion.resx">
+      <DependentUpon>frmCCFConsultaAutorizacion.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCCFConsultaChequesPos.resx">
+      <DependentUpon>frmCCFConsultaChequesPos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCCFConsultaRC.resx">
+      <DependentUpon>frmCCFConsultaRC.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCCFAutorizacion.resx">
+      <DependentUpon>frmCCFAutorizacion.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCCFCreaDocAnulado.resx">
+      <DependentUpon>frmCCFCreaDocAnulado.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCCFpopupFacturas.resx">
+      <DependentUpon>frmCCFpopupFacturas.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmChequePos.resx">
+      <DependentUpon>frmChequePos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmConsultaDevoluciones.resx">
+      <DependentUpon>frmConsultaDevoluciones.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmDescuentos.resx">
+      <DependentUpon>frmDescuentos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmConsultaFacturas.resx">
+      <DependentUpon>frmConsultaFacturas.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmAsignaLote.resx">
       <DependentUpon>frmAsignaLote.vb</DependentUpon>
     </EmbeddedResource>
@@ -385,11 +625,33 @@
     <EmbeddedResource Include="frmCatalogos.resx">
       <DependentUpon>frmCatalogos.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmCategoriaCliente.resx">
+      <DependentUpon>frmCategoriaCliente.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCCFAplicaCreditos.resx">
+      <DependentUpon>frmCCFAplicaCreditos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCCFConsultaDocs.resx">
+      <DependentUpon>frmCCFConsultaDocs.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCCFDocumentos.resx">
+      <DependentUpon>frmCCFDocumentos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCCFFiltroReportes.resx">
+      <DependentUpon>frmCCFFiltroReportes.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCCFParametros.resx">
+      <DependentUpon>frmCCFParametros.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmConsecMask.resx">
       <DependentUpon>frmConsecMask.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmAplicaciones.resx">
       <DependentUpon>frmAplicaciones.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCPConsultaDoc.resx">
+      <DependentUpon>frmCPConsultaDoc.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmDetalles.resx">
       <DependentUpon>frmDetalles.vb</DependentUpon>
@@ -397,8 +659,14 @@
     <EmbeddedResource Include="frmDevolucion.resx">
       <DependentUpon>frmDevolucion.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmEscalasSinMaximo.resx">
+      <DependentUpon>frmEscalasSinMaximo.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmFactura.resx">
       <DependentUpon>frmFactura.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMenubackgroud.resx">
+      <DependentUpon>frmMenubackgroud.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmParametrosFA.resx">
       <DependentUpon>frmParametrosFA.vb</DependentUpon>
@@ -415,14 +683,26 @@
     <EmbeddedResource Include="frmPopupCliente.resx">
       <DependentUpon>frmPopupCliente.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmpopupDescuentoEscala.resx">
+      <DependentUpon>frmpopupDescuentoEscala.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPopupFactura.resx">
+      <DependentUpon>frmPopupFactura.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmPopupProducto.resx">
       <DependentUpon>frmPopupProducto.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmpopupPromociones.resx">
+      <DependentUpon>frmpopupPromociones.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmPrecios.resx">
       <DependentUpon>frmPrecios.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmPromociones.resx">
       <DependentUpon>frmPromociones.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmRecibos.resx">
+      <DependentUpon>frmRecibos.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmRemision.resx">
       <DependentUpon>frmRemision.vb</DependentUpon>
@@ -458,21 +738,63 @@
     <EmbeddedResource Include="frmClientes.resx">
       <DependentUpon>frmClientes.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\rptFacturaFinal.resx">
+      <DependentUpon>rptFacturaFinal.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\rptAnalisisVencimiento.resx">
+      <DependentUpon>rptAnalisisVencimiento.vb</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\rptAntiguedadSaldosSucursal.resx">
+      <DependentUpon>rptAntiguedadSaldosSucursal.vb</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\rptDesglosePagos.resx">
+      <DependentUpon>rptDesglosePagos.vb</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\rptDocumentosCobrar.resx">
+      <DependentUpon>rptDocumentosCobrar.vb</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\rptListaPreciosbyProveedor.resx">
+      <DependentUpon>rptListaPreciosbyProveedor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\rptListaPreciobyProveedor.resx">
+      <DependentUpon>rptListaPreciobyProveedor.vb</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\rptLotesFactura.resx">
+      <DependentUpon>rptLotesFactura.vb</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\rptMovimientos.resx">
+      <DependentUpon>rptMovimientos.vb</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\rptsample.resx">
+      <DependentUpon>rptsample.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\rptTablaBonificacionPrecios.resx">
+      <DependentUpon>rptTablaBonificacionPrecios.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reportes\XtraReportPedido.resx">
       <DependentUpon>XtraReportPedido.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="rptDocumentoCCF.resx">
+      <DependentUpon>rptDocumentoCCF.vb</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="rptFactura.resx">
+      <DependentUpon>rptFactura.vb</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="rptPedido.resx">
       <DependentUpon>rptPedido.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="rptFactura.resx">
-      <DependentUpon>rptFactura.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="rptRemision.resx">
       <DependentUpon>rptRemision.vb</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="rptLotesFactura.resx">
-      <DependentUpon>rptLotesFactura.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="rptFacturaV1.resx">
       <DependentUpon>rptFacturaV1.vb</DependentUpon>
@@ -482,7 +804,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="My Project\app.manifest" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -493,10 +814,41 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="App.config" />
+    <None Include="Reportes\rptAnalisisVencimiento.repx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Reportes\rptAntiguedadSaldosSucursal.repx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Reportes\rptDesglosePagos.repx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Reportes\rptDocumentoCCF.repx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Reportes\rptDocumentosCobrar.repx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Reportes\rptFactura.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Reportes\rptFacturaFinal.repx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Reportes\rptFacturaV2.repx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Reportes\rptListaPreciosbyProveedor.repx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Reportes\rptLotesFactura.repx" />
+    <None Include="Reportes\rptMovimientos.repx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Reportes\rptPedido.repx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Reportes\rptTablaBonificacionPrecios.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -530,21 +882,22 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
+    <None Include="Resources\archivo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fondoCheque.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fondoCheque1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fondoChequev1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fondoChequev2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cobrar.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

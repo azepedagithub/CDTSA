@@ -137,7 +137,7 @@ Partial Public Class rptFacturaV2
         Me.GroupHeader1.Controls.AddRange(New DevExpress.XtraReports.UI.XRControl() {Me.XrLabel44, Me.XrLabel2, Me.XrLabel3, Me.XrLabel27, Me.XrLabel14, Me.XrLabel17, Me.XrLabel18, Me.XrLabel19})
         Me.GroupHeader1.Dpi = 254.0!
         Me.GroupHeader1.GroupFields.AddRange(New DevExpress.XtraReports.UI.GroupField() {New DevExpress.XtraReports.UI.GroupField("IDProducto", DevExpress.XtraReports.UI.XRColumnSortOrder.Ascending)})
-        Me.GroupHeader1.HeightF = 46.0!
+        Me.GroupHeader1.HeightF = 58.42!
         Me.GroupHeader1.Name = "GroupHeader1"
         '
         'XrLabel44
@@ -193,7 +193,7 @@ Partial Public Class rptFacturaV2
         '
         'XrLabel17
         '
-        Me.XrLabel17.DataBindings.AddRange(New DevExpress.XtraReports.UI.XRBinding() {New DevExpress.XtraReports.UI.XRBinding("Text", Nothing, "fafPrintFacturaLote.SubTotalFinal", "{0:#,##0.00}")})
+        Me.XrLabel17.DataBindings.AddRange(New DevExpress.XtraReports.UI.XRBinding() {New DevExpress.XtraReports.UI.XRBinding("Text", Nothing, "fafPrintFacturaLote.SubTotal", "{0:#,##0.00}")})
         Me.XrLabel17.Dpi = 254.0!
         Me.XrLabel17.Font = New System.Drawing.Font("Times New Roman", 8.0!)
         Me.XrLabel17.LocationFloat = New DevExpress.Utils.PointFloat(1313.762!, 0.0!)
@@ -422,7 +422,7 @@ Partial Public Class rptFacturaV2
         '
         Me.ReportFooter.Controls.AddRange(New DevExpress.XtraReports.UI.XRControl() {Me.XrLabel43, Me.XrLabel42, Me.XrLabel41, Me.XrLabel40, Me.XrLabel39, Me.XrLabel38, Me.XrLabel37, Me.XrLabel36, Me.XrLabel35, Me.XrLabel34, Me.XrLabel33, Me.XrLabel32})
         Me.ReportFooter.Dpi = 254.0!
-        Me.ReportFooter.HeightF = 287.0!
+        Me.ReportFooter.HeightF = 286.9999!
         Me.ReportFooter.Name = "ReportFooter"
         Me.ReportFooter.PrintAtBottom = True
         '
@@ -647,7 +647,7 @@ Partial Public Class rptFacturaV2
         '
         Me.Detail.Controls.AddRange(New DevExpress.XtraReports.UI.XRControl() {Me.XrLabel16, Me.XrLabel15})
         Me.Detail.Dpi = 254.0!
-        Me.Detail.HeightF = 46.0!
+        Me.Detail.HeightF = 43.35419!
         Me.Detail.MultiColumn.ColumnCount = 4
         Me.Detail.MultiColumn.Layout = DevExpress.XtraPrinting.ColumnLayout.AcrossThenDown
         Me.Detail.MultiColumn.Mode = DevExpress.XtraReports.UI.MultiColumnMode.UseColumnCount
@@ -682,7 +682,7 @@ Partial Public Class rptFacturaV2
         '
         Me.IDFactura.Name = "IDFactura"
         Me.IDFactura.Type = GetType(Long)
-        Me.IDFactura.ValueInfo = "41"
+        Me.IDFactura.ValueInfo = "24"
         Me.IDFactura.Visible = False
         '
         'BottomMargin
@@ -695,7 +695,7 @@ Partial Public Class rptFacturaV2
         '
         'SqlDataSource1
         '
-        Me.SqlDataSource1.ConnectionName = "Ced_Connection"
+        Me.SqlDataSource1.ConnectionName = "localhost_CED2_Connection"
         Me.SqlDataSource1.Name = "SqlDataSource1"
         StoredProcQuery1.Name = "fafPrintFacturaLote"
         QueryParameter1.Name = "@IDFactura"
@@ -710,6 +710,7 @@ Partial Public Class rptFacturaV2
         '
         Me.LoteCantidad.DataMember = "fafPrintFacturaLote"
         Me.LoteCantidad.Expression = "[LoteProveedor]+' - '+ToStr(Round([CantidadLote],2))"
+        Me.LoteCantidad.FieldType = DevExpress.XtraReports.UI.FieldType.[String]
         Me.LoteCantidad.Name = "LoteCantidad"
         '
         'rptFacturaV2
@@ -739,8 +740,6 @@ Partial Public Class rptFacturaV2
     Friend WithEvents XrLabel2 As DevExpress.XtraReports.UI.XRLabel
     Friend WithEvents XrLabel3 As DevExpress.XtraReports.UI.XRLabel
     Friend WithEvents XrLabel27 As DevExpress.XtraReports.UI.XRLabel
-    Friend WithEvents XrLabel17 As DevExpress.XtraReports.UI.XRLabel
-    Friend WithEvents XrLabel18 As DevExpress.XtraReports.UI.XRLabel
     Friend WithEvents XrLabel19 As DevExpress.XtraReports.UI.XRLabel
     Friend WithEvents XrLabel28 As DevExpress.XtraReports.UI.XRLabel
     Friend WithEvents XrLabel38 As DevExpress.XtraReports.UI.XRLabel
@@ -782,4 +781,6 @@ Partial Public Class rptFacturaV2
     Friend WithEvents XrLabel15 As DevExpress.XtraReports.UI.XRLabel
     Friend WithEvents XrLabel16 As DevExpress.XtraReports.UI.XRLabel
     Friend WithEvents LoteCantidad As DevExpress.XtraReports.UI.CalculatedField
+    Friend WithEvents XrLabel17 As DevExpress.XtraReports.UI.XRLabel
+    Friend WithEvents XrLabel18 As DevExpress.XtraReports.UI.XRLabel
 End Class

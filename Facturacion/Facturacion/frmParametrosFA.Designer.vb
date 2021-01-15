@@ -24,13 +24,14 @@ Partial Class frmParametrosFA
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmParametrosFA))
         Me.LayoutControl1 = New DevExpress.XtraLayout.LayoutControl()
+        Me.chkEditaCantidadPedFact = New DevExpress.XtraEditors.CheckEdit()
         Me.chkEditaPrecPedido = New DevExpress.XtraEditors.CheckEdit()
         Me.SearchLookUpEditEntrega = New DevExpress.XtraEditors.SearchLookUpEdit()
         Me.GridView5 = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.chkDefTipEnt = New DevExpress.XtraEditors.CheckEdit()
         Me.SearchLookUpEditTipoFact = New DevExpress.XtraEditors.SearchLookUpEdit()
         Me.GridView4 = New DevExpress.XtraGrid.Views.Grid.GridView()
-        Me.chkDefTipo = New DevExpress.XtraEditors.CheckEdit()
+        Me.chkTipoFactDefault = New DevExpress.XtraEditors.CheckEdit()
         Me.chkPersonalizada = New DevExpress.XtraEditors.CheckEdit()
         Me.txtAnchoFactura = New DevExpress.XtraEditors.TextEdit()
         Me.txtAltoFactura = New DevExpress.XtraEditors.TextEdit()
@@ -58,7 +59,6 @@ Partial Class frmParametrosFA
         Me.LayoutControlItem3 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem4 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem5 = New DevExpress.XtraLayout.LayoutControlItem()
-        Me.LayoutControlItem6 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem7 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem9 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem8 = New DevExpress.XtraLayout.LayoutControlItem()
@@ -71,6 +71,9 @@ Partial Class frmParametrosFA
         Me.LayoutControlItem16 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem17 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem18 = New DevExpress.XtraLayout.LayoutControlItem()
+        Me.LayoutControlItem19 = New DevExpress.XtraLayout.LayoutControlItem()
+        Me.LayoutControlItem6 = New DevExpress.XtraLayout.LayoutControlItem()
+        Me.EmptySpaceItem1 = New DevExpress.XtraLayout.EmptySpaceItem()
         Me.SimpleButton1 = New DevExpress.XtraEditors.SimpleButton()
         Me.SimpleButton2 = New DevExpress.XtraEditors.SimpleButton()
         Me.LabelControl4 = New DevExpress.XtraEditors.LabelControl()
@@ -79,18 +82,18 @@ Partial Class frmParametrosFA
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
         Me.LabelControl1 = New DevExpress.XtraEditors.LabelControl()
-        Me.chkEditaCantidadPedFact = New DevExpress.XtraEditors.CheckEdit()
-        Me.LayoutControlItem19 = New DevExpress.XtraLayout.LayoutControlItem()
-        Me.EmptySpaceItem1 = New DevExpress.XtraLayout.EmptySpaceItem()
+        Me.txtDigitosDecimales = New DevExpress.XtraEditors.TextEdit()
+        Me.LayoutControlItem20 = New DevExpress.XtraLayout.LayoutControlItem()
         CType(Me.LayoutControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.LayoutControl1.SuspendLayout()
+        CType(Me.chkEditaCantidadPedFact.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.chkEditaPrecPedido.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SearchLookUpEditEntrega.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridView5, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.chkDefTipEnt.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SearchLookUpEditTipoFact.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridView4, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.chkDefTipo.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.chkTipoFactDefault.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.chkPersonalizada.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtAnchoFactura.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtAltoFactura.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -118,7 +121,6 @@ Partial Class frmParametrosFA
         CType(Me.LayoutControlItem3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem5, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.LayoutControlItem6, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem7, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem9, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem8, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -131,20 +133,23 @@ Partial Class frmParametrosFA
         CType(Me.LayoutControlItem16, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem17, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem18, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupBox1.SuspendLayout()
-        CType(Me.chkEditaCantidadPedFact.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem19, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.LayoutControlItem6, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.EmptySpaceItem1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupBox1.SuspendLayout()
+        CType(Me.txtDigitosDecimales.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.LayoutControlItem20, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'LayoutControl1
         '
+        Me.LayoutControl1.Controls.Add(Me.txtDigitosDecimales)
         Me.LayoutControl1.Controls.Add(Me.chkEditaCantidadPedFact)
         Me.LayoutControl1.Controls.Add(Me.chkEditaPrecPedido)
         Me.LayoutControl1.Controls.Add(Me.SearchLookUpEditEntrega)
         Me.LayoutControl1.Controls.Add(Me.chkDefTipEnt)
         Me.LayoutControl1.Controls.Add(Me.SearchLookUpEditTipoFact)
-        Me.LayoutControl1.Controls.Add(Me.chkDefTipo)
+        Me.LayoutControl1.Controls.Add(Me.chkTipoFactDefault)
         Me.LayoutControl1.Controls.Add(Me.chkPersonalizada)
         Me.LayoutControl1.Controls.Add(Me.txtAnchoFactura)
         Me.LayoutControl1.Controls.Add(Me.txtAltoFactura)
@@ -164,6 +169,15 @@ Partial Class frmParametrosFA
         Me.LayoutControl1.Size = New System.Drawing.Size(797, 194)
         Me.LayoutControl1.TabIndex = 0
         Me.LayoutControl1.Text = "LayoutControl1"
+        '
+        'chkEditaCantidadPedFact
+        '
+        Me.chkEditaCantidadPedFact.Location = New System.Drawing.Point(236, 60)
+        Me.chkEditaCantidadPedFact.Name = "chkEditaCantidadPedFact"
+        Me.chkEditaCantidadPedFact.Properties.Caption = "Edita Cantidad de Pedido en Factura"
+        Me.chkEditaCantidadPedFact.Size = New System.Drawing.Size(197, 19)
+        Me.chkEditaCantidadPedFact.StyleController = Me.LayoutControl1
+        Me.chkEditaCantidadPedFact.TabIndex = 41
         '
         'chkEditaPrecPedido
         '
@@ -217,14 +231,14 @@ Partial Class frmParametrosFA
         Me.GridView4.OptionsSelection.EnableAppearanceFocusedCell = False
         Me.GridView4.OptionsView.ShowGroupPanel = False
         '
-        'chkDefTipo
+        'chkTipoFactDefault
         '
-        Me.chkDefTipo.Location = New System.Drawing.Point(12, 132)
-        Me.chkDefTipo.Name = "chkDefTipo"
-        Me.chkDefTipo.Properties.Caption = "Usa Default Tipo Fact "
-        Me.chkDefTipo.Size = New System.Drawing.Size(201, 19)
-        Me.chkDefTipo.StyleController = Me.LayoutControl1
-        Me.chkDefTipo.TabIndex = 36
+        Me.chkTipoFactDefault.Location = New System.Drawing.Point(12, 132)
+        Me.chkTipoFactDefault.Name = "chkTipoFactDefault"
+        Me.chkTipoFactDefault.Properties.Caption = "Usa Default Tipo Fact "
+        Me.chkTipoFactDefault.Size = New System.Drawing.Size(201, 19)
+        Me.chkTipoFactDefault.StyleController = Me.LayoutControl1
+        Me.chkTipoFactDefault.TabIndex = 36
         '
         'chkPersonalizada
         '
@@ -404,7 +418,7 @@ Partial Class frmParametrosFA
         '
         Me.LayoutControlGroup1.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.[True]
         Me.LayoutControlGroup1.GroupBordersVisible = False
-        Me.LayoutControlGroup1.Items.AddRange(New DevExpress.XtraLayout.BaseLayoutItem() {Me.LayoutControlItem12, Me.LayoutControlItem1, Me.LayoutControlItem2, Me.LayoutControlItem3, Me.LayoutControlItem4, Me.LayoutControlItem5, Me.LayoutControlItem7, Me.LayoutControlItem9, Me.LayoutControlItem8, Me.LayoutControlItem10, Me.LayoutControlItem11, Me.EmptySpaceItem4, Me.LayoutControlItem13, Me.LayoutControlItem14, Me.LayoutControlItem15, Me.LayoutControlItem16, Me.LayoutControlItem17, Me.LayoutControlItem18, Me.LayoutControlItem19, Me.LayoutControlItem6, Me.EmptySpaceItem1})
+        Me.LayoutControlGroup1.Items.AddRange(New DevExpress.XtraLayout.BaseLayoutItem() {Me.LayoutControlItem12, Me.LayoutControlItem1, Me.LayoutControlItem2, Me.LayoutControlItem3, Me.LayoutControlItem4, Me.LayoutControlItem5, Me.LayoutControlItem7, Me.LayoutControlItem9, Me.LayoutControlItem8, Me.LayoutControlItem10, Me.LayoutControlItem11, Me.EmptySpaceItem4, Me.LayoutControlItem13, Me.LayoutControlItem14, Me.LayoutControlItem15, Me.LayoutControlItem16, Me.LayoutControlItem17, Me.LayoutControlItem18, Me.LayoutControlItem19, Me.LayoutControlItem6, Me.EmptySpaceItem1, Me.LayoutControlItem20})
         Me.LayoutControlGroup1.Location = New System.Drawing.Point(0, 0)
         Me.LayoutControlGroup1.Name = "Root"
         Me.LayoutControlGroup1.Size = New System.Drawing.Size(797, 194)
@@ -463,15 +477,6 @@ Partial Class frmParametrosFA
         Me.LayoutControlItem5.Size = New System.Drawing.Size(224, 24)
         Me.LayoutControlItem5.Text = "Número Lineas en la Factura "
         Me.LayoutControlItem5.TextSize = New System.Drawing.Size(147, 13)
-        '
-        'LayoutControlItem6
-        '
-        Me.LayoutControlItem6.Control = Me.SearchLookUpEditPaquete
-        Me.LayoutControlItem6.Location = New System.Drawing.Point(426, 72)
-        Me.LayoutControlItem6.Name = "LayoutControlItem6"
-        Me.LayoutControlItem6.Size = New System.Drawing.Size(351, 24)
-        Me.LayoutControlItem6.Text = "Paquete Inventario Factura"
-        Me.LayoutControlItem6.TextSize = New System.Drawing.Size(147, 13)
         '
         'LayoutControlItem7
         '
@@ -537,7 +542,7 @@ Partial Class frmParametrosFA
         '
         'LayoutControlItem14
         '
-        Me.LayoutControlItem14.Control = Me.chkDefTipo
+        Me.LayoutControlItem14.Control = Me.chkTipoFactDefault
         Me.LayoutControlItem14.Location = New System.Drawing.Point(0, 120)
         Me.LayoutControlItem14.Name = "LayoutControlItem14"
         Me.LayoutControlItem14.Size = New System.Drawing.Size(205, 23)
@@ -583,6 +588,32 @@ Partial Class frmParametrosFA
         Me.LayoutControlItem18.Size = New System.Drawing.Size(191, 24)
         Me.LayoutControlItem18.TextSize = New System.Drawing.Size(0, 0)
         Me.LayoutControlItem18.TextVisible = False
+        '
+        'LayoutControlItem19
+        '
+        Me.LayoutControlItem19.Control = Me.chkEditaCantidadPedFact
+        Me.LayoutControlItem19.Location = New System.Drawing.Point(224, 48)
+        Me.LayoutControlItem19.Name = "LayoutControlItem19"
+        Me.LayoutControlItem19.Size = New System.Drawing.Size(201, 24)
+        Me.LayoutControlItem19.TextSize = New System.Drawing.Size(0, 0)
+        Me.LayoutControlItem19.TextVisible = False
+        '
+        'LayoutControlItem6
+        '
+        Me.LayoutControlItem6.Control = Me.SearchLookUpEditPaquete
+        Me.LayoutControlItem6.Location = New System.Drawing.Point(426, 72)
+        Me.LayoutControlItem6.Name = "LayoutControlItem6"
+        Me.LayoutControlItem6.Size = New System.Drawing.Size(351, 24)
+        Me.LayoutControlItem6.Text = "Paquete Inventario Factura"
+        Me.LayoutControlItem6.TextSize = New System.Drawing.Size(147, 13)
+        '
+        'EmptySpaceItem1
+        '
+        Me.EmptySpaceItem1.AllowHotTrack = False
+        Me.EmptySpaceItem1.Location = New System.Drawing.Point(368, 72)
+        Me.EmptySpaceItem1.Name = "EmptySpaceItem1"
+        Me.EmptySpaceItem1.Size = New System.Drawing.Size(58, 24)
+        Me.EmptySpaceItem1.TextSize = New System.Drawing.Size(0, 0)
         '
         'SimpleButton1
         '
@@ -652,31 +683,22 @@ Partial Class frmParametrosFA
         Me.LabelControl1.Size = New System.Drawing.Size(0, 13)
         Me.LabelControl1.TabIndex = 11
         '
-        'chkEditaCantidadPedFact
+        'txtDigitosDecimales
         '
-        Me.chkEditaCantidadPedFact.Location = New System.Drawing.Point(236, 60)
-        Me.chkEditaCantidadPedFact.Name = "chkEditaCantidadPedFact"
-        Me.chkEditaCantidadPedFact.Properties.Caption = "Edita Cantidad de Pedido en Factura"
-        Me.chkEditaCantidadPedFact.Size = New System.Drawing.Size(197, 19)
-        Me.chkEditaCantidadPedFact.StyleController = Me.LayoutControl1
-        Me.chkEditaCantidadPedFact.TabIndex = 41
+        Me.txtDigitosDecimales.Location = New System.Drawing.Point(326, 84)
+        Me.txtDigitosDecimales.Name = "txtDigitosDecimales"
+        Me.txtDigitosDecimales.Size = New System.Drawing.Size(50, 20)
+        Me.txtDigitosDecimales.StyleController = Me.LayoutControl1
+        Me.txtDigitosDecimales.TabIndex = 42
         '
-        'LayoutControlItem19
+        'LayoutControlItem20
         '
-        Me.LayoutControlItem19.Control = Me.chkEditaCantidadPedFact
-        Me.LayoutControlItem19.Location = New System.Drawing.Point(224, 48)
-        Me.LayoutControlItem19.Name = "LayoutControlItem19"
-        Me.LayoutControlItem19.Size = New System.Drawing.Size(201, 24)
-        Me.LayoutControlItem19.TextSize = New System.Drawing.Size(0, 0)
-        Me.LayoutControlItem19.TextVisible = False
-        '
-        'EmptySpaceItem1
-        '
-        Me.EmptySpaceItem1.AllowHotTrack = False
-        Me.EmptySpaceItem1.Location = New System.Drawing.Point(164, 72)
-        Me.EmptySpaceItem1.Name = "EmptySpaceItem1"
-        Me.EmptySpaceItem1.Size = New System.Drawing.Size(262, 24)
-        Me.EmptySpaceItem1.TextSize = New System.Drawing.Size(0, 0)
+        Me.LayoutControlItem20.Control = Me.txtDigitosDecimales
+        Me.LayoutControlItem20.Location = New System.Drawing.Point(164, 72)
+        Me.LayoutControlItem20.Name = "LayoutControlItem20"
+        Me.LayoutControlItem20.Size = New System.Drawing.Size(204, 24)
+        Me.LayoutControlItem20.Text = "Digitos Decimales en el Módulo"
+        Me.LayoutControlItem20.TextSize = New System.Drawing.Size(147, 13)
         '
         'frmParametrosFA
         '
@@ -692,13 +714,14 @@ Partial Class frmParametrosFA
         Me.Text = "Parámetros del Módulo de Facturación"
         CType(Me.LayoutControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.LayoutControl1.ResumeLayout(False)
+        CType(Me.chkEditaCantidadPedFact.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.chkEditaPrecPedido.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.SearchLookUpEditEntrega.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridView5, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.chkDefTipEnt.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.SearchLookUpEditTipoFact.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridView4, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.chkDefTipo.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.chkTipoFactDefault.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.chkPersonalizada.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtAnchoFactura.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtAltoFactura.Properties, System.ComponentModel.ISupportInitialize).EndInit()
@@ -726,7 +749,6 @@ Partial Class frmParametrosFA
         CType(Me.LayoutControlItem3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem4, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem5, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.LayoutControlItem6, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem7, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem9, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem8, System.ComponentModel.ISupportInitialize).EndInit()
@@ -739,11 +761,13 @@ Partial Class frmParametrosFA
         CType(Me.LayoutControlItem16, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem17, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem18, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.LayoutControlItem19, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.LayoutControlItem6, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.EmptySpaceItem1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
-        CType(Me.chkEditaCantidadPedFact.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.LayoutControlItem19, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.EmptySpaceItem1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.txtDigitosDecimales.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.LayoutControlItem20, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -796,7 +820,7 @@ Partial Class frmParametrosFA
     Friend WithEvents chkDefTipEnt As DevExpress.XtraEditors.CheckEdit
     Friend WithEvents SearchLookUpEditTipoFact As DevExpress.XtraEditors.SearchLookUpEdit
     Friend WithEvents GridView4 As DevExpress.XtraGrid.Views.Grid.GridView
-    Friend WithEvents chkDefTipo As DevExpress.XtraEditors.CheckEdit
+    Friend WithEvents chkTipoFactDefault As DevExpress.XtraEditors.CheckEdit
     Friend WithEvents LayoutControlItem14 As DevExpress.XtraLayout.LayoutControlItem
     Friend WithEvents LayoutControlItem15 As DevExpress.XtraLayout.LayoutControlItem
     Friend WithEvents LayoutControlItem16 As DevExpress.XtraLayout.LayoutControlItem
@@ -806,4 +830,6 @@ Partial Class frmParametrosFA
     Friend WithEvents chkEditaCantidadPedFact As DevExpress.XtraEditors.CheckEdit
     Friend WithEvents LayoutControlItem19 As DevExpress.XtraLayout.LayoutControlItem
     Friend WithEvents EmptySpaceItem1 As DevExpress.XtraLayout.EmptySpaceItem
+    Friend WithEvents txtDigitosDecimales As DevExpress.XtraEditors.TextEdit
+    Friend WithEvents LayoutControlItem20 As DevExpress.XtraLayout.LayoutControlItem
 End Class

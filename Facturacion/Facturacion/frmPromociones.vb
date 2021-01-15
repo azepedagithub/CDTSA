@@ -16,6 +16,8 @@ Public Class frmPromociones
     Dim viewSelectedRow As GridView
     Dim currentRow As DataRow
     Dim sIDTabla As String = "0"
+    Dim lbEdit As Boolean = False
+    Dim lbAdd As Boolean = False
     Private Sub frmPromociones_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         CargagridLookUpsFromTables()
         RefreshGrid()
@@ -24,7 +26,7 @@ Public Class frmPromociones
     Sub CargagridLookUpsFromTables()
 
         CargagridSearchLookUp(Me.SearchLookUpEditProveedor, "cppProveedor", "IDProveedor, Nombre, Activo", "", "IDProveedor", "Nombre", "IDProveedor")
-        CargagridSearchLookUp(Me.SearchLookUpEditProducto, "invProducto", "IDProducto, Descr, Activo", "", "IDProducto", "Descr", "IDProducto")
+
 
     End Sub
     Sub CargagridSearchLookUp(ByVal g As SearchLookUpEdit, sTableName As String, sFieldsName As String, sWhere As String, sOrderBy As String, sDisplayMember As String, sValueMember As String)
@@ -39,15 +41,14 @@ Public Class frmPromociones
     Sub RefreshGrid()
         Try
             Dim sProveedor As String
-            If Me.chkDejarProv.EditValue = True And Me.SearchLookUpEditProveedor.Text <> "" Then
+            If Me.SearchLookUpEditProveedor.Text <> "" Then
                 sProveedor = SearchLookUpEditProveedor.EditValue.ToString
             Else
                 sProveedor = "0"
             End If
             tableData = cManager.ExecSPgetData("fafgetPromociones", sProveedor)
             GridControl1.DataSource = tableData
-            'GridColumn2.Caption = gsDescrName
-            'GridColumn2.SummaryItem.SetSummary(DevExpress.Data.SummaryItemType.Count, "Elementos Registrados : {0:n0} ")
+
             GridControl1.Refresh()
         Catch ex As Exception
             MessageBox.Show(ex.Message())
@@ -59,9 +60,15 @@ Public Class frmPromociones
             Dim sParameters As String
             Dim sFechadesde As String = CDate(Me.DateEditDesde.EditValue).ToString("yyyyMMdd")
             Dim sFechaHasta As String = CDate(Me.DateEditHasta.EditValue).ToString("yyyyMMdd")
+            Dim sRequiereBonif As String
+            If Me.chkRequiereBonif.EditValue = True Then
+                sRequiereBonif = "1"
+            Else
+                sRequiereBonif = "0"
+            End If
             sParameters = "'" & sOperacion & "'," & sIDTabla & " ," & SearchLookUpEditProveedor.EditValue.ToString() & "," & _
             SearchLookUpEditProducto.EditValue.ToString() & "," & _
-             txtPorcDesc.Text & ", '" & sFechadesde & "','" & sFechaHasta & "'" & "," & sTodos
+             txtPorcDesc.Text & "," & txtPorcDescCliEsp.Text & ", '" & sFechadesde & "','" & sFechaHasta & "'," & sRequiereBonif & "," & sTodos
             tableData = cManager.ExecSPgetData("fafUpdatePromociones", sParameters)
             RefreshGrid()
 
@@ -75,6 +82,10 @@ Public Class frmPromociones
         Dim lbok As Boolean = True
 
         If txtPorcDesc.Text Is Nothing Or String.IsNullOrEmpty(txtPorcDesc.Text) Then
+            lbok = False
+            Return lbok
+        End If
+        If txtPorcDescCliEsp.Text Is Nothing Or String.IsNullOrEmpty(txtPorcDescCliEsp.Text) Then
             lbok = False
             Return lbok
         End If
@@ -94,12 +105,43 @@ Public Class frmPromociones
     End Function
     Private Sub ClearControls()
         Me.txtPorcDesc.Text = ""
+        Me.txtPorcDescCliEsp.Text = ""
         Me.DateEditDesde.Text = ""
         Me.DateEditHasta.Text = ""
         Me.SearchLookUpEditProducto.Text = ""
-        If chkDejarProv.EditValue = False Then
+        Me.chkRequiereBonif.Checked = False
+        If chkDejarProv.Checked = False Then
             Me.SearchLookUpEditProveedor.Text = ""
         End If
+    End Sub
+    Private Sub EnableButtons()
+        If lbAdd = False And lbEdit = False Then
+            Me.btnDelete.Enabled = False
+            Me.btnEdit.Enabled = False
+            cmdNewClear.Enabled = True
+            Me.btnExcel.Enabled = False
+            btnPropFecha.Enabled = False
+        End If
+        If lbAdd = False And lbEdit = True Then
+            Me.btnDelete.Enabled = True
+            Me.btnEdit.Enabled = True
+            cmdNewClear.Enabled = True
+            btnExcel.Enabled = True
+            btnPropFecha.Enabled = True
+        End If
+        If lbAdd = True And lbEdit = False Then
+            Me.btnDelete.Enabled = False
+            Me.btnEdit.Enabled = True
+            cmdNewClear.Enabled = False
+            btnExcel.Enabled = False
+            btnPropFecha.Enabled = False
+        End If
+    End Sub
+    Private Sub ClearControlsNoCatalogos()
+        Me.txtPorcDesc.Text = ""
+        Me.txtPorcDescCliEsp.Text = ""
+        Me.DateEditDesde.Text = ""
+        Me.DateEditHasta.Text = ""
     End Sub
     Private Sub GridViewDetalle_FocusedRowChanged(sender As Object, e As DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs) Handles GridViewDetalle.FocusedRowChanged
         Dim index As Integer = GridViewDetalle.FocusedRowHandle
@@ -111,62 +153,17 @@ Public Class frmPromociones
                 Me.SearchLookUpEditProveedor.EditValue = dr("IDProveedor").ToString()
                 Me.SearchLookUpEditProducto.EditValue = dr("IDProducto").ToString()
                 Me.txtPorcDesc.Text = dr("PorcDesc")
+                Me.txtPorcDescCliEsp.Text = dr("PorcDescCliEsp")
                 Me.DateEditDesde.EditValue = CDate(dr("Desde"))
                 Me.DateEditHasta.EditValue = CDate(dr("Hasta"))
+                Me.chkRequiereBonif.EditValue = CBool(dr("RequiereBonif"))
+                lbEdit = True
+                lbAdd = False
+                EnableButtons()
             End If
         End If
     End Sub
 
-    Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
-        Try
-            Dim sTodos As String = "0"
-            If Not ControlsOk() Then
-                MessageBox.Show("Por favor revise los datos de la bonificación, existe un campo incompleto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                Me.txtPorcDesc.Focus()
-                Return
-            End If
-
-            If Me.chkTodosProd.EditValue = True Then
-                If MessageBox.Show("Ud va a aplicar a todos los productos del Proveeedor el mismo descuento en las mismas fechas, Ud está de acuerdo ?", "Advertencia", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) = Windows.Forms.DialogResult.No Then
-                    Exit Sub
-                Else
-                    sTodos = "1"
-                End If
-            Else
-                sTodos = "0"
-                Dim foundRow() As DataRow
-                Dim sCondicion As String
-                sCondicion = "IDProveedor=" & Me.SearchLookUpEditProveedor.EditValue.ToString() & " and IDProducto =" & Me.SearchLookUpEditProducto.EditValue.ToString() & _
-                    " And Desde ='" & Me.DateEditDesde.EditValue.ToString() & "' And " & " Hasta = '" & Me.DateEditHasta.EditValue.ToString() & "'"
-                foundRow = tableData.Select(sCondicion)
-
-                If foundRow IsNot Nothing And foundRow.Count > 0 Then
-                    MessageBox.Show("Ese Descuento ya Existe, por favor revise", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                    Return
-
-                End If
-            End If
-
-
-
-            AddDataToGrid(sTodos, "I")
-            If Me.chkTodosProd.EditValue = True Then
-                Me.chkTodosProd.EditValue = False
-            End If
-            If chkDejarProv.EditValue = False Then
-                Me.SearchLookUpEditProveedor.Text = ""
-            End If
-
-            'ubico el cursor en la fila del filtro y no en la primera row
-            GridViewDetalle.FocusedRowHandle = DevExpress.XtraGrid.GridControl.AutoFilterRowHandle
-            ClearControls()
-            SearchLookUpEditProducto.Focus()
-        Catch ex As Exception
-            MessageBox.Show("Ha ocurrido un error al agregar el registro " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-
-
-    End Sub
 
     Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
         Try
@@ -196,7 +193,7 @@ Public Class frmPromociones
             If Me.chkTodosProd.EditValue = True Then
                 Me.chkTodosProd.EditValue = False
             End If
-            ClearControls()
+            'ClearControls()
             'ubico el cursor en la fila del filtro y no en la primera row
             GridViewDetalle.FocusedRowHandle = DevExpress.XtraGrid.GridControl.AutoFilterRowHandle
             SearchLookUpEditProducto.Focus()
@@ -207,45 +204,85 @@ Public Class frmPromociones
 
     Private Sub btnEdit_Click(sender As Object, e As EventArgs) Handles btnEdit.Click
         Try
-            Dim sTodos As String = "0"
-            If Not ControlsOk() Then
-                MessageBox.Show("Por favor revise los datos , existe un campo incompleto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                Me.txtPorcDesc.Focus()
-                Return
-            End If
-
-            If Me.chkTodosProd.EditValue = True Then
-                If MessageBox.Show("Ud va a aplicar a todos los productos del Proveeedor el mismo descuento en las mismas fechas, Ud está de acuerdo ?", "Advertencia", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) = Windows.Forms.DialogResult.No Then
-                    Exit Sub
-                Else
-                    sTodos = "1"
+            If lbAdd And Not lbEdit Then
+                Dim sTodos As String = "0"
+                If Not ControlsOk() Then
+                    MessageBox.Show("Por favor revise los datos de la bonificación, existe un campo incompleto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Me.txtPorcDesc.Focus()
+                    Return
                 End If
-            Else
-                sTodos = "0"
 
-                'Dim foundRow() As DataRow
-                'Dim sCondicion As String
-                'sCondicion = "IDProveedor=" & Me.SearchLookUpEditProveedor.EditValue.ToString() & " and IDProducto =" & Me.SearchLookUpEditProducto.EditValue.ToString() 
-                'foundRow = tableData.Select(sCondicion)
+                If chkTodosProd.Checked = True Then
+                    If MessageBox.Show("Ud va a aplicar a todos los productos del Proveeedor el mismo descuento en las mismas fechas, Ud está de acuerdo ?", "Advertencia", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) = Windows.Forms.DialogResult.No Then
+                        Exit Sub
+                    Else
+                        sTodos = "1"
+                    End If
+                Else
+                    sTodos = "0"
+                    Dim foundRow() As DataRow
+                    Dim sCondicion As String
+                    sCondicion = "IDProveedor=" & Me.SearchLookUpEditProveedor.EditValue.ToString() & " and IDProducto =" & Me.SearchLookUpEditProducto.EditValue.ToString() & _
+                        " And Desde ='" & Me.DateEditDesde.EditValue.ToString() & "' And " & " Hasta = '" & Me.DateEditHasta.EditValue.ToString() & "'"
+                    foundRow = tableData.Select(sCondicion)
 
-                'If (foundRow IsNot Nothing And foundRow.Count > 0) Then
-                '    MessageBox.Show("Esa Descuento no Existe, por favor revise", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                '    Return
+                    If foundRow IsNot Nothing And foundRow.Count > 0 Then
+                        MessageBox.Show("Ese Descuento ya Existe, por favor revise", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        Return
 
+                    End If
+                End If
+
+                AddDataToGrid(sTodos, "I")
+                'If Me.chkTodosProd.EditValue = True Then
+                '    Me.chkTodosProd.EditValue = False
                 'End If
+                'If chkDejarProv.EditValue = False Then
+                '    Me.SearchLookUpEditProveedor.Text = ""
+                'End If
+
+                'ubico el cursor en la fila del filtro y no en la primera row
+                GridViewDetalle.FocusedRowHandle = DevExpress.XtraGrid.GridControl.AutoFilterRowHandle
+                'ClearControls()
+                SearchLookUpEditProducto.Focus()
+                lbAdd = False
+                lbEdit = False
             End If
 
+            If lbEdit And Not lbAdd Then
+                Dim sTodos As String = "0"
+                If Not ControlsOk() Then
+                    MessageBox.Show("Por favor revise los datos , existe un campo incompleto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Me.txtPorcDesc.Focus()
+                    Return
+                End If
+
+                If chkTodosProd.Checked = True Then
+                    If MessageBox.Show("Ud va a aplicar a todos los productos del Proveeedor el mismo descuento en las mismas fechas, Ud está de acuerdo ?", "Advertencia", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) = Windows.Forms.DialogResult.No Then
+                        Exit Sub
+                    Else
+                        sTodos = "1"
+                    End If
+                Else
+                    sTodos = "0"
+
+                End If
 
 
-            AddDataToGrid(sTodos, "U")
-            If Me.chkTodosProd.EditValue = True Then
-                Me.chkTodosProd.EditValue = False
+
+                AddDataToGrid(sTodos, "U")
+                If Me.chkTodosProd.EditValue = True Then
+                    Me.chkTodosProd.EditValue = False
+                End If
+                'ubico el cursor en la fila del filtro y no en la primera row
+                GridViewDetalle.FocusedRowHandle = DevExpress.XtraGrid.GridControl.AutoFilterRowHandle
+                'ClearControls()
+                SearchLookUpEditProducto.Focus()
+
             End If
-            '            TotalizaGrid()
-            'ubico el cursor en la fila del filtro y no en la primera row
-            GridViewDetalle.FocusedRowHandle = DevExpress.XtraGrid.GridControl.AutoFilterRowHandle
-            ClearControls()
-            SearchLookUpEditProducto.Focus()
+            lbAdd = False
+            lbEdit = False
+            EnableButtons()
         Catch ex As Exception
             MessageBox.Show("Ha ocurrido un error al agregar el registro " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
@@ -260,10 +297,66 @@ Public Class frmPromociones
         End If
     End Sub
 
-    Private Sub chkVerTodos_CheckedChanged(sender As Object, e As EventArgs) Handles chkVerTodos.CheckedChanged
-        If Me.chkVerTodos.EditValue = True Then
-            RefreshGrid()
-            ClearControls()
+
+
+    Private Sub cmdNewClear_Click(sender As Object, e As EventArgs) Handles cmdNewClear.Click
+        ClearControls()
+        lbEdit = False
+        lbAdd = True
+        EnableButtons()
+    End Sub
+    Private Sub ValidaLetraNumero(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) _
+       Handles txtPorcDesc.KeyPress, txtPorcDescCliEsp.KeyPress
+        Dim strListaControles As String
+        strListaControles = "txtPorcDesc, txtPorcDescCliEsp"
+        If strListaControles.Contains(sender.name) = True And Asc(e.KeyChar) <> Keys.Return Then
+            e.KeyChar = Chr(Solo_Numeros(Asc(e.KeyChar)))
         End If
+        If sender.name = "txtPorcDesc" And Asc(e.KeyChar) = Keys.Return Then
+            txtPorcDesc.Focus()
+        End If
+        If sender.name = "txtPorcDescCliEsp" And Asc(e.KeyChar) = Keys.Return Then
+            Me.txtPorcDescCliEsp.Focus()
+        End If
+
+
+    End Sub
+
+    Private Sub SearchLookUpEditProveedor_EditValueChanged(sender As Object, e As EventArgs) Handles SearchLookUpEditProveedor.EditValueChanged
+        If SearchLookUpEditProveedor.Text <> "" Then
+            Dim sFiltro As String = "IDProveedor=" & SearchLookUpEditProveedor.EditValue.ToString()
+            CargagridSearchLookUp(Me.SearchLookUpEditProducto, "invProducto", "IDProducto, Descr, Activo", sFiltro, "IDProducto", "Descr", "IDProducto")
+        End If
+
+    End Sub
+
+
+    Private Sub cmdRefresh_Click(sender As Object, e As EventArgs) Handles cmdRefresh.Click
+        RefreshGrid()
+        ClearControlsNocatalogos()
+    End Sub
+
+
+    Private Sub btnPropFecha_Click(sender As Object, e As EventArgs) Handles btnPropFecha.Click
+        Try
+            Dim sTodos As String = "0"
+            sTodos = "1"
+
+            If MessageBox.Show("Ud va a Progagar el rango de Fechas seleccionado a todos los productos del Proveedor " & Me.SearchLookUpEditProveedor.Text & ", Ud está de acuerdo ?", "Advertencia", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) = Windows.Forms.DialogResult.No Then
+                Exit Sub
+            End If
+
+            AddDataToGrid(sTodos, "F")
+            If Me.chkTodosProd.EditValue = True Then
+                Me.chkTodosProd.EditValue = False
+            End If
+            'ClearControls()
+            'ubico el cursor en la fila del filtro y no en la primera row
+            GridViewDetalle.FocusedRowHandle = DevExpress.XtraGrid.GridControl.AutoFilterRowHandle
+            'SearchLookUpEditProducto.Focus()
+        Catch ex As Exception
+            MessageBox.Show("Ha ocurrido un error al propagar Fechas " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+
     End Sub
 End Class

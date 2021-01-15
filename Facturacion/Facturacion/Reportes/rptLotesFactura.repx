@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XtraReportsLayoutSerializer SerializerVersion="15.2.7.0" Ref="1" ControlType="DevExpress.XtraReports.UI.XtraReport, DevExpress.XtraReports.v15.2, Version=15.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Name="rptLotesFactura" Margins="99, 100, 2, 0" PageWidth="850" PageHeight="1100" ScriptLanguage="VisualBasic" Version="15.2" FilterString="[IDFactura] = ?pIDFactura And [IDProducto] = ?pIDProducto" DataMember="fafGetFacturaLotes" DataSource="#Ref-0">
+  <Parameters>
+    <Item1 Ref="3" Visible="false" Description="IDFactura" ValueInfo="0" Name="pIDFactura" Type="#Ref-2" />
+    <Item2 Ref="5" Visible="false" Description="IDProducto" ValueInfo="0" Name="pIDProducto" Type="#Ref-4" />
+  </Parameters>
+  <CalculatedFields>
+    <Item1 Ref="6" Name="LoteCantidad" Expression=" [LoteProveedor]+ '- ' +ToStr(ToInt([Total]))+':' + ToStr(GetDay([FechaVencimiento]))+'/' + ToStr(GetMonth([FechaVencimiento]))+'/' + ToStr(GetYear([FechaVencimiento]))" DataMember="fafGetFacturaLotes" />
+  </CalculatedFields>
+  <Bands>
+    <Item1 Ref="7" ControlType="DetailBand" Name="Detail" HeightF="18.75" KeepTogether="true" TextAlignment="TopLeft" Padding="0,0,0,0,100">
+      <MultiColumn Ref="8" ColumnCount="4" Layout="AcrossThenDown" Mode="UseColumnCount" />
+      <Controls>
+        <Item1 Ref="9" ControlType="XRLabel" Name="XrLabel1" Text="XrLabel1" SizeF="151.0417,13.95833" LocationFloat="10.00001, 0" Font="Times New Roman, 8pt" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="10" PropertyName="Text" DataMember="fafGetFacturaLotes.LoteCantidad" />
+          </DataBindings>
+          <StylePriority Ref="11" UseFont="false" />
+        </Item1>
+      </Controls>
+    </Item1>
+    <Item2 Ref="12" ControlType="TopMarginBand" Name="TopMargin" HeightF="2" TextAlignment="TopLeft" Padding="0,0,0,0,100" />
+    <Item3 Ref="13" ControlType="BottomMarginBand" Name="BottomMargin" HeightF="0" TextAlignment="TopLeft" Padding="0,0,0,0,100" />
+  </Bands>
+  <ComponentStorage>
+    <Item1 Ref="0" ObjectType="DevExpress.DataAccess.Sql.SqlDataSource,DevExpress.DataAccess.v15.2" Name="SqlDataSource1" Base64="PFNxbERhdGFTb3VyY2U+PE5hbWU+U3FsRGF0YVNvdXJjZTE8L05hbWU+PENvbm5lY3Rpb24gTmFtZT0ibG9jYWxob3N0X2NlZGFfQ29ubmVjdGlvbiAyIiBGcm9tQXBwQ29uZmlnPSJ0cnVlIiAvPjxRdWVyeSBUeXBlPSJTdG9yZWRQcm9jUXVlcnkiIE5hbWU9ImZhZkdldEZhY3R1cmFMb3RlcyI+PFBhcmFtZXRlciBOYW1lPSJASURGYWN0dXJhIiBUeXBlPSJEZXZFeHByZXNzLkRhdGFBY2Nlc3MuRXhwcmVzc2lvbiI+KFN5c3RlbS5JbnQ2NCwgbXNjb3JsaWIsIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5KShbUGFyYW1ldGVycy5wSURGYWN0dXJhXSk8L1BhcmFtZXRlcj48UGFyYW1ldGVyIE5hbWU9IkBJRFByb2R1Y3RvIiBUeXBlPSJEZXZFeHByZXNzLkRhdGFBY2Nlc3MuRXhwcmVzc2lvbiI+KFN5c3RlbS5JbnQzMiwgbXNjb3JsaWIsIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5KShbUGFyYW1ldGVycy5wSURQcm9kdWN0b10pPC9QYXJhbWV0ZXI+PFByb2NOYW1lPmZhZkdldEZhY3R1cmFMb3RlczwvUHJvY05hbWU+PC9RdWVyeT48UmVzdWx0U2NoZW1hPjxEYXRhU2V0IE5hbWU9IlNxbERhdGFTb3VyY2UxIj48VmlldyBOYW1lPSJmYWZHZXRGYWN0dXJhTG90ZXMiPjxGaWVsZCBOYW1lPSJJREZhY3R1cmFQcm9kIiBUeXBlPSJJbnQ2NCIgLz48RmllbGQgTmFtZT0iSURGYWN0dXJhIiBUeXBlPSJJbnQ2NCIgLz48RmllbGQgTmFtZT0iSURQcm9kdWN0byIgVHlwZT0iSW50NjQiIC8+PEZpZWxkIE5hbWU9IkxvdGVJbnRlcm5vIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IkxvdGVQcm92ZWVkb3IiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iRmVjaGFWZW5jaW1pZW50byIgVHlwZT0iRGF0ZVRpbWUiIC8+PEZpZWxkIE5hbWU9IlRvdGFsIiBUeXBlPSJEZWNpbWFsIiAvPjxGaWVsZCBOYW1lPSJGYWN0dXJhZGFzIiBUeXBlPSJEZWNpbWFsIiAvPjxGaWVsZCBOYW1lPSJCb25pZmljYWRhcyIgVHlwZT0iRGVjaW1hbCIgLz48L1ZpZXc+PC9EYXRhU2V0PjwvUmVzdWx0U2NoZW1hPjwvU3FsRGF0YVNvdXJjZT4=" />
+  </ComponentStorage>
+  <ObjectStorage>
+    <Item1 ObjectType="DevExpress.XtraReports.Serialization.ObjectStorageInfo, DevExpress.XtraReports.v15.2" Ref="2" Content="System.Int64" Type="System.Type" />
+    <Item2 ObjectType="DevExpress.XtraReports.Serialization.ObjectStorageInfo, DevExpress.XtraReports.v15.2" Ref="4" Content="System.Int32" Type="System.Type" />
+  </ObjectStorage>
+</XtraReportsLayoutSerializer>

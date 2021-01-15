@@ -20,6 +20,7 @@ Public Class frmPrecios
         Me.SearchLookUpEditNivelCliente.ReadOnly = True
         Me.SearchLookUpEditmonCli.ReadOnly = True
         InitGrids()
+        RefreshGrid()
     End Sub
     Private Sub InitGrids()
         'sParametros = IIf(sProducto = "", "0", sProducto) & "," & IIf(sNivel = "", "0", sNivel) & "," & IIf(sProveedor = "", "0", sProveedor)
@@ -391,11 +392,16 @@ Public Class frmPrecios
 
             foundRow = tableData.Select(sCondicion)
             If foundRow IsNot Nothing And foundRow.Count > 0 Then
+                Dim topRowIndex As Integer = Me.GridViewDetalle.TopRowIndex
+                Dim focusedRowHandle As Integer = GridViewDetalle.FocusedRowHandle
+
 
                 AddDataToGrid("U")
-                ClearControls()
+                GridViewDetalle.FocusedRowHandle = focusedRowHandle
+                GridViewDetalle.TopRowIndex = topRowIndex
+                'ClearControls()
                 'ubico el cursor en la fila del filtro y no en la primera row
-                GridViewDetalle.FocusedRowHandle = DevExpress.XtraGrid.GridControl.AutoFilterRowHandle
+                ' GridViewDetalle.FocusedRowHandle = DevExpress.XtraGrid.GridControl.AutoFilterRowHandle
                 Return
             Else
                 MessageBox.Show("Ese precio no Existe, por favor revise", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -510,11 +516,15 @@ Public Class frmPrecios
             foundRow = Me.tableDataCli.Select(sCondicion)
 
             If foundRow IsNot Nothing And foundRow.Count > 0 Then
-
+                Dim topRowIndex As Integer = Me.GridViewDetalle.TopRowIndex
+                Dim focusedRowHandle As Integer = GridViewDetalle.FocusedRowHandle
                 AddDataToGridCli("U")
-                ClearControlsCli()
+                RefreshGridCliente()
+                GridViewDetalle.FocusedRowHandle = focusedRowHandle
+                GridViewDetalle.TopRowIndex = topRowIndex
+                'ClearControlsCli()
                 'ubico el cursor en la fila del filtro y no en la primera row
-                GridViewPrecioCliente.FocusedRowHandle = DevExpress.XtraGrid.GridControl.AutoFilterRowHandle
+                'GridViewPrecioCliente.FocusedRowHandle = DevExpress.XtraGrid.GridControl.AutoFilterRowHandle
                 Return
             Else
                 AddDataToGridCli("I")
@@ -579,15 +589,18 @@ Public Class frmPrecios
 
     Private Sub txtIDProducto_KeyDown(sender As Object, e As KeyEventArgs) Handles txtIDProducto.KeyDown
         If e.KeyCode = Keys.Enter Then
-            Dim strDescr As String = cManager.GetDescrFromTable("invProducto", "Descr", "IDProducto =" & txtIDProducto.Text, "IDProducto")
-            If strDescr = "" Then
-                txtIDProducto.EditValue = ""
-                txtDescr.EditValue = ""
-                MessageBox.Show("No existe ningun registro con ese Código, por favor revise ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            Else
-                Me.txtDescr.Text = strDescr
-                Me.SearchLookUpEditNivel.Focus()
+            If txtIDProducto.EditValue.ToString() <> "" Then
+                Dim strDescr As String = cManager.GetDescrFromTable("invProducto", "Descr", "IDProducto =" & txtIDProducto.Text, "IDProducto")
+                If strDescr = "" Then
+                    txtIDProducto.EditValue = ""
+                    txtDescr.EditValue = ""
+                    MessageBox.Show("No existe ningun registro con ese Código, por favor revise ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Else
+                    Me.txtDescr.Text = strDescr
+                    Me.SearchLookUpEditNivel.Focus()
+                End If
             End If
+
 
         End If
     End Sub
@@ -655,14 +668,14 @@ Public Class frmPrecios
         If chkTodosProd.Checked Then
             Me.txtIDProducto.Text = ""
             Me.txtDescr.Text = ""
-            Me.txtIDProducto.Enabled = False
-            Me.txtDescr.Enabled = False
+            Me.txtIDProducto.ReadOnly = True
+            Me.txtDescr.ReadOnly = True
             Me.btnProducto.Enabled = False
         Else
             Me.txtIDProducto.Text = ""
             Me.txtDescr.Text = ""
-            Me.txtIDProducto.Enabled = True
-            Me.txtDescr.Enabled = True
+            Me.txtIDProducto.ReadOnly = False
+            Me.txtDescr.ReadOnly = False
             Me.btnProducto.Enabled = True
         End If
     End Sub
@@ -702,14 +715,14 @@ Public Class frmPrecios
             Me.SearchLookUpEditmonCli.Text = ""
             Me.SearchLookUpEditNivelCliente.Enabled = False
             SearchLookUpEditmonCli.Enabled = False
-            Me.txtCliente.Enabled = False
-            Me.txtNombre.Enabled = False
+            Me.txtCliente.ReadOnly = True
+            Me.txtNombre.ReadOnly = True
             Me.btnCliente.Enabled = False
         Else
             Me.txtCliente.Text = ""
             Me.txtNombre.Text = ""
-            Me.txtCliente.Enabled = True
-            Me.txtNombre.Enabled = True
+            Me.txtCliente.ReadOnly = False
+            Me.txtNombre.ReadOnly = False
             Me.btnCliente.Enabled = True
             Me.SearchLookUpEditNivelCliente.Enabled = True
             SearchLookUpEditmonCli.Enabled = True
@@ -753,12 +766,14 @@ Public Class frmPrecios
     Private Sub chkIncrementaPrecio_CheckedChanged(sender As Object, e As EventArgs) Handles chkIncrementaPrecio.CheckedChanged
         If chkIncrementaPrecio.EditValue = True Then
             Me.txtPorcIncremento.Enabled = True
+            Me.txtPorcIncrementoPublico.Enabled = True
             Me.cmdAplicaIncremento.Enabled = True
             Me.SearchLookUpEditNivel.Enabled = True
             Me.SearchLookUpEditMoneda.Enabled = True
         Else
 
             Me.txtPorcIncremento.Enabled = False
+            Me.txtPorcIncrementoPublico.Enabled = False
             Me.cmdAplicaIncremento.Enabled = False
         End If
     End Sub
@@ -773,10 +788,14 @@ Public Class frmPrecios
                 MessageBox.Show("Para poder correr el proceso de incrementar Precios, el Porcentaje de incremento debe ser mayor que cero ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
-
+            ' Se debe permitir valore en cero porque puede ser uno de los dos en cero, asi queda mas flexible.
+            'If Me.txtPorcIncrementoPublico.EditValue <= 0 Or IsNothing(Me.txtPorcIncrementoPublico) Then
+            '    MessageBox.Show("Para poder correr el proceso de incrementar Precios, el Porcentaje de incremento Publico debe ser mayor que cero ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            '    Exit Sub
+            'End If
             If MessageBox.Show("Ud. va a incrementar Precios para el Nivel " & Me.SearchLookUpEditNivel.Text & " y la Moneda " & Me.SearchLookUpEditMoneda.Text & _
-                             " con un Porcentaje de incremento de % " & txtPorcIncremento.EditValue.ToString(), "Advertencia", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-                IncrementaPrecios(CDec(txtPorcIncremento.EditValue), CInt(SearchLookUpEditNivel.EditValue), CInt(SearchLookUpEditMoneda.EditValue))
+                             " con un Porcentaje de incremento en Precio y Puclico de % " & txtPorcIncremento.EditValue.ToString() & " y " & txtPorcIncrementoPublico.EditValue.ToString(), "Advertencia", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                IncrementaPrecios(CDec(txtPorcIncremento.EditValue), CDec(txtPorcIncrementoPublico.EditValue), CInt(SearchLookUpEditNivel.EditValue), CInt(SearchLookUpEditMoneda.EditValue))
             Else
                 Exit Sub
             End If
@@ -786,15 +805,86 @@ Public Class frmPrecios
         End Try
     End Sub
 
-    Private Sub IncrementaPrecios(dPorcIncremento As Decimal, iIDNivel As Int16, iIDMoneda As Int16)
-        Dim storeName As String, sparameters As String
-        Dim dFecha As Date = Now
-        storeName = "fafIncrementaListaPrecios"
-        sparameters = dPorcIncremento.ToString() & ",'" & dFecha.ToString("yyyy-MM-dd HH:mm:ss") & "'" & "," & iIDNivel.ToString() & "," & iIDMoneda.ToString() & ", '" & gsUsuario & "'"
+    Private Sub IncrementaPrecios(dPorcIncremento As Decimal, dPorcIncrementoPublico As Decimal, iIDNivel As Int16, iIDMoneda As Int16)
+        Try
+            Dim storeName As String, sparameters As String
+            Dim dFecha As Date = Now
+            storeName = "fafIncrementaListaPrecios"
+            sparameters = dPorcIncremento.ToString() & "," & dPorcIncrementoPublico.ToString() & ",'" & dFecha.ToString("yyyy-MM-dd HH:mm:ss") & "'" & "," & iIDNivel.ToString() & "," & iIDMoneda.ToString() & ", '" & gsUsuario & "'"
 
-        cManager.ExecSP(storeName, sparameters)
-        Me.chkTodosNiveles.EditValue = False
-        RefreshGrid()
-        MessageBox.Show("Proceso Exitoso...  ", "Exito", MessageBoxButtons.OK)
+            cManager.ExecSP(storeName, sparameters)
+            Me.chkTodosNiveles.EditValue = False
+            RefreshGrid()
+            MessageBox.Show("Proceso Exitoso... Los Precios fueron actualizados en Batch con los porcentajes por Ud indicado ", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+
+        Catch ex As Exception
+            MessageBox.Show("Ha ocurrido un error al incrementar los Precios " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+
     End Sub
+
+    Private Sub cmdPrint_Click(sender As Object, e As EventArgs) Handles cmdPrint.Click
+        Try
+            If tableData.Rows.Count > 0 Then
+
+                Dim report As DevExpress.XtraReports.UI.XtraReport = DevExpress.XtraReports.UI.XtraReport.FromFile("./Reportes/rptListaPreciosbyProveedor.repx", True)
+                report.DataSource = vbNull
+                report.DataSource = tableData
+                report.DataMember = "rptListaPreciosbyProveedor"
+                report.Parameters("psEmpresa").Value = gsNombreEmpresa
+                report.Parameters("psNivel").Value = Me.SearchLookUpEditNivel.Text
+                report.Parameters("psMoneda").Value = Me.SearchLookUpEditMoneda.Text
+                report.PaperKind = System.Drawing.Printing.PaperKind.Letter
+                Dim tool As DevExpress.XtraReports.UI.ReportPrintTool = New DevExpress.XtraReports.UI.ReportPrintTool(report)
+
+                tool.ShowPreview()
+            Else
+                MessageBox.Show("No existe registros con ese criterio de Filtro, por favor revise ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            End If
+
+        Catch ex As Exception
+            MessageBox.Show("Ha ocurrido un error al imprimir los Precios " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Sub cmdBonifPrecio_Click(sender As Object, e As EventArgs) Handles cmdBonifPrecio.Click
+        Try
+            If Me.SearchLookUpEditMoneda.Text = "" Or Me.SearchLookUpEditNivel.Text = "" Then
+                MessageBox.Show("Para poder Imprimir la tabla de Bonificaciones y Precios, debe seleccionar el Nivel de Precios y la Moneda ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Exit Sub
+            End If
+            Dim storeName As String, sparameters As String
+            Dim dFecha As Date = Now
+            Dim t As DataTable
+            storeName = "fafprintTablaBonificacionPrecios"
+            sparameters = IIf(Me.SearchLookUpEditProveedor.Text = "", "0", Me.SearchLookUpEditProveedor.EditValue.ToString()) & "," & Me.SearchLookUpEditNivel.EditValue.ToString() & "," & Me.SearchLookUpEditMoneda.EditValue.ToString()
+
+            t = cManager.ExecSPgetData(storeName, sparameters)
+
+            If t.Rows.Count > 0 Then
+
+                Dim report As DevExpress.XtraReports.UI.XtraReport = DevExpress.XtraReports.UI.XtraReport.FromFile("./Reportes/rptTablaBonificacionPrecios.repx", True)
+                report.DataSource = vbNull
+                report.DataSource = t
+                report.DataMember = "rptTablaBonificacionPrecios"
+                report.Parameters("psEmpresa").Value = gsNombreEmpresa
+                report.Parameters("psNivel").Value = Me.SearchLookUpEditNivel.Text
+                report.Parameters("psMoneda").Value = Me.SearchLookUpEditMoneda.Text
+                report.PaperKind = System.Drawing.Printing.PaperKind.Letter
+                report.Landscape = True
+                Dim tool As DevExpress.XtraReports.UI.ReportPrintTool = New DevExpress.XtraReports.UI.ReportPrintTool(report)
+
+                tool.ShowPreview()
+            Else
+                MessageBox.Show("No existe registros con ese criterio de Filtro, por favor revise ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            End If
+        Catch ex As Exception
+            MessageBox.Show("Ha ocurrido un error la tabla de Bonificaciones y Precios " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+
+    End Sub
+
+
 End Class

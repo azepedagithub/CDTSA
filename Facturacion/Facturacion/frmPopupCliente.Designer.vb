@@ -29,11 +29,12 @@ Partial Class frmPopupCliente
         Me.Activo = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.Farmacia = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.Direccion = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.NombreVendedor = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.Telefono = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumnCredito = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumnEditaNombre = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.GridColumnIDMoneda = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumnIDNivel = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumnIDMoneda = New DevExpress.XtraGrid.Columns.GridColumn()
         CType(Me.GridControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridViewClientes, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -51,13 +52,14 @@ Partial Class frmPopupCliente
         '
         Me.GridViewClientes.Appearance.ColumnFilterButton.Options.UseTextOptions = True
         Me.GridViewClientes.Appearance.ColumnFilterButton.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far
-        Me.GridViewClientes.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.IDCliente, Me.Nombre, Me.Activo, Me.Farmacia, Me.Direccion, Me.Telefono, Me.GridColumnCredito, Me.GridColumnEditaNombre, Me.GridColumnIDNivel, Me.GridColumnIDMoneda})
+        Me.GridViewClientes.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.IDCliente, Me.Nombre, Me.Activo, Me.Farmacia, Me.Direccion, Me.NombreVendedor, Me.Telefono, Me.GridColumnCredito, Me.GridColumnEditaNombre, Me.GridColumnIDNivel, Me.GridColumnIDMoneda})
         Me.GridViewClientes.GridControl = Me.GridControl1
         Me.GridViewClientes.GroupPanelText = "Agrupe una Columna Aqui :"
         Me.GridViewClientes.GroupSummary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Count, "", Me.Nombre, "{Count = {0}}")})
         Me.GridViewClientes.Name = "GridViewClientes"
         Me.GridViewClientes.OptionsBehavior.Editable = False
         Me.GridViewClientes.OptionsFind.AlwaysVisible = True
+        Me.GridViewClientes.OptionsFind.SearchInPreview = True
         Me.GridViewClientes.OptionsSelection.EnableAppearanceFocusedCell = False
         Me.GridViewClientes.OptionsView.ShowAutoFilterRow = True
         Me.GridViewClientes.OptionsView.ShowFooter = True
@@ -71,7 +73,7 @@ Partial Class frmPopupCliente
         Me.IDCliente.OptionsColumn.AllowEdit = False
         Me.IDCliente.Visible = True
         Me.IDCliente.VisibleIndex = 0
-        Me.IDCliente.Width = 37
+        Me.IDCliente.Width = 70
         '
         'Nombre
         '
@@ -79,9 +81,11 @@ Partial Class frmPopupCliente
         Me.Nombre.FieldName = "Nombre"
         Me.Nombre.Name = "Nombre"
         Me.Nombre.OptionsColumn.AllowEdit = False
+        Me.Nombre.OptionsFilter.AllowFilterModeChanging = DevExpress.Utils.DefaultBoolean.[True]
+        Me.Nombre.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains
         Me.Nombre.Visible = True
         Me.Nombre.VisibleIndex = 1
-        Me.Nombre.Width = 149
+        Me.Nombre.Width = 201
         '
         'Activo
         '
@@ -91,17 +95,19 @@ Partial Class frmPopupCliente
         Me.Activo.Name = "Activo"
         Me.Activo.OptionsColumn.AllowEdit = False
         Me.Activo.Visible = True
-        Me.Activo.VisibleIndex = 5
-        Me.Activo.Width = 46
+        Me.Activo.VisibleIndex = 6
+        Me.Activo.Width = 91
         '
         'Farmacia
         '
         Me.Farmacia.Caption = "Farmacia"
         Me.Farmacia.FieldName = "Farmacia"
         Me.Farmacia.Name = "Farmacia"
+        Me.Farmacia.OptionsFilter.AllowFilterModeChanging = DevExpress.Utils.DefaultBoolean.[True]
+        Me.Farmacia.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains
         Me.Farmacia.Visible = True
         Me.Farmacia.VisibleIndex = 2
-        Me.Farmacia.Width = 135
+        Me.Farmacia.Width = 191
         '
         'Direccion
         '
@@ -109,8 +115,19 @@ Partial Class frmPopupCliente
         Me.Direccion.FieldName = "Direccion"
         Me.Direccion.Name = "Direccion"
         Me.Direccion.Visible = True
-        Me.Direccion.VisibleIndex = 3
-        Me.Direccion.Width = 244
+        Me.Direccion.VisibleIndex = 5
+        Me.Direccion.Width = 321
+        '
+        'NombreVendedor
+        '
+        Me.NombreVendedor.Caption = "Vendedor"
+        Me.NombreVendedor.FieldName = "NombreVendedor"
+        Me.NombreVendedor.Name = "NombreVendedor"
+        Me.NombreVendedor.OptionsFilter.AllowFilterModeChanging = DevExpress.Utils.DefaultBoolean.[True]
+        Me.NombreVendedor.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains
+        Me.NombreVendedor.Visible = True
+        Me.NombreVendedor.VisibleIndex = 4
+        Me.NombreVendedor.Width = 160
         '
         'Telefono
         '
@@ -118,16 +135,14 @@ Partial Class frmPopupCliente
         Me.Telefono.FieldName = "Telefono"
         Me.Telefono.Name = "Telefono"
         Me.Telefono.Visible = True
-        Me.Telefono.VisibleIndex = 4
-        Me.Telefono.Width = 84
+        Me.Telefono.VisibleIndex = 3
+        Me.Telefono.Width = 76
         '
         'GridColumnCredito
         '
         Me.GridColumnCredito.Caption = "Credito"
         Me.GridColumnCredito.FieldName = "Credito"
         Me.GridColumnCredito.Name = "GridColumnCredito"
-        Me.GridColumnCredito.Visible = True
-        Me.GridColumnCredito.VisibleIndex = 6
         Me.GridColumnCredito.Width = 45
         '
         'GridColumnEditaNombre
@@ -135,20 +150,19 @@ Partial Class frmPopupCliente
         Me.GridColumnEditaNombre.Caption = "EditaNombre"
         Me.GridColumnEditaNombre.FieldName = "EditaNombre"
         Me.GridColumnEditaNombre.Name = "GridColumnEditaNombre"
-        Me.GridColumnEditaNombre.Visible = True
-        Me.GridColumnEditaNombre.VisibleIndex = 7
-        '
-        'GridColumnIDMoneda
-        '
-        Me.GridColumnIDMoneda.Caption = "IDMoneda"
-        Me.GridColumnIDMoneda.FieldName = "IDMoneda"
-        Me.GridColumnIDMoneda.Name = "GridColumnIDMoneda"
+        Me.GridColumnEditaNombre.Width = 91
         '
         'GridColumnIDNivel
         '
         Me.GridColumnIDNivel.Caption = "IDNivel"
         Me.GridColumnIDNivel.FieldName = "IDNivel"
         Me.GridColumnIDNivel.Name = "GridColumnIDNivel"
+        '
+        'GridColumnIDMoneda
+        '
+        Me.GridColumnIDMoneda.Caption = "IDMoneda"
+        Me.GridColumnIDMoneda.FieldName = "IDMoneda"
+        Me.GridColumnIDMoneda.Name = "GridColumnIDMoneda"
         '
         'frmPopupCliente
         '
@@ -177,4 +191,5 @@ Partial Class frmPopupCliente
     Friend WithEvents GridColumnEditaNombre As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents GridColumnIDMoneda As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents GridColumnIDNivel As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents NombreVendedor As DevExpress.XtraGrid.Columns.GridColumn
 End Class

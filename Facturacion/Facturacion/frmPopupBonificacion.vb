@@ -1,20 +1,24 @@
 ﻿Imports Clases
+Imports DevExpress.XtraGrid.Columns
 
 Public Class frmPopupBonificacion
     Dim cManager As New ClassManager
     Dim tableData As New DataTable()
-    Public gsProductoID As String = "0"
-    Public gdRequerido As Decimal
-    Public gdBono As Decimal
-    Public gdBonoDistr As Decimal
-    Public gdBonoProv As Decimal
+    Public gsProductoID As String
+    Public gsIDNivel As String
+    Public gsIDMoneda As String
+
 
     Private Sub frmPopupBonificacion_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        If gsProductoID <> "" Then
+            Dim filterString As String = "[IDProducto] =" & gsProductoID
+            Me.GridViewDetalle.Columns("IDProducto").FilterInfo = New ColumnFilterInfo(filterString)
+        End If
         RefreshGrid()
     End Sub
     Sub RefreshGrid()
         Try
-            tableData = cManager.ExecSPgetData("fafgetTablaBonificacion", "0" + "," + gsProductoID)
+            tableData = cManager.ExecSPgetData("fafprintTablaBonificacionPrecios", "0," & gsIDNivel & "," & gsIDMoneda)
             GridControl1.DataSource = tableData
             GridControl1.Refresh()
         Catch ex As Exception
@@ -22,13 +26,5 @@ Public Class frmPopupBonificacion
         End Try
     End Sub
 
-    Private Sub GridViewDetalle_FocusedRowChanged(sender As Object, e As DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs) Handles GridViewDetalle.FocusedRowChanged
-        Dim dr As DataRow = GridViewDetalle.GetFocusedDataRow()
-        If dr IsNot Nothing Then
-            gdRequerido = String.Format("{0:0.00}", dr("Requerido"))
-            gdBono = String.Format("{0:0.00}", dr("Bono"))
-            gdBonoDistr = String.Format("{0:0.00}", dr("CantBonifProv"))
-            gdBonoProv = String.Format("{0:0.00}", dr("CantBonifDist"))
-        End If
-    End Sub
+
 End Class

@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XtraReportsLayoutSerializer SerializerVersion="15.2.7.0" Ref="1" ControlType="DevExpress.XtraReports.UI.XtraReport, DevExpress.XtraReports.v15.2, Version=15.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Name="rptDocumentoCCF" PageWidth="850" PageHeight="1100" ScriptLanguage="VisualBasic" Version="15.2" DataMember="ccfGetDocumento" DataSource="#Ref-0">
+  <Parameters>
+    <Item1 Ref="3" Visible="false" Description="psTipoDocumento" Name="psTipoDocumento" />
+    <Item2 Ref="5" Visible="false" Description="piIDDocumento" ValueInfo="0" Name="piIDDocumento" Type="#Ref-4" />
+    <Item3 Ref="6" Visible="false" Name="psEmpresa" />
+  </Parameters>
+  <Bands>
+    <Item1 Ref="7" ControlType="DetailBand" Name="Detail" HeightF="142.958328" TextAlignment="TopLeft" Padding="0,0,0,0,100">
+      <Controls>
+        <Item1 Ref="8" ControlType="XRLabel" Name="XrLabel9" Text="Concepto " SizeF="78.28394,18" LocationFloat="3.91667676, 0" StyleName="FieldCaption" Padding="2,2,0,0,96" />
+        <Item2 Ref="9" ControlType="XRLabel" Name="XrLabel23" Text="XrLabel23" SizeF="635.833252,112.750046" LocationFloat="4.16666651, 17.9999676" StyleName="DataField" Padding="2,2,0,0,96" Borders="All">
+          <DataBindings>
+            <Item1 Ref="10" PropertyName="Text" DataMember="ccfGetDocumento.ConceptoUsuario" />
+          </DataBindings>
+          <StylePriority Ref="11" UseBorders="false" />
+        </Item2>
+      </Controls>
+    </Item1>
+    <Item2 Ref="12" ControlType="TopMarginBand" Name="TopMargin" HeightF="100" TextAlignment="TopLeft" Padding="0,0,0,0,100" />
+    <Item3 Ref="13" ControlType="BottomMarginBand" Name="BottomMargin" HeightF="100" TextAlignment="TopLeft" Padding="0,0,0,0,100" />
+    <Item4 Ref="14" ControlType="PageFooterBand" Name="PageFooterBand1" HeightF="29" />
+    <Item5 Ref="15" ControlType="ReportHeaderBand" Name="ReportHeader" HeightF="233.958313">
+      <Controls>
+        <Item1 Ref="16" ControlType="XRPanel" Name="XrPanel1" SizeF="649.999939,220.833313" LocationFloat="0, 0" Borders="All">
+          <Controls>
+            <Item1 Ref="17" ControlType="XRLabel" Name="XrLabel4" Text="Moneda" SizeF="59.6666565,18" LocationFloat="409.7292, 151.6667" StyleName="FieldCaption" Padding="2,2,0,0,100" />
+            <Item2 Ref="18" ControlType="XRPageInfo" Name="XrPageInfo1" PageInfo="DateTime" SizeF="192.166626,23" LocationFloat="447.8333, 10.0000067" StyleName="PageInfo" Padding="2,2,0,0,100" />
+            <Item3 Ref="19" ControlType="XRLabel" Name="XrLabel8" Text="Plazo Dias" SizeF="66.20831,18" LocationFloat="533.7422, 180.958282" StyleName="FieldCaption" Padding="2,2,0,0,100" />
+            <Item4 Ref="20" ControlType="XRLabel" Name="XrLabel21" Text="XrLabel21" SizeF="76.29165,18" LocationFloat="457.450623, 180.9583" StyleName="DataField" Padding="2,2,0,0,100">
+              <DataBindings>
+                <Item1 Ref="21" FormatString="{0:dd/MM/yyyy}" PropertyName="Text" DataMember="ccfGetDocumento.Vencimiento" />
+              </DataBindings>
+            </Item4>
+            <Item5 Ref="22" ControlType="XRLabel" Name="XrLabel7" Text="Vencimiento" SizeF="80.36724,18" LocationFloat="377.083344, 180.9583" StyleName="FieldCaption" Padding="2,2,0,0,100" />
+            <Item6 Ref="23" ControlType="XRLabel" Name="XrLabel22" Text="XrLabel22" SizeF="39.166687,18" LocationFloat="600.8333, 180.9583" StyleName="DataField" Padding="2,2,0,0,100">
+              <DataBindings>
+                <Item1 Ref="24" FormatString="{0:#,#}" PropertyName="Text" DataMember="ccfGetDocumento.Plazo" />
+              </DataBindings>
+            </Item6>
+            <Item7 Ref="25" ControlType="XRLabel" Name="XrLabel28" Text="XrLabel28" SizeF="226.625046,18" LocationFloat="135.354172, 180.9583" StyleName="DataField" Padding="2,2,0,0,100">
+              <DataBindings>
+                <Item1 Ref="26" PropertyName="Text" DataMember="ccfGetDocumento.NombreVendedor" />
+              </DataBindings>
+            </Item7>
+            <Item8 Ref="27" ControlType="XRLabel" Name="XrLabel13" Text="Vendedor" SizeF="69.04166,18" LocationFloat="3.91667676, 180.9583" StyleName="FieldCaption" Padding="2,2,0,0,100" />
+            <Item9 Ref="28" ControlType="XRLabel" Name="XrLabel27" Text="XrLabel27" SizeF="39.79171,18" LocationFloat="92.9376, 180.9583" StyleName="DataField" Padding="2,2,0,0,100">
+              <DataBindings>
+                <Item1 Ref="29" PropertyName="Text" DataMember="ccfGetDocumento.IDVendedor" />
+              </DataBindings>
+            </Item9>
+            <Item10 Ref="30" ControlType="XRLabel" Name="XrLabel26" Text="XrLabel26" SizeF="157.916473,18" LocationFloat="478.10434, 151.6667" StyleName="DataField" Padding="2,2,0,0,100">
+              <DataBindings>
+                <Item1 Ref="31" PropertyName="Text" DataMember="ccfGetDocumento.DescrMoneda" />
+              </DataBindings>
+            </Item10>
+            <Item11 Ref="32" ControlType="XRLabel" Name="XrLabel19" Text="XrLabel19" SizeF="110.916565,18" LocationFloat="284.312622, 151.6667" StyleName="DataField" Padding="2,2,0,0,100">
+              <DataBindings>
+                <Item1 Ref="33" FormatString="{0:n2}" PropertyName="Text" DataMember="ccfGetDocumento.MontoOriginal" />
+              </DataBindings>
+            </Item11>
+            <Item12 Ref="34" ControlType="XRLabel" Name="XrLabel5" Text="Monto" SizeF="51.33333,18" LocationFloat="217.604263, 151.6667" StyleName="FieldCaption" Padding="2,2,0,0,100" />
+            <Item13 Ref="35" ControlType="XRLabel" Name="XrLabel1" Text="Cliente" SizeF="49.50002,18.0000229" LocationFloat="4.16666651, 112.250008" StyleName="FieldCaption" Padding="2,2,0,0,100" />
+            <Item14 Ref="36" ControlType="XRLabel" Name="XrLabel15" Text="XrLabel15" SizeF="66.8750458,18" LocationFloat="54.4583321, 112.250008" StyleName="DataField" Padding="2,2,0,0,100">
+              <DataBindings>
+                <Item1 Ref="37" PropertyName="Text" DataMember="ccfGetDocumento.IDCliente" />
+              </DataBindings>
+            </Item14>
+            <Item15 Ref="38" ControlType="XRLabel" Name="XrLabel16" Text="XrLabel16" SizeF="259.875,17.9999924" LocationFloat="135.354187, 112.250015" StyleName="DataField" Padding="2,2,0,0,100">
+              <DataBindings>
+                <Item1 Ref="39" PropertyName="Text" DataMember="ccfGetDocumento.Nombre" />
+              </DataBindings>
+            </Item15>
+            <Item16 Ref="40" ControlType="XRLabel" Name="XrLabel6" Text="Fecha" SizeF="53.666687,18" LocationFloat="6.4453125, 151.6667" StyleName="FieldCaption" Padding="2,2,0,0,100" />
+            <Item17 Ref="41" ControlType="XRLabel" Name="XrLabel20" Text="XrLabel20" SizeF="87.75,18" LocationFloat="92.9376, 151.6667" StyleName="DataField" Padding="2,2,0,0,100">
+              <DataBindings>
+                <Item1 Ref="42" FormatString="{0:dd/MM/yyyy}" PropertyName="Text" DataMember="ccfGetDocumento.Fecha" />
+              </DataBindings>
+            </Item17>
+            <Item18 Ref="43" ControlType="XRLabel" Name="XrLabel18" Text="XrLabel18" SizeF="135.916565,18" LocationFloat="478.1043, 74.58335" StyleName="DataField" Font="Arial, 9pt, style=Bold" Padding="2,2,0,0,100" Borders="None">
+              <DataBindings>
+                <Item1 Ref="44" PropertyName="Text" DataMember="ccfGetDocumento.Documento" />
+              </DataBindings>
+              <StylePriority Ref="45" UseFont="false" UseBorders="false" />
+            </Item18>
+            <Item19 Ref="46" ControlType="XRLabel" Name="XrLabel3" Text="No." SizeF="25.5416565,18" LocationFloat="443.8542, 74.58335" StyleName="FieldCaption" Font="Times New Roman, 10pt, style=Bold" Padding="2,2,0,0,100">
+              <StylePriority Ref="47" UseFont="false" />
+            </Item19>
+            <Item20 Ref="48" ControlType="XRLabel" Name="lblNombreReporte" Multiline="true" Text="Documento Cuentas por Cobrar" TextAlignment="TopLeft" SizeF="271.117218,23.0000076" LocationFloat="6.445305, 46.5417" Font="Times New Roman, 12pt, style=Bold" Padding="2,2,0,0,100" Borders="None">
+              <StylePriority Ref="49" UseFont="false" UseBorders="false" UseTextAlignment="false" />
+            </Item20>
+            <Item21 Ref="50" ControlType="XRLabel" Name="lblEmpresa" TextAlignment="TopCenter" SizeF="344.7917,23" LocationFloat="6.4453125, 10.0000067" Font="Times New Roman, 12pt, style=Bold" Padding="2,2,0,0,100" Borders="None">
+              <DataBindings>
+                <Item1 Ref="52" Parameter="#Ref-6" PropertyName="Text" DataMember="psEmpresa" />
+              </DataBindings>
+              <StylePriority Ref="53" UseFont="false" UseBorders="false" UseTextAlignment="false" />
+            </Item21>
+            <Item22 Ref="54" ControlType="XRLabel" Name="XrLabel2" Text="XrLabel2" SizeF="135.916565,23.0000038" LocationFloat="478.1043, 51.5833626" Font="Times New Roman, 9.75pt, style=Bold" Padding="2,2,0,0,100" Borders="None">
+              <DataBindings>
+                <Item1 Ref="55" PropertyName="Text" DataMember="ccfGetDocumento.DescrClase" />
+              </DataBindings>
+              <StylePriority Ref="56" UseFont="false" UseBorders="false" />
+            </Item22>
+          </Controls>
+          <StylePriority Ref="57" UseBorders="false" />
+        </Item1>
+      </Controls>
+    </Item5>
+  </Bands>
+  <StyleSheet>
+    <Item1 Ref="58" Name="Title" BorderStyle="Inset" Font="Times New Roman, 21pt" ForeColor="Black" BackColor="Transparent" BorderColor="Black" Sides="None" StringFormat="Near;Near;0;None;Character;Default" BorderWidthSerializable="1" />
+    <Item2 Ref="59" Name="FieldCaption" BorderStyle="Inset" Font="Times New Roman, 10pt" ForeColor="Black" BackColor="Transparent" BorderColor="Black" Sides="None" StringFormat="Near;Near;0;None;Character;Default" BorderWidthSerializable="1" />
+    <Item3 Ref="60" Name="PageInfo" BorderStyle="Inset" Font="Arial, 8pt" ForeColor="Black" BackColor="Transparent" BorderColor="Black" Sides="None" StringFormat="Near;Near;0;None;Character;Default" BorderWidthSerializable="1" />
+    <Item4 Ref="61" Name="DataField" BorderStyle="Inset" Padding="2,2,0,0,100" Font="Arial, 9pt" ForeColor="Black" BackColor="Transparent" BorderColor="Black" Sides="None" StringFormat="Near;Near;0;None;Character;Default" BorderWidthSerializable="1" />
+  </StyleSheet>
+  <ComponentStorage>
+    <Item1 Ref="0" ObjectType="DevExpress.DataAccess.Sql.SqlDataSource,DevExpress.DataAccess.v15.2" Name="SqlDataSource1" Base64="PFNxbERhdGFTb3VyY2U+PE5hbWU+U3FsRGF0YVNvdXJjZTE8L05hbWU+PENvbm5lY3Rpb24gTmFtZT0iQ2VkX0Nvbm5lY3Rpb24iIEZyb21BcHBDb25maWc9InRydWUiIC8+PFF1ZXJ5IFR5cGU9IlN0b3JlZFByb2NRdWVyeSIgTmFtZT0iY2NmR2V0RG9jdW1lbnRvIj48UGFyYW1ldGVyIE5hbWU9IkBUaXBvIiBUeXBlPSJEZXZFeHByZXNzLkRhdGFBY2Nlc3MuRXhwcmVzc2lvbiI+KFN5c3RlbS5TdHJpbmcsIG1zY29ybGliLCBWZXJzaW9uPTQuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjc3YTVjNTYxOTM0ZTA4OSkoW1BhcmFtZXRlcnMucHNUaXBvRG9jdW1lbnRvXSk8L1BhcmFtZXRlcj48UGFyYW1ldGVyIE5hbWU9IkBJRERvY3VtZW50byIgVHlwZT0iRGV2RXhwcmVzcy5EYXRhQWNjZXNzLkV4cHJlc3Npb24iPihTeXN0ZW0uSW50MzIsIG1zY29ybGliLCBWZXJzaW9uPTQuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjc3YTVjNTYxOTM0ZTA4OSkoW1BhcmFtZXRlcnMucGlJRERvY3VtZW50b10pPC9QYXJhbWV0ZXI+PFByb2NOYW1lPmNjZkdldERvY3VtZW50bzwvUHJvY05hbWU+PC9RdWVyeT48UmVzdWx0U2NoZW1hPjxEYXRhU2V0IE5hbWU9IlNxbERhdGFTb3VyY2UxIj48VmlldyBOYW1lPSJjY2ZHZXREb2N1bWVudG8iPjxGaWVsZCBOYW1lPSJJRERlYml0byIgVHlwZT0iSW50MzIiIC8+PEZpZWxkIE5hbWU9IklEQ2xpZW50ZSIgVHlwZT0iSW50MzIiIC8+PEZpZWxkIE5hbWU9Ik5vbWJyZSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJJREJvZGVnYSIgVHlwZT0iSW50MzIiIC8+PEZpZWxkIE5hbWU9IkRlc2NyQm9kZWdhIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IklEVmVuZGVkb3IiIFR5cGU9IkludDMyIiAvPjxGaWVsZCBOYW1lPSJOb21icmVWZW5kZWRvciIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJUaXBvRG9jdW1lbnRvIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IklEQ2xhc2UiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iRGVzY3JDbGFzZSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJJRFN1YlRpcG8iIFR5cGU9IkludDMyIiAvPjxGaWVsZCBOYW1lPSJJRE1vbmVkYSIgVHlwZT0iSW50MzIiIC8+PEZpZWxkIE5hbWU9IkRlc2NyTW9uZWRhIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IkRvY3VtZW50byIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJGZWNoYSIgVHlwZT0iRGF0ZVRpbWUiIC8+PEZpZWxkIE5hbWU9IlZlbmNpbWllbnRvIiBUeXBlPSJEYXRlVGltZSIgLz48RmllbGQgTmFtZT0iUGxhem8iIFR5cGU9IkRlY2ltYWwiIC8+PEZpZWxkIE5hbWU9Ik1vbnRvT3JpZ2luYWwiIFR5cGU9IkRlY2ltYWwiIC8+PEZpZWxkIE5hbWU9IlNhbGRvQWN0dWFsIiBUeXBlPSJEZWNpbWFsIiAvPjxGaWVsZCBOYW1lPSJDYW5jZWxhZG8iIFR5cGU9IkJvb2xlYW4iIC8+PEZpZWxkIE5hbWU9IkFudWxhZG8iIFR5cGU9IkJvb2xlYW4iIC8+PEZpZWxkIE5hbWU9IkNvbmNlcHRvU2lzdGVtYSIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJDb25jZXB0b1VzdWFyaW8iIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iQ29udGFiaWxpemFkbyIgVHlwZT0iQm9vbGVhbiIgLz48RmllbGQgTmFtZT0iQXNpZW50byIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJmbGdBcHJvYmFkbyIgVHlwZT0iQm9vbGVhbiIgLz48RmllbGQgTmFtZT0iZmxnT3JpZ2VuRXh0ZXJubyIgVHlwZT0iQm9vbGVhbiIgLz48RmllbGQgTmFtZT0iVXN1YXJpbyIgVHlwZT0iU3RyaW5nIiAvPjwvVmlldz48L0RhdGFTZXQ+PC9SZXN1bHRTY2hlbWE+PC9TcWxEYXRhU291cmNlPg==" />
+  </ComponentStorage>
+  <ObjectStorage>
+    <Item1 ObjectType="DevExpress.XtraReports.Serialization.ObjectStorageInfo, DevExpress.XtraReports.v15.2" Ref="4" Content="System.Int32" Type="System.Type" />
+  </ObjectStorage>
+</XtraReportsLayoutSerializer>

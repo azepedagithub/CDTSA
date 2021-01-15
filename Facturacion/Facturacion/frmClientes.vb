@@ -44,9 +44,12 @@ Public Class frmClientes
             Me.chkCredito.Enabled = True
             Me.chkCredito.Checked = True
             Me.chkEditaNombre.Checked = False
+            Me.chkCorporativo.Checked = False
+            Me.chkMiembroCorp.Checked = False
             Me.DateEditIngreso.Enabled = False
-
+            Me.MemoEditDireccion.Text = ""
             Me.txtLimite.Text = "0"
+            Me.txtDisponible.Text = "0"
             Me.txtInteres.Text = "0"
             Me.txtNombre.Text = ""
             Me.txtRuc.Text = ""
@@ -57,6 +60,9 @@ Public Class frmClientes
             Me.txtDueno.Text = ""
             Me.txtCedula.Text = ""
             Me.txtCelular.Text = ""
+            ' Aqui se debe validar si el usuario puede definir o no si puede hacer especial a un cliente.
+            Me.chkEspecial.Checked = False
+            Me.chkFarmacia.Checked = False
             Me.gridlookupTipo.Text = ""
             Me.gridLookUpNivel.Text = ""
             Me.gridLookUpMoneda.Text = ""
@@ -68,6 +74,7 @@ Public Class frmClientes
             Me.gridlookupMunicipio.Text = ""
             Me.gridlookupZona.Text = ""
             Me.gridlookupSubZona.Text = ""
+            CargagridSearchLookUp(Me.SearchLookUpEditClienteCorp, "ccfClientes", "IDCliente, Nombre, Activo", "EsCorporacion=1", "Nombre", "Nombre", "IDCliente")
             Me.SearchLookUpEditClienteCorp.Enabled = False
             Me.SearchLookUpEditClienteCorp.Text = ""
         End If
@@ -85,6 +92,7 @@ Public Class frmClientes
         ' la SubZona se debe cargar cuando se haya selecionado la Zona
         CargagridLookUp(Me.gridlookupSucursal, "invBodega", "IDBodega, Descr, Activo", "", "IDBodega", "Descr", "IDBodega")
         CargagridLookUp(Me.gridLookUpPlazo, "ccfPlazo", "Plazo, Descr, Activo", "", "Plazo", "Descr", "Plazo")
+        CargagridLookUp(Me.GridLookUpEditEvaluacion, "fafEvaluacionCliente", "IDEvaluacion, Descr, Activo", "", "IDEvaluacion", "Descr", "IDEvaluacion")
         CargagridSearchLookUp(Me.SearchLookUpEditClienteCorp, "ccfClientes", "IDCliente, Nombre, Activo", "EsCorporacion=1", "Nombre", "Nombre", "IDCliente")
         gridLookUpMoneda.ReadOnly = True
     End Sub
@@ -102,10 +110,12 @@ Public Class frmClientes
         Me.txtweb.EditValue = tableData.Rows(0).Item("pweb").ToString()
         Me.DateEditIngreso.EditValue = tableData.Rows(0).Item("FechaIngreso")
         If Not IsDBNull(tableData.Rows(0).Item("LimiteCredito")) Then
-            '    Me.txtLimite.EditValue = vbNull
-            'Else
             Me.txtLimite.EditValue = CDbl(tableData.Rows(0).Item("LimiteCredito"))
         End If
+        If Not IsDBNull(tableData.Rows(0).Item("DisponibleCredito")) Then
+            Me.txtDisponible.EditValue = CDbl(tableData.Rows(0).Item("DisponibleCredito"))
+        End If
+
         If Not IsDBNull(tableData.Rows(0).Item("PorcInteres")) Then
             Me.txtInteres.EditValue = CDbl(tableData.Rows(0).Item("PorcInteres"))
         End If
@@ -144,24 +154,28 @@ Public Class frmClientes
         Me.gridlookupMunicipio.EditValue = CInt(tableData.Rows(0).Item("IDMunicipio"))
         Me.gridlookupZona.EditValue = CInt(tableData.Rows(0).Item("IDZona"))
         Me.gridlookupSubZona.EditValue = CInt(tableData.Rows(0).Item("IDSubZona"))
+        Me.GridLookUpEditEvaluacion.EditValue = CInt(tableData.Rows(0).Item("IDEvaluacion"))
         Me.chkEditaNombre.EditValue = Convert.ToBoolean(tableData.Rows(0).Item("EditaNombre"))
         If IsDBNull(tableData.Rows(0).Item("Escorporacion")) Then
-            Me.chkMiembroCorp.EditValue = False
-        Else
-            Convert.ToBoolean(tableData.Rows(0).Item("Escorporacion"))
-        End If
-        If IsDBNull(tableData.Rows(0).Item("MiembroCorp")) Then
             Me.chkCorporativo.EditValue = False
         Else
-            Me.chkMiembroCorp.EditValue = Convert.ToBoolean(tableData.Rows(0).Item("Escorporacion"))
+            chkCorporativo.Checked = Convert.ToBoolean(tableData.Rows(0).Item("Escorporacion"))
+        End If
+        If IsDBNull(tableData.Rows(0).Item("MiembroCorp")) Then
+            Me.chkMiembroCorp.EditValue = False
+        Else
+            Me.chkMiembroCorp.EditValue = Convert.ToBoolean(tableData.Rows(0).Item("MiembroCorp"))
+        End If
+        If IsDBNull(tableData.Rows(0).Item("flgEspecial")) Then
+            Me.chkEspecial.EditValue = False
+        Else
+            Me.chkEspecial.EditValue = Convert.ToBoolean(tableData.Rows(0).Item("flgEspecial"))
         End If
         If IsDBNull(tableData.Rows(0).Item("IDClienteCorp")) Then
             SearchLookUpEditClienteCorp.EditValue = ""
         Else
             SearchLookUpEditClienteCorp.EditValue = CInt(tableData.Rows(0).Item("IDClienteCorp"))
         End If
-
-
 
         Dim imageBytes As Byte()
         If Not IsDBNull(tableData.Rows(0)("Foto")) Then
@@ -176,7 +190,7 @@ Public Class frmClientes
 
     End Sub
 
-    
+
     Sub CargagridLookUp(ByVal g As GridLookUpEdit, sTableName As String, sFieldsName As String, sWhere As String, sOrderBy As String, sDisplayMember As String, sValueMember As String)
         g.Properties.DataSource = cManager.GetDataTable(sTableName, sFieldsName, sWhere, sOrderBy)
         g.Properties.DisplayMember = sDisplayMember
@@ -316,13 +330,16 @@ Public Class frmClientes
             sparameterValues = sparameterValues & Me.gridLookUpMoneda.EditValue.ToString() & ","
             sparameterValues = sparameterValues & IIf(Me.chkEditaNombre.Checked = True, 1, 0).ToString() & ","
             sparameterValues = sparameterValues & IIf(Me.chkCredito.Checked = True, 1, 0).ToString() & ","
+            sparameterValues = sparameterValues & IIf(Me.chkEspecial.Checked = True, 1, 0).ToString() & ","
             sparameterValues = sparameterValues & IIf(Me.chkCorporativo.Checked = True, 1, 0).ToString() & ","
             sparameterValues = sparameterValues & IIf(Me.chkMiembroCorp.Checked = True, 1, 0).ToString() & ","
             If Me.SearchLookUpEditClienteCorp.Text = "" Then
-                sparameterValues = sparameterValues & "null"
+                sparameterValues = sparameterValues & "null" & ","
             Else
-                sparameterValues = sparameterValues & Me.SearchLookUpEditClienteCorp.EditValue.ToString()
+                sparameterValues = sparameterValues & Me.SearchLookUpEditClienteCorp.EditValue.ToString() & ","
             End If
+            sparameterValues = sparameterValues & txtDisponible.EditValue.ToString() & ","
+            sparameterValues = sparameterValues & Me.GridLookUpEditEvaluacion.EditValue.ToString()
             'sparameterValues = sparameterValues & IIf(Me.SearchLookUpEditClienteCorp.Text = "", "null", Me.SearchLookUpEditClienteCorp.EditValue.ToString())
             gImage = PictureBoxFoto.Image
             cManager.ExecSPwithImage(storeName, sparameterValues, gImage)
@@ -378,6 +395,7 @@ Public Class frmClientes
         If gridLookUpNivel.Text = "" Then MsgBox("Debe seleccionar un NIvel de Precios del Cliente", MsgBoxStyle.Critical + MsgBoxStyle.OkOnly, "Ayuda") : Me.gridLookUpNivel.Focus() : Return False : Exit Function
         If gridLookUpMoneda.Text = "" Then MsgBox("Debe seleccionar una Moneda para el Cliente", MsgBoxStyle.Critical + MsgBoxStyle.OkOnly, "Ayuda") : Me.gridLookUpMoneda.Focus() : Return False : Exit Function
         If gridLookUpPlazo.Text = "" Then MsgBox("Debe seleccionar un Plazo del Cliente", MsgBoxStyle.Critical + MsgBoxStyle.OkOnly, "Ayuda") : Me.gridLookUpPlazo.Focus() : Return False : Exit Function
+        If GridLookUpEditEvaluacion.Text = "" Then MsgBox("Debe seleccionar una Evaluacion para el Cliente", MsgBoxStyle.Critical + MsgBoxStyle.OkOnly, "Ayuda") : Me.GridLookUpEditEvaluacion.Focus() : Return False : Exit Function
         If gridlookupDepto.Text = "" Then MsgBox("Debe seleccionar un Departamento para el Cliente", MsgBoxStyle.Critical + MsgBoxStyle.OkOnly, "Ayuda") : Me.gridlookupDepto.Focus() : Return False : Exit Function
         If gridlookupMunicipio.Text = "" Then MsgBox("Debe seleccionar un Departamento para el Cliente", MsgBoxStyle.Critical + MsgBoxStyle.OkOnly, "Ayuda") : Me.gridlookupMunicipio.Focus() : Return False : Exit Function
         If gridlookupZona.Text = "" Then MsgBox("Debe seleccionar una Zona para el Cliente", MsgBoxStyle.Critical + MsgBoxStyle.OkOnly, "Ayuda") : Me.gridlookupZona.Focus() : Return False : Exit Function
@@ -399,8 +417,9 @@ Public Class frmClientes
 
 
     Private Sub chkFarmacia_CheckedChanged(sender As Object, e As EventArgs) Handles chkFarmacia.CheckedChanged
-        If chkFarmacia.EditValue = True Then
+        If chkFarmacia.Checked = True Then
             txtFarmacia.Enabled = True
+            txtFarmacia.Focus()
         Else
             txtFarmacia.Text = ""
             txtFarmacia.Enabled = False
@@ -456,11 +475,12 @@ Public Class frmClientes
         If chkCorporativo.Checked = True And chkMiembroCorp.Checked Then
             MessageBox.Show("Un cliente no puede ser Corporativo Matriz y Miembro a la vez ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             chkMiembroCorp.Checked = False
+
             Return
         End If
         If chkCorporativo.Checked = True Then
             Me.SearchLookUpEditClienteCorp.Text = ""
-            Me.SearchLookUpEditClienteCorp.Enabled = True
+            Me.SearchLookUpEditClienteCorp.Enabled = False
         Else
             Me.SearchLookUpEditClienteCorp.Enabled = False
         End If
@@ -470,12 +490,10 @@ Public Class frmClientes
         If chkCorporativo.Checked = True And chkMiembroCorp.Checked Then
             MessageBox.Show("Un cliente no puede ser Corporativo Matriz y Miembro a la vez ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             chkCorporativo.Checked = False
-            Return
+            'Return
         End If
         If chkMiembroCorp.Checked = True Then
             Me.SearchLookUpEditClienteCorp.Enabled = True
-
-
         End If
 
     End Sub
@@ -483,4 +501,6 @@ Public Class frmClientes
     Private Sub BarButtonOut_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles BarButtonOut.ItemClick
         Close()
     End Sub
+
+
 End Class

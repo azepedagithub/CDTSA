@@ -75,7 +75,23 @@ Public Class frmDetalles
     End Sub
 
     Private Sub btnEdit_Click(sender As Object, e As EventArgs) Handles btnEdit.Click
-        Select UCase(gsFormDetalleName)
+        ShowDataDetail()
+    End Sub
+    Private Sub ShowDataDetail()
+        Select Case UCase(gsFormDetalleName)
+            Case "CATEGORIACLIENTE"
+                Dim dr As DataRow = GridView1.GetFocusedDataRow()
+                Dim sCodigo As String
+                sCodigo = dr(0).ToString()
+                Dim frm As New frmCategoriaCliente()
+                frm.gsCodeName = "IDCategoria"
+                frm.gsCodeValue = sCodigo
+                gsNombreStoreProcedure = "fafgetCategoriaCliente"
+                frm.gsStoreProcNameGetData = gsNombreStoreProcedure
+                frm.gbCodeNumeric = True
+                frm.gbEdit = True
+                frm.ShowDialog()
+                frm.Dispose()
             Case "CLIENTE"
                 Dim dr As DataRow = GridView1.GetFocusedDataRow()
                 Dim sCodigo As String
@@ -111,14 +127,14 @@ Public Class frmDetalles
                 frm.gsCodeValue = sCodigo
                 gsNombreStoreProcedure = "globalgetConsecMask"
                 frm.gsStoreProcNameGetData = gsNombreStoreProcedure
-                frm.gbCodeNumeric = True
+                frm.gbCodeNumeric = False
                 frm.gbEdit = True
                 frm.ShowDialog()
                 frm.Dispose()
         End Select
         RefreshGrid()
-    End Sub
 
+    End Sub
 
     Private Sub btnDelete_Click_1(sender As Object, e As EventArgs) Handles btnDelete.Click
         Dim storeName As String, sparameterValues As String
@@ -157,7 +173,8 @@ Public Class frmDetalles
         End Try
     End Sub
 
-    Private Sub GridControl1_Click(sender As Object, e As EventArgs) Handles GridControl1.Click
 
+    Private Sub GridControl1_DoubleClick(sender As Object, e As EventArgs) Handles GridControl1.DoubleClick
+        ShowDataDetail()
     End Sub
 End Class
