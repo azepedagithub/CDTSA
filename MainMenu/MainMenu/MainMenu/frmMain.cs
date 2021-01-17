@@ -19,6 +19,7 @@ using CO;
 using Facturacion;
 
 
+
 namespace MainMenu
 {
     public partial class frmMain : DevExpress.XtraBars.Ribbon.RibbonForm
@@ -35,10 +36,12 @@ namespace MainMenu
             ControlStyles.DoubleBuffer,
             true);
             CreateNodes(treeListInventario);
+			CreateNodes(treeListTeleventa);
             CreateNodes(treeListFactura);
             CreateNodes(treeListContabilidad);
             CreateNodes(treeListAdministracion);
             CreateNodes(treeListControlBancario);
+			CreateNodes(treeListCuentasXCobrar);
             CreateNodes(treelstCompras);
             CreateNodes(treelstCuentasPorPagar);
             this.Load += frmMain_Load;
@@ -58,8 +61,111 @@ namespace MainMenu
 
             this.treeListFactura.DoubleClick -= treeListFactura_DoubleClick;
             this.treeListFactura.DoubleClick += treeListFactura_DoubleClick;
+
+			this.treeListTeleventa.DoubleClick -= treeListTeleVenta_DoubleClick;
+			this.treeListTeleventa.DoubleClick += treeListTeleVenta_DoubleClick;
+
+			this.treeListCuentasXCobrar.DoubleClick -= treeListCuentasXCobrar_DoubleClick;
+			this.treeListCuentasXCobrar.DoubleClick += treeListCuentasXCobrar_DoubleClick;
+
+			this.treelstCuentasPorPagar.DoubleClick-=treelstCuentasPorPagar_DoubleClick;
+			this.treelstCuentasPorPagar.DoubleClick += treelstCuentasPorPagar_DoubleClick;
             
         }
+
+		void treeListCuentasXCobrar_DoubleClick(object sender, EventArgs e)
+		{
+			 DevExpress.XtraTreeList.Nodes.TreeListNode node = default(DevExpress.XtraTreeList.Nodes.TreeListNode);
+            node = ((TreeList)sender).FocusedNode;
+            if (node.Tag == null)
+                return;
+			CP.frmMainCP ofrmOpcionCP = new CP.frmMainCP();
+			frmtmpMain ofrmOpcionFA = new frmtmpMain();
+			switch (node.Tag.ToString())
+			{
+				case "optRegistrarCliente":
+					ofrmOpcionFA.MenuClientes();
+					break;
+				case "optRegistrarTranCliente":
+					frmCCFConsultaDocs ofrmDocs = new frmCCFConsultaDocs();
+					ofrmDocs.ShowDialog();
+					break;
+				case "optRecibosCaja":
+					frmCCFConsultaRC ofrmRecibos = new frmCCFConsultaRC();
+					ofrmRecibos.ShowDialog();
+					break;
+				case "optRegistrarChequePostFechado":
+					frmCCFConsultaChequesPos ofrmChequesPos = new frmCCFConsultaChequesPos();
+					ofrmChequesPos.ShowDialog();
+					break;
+				case "optAutorizacionesCliente":
+					frmCCFConsultaAutorizacion ofrmAutorizaciones = new frmCCFConsultaAutorizacion();
+					ofrmAutorizaciones.ShowDialog();
+					break;
+				case "optGuardarDocAnulado":
+					frmCCFCreaDocAnulado ofrmCrearDocAnulado = new frmCCFCreaDocAnulado();
+					ofrmCrearDocAnulado.ShowDialog();
+					break;
+				case "optMovimientosCliente":
+					frmCCFFiltroReportes ofrmRep = new frmCCFFiltroReportes();
+					ofrmRep.iReporte = Unit.CrptMovimientos;
+					ofrmRep.gsNombreReporte = "Reporte de Movimientos del Cliente";
+					ofrmRep.ShowDialog();
+					break;
+				case "optDesglosePagoCliente":
+					frmCCFFiltroReportes ofrmRep2 = new frmCCFFiltroReportes();
+					ofrmRep2.iReporte = Unit.CrptDesglosePagos;
+					ofrmRep2.gsNombreReporte = "Reporte Desglose de Pagos";
+					ofrmRep2.ShowDialog();
+					break;
+				case "optDxCCliente":
+					frmCCFFiltroReportes ofrmRep3 = new frmCCFFiltroReportes();
+					ofrmRep3.iReporte = Unit.CrptDocumentosPorCobrar;
+					ofrmRep3.gsNombreReporte = "Reporte Documentos por Cobrar";
+					ofrmRep3.ShowDialog();
+					break;
+				case "optAnalisisVencCliente":
+					frmCCFFiltroReportes ofrmRep4 = new frmCCFFiltroReportes();
+					ofrmRep4.iReporte = Unit.CrptDocumentosPorCobrar;
+					ofrmRep4.gsNombreReporte = "Reporte Análisis de Vencimientos";
+					ofrmRep4.ShowDialog();
+					break;
+				case "optAnalisisVencSucCliente":
+					frmCCFFiltroReportes ofrmRep5 = new frmCCFFiltroReportes();
+					ofrmRep5.iReporte = Unit.CrptAnalisisVencimientoSucursal;
+					ofrmRep5.gsNombreReporte = "Reporte Análisis de Vencimientos";
+					ofrmRep5.ShowDialog();
+					break;
+				case "optCategoriaCliente":
+					ofrmOpcionFA.MenuCatCliente();
+					break;
+				case "optTipoCliente":
+					ofrmOpcionFA.MenuTipoCliente();
+					break;
+				case "optEvaluacionesCliente":
+					ofrmOpcionFA.MenuEvalCliente();
+					break;
+				case "optDepartamentoCliente":
+					ofrmOpcionFA.MenuDepartamento();
+					break;
+				case "optMunicipiosCliente":
+					ofrmOpcionFA.MenuMunicipio();
+					break;
+				case "optZonasCliente":
+					ofrmOpcionFA.MenuZona();
+					break;
+				case "optSubZonaCliente":
+					ofrmOpcionFA.MenuSubZona();
+					break;
+				case "optPlasosCreditoCliente":
+					ofrmOpcionFA.MenuPlazos();
+					break;
+				case "optParametrosCliente":
+					break;
+
+
+			}
+		}
 
         
 
@@ -267,6 +373,34 @@ namespace MainMenu
         }
 
 
+		void treeListTeleVenta_DoubleClick(object sender, EventArgs e)
+		{
+			DevExpress.XtraTreeList.Nodes.TreeListNode node = default(DevExpress.XtraTreeList.Nodes.TreeListNode);
+			node = ((TreeList)sender).FocusedNode;
+			if (Application.OpenForms[node.Tag.ToString()] != null)
+			{
+				Application.OpenForms[node.Tag.ToString()].Activate();
+				return;
+			}
+			Facturacion.frmtmpMain ofrmMain = new Facturacion.frmtmpMain();
+			switch (node.Tag.ToString())
+			{
+				case "optCrearPedidoTeleventa":
+					ofrmMain.MenuCrearPedido();
+					break;
+				case "optCrearAutorizarPedidoTeleventa":
+					ofrmMain.MenuAutorizarPedido();
+					break;
+				case "optEstadoPedidoTeleventa":
+					ofrmMain.MenuEstadoPedido();
+					break;
+
+				case "optTipoEntregaTeleventa":
+					ofrmMain.MenuTipoEntrega();
+					break;
+			}
+		}
+
         void treeListFactura_DoubleClick(object sender, EventArgs e)
         {
             DevExpress.XtraTreeList.Nodes.TreeListNode node = default(DevExpress.XtraTreeList.Nodes.TreeListNode);
@@ -276,162 +410,66 @@ namespace MainMenu
                 Application.OpenForms[node.Tag.ToString()].Activate();
                 return;
             }
+			Facturacion.frmtmpMain ofrmMain = new Facturacion.frmtmpMain();
             switch (node.Tag.ToString())
             {
-                case "frmDetalles":
-                    Facturacion.frmDetalles ofrmDetalles = new frmDetalles();
-                    ofrmDetalles.gsFormDetalleName = "CLIENTE"  ;
-                    ofrmDetalles.gsCaptionFrm = "Clientes";
-                    ofrmDetalles.gsTableName = "ccfClientes";
-                    ofrmDetalles.gsCodeName = "IDCliente";
-                    ofrmDetalles.gbCodeNumeric = true;
-                    ofrmDetalles.gsDescrName = "Nombre";
-                    ofrmDetalles.gsFieldsRest = "Activo";
-                    ofrmDetalles.gsOrder = "IDCliente";
-                    ofrmDetalles.MdiParent = this;
-                    ShowPagesRibbonMan(false);
-                    ofrmDetalles.Show();
+				
+				case "optCrearFactura":
+					ofrmMain.MenuFactura();
+					//ofrmDetalles.gsFormDetalleName = "CLIENTE";
+					//ofrmDetalles.gsCaptionFrm = "Clientes";
+					//ofrmDetalles.gsTableName = "ccfClientes";
+					//ofrmDetalles.gsCodeName = "IDCliente";
+					//ofrmDetalles.gbCodeNumeric = true;
+					//ofrmDetalles.gsDescrName = "Nombre";
+					//ofrmDetalles.gsFieldsRest = "Activo";
+					//ofrmDetalles.gsOrder = "IDCliente";
+					//ofrmDetalles.MdiParent = this;
+					//ShowPagesRibbonMan(false);
+					//ofrmDetalles.Show();
+					break;
+				case "optCrearDevolucion":
+					ofrmMain.MenuDevolucion();
                     break;
-                case "optDepartamento":
-                    Facturacion.frmCatalogos ofrmDepartamento = new frmCatalogos();
-                     ofrmDepartamento.MdiParent = this;
-                     ofrmDepartamento.gsCaptionFrm = "Departamentos";
-                     ofrmDepartamento.gsTableName = "globalDepto";
-                    ofrmDepartamento.gsCodeName = "IDDepto";
-                    ofrmDepartamento.gbCodeNumeric = true;
-                    ofrmDepartamento.gsDescrName = "Descr";
-                    ofrmDepartamento.gsFieldsRest = "Activo";
-                    ofrmDepartamento.gsOrder = "IDDepto";
-                    ShowPagesRibbonMan(false);
-                    ofrmDepartamento.Show();
+				case "optConsultaFacturacion":
+					ofrmMain.MenuConsultaFactura();
                     break;
-                case "optMunicipio":
-                    Facturacion.frmSubCatalogo ofrmMunicipio = new frmSubCatalogo();
-                    ofrmMunicipio.gsCaptionFrm = "Master Departamento / Municipios";
-                    ofrmMunicipio.gsStoreProcNameMaster = "fafGetMasterMunicipios";
-                    ofrmMunicipio.gsParametersValuesMaster = "-1,-1";
-                    ofrmMunicipio.gsTableNameMaster = "globalDepto";
-                    ofrmMunicipio.gsCodeNameMaster = "IDDepto";
-                    ofrmMunicipio.gbCodeNumericMaster = true;
-                    ofrmMunicipio.gsDescrNameMaster = "Descr";
-                    ofrmMunicipio.gsFieldsRestMaster = "Activo";
-                    
-                    ofrmMunicipio.gsTableName = "globalMunicipio";
-                    ofrmMunicipio.gsCodeName = "IDMunicipio";
-                    ofrmMunicipio.gbCodeNumeric = true;
-                    ofrmMunicipio.gsDescrName = "Descr";
-                    ofrmMunicipio.gsFieldsRest = "Activo";
-                    
-                    ofrmMunicipio.Show();
+				case "optConsultaDevoluciones":
+					ofrmMain.MenuConsultaDev();
                     break;
 
-                case "optZona":
-                    Facturacion.frmCatalogos ofrmZona = new frmCatalogos();
-                    ofrmZona.gsCaptionFrm = "Master Departamento / Municipios";
-                    ofrmZona.gsCaptionFrm = "Zonas";
-                    ofrmZona.gsTableName = "globalZona";
-                    ofrmZona.gsOrder = "IDZona";
-                    ofrmZona.gsCodeName = "IDZona";
-                    ofrmZona.gbCodeNumeric = true ;
-                    ofrmZona.gsDescrName = "Descr" ;
-                    ofrmZona.gsFieldsRest = " Activo";
-                    
-                    ofrmZona.Show();
+				case "optCatalogoTipoFactura":
+					ofrmMain.MenuTipoFactura();
+					break;
+				case "optCatalogoTipoVendedor":
+					ofrmMain.MenuTipoVendedor();
+					break;
+				case "optCatalogoGrupoVendedor":
+					ofrmMain.MenuGrupoVendedor();
                     break;
-                case "optSubZona":
-                    Facturacion.frmSubCatalogo frmSubZona = new frmSubCatalogo();
-                    frmSubZona.gsCaptionFrm = "Master Zona / SubZona";
-                    frmSubZona.gsStoreProcNameMaster = "fafGetMasterSubZonas";
-                    frmSubZona.gsParametersValuesMaster = "-1,-1";
-                    frmSubZona.gsTableNameMaster = "globalZona";
-                    frmSubZona.gsCodeNameMaster = "IDZona";
-                    frmSubZona.gbCodeNumericMaster = true;
-                    frmSubZona.gsDescrNameMaster = "Descr";
-                    frmSubZona.gsFieldsRestMaster = "Activo";
-                    frmSubZona.gsTableName = "globalSubZona";
-                    frmSubZona.gsCodeName = "IDSubZona";
-                    frmSubZona.gbCodeNumeric = true;
-                    frmSubZona.gsDescrName = "Descr";
-                    frmSubZona.gsFieldsRest = "Activo";
-
-                    frmSubZona.Show();
+				case "optCatalogoVendedores":
+					ofrmMain.MenuVendedores();
                     break;
-                case "optConsecutivosMascaras":
-                    Facturacion.frmDetalles frm = new frmDetalles();
-                    frm.gsFormDetalleName = "CONSECUTIVOMASK";
-                    frm.gsCaptionFrm = "Consecutivos";
-                    frm.gsTableName = "globalConsecMask";
-                    frm.gsCodeName = "Codigo";
-                    frm.gbCodeNumeric = false;
-                    frm.gsDescrName = "Descr";
-                    frm.gsFieldsRest = "Consecutivo, Mascara,Activo";
-                    frm.gsOrder = "Codigo";
-                    frm.Show();
-                    break;
-                case "optPlazos":
-                    Facturacion.frmCatalogos frmPlazos=  new frmCatalogos();
-                    frmPlazos.gsCaptionFrm = "Plazos de Creditos";
-                    frmPlazos.gsTableName = "ccfPlazo";
-                    frmPlazos.gsCodeName = "Plazo";
-                    frmPlazos.gbCodeNumeric = true;
-                    frmPlazos.gsDescrName = "Descr";
-                    frmPlazos.gsFieldsRest = "Activo";
-                    frmPlazos.gsOrder = "Plazo";
+				case "optNivelesPrecio":
+					ofrmMain.menuNivelPrecio();
+					break;
+				case "optListaPrecios":
+					ofrmMain.MenuListaPrecios();
+					break;
+				case "optCrearPromocion":
+					ofrmMain.MenuBonificaciones();
+					break;
+				case "optTablaDesc":
+					ofrmMain.MenuTablaDesc();
+					break;
+				case "optParametrosFA":
+					ofrmMain.MenuParametrosFactura();
+					break;
+				case "optConsecutivosMask":
+					ofrmMain.MenuConsecutivMask();
+					break;
 
-                    frmPlazos.Show();
-                    break;
-                case "optTipoEntrega":
-                    Facturacion.frmCatalogos frmTipoEntrega = new frmCatalogos();
-                    frmTipoEntrega.gsCaptionFrm = "Tipos de Entrega a Clientes";
-                    frmTipoEntrega.gsTableName = "fafTipoEntrega";
-                    frmTipoEntrega.gsCodeName = "IDTipoEntrega";
-                    frmTipoEntrega.gbCodeNumeric = true;
-                    frmTipoEntrega.gsDescrName = "Descr";
-                    frmTipoEntrega.gsFieldsRest = "Activo";
-                    frmTipoEntrega.gsOrder = "IDTipoEntrega";
-
-                    frmTipoEntrega.Show();
-
-                    break;
-                case "optTipoCliente":
-                     Facturacion.frmCatalogos frmTipoCliente = new frmCatalogos();
-                     frmTipoCliente.gsCaptionFrm = "Tipos de Cliente";
-                     frmTipoCliente.gsTableName = "fafTipoCliente";
-                     frmTipoCliente.gsCodeName = "IDTipo";
-                    frmTipoCliente.gbCodeNumeric = true;
-                    frmTipoCliente.gsDescrName = "Descr";
-                    frmTipoCliente.gsFieldsRest = "Activo";
-                    frmTipoCliente.gsOrder = "IDTipo";
-
-                    frmTipoCliente.Show();
-                    break;
-                case "optCategoriaCliente":
-                     Facturacion.frmCatalogos frmCategoriaCliente = new frmCatalogos();
-                     frmCategoriaCliente.gsCaptionFrm = "Categoria Cliente";
-                     frmCategoriaCliente.gsTableName = "fafCategoriaCliente";
-                     frmCategoriaCliente.gsCodeName = "IDCategoria";
-                    frmCategoriaCliente.gbCodeNumeric = true;
-                    frmCategoriaCliente.gsDescrName = "Descr";
-                    frmCategoriaCliente.gsFieldsRest = "Activo";
-                    frmCategoriaCliente.gsOrder = "IDCategoria";
-
-                    frmCategoriaCliente.Show();
-                    break;
-                case "optVendedores":
-                    Facturacion.frmDetalles ofrmVendedores =  new frmDetalles();
-                    ofrmVendedores.gsFormDetalleName = "VENDEDOR";
-                    ofrmVendedores.gsCaptionFrm = "Vendedores";
-                    ofrmVendedores.gsTableName = "fafVendedor";
-                    ofrmVendedores.gsCodeName = "IDVendedor";
-                    ofrmVendedores.gbCodeNumeric = true;
-                    ofrmVendedores.gsDescrName = "Nombre";
-                    ofrmVendedores.gsFieldsRest = "Activo";
-                    ofrmVendedores.gsOrder = "IDVendedor";
-
-                    ofrmVendedores.Show();
-                    break;
-
-
+                
             }
         }
 
@@ -514,11 +552,19 @@ namespace MainMenu
             }
         }
 
+		private void SetUsuarioIntegracionModulos(String sUsuario){
+			Unit.gsUsuario = sUsuario;
+			CP.Unitbk.gsUsuario = sUsuario;
+			Unit.gsSucursal = "1";
+		}
+
         private void CargarPrivilegios()
         {
             DataSet DS = new DataSet();
             DataTable DT = new DataTable();
-            DS = UsuarioDAC.GetAccionModuloFromRole(0, UsuarioDAC._DS.Tables[0].Rows[0]["Usuario"].ToString());
+			String sUsuario = UsuarioDAC._DS.Tables[0].Rows[0]["Usuario"].ToString();
+			SetUsuarioIntegracionModulos(sUsuario);
+            DS = UsuarioDAC.GetAccionModuloFromRole(0,sUsuario);
             DT = DS.Tables[0];
             //Modulos principales
             if (UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosGeneralesType.Contabilidad, DT))
@@ -729,7 +775,7 @@ namespace MainMenu
         }
 
 
-
+// SeccionMenu
         private void CreateNodes(TreeList tl)
         {
             tl.BeginUnboundLoad();
@@ -840,60 +886,222 @@ namespace MainMenu
                     break;
 
                 case "treelstCuentasPorPagar":
+
                     TreeListNode nodeDocumentosCP = tl.AppendNode(new object[] { "Transacciones" }, -1, 11, 11, 11);
 					nodeDocumentosCP.Tag = "frmCPConsultaDocs";
+
+					TreeListNode nodeProveedoresCP = tl.AppendNode(new object[] { "Proveedores" }, -1, 11, 11, 11);
+					nodeProveedoresCP.Tag = "frmListadoProveedores";
+                    
 
 					//Carpeta
 					TreeListNode nodeReportesCP = tl.AppendNode(new object[] { "Reportes" }, -1, 9, 10, 9);
 					TreeListNode nodeMoviProveedor = tl.AppendNode(new object[] { "Movimentos del Proveedor" }, nodeReportesCP.Id, 11, 11, 11);
-					nodeMoviProveedor.Tag = "frmCPFiltroReportes";
+					nodeMoviProveedor.Tag = "frmCPMovimientosProveedor";
 
 					TreeListNode nodeDesglosePago = tl.AppendNode(new object[] { "Desglose de Pago" }, nodeReportesCP.Id, 11, 11, 11);
-					nodeDesglosePago.Tag = "frmCPFiltroReportesDesglosePago";
+					nodeDesglosePago.Tag = "frmCPReportesDesglosePago";
 
 					TreeListNode nodeDocxPagar = tl.AppendNode(new object[] { "Documentos por Pagar" }, nodeReportesCP.Id, 11, 11, 11);
-					nodeDocxPagar.Tag = "frmCPFiltroReportesDocXPagar";
+					nodeDocxPagar.Tag = "frmCPReportesDocXPagar";
 
 					TreeListNode nodeAnalisisVencPro = tl.AppendNode(new object[] { "Análisis de Vencimiento" }, nodeReportesCP.Id, 11, 11, 11);
-					nodeAnalisisVencPro.Tag = "frmCPFiltroReportesAnalisisVencimientoProv";
+					nodeAnalisisVencPro.Tag = "frmCPReportesAnalisisVencimientoProv";
+
+
+					TreeListNode nodeCatalogosCP = tl.AppendNode(new object[] { "Catálogos" }, -1, 9, 10, 9);
+					TreeListNode nodeCondicionPago = tl.AppendNode(new object[] { "Condición de Pago" }, nodeCatalogosCP.Id, 11, 11, 11);
+					nodeCondicionPago.Tag = "frmCondicionPago";
+
+
+					TreeListNode nodeCategoriaProveedor = tl.AppendNode(new object[] { "Categoria Proveedor" }, nodeCatalogosCP.Id, 11, 11, 11);
+					nodeCategoriaProveedor.Tag = "frmCategoriaProveedor";
+
+					TreeListNode nodeRetenciones = tl.AppendNode(new object[] { "Catálogo de Retenciones" }, nodeCatalogosCP.Id, 11, 11, 11);
+					nodeRetenciones.Tag = "frmListadoRetenciones";
 
 					
-										
-					TreeListNode nodeCondicionPago = tl.AppendNode(new object[] { "Condición de Pago" }, -1, 11, 11, 11);
-					nodeCondicionPago.Tag = "frmCondicionPago";
-                   
-
-					TreeListNode nodeCategoriaProveedor = tl.AppendNode(new object[] { "Categoria Proveedor" }, -1, 11, 11, 11);
-					nodeCategoriaProveedor.Tag = "frmCategoriaProveedor";
-                   
-					TreeListNode nodeRetenciones = tl.AppendNode(new object[] { "Catálogo de Retenciones" }, -1, 11, 11, 11);
-					nodeRetenciones.Tag = "frmListadoRetenciones";
+					TreeListNode nodeParametrosCP = tl.AppendNode(new object[] { "Parámetros" }, -1, 11, 11, 11);
+					nodeParametrosCP.Tag = "frmParametrosCP";
                    
                     break;
+				case "treeListTeleventa":
+					TreeListNode nodePedidos = tl.AppendNode(new object[] { "Televentas" }, -1, 9, 10, 9);
+					TreeListNode nodeCrearPedido = tl.AppendNode(new object[] { "Crear Pedido" }, nodePedidos.Id, 11, 11, 11);
+					nodeCrearPedido.Tag = "optCrearPedidoTeleventa";
+
+					TreeListNode nodeAutorizaPedido = tl.AppendNode(new object[] { "Autorizar Pedido" }, nodePedidos.Id, 11, 11, 11);
+					nodeAutorizaPedido.Tag = "optCrearAutorizarPedidoTeleventa";
+
+					TreeListNode nodeCatalogoTeleventas = tl.AppendNode(new object[] { "Catalogos" },-1, 9, 10, 9);
+					TreeListNode nodeEstadoPedidoTeleventa = tl.AppendNode(new object[] { "Estado Pedido" }, nodeCatalogoTeleventas.Id, 11, 11, 11);
+					nodeEstadoPedidoTeleventa.Tag = "optEstadoPedidoTeleventa";
+
+					TreeListNode nodeTipoEntregaTeleventa = tl.AppendNode(new object[] { "Tipo Entrega" }, nodeCatalogoTeleventas.Id, 11, 11, 11);
+					nodeTipoEntregaTeleventa.Tag = "optTipoEntregaTeleventa";
+
+					break;
+				case "treeListCuentasXCobrar":				
+
+					TreeListNode nodeRegistrarCliente = tl.AppendNode(new object[] { "Registrar Cliente" }, -1, 11, 11, 11);
+					nodeRegistrarCliente.Tag = "optRegistrarCliente";
+
+					TreeListNode nodeTransaccionesCliente = tl.AppendNode(new object[] { "Transacciones" }, -1, 9, 10, 9);
+					TreeListNode nodeRegistrarTranCliente = tl.AppendNode(new object[] { "Transacciones" }, nodeTransaccionesCliente.Id, 11, 11, 11);
+					nodeRegistrarCliente.Tag = "optRegistrarTranCliente";
+
+					TreeListNode nodeRecibosCaja= tl.AppendNode(new object[] { "Recibos de Caja" }, nodeTransaccionesCliente.Id, 11, 11, 11);
+					nodeRecibosCaja.Tag = "optRecibosCaja";
+
+					TreeListNode nodeRegistrarChequePostFechado = tl.AppendNode(new object[] { "Cheques PostFechados" }, nodeTransaccionesCliente.Id, 11, 11, 11);
+					nodeRegistrarChequePostFechado.Tag = "optRegistrarChequePostFechado";
+
+					TreeListNode nodeProcesosCliente = tl.AppendNode(new object[] { "Procesos" }, -1, 9, 10, 9);
+					TreeListNode nodeAutorizacionesCliente = tl.AppendNode(new object[] { "Autorizaciones" }, nodeProcesosCliente.Id, 11, 11, 11);
+					nodeAutorizacionesCliente.Tag = "optAutorizacionesCliente";
+
+
+					TreeListNode nodeGuardarDocAnulado = tl.AppendNode(new object[] { "Grabar Doc Anulado" }, nodeProcesosCliente.Id, 11, 11, 11);
+					nodeGuardarDocAnulado.Tag = "optGuardarDocAnulado";
+
+
+					TreeListNode nodeReportesCliente = tl.AppendNode(new object[] { "Reportes" }, -1, 9, 10, 9);
+					TreeListNode nodeMoviCliente = tl.AppendNode(new object[] { "Movimientos del Cliente" }, nodeReportesCliente.Id, 11, 11, 11);
+					nodeMoviCliente.Tag = "optMovimientosCliente";
+
+					TreeListNode nodeDesglosePagoCliente = tl.AppendNode(new object[] { "Desglose de Pagos" }, nodeReportesCliente.Id, 11, 11, 11);
+					nodeDesglosePagoCliente.Tag = "optDesglosePagoCliente";
+
+					TreeListNode nodeDocXCobrCliente = tl.AppendNode(new object[] { "Documentos por cobrar" }, nodeReportesCliente.Id, 11, 11, 11);
+					nodeDocXCobrCliente.Tag = "optDxCCliente";
+
+					TreeListNode nodeAnalisisVencimientoCliente = tl.AppendNode(new object[] { "Análisis de Vencimiento" }, nodeReportesCliente.Id, 11, 11, 11);
+					nodeAnalisisVencimientoCliente.Tag = "optAnalisisVencCliente";
+
+					TreeListNode nodeAnalisisVencSucCliente = tl.AppendNode(new object[] { "Análisis de Vencimiento por Sucursal" }, nodeReportesCliente.Id, 11, 11, 11);
+					nodeAnalisisVencSucCliente.Tag = "optAnalisisVencSucCliente";
+
+
+
+					
+
+					TreeListNode nodeCatalogos = tl.AppendNode(new object[] { "Catálogos" }, -1, 9, 10, 9);
+					TreeListNode nodeCategoriaCliente = tl.AppendNode(new object[] { "Categoria de Clientes" }, nodeCatalogos.Id, 11, 11, 11);
+					nodeCategoriaCliente.Tag = "optCategoriaCliente";
+
+					TreeListNode nodeTipoCliente = tl.AppendNode(new object[] { "Tipo Clientes" }, nodeCatalogos.Id, 11, 11, 11);
+					nodeTipoCliente.Tag = "optTipoCliente";
+
+					TreeListNode nodeEvaluacionesCliente = tl.AppendNode(new object[] { "Evaluaciones de Clientes" }, nodeCatalogos.Id, 11, 11, 11);
+					nodeEvaluacionesCliente.Tag = "optEvaluacionesCliente";
+
+					TreeListNode nodeDepartamentoCliente = tl.AppendNode(new object[] { "Departamento" }, nodeCatalogos.Id, 11, 11, 11);
+					nodeDepartamentoCliente.Tag = "optDepartamentoCliente";
+
+					TreeListNode nodeMunicipiosCliente = tl.AppendNode(new object[] { "Municipios" }, nodeCatalogos.Id, 11, 11, 11);
+					nodeMunicipiosCliente.Tag = "optMunicipiosCliente";
+					TreeListNode nodeZonasCliente = tl.AppendNode(new object[] { "Zonas" }, nodeCatalogos.Id, 11, 11, 11);
+					nodeZonasCliente.Tag = "optZonasCliente";
+					TreeListNode nodeSubZonaCliente = tl.AppendNode(new object[] { "Sub Zonas" }, nodeCatalogos.Id, 11, 11, 11);
+					nodeSubZonaCliente.Tag = "optSubZonaCliente";
+
+					TreeListNode nodePlazosCreditoCliente = tl.AppendNode(new object[] { "Plazos de Credito" }, nodeCatalogos.Id, 11, 11, 11);
+					nodePlazosCreditoCliente.Tag = "optPlasosCreditoCliente";
+
+					TreeListNode nodeParametrosCliente = tl.AppendNode(new object[] { "Paremetros" }, -1, 11, 11, 11);
+					nodeParametrosCliente.Tag = "optParametrosCliente";
+
+					
+					
+					break;
 
                 case "treeListFactura":
-                    TreeListNode nodeDepartamento = tl.AppendNode(new object[] { "Departamento" }, -1, 11, 11, 11);
-                    nodeDepartamento.Tag = "optDepartamento";
-                    TreeListNode nodeMunicipio = tl.AppendNode(new object[] { "Municipio" }, -1, 11, 11, 11);
-                    nodeMunicipio.Tag = "optMunicipio";
-                    TreeListNode nodeZona = tl.AppendNode(new object[] { "Zona" }, -1, 11, 11, 11);
-                    nodeZona.Tag = "optZona";
-                    TreeListNode nodeSubZona = tl.AppendNode(new object[] { "Sub Zona" }, -1, 11, 11, 11);
-                    nodeSubZona.Tag = "optSubZona";
-                    TreeListNode nodeConsecutivosMarscaras = tl.AppendNode(new object[] { "Consecutivos de Mascaras" }, -1, 11, 11, 11);
-                    nodeConsecutivosMarscaras.Tag = "optConsecutivosMascaras";
-                    TreeListNode nodePlazos = tl.AppendNode(new object[] { "Plazos" }, -1, 11, 11, 11);
-                    nodePlazos.Tag = "optPlazos";
-                    TreeListNode nodeTipoEntrega = tl.AppendNode(new object[] { "Tipo Entrega" }, -1, 11, 11, 11);
-                    nodeTipoEntrega.Tag = "optTipoEntrega";
-                    TreeListNode nodeTipoCliente = tl.AppendNode(new object[] { "Tipo Cliente" }, -1, 11, 11, 11);
-                    nodeTipoCliente.Tag = "optTipoCliente";
-                    TreeListNode nodeCategoriaCliente = tl.AppendNode(new object[] { "Categoria Cliente" }, -1, 11, 11, 11);
-                    nodeCategoriaCliente.Tag = "optCategoriaCliente";
-                    TreeListNode nodeVendedores = tl.AppendNode(new object[] { "Vendedores" }, -1, 11, 11, 11);
-                    nodeVendedores.Tag = "optVendedores";
-                    TreeListNode nodeCliente = tl.AppendNode(new object[] { "Clientes" }, -1, 11, 11, 11);
-                    nodeCliente.Tag = "frmDetalles";
+					
+
+					TreeListNode nodeFactura = tl.AppendNode(new object[] { "Facturación" }, -1, 9, 10, 9);
+					TreeListNode nodeCrearFactura= tl.AppendNode(new object[] { "Crear Factura" }, nodeFactura.Id, 11, 11, 11);
+					nodeCrearFactura.Tag = "optCrearFactura";
+
+					TreeListNode nodeCrearDevolucion= tl.AppendNode(new object[] { "Crear Devolución" }, nodeFactura.Id, 11, 11, 11);
+					nodeCrearDevolucion.Tag = "optCrearDevolucion";
+
+					TreeListNode nodeConsultasFactura = tl.AppendNode(new object[] { "Consultas" }, nodeFactura.Id, 9, 10, 9);
+					TreeListNode nodeConsultaFacturacion = tl.AppendNode(new object[] { "Facturación" }, nodeConsultasFactura.Id, 11, 11, 11);
+					nodeConsultaFacturacion.Tag = "optConsultaFacturacion";
+
+					TreeListNode nodeConsultaDevolucion = tl.AppendNode(new object[] { "Devoluciones" }, nodeConsultasFactura.Id, 11, 11, 11);
+					nodeConsultaDevolucion.Tag = "optConsultaDevoluciones";
+
+					TreeListNode nodeCatalogosFactura = tl.AppendNode(new object[] { "Catalogos" }, nodeFactura.Id, 9, 10, 9);
+					TreeListNode nodeCatalogoTipoFactura = tl.AppendNode(new object[] { "Tipo Factura" }, nodeCatalogosFactura.Id, 11, 11, 11);
+					nodeCatalogoTipoFactura.Tag = "optCatalogoTipoFactura";
+
+					TreeListNode nodeCatalogoTipoVendor = tl.AppendNode(new object[] { "Tipo Vendedor" }, nodeCatalogosFactura.Id, 11, 11, 11);
+					nodeCatalogoTipoVendor.Tag = "optCatalogoTipoVendedor";
+
+					TreeListNode nodeCatalogoGrupoVendor = tl.AppendNode(new object[] { "Grupo Vendedor" }, nodeCatalogosFactura.Id, 11, 11, 11);
+					nodeCatalogoGrupoVendor.Tag = "optCatalogoGrupoVendedor";
+
+					TreeListNode nodeCatalogoVendedores = tl.AppendNode(new object[] { "Vendedores" }, nodeCatalogosFactura.Id, 11, 11, 11);
+					nodeCatalogoVendedores.Tag = "optCatalogoVendedores";
+					
+
+					TreeListNode nodePrecios = tl.AppendNode(new object[] { "Precios" }, -1, 9, 10, 9);
+
+					TreeListNode nodeNivelPrecio = tl.AppendNode(new object[] { "Niveles de Precios" }, nodePrecios.Id, 11, 11, 11);
+					nodeNivelPrecio.Tag = "optNivelesPrecio";
+
+					TreeListNode nodeListaPrecio = tl.AppendNode(new object[] { "Lista de Precios" }, nodePrecios.Id, 11, 11, 11);
+					nodeListaPrecio.Tag = "optListaPrecios";
+
+
+					TreeListNode nodePromociones = tl.AppendNode(new object[] { "Promociones" }, -1, 9, 10, 9);
+
+					TreeListNode nodeCreaPromocion = tl.AppendNode(new object[] { "Crear Promoción" }, nodePromociones.Id, 11, 11, 11);
+					nodeNivelPrecio.Tag = "optCrearPromocion";
+
+					TreeListNode nodeCrearBonificaciones = tl.AppendNode(new object[] { "Crear Bonificaciones" }, nodePromociones.Id, 11, 11, 11);
+					nodeCrearBonificaciones.Tag = "optCrearBonificacion";
+
+					TreeListNode nodeTablaDesc = tl.AppendNode(new object[] { "Tabla de Descuentos" }, nodePromociones.Id, 11, 11, 11);
+					nodeTablaDesc.Tag = "optTablaDesc";
+
+
+					TreeListNode nodeParametrosFactura = tl.AppendNode(new object[] { "Parámetros" }, -1, 9, 10, 9);
+
+					TreeListNode nodeParametrosFA = tl.AppendNode(new object[] { "Parámetros Facturación" }, nodeParametrosFactura.Id, 11, 11, 11);
+					nodeParametrosFA.Tag = "optParametrosFA";
+
+					TreeListNode nodeConsecutivosMask = tl.AppendNode(new object[] { "Consecutivos" }, nodeParametrosFactura.Id, 11, 11, 11);
+					nodeConsecutivosMask.Tag = "optConsecutivosMask";
+
+					
+
+					
+
+
+					//TreeListNode nodeDepartamento = tl.AppendNode(new object[] { "Departamento" }, -1, 11, 11, 11);
+					//nodeDepartamento.Tag = "optDepartamento";
+					//TreeListNode nodeMunicipio = tl.AppendNode(new object[] { "Municipio" }, -1, 11, 11, 11);
+					//nodeMunicipio.Tag = "optMunicipio";
+					//TreeListNode nodeZona = tl.AppendNode(new object[] { "Zona" }, -1, 11, 11, 11);
+					//nodeZona.Tag = "optZona";
+					//TreeListNode nodeSubZona = tl.AppendNode(new object[] { "Sub Zona" }, -1, 11, 11, 11);
+					//nodeSubZona.Tag = "optSubZona";
+					//TreeListNode nodeConsecutivosMarscaras = tl.AppendNode(new object[] { "Consecutivos de Mascaras" }, -1, 11, 11, 11);
+					//nodeConsecutivosMarscaras.Tag = "optConsecutivosMascaras";
+					//TreeListNode nodePlazos = tl.AppendNode(new object[] { "Plazos" }, -1, 11, 11, 11);
+					//nodePlazos.Tag = "optPlazos";
+					//TreeListNode nodeTipoEntrega = tl.AppendNode(new object[] { "Tipo Entrega" }, -1, 11, 11, 11);
+					//nodeTipoEntrega.Tag = "optTipoEntrega";
+					//TreeListNode nodeTipoCliente = tl.AppendNode(new object[] { "Tipo Cliente" }, -1, 11, 11, 11);
+					//nodeTipoCliente.Tag = "optTipoCliente";
+					//TreeListNode nodeCategoriaCliente = tl.AppendNode(new object[] { "Categoria Cliente" }, -1, 11, 11, 11);
+					//nodeCategoriaCliente.Tag = "optCategoriaCliente";
+					//TreeListNode nodeVendedores = tl.AppendNode(new object[] { "Vendedores" }, -1, 11, 11, 11);
+					//nodeVendedores.Tag = "optVendedores";
+					//TreeListNode nodeCliente = tl.AppendNode(new object[] { "Clientes" }, -1, 11, 11, 11);
+					//nodeCliente.Tag = "frmDetalles";
                     break;
 
                 case "treeListContabilidad":
@@ -1222,6 +1430,40 @@ namespace MainMenu
 					ShowPagesRibbonMan(false);
 					ofrmDoc.Show();
 					break;
+				case "frmListadoProveedores":
+					CO.frmListadoProveedores ofrmLstProveedores = new frmListadoProveedores();
+					ofrmLstProveedores.MdiParent = this;
+					ofrmLstProveedores.WindowState = FormWindowState.Maximized;
+					ShowPagesRibbonMan(false);
+					ofrmLstProveedores.Show();
+					break;
+				case "frmCPMovimientosProveedor":
+					CP.frmCPFiltroReportes ofrmReporteMovimientos = new CP.frmCPFiltroReportes();
+					ofrmReporteMovimientos.iReporte = Unit.CrptMovimientos;
+					ofrmReporteMovimientos.gsNombreReporte = "Reporte de Movimientos del Proveedor";
+					ofrmReporteMovimientos.ShowDialog();
+					break;
+				case "frmCPReportesDesglosePago":
+					CP.frmCPFiltroReportes ofrmReporteDesglosePago = new CP.frmCPFiltroReportes();
+					ofrmReporteDesglosePago.iReporte = Unit.CrptDesglosePagos;
+					ofrmReporteDesglosePago.gsNombreReporte = "Reporte de Desglose de Pagos";
+					ofrmReporteDesglosePago.ShowDialog();
+					break;
+				case "frmCPReportesDocXPagar":
+					CP.frmCPFiltroReportes ofrmReporteDocxPagar = new CP.frmCPFiltroReportes();
+					ofrmReporteDocxPagar.iReporte = Unit.CrptDesglosePagos;
+					ofrmReporteDocxPagar.gsNombreReporte = "Reporte de Documento por Pagar";
+					ofrmReporteDocxPagar.ShowDialog();
+					break;
+				case "frmCPFiltroReportesAnalisisVencimientoProv":
+					CP.frmCPFiltroReportes ofrmFiltroRep4 = new CP.frmCPFiltroReportes();
+					ofrmFiltroRep4.MdiParent = this;
+					ofrmFiltroRep4.WindowState = FormWindowState.Maximized;
+					ShowPagesRibbonMan(false);
+					ofrmFiltroRep4.iReporte = CP.Unitbk.CrptAnalisisVencimiento;
+					ofrmFiltroRep4.gsNombreReporte = "Reporte Analisis de Vencimientos por Proveedor";
+					ofrmFiltroRep4.Show();
+					break;
 				case "frmCategoriaProveedor":
 					CP.frmCategoriaProveedor ofrmCategoriaProveedor = new CP.frmCategoriaProveedor();
 					ofrmCategoriaProveedor.MdiParent = this;
@@ -1246,44 +1488,8 @@ namespace MainMenu
 					ofrmRetenciones.Show();
 					break;
 
-				case "frmCPFiltroReportes":
-					CP.frmCPFiltroReportes ofrmFiltroRep = new CP.frmCPFiltroReportes();
-					ofrmFiltroRep.MdiParent = this;
-					ofrmFiltroRep.WindowState = FormWindowState.Maximized;
-					ShowPagesRibbonMan(false);
-					ofrmFiltroRep.iReporte = CP.Unitbk.CrptMovimientos	;
-					ofrmFiltroRep.gsNombreReporte = "Reporte de Movimientos del Cliente";
-					ofrmFiltroRep.Show();
-					break;
-				case "frmCPFiltroReportesDesglosePago":
-					CP.frmCPFiltroReportes ofrmFiltroRep2 = new CP.frmCPFiltroReportes();
-					ofrmFiltroRep2.MdiParent = this;
-					ofrmFiltroRep2.WindowState = FormWindowState.Maximized;
-					ShowPagesRibbonMan(false);
-					ofrmFiltroRep2.iReporte = CP.Unitbk.CrptDesglosePagos;
-					ofrmFiltroRep2.gsNombreReporte = "Reporte Desglose de Pagos";
-					ofrmFiltroRep2.Show();
-					break;
-				case "frmCPFiltroReportesDocXPagar":
-					CP.frmCPFiltroReportes ofrmFiltroRep3 = new CP.frmCPFiltroReportes();
-					ofrmFiltroRep3.MdiParent = this;
-					ofrmFiltroRep3.WindowState = FormWindowState.Maximized;
-					ShowPagesRibbonMan(false);
-					ofrmFiltroRep3.iReporte = CP.Unitbk.CrptDocumentosPorPagar;
-					ofrmFiltroRep3.gsNombreReporte = "Reporte Documentos por Pagar";
-					ofrmFiltroRep3.Show();
-					break;
-				case "frmCPFiltroReportesAnalisisVencimientoProv":
-					CP.frmCPFiltroReportes ofrmFiltroRep4 = new CP.frmCPFiltroReportes();
-					ofrmFiltroRep4.MdiParent = this;
-					ofrmFiltroRep4.WindowState = FormWindowState.Maximized;
-					ShowPagesRibbonMan(false);
-					ofrmFiltroRep4.iReporte = CP.Unitbk.CrptAnalisisVencimiento;
-					ofrmFiltroRep4.gsNombreReporte = "Reporte Analisis de Vencimientos pro Proveedor";
-					ofrmFiltroRep4.Show();
-					break;
-
-
+			
+				
 			}
 
         }

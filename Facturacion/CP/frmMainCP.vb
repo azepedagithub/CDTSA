@@ -12,6 +12,7 @@
     End Sub
 
 
+
     Private Sub NavBarItemMovimientos_LinkClicked(sender As Object, e As DevExpress.XtraNavBar.NavBarLinkEventArgs) Handles NavBarItemMovimientos.LinkClicked
         Try
             Dim frm As New frmCPFiltroReportes()

@@ -1,7 +1,6 @@
 ﻿Imports Clases
 Public Class frmtmpMain
-
-    Private Sub btnCatCatCliente_Click(sender As Object, e As EventArgs) Handles btnCatCatCliente.Click
+    Public Sub MenuCatCliente()
         Try
             Dim frm As New frmDetalles
             frm.gsFormDetalleName = "CATEGORIACLIENTE"
@@ -18,10 +17,13 @@ Public Class frmtmpMain
         Catch ex As Exception
             MessageBox.Show("Ocurrió un error al cargar la información " & Err.Description, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
-
+    End Sub
+    Private Sub btnCatCatCliente_Click(sender As Object, e As EventArgs) Handles btnCatCatCliente.Click
+    
+        MenuCatCliente()
     End Sub
 
-    Private Sub btnTipoCliente_Click(sender As Object, e As EventArgs) Handles btnTipoCliente.Click
+    Public Sub MenuTipoCliente()
         Try
             Dim frm As New frmCatalogos()
             frm.gsCaptionFrm = "Tipos de Cliente"
@@ -39,7 +41,11 @@ Public Class frmtmpMain
         End Try
     End Sub
 
-    Private Sub btnEstadoPedido_Click(sender As Object, e As EventArgs) Handles btnEstadoPedido.Click
+    Private Sub btnTipoCliente_Click(sender As Object, e As EventArgs) Handles btnTipoCliente.Click
+        MenuTipoCliente()
+    End Sub
+
+    Public Sub MenuEstadoPedido()
         Try
             If Not UsuarioTieneAcceso(gsUsuario, "CATESTADOPEDIDO") Then
                 MessageBox.Show("Ud. No tiene acceso a esta opción... repórtelo al administrador del Sistema ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -59,10 +65,14 @@ Public Class frmtmpMain
         Catch ex As Exception
             MessageBox.Show("Ha ocurrido un error al ejecutar la opción " & Err.Description, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
-
     End Sub
 
-    Private Sub btnTipoEntrega_Click(sender As Object, e As EventArgs) Handles btnTipoEntrega.Click
+    Private Sub btnEstadoPedido_Click(sender As Object, e As EventArgs) Handles btnEstadoPedido.Click
+      
+        MenuEstadoPedido()
+    End Sub
+
+    Public Sub MenuTipoEntrega()
         Try
             If Not UsuarioTieneAcceso(gsUsuario, "CATTIPOENTREGA") Then
                 MessageBox.Show("Ud. No tiene acceso a esta opción... repórtelo al administrador del Sistema ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -85,10 +95,13 @@ Public Class frmtmpMain
         Catch ex As Exception
             MessageBox.Show("Ha ocurrido un error al ejecutar la opción " & Err.Description, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
-
     End Sub
 
-    Private Sub btnTipoFactura_Click(sender As Object, e As EventArgs) Handles btnTipoFactura.Click
+    Private Sub btnTipoEntrega_Click(sender As Object, e As EventArgs) Handles btnTipoEntrega.Click
+        MenuTipoEntrega()
+    End Sub
+
+    Public Sub MenuTipoFactura()
         Try
             Dim frm As New frmCatalogos()
             frm.gsCaptionFrm = "Tipo de Factura"
@@ -107,7 +120,12 @@ Public Class frmtmpMain
 
     End Sub
 
-    Private Sub cmdDepto_Click(sender As Object, e As EventArgs) Handles cmdDepto.Click
+    Private Sub btnTipoFactura_Click(sender As Object, e As EventArgs) Handles btnTipoFactura.Click
+        MenuTipoFactura()
+    End Sub
+
+
+    Public Sub MenuDepartamento()
         Try
             Dim frm As New frmCatalogos()
             frm.gsCaptionFrm = "Departamentos"
@@ -122,10 +140,14 @@ Public Class frmtmpMain
         Catch ex As Exception
             MessageBox.Show("Ha ocurrido un error al ejecutar la opción " & Err.Description, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
-
     End Sub
 
-    Private Sub btnMunicipio_Click(sender As Object, e As EventArgs) Handles btnMunicipio.Click
+    Private Sub cmdDepto_Click(sender As Object, e As EventArgs) Handles cmdDepto.Click
+    
+        MenuDepartamento()
+    End Sub
+
+    Public Sub MenuMunicipio()
         Try
             Dim frm As New frmSubCatalogo
             frm.gsCaptionFrm = "Master Departamento / Municipios"
@@ -149,7 +171,11 @@ Public Class frmtmpMain
 
     End Sub
 
-    Private Sub btnZona_Click(sender As Object, e As EventArgs) Handles btnZona.Click
+    Private Sub btnMunicipio_Click(sender As Object, e As EventArgs) Handles btnMunicipio.Click
+        MenuMunicipio()
+    End Sub
+
+    Public Sub MenuZona()
         Try
             Dim frm As New frmCatalogos()
             frm.gsCaptionFrm = "Zonas"
@@ -164,10 +190,14 @@ Public Class frmtmpMain
         Catch ex As Exception
             MessageBox.Show("Ha ocurrido un error al ejecutar la opción " & Err.Description, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+    End Sub
+
+    Private Sub btnZona_Click(sender As Object, e As EventArgs) Handles btnZona.Click
+        MenuZona()
 
     End Sub
 
-    Private Sub btnSubZonas_Click(sender As Object, e As EventArgs) Handles btnSubZonas.Click
+    Public Sub MenuSubZona()
         Try
             Dim frm As New frmSubCatalogo
             frm.gsCaptionFrm = "Master Zona / SubZona"
@@ -189,6 +219,10 @@ Public Class frmtmpMain
         Catch ex As Exception
             MessageBox.Show("Ha ocurrido un error al ejecutar la opción " & Err.Description, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+    End Sub
+
+    Private Sub btnSubZonas_Click(sender As Object, e As EventArgs) Handles btnSubZonas.Click
+        MenuSubZona()
 
     End Sub
 
@@ -209,7 +243,7 @@ Public Class frmtmpMain
 
     End Sub
 
-    Private Sub btnPlazos_Click(sender As Object, e As EventArgs) Handles btnPlazos.Click
+    Public Sub MenuPlazos()
         Try
             Dim frm As New frmCatalogos()
             frm.gsCaptionFrm = "Plazos de Creditos"
@@ -225,10 +259,14 @@ Public Class frmtmpMain
         Catch ex As Exception
             MessageBox.Show("Ha ocurrido un error al ejecutar la opción " & Err.Description, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+    End Sub
+
+    Private Sub btnPlazos_Click(sender As Object, e As EventArgs) Handles btnPlazos.Click
+        MenuPlazos()
 
     End Sub
 
-    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+    Public Sub MenuClientes()
         Try
             Dim frm As New frmDetalles
             frm.gsFormDetalleName = "CLIENTE"
@@ -245,10 +283,14 @@ Public Class frmtmpMain
         Catch ex As Exception
             MessageBox.Show("Ha ocurrido un error al ejecutar la opción " & Err.Description, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        MenuClientes()
 
     End Sub
 
-    Private Sub btnVendedor_Click(sender As Object, e As EventArgs) Handles btnVendedor.Click
+    Public Sub MenuTipoVendedor()
         Try
             Dim frm As New frmCatalogos
             frm.gsCaptionFrm = "Tipo Vendedor"
@@ -264,10 +306,15 @@ Public Class frmtmpMain
         Catch ex As Exception
             MessageBox.Show("Ha ocurrido un error al ejecutar la opción " & Err.Description, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+    End Sub
+
+    Private Sub btnVendedor_Click(sender As Object, e As EventArgs) Handles btnVendedor.Click
+  
+        MenuTipoVendedor()
 
     End Sub
 
-    Private Sub cmdNivel_Click(sender As Object, e As EventArgs) Handles cmdNivel.Click
+    Public Sub menuNivelPrecio()
         Try
             Dim frm As New frmCatalogos
             frm.gsCaptionFrm = "Niveles de Precios"
@@ -297,7 +344,11 @@ Public Class frmtmpMain
 
     End Sub
 
-    Private Sub Button1_Click_1(sender As Object, e As EventArgs) Handles Button1.Click
+    Private Sub cmdNivel_Click(sender As Object, e As EventArgs) Handles cmdNivel.Click
+        menuNivelPrecio()
+    End Sub
+
+    Public Sub MenuVendedores()
         Try
             Dim frm As New frmDetalles
             frm.gsFormDetalleName = "VENDEDOR"
@@ -314,10 +365,14 @@ Public Class frmtmpMain
         Catch ex As Exception
             MessageBox.Show("Ha ocurrido un error al ejecutar la opción " & Err.Description, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+    End Sub
+
+    Private Sub Button1_Click_1(sender As Object, e As EventArgs) Handles Button1.Click
+        MenuVendedores()
 
     End Sub
 
-    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+    Public Sub MenuCrearPedido()
         Try
             Dim cManager As New Clases.ClassManager
             Dim td As New DataTable
@@ -354,10 +409,14 @@ Public Class frmtmpMain
         Catch ex As Exception
             MessageBox.Show("Ha ocurrido un error al ejecutar la opción " & Err.Description, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+    End Sub
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        MenuCrearPedido()
 
     End Sub
 
-    Private Sub btnBonif_Click(sender As Object, e As EventArgs) Handles btnBonif.Click
+    Public Sub MenuBonificaciones()
         Try
             Dim frm As New frmBonificaciones
             frm.Show()
@@ -368,7 +427,11 @@ Public Class frmtmpMain
 
     End Sub
 
-    Private Sub btnPrecios_Click(sender As Object, e As EventArgs) Handles btnPrecios.Click
+    Private Sub btnBonif_Click(sender As Object, e As EventArgs) Handles btnBonif.Click
+        MenuBonificaciones()
+    End Sub
+
+    Public Sub MenuListaPrecios()
         Try
             Dim frm As New frmPrecios
             frm.ShowDialog()
@@ -376,10 +439,13 @@ Public Class frmtmpMain
         Catch ex As Exception
             MessageBox.Show("Ha ocurrido un error al ejecutar la opción " & Err.Description, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
-
     End Sub
 
-    Private Sub btnAutorizaPedido_Click(sender As Object, e As EventArgs) Handles btnAutorizaPedido.Click
+    Private Sub btnPrecios_Click(sender As Object, e As EventArgs) Handles btnPrecios.Click
+      
+        MenuListaPrecios()
+    End Sub
+    Public Sub MenuAutorizarPedido()
         Try
             Dim frm As New frmAutorizaPedido()
             frm.ShowDialog()
@@ -390,7 +456,11 @@ Public Class frmtmpMain
 
     End Sub
 
-    Private Sub btnFactura_Click(sender As Object, e As EventArgs) Handles btnFactura.Click
+    Private Sub btnAutorizaPedido_Click(sender As Object, e As EventArgs) Handles btnAutorizaPedido.Click
+        MenuAutorizarPedido()
+    End Sub
+
+    Public Sub MenuFactura()
         Try
             If Not CargaParametros() Then
                 MessageBox.Show("No se han definido los parámetros del Sistema... LLame a su administrador de IT ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -423,7 +493,12 @@ Public Class frmtmpMain
         End Try
     End Sub
 
-    Private Sub btnConsecMask_Click(sender As Object, e As EventArgs) Handles btnConsecMask.Click
+    Private Sub btnFactura_Click(sender As Object, e As EventArgs) Handles btnFactura.Click
+        MenuFactura()
+    End Sub
+
+
+    Public Sub MenuConsecutivMask()
         Try
             Dim frm As New frmDetalles
             frm.gsFormDetalleName = "CONSECUTIVOMASK"
@@ -442,16 +517,24 @@ Public Class frmtmpMain
         End Try
     End Sub
 
-    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+    Private Sub btnConsecMask_Click(sender As Object, e As EventArgs) Handles btnConsecMask.Click
+        MenuConsecutivMask()
+    End Sub
+
+    Public Sub MenuParametrosFactura()
         Try
             frmParametrosFA.Show()
         Catch ex As Exception
             MessageBox.Show("Ha ocurrido un error al ejecutar la opción " & Err.Description, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
-
     End Sub
 
-    Private Sub cmdPromociones_Click(sender As Object, e As EventArgs) Handles cmdPromociones.Click
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+       
+        MenuParametrosFactura()
+    End Sub
+
+    Public Sub MenuPromociones()
         Try
             Dim frm As New frmPromociones
             frm.Show()
@@ -459,6 +542,10 @@ Public Class frmtmpMain
         Catch ex As Exception
             MessageBox.Show("Ha ocurrido un error al ejecutar la opción " & Err.Description, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+    End Sub
+
+    Private Sub cmdPromociones_Click(sender As Object, e As EventArgs) Handles cmdPromociones.Click
+    
     End Sub
 
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
@@ -471,7 +558,7 @@ Public Class frmtmpMain
         End Try
     End Sub
 
-    Private Sub SimpleButton1_Click(sender As Object, e As EventArgs) Handles SimpleButton1.Click
+    Public Sub MenuDevolucion()
         Try
             If Not CargaParametros() Then
                 MessageBox.Show("No se han definido los parámetros del Sistema... LLame a su administrador de IT ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -502,6 +589,11 @@ Public Class frmtmpMain
         Catch ex As Exception
             MessageBox.Show("Ha ocurrido un error al ejecutar la opción " & Err.Description, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+    End Sub
+
+    Private Sub SimpleButton1_Click(sender As Object, e As EventArgs) Handles SimpleButton1.Click
+     
+        MenuDevolucion()
 
 
     End Sub
@@ -644,7 +736,7 @@ Public Class frmtmpMain
 
     End Sub
 
-    Private Sub cmdConsulta_Click(sender As Object, e As EventArgs) Handles cmdConsulta.Click
+    Public Sub MenuConsultaFactura()
         Try
             Dim frm As New frmConsultaFacturas()
             frm.Show()
@@ -654,7 +746,11 @@ Public Class frmtmpMain
         End Try
     End Sub
 
-    Private Sub btngrupoVend_Click(sender As Object, e As EventArgs) Handles btngrupoVend.Click
+    Private Sub cmdConsulta_Click(sender As Object, e As EventArgs) Handles cmdConsulta.Click
+        MenuConsultaFactura()
+    End Sub
+
+    Public Sub MenuGrupoVendedor()
         Try
             Dim frm As New frmCatalogos
             frm.gsCaptionFrm = "Grupo Vendedor"
@@ -672,7 +768,11 @@ Public Class frmtmpMain
         End Try
     End Sub
 
-    Private Sub btnEvalCliente_Click(sender As Object, e As EventArgs) Handles btnEvalCliente.Click
+    Private Sub btngrupoVend_Click(sender As Object, e As EventArgs) Handles btngrupoVend.Click
+        MenuGrupoVendedor()
+    End Sub
+
+    Public Sub MenuEvalCliente()
         Try
             Dim frm As New frmCatalogos()
             frm.gsCaptionFrm = "Evaluacion de Cliente"
@@ -690,7 +790,11 @@ Public Class frmtmpMain
         End Try
     End Sub
 
-    Private Sub btnDescuentos_Click(sender As Object, e As EventArgs) Handles btnDescuentos.Click
+    Private Sub btnEvalCliente_Click(sender As Object, e As EventArgs) Handles btnEvalCliente.Click
+        MenuEvalCliente()
+    End Sub
+
+    Public Sub MenuTablaDesc()
         Try
             Dim frm As New frmDescuentos()
             frm.Show()
@@ -698,6 +802,10 @@ Public Class frmtmpMain
         Catch ex As Exception
             MessageBox.Show("Ha ocurrido un error al ejecutar la opción " & Err.Description, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+    End Sub
+
+    Private Sub btnDescuentos_Click(sender As Object, e As EventArgs) Handles btnDescuentos.Click
+        MenuTablaDesc()
     End Sub
 
 
@@ -712,7 +820,7 @@ Public Class frmtmpMain
         End Try
     End Sub
 
-  
+
     Private Sub NavBarItemCheques_LinkClicked(sender As Object, e As DevExpress.XtraNavBar.NavBarLinkEventArgs) Handles NavBarItemCheques.LinkClicked
         Try
             Dim frm As New frmCCFConsultaChequesPos()
@@ -753,7 +861,7 @@ Public Class frmtmpMain
 
     End Sub
 
-    Private Sub cmdCosultaDev_Click(sender As Object, e As EventArgs) Handles cmdCosultaDev.Click
+    Public Sub MenuConsultaDev()
         Try
             Dim frm As New frmConsultaDevoluciones()
             frm.Show()
@@ -761,5 +869,9 @@ Public Class frmtmpMain
         Catch ex As Exception
             MessageBox.Show("Ha ocurrido un error al ejecutar la opción " & Err.Description, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+    End Sub
+
+    Private Sub cmdCosultaDev_Click(sender As Object, e As EventArgs) Handles cmdCosultaDev.Click
+        MenuConsultaDev()
     End Sub
 End Class

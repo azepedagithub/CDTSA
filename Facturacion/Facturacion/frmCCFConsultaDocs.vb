@@ -1,6 +1,6 @@
 ﻿Imports Clases
 Imports DevExpress.XtraEditors
-Class frmCCFConsultaDocs
+Public Class frmCCFConsultaDocs
     Dim cManager As New ClassManager
     Dim tableData As New DataTable()
     Dim psAnulado As String = "-1"
@@ -32,7 +32,7 @@ Class frmCCFConsultaDocs
             GridView1.OptionsSelection.MultiSelect = True
             GridView1.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.RowSelect
             CargagridLookUpsFromTables()
-   
+
         Catch ex As Exception
             MessageBox.Show("Ha ocurrido un error al cargar los Datos " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
@@ -176,7 +176,7 @@ Class frmCCFConsultaDocs
         SetParametroContabilizado()
     End Sub
 
-  
+
     Private Sub BarButtonItemAprobar_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles BarButtonItemAprobar.ItemClick
 
         Try

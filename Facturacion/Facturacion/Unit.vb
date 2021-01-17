@@ -6,7 +6,7 @@ Imports Clases
 
 
 
-Module Unit
+Public Module Unit
     Public dtFacturaLinea As New DataTable
     Public dtFacturaLineaLote As New DataTable
     Public gsSucursal As String = "1"
