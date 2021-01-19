@@ -297,7 +297,7 @@ Partial Public Class rptDesglosePagos
         Me.XrLabel5.BorderColor = System.Drawing.Color.Transparent
         Me.XrLabel5.Dpi = 96.0!
         Me.XrLabel5.Font = New System.Drawing.Font("Times New Roman", 8.25!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.XrLabel5.LocationFloat = New DevExpress.Utils.PointFloat(401.4129!, 7.446808!)
+        Me.XrLabel5.LocationFloat = New DevExpress.Utils.PointFloat(416.8148!, 7.446808!)
         Me.XrLabel5.Name = "XrLabel5"
         Me.XrLabel5.Padding = New DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96.0!)
         Me.XrLabel5.SizeF = New System.Drawing.SizeF(65.38638!, 14.4!)
@@ -313,7 +313,7 @@ Partial Public Class rptDesglosePagos
         Me.XrLabel31.LocationFloat = New DevExpress.Utils.PointFloat(328.3704!, 7.446808!)
         Me.XrLabel31.Name = "XrLabel31"
         Me.XrLabel31.Padding = New DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96.0!)
-        Me.XrLabel31.SizeF = New System.Drawing.SizeF(66.14993!, 17.28!)
+        Me.XrLabel31.SizeF = New System.Drawing.SizeF(78.14993!, 17.28!)
         Me.XrLabel31.StyleName = "DataField"
         Me.XrLabel31.StylePriority.UseFont = False
         '

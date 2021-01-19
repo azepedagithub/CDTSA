@@ -866,6 +866,8 @@ Partial Class frmCPAplicaCreditos
         'SaldoCredito
         '
         Me.SaldoCredito.Caption = "SaldoCredito"
+        Me.SaldoCredito.DisplayFormat.FormatString = "n2"
+        Me.SaldoCredito.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
         Me.SaldoCredito.FieldName = "SaldoCredito"
         Me.SaldoCredito.Name = "SaldoCredito"
         Me.SaldoCredito.Visible = True
@@ -909,6 +911,8 @@ Partial Class frmCPAplicaCreditos
         'MontoPago
         '
         Me.MontoPago.Caption = "Abonado"
+        Me.MontoPago.DisplayFormat.FormatString = "n2"
+        Me.MontoPago.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
         Me.MontoPago.FieldName = "MontoPago"
         Me.MontoPago.Name = "MontoPago"
         Me.MontoPago.Summary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum), New DevExpress.XtraGrid.GridColumnSummaryItem()})

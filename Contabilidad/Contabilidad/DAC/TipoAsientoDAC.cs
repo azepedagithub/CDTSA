@@ -53,14 +53,72 @@ namespace CG
             return DS;
         }
 
+		public static long AsociarUsuario(string TipoAsiento, String sUsuario,  SqlTransaction tran)
+		{
+			long result = -1;
+			String strSQL = "dbo.cntAsociarUsuarioATipoAsiento";
 
-        public static DataSet GetTipoAsientoByUsuario(String Usuario)
+			SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
+
+			oCmd.Parameters.Add(new SqlParameter("@Usuario", sUsuario));
+			oCmd.Parameters.Add(new SqlParameter("@TipoAsiento", TipoAsiento));
+			
+			oCmd.CommandType = CommandType.StoredProcedure;
+			oCmd.Transaction = tran;
+			result = oCmd.ExecuteNonQuery();
+
+
+			return result;
+
+		}
+
+
+		
+
+		public static DataSet Get(String TipoAsiento)
         {
-            String strSQL = "SELECT  Tipo , Descr ,  Consecutivo , UltimoAsiento ,  Activo , ReadOnlySys  FROM dbo.cntTipoAsiento WHERE Tipo IN (SELECT Tipo  FROM TipoAsientoUsuario WHERE Usuario =@Usuario)";
+			String strSQL = "dbo.cntGetUsuariosNotAsociadosTipoAsiento";
 
             SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
 
-            oCmd.Parameters.Add(new SqlParameter("@Usuario", Usuario));
+            oCmd.Parameters.Add(new SqlParameter("@TipoAsiento", TipoAsiento));
+
+            oCmd.CommandType = CommandType.StoredProcedure;
+
+            SqlDataAdapter oAdap = new SqlDataAdapter(oCmd);
+            DataSet DS = new DataSet();
+
+            oAdap.Fill(DS, "Data");
+            return DS;
+        }
+
+		public static DataSet GetTipoAsientoByUsuario(String Usuario)
+        {
+			String strSQL = "dbo.cntGetTipoAsientoUsuario";
+
+            SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
+
+            //oCmd.Parameters.Add(new SqlParameter("@TipoAsiento", TipoAsiento));
+			oCmd.Parameters.Add(new SqlParameter("@Usuario", Usuario));
+
+            oCmd.CommandType = CommandType.StoredProcedure;
+
+            SqlDataAdapter oAdap = new SqlDataAdapter(oCmd);
+            DataSet DS = new DataSet();
+
+            oAdap.Fill(DS, "Data");
+            return DS;
+        }
+
+		
+
+        public static DataSet GetUsuariosNotAsociadosTipoAsiento(String TipoAsiento)
+        {
+			String strSQL = "cntGetUsuariosNotAsociadosTipoAsiento";
+
+            SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
+
+            oCmd.Parameters.Add(new SqlParameter("@Usuario", TipoAsiento));
             oCmd.CommandType = CommandType.Text;
 
             SqlDataAdapter oAdap = new SqlDataAdapter(oCmd);

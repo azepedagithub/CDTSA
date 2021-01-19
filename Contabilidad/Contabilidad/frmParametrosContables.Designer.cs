@@ -28,11 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmParametrosContables));
 			this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
-			this.slkupTipoCambio = new DevExpress.XtraEditors.SearchLookUpEdit();
-			this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
+			this.slkupCuentaUtilidadPeriodoGastos = new DevExpress.XtraEditors.SearchLookUpEdit();
+			this.barManager1 = new DevExpress.XtraBars.BarManager();
 			this.bar1 = new DevExpress.XtraBars.Bar();
 			this.btnGuardar = new DevExpress.XtraBars.BarButtonItem();
 			this.btnSalir = new DevExpress.XtraBars.BarButtonItem();
@@ -40,6 +39,10 @@
 			this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
+			this.gridView3 = new DevExpress.XtraGrid.Views.Grid.GridView();
+			this.slkupCuentaUtilidadPeriodoCostos = new DevExpress.XtraEditors.SearchLookUpEdit();
+			this.gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
+			this.slkupTipoCambio = new DevExpress.XtraEditors.SearchLookUpEdit();
 			this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
 			this.txtCantNivel6 = new DevExpress.XtraEditors.TextEdit();
 			this.dtpMesFinPeriodoFiscal = new DevExpress.XtraScheduler.UI.MonthEdit();
@@ -83,22 +86,22 @@
 			this.layoutControlGroup3 = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.layoutControlItem10 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem11 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.layoutControlItem21 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.layoutControlItem22 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlGroup4 = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.layoutControlItem12 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem14 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem13 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem15 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
-			this.slkupCuentaUtilidadPeriodoCostos = new DevExpress.XtraEditors.SearchLookUpEdit();
-			this.layoutControlItem21 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
-			this.slkupCuentaUtilidadPeriodoGastos = new DevExpress.XtraEditors.SearchLookUpEdit();
-			this.layoutControlItem22 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.gridView3 = new DevExpress.XtraGrid.Views.Grid.GridView();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
 			this.layoutControl1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.slkupTipoCambio.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.slkupCuentaUtilidadPeriodoGastos.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.gridView3)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.slkupCuentaUtilidadPeriodoCostos.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.gridView2)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.slkupTipoCambio.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtCantNivel6.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dtpMesFinPeriodoFiscal.Properties)).BeginInit();
@@ -142,18 +145,14 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup3)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem11)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem21)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem22)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup4)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem12)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem14)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem13)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem15)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.slkupCuentaUtilidadPeriodoCostos.Properties)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem21)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.gridView2)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.slkupCuentaUtilidadPeriodoGastos.Properties)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem22)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.gridView3)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// layoutControl1
@@ -189,19 +188,17 @@
 			this.layoutControl1.TabIndex = 0;
 			this.layoutControl1.Text = "layoutControl1";
 			// 
-			// slkupTipoCambio
+			// slkupCuentaUtilidadPeriodoGastos
 			// 
-			this.slkupTipoCambio.EditValue = "";
-			this.slkupTipoCambio.Location = new System.Drawing.Point(188, 118);
-			this.slkupTipoCambio.MenuManager = this.barManager1;
-			this.slkupTipoCambio.Name = "slkupTipoCambio";
-			this.slkupTipoCambio.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+			this.slkupCuentaUtilidadPeriodoGastos.Location = new System.Drawing.Point(188, 94);
+			this.slkupCuentaUtilidadPeriodoGastos.MenuManager = this.barManager1;
+			this.slkupCuentaUtilidadPeriodoGastos.Name = "slkupCuentaUtilidadPeriodoGastos";
+			this.slkupCuentaUtilidadPeriodoGastos.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-			this.slkupTipoCambio.Properties.NullText = "";
-			this.slkupTipoCambio.Properties.View = this.gridView1;
-			this.slkupTipoCambio.Size = new System.Drawing.Size(339, 20);
-			this.slkupTipoCambio.StyleController = this.layoutControl1;
-			this.slkupTipoCambio.TabIndex = 25;
+			this.slkupCuentaUtilidadPeriodoGastos.Properties.View = this.gridView3;
+			this.slkupCuentaUtilidadPeriodoGastos.Size = new System.Drawing.Size(339, 20);
+			this.slkupCuentaUtilidadPeriodoGastos.StyleController = this.layoutControl1;
+			this.slkupCuentaUtilidadPeriodoGastos.TabIndex = 27;
 			// 
 			// barManager1
 			// 
@@ -269,6 +266,46 @@
 			this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
 			this.barDockControlRight.Location = new System.Drawing.Point(551, 47);
 			this.barDockControlRight.Size = new System.Drawing.Size(0, 349);
+			// 
+			// gridView3
+			// 
+			this.gridView3.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+			this.gridView3.Name = "gridView3";
+			this.gridView3.OptionsSelection.EnableAppearanceFocusedCell = false;
+			this.gridView3.OptionsView.ShowGroupPanel = false;
+			// 
+			// slkupCuentaUtilidadPeriodoCostos
+			// 
+			this.slkupCuentaUtilidadPeriodoCostos.Location = new System.Drawing.Point(188, 70);
+			this.slkupCuentaUtilidadPeriodoCostos.MenuManager = this.barManager1;
+			this.slkupCuentaUtilidadPeriodoCostos.Name = "slkupCuentaUtilidadPeriodoCostos";
+			this.slkupCuentaUtilidadPeriodoCostos.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+			this.slkupCuentaUtilidadPeriodoCostos.Properties.View = this.gridView2;
+			this.slkupCuentaUtilidadPeriodoCostos.Size = new System.Drawing.Size(339, 20);
+			this.slkupCuentaUtilidadPeriodoCostos.StyleController = this.layoutControl1;
+			this.slkupCuentaUtilidadPeriodoCostos.TabIndex = 26;
+			// 
+			// gridView2
+			// 
+			this.gridView2.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+			this.gridView2.Name = "gridView2";
+			this.gridView2.OptionsSelection.EnableAppearanceFocusedCell = false;
+			this.gridView2.OptionsView.ShowGroupPanel = false;
+			// 
+			// slkupTipoCambio
+			// 
+			this.slkupTipoCambio.EditValue = "";
+			this.slkupTipoCambio.Location = new System.Drawing.Point(188, 118);
+			this.slkupTipoCambio.MenuManager = this.barManager1;
+			this.slkupTipoCambio.Name = "slkupTipoCambio";
+			this.slkupTipoCambio.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+			this.slkupTipoCambio.Properties.NullText = "";
+			this.slkupTipoCambio.Properties.View = this.gridView1;
+			this.slkupTipoCambio.Size = new System.Drawing.Size(339, 20);
+			this.slkupTipoCambio.StyleController = this.layoutControl1;
+			this.slkupTipoCambio.TabIndex = 25;
 			// 
 			// gridView1
 			// 
@@ -670,6 +707,24 @@
 			this.layoutControlItem11.Text = "Cuenta Utilidad Acumulada:";
 			this.layoutControlItem11.TextSize = new System.Drawing.Size(161, 13);
 			// 
+			// layoutControlItem21
+			// 
+			this.layoutControlItem21.Control = this.slkupCuentaUtilidadPeriodoCostos;
+			this.layoutControlItem21.Location = new System.Drawing.Point(0, 24);
+			this.layoutControlItem21.Name = "layoutControlItem21";
+			this.layoutControlItem21.Size = new System.Drawing.Size(507, 24);
+			this.layoutControlItem21.Text = "Cuenta Utilidad Periodo Costos:";
+			this.layoutControlItem21.TextSize = new System.Drawing.Size(161, 13);
+			// 
+			// layoutControlItem22
+			// 
+			this.layoutControlItem22.Control = this.slkupCuentaUtilidadPeriodoGastos;
+			this.layoutControlItem22.Location = new System.Drawing.Point(0, 48);
+			this.layoutControlItem22.Name = "layoutControlItem22";
+			this.layoutControlItem22.Size = new System.Drawing.Size(507, 24);
+			this.layoutControlItem22.Text = "Cuenta Utilidad Periodo Gastos:";
+			this.layoutControlItem22.TextSize = new System.Drawing.Size(161, 13);
+			// 
 			// layoutControlGroup4
 			// 
 			this.layoutControlGroup4.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
@@ -727,62 +782,6 @@
 			this.emptySpaceItem1.Size = new System.Drawing.Size(26, 283);
 			this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
 			// 
-			// slkupCuentaUtilidadPeriodoCostos
-			// 
-			this.slkupCuentaUtilidadPeriodoCostos.Location = new System.Drawing.Point(188, 70);
-			this.slkupCuentaUtilidadPeriodoCostos.MenuManager = this.barManager1;
-			this.slkupCuentaUtilidadPeriodoCostos.Name = "slkupCuentaUtilidadPeriodoCostos";
-			this.slkupCuentaUtilidadPeriodoCostos.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-			this.slkupCuentaUtilidadPeriodoCostos.Properties.View = this.gridView2;
-			this.slkupCuentaUtilidadPeriodoCostos.Size = new System.Drawing.Size(339, 20);
-			this.slkupCuentaUtilidadPeriodoCostos.StyleController = this.layoutControl1;
-			this.slkupCuentaUtilidadPeriodoCostos.TabIndex = 26;
-			// 
-			// layoutControlItem21
-			// 
-			this.layoutControlItem21.Control = this.slkupCuentaUtilidadPeriodoCostos;
-			this.layoutControlItem21.Location = new System.Drawing.Point(0, 24);
-			this.layoutControlItem21.Name = "layoutControlItem21";
-			this.layoutControlItem21.Size = new System.Drawing.Size(507, 24);
-			this.layoutControlItem21.Text = "Cuenta Utilidad Periodo Costos:";
-			this.layoutControlItem21.TextSize = new System.Drawing.Size(161, 13);
-			// 
-			// gridView2
-			// 
-			this.gridView2.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
-			this.gridView2.Name = "gridView2";
-			this.gridView2.OptionsSelection.EnableAppearanceFocusedCell = false;
-			this.gridView2.OptionsView.ShowGroupPanel = false;
-			// 
-			// slkupCuentaUtilidadPeriodoGastos
-			// 
-			this.slkupCuentaUtilidadPeriodoGastos.Location = new System.Drawing.Point(188, 94);
-			this.slkupCuentaUtilidadPeriodoGastos.MenuManager = this.barManager1;
-			this.slkupCuentaUtilidadPeriodoGastos.Name = "slkupCuentaUtilidadPeriodoGastos";
-			this.slkupCuentaUtilidadPeriodoGastos.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-			this.slkupCuentaUtilidadPeriodoGastos.Properties.View = this.gridView3;
-			this.slkupCuentaUtilidadPeriodoGastos.Size = new System.Drawing.Size(339, 20);
-			this.slkupCuentaUtilidadPeriodoGastos.StyleController = this.layoutControl1;
-			this.slkupCuentaUtilidadPeriodoGastos.TabIndex = 27;
-			// 
-			// layoutControlItem22
-			// 
-			this.layoutControlItem22.Control = this.slkupCuentaUtilidadPeriodoGastos;
-			this.layoutControlItem22.Location = new System.Drawing.Point(0, 48);
-			this.layoutControlItem22.Name = "layoutControlItem22";
-			this.layoutControlItem22.Size = new System.Drawing.Size(507, 24);
-			this.layoutControlItem22.Text = "Cuenta Utilidad Periodo Gastos:";
-			this.layoutControlItem22.TextSize = new System.Drawing.Size(161, 13);
-			// 
-			// gridView3
-			// 
-			this.gridView3.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
-			this.gridView3.Name = "gridView3";
-			this.gridView3.OptionsSelection.EnableAppearanceFocusedCell = false;
-			this.gridView3.OptionsView.ShowGroupPanel = false;
-			// 
 			// frmParametrosContables
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -799,11 +798,15 @@
 			this.MaximizeBox = false;
 			this.Name = "frmParametrosContables";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "frmParametrosContables";
+			this.Text = "Parametros de Contabilidad";
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
 			this.layoutControl1.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.slkupTipoCambio.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.slkupCuentaUtilidadPeriodoGastos.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.gridView3)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.slkupCuentaUtilidadPeriodoCostos.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.gridView2)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.slkupTipoCambio.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtCantNivel6.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.dtpMesFinPeriodoFiscal.Properties)).EndInit();
@@ -847,18 +850,14 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup3)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem11)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem21)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem22)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup4)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem12)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem14)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem13)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem15)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.slkupCuentaUtilidadPeriodoCostos.Properties)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem21)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.gridView2)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.slkupCuentaUtilidadPeriodoGastos.Properties)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem22)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.gridView3)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

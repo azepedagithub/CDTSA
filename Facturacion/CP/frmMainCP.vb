@@ -12,7 +12,6 @@
     End Sub
 
 
-
     Private Sub NavBarItemMovimientos_LinkClicked(sender As Object, e As DevExpress.XtraNavBar.NavBarLinkEventArgs) Handles NavBarItemMovimientos.LinkClicked
         Try
             Dim frm As New frmCPFiltroReportes()
@@ -60,9 +59,5 @@
         Catch ex As Exception
             MessageBox.Show("Ha ocurrido un error al ejecutar la opción " & Err.Description, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
-    End Sub
-
-    Private Sub NavBarControl1_Click(sender As Object, e As EventArgs) Handles NavBarControl1.Click
-
     End Sub
 End Class

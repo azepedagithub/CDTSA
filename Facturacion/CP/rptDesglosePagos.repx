@@ -84,24 +84,24 @@
         <Item3 Ref="44" ControlType="XRLabel" Name="XrLabel1" Text="Aplicado por" SizeF="68.33215,14.4" LocationFloat="15.53233, 10" Dpi="96" StyleName="FieldCaption" Font="Times New Roman, 8.25pt, style=Bold, Italic, charSet=0" Padding="2,2,0,0,96">
           <StylePriority Ref="45" UseFont="false" />
         </Item3>
-        <Item4 Ref="46" ControlType="XRPanel" Name="XrPanel1" SizeF="722.2979,29.4468079" LocationFloat="1.70213318, 2.55319214" Dpi="96" BackColor="Transparent" Borders="All">
+        <Item4 Ref="46" ControlType="XRPanel" Name="XrPanel1" SizeF="722.2979,29.44681" LocationFloat="1.702133, 2.553192" Dpi="96" BackColor="Transparent" Borders="All">
           <Controls>
-            <Item1 Ref="47" ControlType="XRLabel" Name="XrLabel5" Text="Total Pago" SizeF="65.38638,14.4" LocationFloat="401.4129, 7.446808" Dpi="96" Font="Times New Roman, 8.25pt, style=Bold, Italic, charSet=0" Padding="2,2,0,0,96" BorderColor="Transparent">
+            <Item1 Ref="47" ControlType="XRLabel" Name="XrLabel5" Text="Total Pago" SizeF="65.38638,14.4" LocationFloat="416.814819, 7.446808" Dpi="96" Font="Times New Roman, 8.25pt, style=Bold, Italic, charSet=0" Padding="2,2,0,0,96" BorderColor="Transparent">
               <StylePriority Ref="48" UseFont="false" UseBorderColor="false" />
             </Item1>
-            <Item2 Ref="49" ControlType="XRLabel" Name="XrLabel31" SizeF="66.14993,17.28" LocationFloat="328.3704, 7.446808" Dpi="96" StyleName="DataField" Font="Times New Roman, 8.25pt, style=Italic, charSet=0" Padding="2,2,0,0,96">
+            <Item2 Ref="49" ControlType="XRLabel" Name="XrLabel31" SizeF="78.14993,17.28" LocationFloat="328.3704, 7.446808" Dpi="96" StyleName="DataField" Font="Times New Roman, 8.25pt, style=Italic, charSet=0" Padding="2,2,0,0,96">
               <DataBindings>
                 <Item1 Ref="50" PropertyName="Text" DataMember="cpprptDesglosePagos.MonedaDebito" />
               </DataBindings>
               <StylePriority Ref="51" UseFont="false" />
             </Item2>
-            <Item3 Ref="52" ControlType="XRLabel" Name="XrLabel14" SizeF="56.94431,14.4" LocationFloat="268.4802, 7.446808" Dpi="96" Font="Times New Roman, 8.25pt, style=Italic, charSet=0" Padding="2,2,0,0,96" BorderColor="Transparent">
+            <Item3 Ref="52" ControlType="XRLabel" Name="XrLabel14" SizeF="56.94431,14.4" LocationFloat="268.480164, 7.446808" Dpi="96" Font="Times New Roman, 8.25pt, style=Italic, charSet=0" Padding="2,2,0,0,96" BorderColor="Transparent">
               <DataBindings>
-                <Item1 Ref="53" PropertyName="Text" DataMember="cpprptDesglosePagos.FechaDebito" />
+                <Item1 Ref="53" FormatString="{0:dd/MM/yyyy}" PropertyName="Text" DataMember="cpprptDesglosePagos.FechaDebito" />
               </DataBindings>
               <StylePriority Ref="54" UseFont="false" UseBorderColor="false" />
             </Item3>
-            <Item4 Ref="55" ControlType="XRLabel" Name="XrLabel15" TextAlignment="TopRight" SizeF="83.18475,14.4" LocationFloat="487.653137, 7.446808" Dpi="96" Font="Times New Roman, 8.25pt, style=Italic, charSet=0" Padding="2,2,0,0,96" BorderColor="Transparent">
+            <Item4 Ref="55" ControlType="XRLabel" Name="XrLabel15" TextAlignment="TopRight" SizeF="83.18475,14.4" LocationFloat="487.6531, 7.446808" Dpi="96" Font="Times New Roman, 8.25pt, style=Italic, charSet=0" Padding="2,2,0,0,96" BorderColor="Transparent">
               <DataBindings>
                 <Item1 Ref="56" FormatString="{0:n2}" PropertyName="Text" DataMember="cpprptDesglosePagos.TotalDebito" />
               </DataBindings>
@@ -189,7 +189,7 @@
         <Item8 Ref="102" ControlType="XRPageInfo" Name="XrPageInfo3" PageInfo="DateTime" Format="{0:dd/MM/yyyy HH:mm}" TextAlignment="TopRight" SizeF="135.4799,22.08" LocationFloat="564.5683, 32.08002" Dpi="96" StyleName="PageInfo" Font="Times New Roman, 10pt" Padding="2,2,0,0,96">
           <StylePriority Ref="103" UseFont="false" UseTextAlignment="false" />
         </Item8>
-        <Item9 Ref="104" ControlType="XRLabel" Name="XrLabel16" Text="Proveedor :" SizeF="82.16986,22.08" LocationFloat="140.90329, 66.24002" Dpi="96" Font="Times New Roman, 9.75pt, style=Bold, charSet=0" Padding="2,2,0,0,96">
+        <Item9 Ref="104" ControlType="XRLabel" Name="XrLabel16" Text="Proveedor :" SizeF="82.16986,22.08" LocationFloat="140.9033, 66.24002" Dpi="96" Font="Times New Roman, 9.75pt, style=Bold, charSet=0" Padding="2,2,0,0,96">
           <StylePriority Ref="105" UseFont="false" />
         </Item9>
         <Item10 Ref="106" ControlType="XRLabel" Name="lblCliente" SizeF="468.4535,22.07999" LocationFloat="226.4099, 66.24003" Dpi="96" Font="Times New Roman, 9.75pt, style=Bold, charSet=0" Padding="2,2,0,0,96">
@@ -198,7 +198,7 @@
           </DataBindings>
           <StylePriority Ref="108" UseFont="false" />
         </Item10>
-        <Item11 Ref="109" ControlType="XRLabel" Name="lblNombreReporte" Text="Desglose de Pagos Recibidos" TextAlignment="TopLeft" SizeF="206.9295,22.08001" LocationFloat="226.4099, 22.07999" Dpi="96" Font="Times New Roman, 12pt, style=Bold" Padding="2,2,0,0,96">
+        <Item11 Ref="109" ControlType="XRLabel" Name="lblNombreReporte" Text="Desglose de Pagos Realizados" TextAlignment="TopLeft" SizeF="206.9295,22.08001" LocationFloat="226.4099, 22.07999" Dpi="96" Font="Times New Roman, 12pt, style=Bold" Padding="2,2,0,0,96">
           <StylePriority Ref="110" UseFont="false" UseTextAlignment="false" />
         </Item11>
         <Item12 Ref="111" ControlType="XRLabel" Name="lblEmpresa" TextAlignment="TopCenter" SizeF="331,22.08" LocationFloat="152.9033, 0" Dpi="96" Font="Times New Roman, 12pt, style=Bold" Padding="2,2,0,0,96">
@@ -222,7 +222,7 @@
         <Item17 Ref="122" ControlType="XRLabel" Name="XrLabel9" Text="Dias Venc" TextAlignment="TopCenter" SizeF="69.21344,17.28" LocationFloat="468.5015, 105.9328" Dpi="96" Font="Times New Roman, 9.75pt, style=Bold, charSet=0" Padding="2,2,0,0,96">
           <StylePriority Ref="123" UseFont="false" UseTextAlignment="false" />
         </Item17>
-        <Item18 Ref="124" ControlType="XRLabel" Name="XrLabel7" Text="IDCrédito" SizeF="70.1094055,17.28001" LocationFloat="97.36063, 105.9328" Dpi="96" Font="Times New Roman, 9.75pt, style=Bold, charSet=0" Padding="2,2,0,0,96">
+        <Item18 Ref="124" ControlType="XRLabel" Name="XrLabel7" Text="IDCrédito" SizeF="70.10941,17.28001" LocationFloat="97.36063, 105.9328" Dpi="96" Font="Times New Roman, 9.75pt, style=Bold, charSet=0" Padding="2,2,0,0,96">
           <StylePriority Ref="125" UseFont="false" />
         </Item18>
         <Item19 Ref="126" ControlType="XRLabel" Name="XrLabel3" Text="Clase" SizeF="38.74814,17.28001" LocationFloat="45.11633, 105.9328" Dpi="96" Font="Times New Roman, 9.75pt, style=Bold, charSet=0" Padding="2,2,0,0,96">

@@ -197,6 +197,12 @@
     <Compile Include="DAC\EjercicioDAC.cs" />
     <Compile Include="DAC\GrupoEstadosFinancierosDAC.cs" />
     <Compile Include="DAC\ReportesDAC.cs" />
+    <Compile Include="frmAsociarUsuarioToTipoAsiento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAsociarUsuarioToTipoAsiento.Designer.cs">
+      <DependentUpon>frmAsociarUsuarioToTipoAsiento.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmCerrarPeriodo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -238,6 +244,18 @@
     </Compile>
     <Compile Include="frmSubirTipoCambio.Designer.cs">
       <DependentUpon>frmSubirTipoCambio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmTipoAsiento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTipoAsiento.Designer.cs">
+      <DependentUpon>frmTipoAsiento.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmTipoAsientoUsuarios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTipoAsientoUsuarios.Designer.cs">
+      <DependentUpon>frmTipoAsientoUsuarios.cs</DependentUpon>
     </Compile>
     <Compile Include="frmTipoCambioDetalle.cs">
       <SubType>Form</SubType>
@@ -441,6 +459,9 @@
     <EmbeddedResource Include="Consultas\frmConsultasDetalleMayor.resx">
       <DependentUpon>frmConsultasDetalleMayor.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmAsociarUsuarioToTipoAsiento.resx">
+      <DependentUpon>frmAsociarUsuarioToTipoAsiento.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmCerrarPeriodo.resx">
       <DependentUpon>frmCerrarPeriodo.cs</DependentUpon>
     </EmbeddedResource>
@@ -461,6 +482,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmSubirTipoCambio.resx">
       <DependentUpon>frmSubirTipoCambio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTipoAsiento.resx">
+      <DependentUpon>frmTipoAsiento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTipoAsientoUsuarios.resx">
+      <DependentUpon>frmTipoAsientoUsuarios.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmTipoCambioDetalle.resx">
       <DependentUpon>frmTipoCambioDetalle.cs</DependentUpon>

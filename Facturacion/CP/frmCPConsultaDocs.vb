@@ -1,6 +1,5 @@
 ﻿Imports Clases
 Imports DevExpress.XtraEditors
-
 Public Class frmCPConsultaDocs
     Dim cManager As New ClassManager
     Dim tableData As New DataTable()
@@ -413,6 +412,29 @@ Public Class frmCPConsultaDocs
         Dim dr As DataRow = GridView1.GetFocusedDataRow()
         gsClase = ""
         If dr IsNot Nothing Then
+            If dr("TipoDocumento").ToString() = "C" Then
+                gIDProveedor = CInt(dr("IDProveedor"))
+                gsNombre = dr("Nombre").ToString()
+                gIDDocPago = CInt(dr("IDDocumento"))
+                gsClase = dr("IDClase").ToString()
+                gdMontoOriginal = CDec(dr("MontoOriginal"))
+                gdSaldo = CDec(dr("SaldoDebito"))
+                gdFecha = CDate(dr("Fecha"))
+                gsDocumento = dr("Documento").ToString()
+                gdTipoCambio = CDec(dr("TipoCambio"))
+                gsMoneda = dr("DescrMoneda").ToString()
+                gIDMoneda = CInt(dr("IDMoneda"))
+            End If
+        Else
+            gsClase = ""
+        End If
+    End Sub
+
+
+    Private Sub getDataRowDebitoFromGrid()
+        Dim dr As DataRow = GridView1.GetFocusedDataRow()
+        gsClase = ""
+        If dr IsNot Nothing Then
             If dr("TipoDocumento").ToString() = "D" Then
                 gIDProveedor = CInt(dr("IDProveedor"))
                 gsNombre = dr("Nombre").ToString()
@@ -430,6 +452,7 @@ Public Class frmCPConsultaDocs
             gsClase = ""
         End If
     End Sub
+
 
     Private Sub GridView1_FocusedRowChanged(sender As Object, e As DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs) Handles GridView1.FocusedRowChanged
         Dim dr As DataRow = GridView1.GetFocusedDataRow()
@@ -467,7 +490,7 @@ Public Class frmCPConsultaDocs
 
 
     Private Sub BarButtonItemAplicaciones_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles BarButtonItemAplicaciones.ItemClick
-        getDataRowCreditoFromGrid()
+        getDataRowDebitoFromGrid()
         If gsClase <> "" Then
             Dim frm As New frmCPAplicaCreditos()
             frm.gbAplicar = False
@@ -556,7 +579,7 @@ Public Class frmCPConsultaDocs
                     Return
                 End If
                 If dr("TipoDocumento").ToString() = "C" Then
-                    MessageBox.Show("No se puede Desaplicar un Crédito ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    MessageBox.Show("No se puede Desaplicar un Débito ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     Return
                 End If
                 If dr("TipoDocumento").ToString() = "D" And CBool(dr("Aprobado")) = False Then
@@ -565,7 +588,7 @@ Public Class frmCPConsultaDocs
                 End If
 
             End If
-            getDataRowCreditoFromGrid()
+            getDataRowDebitoFromGrid()
             If gsClase <> "" Then
                 Dim frm As New frmCPAplicaCreditos()
                 frm.gbAplicar = False
@@ -664,14 +687,53 @@ Public Class frmCPConsultaDocs
     End Sub
 
 
-    Private Sub BarButtonItemCreaDocAnulado_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles BarButtonItemCreaDocAnulado.ItemClick
+    Private Sub BarButtonItemCreaDocAnulado_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles BarButtonItemRetenciones.ItemClick
         Try
-            'Dim frm As New frmCCFCreaDocAnulado()
-            'frm.Show()
-            RefrescaFiltro()
+            Dim dr As DataRow = GridView1.GetFocusedDataRow()
+            gsClase = ""
+            If dr IsNot Nothing Then
+                If CBool(dr("Anulado")) = True Then
+                    MessageBox.Show("No se puede Retener un Documento Anulado ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Return
+                End If
+
+                If dr("TipoDocumento").ToString() = "D" Then
+                    MessageBox.Show("No se puede Retener un Débito, solamente se Retiene a un Crédito ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Return
+                End If
+
+
+                If dr("TipoDocumento").ToString() = "C" And CBool(dr("Aprobado")) = False Then
+                    MessageBox.Show("No se puede Retener un Crédito sin estar Aprobado ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Return
+                End If
+
+
+
+            End If
+            getDataRowCreditoFromGrid()
+            If gsClase <> "" Then
+                Dim sParametros As String
+                Dim td As DataTable
+                sParametros = "'" & gsClase & "'," & dr("IDProveedor").ToString()
+                td = cManager.ExecFunction("cppUsaRetencion", sParametros)
+                If (td.Rows(0)(0)) = False Then
+                    MessageBox.Show("Esa Clase de Documento " & gsClase & " o el Proveedor No Usa Retención ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Return
+                End If
+                Dim frm As New frmPopUpRetProveedor
+                frm.gsIDProveedor = dr("IDProveedor").ToString()
+                frm.gsNombreProveedor = dr("Nombre").ToString()
+                frm.gsDocumento = dr("Documento").ToString()
+                frm.gsIDCredito = dr("IDDocumento").ToString()
+                frm.gbExisteDocumentoDeuda = True
+                frm.ShowDialog()
+                RefrescaFiltro()
+            End If
 
         Catch ex As Exception
-            MessageBox.Show("Error al Crear un Documento Anulado" & Err.Description, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("No se puede Aplicar un Credito sin estar Aplicado " & Err.Description, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+
     End Sub
 End Class

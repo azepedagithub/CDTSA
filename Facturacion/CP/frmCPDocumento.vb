@@ -48,6 +48,8 @@ Public Class frmCPDocumento
                 Me.txtContacto.EditValue = frm.gsContacto
                 gIDPlazo = CInt(frm.gsIDCondicionPago)
                 Me.SearchLookUpEditPlazo.EditValue = gIDPlazo
+                Me.SearchLookUpEditMoneda.EditValue = frm.gsIDMoneda
+                Me.SearchLookUpEditMonedaC.EditValue = frm.gsIDMoneda
                 CalculaFechaVencimiento()
             End If
             frm.Dispose()
@@ -66,7 +68,7 @@ Public Class frmCPDocumento
                 Return
             End If
             If Not CargaParametrosCPP() Then
-                MessageBox.Show("Ha ocurrido un error al cargar los Parametros de Cuentas por Pagar...", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("Ha ocurrido un error al cargar los Parametros de Cartera...", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Me.Close()
                 Return
             End If
@@ -258,6 +260,15 @@ Public Class frmCPDocumento
         txtConsumo.EditValue = 0
         txtFlete.EditValue = 0
         txtTotal.EditValue = 0
+        Me.CheckEditAprobado.ReadOnly = True
+        Me.CheckEditAprobadoC.ReadOnly = True
+        Me.CheckEditOrigenExterno.ReadOnly = True
+        Me.CheckEditOrigenExternoC.ReadOnly = True
+        Me.chkAnulado.ReadOnly = True
+        Me.chkAnuladoC.ReadOnly = True
+        Me.txtUsuario.ReadOnly = True
+        Me.txtUsuarioC.ReadOnly = True
+
     End Sub
 
     Sub CargaControlsFromOneRegister()
@@ -829,7 +840,7 @@ Public Class frmCPDocumento
     End Function
     Private Sub BarbtnSave_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles BarbtnSave.ItemClick
         Dim storeName As String, sparameterValues As String
-        Dim sIDRetenciones As String
+        Dim sIDRetenciones As String = ""
         Try
             If ControlsOk() Then
                 If gbEdit Then
@@ -844,6 +855,9 @@ Public Class frmCPDocumento
                 End If
                 Dim td As New DataTable()
                 If Me.rbDebitos.Checked Then
+                    If Not ValidaMonedas() Then
+                        Exit Sub
+                    End If
                     If gParametrosCPP.EditaConsecutivos = True Then
                         'If Not IsMaskOK(gsMascara, Me.txtDocumento.EditValue) Then
                         '    Me.txtDocumento.Focus()
@@ -899,13 +913,22 @@ Public Class frmCPDocumento
                     Exit Sub
                 Else
 
-                    Dim frm As New frmPopUpRetProveedor()
-                    frm.gsIDProveedor = txtIDProveedor.EditValue.ToString()
-                    frm.gsNombreProveedor = txtNombre.ToString()
-                    frm.gsDocumento = txtDocumentoC.EditValue.ToString()
-                    frm.ShowDialog()
-                    sIDRetenciones = frm.gsIDRetenciones
-                    frm.Dispose()
+                    Dim sParametros As String
+                    sparametros = "'" & Me.SearchLookUpEditClase.EditValue.ToString() & "'," & txtIDProveedor.EditValue.ToString()
+                    td = cManager.ExecFunction("cppUsaRetencion", sParametros)
+                    If (td.Rows(0)(0)) = True Then
+                        Dim frm As New frmPopUpRetProveedor()
+                        frm.gsIDProveedor = txtIDProveedor.EditValue.ToString()
+                        frm.gsNombreProveedor = txtNombre.ToString()
+                        frm.gsDocumento = txtDocumentoC.EditValue.ToString()
+                        frm.gsIDCredito = "0"
+                        frm.gbExisteDocumentoDeuda = False
+                        frm.ShowDialog()
+                        sIDRetenciones = frm.gsIDRetenciones
+                        frm.Dispose()
+
+                    End If
+
                     If gParametrosCPP.EditaConsecutivos = True Then
                         'If Not IsMaskOK(gsMascara, Me.txtDocumentoC.EditValue) Then
                         '    Me.txtDocumentoC.Focus()
@@ -1214,7 +1237,7 @@ Public Class frmCPDocumento
     End Sub
 
     Private Sub SearchLookUpEditCuenta_EditValueChanged(sender As Object, e As EventArgs) Handles SearchLookUpEditCuenta.EditValueChanged
-        Dim lbok As Boolean = ValidaMonedas()
+        'Dim lbok As Boolean = ValidaMonedas()
         If gbAdd Then
             If Me.SearchLookUpEditCuenta.Text <> "" And gsIDClaseDebito = "CHK" Then
                 Me.txtDocumento.EditValue = getNextConsecutivoCheque(SearchLookUpEditCuenta.EditValue.ToString())
@@ -1227,14 +1250,14 @@ Public Class frmCPDocumento
             If Me.SearchLookUpEditCuenta.Text <> "" Then
                 If Me.SearchLookUpEditMoneda.Text = "" Then
                     MessageBox.Show("Ud no ha seleccionado la Moneda del documento. Por favor indique la Moneda del documento ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                    SearchLookUpEditCuenta.Text = ""
+                    'SearchLookUpEditCuenta.Text = ""
                     lbok = False
                 End If
                 Dim dr As DataRowView = Me.SearchLookUpEditCuenta.GetSelectedDataRow()
                 giIDMonedaCuentaBancaria = CInt(dr("IDMoneda"))
                 If giIDMonedaCuentaBancaria <> CInt(Me.SearchLookUpEditMoneda.EditValue) Then
                     MessageBox.Show("Ud seleccionó una Cuenta de Banco con Moneda distinta a la Moneda del documento. Revise por favor, ambas monedas deben ser iguales", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                    SearchLookUpEditCuenta.Text = ""
+                    'SearchLookUpEditCuenta.Text = ""
                     lbok = False
                 End If
             End If
@@ -1247,14 +1270,17 @@ Public Class frmCPDocumento
     End Function
 
     Private Sub SearchLookUpEditMoneda_EditValueChanged(sender As Object, e As EventArgs) Handles SearchLookUpEditMoneda.EditValueChanged
-        Dim lbok As Boolean = ValidaMonedas()
+        'Dim lbok As Boolean = ValidaMonedas()
     End Sub
     Private Sub CalculaDesglose()
         Try
+            If gbAdd Then
                 Me.txtSubTotalDescontado.EditValue = CDec(txtSubTotal.EditValue) - CDec(txtDescuento.EditValue)
                 Me.txtTotal.EditValue = CDec(txtSubTotalDescontado.EditValue) + CDec(Me.txtIVA.EditValue) + CDec(txtConsumo.EditValue) + CDec(txtFlete.EditValue)
                 txtMontoC.EditValue = CDec(txtTotal.EditValue)
                 txtSaldoC.EditValue = CDec(txtMontoC.EditValue)
+
+            End If
         Catch ex As Exception
             MessageBox.Show("Ocurrió un error al Calcular el Desglose" & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
@@ -1303,7 +1329,4 @@ Public Class frmCPDocumento
     End Sub
 
 
-    Private Sub txtMontoC_EditValueChanged(sender As Object, e As EventArgs) Handles txtMontoC.EditValueChanged
-
-    End Sub
 End Class

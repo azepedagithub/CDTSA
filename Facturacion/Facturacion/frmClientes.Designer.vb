@@ -19,11 +19,10 @@ Partial Class frmClientes
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmClientes))
         Me.LayoutControl1 = New DevExpress.XtraLayout.LayoutControl()
-        Me.txtDisponible = New DevExpress.XtraEditors.TextEdit()
-        Me.BarManager1 = New DevExpress.XtraBars.BarManager(Me.components)
+        Me.GridLookUpEditEvaluacion = New DevExpress.XtraEditors.GridLookUpEdit()
+        Me.BarManager1 = New DevExpress.XtraBars.BarManager()
         Me.Bar1 = New DevExpress.XtraBars.Bar()
         Me.BarButtonNuevo = New DevExpress.XtraBars.BarButtonItem()
         Me.BarButtonDelete = New DevExpress.XtraBars.BarButtonItem()
@@ -34,7 +33,7 @@ Partial Class frmClientes
         Me.barDockControlBottom = New DevExpress.XtraBars.BarDockControl()
         Me.barDockControlLeft = New DevExpress.XtraBars.BarDockControl()
         Me.barDockControlRight = New DevExpress.XtraBars.BarDockControl()
-        Me.ImageCollection1 = New DevExpress.Utils.ImageCollection(Me.components)
+        Me.ImageCollection1 = New DevExpress.Utils.ImageCollection()
         Me.BarButtonItem1 = New DevExpress.XtraBars.BarButtonItem()
         Me.BarButtonItem2 = New DevExpress.XtraBars.BarButtonItem()
         Me.BarButtonItem3 = New DevExpress.XtraBars.BarButtonItem()
@@ -53,6 +52,8 @@ Partial Class frmClientes
         Me.BarSubItem6 = New DevExpress.XtraBars.BarSubItem()
         Me.BarButtonItem14 = New DevExpress.XtraBars.BarButtonItem()
         Me.BarButtonItem10 = New DevExpress.XtraBars.BarButtonItem()
+        Me.GridView4 = New DevExpress.XtraGrid.Views.Grid.GridView()
+        Me.txtDisponible = New DevExpress.XtraEditors.TextEdit()
         Me.chkEspecial = New DevExpress.XtraEditors.CheckEdit()
         Me.SearchLookUpEditClienteCorp = New DevExpress.XtraEditors.SearchLookUpEdit()
         Me.SearchLookUpEdit1View = New DevExpress.XtraGrid.Views.Grid.GridView()
@@ -142,17 +143,17 @@ Partial Class frmClientes
         Me.LayoutControlItem32 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.EmptySpaceItem2 = New DevExpress.XtraLayout.EmptySpaceItem()
         Me.LayoutControlItem35 = New DevExpress.XtraLayout.LayoutControlItem()
+        Me.LayoutControlItem36 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlGroup5 = New DevExpress.XtraLayout.LayoutControlGroup()
         Me.LayoutControlGroup6 = New DevExpress.XtraLayout.LayoutControlGroup()
         Me.EmptySpaceItem3 = New DevExpress.XtraLayout.EmptySpaceItem()
-        Me.GridLookUpEditEvaluacion = New DevExpress.XtraEditors.GridLookUpEdit()
-        Me.LayoutControlItem36 = New DevExpress.XtraLayout.LayoutControlItem()
-        Me.GridView4 = New DevExpress.XtraGrid.Views.Grid.GridView()
         CType(Me.LayoutControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.LayoutControl1.SuspendLayout()
-        CType(Me.txtDisponible.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GridLookUpEditEvaluacion.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BarManager1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ImageCollection1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GridView4, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.txtDisponible.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.chkEspecial.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SearchLookUpEditClienteCorp.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SearchLookUpEdit1View, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -243,12 +244,10 @@ Partial Class frmClientes
         CType(Me.LayoutControlItem32, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.EmptySpaceItem2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem35, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.LayoutControlItem36, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlGroup5, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlGroup6, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.EmptySpaceItem3, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.GridLookUpEditEvaluacion.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.LayoutControlItem36, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.GridView4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'LayoutControl1
@@ -298,14 +297,16 @@ Partial Class frmClientes
         Me.LayoutControl1.TabIndex = 0
         Me.LayoutControl1.Text = "LayoutControl1"
         '
-        'txtDisponible
+        'GridLookUpEditEvaluacion
         '
-        Me.txtDisponible.Location = New System.Drawing.Point(353, 215)
-        Me.txtDisponible.MenuManager = Me.BarManager1
-        Me.txtDisponible.Name = "txtDisponible"
-        Me.txtDisponible.Size = New System.Drawing.Size(103, 20)
-        Me.txtDisponible.StyleController = Me.LayoutControl1
-        Me.txtDisponible.TabIndex = 45
+        Me.GridLookUpEditEvaluacion.Location = New System.Drawing.Point(712, 215)
+        Me.GridLookUpEditEvaluacion.MenuManager = Me.BarManager1
+        Me.GridLookUpEditEvaluacion.Name = "GridLookUpEditEvaluacion"
+        Me.GridLookUpEditEvaluacion.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.GridLookUpEditEvaluacion.Properties.View = Me.GridView4
+        Me.GridLookUpEditEvaluacion.Size = New System.Drawing.Size(138, 20)
+        Me.GridLookUpEditEvaluacion.StyleController = Me.LayoutControl1
+        Me.GridLookUpEditEvaluacion.TabIndex = 46
         '
         'BarManager1
         '
@@ -529,6 +530,22 @@ Partial Class frmClientes
         Me.BarButtonItem10.Caption = "BarButtonItem10"
         Me.BarButtonItem10.Id = 21
         Me.BarButtonItem10.Name = "BarButtonItem10"
+        '
+        'GridView4
+        '
+        Me.GridView4.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus
+        Me.GridView4.Name = "GridView4"
+        Me.GridView4.OptionsSelection.EnableAppearanceFocusedCell = False
+        Me.GridView4.OptionsView.ShowGroupPanel = False
+        '
+        'txtDisponible
+        '
+        Me.txtDisponible.Location = New System.Drawing.Point(353, 215)
+        Me.txtDisponible.MenuManager = Me.BarManager1
+        Me.txtDisponible.Name = "txtDisponible"
+        Me.txtDisponible.Size = New System.Drawing.Size(103, 20)
+        Me.txtDisponible.StyleController = Me.LayoutControl1
+        Me.txtDisponible.TabIndex = 45
         '
         'chkEspecial
         '
@@ -1322,6 +1339,15 @@ Partial Class frmClientes
         Me.LayoutControlItem35.Text = "Disponible "
         Me.LayoutControlItem35.TextSize = New System.Drawing.Size(94, 13)
         '
+        'LayoutControlItem36
+        '
+        Me.LayoutControlItem36.Control = Me.GridLookUpEditEvaluacion
+        Me.LayoutControlItem36.Location = New System.Drawing.Point(591, 24)
+        Me.LayoutControlItem36.Name = "LayoutControlItem36"
+        Me.LayoutControlItem36.Size = New System.Drawing.Size(239, 24)
+        Me.LayoutControlItem36.Text = "Evaluación"
+        Me.LayoutControlItem36.TextSize = New System.Drawing.Size(94, 13)
+        '
         'LayoutControlGroup5
         '
         Me.LayoutControlGroup5.Location = New System.Drawing.Point(0, 252)
@@ -1342,33 +1368,6 @@ Partial Class frmClientes
         Me.EmptySpaceItem3.Size = New System.Drawing.Size(977, 10)
         Me.EmptySpaceItem3.TextSize = New System.Drawing.Size(0, 0)
         '
-        'GridLookUpEditEvaluacion
-        '
-        Me.GridLookUpEditEvaluacion.Location = New System.Drawing.Point(712, 215)
-        Me.GridLookUpEditEvaluacion.MenuManager = Me.BarManager1
-        Me.GridLookUpEditEvaluacion.Name = "GridLookUpEditEvaluacion"
-        Me.GridLookUpEditEvaluacion.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
-        Me.GridLookUpEditEvaluacion.Properties.View = Me.GridView4
-        Me.GridLookUpEditEvaluacion.Size = New System.Drawing.Size(138, 20)
-        Me.GridLookUpEditEvaluacion.StyleController = Me.LayoutControl1
-        Me.GridLookUpEditEvaluacion.TabIndex = 46
-        '
-        'LayoutControlItem36
-        '
-        Me.LayoutControlItem36.Control = Me.GridLookUpEditEvaluacion
-        Me.LayoutControlItem36.Location = New System.Drawing.Point(591, 24)
-        Me.LayoutControlItem36.Name = "LayoutControlItem36"
-        Me.LayoutControlItem36.Size = New System.Drawing.Size(239, 24)
-        Me.LayoutControlItem36.Text = "Evaluación"
-        Me.LayoutControlItem36.TextSize = New System.Drawing.Size(94, 13)
-        '
-        'GridView4
-        '
-        Me.GridView4.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus
-        Me.GridView4.Name = "GridView4"
-        Me.GridView4.OptionsSelection.EnableAppearanceFocusedCell = False
-        Me.GridView4.OptionsView.ShowGroupPanel = False
-        '
         'frmClientes
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1385,9 +1384,11 @@ Partial Class frmClientes
         Me.Text = "Clientes"
         CType(Me.LayoutControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.LayoutControl1.ResumeLayout(False)
-        CType(Me.txtDisponible.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GridLookUpEditEvaluacion.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.BarManager1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.ImageCollection1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GridView4, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.txtDisponible.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.chkEspecial.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.SearchLookUpEditClienteCorp.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.SearchLookUpEdit1View, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1478,12 +1479,10 @@ Partial Class frmClientes
         CType(Me.LayoutControlItem32, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.EmptySpaceItem2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem35, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.LayoutControlItem36, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlGroup5, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlGroup6, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.EmptySpaceItem3, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.GridLookUpEditEvaluacion.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.LayoutControlItem36, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.GridView4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

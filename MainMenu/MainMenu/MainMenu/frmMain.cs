@@ -763,6 +763,12 @@ namespace MainMenu
 					ShowPagesRibbonMan(false);
 					ofrmGenDocCierreFiscal.Show();
 					break;
+				case "frmTipoAsiento":
+					frmTipoAsiento ofrmTipoAsiento = new frmTipoAsiento();
+					ofrmTipoAsiento.MdiParent = this;
+					ShowPagesRibbonMan(false);
+					ofrmTipoAsiento.Show();
+					break;
             }
 
 
@@ -948,7 +954,7 @@ namespace MainMenu
 
 					TreeListNode nodeTransaccionesCliente = tl.AppendNode(new object[] { "Transacciones" }, -1, 9, 10, 9);
 					TreeListNode nodeRegistrarTranCliente = tl.AppendNode(new object[] { "Transacciones" }, nodeTransaccionesCliente.Id, 11, 11, 11);
-					nodeRegistrarCliente.Tag = "optRegistrarTranCliente";
+					nodeRegistrarTranCliente.Tag = "optRegistrarTranCliente";
 
 					TreeListNode nodeRecibosCaja= tl.AppendNode(new object[] { "Recibos de Caja" }, nodeTransaccionesCliente.Id, 11, 11, 11);
 					nodeRecibosCaja.Tag = "optRecibosCaja";
@@ -1021,9 +1027,6 @@ namespace MainMenu
 					TreeListNode nodeFactura = tl.AppendNode(new object[] { "Facturación" }, -1, 9, 10, 9);
 					TreeListNode nodeCrearFactura= tl.AppendNode(new object[] { "Crear Factura" }, nodeFactura.Id, 11, 11, 11);
 					nodeCrearFactura.Tag = "optCrearFactura";
-
-					TreeListNode nodeCrearDevolucion= tl.AppendNode(new object[] { "Crear Devolución" }, nodeFactura.Id, 11, 11, 11);
-					nodeCrearDevolucion.Tag = "optCrearDevolucion";
 
 					TreeListNode nodeConsultasFactura = tl.AppendNode(new object[] { "Consultas" }, nodeFactura.Id, 9, 10, 9);
 					TreeListNode nodeConsultaFacturacion = tl.AppendNode(new object[] { "Facturación" }, nodeConsultasFactura.Id, 11, 11, 11);
@@ -1210,6 +1213,9 @@ namespace MainMenu
 
                     TreeListNode nodeCierreMes = tl.AppendNode(new object[] { "Cerrar Periodo" }, nodeAdministracionContabilidad.Id, 11, 11, 11);
                     nodeCierreMes.Tag = "frmCerrarPeriodo";
+
+					TreeListNode nodeTipoAsiento = tl.AppendNode(new object[] { "Tipo Asiento" }, nodeAdministracionContabilidad.Id, 11, 11, 11);
+					nodeTipoAsiento.Tag = "frmTipoAsiento";
                     break;
             }
 

@@ -92,15 +92,15 @@ CONSTRAINT [pkccpCondicionPago] PRIMARY KEY CLUSTERED
 
 GO
 
-CREATE TABLE dbo.coTipoProrrateoRubrosCompra(
-	IDTipoProrrateo INT NOT NULL,
-	Descr NVARCHAR(250),
-	Activo BIT DEFAULT 1
-CONSTRAINT pkcoTipoProrrateoRubrosCompra PRIMARY KEY CLUSTERED 
-(
-	IDTipoProrrateo ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-) ON [PRIMARY]
+--CREATE TABLE dbo.coTipoProrrateoRubrosCompra(
+--	IDTipoProrrateo INT NOT NULL,
+--	Descr NVARCHAR(250),
+--	Activo BIT DEFAULT 1
+--CONSTRAINT pkcoTipoProrrateoRubrosCompra PRIMARY KEY CLUSTERED 
+--(
+--	IDTipoProrrateo ASC
+--)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+--) ON [PRIMARY]
 
 GO
 
@@ -188,7 +188,7 @@ CREATE TABLE [dbo].[coOrdenCompra](
 	Flete DECIMAL(28,4),
 	Seguro DECIMAL(28,4),
 	Anticipos decimal(28,4),
-	IDTipoProrrateo INt,
+	--IDTipoProrrateo INt,
 	IDEmbarque INT,
 	IDDocumentoCP INT,
 	TipoCambio DECIMAL(28,4),
@@ -235,8 +235,8 @@ REFERENCES [dbo].cppCondicionPago (IDCondicionPago)
 GO
 
 
-ALTER TABLE [dbo].[coOrdenCompra]  WITH CHECK ADD  CONSTRAINT [fkcoOrdenCompra_TipoProrrateo] FOREIGN KEY([IDTipoProrrateo])
-REFERENCES [dbo].coTipoProrrateoRubrosCompra (IDTipoProrrateo)
+--ALTER TABLE [dbo].[coOrdenCompra]  WITH CHECK ADD  CONSTRAINT [fkcoOrdenCompra_TipoProrrateo] FOREIGN KEY([IDTipoProrrateo])
+--REFERENCES [dbo].coTipoProrrateoRubrosCompra (IDTipoProrrateo)
 
 GO
 
@@ -772,7 +772,7 @@ INNER JOIN dbo.invProducto P ON A.IDProducto = P.IDProducto
 WHERE (IDSolicitud =@IDSolicitud OR (@IDSolicitud=-1 AND 1=3))
 go 
 
-CREATE PROCEDURE dbo.coGetOrdenCompra(  @IDOrdenCompra AS INT, @FechaInicial AS DATETIME,@FechaFinal AS DATETIME, @Proveedor AS NVARCHAR(1000),@Estado AS NVARCHAR(1000),@FechaRequeridaInicial AS DATETIME ,
+CREATE  PROCEDURE dbo.coGetOrdenCompra(  @IDOrdenCompra AS INT, @FechaInicial AS DATETIME,@FechaFinal AS DATETIME, @Proveedor AS NVARCHAR(1000),@Estado AS NVARCHAR(1000),@FechaRequeridaInicial AS DATETIME ,
 																			@FechaRequeridaFinal AS DATETIME)
 AS 
 DECLARE @Separador AS NVARCHAR(1)
@@ -798,7 +798,7 @@ INNER JOIN dbo.invBodega C ON A.IDBodega= C.IDBodega
 INNER JOIN dbo.cppProveedor D ON A.IDProveedor = D.IDProveedor
 INNER JOIN dbo.globalMoneda E ON A.IDMoneda = E.IDMoneda
 INNER JOIN dbo.cppCondicionPago F ON A.IDCondicionPago = F.IDCondicionPago
-LEFT  JOIN dbo.coTipoProrrateoRubrosCompra G ON A.IDTipoProrrateo = G.IDTipoProrrateo
+--LEFT  JOIN dbo.coTipoProrrateoRubrosCompra G ON A.IDTipoProrrateo = G.IDTipoProrrateo
 LEFT JOIN dbo.coEmbarque H ON A.IDEmbarque = H.IDEmbarque
 WHERE (A.IDOrdenCompra = @IDOrdenCompra OR @IDOrdenCompra = -1) AND A.Fecha  BETWEEN @FechaInicial  AND @FechaFinal  AND FechaRequerida  BETWEEN @FechaRequeridaInicial AND @FechaRequeridaFinal
 AND (a.IDProveedor IN (SELECT Value FROM [dbo].[ConvertListToTable](@Proveedor,@Separador)) OR @Proveedor = '*')  AND (A.IDEstado IN (SELECT Value FROM [dbo].[ConvertListToTable](@Estado,@Separador) ) OR @Estado ='*' )
@@ -807,7 +807,7 @@ AND (a.IDProveedor IN (SELECT Value FROM [dbo].[ConvertListToTable](@Proveedor,@
 go 
 
 
-CREATE PROCEDURE dbo.coGetOrdenCompraByID( @IDOrdenCompra AS INT)
+ALTER PROCEDURE dbo.coGetOrdenCompraByID( @IDOrdenCompra AS INT)
 AS 
 SELECT  A.IDOrdenCompra ,OrdenCompra ,A.Fecha ,FechaRequerida ,FechaEmision ,FechaRequeridaEmbarque ,FechaCotizacion ,IDEstado, B.Descr DescrEstado,A.IDBodega, C.Descr DescrBodega, 
 		A.IDProveedor ,D.Nombre DescrProveedor,A.IDMoneda, E.Descr DescrMoneda,A.IDCondicionPago , F.Descr DescrCondicionPago,F.Dias DiasCondicionPago,
@@ -818,7 +818,7 @@ INNER JOIN dbo.invBodega C ON A.IDBodega= C.IDBodega
 INNER JOIN dbo.cppProveedor D ON A.IDProveedor = D.IDProveedor
 INNER JOIN dbo.globalMoneda E ON A.IDMoneda = E.IDMoneda
 INNER JOIN dbo.cppCondicionPago F ON A.IDCondicionPago = F.IDCondicionPago
-LEFT  JOIN dbo.coTipoProrrateoRubrosCompra G ON A.IDTipoProrrateo = G.IDTipoProrrateo
+--LEFT  JOIN dbo.coTipoProrrateoRubrosCompra G ON A.IDTipoProrrateo = G.IDTipoProrrateo
 LEFT JOIN dbo.coEmbarque H ON A.IDEmbarque = H.IDEmbarque
 WHERE (A.IDOrdenCompra = @IDOrdenCompra )
 

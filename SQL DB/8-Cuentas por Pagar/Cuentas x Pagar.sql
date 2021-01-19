@@ -1,7 +1,7 @@
---drop table dbo.cppParametros
+--drop table dbo.cppParametros alter table cppParametros add ProvExternoRetencion bit default 0 update cppParametros set ProvExternoRetencion = 0
 Create table dbo.cppParametros (IDParametro int identity (1,1) not null, 
 DocAprobadosDefault bit default 0, CambiarPlazo bit default 0, TipoAsientoDebito nvarchar(2), 
-TipoAsientoCredito nvarchar(2), IntegracionContable bit default 0 )
+TipoAsientoCredito nvarchar(2), IntegracionContable bit default 0, ProvExternoRetencion bit default 0 )
 go
 alter table dbo.cppParametros add constraint pkcppParametros primary key (IDParametro)
 go
@@ -44,7 +44,7 @@ go
 -- Select * from dbo.cppClaseDocumento alter table dbo.cppClaseDocumento add GeneraRetencion bit default 0 alter table dbo.cppClaseDocumento add UsaCuentaBancaria bit default 0 Update dbo.cppClaseDocumento set GeneraRetencion = 0
 Create Table dbo.cppClaseDocumento ( TipoDocumento nvarchar(1) not null, IDClase nvarchar(10) not null, Descr nvarchar(250), 
 Orden int default 0, Activo bit default 1,
-DistribAutom bit default 0, EsInteres bit default 0, EsDeslizamiento bit default 0, UsaCuentaBancaria bit default 0,
+DistribAutom bit default 0, EsInteres bit default 0, EsDeslizamiento bit default 0 ,  UsaCuentaBancaria bit default 0,
 SysReadOnly bit default 0, UltimoNumero bit default 0, AprobacionRequerida bit default 0, GeneraRetencion bit default 0)
 go
 
@@ -107,19 +107,19 @@ Especial bit default 0, ContraCtaEnSubTipo bit default 0, SysReadOnly bit defaul
 --, Orden int default 0, DistribAutom bit default 0, EsInteres bit default 0, EsDeslizamiento bit default 0 )
 go
 /* Explicacion de los Campos de la tabla dbo.[cppSubTipoDocumento]
-Field	DescripciÛn	FunciÛn
+Field	Descripci€n	Funci€n
 IDSubTipo	Codigo del SubTipo	
-TipoDocumento	Tipo de SubTipo de Documento	Indica si el Documento es DÈbito o CrÈdito
+TipoDocumento	Tipo de SubTipo de Documento	Indica si el Documento es D»bito o Cr»dito
 IDClase	ID de la Clase a la que pertenece	Indica la Clase 
-Descr	DescripciÛn del SubTipo de Documento	
-Descripcion	DescripciÛn Alterna	
+Descr	Descripci€n del SubTipo de Documento	
+Descripcion	Descripci€n Alterna	
 Consecutivo	Consecutivo No Usado, esto es si el usuario quiere	
-DistribAutom	DistribuciÛn Autom·tica de los SubTipo CrÈditos	Si es 1 Aplica o Cancela los dÈbitos m·s vencidos
-EsRecuperacion	Indica si un Documento Aplica como RecuperaciÛn	Es utilizado en la reporteria
-SubTipoGeneraAsiento	Indica si un subtipo genera o no Asiento Contable	Si es 0 la generaciÛn de Asiento se hace como un R/C autom·tico
+DistribAutom	Distribuci€n Autom∑tica de los SubTipo Cr»ditos	Si es 1 Aplica o Cancela los d»bitos m∑s vencidos
+EsRecuperacion	Indica si un Documento Aplica como Recuperaci€n	Es utilizado en la reporteria
+SubTipoGeneraAsiento	Indica si un subtipo genera o no Asiento Contable	Si es 0 la generaci€n de Asiento se hace como un R/C autom∑tico
 NaturalezaCta	Indica en donde va la cuenta que manda	La cuenta que manda puede estar en Deb o Cred
 CtaDebito	Cuenta Contable del SubTipo en el Debito	
-CtaCredito	Cuenta Contable del SubTipo en el CrÈdito	
+CtaCredito	Cuenta Contable del SubTipo en el Cr»dito	
 Especial	Indica si el subtipo corresponde para un Cliente vario o especial	Si es especial, se toma los clientes que tengan categoria Especial o Varios
 ContraCtaEnSubTipo	Indica si la ContraCuenta la toma del SubTipo o es la Cta CxC de la Sucursal	
 
@@ -316,12 +316,144 @@ go
 
 Create nonclustered index  indcppAplicacionesIDCredito on dbo.cppAplicaciones (IDCredito)
 go
+
 -- drop procedure dbo.cppUpdatecppCreditos select * from dbo.cppproveedor
+-- Create Procedure dbo.cppCreaRetenciones @IDProveedor int, @IDCredito int, 
+--@IDClase nvarchar(10), @Documento nvarchar(20) , 
+--@Fecha datetime,  @Usuario nvarchar(20), @TipoCambio decimal(28,4),
+--@IDMoneda int = null,@SubTotal decimal(28, 4)=0, @SubTotalDescuento decimal(28, 4)=0, 
+--@Total decimal(28,4)=0, @strIDRetenciones nvarchar(500)=null
+
+ create Procedure dbo.cppCreaRetenciones @IDCredito int, 
+ @strIDRetenciones nvarchar(500)=null
+-- la Transaccion debe ponerse fuera de este proceso
+as
+set nocount on
+Declare @GeneraRetencion bit 
+Declare @IDProveedor int,  
+@IDClase nvarchar(10), @Documento nvarchar(20) , 
+@Fecha datetime,  @Usuario nvarchar(20), @TipoCambio decimal(28,4),
+@IDMoneda int = null,@SubTotal decimal(28, 4), @SubTotalDescuento decimal(28, 4), 
+@Total decimal(28,4)
+
+Select @IDProveedor = IDProveedor , @IDCredito = IDCredito , 
+	@IDClase = IDClase, @Documento =Documento  , @Fecha = Fecha ,  
+	@Usuario = Usuario , @TipoCambio = TipoCambio,
+	@IDMoneda = IDMoneda,@SubTotal = SubTotal , 
+	@SubTotalDescuento = SubTotalsinDescuento , @Total = Total
+From dbo.cppCreditos 
+Where IDCredito = @IDCredito 
+
+Select @GeneraRetencion = GeneraRetencion
+From dbo.cppClaseDocumento 
+Where IDClase = @IDClase
+
+if @GeneraRetencion = 1 and exists ( Select * from dbo.cppRetencion 
+	Where IDRetencion in (Select value 
+	From dbo.ConvertListToTable (@strIDRetenciones, ','))	
+	)
+begin
+	Declare @Retenciones as table (
+	[IDProveedor] [int] NOT NULL,
+	[IDCredito] [int] NOT NULL,
+	[IDRetencion] [int] NOT NULL,
+	[Pagada] [bit] NULL,
+	[FechaRetencion] [date] NULL,
+	[Monto] [decimal](28, 4) NULL,
+	[Base] [decimal](28, 4) NULL )	
+	Insert @Retenciones ( IDProveedor, IDCredito, IDRetencion, Pagada, FechaRetencion, Monto, Base )
+	Select @IDProveedor IDProvedor, @IDCredito IDCredito, R.IDRetencion, 1 Pagada, @Fecha FechaRetencion,
+	(case when AplicaSubTotal = 1 
+	then @SubTotal else
+	case when AplicaSubTotalMenosDesc = 1 then
+	@SubTotalDescuento
+	else
+	case when AplicaTotalFactura = 1 then
+	@Total
+	else
+	0
+	end 
+	end
+	end * Porcentaje/100 ) MontoRetencion, 
+	case when AplicaSubTotal = 1 
+	then @SubTotal else
+	case when AplicaSubTotalMenosDesc = 1 then
+	@SubTotalDescuento
+	else
+	case when AplicaTotalFactura = 1 then
+	@Total
+	else
+	0
+	end 
+	end
+	end Base 
+	From dbo.cppRetencion R left join ( Select IDRetencion, IDProveedor, IDCredito 
+	from dbo.cppRetenciones 
+	Where IDProveedor = @IDProveedor and IDCredito = @IDCredito ) A
+	on R.IDRetencion = A.IDRetencion  
+	Where R.IDRetencion in (Select value From dbo.ConvertListToTable (@strIDRetenciones, ','))	
+	AND A.IDCredito IS NULL AND A.IDProveedor IS NULL AND A.IDRetencion IS NULL
+	IF ( Select count(*) from @Retenciones ) > 0
+	BEGIN
+	
+	insert dbo.cppRetenciones (IDProveedor, IDCredito, IDRetencion, Pagada, FechaRetencion, Monto, Base)
+	Select IDProveedor, IDCredito, IDRetencion, Pagada, FechaRetencion, Monto, Base
+	From @Retenciones 
+	-- insertamos los Debitos Retenciones 
+	Declare @IDSubtipoRetencion int 
+	Select top 1 @IDSubtipoRetencion = IDSubTipo 
+	From dbo.cppSubTipoDocumento
+	Where IDClase = 'RET' 
+	
+	Declare @TableinsertDebitos as table (IDnewDebito int, DocDebito nvarchar(20), 
+	Fecha datetime, Monto decimal(28,4) default 0)
+	Insert dbo.cppDebitos (IDProveedor, TipoDocumento, IDClase, IDSubTipo, Documento,
+	Fecha, MontoOriginal, SaldoActual, PorcInteres, Anulado, 
+	ConceptoSistema,
+	ConceptoUsuario, Usuario , TipoCambio, Contabilizado, flgOrigenExterno, flgAprobado, 
+	IDMoneda )
+	OUTPUT inserted.IDDebito, inserted.Documento, inserted.Fecha, inserted.MontoOriginal    
+	INTO @TableinsertDebitos
+	Select R.IDProveedor, 'D', 'RET', @IDSubtipoRetencion, 'RET' + cast(R.IDRetenciones  as nvarchar(100) ),
+	CAST(R.FechaRetencion AS DATE), R.Monto, 0 SaldoActual, 0 PorcInteres, 0 Anulado, 	
+	@IDClase + '-' + @Documento ,	
+	'RetenciÛn correspondiente al Documento ' + @IDClase + '-' + @Documento ,	
+	@Usuario, @TipoCambio, 0 Contabilizado, 0 flgOrigenExterno, 1 flgAprobado,
+	@IDMoneda  
+	From dbo.cppRetenciones R inner join @Retenciones T
+	on R.IDRetencion = T.IDRetencion and R.IDProveedor = T.IDProveedor 
+	and R.IDCredito = T.IDCredito and R.FechaRetencion = T.FechaRetencion 
+
+	
+	Declare @TotalRetenciones decimal (28,4)
+	
+	Select @TotalRetenciones = SUM(Monto)
+	From @TableinsertDebitos
+	
+	Insert dbo.cppAplicaciones (IDDebito, IDCredito, DocDebito, DocCredito, Fecha, FechaCredito, MontoCredito )
+	Select IDnewDebito, @IDCredito, DocDebito, @Documento, Fecha, cast(GETDATE() as DATE) , Monto 
+	From @TableinsertDebitos 
+	
+	Insert dbo.cppProveedorRetencion (IDProveedor, IDRetencion )
+	Select E.IDProveedor, E.IDRetencion 
+	from (
+	Select Distinct IDProveedor, IDRetencion 
+	from dbo.cppRetenciones 
+	Where IDProveedor = @IDProveedor ) E left join dbo.cppProveedorRetencion A
+	on E.IDProveedor = A.IDProveedor and E.IDRetencion = A.IDRetencion 
+	where A.IDProveedor is null and A.IDRetencion is null 
+	
+	Update dbo.cppCreditos  set SaldoActual = SaldoActual - @TotalRetenciones
+	WHERE IDCredito = @IDCredito 
+	END
+end
+go
+
 /*
 exec dbo.cppUpdatecppCreditos 'I', 0, 1, 'C', 'FAC', 1, 'F01002','20210114', 0, 1000,
 'ND', 'ND', 'azepeda', 34.4545, 0, 1, 1, 0, 1000, 0,0,0,0,0,1000, '1,2'
 */
---
+
 Create Procedure dbo.cppUpdatecppCreditos @Operation nvarchar(1),  @IDCredito int Output, 
 @IDProveedor int  ,@TipoDocumento nvarchar(1) , @IDClase nvarchar(10), 
 @IDSubTipo	int , @Documento nvarchar(20) , @Fecha datetime ,  @Plazo INT ,  @MontoOriginal decimal(28,4) ,
@@ -345,6 +477,9 @@ set @Ok = 0
 Select @GeneraRetencion = GeneraRetencion,@flgAprobado = CASE WHEN AprobacionRequerida = 1 then  0 else 1 end 
 From dbo.cppClaseDocumento 
 Where IDClase = @IDClase 
+
+if @strIDRetenciones is null
+	set @strIDRetenciones = ''
 
 if @Anulado is null 
 	set @Anulado = 0
@@ -372,87 +507,10 @@ begin
 	)
 	Set @IDCredito  = (SELECT SCOPE_IDENTITY())
 
-	if @GeneraRetencion = 1
-	begin	
-	-- Creamos las Retenciones 
-	
-	Declare @Retenciones as table (
-	[IDProveedor] [int] NOT NULL,
-	[IDCredito] [int] NOT NULL,
-	[IDRetencion] [int] NOT NULL,
-	[Pagada] [bit] NULL,
-	[FechaRetencion] [date] NULL,
-	[Monto] [decimal](28, 4) NULL,
-	[Base] [decimal](28, 4) NULL )	
-	Insert @Retenciones ( IDProveedor, IDCredito, IDRetencion, Pagada, FechaRetencion, Monto, Base )
-	Select @IDProveedor IDProvedor, @IDCredito IDCredito, IDRetencion, 1 Pagada, @Fecha FechaRetencion,
-	(case when AplicaSubTotal = 1 
-	then @SubTotal else
-	case when AplicaSubTotalMenosDesc = 1 then
-	@SubTotalDescuento
-	else
-	case when AplicaTotalFactura = 1 then
-	@Total
-	else
-	0
-	end 
-	end
-	end * Porcentaje/100 ) MontoRetencion, 
-	case when AplicaSubTotal = 1 
-	then @SubTotal else
-	case when AplicaSubTotalMenosDesc = 1 then
-	@SubTotalDescuento
-	else
-	case when AplicaTotalFactura = 1 then
-	@Total
-	else
-	0
-	end 
-	end
-	end Base 
-	From dbo.cppRetencion 
-	Where IDRetencion in (Select value From dbo.ConvertListToTable (@strIDRetenciones, ','))	
-	
-	insert dbo.cppRetenciones (IDProveedor, IDCredito, IDRetencion, Pagada, FechaRetencion, Monto, Base)
-	Select IDProveedor, IDCredito, IDRetencion, Pagada, FechaRetencion, Monto, Base
-	From @Retenciones 
-	-- insertamos los Debitos Retenciones 
-	Declare @IDSubtipoRetencion int 
-	Select top 1 @IDSubtipoRetencion = IDSubTipo 
-	From dbo.cppSubTipoDocumento
-	Where IDClase = 'RET' 
-	
-	Declare @TableinsertDebitos as table (IDnewDebito int, DocDebito nvarchar(20), 
-	Fecha datetime, Monto decimal(28,4) default 0)
-	Insert dbo.cppDebitos (IDProveedor, TipoDocumento, IDClase, IDSubTipo, Documento,
-	Fecha, MontoOriginal, SaldoActual, PorcInteres, Anulado, 
-	ConceptoSistema,
-	ConceptoUsuario, Usuario , TipoCambio, Contabilizado, flgOrigenExterno, flgAprobado, 
-	IDMoneda )
-	OUTPUT inserted.IDDebito, inserted.Documento, inserted.Fecha, inserted.MontoOriginal    
-	INTO @TableinsertDebitos
-	Select R.IDProveedor, 'D', 'RET', @IDSubtipoRetencion, 'RET' + cast(R.IDRetenciones  as nvarchar(100) ),
-	CAST(R.FechaRetencion AS DATETIME), R.Monto, 0 SaldoActual, 0 PorcInteres, 0 Anulado, 
-	'Retención correspondiente al Documento ' + @IDClase + '-' + @Documento ,
-	@IDClase + '-' + @Documento ,	
-	@Usuario, @TipoCambio, 0 Contabilizado, 0 flgOrigenExterno, 1 flgAprobado,
-	@IDMoneda  
-	From dbo.cppRetenciones R inner join @Retenciones T
-	on R.IDRetencion = T.IDRetencion and R.IDProveedor = T.IDProveedor 
-	and R.IDCredito = T.IDCredito and R.FechaRetencion = T.FechaRetencion 
-	
-	Declare @TotalRetenciones decimal (28,4)
-	
-	Select @TotalRetenciones = SUM(Monto)
-	From @TableinsertDebitos
-	
-	Insert dbo.cppAplicaciones (IDDebito, IDCredito, DocDebito, DocCredito, Fecha, FechaCredito, MontoCredito )
-	Select IDnewDebito, @IDCredito, DocDebito, @Documento, Fecha, GETDATE(), Monto 
-	From @TableinsertDebitos 
-	
-	Update dbo.cppCreditos  set SaldoActual = MontoOriginal - @TotalRetenciones
-	WHERE IDCredito = @IDCredito 
-	
+	if @GeneraRetencion = 1 and @strIDRetenciones <>''
+	begin
+	---- Creamos las Retenciones 	
+	exec dbo.cppCreaRetenciones @IDCredito, @strIDRetenciones
 	-- falta generar contabliizacion 
 	end -- Genera Retencion	
 end
@@ -473,7 +531,7 @@ begin
 set @Ok = 1
 	if exists( Select IDAplicacion from dbo.cppAPLICACIONES (Nolock)  where IDCredito =  @IDCredito )
 	begin
-	RAISERROR ('Ud est· queriendo eliminar un documento que tiene Aplicaciones, primero elimÌnelas', 16, 10);
+	RAISERROR ('Ud est· queriendo eliminar un documento que tiene Aplicaciones, primero elimÃnelas', 16, 10);
 	set @Ok = 0
 	end
 	if  @Ok = 1
@@ -523,6 +581,9 @@ begin try
 
 if @Anulado is null
 	set @Anulado = 0
+Select @flgAprobado = CASE WHEN AprobacionRequerida = 1 then  0 else 1 end 
+From dbo.cppClaseDocumento 
+Where IDClase = @IDClase
 
 if upper(@Operation) = 'I'
 begin
@@ -554,7 +615,7 @@ begin
 set @Ok = 1
 	if exists( Select IDAplicacion from dbo.cppAPLICACIONES (Nolock)  where IDDebito =  @IDDebito )
 	begin
-	RAISERROR ('Ud est· queriendo eliminar un documento que tiene Aplicaciones, primero elimÌnelas', 16, 10);
+	RAISERROR ('Ud est∑ queriendo eliminar un documento que tiene Aplicaciones, primero elimÃnelas', 16, 10);
 	set @Ok = 0
 	end
 	if  @Ok = 1
@@ -673,7 +734,7 @@ BEGIN
 	FROM DBO.cppDEBITOS (NOLOCK) D inner join dbo.globalMoneda (NOLOCK) M
 	on D.IDMONEDA = M.IDMoneda
 	WHERE (IDDEBITO = @IDDocumento or @IDDocumento = 0) and (@IDProveedor =0 or IDProveedor = @IDProveedor) 
-	and D.Fecha <= @Fecha and D.flgAprobado = 1 ) L 
+	and cast(D.Fecha as DATE) <= cast(@Fecha as DATE) and D.flgAprobado = 1 ) L 
 
 	LEFT JOIN 
 	(
@@ -687,7 +748,7 @@ BEGIN
 	ON A.IDDEBITO = D.IDDEBITO INNER JOIN DBO.globalMoneda MD
 	ON D.IDMONEDA = MD.IDMoneda 
 	WHERE (A.IDDEBITO = @IDDocumento or @IDDocumento = 0) and (@IDProveedor =0 or D.IDProveedor = @IDProveedor)
-	and A.FechaCredito <=@Fecha and C.flgAprobado = 1 and D.flgAprobado = 1 -- OJO COLEGIAR ESTA DECICION and A.flgFlotante = 0 and C.flgFlotante = 0
+	and cast(A.FechaCredito as DATE) <=cast(@Fecha as date) and C.flgAprobado = 1 and D.flgAprobado = 1 -- OJO COLEGIAR ESTA DECICION and A.flgFlotante = 0 and C.flgFlotante = 0
 	GROUP BY A.IDDEBITO, MD.NACIONAL, C.TipoCambio 
 	) R
 	ON L.IDDEBITO = R.IDDebito 
@@ -732,7 +793,7 @@ BEGIN
 	FROM DBO.cppCreditos D inner join dbo.globalMoneda (NOLOCK) M
 	on D.IDMONEDA = M.IDMoneda
 	WHERE (IDCredito = @IDDocumento or @IDDocumento = 0) and (@IDProveedor=0 or IDProveedor = @IDProveedor)
-	and D.Fecha <= @Fecha and D.flgAprobado = 1 --and D.flgFlotante = 0
+	and cast(D.Fecha as date) <= cast(@Fecha as date) and D.flgAprobado = 1 --and D.flgFlotante = 0
 	) L
 
 	LEFT JOIN 
@@ -746,7 +807,7 @@ BEGIN
 	ON A.IDDEBITO = D.IDDEBITO INNER JOIN DBO.globalMoneda MD
 	ON D.IDMONEDA = MD.IDMoneda 
 	WHERE (A.IDCredito = @IDDocumento or @IDDocumento = 0) and (@IDProveedor=0 or C.IDProveedor = @IDProveedor)
-	and A.FechaCredito <=@Fecha and D.flgAprobado = 1 and C.flgAprobado = 1  --and A.flgFlotante = 0 and C.flgFlotante = 0
+	and cast(A.FechaCredito as DATE) <=cast(@Fecha as date) and D.flgAprobado = 1 and C.flgAprobado = 1  --and A.flgFlotante = 0 and C.flgFlotante = 0
 	GROUP BY A.IDCREDITO, MC.NACIONAL, C.TipoCambio 
 	) R
 	ON L.IDCREDITO = R.IDCREDITO
@@ -837,14 +898,14 @@ FROM  dbo.cppGetSaldoDocumento('C', @FechaCorte, @IDCredito, @IDProveedor ) D
 Where (D.IDProveedor = @IDProveedor or @IDProveedor = 0) and SaldoLocal <> 0 and saldodolar <> 0
 go
 
--- exec dbo.cpprptAntiguedadSaldosPorProveedor 0, '20210120', 0
+--select * from cppGetDocumentosxPagar(4, '20210115', 0) exec dbo.cpprptAntiguedadSaldosPorProveedor 0, '20210120', 1
 Create Procedure dbo.cpprptAntiguedadSaldosPorProveedor @IDProveedor  Int, @FechaCorte DATETIME, 
  @EnDolar bit = null
 as
 declare @TipoCambio as decimal(18,4), @IDTipoCambioFactura nvarchar(20)
 declare  @Resultados as table (  IDDebito int, IDClase nvarchar(10), IDSubtipo int, Fecha datetime, Vencimiento datetime,
 DiasVencidos int, TotalDebito decimal(28,4), IDCredito int, IDProveedor  nvarchar(20), Nombre nvarchar(255),
-Saldo decimal(28,4) 
+Saldo decimal(28,4), Nacional bit 
 )
 
 declare  @ResultadoDetallado as table ( 
@@ -865,22 +926,39 @@ set @IDTipoCambioFactura = (Select top 1 IDTipoCambio  from dbo.globaltipocambio
 if @EnDolar is null
 	set @EnDolar = 0
 
-if @EnDolar = 1
 	select @TipoCambio=( SELECT dbo.[globalGetLastTipoCambio] (@FechaCorte, @IDTipoCambioFactura))	
-else
-	set @TipoCambio = 0
+
 
 	
 Insert @Resultados (IDCredito , IDClase , IDSubtipo , Fecha , Vencimiento, DiasVencidos, 
-TotalDebito, IDProveedor, Nombre,  Saldo )
+TotalDebito, IDProveedor, Nombre,  Saldo, Nacional )
 SELECT D.IDCredito , D.IDClase , D.IDSubtipo , D.Fecha , D.Vencimiento, D.DiasVencidos, 
-case when @EnDolar = 1 then TotalDebitoLocal else TotalDebitoDolar end TotalDebito,
- D.IDProveedor,C.Nombre,  case when @EnDolar = 0 then  SaldoLocal    else SaldoDolar end Saldo
+case when Nacional = 1 then TotalDebitoLocal else TotalDebitoDolar end TotalDebito,
+ D.IDProveedor,C.Nombre,  
+case when Nacional = 1 then  SaldoLocal    else SaldoDolar end Saldo, Nacional 
 FROM  dbo.cppGetDocumentosxPagar(@IDProveedor, @FechaCorte, 0) D INNER JOIN dbo.cppProveedor  C
 ON D.IDProveedor = C.IDProveedor 
 
 if @EnDolar = 1
-	Update @Resultados set Saldo = case when @TipoCambio > 0 then  Saldo / @TipoCambio  else Saldo end
+	Update @Resultados 
+	set Saldo = case when @EnDolar = 1 and Nacional = 1  
+	then  Saldo / @TipoCambio  
+	else 
+	case when @EnDolar = 1 and Nacional = 0
+	then
+	Saldo
+	else
+	case when @EnDolar = 0 and Nacional = 0
+	then
+	Saldo * @TipoCambio
+	else
+	case when @EnDolar = 0 and Nacional =1
+	then
+	Saldo
+	end
+	end
+	end
+	end
 
 	insert @ResultadoDetallado (  IDProveedor ,NOMBRE,SaldoNovencido,
 	Saldoa30,Saldo31a60,Saldo61a90,
@@ -1137,7 +1215,7 @@ A.FechaCredito FechaPago,
 	ON A.IDDEBITO = D.IDDEBITO INNER JOIN DBO.globalMoneda MD
 	ON D.IDMONEDA = MD.IDMoneda 
 WHERE (C.IDProveedor =  @IDProveedor OR @IDProveedor = 0) AND 
-A.FechaCredito BETWEEN @FECHAINICIAL AND @FECHAFINAL
+cast(A.FechaCredito as DATE )  BETWEEN @FECHAINICIAL AND @FECHAFINAL
 order by c.Vencimiento desc
 
 SELECT R.IDProveedor, IDClaseDebito,   R.IDDebito, R.FechaDebito, FechaCredito,  TotalDebito,
@@ -1243,7 +1321,7 @@ and (@flgAprobado = -1 or  M.flgAprobado = @flgAprobado )
 and (@Anulado = -1 or M.Anulado = @Anulado )
 and ((@flgSaldoMayorCero = 1 and M.SaldoActual >0 ) or (@flgSaldoMayorCero = 0 and M.SaldoActual <=0) or (@flgSaldoMayorCero = -1))
 and (M.Contabilizado   = @Contabilizado  or @Contabilizado = -1)
-Order by M.IDClase, m.DOCUMENTO
+Order by M.IDPROVEEDOR, M.FECHA, M.ORDEN --M.IDClase, m.DOCUMENTO
 go
 
 -- exec dbo.cppgetAplicacion 5
@@ -1475,7 +1553,7 @@ if @FechaFin is null
 	set @FechaFin = '20500101'
 	 
  Select R.IDDebito, R.IDClase, R.Documento Recibo,R.MontoOriginal TotalRecibo, R.Fecha, 
-	 R.IDProveedor, C.Nombre, 
+ R.IDProveedor, C.Nombre, 
  A.IDDebito, D.Documento Factura, 
  D.Fecha FechaFactura, D.MontoOriginal TotalFactura, A.Efectivo, A.Descuento,
  A.RetencionMunicipal, A.RetencionRenta , A.flgFlotante, A.IDChequePos, P.Numero, A.MontoChequePos, P.Cobrado, P.SinFondo, A.MontoCredito MontoAplicado, D.SaldoActual SaldoFactura
@@ -1503,123 +1581,84 @@ if @FechaFin is null
  return (isnull(@Ultimo,''))	
  end
  go
- 
- Create Function  dbo.cppgetRetencionesProveedor (  @IDProveedor int )
+ -- select * from dbo.cppgetRetencionesProveedor (12, 26 )
+ Create Function  dbo.cppgetRetencionesProveedor (  @IDProveedor int, @IDCredito int )
  Returns table 
  -- Retornas las Retenciones de un proveedor asignadas y no asignadas
  as
  Return
- Select ISNULL(PR.IDRetencion, 0 ) AsignadaProveedor, 
- R.IDRetencion, R.Descr, R.Porcentaje,  R.MontoMinimo,
- --1 Aplicada
- CAST(  case when T.IDRetenciones is null then 0 else 1 end AS BIT )  Aplicada
- From dbo.cppRetencion R left join 
- (Select IDProveedor, IDRetencion 
-  From dbo.cppProveedorRetencion 
-  Where IDProveedor = @IDProveedor
-  ) PR
- on PR.IDRetencion = R.IDRetencion 
- left join ( Select IDRetenciones, IDRetencion, IDProveedor   
-	 From dbo.cppRetenciones 
-	 Where IDProveedor = @IDProveedor )  T
- on R.IDRetencion = T.IDRetencion and PR.IDProveedor = T.IDProveedor 
- where R.Activo = 1 
- go
+ Select L.IDProveedor, L.IDCredito,L.IDRetencion ,  L.Descr,L.Porcentaje, L.MontoMinimo, 
+cast(L.AsignadaProveedor as bit ) AsignadaProveedor, CAST( case when R.IDRetencion is null then 0 else 1 end as bit ) Aplicada,
+isnull(R.Base, 0) Base , isnull(R.Monto,0) MontoRetenido
+From 
+(
+	Select @IDProveedor IDProveedor, @IDCredito IDCredito,
+	 case when PR.IDRetencion IS null then 0 else 1 end AsignadaProveedor, 
+	 R.IDRetencion, R.Descr, R.Porcentaje,  R.MontoMinimo
+	 From dbo.cppRetencion R left join 
+	 (Select IDProveedor, IDRetencion 
+	  From dbo.cppProveedorRetencion 
+	  Where IDProveedor = @IDProveedor 
+	  ) PR
+	 on PR.IDRetencion = R.IDRetencion
+	 --Where R.Activo = 1
+) L left join 
+(
+ Select IDRetenciones, IDRetencion, IDProveedor, IDCredito, T.Base, T.Monto   
+	 From dbo.cppRetenciones T
+	 Where IDProveedor = @IDProveedor and IDCredito = @IDCredito 
+) R 
+on L.IDCredito = R.IDCredito and L.IDProveedor = R.IDProveedor and
+L.IDRetencion = R.IDRetencion 
+go
  
- Create Procedure dbo.cppgetPopUpRetenciones @IDProveedor int 
+ -- exec dbo.cppgetPopUpRetenciones 18, 30
+ Create Procedure dbo.cppgetPopUpRetenciones @IDProveedor int, @IDCredito int  
  as 
  set nocount on
- Select IDRetencion, Descr, Porcentaje, MontoMinimo, Aplicada, AsignadaProveedor 
- From dbo.cppgetRetencionesProveedor ( @IDProveedor )
+ Select IDRetencion, Descr, Porcentaje, MontoMinimo, AsignadaProveedor, Aplicada,  
+ Base, MontoRetenido 
+ From dbo.cppgetRetencionesProveedor ( @IDProveedor, @IDCredito  )
  order by Aplicada desc 
  go
+
+
+-- select dbo.cppUsaRetencion ('FAC', 20)
+Create Function dbo.cppUsaRetencion (@IDClase nvarchar(10), @IDProveedor int )
+returns bit
+as
+begin
+ Declare @UsaRetencion bit, @ProvExternoRetencion bit, 
+ @isLocal bit, @GeneraRetencion bit 
  
- -- exec dbo.cppgetPopUpRetenciones 1 Select * from dbo.cppgetRetencionesProveedor ( 1 )
+set @ProvExternoRetencion = isnull((Select top 1  ProvExternoRetencion
+	From dbo.cppParametros)
+	,0) 
 
+set @isLocal =	isnull((	Select  isLocal
+	From dbo.cppProveedor 
+	Where IDProveedor = @IDProveedor ), 0)
 
-
-CREATE PROCEDURE dbo.cppUpdateRetencion @Operacion nvarchar(1), @IDRetencion INT OUTPUT, @Descr nvarchar(250),@Porcentaje decimal(28,2),@AplicaTotalFactura bit, 
-				@AplicaSubTotal bit, @AplicaSubTotalMenosDesc bit,@IDCentroRet int, @IDCuentaRet bigint ,
-				@MontoMinimo decimal(28,2),@Activo bit
-AS
-
-IF (@IDCentroRet=-1)  SET @IDCentroRet = NULL
-IF (@IDCuentaRet=-1)  SET @IDCuentaRet = NULL
-
-IF (@Operacion = 'I')
-BEGIN
-	SET @IDRetencion = (SELECT ISNULL(MAX(IDRetencion),0) + 1 FROM dbo.cppRetencion)
+set @GeneraRetencion =isnull((Select  GeneraRetencion 
+	From dbo.cppClaseDocumento 
+	Where TipoDocumento = 'C' and IDClase = @IDClase 
+	AND GeneraRetencion = 1 ),0)
 	
-	INSERT INTO dbo.cppRetencion( IDRetencion ,Descr ,Porcentaje ,AplicaTotalFactura ,AplicaSubTotal ,AplicaSubTotalMenosDesc ,IDCentroRet ,IDCuentaRet ,MontoMinimo ,Activo)
-	VALUES  (@IDRetencion, @Descr, @Porcentaje, @AplicaTotalFactura,@AplicaSubTotal,@AplicaSubTotalMenosDesc,@IDCentroRet,@IDCuentaRet,@MontoMinimo,@Activo)
-END				
-IF (@Operacion='U')
-BEGIN	
-	UPDATE dbo.cppRetencion SET Descr = @Descr, Porcentaje = @Porcentaje, AplicaTotalFactura = @AplicaTotalFactura,AplicaSubTotal = @AplicaSubTotal,AplicaSubTotalMenosDesc = @AplicaSubTotalMenosDesc,
-	IDCentroRet = @IDCentroRet,IDCuentaRet = @IDCuentaRet,MontoMinimo = @MontoMinimo, Activo = @Activo
-	WHERE IDRetencion = @IDRetencion
-END	
-IF (@Operacion ='D')
-BEGIN	
-	DELETE FROM dbo.cppRetencion WHERE IDRetencion = @IDRetencion
-END
+ if @isLocal = 0 and @ProvExternoRetencion = 0
+	set @UsaRetencion = 0
 
-GO
-
-CREATE PROCEDURE dbo.cppGetRetencion @IDRetencion INT, @Descr NVARCHAR(20)
-AS 
-SELECT  IDRetencion ,
-        Descr ,
-        Porcentaje ,
-        AplicaTotalFactura ,
-        AplicaSubTotal ,
-        AplicaSubTotalMenosDesc ,
-        IDCentroRet ,
-        IDCuentaRet ,
-        MontoMinimo ,
-        Activo  FROM dbo.cppRetencion WHERE (IDRetencion=@IDRetencion OR @IDRetencion=-1)
-AND (Descr LIKE '$' + @Descr +'$' OR @Descr='*')
+if @isLocal = 0 and @ProvExternoRetencion = 1
+	set @UsaRetencion = 1
 	
+if @isLocal = 1 and @GeneraRetencion = 1 
+	set @UsaRetencion = 1 
+else
+	set @UsaRetencion = 0
 	
-GO 
-
-CREATE  PROCEDURE dbo.cppUpdateProveedorRetencion @Operacion NVARCHAR(1), @IDProveedor INT , @IDRetencion INT
-AS 
-IF (@Operacion='I')
-BEGIN
-	INSERT INTO dbo.cppProveedorRetencion( IDProveedor, IDRetencion )
-	VALUES  ( @IDProveedor,@IDRetencion )
-END
-IF (@Operacion='D')
-BEGIN
-	DELETE FROM dbo.cppProveedorRetencion WHERE IDProveedor=@IDProveedor AND IDRetencion=@IDRetencion
-END
-
-GO
+	Return (@UsaRetencion)
+end
+go
+-- Declare @strIDRetenciones nvarchar(500) 
+--select * from  dbo.ConvertListToTable('1,2', ',' )
 
 
-CREATE  PROCEDURE dbo.cppGetProveedorRetencion @IDProveedor INT ,@IDRetencion INT
-AS
-SELECT A.IDProveedor, R.IDRetencion,R.Descr ,R.Porcentaje,R.MontoMinimo,R.AplicaSubTotal,R.AplicaSubTotalMenosDesc,R.AplicaTotalFactura FROM dbo.cppProveedorRetencion A
-INNER JOIN dbo.cppRetencion R ON  A.IDRetencion = R.IDRetencion
-WHERE (IDProveedor = @IDProveedor OR @IDProveedor=-1) AND (A.IDRetencion = @IDRetencion OR @IDRetencion = -1) AND R.Activo=1
-
-GO
-
-
-CREATE PROCEDURE dbo.cppGetRetencionesNoAsociadas @IDProveedor INT
-AS 
-SELECT  A.IDRetencion ,
-        A.Descr ,
-        A.Porcentaje ,
-        A.AplicaTotalFactura ,
-        A.AplicaSubTotal ,
-        A.AplicaSubTotalMenosDesc ,
-        A.IDCentroRet ,
-        A.IDCuentaRet ,
-        A.MontoMinimo ,
-        A.Activo  FROM dbo.cppRetencion A
-        LEFT JOIN (SELECT *  FROM  dbo.cppProveedorRetencion  WHERE IDProveedor=@IDProveedor) B ON A.IDRetencion = B.IDRetencion 
-        WHERE B.IDRetencion IS NULL  
-        
-GO

@@ -33,8 +33,10 @@ Public Module Unitbk
 
     Sub CargagridSearchLookUp(ByVal g As SearchLookUpEdit, sTableName As String, sFieldsName As String, sWhere As String, sOrderBy As String, sDisplayMember As String, sValueMember As String)
         Dim count = sFieldsName.Split(",").Length - 1
+        Dim tableSource As New DataTable
         g.Properties.DataSource = Nothing
-        g.Properties.DataSource = cManager.GetDataTable(sTableName, sFieldsName, sWhere, sOrderBy)
+        tableSource = cManager.GetDataTable(sTableName, sFieldsName, sWhere, sOrderBy)
+        g.Properties.DataSource = tableSource
         g.Properties.DisplayMember = sDisplayMember
         g.Properties.ValueMember = sValueMember
         g.Properties.PopupFormSize = New Size(500, 250)
@@ -54,7 +56,12 @@ Public Module Unitbk
             g.Properties.View.Columns(2).Width = 80
             g.Properties.View.Columns(3).Width = 80
         End If
-        g.Properties.NullText = ""
+        If tableSource.Rows.Count > 1 Then
+            g.Properties.NullText = ""
+        ElseIf tableSource.Rows.Count = 1 Then
+            g.EditValue = tableSource.Rows(0)(0)
+        End If
+
     End Sub
     Public Function DatoCorrecto(sValor As String, bIsNumeric As Boolean) As String
         Dim sResult As String
