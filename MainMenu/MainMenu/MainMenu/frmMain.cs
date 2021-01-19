@@ -767,6 +767,7 @@ namespace MainMenu
 					frmTipoAsiento ofrmTipoAsiento = new frmTipoAsiento();
 					ofrmTipoAsiento.MdiParent = this;
 					ShowPagesRibbonMan(false);
+					ofrmTipoAsiento.WindowState = FormWindowState.Maximized;
 					ofrmTipoAsiento.Show();
 					break;
             }

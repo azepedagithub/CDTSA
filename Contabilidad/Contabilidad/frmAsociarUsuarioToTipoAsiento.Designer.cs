@@ -34,6 +34,8 @@
 			this.btnCancelar = new DevExpress.XtraEditors.SimpleButton();
 			this.gridControl = new DevExpress.XtraGrid.GridControl();
 			this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+			this.colUsuario = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colDescr = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -97,8 +99,31 @@
 			// 
 			// gridView1
 			// 
+			this.gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.colUsuario,
+            this.colDescr});
 			this.gridView1.GridControl = this.gridControl;
 			this.gridView1.Name = "gridView1";
+			this.gridView1.OptionsSelection.MultiSelect = true;
+			this.gridView1.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CheckBoxRowSelect;
+			// 
+			// colUsuario
+			// 
+			this.colUsuario.Caption = "Usuario";
+			this.colUsuario.FieldName = "USUARIO";
+			this.colUsuario.Name = "colUsuario";
+			this.colUsuario.Visible = true;
+			this.colUsuario.VisibleIndex = 0;
+			this.colUsuario.Width = 89;
+			// 
+			// colDescr
+			// 
+			this.colDescr.Caption = "Descripción";
+			this.colDescr.FieldName = "DESCR";
+			this.colDescr.Name = "colDescr";
+			this.colDescr.Visible = true;
+			this.colDescr.VisibleIndex = 1;
+			this.colDescr.Width = 363;
 			// 
 			// layoutControlGroup1
 			// 
@@ -156,6 +181,7 @@
 			this.ClientSize = new System.Drawing.Size(494, 440);
 			this.Controls.Add(this.layoutControl1);
 			this.Name = "frmAsociarUsuarioToTipoAsiento";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Asociar Usuario a Tipo de Asiento";
 			this.Load += new System.EventHandler(this.frmAsociarUsuarioToTipoAsiento_Load);
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
@@ -183,5 +209,7 @@
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
 		private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
+		private DevExpress.XtraGrid.Columns.GridColumn colUsuario;
+		private DevExpress.XtraGrid.Columns.GridColumn colDescr;
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -22,7 +23,7 @@ namespace CG
 		}
 
 		private void CargarUsuarios() {
-			dtTipoAsientoUsuario = TipoAsientoDAC.GetTipoAsientoByUsuario(TipoAsiento).Tables[0];
+			dtTipoAsientoUsuario = TipoAsientoDAC.GetUsuarioByTipoAsiento(TipoAsiento).Tables[0];
 			this.dtgTipoAsientoUsuario.DataSource = dtTipoAsientoUsuario;
 		}
 
@@ -39,7 +40,7 @@ namespace CG
 
 		private void btnAgregar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
 		{
-			frmAsociarUsuarioToTipoAsiento ofrmAsociar = new frmAsociarUsuarioToTipoAsiento();
+			frmAsociarUsuarioToTipoAsiento ofrmAsociar = new frmAsociarUsuarioToTipoAsiento(this.TipoAsiento);
 			ofrmAsociar.FormClosed += ofrmAsociar_FormClosed;
 			ofrmAsociar.ShowDialog();
 		}
@@ -54,7 +55,33 @@ namespace CG
 
 		private void btnEliminar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
 		{
-		 //  if (this.dtgTipoAsientoUsuari
+			try
+			{
+				ArrayList rows = new ArrayList();
+				for (int i = 0; i < this.gridView.SelectedRowsCount; i++)
+				{
+					if (gridView.GetSelectedRows()[i] >= 0)
+						rows.Add(gridView.GetDataRow(gridView.GetSelectedRows()[i]));
+				}
+
+				for (int i = 0; i < rows.Count; i++)
+				{
+				
+					DataRow row = rows[i] as DataRow;
+						
+						Security.ConnectionManager.BeginTran();
+						TipoAsientoDAC.EliminarUsuario(row["Tipo"].ToString(), row["Usuario"].ToString(), Security.ConnectionManager.Tran);
+						Security.ConnectionManager.CommitTran();
+				}
+				if (rows.Count > 0)
+					CargarUsuarios();
+				
+			}
+			catch (Exception ex) {
+				MessageBox.Show("Ha ocurrido el siguiente error: \n\r" + ex.Message);
+				if (Security.ConnectionManager.Tran != null)
+					Security.ConnectionManager.RollBackTran();
+			}
 		}
 	}
 }

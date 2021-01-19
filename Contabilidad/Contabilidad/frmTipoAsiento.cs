@@ -38,7 +38,9 @@ namespace CG
 		private void btnAsociarUsuario_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
 		{
 			if (this.gridView1.GetSelectedRows().Count() > 0) {
-				MessageBox.Show(this.gridView1.GetSelectedRows()[0].ToString());
+				DataRow dr = (DataRow)this.gridView1.GetDataRow((int)this.gridView1.GetSelectedRows()[0]);
+				frmTipoAsientoUsuarios ofrmTipoAsientoUsuario = new frmTipoAsientoUsuarios(dr["Tipo"].ToString());
+				ofrmTipoAsientoUsuario.ShowDialog();
 			}
 		}
 	}
