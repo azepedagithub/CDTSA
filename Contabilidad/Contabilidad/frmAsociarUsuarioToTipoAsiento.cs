@@ -17,15 +17,22 @@ namespace CG
 		DataTable dtUsuario;
 		String TipoAsiento;
 
-		public frmAsociarUsuarioToTipoAsiento()
+		public frmAsociarUsuarioToTipoAsiento(String TipoAsiento)
 		{
 			InitializeComponent();
+			this.TipoAsiento = TipoAsiento;
 		}
 
 		private void frmAsociarUsuarioToTipoAsiento_Load(object sender, EventArgs e)
 		{
-			dtUsuario = TipoAsientoDAC.GetUsuariosNotAsociadosTipoAsiento(TipoAsiento).Tables[0];
-			this.gridControl.DataSource = dtUsuario;
+			try
+			{
+				dtUsuario = TipoAsientoDAC.GetUsuariosNotAsociadosTipoAsiento(TipoAsiento).Tables[0];
+				this.gridControl.DataSource = dtUsuario;
+			}
+			catch (Exception ex) {
+				MessageBox.Show("Han ocurrido los siguientes errores: " + ex.Message);
+			}
 
 		}
 
