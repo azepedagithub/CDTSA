@@ -316,6 +316,34 @@ Public Module Unit
         Return lbok
     End Function
 
+    Public Sub FormatDateEdit(DateEditFecha As DateEdit)
+        DateEditFecha.Properties.Mask.UseMaskAsDisplayFormat = True
+        DateEditFecha.Properties.EditMask = "dd/MM/yyyy"
+    End Sub
+
+
+    Public Function FechaEnPeriodoAbierto(dFecha As Date) As Boolean
+        Dim lbok As Boolean = False
+        Try
+            Dim sParameters As String
+            Dim td As DataTable
+            sParameters = "'" & dFecha.ToString("yyyyMMdd") & "'"
+            td = cManager.ExecFunction("cntFechaEnPeriodoAbierto", sParameters)
+            If CBool(td.Rows(0)(0)) = False Then
+                lbok = False
+            Else
+                lbok = True
+
+            End If
+
+        Catch ex As Exception
+            lbok = False
+        End Try
+        Return lbok
+
+    End Function
+
+
     Public Function UsuarioTieneAcceso(sUsuario As String, sAccionPRG As String) As Boolean
         Dim lbok As Boolean = False
         Try
