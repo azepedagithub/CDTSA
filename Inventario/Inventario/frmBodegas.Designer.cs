@@ -82,6 +82,7 @@
 			this.layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem10 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.btnUsuarios = new DevExpress.XtraBars.BarButtonItem();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
 			this.layoutControl1.SuspendLayout();
@@ -123,9 +124,10 @@
             this.btnEliminar,
             this.lblStatus,
             this.btnExportar,
-            this.btnRefrescar});
+            this.btnRefrescar,
+            this.btnUsuarios});
 			this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-			this.ribbonControl.MaxItemId = 4;
+			this.ribbonControl.MaxItemId = 6;
 			this.ribbonControl.Name = "ribbonControl";
 			this.ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -210,6 +212,7 @@
 			this.ribbonPageGroup1.ItemLinks.Add(this.btnCancelar);
 			this.ribbonPageGroup1.ItemLinks.Add(this.btnEliminar);
 			this.ribbonPageGroup1.ItemLinks.Add(this.btnExportar);
+			this.ribbonPageGroup1.ItemLinks.Add(this.btnUsuarios);
 			this.ribbonPageGroup1.ItemLinks.Add(this.btnRefrescar);
 			this.ribbonPageGroup1.Name = "ribbonPageGroup1";
 			this.ribbonPageGroup1.Text = "Acciones";
@@ -684,6 +687,15 @@
 			this.layoutControlItem10.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem10.TextVisible = false;
 			// 
+			// btnUsuarios
+			// 
+			this.btnUsuarios.Caption = "Usuarios";
+			this.btnUsuarios.Glyph = ((System.Drawing.Image)(resources.GetObject("btnUsuarios.Glyph")));
+			this.btnUsuarios.Id = 4;
+			this.btnUsuarios.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnUsuarios.LargeGlyph")));
+			this.btnUsuarios.Name = "btnUsuarios";
+			this.btnUsuarios.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnUsuarios_ItemClick);
+			// 
 			// frmBodegas
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -783,5 +795,6 @@
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem7;
 		private DevExpress.XtraEditors.CheckEdit chkBodegaMuestra;
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem10;
+		private DevExpress.XtraBars.BarButtonItem btnUsuarios;
     }
 }

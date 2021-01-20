@@ -161,6 +161,8 @@ namespace Security
 		}
 
 
+
+
 		public static DataSet GetUsuarioNotInRole(int IDRole, SqlTransaction tran)
 		{
 			String strSQL = "dbo.secGetUsuariosNotInRole";

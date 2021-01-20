@@ -3887,3 +3887,30 @@ WHERE IDTransaccion= @IDTransaccion
 GO
 
 
+
+CREATE PROCEDURE dbo.invGetUsarioByBodega(@IDBodega INT)
+AS 
+SELECT  A.Usuario ,B.DESCR Descr,
+        IDBodega
+FROM dbo.invUsuarioBodega a
+INNER JOIN dbo.secUSUARIO B ON A.Usuario = B.USUARIO
+WHERE (IDBodega = @IDBodega OR @IDBodega=-1)
+
+GO
+
+
+CREATE PROCEDURE dbo.invUpdateUsuarioBodega @Operacion NVARCHAR(1),@Usuario NVARCHAR(100), @IDBodega int
+AS 
+
+IF (@Operacion = 'I')
+BEGIN
+	INSERT INTO dbo.invUsuarioBodega( Usuario, IDBodega )
+	VALUES  (@Usuario, @IDBodega)
+END
+IF (@Operacion='D')
+	DELETE FROM dbo.invUsuarioBodega WHERE Usuario = @Usuario AND IDBodega = @IDBodega
+
+GO
+
+
+

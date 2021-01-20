@@ -420,6 +420,12 @@ namespace CI
 
 		}
 
+		private void btnUsuarios_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+		{
+			frmUsuarioBodega ofrmUsuarios = new frmUsuarioBodega((int)currentRow["IDBodega"], currentRow["Descr"].ToString());
+			ofrmUsuarios.ShowDialog();
+		}
+
 
      
     
