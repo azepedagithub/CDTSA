@@ -71,6 +71,7 @@ Partial Class frmPedido
         Me.LayoutControlItem48 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.btnBonif = New DevExpress.XtraEditors.SimpleButton()
         Me.LayoutControl2 = New DevExpress.XtraLayout.LayoutControl()
+        Me.btnDescProm = New DevExpress.XtraEditors.SimpleButton()
         Me.btnDescuento = New DevExpress.XtraEditors.SimpleButton()
         Me.txtAhorro = New DevExpress.XtraEditors.TextEdit()
         Me.txtPrecioLista = New DevExpress.XtraEditors.TextEdit()
@@ -145,6 +146,7 @@ Partial Class frmPedido
         Me.EmptySpaceItem13 = New DevExpress.XtraLayout.EmptySpaceItem()
         Me.EmptySpaceItem14 = New DevExpress.XtraLayout.EmptySpaceItem()
         Me.LayoutControlItem53 = New DevExpress.XtraLayout.LayoutControlItem()
+        Me.LayoutControlItem54 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.GridControl1 = New DevExpress.XtraGrid.GridControl()
         Me.GridViewProducto = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.LayoutControlItem28 = New DevExpress.XtraLayout.LayoutControlItem()
@@ -163,8 +165,6 @@ Partial Class frmPedido
         Me.LayoutControlItem50 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem17 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem52 = New DevExpress.XtraLayout.LayoutControlItem()
-        Me.btnDescProm = New DevExpress.XtraEditors.SimpleButton()
-        Me.LayoutControlItem54 = New DevExpress.XtraLayout.LayoutControlItem()
         CType(Me.LayoutControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.LayoutControl1.SuspendLayout()
         CType(Me.txtDisponible.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -282,6 +282,7 @@ Partial Class frmPedido
         CType(Me.EmptySpaceItem13, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.EmptySpaceItem14, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem53, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.LayoutControlItem54, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridViewProducto, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem28, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -301,7 +302,6 @@ Partial Class frmPedido
         CType(Me.LayoutControlItem50, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem17, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem52, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.LayoutControlItem54, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'LayoutControl1
@@ -459,22 +459,22 @@ Partial Class frmPedido
         'DateEditRequerido
         '
         Me.DateEditRequerido.EditValue = Nothing
-        Me.DateEditRequerido.Location = New System.Drawing.Point(857, 72)
+        Me.DateEditRequerido.Location = New System.Drawing.Point(979, 72)
         Me.DateEditRequerido.Name = "DateEditRequerido"
         Me.DateEditRequerido.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
         Me.DateEditRequerido.Properties.CalendarTimeProperties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
-        Me.DateEditRequerido.Size = New System.Drawing.Size(80, 20)
+        Me.DateEditRequerido.Size = New System.Drawing.Size(72, 20)
         Me.DateEditRequerido.StyleController = Me.LayoutControl1
         Me.DateEditRequerido.TabIndex = 10
         '
         'DateEditFecha
         '
-        Me.DateEditFecha.EditValue = Nothing
-        Me.DateEditFecha.Location = New System.Drawing.Point(975, 72)
+        Me.DateEditFecha.EditValue = New Date(2021, 1, 13, 0, 0, 0, 0)
+        Me.DateEditFecha.Location = New System.Drawing.Point(827, 72)
         Me.DateEditFecha.Name = "DateEditFecha"
         Me.DateEditFecha.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
         Me.DateEditFecha.Properties.CalendarTimeProperties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
-        Me.DateEditFecha.Size = New System.Drawing.Size(76, 20)
+        Me.DateEditFecha.Size = New System.Drawing.Size(84, 20)
         Me.DateEditFecha.StyleController = Me.LayoutControl1
         Me.DateEditFecha.TabIndex = 9
         '
@@ -561,7 +561,7 @@ Partial Class frmPedido
         'LayoutControlGroup2
         '
         Me.LayoutControlGroup2.CaptionImage = CType(resources.GetObject("LayoutControlGroup2.CaptionImage"), System.Drawing.Image)
-        Me.LayoutControlGroup2.Items.AddRange(New DevExpress.XtraLayout.BaseLayoutItem() {Me.LayoutControlItem4, Me.LayoutControlItem5, Me.LayoutControlItem1, Me.LayoutControlItem6, Me.LayoutControlItem7, Me.LayoutControlItem22, Me.LayoutControlItem2, Me.LayoutControlItem24, Me.EmptySpaceItem2, Me.LayoutControlItem3, Me.LayoutControlItem33, Me.LayoutControlItem34, Me.LayoutControlItem23, Me.LayoutControlItem67, Me.LayoutControlItem8, Me.LayoutControlItem32, Me.LayoutControlItem20, Me.LayoutControlItem47, Me.LayoutControlItem48})
+        Me.LayoutControlGroup2.Items.AddRange(New DevExpress.XtraLayout.BaseLayoutItem() {Me.LayoutControlItem4, Me.LayoutControlItem5, Me.LayoutControlItem1, Me.LayoutControlItem7, Me.LayoutControlItem22, Me.LayoutControlItem2, Me.LayoutControlItem24, Me.EmptySpaceItem2, Me.LayoutControlItem3, Me.LayoutControlItem33, Me.LayoutControlItem34, Me.LayoutControlItem23, Me.LayoutControlItem67, Me.LayoutControlItem8, Me.LayoutControlItem32, Me.LayoutControlItem20, Me.LayoutControlItem47, Me.LayoutControlItem48, Me.LayoutControlItem6})
         Me.LayoutControlGroup2.Location = New System.Drawing.Point(0, 0)
         Me.LayoutControlGroup2.Name = "LayoutControlGroup2"
         Me.LayoutControlGroup2.Size = New System.Drawing.Size(1055, 172)
@@ -597,9 +597,9 @@ Partial Class frmPedido
         'LayoutControlItem6
         '
         Me.LayoutControlItem6.Control = Me.DateEditFecha
-        Me.LayoutControlItem6.Location = New System.Drawing.Point(917, 24)
+        Me.LayoutControlItem6.Location = New System.Drawing.Point(769, 24)
         Me.LayoutControlItem6.Name = "LayoutControlItem6"
-        Me.LayoutControlItem6.Size = New System.Drawing.Size(114, 26)
+        Me.LayoutControlItem6.Size = New System.Drawing.Size(122, 26)
         Me.LayoutControlItem6.Text = "Fecha"
         Me.LayoutControlItem6.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize
         Me.LayoutControlItem6.TextSize = New System.Drawing.Size(29, 13)
@@ -608,9 +608,9 @@ Partial Class frmPedido
         'LayoutControlItem7
         '
         Me.LayoutControlItem7.Control = Me.DateEditRequerido
-        Me.LayoutControlItem7.Location = New System.Drawing.Point(769, 24)
+        Me.LayoutControlItem7.Location = New System.Drawing.Point(891, 24)
         Me.LayoutControlItem7.Name = "LayoutControlItem7"
-        Me.LayoutControlItem7.Size = New System.Drawing.Size(148, 26)
+        Me.LayoutControlItem7.Size = New System.Drawing.Size(140, 26)
         Me.LayoutControlItem7.Text = "Requerido"
         Me.LayoutControlItem7.TextSize = New System.Drawing.Size(61, 13)
         '
@@ -797,6 +797,16 @@ Partial Class frmPedido
         Me.LayoutControl2.Size = New System.Drawing.Size(845, 261)
         Me.LayoutControl2.TabIndex = 2
         Me.LayoutControl2.Text = "LayoutControl2"
+        '
+        'btnDescProm
+        '
+        Me.btnDescProm.Image = CType(resources.GetObject("btnDescProm.Image"), System.Drawing.Image)
+        Me.btnDescProm.Location = New System.Drawing.Point(508, 92)
+        Me.btnDescProm.Name = "btnDescProm"
+        Me.btnDescProm.Size = New System.Drawing.Size(116, 22)
+        Me.btnDescProm.StyleController = Me.LayoutControl2
+        Me.btnDescProm.TabIndex = 38
+        Me.btnDescProm.Text = "Desc Promoción"
         '
         'btnDescuento
         '
@@ -1487,6 +1497,15 @@ Partial Class frmPedido
         Me.LayoutControlItem53.TextSize = New System.Drawing.Size(0, 0)
         Me.LayoutControlItem53.TextVisible = False
         '
+        'LayoutControlItem54
+        '
+        Me.LayoutControlItem54.Control = Me.btnDescProm
+        Me.LayoutControlItem54.Location = New System.Drawing.Point(484, 50)
+        Me.LayoutControlItem54.Name = "LayoutControlItem54"
+        Me.LayoutControlItem54.Size = New System.Drawing.Size(120, 26)
+        Me.LayoutControlItem54.TextSize = New System.Drawing.Size(0, 0)
+        Me.LayoutControlItem54.TextVisible = False
+        '
         'GridControl1
         '
         Me.GridControl1.Location = New System.Drawing.Point(15, 191)
@@ -1694,25 +1713,6 @@ Partial Class frmPedido
         Me.LayoutControlItem52.Text = "Desc Esp"
         Me.LayoutControlItem52.TextSize = New System.Drawing.Size(64, 13)
         '
-        'btnDescProm
-        '
-        Me.btnDescProm.Image = CType(resources.GetObject("btnDescProm.Image"), System.Drawing.Image)
-        Me.btnDescProm.Location = New System.Drawing.Point(508, 92)
-        Me.btnDescProm.Name = "btnDescProm"
-        Me.btnDescProm.Size = New System.Drawing.Size(116, 22)
-        Me.btnDescProm.StyleController = Me.LayoutControl2
-        Me.btnDescProm.TabIndex = 38
-        Me.btnDescProm.Text = "Desc Promoción"
-        '
-        'LayoutControlItem54
-        '
-        Me.LayoutControlItem54.Control = Me.btnDescProm
-        Me.LayoutControlItem54.Location = New System.Drawing.Point(484, 50)
-        Me.LayoutControlItem54.Name = "LayoutControlItem54"
-        Me.LayoutControlItem54.Size = New System.Drawing.Size(120, 26)
-        Me.LayoutControlItem54.TextSize = New System.Drawing.Size(0, 0)
-        Me.LayoutControlItem54.TextVisible = False
-        '
         'frmPedido
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1844,6 +1844,7 @@ Partial Class frmPedido
         CType(Me.EmptySpaceItem13, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.EmptySpaceItem14, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem53, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.LayoutControlItem54, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridControl1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridViewProducto, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem28, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1863,7 +1864,6 @@ Partial Class frmPedido
         CType(Me.LayoutControlItem50, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem17, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem52, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.LayoutControlItem54, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub

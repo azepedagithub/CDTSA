@@ -434,6 +434,8 @@ Public Class frmFactura
     End Sub
     Private Sub frmFactura_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Try
+            FormatDateEdit(Me.DateEditFecha)
+            FormatDateEdit(Me.DateEditVencimiento)
             CreateFieldsToDataTable()
             'AssignFieldsToGrid()
             CargagridLookUpsFromTables()
@@ -517,7 +519,6 @@ Public Class frmFactura
         FormatControlNumber(txtExistencia)
         FormatControlNumber(txtCantBonif)
         FormatControlNumber(txtCantPrecio)
-
 
     End Sub
     Private Sub RefreshDataFromGridToControls()
@@ -1461,6 +1462,11 @@ Public Class frmFactura
                 Return
             End If
 
+            If Not FechaEnPeriodoAbierto(CDate(Me.DateEditFecha.EditValue)) Then
+                MessageBox.Show("La Fecha de la Factura debe estar en un Período Contable Abierto... Ud debe cambiar la Fecha de la Factura o llamar al Administrador del Sistema", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Return
+            End If
+
             If Me.txtTipoCambio.EditValue = 0 Then
                 MessageBox.Show("El tipo de Cambio es Cero, favor revise o llame al administrador del Sistema", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Return
@@ -1805,6 +1811,13 @@ Public Class frmFactura
     Private Sub DateEditFecha_EditValueChanged(sender As Object, e As EventArgs) Handles DateEditFecha.EditValueChanged
         CalculaFechaVencimiento()
         Me.txtTipoCambio.EditValue = getTipoCambio(Me.DateEditFecha.EditValue, gParametros.TipoCambioFact)
+        If Me.DateEditFecha.EditValue IsNot Nothing Then
+            If Not FechaEnPeriodoAbierto(CDate(Me.DateEditFecha.EditValue)) Then
+                MessageBox.Show("La Fecha de la Factura debe estar en un Período Contable Abierto... Ud debe cambiar la Fecha de la Factura o llamar al Administrador del Sistema", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Return
+            End If
+        End If
+
     End Sub
 
     Private Sub PrintReport(pIDFactura As Int64, psMontoFactura As String)

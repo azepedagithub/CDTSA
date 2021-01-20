@@ -505,6 +505,7 @@ Partial Class frmFactura
         Me.DateEditVencimiento.Name = "DateEditVencimiento"
         Me.DateEditVencimiento.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
         Me.DateEditVencimiento.Properties.CalendarTimeProperties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.DateEditVencimiento.Properties.Mask.EditMask = "dd/MM/yyyy"
         Me.DateEditVencimiento.Properties.ReadOnly = True
         Me.DateEditVencimiento.Size = New System.Drawing.Size(126, 20)
         Me.DateEditVencimiento.StyleController = Me.LayoutControl1
@@ -660,6 +661,7 @@ Partial Class frmFactura
         Me.DateEditFecha.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
         Me.DateEditFecha.Properties.CalendarTimeProperties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
         Me.DateEditFecha.Properties.EditValueChangedFiringMode = DevExpress.XtraEditors.Controls.EditValueChangedFiringMode.Buffered
+        Me.DateEditFecha.Properties.Mask.EditMask = "dd/MM/yyyy"
         Me.DateEditFecha.Size = New System.Drawing.Size(90, 20)
         Me.DateEditFecha.StyleController = Me.LayoutControl1
         Me.DateEditFecha.TabIndex = 3
