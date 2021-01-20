@@ -130,6 +130,44 @@ namespace CI.DAC
         }
 
 
+		public static DataSet GetUsuarioByBodega(int Bodega)
+		{
+			String strSQL = "dbo.invGetUsarioByBodega";
+
+			SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
+
+
+			oCmd.Parameters.Add(new SqlParameter("@IDBodega", Bodega));
+			
+			oCmd.CommandType = CommandType.StoredProcedure;
+
+			SqlDataAdapter oAdap = new SqlDataAdapter(oCmd);
+			DataSet DS = new DataSet();
+			oAdap.Fill(DS);
+			DS.Tables[0].TableName = "Data";
+			return DS;
+		}
+
+		public static int InsertUpdateUsuarioBodega(string Operacion,  int IDBodega, String Usuario, SqlTransaction tran)
+		{
+			int result = -1;
+			String strSQL = "dbo.invUpdateUsuarioBodega";
+
+			SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
+
+			oCmd.Parameters.Add(new SqlParameter("@Operacion", Operacion));
+			oCmd.Parameters.Add(new SqlParameter("@IDBodega", IDBodega));
+			oCmd.Parameters.Add(new SqlParameter("@Usuario", Usuario));
+
+			
+			oCmd.CommandType = CommandType.StoredProcedure;
+			oCmd.Transaction = tran;
+			result = oCmd.ExecuteNonQuery();
+		
+			return result;
+
+		}
+
     }
 
 }
