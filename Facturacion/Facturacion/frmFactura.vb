@@ -1480,7 +1480,7 @@ Public Class frmFactura
                 Return
             End If
 
-            If dtFacturaLinea.Rows.Count > 0 Then
+            If dtFacturaLinea.Rows.Count > 0 And CInt(Me.SearchLookUpEditTipoFact.EditValue) = 2 Then
                 If Not TieneDisponilidad(CDec(txtTotal.EditValue)) Then
                     Dim td As New DataTable
                     Dim lbSinLimite As Boolean = True

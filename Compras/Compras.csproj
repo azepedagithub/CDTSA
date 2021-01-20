@@ -55,7 +55,7 @@
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>E7B6DD784A2F7D381A781EDC213E8CF8DCCBA39A</ManifestCertificateThumbprint>
@@ -366,7 +366,6 @@
     <EmbeddedResource Include="Reportes\rptSubRptGastos.resx">
       <DependentUpon>rptSubRptGastos.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="Compras_TemporaryKey.pfx" />
     <None Include="FilesTemplate\import_Orden.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
