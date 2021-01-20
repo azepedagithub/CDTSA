@@ -43,7 +43,7 @@ namespace CO
         int IDObligacionProveedor =-1;
         DateTime FechaVence, FechaPoliza, FechaFactura;
         String Factura, Poliza, GuiaBL,AsientoFactura;
-        double TipoCambioPoliza, ValorMercaderia, MontoFlete, MontoSeguro, MontoTotal;
+        double TipoCambioPoliza, ValorMercaderia, MontoFlete,MontoDesc,MontoAnticipo, MontoSeguro, MontoTotal;
         DataTable dtObligacionProveedor = new DataTable();
         
         //Datos de OtrosGastos
@@ -334,17 +334,33 @@ namespace CO
                 double Impuesto =   Convert.ToDouble((decimal)row["Impuesto"])/100;
                 MontoMercaderia = MontoMercaderia + (SubTotal + (SubTotal * Impuesto));
             }
-
+			
             DataRow rowOrden = dtOrdenCompra.Rows.Count>0 ? dtOrdenCompra.Rows[0]: null;
-              Double MontoFlete,MontoSeguro;
+			
+            Double MontoFlete,MontoSeguro,MontoDesc,MontoAnticipo,PorcDesc;
+			MontoFlete = 0;
+			MontoSeguro = 0;
+			MontoDesc = 0;
+			PorcDesc = 0;
+			MontoAnticipo = 0;
+
             if (rowOrden != null) {
                 MontoFlete = Convert.ToDouble((rowOrden["Flete"] == DBNull.Value || rowOrden["Flete"].ToString() == "") ? 0 : rowOrden["Flete"]);
                 MontoSeguro = Convert.ToDouble((rowOrden["Seguro"] == DBNull.Value || rowOrden["Seguro"].ToString() == "") ? 0 : rowOrden["Seguro"]);
-                this.txtMontoFlete.EditValue = MontoFlete;
+				PorcDesc = Convert.ToDouble((rowOrden["Descuento"] == DBNull.Value || rowOrden["Descuento"].ToString() == "") ? 0 : rowOrden["Descuento"]);
+				MontoAnticipo = Convert.ToDouble((rowOrden["Anticipos"] == DBNull.Value || rowOrden["Anticipos"].ToString() == "" ) ? 0 : rowOrden["Anticipos"]);
+				MontoDesc = MontoMercaderia * (PorcDesc / 100);
+				this.txtMontoFlete.EditValue = MontoFlete;
                 this.txtMontoSeguro.EditValue = MontoSeguro;
+				this.txtMontoDesc.EditValue = MontoDesc;
+				this.txtMontoAnticipos.EditValue = MontoAnticipo;
             }  else {
-                MontoFlete=0;
-                MontoSeguro=0;
+               
+				this.txtMontoFlete.EditValue = 0;
+				this.txtMontoDesc.EditValue = 0;
+				this.txtMontoSeguro.EditValue = 0;
+				this.txtMontoAnticipos.EditValue = 0;
+				
             }
             
             DataView dv = dtMoneda.AsDataView();
@@ -352,7 +368,7 @@ namespace CO
 
             this.lblMoneda.Text = dv.ToTable().Rows[0]["Descr"].ToString();
             this.txtTotalMercaderia.EditValue = MontoMercaderia;
-            this.txtTotal.EditValue = MontoMercaderia + MontoFlete + MontoSeguro;
+            this.txtTotal.EditValue = MontoMercaderia + MontoFlete + MontoSeguro- MontoDesc -MontoAnticipo;
         }
 
         private void AlertaFacturaSinGuardar() {
@@ -389,6 +405,8 @@ namespace CO
                     this.txtTipoCambio.EditValue = Convert.ToDecimal(drObl["TipoCambio"]);
                     this.txtMontoFlete.EditValue = Convert.ToDecimal(drObl["MontoFlete"]);
                     this.txtMontoSeguro.EditValue = Convert.ToDecimal(drObl["MontoSeguro"]);
+					this.txtMontoDesc.EditValue = Convert.ToDecimal(drObl["MontoDesc"]);
+					this.txtMontoAnticipos.EditValue = Convert.ToDecimal(drObl["MontoAnticipo"]);
                     this.linkAsientoMercaderia.Text = drObl["Asiento"].ToString();                    
                     //Validar si tiene documento CP asociado
                     //string sDocCP = clsObligacionProveedorDAC.getDocumentoCP((int)this.ID_Embarque);
@@ -936,7 +954,10 @@ namespace CO
             this.TipoCambioPoliza = Convert.ToDouble(this.txtTipoCambio.EditValue);
             this.ValorMercaderia = Convert.ToDouble(this.txtTotalMercaderia.EditValue);
             this.MontoSeguro = Convert.ToDouble(this.txtMontoSeguro.EditValue);
+			this.MontoDesc = Convert.ToDouble(this.txtMontoDesc.EditValue);
+			this.MontoAnticipo = Convert.ToDouble(this.txtMontoAnticipos.EditValue);
             this.MontoFlete = Convert.ToDouble(this.txtMontoFlete.EditValue);
+
             this.MontoTotal = Convert.ToDouble(this.txtTotal.EditValue);
         }
 
@@ -974,7 +995,7 @@ namespace CO
                 else
                     AccionDatosFactura = "U";
                 ConnectionManager.BeginTran();
-                clsObligacionProveedorDAC.InsertUpdate(AccionDatosFactura, ref IDObligacionProveedor, (int)IDEmbarque, false, FechaFactura, FechaVence, FechaPoliza, Poliza, Factura, GuiaBL, (decimal)TipoCambio, (decimal)ValorMercaderia, (decimal)MontoFlete, (decimal)MontoSeguro, (decimal)MontoTotal, ConnectionManager.Tran);
+                clsObligacionProveedorDAC.InsertUpdate(AccionDatosFactura, ref IDObligacionProveedor, (int)IDEmbarque, false, FechaFactura, FechaVence, FechaPoliza, Poliza, Factura, GuiaBL, (decimal)TipoCambio, (decimal)ValorMercaderia, (decimal)MontoFlete, (decimal)MontoSeguro,(decimal) MontoDesc,(decimal) MontoAnticipo, (decimal)MontoTotal, ConnectionManager.Tran);
                 this.tabOtros.PageVisible = true;
                 ConnectionManager.CommitTran();
                 MessageBox.Show("Los datos de Factura se han guardado correctamente");

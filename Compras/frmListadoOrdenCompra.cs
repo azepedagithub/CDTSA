@@ -333,7 +333,7 @@ namespace CO
             {
                 if (Convert.ToInt32(currentRow["IDEstado"]) > 2)
                 {
-                    MessageBox.Show("Solo puede eliminar ordenes cuyo estdo sea el inicial");
+                    MessageBox.Show("Solo puede eliminar ordenes cuyo estado sea el inicial");
                     return;
                 }
                 if (MessageBox.Show("Esta seguro que desea eliminar la Orden de Compra seleccionada ? " ,"Listado de Ordenes de Compra", MessageBoxButtons.YesNo)== System.Windows.Forms.DialogResult.Yes) {

@@ -17,6 +17,7 @@ using ControlBancario;
 using CI;
 using CO;
 using Facturacion;
+using System.Globalization;
 
 
 
@@ -194,7 +195,11 @@ namespace MainMenu
 
         private void CargarConfiguracionRegional()
         {
-            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+			CultureInfo newCulture = (CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
+			newCulture.DateTimeFormat.ShortDatePattern = "dd/MM/yyyy";
+			newCulture.DateTimeFormat.DateSeparator = "/";
+            System.Threading.Thread.CurrentThread.CurrentCulture = newCulture; // new System.Globalization.CultureInfo("en-US");
+
         }
 
         private void ObtenerTipoCambio(String TipoCambio)
@@ -1062,7 +1067,7 @@ namespace MainMenu
 					TreeListNode nodePromociones = tl.AppendNode(new object[] { "Promociones" }, -1, 9, 10, 9);
 
 					TreeListNode nodeCreaPromocion = tl.AppendNode(new object[] { "Crear Promoción" }, nodePromociones.Id, 11, 11, 11);
-					nodeNivelPrecio.Tag = "optCrearPromocion";
+					nodeCreaPromocion.Tag = "optCrearPromocion";
 
 					TreeListNode nodeCrearBonificaciones = tl.AppendNode(new object[] { "Crear Bonificaciones" }, nodePromociones.Id, 11, 11, 11);
 					nodeCrearBonificaciones.Tag = "optCrearBonificacion";

@@ -55,7 +55,6 @@
 			this.colOrdenCompra = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colFecha = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colFechaRequerida = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colComentario = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.Usuario = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colEstado = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.pictureEdit1 = new DevExpress.XtraEditors.PictureEdit();
@@ -76,6 +75,8 @@
 			this.emptySpaceItem6 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.colIDProveedor = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colNombreProveedor = new DevExpress.XtraGrid.Columns.GridColumn();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
 			this.layoutControl1.SuspendLayout();
@@ -350,11 +351,13 @@
             this.colOrdenCompra,
             this.colFecha,
             this.colFechaRequerida,
-            this.colComentario,
             this.Usuario,
-            this.colEstado});
+            this.colEstado,
+            this.colIDProveedor,
+            this.colNombreProveedor});
 			this.gridView1.GridControl = this.gridControl1;
 			this.gridView1.Name = "gridView1";
+			this.gridView1.OptionsView.ColumnAutoWidth = false;
 			this.gridView1.OptionsView.ShowGroupPanel = false;
 			// 
 			// colIDOrdenCompra
@@ -364,7 +367,8 @@
 			this.colIDOrdenCompra.Name = "colIDOrdenCompra";
 			this.colIDOrdenCompra.OptionsColumn.FixedWidth = true;
 			this.colIDOrdenCompra.Visible = true;
-			this.colIDOrdenCompra.VisibleIndex = 0;
+			this.colIDOrdenCompra.VisibleIndex = 1;
+			this.colIDOrdenCompra.Width = 101;
 			// 
 			// colOrdenCompra
 			// 
@@ -372,7 +376,8 @@
 			this.colOrdenCompra.FieldName = "OrdenCompra";
 			this.colOrdenCompra.Name = "colOrdenCompra";
 			this.colOrdenCompra.Visible = true;
-			this.colOrdenCompra.VisibleIndex = 6;
+			this.colOrdenCompra.VisibleIndex = 2;
+			this.colOrdenCompra.Width = 107;
 			// 
 			// colFecha
 			// 
@@ -381,7 +386,7 @@
 			this.colFecha.Name = "colFecha";
 			this.colFecha.OptionsColumn.FixedWidth = true;
 			this.colFecha.Visible = true;
-			this.colFecha.VisibleIndex = 1;
+			this.colFecha.VisibleIndex = 0;
 			// 
 			// colFechaRequerida
 			// 
@@ -390,17 +395,8 @@
 			this.colFechaRequerida.Name = "colFechaRequerida";
 			this.colFechaRequerida.OptionsColumn.FixedWidth = true;
 			this.colFechaRequerida.Visible = true;
-			this.colFechaRequerida.VisibleIndex = 2;
+			this.colFechaRequerida.VisibleIndex = 5;
 			this.colFechaRequerida.Width = 100;
-			// 
-			// colComentario
-			// 
-			this.colComentario.Caption = "Comentario";
-			this.colComentario.FieldName = "Comentario";
-			this.colComentario.Name = "colComentario";
-			this.colComentario.Visible = true;
-			this.colComentario.VisibleIndex = 3;
-			this.colComentario.Width = 219;
 			// 
 			// Usuario
 			// 
@@ -409,7 +405,7 @@
 			this.Usuario.Name = "Usuario";
 			this.Usuario.OptionsColumn.FixedWidth = true;
 			this.Usuario.Visible = true;
-			this.Usuario.VisibleIndex = 4;
+			this.Usuario.VisibleIndex = 7;
 			this.Usuario.Width = 98;
 			// 
 			// colEstado
@@ -419,8 +415,8 @@
 			this.colEstado.Name = "colEstado";
 			this.colEstado.OptionsColumn.FixedWidth = true;
 			this.colEstado.Visible = true;
-			this.colEstado.VisibleIndex = 5;
-			this.colEstado.Width = 100;
+			this.colEstado.VisibleIndex = 6;
+			this.colEstado.Width = 111;
 			// 
 			// pictureEdit1
 			// 
@@ -627,6 +623,24 @@
 			this.layoutControlItem4.Text = "Fecha Inicial:";
 			this.layoutControlItem4.TextSize = new System.Drawing.Size(115, 13);
 			// 
+			// colIDProveedor
+			// 
+			this.colIDProveedor.Caption = "ID Proveedor";
+			this.colIDProveedor.FieldName = "IDProveedor";
+			this.colIDProveedor.Name = "colIDProveedor";
+			this.colIDProveedor.Visible = true;
+			this.colIDProveedor.VisibleIndex = 3;
+			this.colIDProveedor.Width = 74;
+			// 
+			// colNombreProveedor
+			// 
+			this.colNombreProveedor.Caption = "Nombre Proveedor";
+			this.colNombreProveedor.FieldName = "DescrProveedor";
+			this.colNombreProveedor.Name = "colNombreProveedor";
+			this.colNombreProveedor.Visible = true;
+			this.colNombreProveedor.VisibleIndex = 4;
+			this.colNombreProveedor.Width = 164;
+			// 
 			// frmListadoOrdenCompra
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -699,8 +713,7 @@
         private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
         private DevExpress.XtraGrid.Columns.GridColumn colIDOrdenCompra;
         private DevExpress.XtraGrid.Columns.GridColumn colFecha;
-        private DevExpress.XtraGrid.Columns.GridColumn colFechaRequerida;
-        private DevExpress.XtraGrid.Columns.GridColumn colComentario;
+		private DevExpress.XtraGrid.Columns.GridColumn colFechaRequerida;
         private DevExpress.XtraGrid.Columns.GridColumn Usuario;
         private DevExpress.XtraGrid.Columns.GridColumn colEstado;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
@@ -728,5 +741,7 @@
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem7;
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem6;
         private DevExpress.XtraGrid.Columns.GridColumn colOrdenCompra;
+		private DevExpress.XtraGrid.Columns.GridColumn colIDProveedor;
+		private DevExpress.XtraGrid.Columns.GridColumn colNombreProveedor;
     }
 }

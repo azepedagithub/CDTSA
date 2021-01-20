@@ -355,6 +355,7 @@ REFERENCES [dbo].invProducto (IDProducto)
 
 GO
 
+
 CREATE TABLE dbo.coObligacionProveedor (
 	IDObligacion INT NOT NULL,
 	IDEmbarque INT NOT NULL,
@@ -369,6 +370,8 @@ CREATE TABLE dbo.coObligacionProveedor (
 	ValorMercaderia DECIMAL(28,8) DEFAULT 0,
 	MontoFlete DECIMAL(28,8) DEFAULT 0,
 	MontoSeguro DECIMAL(28,8) DEFAULT 0,
+	MontoDesc DECIMAL(28,8) DEFAULT 0,
+	MontoAnticipo Decimal(28,8)  DEFAULT 0,
 	MontoTotal DECIMAL(28,8) DEFAULT 0,
 	Asiento NVARCHAR(20),
 	IDDocumentoCP INT,
@@ -772,7 +775,7 @@ INNER JOIN dbo.invProducto P ON A.IDProducto = P.IDProducto
 WHERE (IDSolicitud =@IDSolicitud OR (@IDSolicitud=-1 AND 1=3))
 go 
 
-CREATE  PROCEDURE dbo.coGetOrdenCompra(  @IDOrdenCompra AS INT, @FechaInicial AS DATETIME,@FechaFinal AS DATETIME, @Proveedor AS NVARCHAR(1000),@Estado AS NVARCHAR(1000),@FechaRequeridaInicial AS DATETIME ,
+CREATE PROCEDURE dbo.coGetOrdenCompra(  @IDOrdenCompra AS INT, @FechaInicial AS DATETIME,@FechaFinal AS DATETIME, @Proveedor AS NVARCHAR(1000),@Estado AS NVARCHAR(1000),@FechaRequeridaInicial AS DATETIME ,
 																			@FechaRequeridaFinal AS DATETIME)
 AS 
 DECLARE @Separador AS NVARCHAR(1)
@@ -790,7 +793,7 @@ set @FechaInicial = CONVERT(VARCHAR(25),@FechaInicial,101)
 set @FechaFinal = CAST(SUBSTRING(CAST(@FechaFinal AS CHAR),1,11) + ' 23:59:59.998' AS DATETIME)
 
 SELECT  A.IDOrdenCompra ,OrdenCompra ,A.Fecha ,FechaRequerida ,FechaEmision ,FechaRequeridaEmbarque ,FechaCotizacion ,IDEstado, B.Descr DescrEstado,A.IDBodega, C.Descr DescrBodega, 
-		A.IDProveedor ,C.Descr DescrProveedor,A.IDMoneda, E.Descr DescrMoneda,A.IDCondicionPago , F.Descr DescrCondicionPago,F.Dias DiasCondicionPago,
+		A.IDProveedor ,D.Nombre DescrProveedor,A.IDMoneda, E.Descr DescrMoneda,A.IDCondicionPago , F.Descr DescrCondicionPago,F.Dias DiasCondicionPago,
         Descuento ,Seguro	,Flete ,Anticipos ,A.IDEmbarque, H.Embarque ,A.IDDocumentoCP ,A.TipoCambio ,A.Usuario ,UsuarioCreaEmbarque ,FechaCreaEmbarque ,UsuarioAprobacion ,
         FechaAprobacion ,A.CreateDate ,A.CreatedBy ,A.RecordDate ,A.UpdateBy  
 FROM dbo.coOrdenCompra A INNER JOIN dbo.coEstadoOrdenCompra B ON A.IDEstado = B.IDEstadoOrden
@@ -1758,18 +1761,21 @@ GO
 
 CREATE PROCEDURE dbo.coUpdateObligacionProveedor (@Operacion AS NVARCHAR(1), @IDObligacion AS INT OUTPUT ,@IDEmbarque AS INT,@flgDocCPGenerado AS bit,@Fecha DATETIME,
 		@FechaVence date, @FechaPoliza Date, @NumPoliza nvarchar(250), @NumFactura nvarchar(250), @Guia_BL nvarchar(250), @TipoCambio decimal(28,8),@ValorMercaderia decimal(28,8),
-		@MontoFlete decimal(28,8),@MontoSeguro decimal(28,8), @MontoTotal decimal(28,8))
+		@MontoFlete decimal(28,8),@MontoSeguro decimal(28,8),@MontoDesc DECIMAL(28,8), @MontoAnticipo DECIMAL(28,8), @MontoTotal decimal(28,8))
 AS 
 IF @Operacion ='I'
 BEGIN
 	SELECT  @IDObligacion = ISNULL(MAX(IDObligacion),0)  FROM dbo.coObligacionProveedor
 	SET @IDObligacion = @IDObligacion + 1
-	INSERT INTO dbo.coObligacionProveedor(IDObligacion, IDEmbarque,flgDocCPGenerado,Fecha, FechaVence, FechaPoliza,NumPoliza,NumFactura,Guia_BL, TipoCambio,ValorMercaderia,MontoFlete,MontoSeguro,MontoTotal)
-	VALUES(@IDObligacion, @IDEmbarque, @flgDocCPGenerado,@Fecha,@FechaVence,@FechaPoliza,@NumPoliza,@NumFactura,@Guia_BL, @TipoCambio,@ValorMercaderia,@MontoFlete,@MontoSeguro,@MontoTotal)
+	INSERT INTO dbo.coObligacionProveedor(IDObligacion, IDEmbarque,flgDocCPGenerado,Fecha, FechaVence, FechaPoliza,NumPoliza,NumFactura,Guia_BL, TipoCambio,ValorMercaderia,MontoFlete,MontoSeguro,MontoDesc,MontoAnticipo,MontoTotal)
+	VALUES(@IDObligacion, @IDEmbarque, @flgDocCPGenerado,@Fecha,@FechaVence,@FechaPoliza,@NumPoliza,@NumFactura,@Guia_BL, @TipoCambio,@ValorMercaderia,@MontoFlete,@MontoSeguro,@MontoDesc,@MontoAnticipo,@MontoTotal)
 END
 IF @Operacion ='U'
 BEGIN
-	UPDATE dbo.coObligacionProveedor SET Fecha=@Fecha, FechaVence = @FechaVence, FechaPoliza= @FechaPoliza, NumPoliza=@NumPoliza, NumFactura=@NumFactura,Guia_BL= @Guia_BL, TipoCambio=@TipoCambio, ValorMercaderia =@ValorMercaderia, MontoFlete = @MontoFlete, MontoSeguro = @MontoSeguro, Montototal= @MontoTotal  WHERE IdObligacion=@IDObligacion
+	UPDATE dbo.coObligacionProveedor SET Fecha=@Fecha, FechaVence = @FechaVence, FechaPoliza= @FechaPoliza, NumPoliza=@NumPoliza, 
+									NumFactura=@NumFactura,Guia_BL= @Guia_BL, TipoCambio=@TipoCambio, ValorMercaderia =@ValorMercaderia, 
+									MontoFlete = @MontoFlete, MontoSeguro = @MontoSeguro,MontoDesc = @MontoDesc, MontoAnticipo = @MontoAnticipo, Montototal= @MontoTotal  
+	WHERE IdObligacion=@IDObligacion
 END
 IF @Operacion ='D'
 BEGIN
@@ -1781,7 +1787,8 @@ GO
 
 CREATE PROCEDURE dbo.coGetObligacionProveedor(@IDEmbarque AS INT, @IDObligacion AS INT)
 AS 
-SELECT  IDObligacion ,IDEmbarque ,flgDocCPGenerado ,Fecha ,FechaVence ,FechaPoliza ,NumPoliza ,NumFactura ,Guia_BL ,TipoCambio ,ValorMercaderia ,MontoFlete ,MontoSeguro ,MontoTotal, Asiento  FROM dbo.coObligacionProveedor
+SELECT  IDObligacion ,IDEmbarque ,flgDocCPGenerado ,Fecha ,FechaVence ,FechaPoliza ,NumPoliza ,NumFactura ,Guia_BL ,
+		TipoCambio ,ValorMercaderia ,MontoFlete ,MontoSeguro,MontoDesc,MontoAnticipo ,MontoTotal, Asiento  FROM dbo.coObligacionProveedor
 WHERE IDEmbarque = @IDEmbarque AND (IDObligacion=@IDObligacion OR @IDObligacion = -1)
 
 GO
@@ -2007,12 +2014,12 @@ GO
 
 
 
-CREATE PROCEDURE dbo.coGetGeneralesOrdenCompra(@IDOrdenCompra AS INT)
+CREATE  PROCEDURE dbo.coGetGeneralesOrdenCompra(@IDOrdenCompra AS INT)
 AS 
 
 DECLARE @Monto_FleteSeguro AS DECIMAL(28,8), @MontoMercaderia AS Decimal(28,8)
 
-SET @Monto_FleteSeguro = (SELECT  Flete + Seguro  FROM dbo.coOrdenCompra WHERE IDOrdenCompra=@IDOrdenCompra)
+SET @Monto_FleteSeguro = (SELECT  Flete + Seguro - Descuento  FROM dbo.coOrdenCompra WHERE IDOrdenCompra=@IDOrdenCompra)
 SET @MontoMercaderia = (SELECT SUM(((PrecioUnitario * Cantidad)-MontoDesc) + ((PrecioUnitario * Cantidad)-MontoDesc) * (Impuesto/100))   FROM dbo.coOrdenCompraDetalle WHERE IDOrdenCompra=@IDOrdenCompra)
 
 SELECT CantDecimalesCantidad,CantDecimalesPrecio,NombreAutorizaOrdenCompra,dbo.globalNumberToLetter(@MontoMercaderia + @Monto_FleteSeguro) MontoOrdenLetras, @MontoMercaderia + @Monto_FleteSeguro MontoOrden  FROM dbo.coParametrosCompra
@@ -2275,6 +2282,6 @@ AS
 --SET @IDOrdenCompra =3
 --SET @Fecha = '20201029'
 
-SELECT DATEADD(DAY,C.Dias,@Fecha) nn  FROM dbo.coOrdenCompra O
+SELECT DATEADD(DAY,C.Dias,@Fecha) FechaVencimiento  FROM dbo.coOrdenCompra O
 INNER JOIN dbo.cppCondicionPago C ON O.IDCondicionPago = C.IDCondicionPago
 WHERE IDOrdenCompra =@IDOrdenCompra
