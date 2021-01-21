@@ -64,6 +64,8 @@
 			this.btnAgregarLotes = new DevExpress.XtraEditors.SimpleButton();
 			this.btnAplicar = new DevExpress.XtraEditors.SimpleButton();
 			this.btnAddLote = new DevExpress.XtraEditors.SimpleButton();
+			this.btnEliminar = new DevExpress.XtraEditors.SimpleButton();
+			this.btnAgrupar = new DevExpress.XtraEditors.SimpleButton();
 			((System.ComponentModel.ISupportInitialize)(this.txtOrdenCompra.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dtgIngresoMercaderia)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridViewIngresoMercaderia)).BeginInit();
@@ -121,12 +123,15 @@
             this.colFechaVencimiento,
             this.Cantidad});
 			this.gridViewIngresoMercaderia.GridControl = this.dtgIngresoMercaderia;
+			this.gridViewIngresoMercaderia.GroupSummary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Cantidad", null, "(Cantidad:  {0:0.##})")});
 			this.gridViewIngresoMercaderia.Name = "gridViewIngresoMercaderia";
 			this.gridViewIngresoMercaderia.NewItemRowText = "Agregar nueva linea al ingreso de productos";
 			this.gridViewIngresoMercaderia.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
 			this.gridViewIngresoMercaderia.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.True;
 			this.gridViewIngresoMercaderia.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Top;
 			this.gridViewIngresoMercaderia.OptionsView.ShowGroupPanel = false;
+			this.gridViewIngresoMercaderia.OptionsView.ShowGroupPanelColumnsAsSingleRow = true;
 			this.gridViewIngresoMercaderia.ShownEditor += new System.EventHandler(this.gridViewRecepcionMercaderia_ShownEditor);
 			// 
 			// IDProducto
@@ -405,11 +410,33 @@
 			this.btnAddLote.Text = "Agregar Lote";
 			this.btnAddLote.Click += new System.EventHandler(this.btnAddLote_Click);
 			// 
+			// btnEliminar
+			// 
+			this.btnEliminar.Image = ((System.Drawing.Image)(resources.GetObject("btnEliminar.Image")));
+			this.btnEliminar.Location = new System.Drawing.Point(519, 121);
+			this.btnEliminar.Name = "btnEliminar";
+			this.btnEliminar.Size = new System.Drawing.Size(75, 23);
+			this.btnEliminar.TabIndex = 6;
+			this.btnEliminar.Text = "Eliminar";
+			this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
+			// 
+			// btnAgrupar
+			// 
+			this.btnAgrupar.Image = ((System.Drawing.Image)(resources.GetObject("btnAgrupar.Image")));
+			this.btnAgrupar.Location = new System.Drawing.Point(438, 121);
+			this.btnAgrupar.Name = "btnAgrupar";
+			this.btnAgrupar.Size = new System.Drawing.Size(75, 23);
+			this.btnAgrupar.TabIndex = 7;
+			this.btnAgrupar.Text = "Agrupar";
+			this.btnAgrupar.Click += new System.EventHandler(this.btnAgrupar_Click);
+			// 
 			// frmRecepcionMercaderia
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(710, 532);
+			this.Controls.Add(this.btnAgrupar);
+			this.Controls.Add(this.btnEliminar);
 			this.Controls.Add(this.btnAplicar);
 			this.Controls.Add(this.btnAddLote);
 			this.Controls.Add(this.btnAgregarLotes);
@@ -488,5 +515,7 @@
         private DevExpress.XtraGrid.Columns.GridColumn colFechaVencimiento;
         private DevExpress.XtraGrid.Views.Grid.GridView gridView3;
 		private DevExpress.XtraEditors.SimpleButton btnAddLote;
+		private DevExpress.XtraEditors.SimpleButton btnEliminar;
+		private DevExpress.XtraEditors.SimpleButton btnAgrupar;
     }
 }

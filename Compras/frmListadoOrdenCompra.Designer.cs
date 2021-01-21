@@ -57,6 +57,8 @@
 			this.colFechaRequerida = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.Usuario = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colEstado = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colIDProveedor = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colNombreProveedor = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.pictureEdit1 = new DevExpress.XtraEditors.PictureEdit();
 			this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -75,8 +77,6 @@
 			this.emptySpaceItem6 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.colIDProveedor = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colNombreProveedor = new DevExpress.XtraGrid.Columns.GridColumn();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
 			this.layoutControl1.SuspendLayout();
@@ -357,7 +357,6 @@
             this.colNombreProveedor});
 			this.gridView1.GridControl = this.gridControl1;
 			this.gridView1.Name = "gridView1";
-			this.gridView1.OptionsView.ColumnAutoWidth = false;
 			this.gridView1.OptionsView.ShowGroupPanel = false;
 			// 
 			// colIDOrdenCompra
@@ -417,6 +416,24 @@
 			this.colEstado.Visible = true;
 			this.colEstado.VisibleIndex = 6;
 			this.colEstado.Width = 111;
+			// 
+			// colIDProveedor
+			// 
+			this.colIDProveedor.Caption = "ID Proveedor";
+			this.colIDProveedor.FieldName = "IDProveedor";
+			this.colIDProveedor.Name = "colIDProveedor";
+			this.colIDProveedor.Visible = true;
+			this.colIDProveedor.VisibleIndex = 3;
+			this.colIDProveedor.Width = 74;
+			// 
+			// colNombreProveedor
+			// 
+			this.colNombreProveedor.Caption = "Nombre Proveedor";
+			this.colNombreProveedor.FieldName = "DescrProveedor";
+			this.colNombreProveedor.Name = "colNombreProveedor";
+			this.colNombreProveedor.Visible = true;
+			this.colNombreProveedor.VisibleIndex = 4;
+			this.colNombreProveedor.Width = 164;
 			// 
 			// pictureEdit1
 			// 
@@ -622,24 +639,6 @@
 			this.layoutControlItem4.Size = new System.Drawing.Size(307, 24);
 			this.layoutControlItem4.Text = "Fecha Inicial:";
 			this.layoutControlItem4.TextSize = new System.Drawing.Size(115, 13);
-			// 
-			// colIDProveedor
-			// 
-			this.colIDProveedor.Caption = "ID Proveedor";
-			this.colIDProveedor.FieldName = "IDProveedor";
-			this.colIDProveedor.Name = "colIDProveedor";
-			this.colIDProveedor.Visible = true;
-			this.colIDProveedor.VisibleIndex = 3;
-			this.colIDProveedor.Width = 74;
-			// 
-			// colNombreProveedor
-			// 
-			this.colNombreProveedor.Caption = "Nombre Proveedor";
-			this.colNombreProveedor.FieldName = "DescrProveedor";
-			this.colNombreProveedor.Name = "colNombreProveedor";
-			this.colNombreProveedor.Visible = true;
-			this.colNombreProveedor.VisibleIndex = 4;
-			this.colNombreProveedor.Width = 164;
 			// 
 			// frmListadoOrdenCompra
 			// 

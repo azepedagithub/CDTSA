@@ -1,5 +1,6 @@
 ﻿using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraLayout;
 using Security;
@@ -19,16 +20,15 @@ namespace CO
     {
         long IDEmbarque = -1;
 		long IDOrdenCompra = -1;
-        int IDProveedor, IDBodega;
-        String OrdenCompra, Embarque;
+        
         String sUsuario = (UsuarioDAC._DS.Tables.Count > 0) ? UsuarioDAC._DS.Tables[0].Rows[0]["Usuario"].ToString() : "azepeda";
-        bool Confirmada = false;
         DataTable dtDatosEmbarque = new DataTable();
         DataTable dtDetalleEmbarque = new DataTable();
         DataTable dtRecepcionMercaderia = new DataTable();
         DataTable dtProductos = new DataTable();
         DataTable dtLotes = new DataTable();
 
+		private bool _groupProduct = false;
 
         public frmRecepcionMercaderia(long IDEmbarque,long IDOrdenCompra)
         {
@@ -175,12 +175,25 @@ namespace CO
         {
             ColumnView view = (ColumnView)sender;
 
-            if (view.FocusedColumn.FieldName == "IDLote" && view.ActiveEditor is SearchLookUpEdit && view.FocusedRowHandle >= 0)
+            if (view.FocusedColumn.FieldName == "IDLote" && view.ActiveEditor is SearchLookUpEdit )
             {
                 SearchLookUpEdit edit = (SearchLookUpEdit)view.ActiveEditor;
-                long IDProducto = (long)view.GetFocusedRowCellValue("IDProducto");
-                
-                edit.Properties.DataSource = CI.DAC.clsLoteDAC.GetData(-1, IDProducto, "*", "*").Tables[0];
+					String sIDProducto = Convert.ToString(view.GetFocusedRowCellValue("IDProducto"));
+					if (sIDProducto != "")
+					{
+						edit.Enabled = true;
+						long IDProducto = (long)view.GetFocusedRowCellValue("IDProducto");
+
+						edit.Properties.DataSource = CI.DAC.clsLoteDAC.GetData(-1, IDProducto, "*", "*").Tables[0];
+						Application.DoEvents();
+					}
+					else
+					{
+						MessageBox.Show("Seleccione un producto");
+						edit.Properties.DataSource = null;
+						edit.Enabled = false;
+						return;
+					}
             }
         }
 
@@ -273,6 +286,43 @@ namespace CO
 		{
 			dtLotes = CI.DAC.clsLoteDAC.GetData(-1, -1, "*", "*").Tables[0];
 			this.slkupGridLote.DataSource = dtLotes;
+		}
+
+		private void btnEliminar_Click(object sender, EventArgs e)
+		{
+			if (this.gridViewIngresoMercaderia.GetSelectedRows().Count() > 0)
+			{
+				this.gridViewIngresoMercaderia.BeginUpdate();
+				this.gridViewIngresoMercaderia.DeleteRow(this.gridViewIngresoMercaderia.FocusedRowHandle);
+				this.dtRecepcionMercaderia.AcceptChanges();
+				this.gridViewIngresoMercaderia.EndUpdate();
+			}
+		}
+
+		private void btnAgrupar_Click(object sender, EventArgs e)
+		{
+
+			GridColumn colGasto = this.gridViewIngresoMercaderia.Columns["IDLote"];
+			GridColumn colProd = gridViewIngresoMercaderia.Columns["IDProducto"];
+			gridViewIngresoMercaderia.BeginSort();
+			try
+			{
+				gridViewIngresoMercaderia.ClearGrouping();
+				if (!_groupProduct)
+				{
+					colGasto.GroupIndex = 1;
+					colProd.GroupIndex = 0;
+
+					_groupProduct = true;
+				}
+				else
+					_groupProduct = false;
+
+			}
+			finally
+			{
+				gridViewIngresoMercaderia.EndSort();
+			}      
 		}
        
 

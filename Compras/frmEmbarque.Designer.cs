@@ -84,6 +84,8 @@
 			this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
 			this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
 			this.labelControl11 = new DevExpress.XtraEditors.LabelControl();
+			this.labelControl15 = new DevExpress.XtraEditors.LabelControl();
+			this.labelControl14 = new DevExpress.XtraEditors.LabelControl();
 			this.labelControl10 = new DevExpress.XtraEditors.LabelControl();
 			this.labelControl9 = new DevExpress.XtraEditors.LabelControl();
 			this.lblMoneda = new DevExpress.XtraEditors.LabelControl();
@@ -98,6 +100,8 @@
 			this.dtpFechaVence = new DevExpress.XtraEditors.DateEdit();
 			this.dtpFechaFactura = new DevExpress.XtraEditors.DateEdit();
 			this.txtTotal = new DevExpress.XtraEditors.TextEdit();
+			this.txtMontoAnticipos = new DevExpress.XtraEditors.TextEdit();
+			this.txtMontoDesc = new DevExpress.XtraEditors.TextEdit();
 			this.txtMontoSeguro = new DevExpress.XtraEditors.TextEdit();
 			this.txtMontoFlete = new DevExpress.XtraEditors.TextEdit();
 			this.txtTotalMercaderia = new DevExpress.XtraEditors.TextEdit();
@@ -166,10 +170,6 @@
 			this.layoutControlItem13 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.emptySpaceItem7 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.txtMontoDesc = new DevExpress.XtraEditors.TextEdit();
-			this.labelControl14 = new DevExpress.XtraEditors.LabelControl();
-			this.txtMontoAnticipos = new DevExpress.XtraEditors.TextEdit();
-			this.labelControl15 = new DevExpress.XtraEditors.LabelControl();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
 			this.layoutControl1.SuspendLayout();
@@ -210,6 +210,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.dtpFechaFactura.Properties.CalendarTimeProperties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dtpFechaFactura.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtTotal.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.txtMontoAnticipos.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.txtMontoDesc.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtMontoSeguro.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtMontoFlete.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtTotalMercaderia.Properties)).BeginInit();
@@ -268,8 +270,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem13)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem7)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.txtMontoDesc.Properties)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.txtMontoAnticipos.Properties)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// ribbonControl1
@@ -469,7 +469,7 @@
 			// 
 			this.tabLineas.Controls.Add(this.dtgLineasOrden);
 			this.tabLineas.Name = "tabLineas";
-			this.tabLineas.Size = new System.Drawing.Size(810, 285);
+			this.tabLineas.Size = new System.Drawing.Size(810, 309);
 			this.tabLineas.Text = "Lineas Orden Compra";
 			// 
 			// dtgLineasOrden
@@ -481,7 +481,7 @@
 			this.dtgLineasOrden.Name = "dtgLineasOrden";
 			this.dtgLineasOrden.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.slkupPresentacion});
-			this.dtgLineasOrden.Size = new System.Drawing.Size(810, 285);
+			this.dtgLineasOrden.Size = new System.Drawing.Size(810, 309);
 			this.dtgLineasOrden.TabIndex = 0;
 			this.dtgLineasOrden.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridViewEmbarque});
@@ -556,7 +556,7 @@
 			// 
 			this.tabDetalle.Controls.Add(this.layoutControl2);
 			this.tabDetalle.Name = "tabDetalle";
-			this.tabDetalle.Size = new System.Drawing.Size(810, 285);
+			this.tabDetalle.Size = new System.Drawing.Size(810, 309);
 			this.tabDetalle.Text = "Detalle del Embarque";
 			// 
 			// layoutControl2
@@ -567,7 +567,7 @@
 			this.layoutControl2.Location = new System.Drawing.Point(0, 0);
 			this.layoutControl2.Name = "layoutControl2";
 			this.layoutControl2.Root = this.layoutControlGroup2;
-			this.layoutControl2.Size = new System.Drawing.Size(810, 285);
+			this.layoutControl2.Size = new System.Drawing.Size(810, 309);
 			this.layoutControl2.TabIndex = 3;
 			this.layoutControl2.Text = "layoutControl2";
 			// 
@@ -591,7 +591,7 @@
 			this.dtgDetalleEmbarque.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.slkupIDProducto,
             this.slkupDescrProducto});
-			this.dtgDetalleEmbarque.Size = new System.Drawing.Size(786, 235);
+			this.dtgDetalleEmbarque.Size = new System.Drawing.Size(786, 259);
 			this.dtgDetalleEmbarque.TabIndex = 1;
 			this.dtgDetalleEmbarque.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridViewDetalleEmbarque});
@@ -705,7 +705,7 @@
             this.emptySpaceItem2});
 			this.layoutControlGroup2.Location = new System.Drawing.Point(0, 0);
 			this.layoutControlGroup2.Name = "layoutControlGroup2";
-			this.layoutControlGroup2.Size = new System.Drawing.Size(810, 285);
+			this.layoutControlGroup2.Size = new System.Drawing.Size(810, 309);
 			this.layoutControlGroup2.TextVisible = false;
 			// 
 			// layoutControlItem3
@@ -713,7 +713,7 @@
 			this.layoutControlItem3.Control = this.dtgDetalleEmbarque;
 			this.layoutControlItem3.Location = new System.Drawing.Point(0, 26);
 			this.layoutControlItem3.Name = "layoutControlItem3";
-			this.layoutControlItem3.Size = new System.Drawing.Size(790, 239);
+			this.layoutControlItem3.Size = new System.Drawing.Size(790, 263);
 			this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem3.TextVisible = false;
 			// 
@@ -855,6 +855,22 @@
 			this.labelControl11.TabIndex = 2;
 			this.labelControl11.Text = "Monto Total:";
 			// 
+			// labelControl15
+			// 
+			this.labelControl15.Location = new System.Drawing.Point(14, 234);
+			this.labelControl15.Name = "labelControl15";
+			this.labelControl15.Size = new System.Drawing.Size(47, 13);
+			this.labelControl15.TabIndex = 2;
+			this.labelControl15.Text = "Anticipos:";
+			// 
+			// labelControl14
+			// 
+			this.labelControl14.Location = new System.Drawing.Point(14, 208);
+			this.labelControl14.Name = "labelControl14";
+			this.labelControl14.Size = new System.Drawing.Size(60, 13);
+			this.labelControl14.TabIndex = 2;
+			this.labelControl14.Text = "Monto Desc:";
+			// 
 			// labelControl10
 			// 
 			this.labelControl10.Location = new System.Drawing.Point(14, 182);
@@ -984,6 +1000,22 @@
 			this.txtTotal.Size = new System.Drawing.Size(100, 20);
 			this.txtTotal.TabIndex = 0;
 			// 
+			// txtMontoAnticipos
+			// 
+			this.txtMontoAnticipos.Location = new System.Drawing.Point(104, 231);
+			this.txtMontoAnticipos.Name = "txtMontoAnticipos";
+			this.txtMontoAnticipos.Properties.ReadOnly = true;
+			this.txtMontoAnticipos.Size = new System.Drawing.Size(100, 20);
+			this.txtMontoAnticipos.TabIndex = 0;
+			// 
+			// txtMontoDesc
+			// 
+			this.txtMontoDesc.Location = new System.Drawing.Point(104, 205);
+			this.txtMontoDesc.Name = "txtMontoDesc";
+			this.txtMontoDesc.Properties.ReadOnly = true;
+			this.txtMontoDesc.Size = new System.Drawing.Size(100, 20);
+			this.txtMontoDesc.TabIndex = 0;
+			// 
 			// txtMontoSeguro
 			// 
 			this.txtMontoSeguro.Location = new System.Drawing.Point(104, 179);
@@ -1066,7 +1098,7 @@
 			// 
 			this.tabOtros.Controls.Add(this.layoutControl4);
 			this.tabOtros.Name = "tabOtros";
-			this.tabOtros.Size = new System.Drawing.Size(810, 285);
+			this.tabOtros.Size = new System.Drawing.Size(810, 309);
 			this.tabOtros.Text = "Otros Pagos / Obligaciones";
 			// 
 			// layoutControl4
@@ -1088,7 +1120,7 @@
 			this.layoutControl4.Location = new System.Drawing.Point(0, 0);
 			this.layoutControl4.Name = "layoutControl4";
 			this.layoutControl4.Root = this.layoutControlGroup4;
-			this.layoutControl4.Size = new System.Drawing.Size(810, 285);
+			this.layoutControl4.Size = new System.Drawing.Size(810, 309);
 			this.layoutControl4.TabIndex = 0;
 			this.layoutControl4.Text = "layoutControl4";
 			// 
@@ -1254,11 +1286,11 @@
 			// 
 			// dtgObligaciones
 			// 
-			this.dtgObligaciones.Location = new System.Drawing.Point(12, 106);
+			this.dtgObligaciones.Location = new System.Drawing.Point(12, 115);
 			this.dtgObligaciones.MainView = this.gridViewObligaciones;
 			this.dtgObligaciones.MenuManager = this.ribbonControl1;
 			this.dtgObligaciones.Name = "dtgObligaciones";
-			this.dtgObligaciones.Size = new System.Drawing.Size(786, 167);
+			this.dtgObligaciones.Size = new System.Drawing.Size(786, 182);
 			this.dtgObligaciones.TabIndex = 17;
 			this.dtgObligaciones.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridViewObligaciones});
@@ -1366,7 +1398,7 @@
             this.emptySpaceItem3});
 			this.layoutControlGroup4.Location = new System.Drawing.Point(0, 0);
 			this.layoutControlGroup4.Name = "layoutControlGroup4";
-			this.layoutControlGroup4.Size = new System.Drawing.Size(810, 285);
+			this.layoutControlGroup4.Size = new System.Drawing.Size(810, 309);
 			this.layoutControlGroup4.TextVisible = false;
 			// 
 			// layoutControlItem10
@@ -1499,9 +1531,9 @@
 			// layoutControlItem25
 			// 
 			this.layoutControlItem25.Control = this.dtgObligaciones;
-			this.layoutControlItem25.Location = new System.Drawing.Point(0, 94);
+			this.layoutControlItem25.Location = new System.Drawing.Point(0, 103);
 			this.layoutControlItem25.Name = "layoutControlItem25";
-			this.layoutControlItem25.Size = new System.Drawing.Size(790, 171);
+			this.layoutControlItem25.Size = new System.Drawing.Size(790, 186);
 			this.layoutControlItem25.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem25.TextVisible = false;
 			// 
@@ -1510,7 +1542,7 @@
 			this.emptySpaceItem3.AllowHotTrack = false;
 			this.emptySpaceItem3.Location = new System.Drawing.Point(0, 84);
 			this.emptySpaceItem3.Name = "emptySpaceItem3";
-			this.emptySpaceItem3.Size = new System.Drawing.Size(790, 10);
+			this.emptySpaceItem3.Size = new System.Drawing.Size(790, 19);
 			this.emptySpaceItem3.TextSize = new System.Drawing.Size(0, 0);
 			// 
 			// txtProveedor
@@ -1679,38 +1711,6 @@
 			this.layoutControlItem2.Text = "Embarque:";
 			this.layoutControlItem2.TextSize = new System.Drawing.Size(84, 13);
 			// 
-			// txtMontoDesc
-			// 
-			this.txtMontoDesc.Location = new System.Drawing.Point(104, 205);
-			this.txtMontoDesc.Name = "txtMontoDesc";
-			this.txtMontoDesc.Properties.ReadOnly = true;
-			this.txtMontoDesc.Size = new System.Drawing.Size(100, 20);
-			this.txtMontoDesc.TabIndex = 0;
-			// 
-			// labelControl14
-			// 
-			this.labelControl14.Location = new System.Drawing.Point(14, 208);
-			this.labelControl14.Name = "labelControl14";
-			this.labelControl14.Size = new System.Drawing.Size(60, 13);
-			this.labelControl14.TabIndex = 2;
-			this.labelControl14.Text = "Monto Desc:";
-			// 
-			// txtMontoAnticipos
-			// 
-			this.txtMontoAnticipos.Location = new System.Drawing.Point(104, 231);
-			this.txtMontoAnticipos.Name = "txtMontoAnticipos";
-			this.txtMontoAnticipos.Properties.ReadOnly = true;
-			this.txtMontoAnticipos.Size = new System.Drawing.Size(100, 20);
-			this.txtMontoAnticipos.TabIndex = 0;
-			// 
-			// labelControl15
-			// 
-			this.labelControl15.Location = new System.Drawing.Point(14, 234);
-			this.labelControl15.Name = "labelControl15";
-			this.labelControl15.Size = new System.Drawing.Size(47, 13);
-			this.labelControl15.TabIndex = 2;
-			this.labelControl15.Text = "Anticipos:";
-			// 
 			// frmEmbarque
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1764,6 +1764,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.dtpFechaFactura.Properties.CalendarTimeProperties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.dtpFechaFactura.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtTotal.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.txtMontoAnticipos.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.txtMontoDesc.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtMontoSeguro.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtMontoFlete.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtTotalMercaderia.Properties)).EndInit();
@@ -1822,8 +1824,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem13)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem7)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.txtMontoDesc.Properties)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.txtMontoAnticipos.Properties)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
