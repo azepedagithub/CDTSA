@@ -53,7 +53,6 @@ Partial Class frmPedido
         Me.LayoutControlItem4 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem5 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem1 = New DevExpress.XtraLayout.LayoutControlItem()
-        Me.LayoutControlItem6 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem7 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem22 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem2 = New DevExpress.XtraLayout.LayoutControlItem()
@@ -69,6 +68,7 @@ Partial Class frmPedido
         Me.LayoutControlItem20 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem47 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem48 = New DevExpress.XtraLayout.LayoutControlItem()
+        Me.LayoutControlItem6 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.btnBonif = New DevExpress.XtraEditors.SimpleButton()
         Me.LayoutControl2 = New DevExpress.XtraLayout.LayoutControl()
         Me.btnDescProm = New DevExpress.XtraEditors.SimpleButton()
@@ -197,7 +197,6 @@ Partial Class frmPedido
         CType(Me.LayoutControlItem4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem5, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.LayoutControlItem6, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem7, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem22, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -213,6 +212,7 @@ Partial Class frmPedido
         CType(Me.LayoutControlItem20, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem47, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem48, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.LayoutControlItem6, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControl2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.LayoutControl2.SuspendLayout()
         CType(Me.txtAhorro.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -337,7 +337,7 @@ Partial Class frmPedido
         Me.txtDisponible.Name = "txtDisponible"
         Me.txtDisponible.Properties.Mask.EditMask = "n2"
         Me.txtDisponible.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric
-        Me.txtDisponible.Size = New System.Drawing.Size(98, 20)
+        Me.txtDisponible.Size = New System.Drawing.Size(77, 20)
         Me.txtDisponible.StyleController = Me.LayoutControl1
         Me.txtDisponible.TabIndex = 22
         '
@@ -361,11 +361,11 @@ Partial Class frmPedido
         '
         'SearchLookUpEditMoneda
         '
-        Me.SearchLookUpEditMoneda.Location = New System.Drawing.Point(857, 122)
+        Me.SearchLookUpEditMoneda.Location = New System.Drawing.Point(836, 122)
         Me.SearchLookUpEditMoneda.Name = "SearchLookUpEditMoneda"
         Me.SearchLookUpEditMoneda.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
         Me.SearchLookUpEditMoneda.Properties.View = Me.SearchLookUpEdit2View
-        Me.SearchLookUpEditMoneda.Size = New System.Drawing.Size(194, 20)
+        Me.SearchLookUpEditMoneda.Size = New System.Drawing.Size(215, 20)
         Me.SearchLookUpEditMoneda.StyleController = Me.LayoutControl1
         Me.SearchLookUpEditMoneda.TabIndex = 19
         '
@@ -382,7 +382,7 @@ Partial Class frmPedido
         Me.SearchLookUpEditNivel.Name = "SearchLookUpEditNivel"
         Me.SearchLookUpEditNivel.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
         Me.SearchLookUpEditNivel.Properties.View = Me.GridView1
-        Me.SearchLookUpEditNivel.Size = New System.Drawing.Size(284, 20)
+        Me.SearchLookUpEditNivel.Size = New System.Drawing.Size(263, 20)
         Me.SearchLookUpEditNivel.StyleController = Me.LayoutControl1
         Me.SearchLookUpEditNivel.TabIndex = 18
         '
@@ -436,7 +436,7 @@ Partial Class frmPedido
         Me.SearchLookUpEditTipoEntrega.Name = "SearchLookUpEditTipoEntrega"
         Me.SearchLookUpEditTipoEntrega.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
         Me.SearchLookUpEditTipoEntrega.Properties.View = Me.GridView3
-        Me.SearchLookUpEditTipoEntrega.Size = New System.Drawing.Size(284, 20)
+        Me.SearchLookUpEditTipoEntrega.Size = New System.Drawing.Size(263, 20)
         Me.SearchLookUpEditTipoEntrega.StyleController = Me.LayoutControl1
         Me.SearchLookUpEditTipoEntrega.TabIndex = 12
         '
@@ -459,22 +459,22 @@ Partial Class frmPedido
         'DateEditRequerido
         '
         Me.DateEditRequerido.EditValue = Nothing
-        Me.DateEditRequerido.Location = New System.Drawing.Point(979, 72)
+        Me.DateEditRequerido.Location = New System.Drawing.Point(971, 72)
         Me.DateEditRequerido.Name = "DateEditRequerido"
         Me.DateEditRequerido.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
         Me.DateEditRequerido.Properties.CalendarTimeProperties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
-        Me.DateEditRequerido.Size = New System.Drawing.Size(72, 20)
+        Me.DateEditRequerido.Size = New System.Drawing.Size(80, 20)
         Me.DateEditRequerido.StyleController = Me.LayoutControl1
         Me.DateEditRequerido.TabIndex = 10
         '
         'DateEditFecha
         '
         Me.DateEditFecha.EditValue = New Date(2021, 1, 13, 0, 0, 0, 0)
-        Me.DateEditFecha.Location = New System.Drawing.Point(827, 72)
+        Me.DateEditFecha.Location = New System.Drawing.Point(806, 72)
         Me.DateEditFecha.Name = "DateEditFecha"
         Me.DateEditFecha.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
         Me.DateEditFecha.Properties.CalendarTimeProperties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
-        Me.DateEditFecha.Size = New System.Drawing.Size(84, 20)
+        Me.DateEditFecha.Size = New System.Drawing.Size(97, 20)
         Me.DateEditFecha.StyleController = Me.LayoutControl1
         Me.DateEditFecha.TabIndex = 9
         '
@@ -532,12 +532,12 @@ Partial Class frmPedido
         '
         'SearchLookUpEditPlazo
         '
-        Me.SearchLookUpEditPlazo.Location = New System.Drawing.Point(857, 98)
+        Me.SearchLookUpEditPlazo.Location = New System.Drawing.Point(836, 98)
         Me.SearchLookUpEditPlazo.Name = "SearchLookUpEditPlazo"
         Me.SearchLookUpEditPlazo.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
         Me.SearchLookUpEditPlazo.Properties.ReadOnly = True
         Me.SearchLookUpEditPlazo.Properties.View = Me.GridView4
-        Me.SearchLookUpEditPlazo.Size = New System.Drawing.Size(194, 20)
+        Me.SearchLookUpEditPlazo.Size = New System.Drawing.Size(215, 20)
         Me.SearchLookUpEditPlazo.StyleController = Me.LayoutControl1
         Me.SearchLookUpEditPlazo.TabIndex = 12
         '
@@ -594,23 +594,12 @@ Partial Class frmPedido
         Me.LayoutControlItem1.Text = "Sucursal"
         Me.LayoutControlItem1.TextSize = New System.Drawing.Size(61, 13)
         '
-        'LayoutControlItem6
-        '
-        Me.LayoutControlItem6.Control = Me.DateEditFecha
-        Me.LayoutControlItem6.Location = New System.Drawing.Point(769, 24)
-        Me.LayoutControlItem6.Name = "LayoutControlItem6"
-        Me.LayoutControlItem6.Size = New System.Drawing.Size(122, 26)
-        Me.LayoutControlItem6.Text = "Fecha"
-        Me.LayoutControlItem6.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize
-        Me.LayoutControlItem6.TextSize = New System.Drawing.Size(29, 13)
-        Me.LayoutControlItem6.TextToControlDistance = 5
-        '
         'LayoutControlItem7
         '
         Me.LayoutControlItem7.Control = Me.DateEditRequerido
-        Me.LayoutControlItem7.Location = New System.Drawing.Point(891, 24)
+        Me.LayoutControlItem7.Location = New System.Drawing.Point(883, 24)
         Me.LayoutControlItem7.Name = "LayoutControlItem7"
-        Me.LayoutControlItem7.Size = New System.Drawing.Size(140, 26)
+        Me.LayoutControlItem7.Size = New System.Drawing.Size(148, 26)
         Me.LayoutControlItem7.Text = "Requerido"
         Me.LayoutControlItem7.TextSize = New System.Drawing.Size(61, 13)
         '
@@ -663,9 +652,9 @@ Partial Class frmPedido
         'LayoutControlItem33
         '
         Me.LayoutControlItem33.Control = Me.SearchLookUpEditMoneda
-        Me.LayoutControlItem33.Location = New System.Drawing.Point(769, 74)
+        Me.LayoutControlItem33.Location = New System.Drawing.Point(748, 74)
         Me.LayoutControlItem33.Name = "LayoutControlItem33"
-        Me.LayoutControlItem33.Size = New System.Drawing.Size(262, 24)
+        Me.LayoutControlItem33.Size = New System.Drawing.Size(283, 24)
         Me.LayoutControlItem33.Text = "Moneda"
         Me.LayoutControlItem33.TextSize = New System.Drawing.Size(61, 13)
         '
@@ -693,9 +682,9 @@ Partial Class frmPedido
         '
         Me.LayoutControlItem67.Control = Me.SearchLookUpEditPlazo
         Me.LayoutControlItem67.CustomizationFormText = "Plazo"
-        Me.LayoutControlItem67.Location = New System.Drawing.Point(769, 50)
+        Me.LayoutControlItem67.Location = New System.Drawing.Point(748, 50)
         Me.LayoutControlItem67.Name = "LayoutControlItem67"
-        Me.LayoutControlItem67.Size = New System.Drawing.Size(262, 24)
+        Me.LayoutControlItem67.Size = New System.Drawing.Size(283, 24)
         Me.LayoutControlItem67.Text = "Plazo"
         Me.LayoutControlItem67.TextSize = New System.Drawing.Size(61, 13)
         '
@@ -713,7 +702,7 @@ Partial Class frmPedido
         Me.LayoutControlItem32.Control = Me.SearchLookUpEditNivel
         Me.LayoutControlItem32.Location = New System.Drawing.Point(417, 74)
         Me.LayoutControlItem32.Name = "LayoutControlItem32"
-        Me.LayoutControlItem32.Size = New System.Drawing.Size(352, 24)
+        Me.LayoutControlItem32.Size = New System.Drawing.Size(331, 24)
         Me.LayoutControlItem32.Text = "Nivel Precio"
         Me.LayoutControlItem32.TextSize = New System.Drawing.Size(61, 13)
         '
@@ -722,7 +711,7 @@ Partial Class frmPedido
         Me.LayoutControlItem20.Control = Me.SearchLookUpEditTipoEntrega
         Me.LayoutControlItem20.Location = New System.Drawing.Point(417, 50)
         Me.LayoutControlItem20.Name = "LayoutControlItem20"
-        Me.LayoutControlItem20.Size = New System.Drawing.Size(352, 24)
+        Me.LayoutControlItem20.Size = New System.Drawing.Size(331, 24)
         Me.LayoutControlItem20.Text = "Tipo Entrega"
         Me.LayoutControlItem20.TextSize = New System.Drawing.Size(61, 13)
         '
@@ -742,11 +731,22 @@ Partial Class frmPedido
         Me.LayoutControlItem48.Control = Me.txtDisponible
         Me.LayoutControlItem48.Location = New System.Drawing.Point(614, 24)
         Me.LayoutControlItem48.Name = "LayoutControlItem48"
-        Me.LayoutControlItem48.Size = New System.Drawing.Size(155, 26)
+        Me.LayoutControlItem48.Size = New System.Drawing.Size(134, 26)
         Me.LayoutControlItem48.Text = "Disponible"
         Me.LayoutControlItem48.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize
         Me.LayoutControlItem48.TextSize = New System.Drawing.Size(48, 13)
         Me.LayoutControlItem48.TextToControlDistance = 5
+        '
+        'LayoutControlItem6
+        '
+        Me.LayoutControlItem6.Control = Me.DateEditFecha
+        Me.LayoutControlItem6.Location = New System.Drawing.Point(748, 24)
+        Me.LayoutControlItem6.Name = "LayoutControlItem6"
+        Me.LayoutControlItem6.Size = New System.Drawing.Size(135, 26)
+        Me.LayoutControlItem6.Text = "Fecha"
+        Me.LayoutControlItem6.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize
+        Me.LayoutControlItem6.TextSize = New System.Drawing.Size(29, 13)
+        Me.LayoutControlItem6.TextToControlDistance = 5
         '
         'btnBonif
         '
@@ -1759,7 +1759,6 @@ Partial Class frmPedido
         CType(Me.LayoutControlItem4, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem5, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.LayoutControlItem6, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem7, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem22, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem2, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1775,6 +1774,7 @@ Partial Class frmPedido
         CType(Me.LayoutControlItem20, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem47, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem48, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.LayoutControlItem6, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControl2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.LayoutControl2.ResumeLayout(False)
         CType(Me.txtAhorro.Properties, System.ComponentModel.ISupportInitialize).EndInit()

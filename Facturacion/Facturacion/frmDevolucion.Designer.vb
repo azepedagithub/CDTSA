@@ -22,30 +22,29 @@ Partial Class frmDevolucion
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmDevolucion))
-        Dim GridLevelNode1 As DevExpress.XtraGrid.GridLevelNode = New DevExpress.XtraGrid.GridLevelNode()
-        Dim SuperToolTip1 As DevExpress.Utils.SuperToolTip = New DevExpress.Utils.SuperToolTip()
-        Dim ToolTipTitleItem1 As DevExpress.Utils.ToolTipTitleItem = New DevExpress.Utils.ToolTipTitleItem()
-        Dim ToolTipItem1 As DevExpress.Utils.ToolTipItem = New DevExpress.Utils.ToolTipItem()
-        Dim SuperToolTip2 As DevExpress.Utils.SuperToolTip = New DevExpress.Utils.SuperToolTip()
-        Dim ToolTipTitleItem2 As DevExpress.Utils.ToolTipTitleItem = New DevExpress.Utils.ToolTipTitleItem()
-        Dim ToolTipItem2 As DevExpress.Utils.ToolTipItem = New DevExpress.Utils.ToolTipItem()
-        Dim SuperToolTip3 As DevExpress.Utils.SuperToolTip = New DevExpress.Utils.SuperToolTip()
-        Dim ToolTipTitleItem3 As DevExpress.Utils.ToolTipTitleItem = New DevExpress.Utils.ToolTipTitleItem()
-        Dim ToolTipItem3 As DevExpress.Utils.ToolTipItem = New DevExpress.Utils.ToolTipItem()
-        Dim SuperToolTip4 As DevExpress.Utils.SuperToolTip = New DevExpress.Utils.SuperToolTip()
-        Dim ToolTipTitleItem4 As DevExpress.Utils.ToolTipTitleItem = New DevExpress.Utils.ToolTipTitleItem()
-        Dim ToolTipItem4 As DevExpress.Utils.ToolTipItem = New DevExpress.Utils.ToolTipItem()
-        Dim SuperToolTip5 As DevExpress.Utils.SuperToolTip = New DevExpress.Utils.SuperToolTip()
-        Dim ToolTipTitleItem5 As DevExpress.Utils.ToolTipTitleItem = New DevExpress.Utils.ToolTipTitleItem()
-        Dim ToolTipItem5 As DevExpress.Utils.ToolTipItem = New DevExpress.Utils.ToolTipItem()
-        Dim SuperToolTip6 As DevExpress.Utils.SuperToolTip = New DevExpress.Utils.SuperToolTip()
-        Dim ToolTipTitleItem6 As DevExpress.Utils.ToolTipTitleItem = New DevExpress.Utils.ToolTipTitleItem()
-        Dim ToolTipItem6 As DevExpress.Utils.ToolTipItem = New DevExpress.Utils.ToolTipItem()
-        Dim SuperToolTip7 As DevExpress.Utils.SuperToolTip = New DevExpress.Utils.SuperToolTip()
-        Dim ToolTipTitleItem7 As DevExpress.Utils.ToolTipTitleItem = New DevExpress.Utils.ToolTipTitleItem()
-        Dim ToolTipItem7 As DevExpress.Utils.ToolTipItem = New DevExpress.Utils.ToolTipItem()
+        Dim GridLevelNode2 As DevExpress.XtraGrid.GridLevelNode = New DevExpress.XtraGrid.GridLevelNode()
+        Dim SuperToolTip10 As DevExpress.Utils.SuperToolTip = New DevExpress.Utils.SuperToolTip()
+        Dim ToolTipTitleItem10 As DevExpress.Utils.ToolTipTitleItem = New DevExpress.Utils.ToolTipTitleItem()
+        Dim ToolTipItem10 As DevExpress.Utils.ToolTipItem = New DevExpress.Utils.ToolTipItem()
+        Dim SuperToolTip8 As DevExpress.Utils.SuperToolTip = New DevExpress.Utils.SuperToolTip()
+        Dim ToolTipTitleItem8 As DevExpress.Utils.ToolTipTitleItem = New DevExpress.Utils.ToolTipTitleItem()
+        Dim ToolTipItem8 As DevExpress.Utils.ToolTipItem = New DevExpress.Utils.ToolTipItem()
+        Dim SuperToolTip9 As DevExpress.Utils.SuperToolTip = New DevExpress.Utils.SuperToolTip()
+        Dim ToolTipTitleItem9 As DevExpress.Utils.ToolTipTitleItem = New DevExpress.Utils.ToolTipTitleItem()
+        Dim ToolTipItem9 As DevExpress.Utils.ToolTipItem = New DevExpress.Utils.ToolTipItem()
+        Dim SuperToolTip11 As DevExpress.Utils.SuperToolTip = New DevExpress.Utils.SuperToolTip()
+        Dim ToolTipTitleItem11 As DevExpress.Utils.ToolTipTitleItem = New DevExpress.Utils.ToolTipTitleItem()
+        Dim ToolTipItem11 As DevExpress.Utils.ToolTipItem = New DevExpress.Utils.ToolTipItem()
+        Dim SuperToolTip12 As DevExpress.Utils.SuperToolTip = New DevExpress.Utils.SuperToolTip()
+        Dim ToolTipTitleItem12 As DevExpress.Utils.ToolTipTitleItem = New DevExpress.Utils.ToolTipTitleItem()
+        Dim ToolTipItem12 As DevExpress.Utils.ToolTipItem = New DevExpress.Utils.ToolTipItem()
+        Dim SuperToolTip13 As DevExpress.Utils.SuperToolTip = New DevExpress.Utils.SuperToolTip()
+        Dim ToolTipTitleItem13 As DevExpress.Utils.ToolTipTitleItem = New DevExpress.Utils.ToolTipTitleItem()
+        Dim ToolTipItem13 As DevExpress.Utils.ToolTipItem = New DevExpress.Utils.ToolTipItem()
+        Dim SuperToolTip14 As DevExpress.Utils.SuperToolTip = New DevExpress.Utils.SuperToolTip()
+        Dim ToolTipTitleItem14 As DevExpress.Utils.ToolTipTitleItem = New DevExpress.Utils.ToolTipTitleItem()
+        Dim ToolTipItem14 As DevExpress.Utils.ToolTipItem = New DevExpress.Utils.ToolTipItem()
         Me.LayoutControl1 = New DevExpress.XtraLayout.LayoutControl()
         Me.txtTipoCambio = New DevExpress.XtraEditors.TextEdit()
         Me.SearchLookUpEditPlazo = New DevExpress.XtraEditors.SearchLookUpEdit()
@@ -111,7 +110,7 @@ Partial Class frmDevolucion
         Me.EmptySpaceItem2 = New DevExpress.XtraLayout.EmptySpaceItem()
         Me.txtTotalDevsinIVA = New DevExpress.XtraEditors.TextEdit()
         Me.txtTotalDevIVA = New DevExpress.XtraEditors.TextEdit()
-        Me.BarManager1 = New DevExpress.XtraBars.BarManager(Me.components)
+        Me.BarManager1 = New DevExpress.XtraBars.BarManager()
         Me.Bar1 = New DevExpress.XtraBars.Bar()
         Me.ó = New DevExpress.XtraBars.BarButtonItem()
         Me.BarSubItemReportes = New DevExpress.XtraBars.BarSubItem()
@@ -567,8 +566,8 @@ Partial Class frmDevolucion
         '
         'GridControl1
         '
-        GridLevelNode1.RelationName = "Level1"
-        Me.GridControl1.LevelTree.Nodes.AddRange(New DevExpress.XtraGrid.GridLevelNode() {GridLevelNode1})
+        GridLevelNode2.RelationName = "Level1"
+        Me.GridControl1.LevelTree.Nodes.AddRange(New DevExpress.XtraGrid.GridLevelNode() {GridLevelNode2})
         Me.GridControl1.Location = New System.Drawing.Point(2, 305)
         Me.GridControl1.MainView = Me.GridViewProducto
         Me.GridControl1.Name = "GridControl1"
@@ -863,13 +862,13 @@ Partial Class frmDevolucion
         Me.ó.Glyph = CType(resources.GetObject("ó.Glyph"), System.Drawing.Image)
         Me.ó.Id = 6
         Me.ó.Name = "ó"
-        ToolTipTitleItem1.Text = "Devolución"
-        ToolTipItem1.LeftIndent = 6
-        ToolTipItem1.Text = "Ud puede Gerará un documento para la Devolucion, se afectará el inventario y se g" & _
+        ToolTipTitleItem10.Text = "Devolución"
+        ToolTipItem10.LeftIndent = 6
+        ToolTipItem10.Text = "Ud puede Gerará un documento para la Devolucion, se afectará el inventario y se g" & _
     "enerará una Nota de Crédito"
-        SuperToolTip1.Items.Add(ToolTipTitleItem1)
-        SuperToolTip1.Items.Add(ToolTipItem1)
-        Me.ó.SuperTip = SuperToolTip1
+        SuperToolTip10.Items.Add(ToolTipTitleItem10)
+        SuperToolTip10.Items.Add(ToolTipItem10)
+        Me.ó.SuperTip = SuperToolTip10
         '
         'BarSubItemReportes
         '
@@ -962,13 +961,13 @@ Partial Class frmDevolucion
         Me.BarButtonItemAprobar.Glyph = CType(resources.GetObject("BarButtonItemAprobar.Glyph"), System.Drawing.Image)
         Me.BarButtonItemAprobar.Id = 0
         Me.BarButtonItemAprobar.Name = "BarButtonItemAprobar"
-        ToolTipTitleItem2.Text = "Cheque del Recibo"
-        ToolTipItem2.LeftIndent = 6
-        ToolTipItem2.Text = "Ud puede ver el Cheque asociado al Recibo, ademas Ud puede indicar si se cobró o " & _
+        ToolTipTitleItem8.Text = "Cheque del Recibo"
+        ToolTipItem8.LeftIndent = 6
+        ToolTipItem8.Text = "Ud puede ver el Cheque asociado al Recibo, ademas Ud puede indicar si se cobró o " & _
     "se encuentra sin Fondos."
-        SuperToolTip2.Items.Add(ToolTipTitleItem2)
-        SuperToolTip2.Items.Add(ToolTipItem2)
-        Me.BarButtonItemAprobar.SuperTip = SuperToolTip2
+        SuperToolTip8.Items.Add(ToolTipTitleItem8)
+        SuperToolTip8.Items.Add(ToolTipItem8)
+        Me.BarButtonItemAprobar.SuperTip = SuperToolTip8
         '
         'BarButtonItemAplicar
         '
@@ -998,12 +997,12 @@ Partial Class frmDevolucion
         Me.BarButtonItemLimpiaFiltro.Id = 5
         Me.BarButtonItemLimpiaFiltro.LargeGlyph = CType(resources.GetObject("BarButtonItemLimpiaFiltro.LargeGlyph"), System.Drawing.Image)
         Me.BarButtonItemLimpiaFiltro.Name = "BarButtonItemLimpiaFiltro"
-        ToolTipTitleItem3.Text = "Limpia Filtro"
-        ToolTipItem3.LeftIndent = 6
-        ToolTipItem3.Text = "Si Ud tiene seteado variables de filtro, con esta opcion Limpia el filtro."
-        SuperToolTip3.Items.Add(ToolTipTitleItem3)
-        SuperToolTip3.Items.Add(ToolTipItem3)
-        Me.BarButtonItemLimpiaFiltro.SuperTip = SuperToolTip3
+        ToolTipTitleItem9.Text = "Limpia Filtro"
+        ToolTipItem9.LeftIndent = 6
+        ToolTipItem9.Text = "Si Ud tiene seteado variables de filtro, con esta opcion Limpia el filtro."
+        SuperToolTip9.Items.Add(ToolTipTitleItem9)
+        SuperToolTip9.Items.Add(ToolTipItem9)
+        Me.BarButtonItemLimpiaFiltro.SuperTip = SuperToolTip9
         '
         'BarButtonItemDocumento
         '
@@ -1018,12 +1017,12 @@ Partial Class frmDevolucion
         Me.BarButtonItemNuevo.Glyph = CType(resources.GetObject("BarButtonItemNuevo.Glyph"), System.Drawing.Image)
         Me.BarButtonItemNuevo.Id = 8
         Me.BarButtonItemNuevo.Name = "BarButtonItemNuevo"
-        ToolTipTitleItem4.Text = "Crear un Recibo"
-        ToolTipItem4.LeftIndent = 6
-        ToolTipItem4.Text = "Ud puede agregar un recibo de caja en esta opción"
-        SuperToolTip4.Items.Add(ToolTipTitleItem4)
-        SuperToolTip4.Items.Add(ToolTipItem4)
-        Me.BarButtonItemNuevo.SuperTip = SuperToolTip4
+        ToolTipTitleItem11.Text = "Crear un Recibo"
+        ToolTipItem11.LeftIndent = 6
+        ToolTipItem11.Text = "Ud puede agregar un recibo de caja en esta opción"
+        SuperToolTip11.Items.Add(ToolTipTitleItem11)
+        SuperToolTip11.Items.Add(ToolTipItem11)
+        Me.BarButtonItemNuevo.SuperTip = SuperToolTip11
         '
         'BarButtonItemAnular
         '
@@ -1031,12 +1030,12 @@ Partial Class frmDevolucion
         Me.BarButtonItemAnular.Glyph = CType(resources.GetObject("BarButtonItemAnular.Glyph"), System.Drawing.Image)
         Me.BarButtonItemAnular.Id = 9
         Me.BarButtonItemAnular.Name = "BarButtonItemAnular"
-        ToolTipTitleItem5.Text = "Anular Recibo"
-        ToolTipItem5.LeftIndent = 6
-        ToolTipItem5.Text = "Ud puede anular un Recibo de Caja"
-        SuperToolTip5.Items.Add(ToolTipTitleItem5)
-        SuperToolTip5.Items.Add(ToolTipItem5)
-        Me.BarButtonItemAnular.SuperTip = SuperToolTip5
+        ToolTipTitleItem12.Text = "Anular Recibo"
+        ToolTipItem12.LeftIndent = 6
+        ToolTipItem12.Text = "Ud puede anular un Recibo de Caja"
+        SuperToolTip12.Items.Add(ToolTipTitleItem12)
+        SuperToolTip12.Items.Add(ToolTipItem12)
+        Me.BarButtonItemAnular.SuperTip = SuperToolTip12
         '
         'BarButtonItemDesaplicar
         '
@@ -1094,13 +1093,13 @@ Partial Class frmDevolucion
         Me.BarButtonItemAplicacionCliente.Glyph = CType(resources.GetObject("BarButtonItemAplicacionCliente.Glyph"), System.Drawing.Image)
         Me.BarButtonItemAplicacionCliente.Id = 23
         Me.BarButtonItemAplicacionCliente.Name = "BarButtonItemAplicacionCliente"
-        ToolTipTitleItem6.Text = "Aplicaciones de un Cliente"
-        ToolTipItem6.LeftIndent = 6
-        ToolTipItem6.Text = "Ud puede ver las Aplicaciones de Un Cliente, o Facturas aplicadas en varios Recib" & _
+        ToolTipTitleItem13.Text = "Aplicaciones de un Cliente"
+        ToolTipItem13.LeftIndent = 6
+        ToolTipItem13.Text = "Ud puede ver las Aplicaciones de Un Cliente, o Facturas aplicadas en varios Recib" & _
     "os de Caja en las Fechas que Ud seleccione"
-        SuperToolTip6.Items.Add(ToolTipTitleItem6)
-        SuperToolTip6.Items.Add(ToolTipItem6)
-        Me.BarButtonItemAplicacionCliente.SuperTip = SuperToolTip6
+        SuperToolTip13.Items.Add(ToolTipTitleItem13)
+        SuperToolTip13.Items.Add(ToolTipItem13)
+        Me.BarButtonItemAplicacionCliente.SuperTip = SuperToolTip13
         '
         'BarButtonItemDesaplic
         '
@@ -1108,12 +1107,12 @@ Partial Class frmDevolucion
         Me.BarButtonItemDesaplic.Glyph = CType(resources.GetObject("BarButtonItemDesaplic.Glyph"), System.Drawing.Image)
         Me.BarButtonItemDesaplic.Id = 24
         Me.BarButtonItemDesaplic.Name = "BarButtonItemDesaplic"
-        ToolTipTitleItem7.Text = "Desaplicar"
-        ToolTipItem7.LeftIndent = 6
-        ToolTipItem7.Text = "Desaplica los pagos realizados a las facturas  con un Recibo de Caja."
-        SuperToolTip7.Items.Add(ToolTipTitleItem7)
-        SuperToolTip7.Items.Add(ToolTipItem7)
-        Me.BarButtonItemDesaplic.SuperTip = SuperToolTip7
+        ToolTipTitleItem14.Text = "Desaplicar"
+        ToolTipItem14.LeftIndent = 6
+        ToolTipItem14.Text = "Desaplica los pagos realizados a las facturas  con un Recibo de Caja."
+        SuperToolTip14.Items.Add(ToolTipTitleItem14)
+        SuperToolTip14.Items.Add(ToolTipItem14)
+        Me.BarButtonItemDesaplic.SuperTip = SuperToolTip14
         '
         'frmDevolucion
         '

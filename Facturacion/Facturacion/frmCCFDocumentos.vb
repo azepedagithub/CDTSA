@@ -425,6 +425,13 @@ Public Class frmCPDocumentos
     Private Sub DateEditFecha_EditValueChanged(sender As Object, e As EventArgs) Handles DateEditFecha.EditValueChanged
         CalculaFechaVencimiento()
         gdTipoCambio = getTipoCambio(Me.DateEditFecha.EditValue, gParametros.TipoCambioFact)
+        If Not DateEditFecha.EditValue Is Nothing Then
+            If Not FechaEnPeriodoAbierto(CDate(Me.DateEditFecha.EditValue)) Then
+                MessageBox.Show("La Fecha del Documento debe estar en un Período Contable Abierto... Ud debe cambiar la Fecha o llamar al Administrador del Sistema", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Return
+            End If
+
+        End If
     End Sub
 
     Private Sub BarbtnAdd_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles BarbtnAdd.ItemClick
@@ -758,10 +765,16 @@ Public Class frmCPDocumentos
                 End If
                 Dim td As New DataTable()
                 If Me.rbDebitos.Checked Then
+
+                    If Not FechaEnPeriodoAbierto(CDate(Me.DateEditFecha.EditValue)) Then
+                        MessageBox.Show("La Fecha del Documento debe estar en un Período Contable Abierto... Ud debe cambiar la Fecha o llamar al Administrador del Sistema", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        Exit Sub
+                    End If
+
                     If gParametrosCCF.EditaConsecutivos = True Then
                         If Not IsMaskOK(gsMascara, Me.txtDocumento.EditValue) Then
                             Me.txtDocumento.Focus()
-                            Return
+                            Exit Sub
                         Else
                             If gbAdd Then
                                 If cManager.ExistsInTable("ccfDebitos", "Documento", "Documento='" & txtDocumento.EditValue.ToString() & _
@@ -810,6 +823,10 @@ Public Class frmCPDocumentos
                     MessageBox.Show("El registro ha sido guardado exitosamente ", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
                     Exit Sub
                 Else
+                    If Not FechaEnPeriodoAbierto(CDate(Me.DateEditFechaC.EditValue)) Then
+                        MessageBox.Show("La Fecha del Documento debe estar en un Período Contable Abierto... Ud debe cambiar la Fecha o llamar al Administrador del Sistema", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        Exit Sub
+                    End If
                     If gParametrosCCF.EditaConsecutivos = True Then
                         If Not IsMaskOK(gsMascara, Me.txtDocumentoC.EditValue) Then
                             Me.txtDocumentoC.Focus()

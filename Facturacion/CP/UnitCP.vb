@@ -421,6 +421,26 @@ Public Module Unitbk
             Return controleValue
         End If
     End Function
+    Public Function FechaEnPeriodoAbierto(dFecha As Date) As Boolean
+        Dim lbok As Boolean = False
+        Try
+                Dim sParameters As String
+                Dim td As DataTable
+                sParameters = "'" & dFecha.ToString("yyyyMMdd") & "'"
+                td = cManager.ExecFunction("cntFechaEnPeriodoAbierto", sParameters)
+                If CBool(td.Rows(0)(0)) = False Then
+                    lbok = False
+                Else
+                    lbok = True
+
+                End If
+
+        Catch ex As Exception
+            lbok = False
+        End Try
+        Return lbok
+
+    End Function
 
 End Module
 
