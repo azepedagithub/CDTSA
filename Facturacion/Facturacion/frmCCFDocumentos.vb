@@ -425,10 +425,13 @@ Public Class frmCPDocumentos
     Private Sub DateEditFecha_EditValueChanged(sender As Object, e As EventArgs) Handles DateEditFecha.EditValueChanged
         CalculaFechaVencimiento()
         gdTipoCambio = getTipoCambio(Me.DateEditFecha.EditValue, gParametros.TipoCambioFact)
-        If Not DateEditFecha.EditValue Is Nothing Then
-            If Not FechaEnPeriodoAbierto(CDate(Me.DateEditFecha.EditValue)) Then
-                MessageBox.Show("La Fecha del Documento debe estar en un Período Contable Abierto... Ud debe cambiar la Fecha o llamar al Administrador del Sistema", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                Return
+        If gbAdd Then
+            If Not DateEditFecha.EditValue Is Nothing Then
+                If Not FechaEnPeriodoAbierto(CDate(Me.DateEditFecha.EditValue)) Then
+                    MessageBox.Show("La Fecha del Documento debe estar en un Período Contable Abierto... Ud debe cambiar la Fecha o llamar al Administrador del Sistema", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Return
+                End If
+
             End If
 
         End If

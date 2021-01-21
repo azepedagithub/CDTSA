@@ -439,10 +439,12 @@ Public Class frmCPDocumento
     Private Sub DateEditFecha_EditValueChanged(sender As Object, e As EventArgs) Handles DateEditFecha.EditValueChanged
         CalculaFechaVencimiento()
         gdTipoCambio = getTipoCambio(Me.DateEditFecha.EditValue, gsTipoCambio)
-        If Not DateEditFecha.EditValue Is Nothing Then
-            If Not FechaEnPeriodoAbierto(CDate(Me.DateEditFecha.EditValue)) Then
-                MessageBox.Show("La Fecha del Documento debe estar en un Período Contable Abierto... Ud debe cambiar la Fecha o llamar al Administrador del Sistema", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                Exit Sub
+        If gbAdd Then
+            If Not DateEditFecha.EditValue Is Nothing Then
+                If Not FechaEnPeriodoAbierto(CDate(Me.DateEditFecha.EditValue)) Then
+                    MessageBox.Show("La Fecha del Documento debe estar en un Período Contable Abierto... Ud debe cambiar la Fecha o llamar al Administrador del Sistema", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Exit Sub
+                End If
             End If
         End If
 
@@ -999,10 +1001,12 @@ Public Class frmCPDocumento
 
     Private Sub DateEditFechaC_EditValueChanged(sender As Object, e As EventArgs) Handles DateEditFechaC.EditValueChanged
         gdTipoCambio = getTipoCambio(Me.DateEditFechaC.EditValue, gsTipoCambio)
-        If Not DateEditFechaC.EditValue Is Nothing Then
-            If Not FechaEnPeriodoAbierto(CDate(Me.DateEditFechaC.EditValue)) Then
-                MessageBox.Show("La Fecha del Documento debe estar en un Período Contable Abierto... Ud debe cambiar la Fecha o llamar al Administrador del Sistema", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                Exit Sub
+        If gbAdd Then
+            If Not DateEditFechaC.EditValue Is Nothing Then
+                If Not FechaEnPeriodoAbierto(CDate(Me.DateEditFechaC.EditValue)) Then
+                    MessageBox.Show("La Fecha del Documento debe estar en un Período Contable Abierto... Ud debe cambiar la Fecha o llamar al Administrador del Sistema", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Exit Sub
+                End If
             End If
         End If
 
