@@ -1811,12 +1811,14 @@ Public Class frmFactura
     Private Sub DateEditFecha_EditValueChanged(sender As Object, e As EventArgs) Handles DateEditFecha.EditValueChanged
         CalculaFechaVencimiento()
         Me.txtTipoCambio.EditValue = getTipoCambio(Me.DateEditFecha.EditValue, gParametros.TipoCambioFact)
-        If Me.DateEditFecha.EditValue IsNot Nothing Then
+        If Not DateEditFecha.EditValue Is Nothing Then
             If Not FechaEnPeriodoAbierto(CDate(Me.DateEditFecha.EditValue)) Then
                 MessageBox.Show("La Fecha de la Factura debe estar en un Período Contable Abierto... Ud debe cambiar la Fecha de la Factura o llamar al Administrador del Sistema", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Return
             End If
         End If
+
+
 
     End Sub
 

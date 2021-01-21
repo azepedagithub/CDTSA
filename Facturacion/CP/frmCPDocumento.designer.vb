@@ -22,7 +22,6 @@ Partial Class frmCPDocumento
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmCPDocumento))
         Me.XtraTabDocumentos = New DevExpress.XtraTab.XtraTabControl()
         Me.é = New DevExpress.XtraTab.XtraTabPage()
@@ -31,7 +30,7 @@ Partial Class frmCPDocumento
         Me.GroupDebito = New DevExpress.XtraEditors.GroupControl()
         Me.LayoutControl3 = New DevExpress.XtraLayout.LayoutControl()
         Me.SearchLookUpEditCuenta = New DevExpress.XtraEditors.SearchLookUpEdit()
-        Me.BarManager1 = New DevExpress.XtraBars.BarManager(Me.components)
+        Me.BarManager1 = New DevExpress.XtraBars.BarManager()
         Me.Bar2 = New DevExpress.XtraBars.Bar()
         Me.BarbtnAdd = New DevExpress.XtraBars.BarButtonItem()
         Me.BarbtnSave = New DevExpress.XtraBars.BarButtonItem()

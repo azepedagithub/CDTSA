@@ -356,6 +356,12 @@ Public Class frmDevolucion
     Private Sub GeneraDevolucion()
 
         Try
+
+            If Not FechaEnPeriodoAbierto(CDate(Me.DateEditFechaDevolucion.EditValue)) Then
+                MessageBox.Show("La Fecha del Documento Devolución debe estar en un Período Contable Abierto... Ud debe cambiar la Fecha o llamar al Administrador del Sistema", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Exit Sub
+            End If
+
             If Not IsMaskOK(gsMascara, Me.txtDevolucion.EditValue) Then
                 'MessageBox.Show("El valor de la Devolución no cumple con el patron de la   ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Me.txtDevolucion.Focus()
@@ -386,7 +392,7 @@ Public Class frmDevolucion
                 cManager.batchSQLitem.Clear()
                 cManager.batchSQLitem.Add(sSql)
 
-               
+
                 ' Recorro las lineas de la devolucion filtrados
                 For Each drItem As DataRow In tableDetDev.Rows
                     Dim dr As DataRow = drItem
@@ -577,5 +583,19 @@ Public Class frmDevolucion
 
     Private Sub txtDevolucion_EditValueChanged(sender As Object, e As EventArgs) Handles txtDevolucion.EditValueChanged
 
+    End Sub
+
+    Private Sub DateEditFecha_EditValueChanged(sender As Object, e As EventArgs) Handles DateEditFecha.EditValueChanged
+
+    End Sub
+
+    Private Sub DateEditFechaDevolucion_EditValueChanged(sender As Object, e As EventArgs) Handles DateEditFechaDevolucion.EditValueChanged
+        If Not DateEditFechaDevolucion.EditValue Is Nothing Then
+            If Not FechaEnPeriodoAbierto(CDate(Me.DateEditFechaDevolucion.EditValue)) Then
+                MessageBox.Show("La Fecha del Documento Devolución debe estar en un Período Contable Abierto... Ud debe cambiar la Fecha o llamar al Administrador del Sistema", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Return
+            End If
+
+        End If
     End Sub
 End Class

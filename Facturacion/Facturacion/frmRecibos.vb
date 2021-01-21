@@ -842,7 +842,10 @@ Public Class frmRecibos
         Dim sSql As String
         Dim td As New DataTable
         Try
-
+            If Not FechaEnPeriodoAbierto(CDate(Me.DateEditFechaCredito.EditValue)) Then
+                MessageBox.Show("La Fecha del Documento debe estar en un Período Contable Abierto... Ud debe cambiar la Fecha o llamar al Administrador del Sistema", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Exit Sub
+            End If
             If Not ControlsHeaderOk() Then
                 MessageBox.Show("Por favor revise los datos generales del Recibo o Crédito, existen al menos un campo incorrecto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Return
@@ -1000,6 +1003,13 @@ Public Class frmRecibos
 
     Private Sub DateEditFechaCredito_EditValueChanged(sender As Object, e As EventArgs) Handles DateEditFechaCredito.EditValueChanged
         gdTipoCambio = getTipoCambio(Me.DateEditFechaCredito.EditValue, gParametros.TipoCambioFact)
+        If Not DateEditFechaCredito.EditValue Is Nothing Then
+            If Not FechaEnPeriodoAbierto(CDate(Me.DateEditFechaCredito.EditValue)) Then
+                MessageBox.Show("La Fecha del Documento debe estar en un Período Contable Abierto... Ud debe cambiar la Fecha o llamar al Administrador del Sistema", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Exit Sub
+            End If
+
+        End If
     End Sub
 
     Private Sub txtchkPosMonto_EditValueChanged(sender As Object, e As EventArgs) Handles txtchkPosMonto.EditValueChanged
