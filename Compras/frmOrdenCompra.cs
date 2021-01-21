@@ -264,7 +264,7 @@ namespace CO
             //Estado Inicial
             if  (IDEstado == 0)
             {
-                this.btnConfirmar.Enabled = false;
+                this.btnConfirmar.Enabled = true;
                 this.btnDesconfirmar.Enabled = false;
                 this.btnAnular.Enabled = false;
                 this.btnEmbarque.Enabled = false;

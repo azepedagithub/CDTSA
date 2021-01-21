@@ -820,10 +820,10 @@ namespace CO
             try
             {
                 if (Confirmada) {
-                    MessageBox.Show("No se puede eliminar un embarque se encuentra en estado confirmada");
+                    MessageBox.Show("No se puede eliminar un embarque que se encuentra en estado confirmado");
                     return;
                 }
-                if (MessageBox.Show("Esta seguro que desea eliminar la Orden de Compra seleccionada ? ", "Listado de Ordenes de Compra", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+                if (MessageBox.Show("Esta seguro que desea eliminar el Embarque seleccionado? ", "Embarque", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
                 {
                     if (IDOrdenCompra >-1)
                     {
@@ -832,7 +832,7 @@ namespace CO
 						DAC.clsEmbarqueDetalleDAC.InsertUpdate("D", IDEmbarque, -1, 0, 9, 0, 0, 0, 0, 0, "", ConnectionManager.Tran);
 						DAC.clsEmbarqueDAC.InsertUpdate("D", IDEmbarque, ref Embarque ,DateTime.Now, DateTime.Now,-1,-1,-1,-1,0,"",DateTime.Now,"",DateTime.Now,"", ConnectionManager.Tran);                            
                         ConnectionManager.CommitTran();
-                        MessageBox.Show("El embarque ha sido eliminado correctamente");
+                        MessageBox.Show("El Embarque ha sido eliminado correctamente");
                     }
 					this.IDEmbarque = -1;
                     this.Close();
@@ -883,7 +883,7 @@ namespace CO
             }
 
             if (sMensaje !="") {
-                MessageBox.Show("No puede liquidar el embarque, por favor revise : \n\r" + sMensaje) ;
+                MessageBox.Show("No puede liquidar el Embarque, por favor revise : \n\r" + sMensaje) ;
                 return ;
             }
 
@@ -936,6 +936,8 @@ namespace CO
                 MessageBox.Show("El Embarque ha sido confirmado");
                 this.btnConfirmar.Enabled =false;
                 this.btnAplicar.Enabled = true;
+				
+				this.btnEliminar.Enabled = false;
                 this.Confirmada = true;
                 this.tabFactura.PageVisible = true;
                 this.xtraTabControl1.SelectedTabPage = this.tabFactura;
