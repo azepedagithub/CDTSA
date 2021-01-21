@@ -1139,6 +1139,8 @@
 			this.txtMontoOtrosPagos.Location = new System.Drawing.Point(303, 72);
 			this.txtMontoOtrosPagos.MenuManager = this.ribbonControl1;
 			this.txtMontoOtrosPagos.Name = "txtMontoOtrosPagos";
+			this.txtMontoOtrosPagos.Properties.Mask.EditMask = "n";
+			this.txtMontoOtrosPagos.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
 			this.txtMontoOtrosPagos.Properties.ReadOnly = true;
 			this.txtMontoOtrosPagos.Size = new System.Drawing.Size(111, 20);
 			this.txtMontoOtrosPagos.StyleController = this.layoutControl4;
@@ -1279,6 +1281,8 @@
 			this.txtImpuesto.Location = new System.Drawing.Point(479, 72);
 			this.txtImpuesto.MenuManager = this.ribbonControl1;
 			this.txtImpuesto.Name = "txtImpuesto";
+			this.txtImpuesto.Properties.Mask.EditMask = "n";
+			this.txtImpuesto.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
 			this.txtImpuesto.Properties.ReadOnly = true;
 			this.txtImpuesto.Size = new System.Drawing.Size(95, 20);
 			this.txtImpuesto.StyleController = this.layoutControl4;
@@ -1307,6 +1311,7 @@
             this.colMontoTotal});
 			this.gridViewObligaciones.GridControl = this.dtgObligaciones;
 			this.gridViewObligaciones.Name = "gridViewObligaciones";
+			this.gridViewObligaciones.OptionsBehavior.ReadOnly = true;
 			this.gridViewObligaciones.OptionsFind.SearchInPreview = true;
 			this.gridViewObligaciones.OptionsView.ShowAutoFilterRow = true;
 			this.gridViewObligaciones.OptionsView.ShowGroupPanel = false;

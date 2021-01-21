@@ -11,20 +11,21 @@ namespace CP.DAC
 {
     public static class clsDocumentocpDAC
     {
-		public static long UpdateCredito(String Operacion, int IDCredito, int IDProveedor, String TipoDocumento,String IDClase, int IDSubTipo, 
+		public static int UpdateCredito(String Operacion, ref int IDCredito, int IDProveedor, String TipoDocumento,String IDClase, int IDSubTipo, 
 			String Documento,DateTime Fecha,int Plazo,decimal MontoOriginal,String ConceptoSistema, String ConceptoUsuario,
 			String Usuario,decimal TipoCambio,bool fglOrigenExterno,bool flgAprobado,int IDMoneda,bool Anulado,decimal SubTotal,
 			decimal Descuento,decimal SubTotalDescuento,Decimal ImpuestoIVA,decimal ImpuestoConsumo,decimal Flete, decimal Total,
-			string strIDRetenciones, SqlTransaction oTran)
+			string strIDRetenciones,  int? IDObligacionProv = null)
 		{
 			long result = -1;
 			String strSQL = "dbo.[cppUpdatecppCreditos]";
-
+			
 			SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
 
-			oCmd.Parameters.Add(new SqlParameter("@Operacion", Operacion));
+			oCmd.Parameters.Add(new SqlParameter("@Operation", Operacion));
 
 			oCmd.Parameters.Add(new SqlParameter("@IDCredito", IDCredito));
+			oCmd.Parameters["@IDCredito"].Direction = ParameterDirection.InputOutput;
 			oCmd.Parameters.Add(new SqlParameter("@IDProveedor", IDProveedor));
 			oCmd.Parameters.Add(new SqlParameter("@TipoDocumento", TipoDocumento));
 			oCmd.Parameters.Add(new SqlParameter("@IDClase", IDClase));
@@ -37,7 +38,7 @@ namespace CP.DAC
 			oCmd.Parameters.Add(new SqlParameter("@ConceptoUsuario", ConceptoUsuario));
 			oCmd.Parameters.Add(new SqlParameter("@Usuario", Usuario));
 			oCmd.Parameters.Add(new SqlParameter("@TipoCambio", TipoCambio));
-			oCmd.Parameters.Add(new SqlParameter("@fglOrigenExterno", fglOrigenExterno));
+			oCmd.Parameters.Add(new SqlParameter("@flgOrigenExterno", fglOrigenExterno));
 			oCmd.Parameters.Add(new SqlParameter("@flgAprobado", flgAprobado));
 			oCmd.Parameters.Add(new SqlParameter("@IDMoneda", IDMoneda));
 			oCmd.Parameters.Add(new SqlParameter("@Anulado", Anulado));
@@ -49,17 +50,21 @@ namespace CP.DAC
 			oCmd.Parameters.Add(new SqlParameter("@Flete", Flete));
 			oCmd.Parameters.Add(new SqlParameter("@Total", Total));
 			oCmd.Parameters.Add(new SqlParameter("@strIDRetenciones", strIDRetenciones));
+			oCmd.Parameters.Add(new SqlParameter("@IDObligacionProv", IDObligacionProv));
+			
 			
 
 
 			oCmd.CommandType = CommandType.StoredProcedure;
 
-			oCmd.Transaction = oTran;
+			if (oCmd.Connection.State == ConnectionState.Closed)
+				oCmd.Connection.Open();
 			result = oCmd.ExecuteNonQuery();
+			IDCredito = Convert.ToInt32(oCmd.Parameters["@IDCredito"].Value);
 
-			oCmd.ExecuteNonQuery();
 
-			return result;
+
+			return IDCredito;
 		}
 
     }

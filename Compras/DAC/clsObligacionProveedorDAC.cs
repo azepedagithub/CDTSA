@@ -92,6 +92,7 @@ namespace CO.DAC
 
         }
 
+		
         public static bool GeneraAsientoContable(int IDEmbarque, String Usuario, ref String Asiento, SqlTransaction tran)
         {
             String strSql = "dbo.coGeneraAsientoObligacionProveedor";

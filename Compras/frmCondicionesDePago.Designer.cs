@@ -220,7 +220,7 @@
 			this.txtDescContado.Location = new System.Drawing.Point(552, 74);
 			this.txtDescContado.MenuManager = this.ribbonControl;
 			this.txtDescContado.Name = "txtDescContado";
-			this.txtDescContado.Properties.Mask.EditMask = "p";
+			this.txtDescContado.Properties.Mask.EditMask = "P";
 			this.txtDescContado.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
 			this.txtDescContado.Size = new System.Drawing.Size(51, 20);
 			this.txtDescContado.StyleController = this.layoutControl1;

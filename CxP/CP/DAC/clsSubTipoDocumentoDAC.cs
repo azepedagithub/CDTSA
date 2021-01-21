@@ -64,7 +64,6 @@ namespace CP.DAC
             oCmd.Transaction = oTran;
             result = oCmd.ExecuteNonQuery();
 
-            oCmd.ExecuteNonQuery();
 
             return result;
         }

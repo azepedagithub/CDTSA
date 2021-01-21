@@ -461,6 +461,7 @@ namespace CO
         {
             try
             {
+				DataTable dtOrdenCompra = clsOrdenCompraDAC.GetByID(this.IDOrdenCompra).Tables[0];
                 //Validar que el consecutivo de Solicitud de Compra este asociado 
                 String Consec = clsUtilDAC.GetParametroCompra("IDConsecEmbarque").Tables[0].Rows[0][0].ToString();
                 if (Consec == null || Consec.Trim() == "")
@@ -513,7 +514,9 @@ namespace CO
 
                 //this.gridViewOtrosPagos.FocusedRowChanged += gridViewOtrosPagos_FocusedRowChanged;
                 this.gridViewObligaciones.FocusedRowChanged += gridViewOtrosPagos_FocusedRowChanged;
-
+				
+				
+				
                 LoadData();
 
                 LoadObligacionProveedor();
@@ -1039,7 +1042,24 @@ namespace CO
             try
             {
                 //GenerarDocumento CP
-                bool bOkGeneraAsiento =false;
+
+				DataTable dtOrdenCompra = clsOrdenCompraDAC.GetByID(this.IDOrdenCompra).Tables[0];
+				decimal Impuesto = clsOrdenCompraDAC.GetImpuestoFromOC(this.IDOrdenCompra);
+				int IDDocCredito=0;
+
+				decimal _TotalMercaderia = Convert.ToDecimal(this.txtTotalMercaderia.EditValue);
+				decimal _Descuento = Convert.ToDecimal(this.txtMontoDesc.EditValue);
+				decimal _SubTotalDesc = _TotalMercaderia - _Descuento;
+				decimal _MontoFlete = Convert.ToDecimal(this.txtMontoFlete.EditValue) + Convert.ToDecimal(this.txtMontoSeguro.EditValue);
+				decimal _Total = _TotalMercaderia + _MontoFlete - _Descuento;
+
+				CP.DAC.clsDocumentocpDAC.UpdateCredito("I",ref IDDocCredito, Convert.ToInt32(dtOrdenCompra.Rows[0]["IDProveedor"]),
+										"C", "FAC", 1, this.txtFactura.EditValue.ToString(), Convert.ToDateTime(this.dtpFechaFactura.EditValue),
+										Convert.ToInt32(dtOrdenCompra.Rows[0]["DiasCondicionPago"]), Convert.ToDecimal(this.txtTotal.EditValue), 
+										"Factura", "Factura", sUsuario, Convert.ToDecimal(TipoCambio), false, true, Convert.ToInt32(dtOrdenCompra.Rows[0]["IDMoneda"]),
+										false, _TotalMercaderia, _Descuento,
+										_SubTotalDesc, Impuesto, 0, 0, _Total, "", IDObligacionProveedor);
+				bool bOkGeneraAsiento =false;
                 ConnectionManager.BeginTran();
                 bOkGeneraAsiento = clsObligacionProveedorDAC.GeneraAsientoContable((int)this.ID_Embarque, this.sUsuario, ref this.AsientoFactura, ConnectionManager.Tran);
                 ConnectionManager.CommitTran();

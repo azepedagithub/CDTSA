@@ -466,7 +466,7 @@ Create Procedure dbo.cppUpdatecppCreditos @Operation nvarchar(1),  @IDCredito in
 @ImpuestoIVA decimal (28,4) ,
 @ImpuestoConsumo decimal (28,4) ,
 @Flete decimal (28,4),
-@Total decimal (28,4), @strIDRetenciones nvarchar(500) = null
+@Total decimal (28,4), @strIDRetenciones nvarchar(500) = NULL,@IDObligacionProv INT = null
 -- @Operation = I Nuevo, D Eliminar, F Modifica Fecha Credito
 as
 set nocount on
@@ -506,6 +506,9 @@ begin
 	@IDMoneda, @SubTotal, @Descuento , @SubTotalDescuento, @ImpuestoIVA  ,@ImpuestoConsumo ,@Flete, @Total  
 	)
 	Set @IDCredito  = (SELECT SCOPE_IDENTITY())
+	
+	IF NOT (@IDObligacionProv IS NULL)
+		UPDATE dbo.coObligacionProveedor SET IDDocumentoCP=@IDCredito WHERE IDObligacion= @IDObligacionProv
 
 	if @GeneraRetencion = 1 and @strIDRetenciones <>''
 	begin
@@ -601,6 +604,7 @@ begin
 	@Usuario, @TipoCambio , @flgOrigenExterno, @flgAprobado, @IDMoneda, @IDCuentaBanco
 	)
 	Set @IDDebito = (SELECT SCOPE_IDENTITY())
+
 	
 end
 if upper(@Operation) = 'U'

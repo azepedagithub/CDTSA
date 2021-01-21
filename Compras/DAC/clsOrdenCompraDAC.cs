@@ -89,6 +89,26 @@ namespace CO.DAC
 
         }
 
+		
+
+		public static decimal GetImpuestoFromOC(long IDOrdenCompra)
+		{
+			String strSQL = "dbo.coGetImpuestroFromOC";
+
+			SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
+
+			oCmd.Parameters.Add(new SqlParameter("@IDOrdenCompra", IDOrdenCompra));
+
+			oCmd.CommandType = CommandType.StoredProcedure;
+			
+
+			SqlDataAdapter oAdap = new SqlDataAdapter(oCmd);
+			DataSet DS = new DataSet();
+
+			oAdap.Fill(DS, "Data");
+			return Convert.ToInt32(DS.Tables[0].Rows[0]["Impuesto"]);
+		}
+
 
 		public static int GetEstadoOrdenCompra(long IDOrdenCompra, SqlTransaction tran)
 		{

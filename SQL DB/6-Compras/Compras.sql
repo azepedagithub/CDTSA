@@ -2285,3 +2285,16 @@ AS
 SELECT DATEADD(DAY,C.Dias,@Fecha) FechaVencimiento  FROM dbo.coOrdenCompra O
 INNER JOIN dbo.cppCondicionPago C ON O.IDCondicionPago = C.IDCondicionPago
 WHERE IDOrdenCompra =@IDOrdenCompra
+
+
+GO
+
+
+CREATE PROCEDURE dbo.coGetImpuestroFromOC @IDOrdenCompra BIGINT
+AS 
+
+SELECT SUM((CantidadAceptada * PrecioUnitario) * (Impuesto/100) ) Impuesto  FROM dbo.coOrdenCompraDetalle
+WHERE IDOrdenCompra = @IDOrdenCompra AND Impuesto>0
+
+
+GO
