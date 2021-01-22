@@ -328,11 +328,13 @@ namespace CO
         {
             DataTable dtOrdenCompra = clsOrdenCompraDAC.GetByID(this.IDOrdenCompra).Tables[0];
             double MontoMercaderia = 0;
+			double MontoImpuesto =0;
             foreach (DataRow row in dtDetalleEmbarque.Rows)
             {
                 double SubTotal =    Convert.ToDouble(((decimal)row["CantidadAceptada"] * (decimal)row["PrecioUnitario"]) - (decimal)row["MontoDesc"]);
                 double Impuesto =   Convert.ToDouble((decimal)row["Impuesto"])/100;
                 MontoMercaderia = MontoMercaderia + (SubTotal + (SubTotal * Impuesto));
+				MontoImpuesto = MontoImpuesto +  (SubTotal * Impuesto);
             }
 			
             DataRow rowOrden = dtOrdenCompra.Rows.Count>0 ? dtOrdenCompra.Rows[0]: null;
@@ -349,7 +351,7 @@ namespace CO
                 MontoSeguro = Convert.ToDouble((rowOrden["Seguro"] == DBNull.Value || rowOrden["Seguro"].ToString() == "") ? 0 : rowOrden["Seguro"]);
 				PorcDesc = Convert.ToDouble((rowOrden["Descuento"] == DBNull.Value || rowOrden["Descuento"].ToString() == "") ? 0 : rowOrden["Descuento"]);
 				MontoAnticipo = Convert.ToDouble((rowOrden["Anticipos"] == DBNull.Value || rowOrden["Anticipos"].ToString() == "" ) ? 0 : rowOrden["Anticipos"]);
-				MontoDesc = MontoMercaderia * (PorcDesc / 100);
+				MontoDesc = (MontoMercaderia-MontoImpuesto) * (PorcDesc / 100);
 				this.txtMontoFlete.EditValue = MontoFlete;
                 this.txtMontoSeguro.EditValue = MontoSeguro;
 				this.txtMontoDesc.EditValue = MontoDesc;
@@ -1047,18 +1049,18 @@ namespace CO
 				decimal Impuesto = clsOrdenCompraDAC.GetImpuestoFromOC(this.IDOrdenCompra);
 				int IDDocCredito=0;
 
-				decimal _TotalMercaderia = Convert.ToDecimal(this.txtTotalMercaderia.EditValue);
+				decimal _TotalMercaderia = Convert.ToDecimal(this.txtTotalMercaderia.EditValue) - Impuesto;
 				decimal _Descuento = Convert.ToDecimal(this.txtMontoDesc.EditValue);
 				decimal _SubTotalDesc = _TotalMercaderia - _Descuento;
 				decimal _MontoFlete = Convert.ToDecimal(this.txtMontoFlete.EditValue) + Convert.ToDecimal(this.txtMontoSeguro.EditValue);
-				decimal _Total = _TotalMercaderia + _MontoFlete - _Descuento;
+				decimal _Total = _TotalMercaderia + _MontoFlete - _Descuento + Impuesto;
 
 				CP.DAC.clsDocumentocpDAC.UpdateCredito("I",ref IDDocCredito, Convert.ToInt32(dtOrdenCompra.Rows[0]["IDProveedor"]),
 										"C", "FAC", 1, this.txtFactura.EditValue.ToString(), Convert.ToDateTime(this.dtpFechaFactura.EditValue),
 										Convert.ToInt32(dtOrdenCompra.Rows[0]["DiasCondicionPago"]), Convert.ToDecimal(this.txtTotal.EditValue), 
 										"Factura", "Factura", sUsuario, Convert.ToDecimal(TipoCambio), false, true, Convert.ToInt32(dtOrdenCompra.Rows[0]["IDMoneda"]),
 										false, _TotalMercaderia, _Descuento,
-										_SubTotalDesc, Impuesto, 0, 0, _Total, "", IDObligacionProveedor);
+										_SubTotalDesc, Impuesto, 0, _MontoFlete, _Total, "", IDObligacionProveedor);
 				bool bOkGeneraAsiento =false;
                 ConnectionManager.BeginTran();
                 bOkGeneraAsiento = clsObligacionProveedorDAC.GeneraAsientoContable((int)this.ID_Embarque, this.sUsuario, ref this.AsientoFactura, ConnectionManager.Tran);
