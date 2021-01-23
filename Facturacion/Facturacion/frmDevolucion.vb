@@ -581,14 +581,6 @@ Public Class frmDevolucion
         Me.Close()
     End Sub
 
-    Private Sub txtDevolucion_EditValueChanged(sender As Object, e As EventArgs) Handles txtDevolucion.EditValueChanged
-
-    End Sub
-
-    Private Sub DateEditFecha_EditValueChanged(sender As Object, e As EventArgs) Handles DateEditFecha.EditValueChanged
-
-    End Sub
-
     Private Sub DateEditFechaDevolucion_EditValueChanged(sender As Object, e As EventArgs) Handles DateEditFechaDevolucion.EditValueChanged
         If Not DateEditFechaDevolucion.EditValue Is Nothing Then
             If Not FechaEnPeriodoAbierto(CDate(Me.DateEditFechaDevolucion.EditValue)) Then
