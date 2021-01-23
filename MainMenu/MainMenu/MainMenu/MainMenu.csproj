@@ -29,7 +29,7 @@
     <SuiteName>Enterprise Solutions</SuiteName>
     <MinimumRequiredVersion>1.0.0.6</MinimumRequiredVersion>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>42</ApplicationRevision>
+    <ApplicationRevision>43</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -287,6 +287,10 @@
     </Content>
     <Content Include="..\..\..\Facturacion\Facturacion\Reporte\Factura\rptTablaBonificacionPrecios.repx">
       <Link>Reporte\Factura\rptTablaBonificacionPrecios.repx</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\..\Facturacion\Facturacion\Reporte\Factura\rptRemision.repx">
+      <Link>Reporte\Factura\rptRemision.repx</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Properties\app.manifest" />

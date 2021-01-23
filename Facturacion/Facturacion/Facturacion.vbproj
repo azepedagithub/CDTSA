@@ -924,6 +924,7 @@
     <Content Include="Reporte\Factura\rptFacturaV2.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Reporte\Factura\rptRemision.repx" />
     <None Include="Resources\archivo.png" />
   </ItemGroup>
   <ItemGroup>
