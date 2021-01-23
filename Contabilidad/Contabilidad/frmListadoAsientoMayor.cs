@@ -179,6 +179,11 @@ namespace CG
             }
         }
 
+		private void btnCancelar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+		{
+			this.Close();
+		}
+
 
 
     }

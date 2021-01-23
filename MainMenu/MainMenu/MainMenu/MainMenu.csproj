@@ -12,23 +12,24 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>C:\Users\DESARROLLO\Desktop\CED Publish\</PublishUrl>
+    <PublishUrl>\\192.168.2.117\InstaladorCedetsa\</PublishUrl>
     <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
+    <InstallFrom>Unc</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
     <UpdateMode>Foreground</UpdateMode>
     <UpdateInterval>7</UpdateInterval>
     <UpdateIntervalUnits>Days</UpdateIntervalUnits>
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
+    <UpdateUrl>\\192.168.2.117\InstaladorCedetsa\</UpdateUrl>
     <TargetCulture>es-NI</TargetCulture>
     <ProductName>ERP Trinidad</ProductName>
     <PublisherName>S4U</PublisherName>
-    <SuiteName>Enterprice Solutions</SuiteName>
+    <SuiteName>Enterprise Solutions</SuiteName>
     <MinimumRequiredVersion>1.0.0.6</MinimumRequiredVersion>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>30</ApplicationRevision>
+    <ApplicationRevision>42</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -220,6 +221,74 @@
     <EmbeddedResource Include="splash.resx">
       <DependentUpon>splash.cs</DependentUpon>
     </EmbeddedResource>
+    <Content Include="..\..\..\Facturacion\CP\Reporte\CP\rptAnalisisVencimiento.repx">
+      <Link>Reporte\CP\rptAnalisisVencimiento.repx</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\..\Facturacion\CP\Reporte\CP\rptDesglosePagos.repx">
+      <Link>Reporte\CP\rptDesglosePagos.repx</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\..\Facturacion\CP\Reporte\CP\rptDocumentosxPagar.repx">
+      <Link>Reporte\CP\rptDocumentosxPagar.repx</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\..\Facturacion\CP\Reporte\CP\rptMovimientos.repx">
+      <Link>Reporte\CP\rptMovimientos.repx</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\..\Facturacion\Facturacion\Reporte\Factura\rptAnalisisVencimiento.repx">
+      <Link>Reporte\Factura\rptAnalisisVencimiento.repx</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\..\Facturacion\Facturacion\Reporte\Factura\rptAntiguedadSaldosSucursal.repx">
+      <Link>Reporte\Factura\rptAntiguedadSaldosSucursal.repx</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\..\Facturacion\Facturacion\Reporte\Factura\rptDesglosePagos.repx">
+      <Link>Reporte\Factura\rptDesglosePagos.repx</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\..\Facturacion\Facturacion\Reporte\Factura\rptDocumentoCCF.repx">
+      <Link>Reporte\Factura\rptDocumentoCCF.repx</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\..\Facturacion\Facturacion\Reporte\Factura\rptDocumentosCobrar.repx">
+      <Link>Reporte\Factura\rptDocumentosCobrar.repx</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\..\Facturacion\Facturacion\Reporte\Factura\rptFactura.repx">
+      <Link>Reporte\Factura\rptFactura.repx</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\..\Facturacion\Facturacion\Reporte\Factura\rptFacturaFinal.repx">
+      <Link>Reporte\Factura\rptFacturaFinal.repx</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\..\Facturacion\Facturacion\Reporte\Factura\rptFacturaV2.repx">
+      <Link>Reporte\Factura\rptFacturaV2.repx</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\..\Facturacion\Facturacion\Reporte\Factura\rptListaPreciosbyProveedor.repx">
+      <Link>Reporte\Factura\rptListaPreciosbyProveedor.repx</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\..\Facturacion\Facturacion\Reporte\Factura\rptLotesFactura.repx">
+      <Link>Reporte\Factura\rptLotesFactura.repx</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\..\Facturacion\Facturacion\Reporte\Factura\rptMovimientos.repx">
+      <Link>Reporte\Factura\rptMovimientos.repx</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\..\Facturacion\Facturacion\Reporte\Factura\rptPedido.repx">
+      <Link>Reporte\Factura\rptPedido.repx</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\..\Facturacion\Facturacion\Reporte\Factura\rptTablaBonificacionPrecios.repx">
+      <Link>Reporte\Factura\rptTablaBonificacionPrecios.repx</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\app.manifest" />
     <None Include="Properties\DataSources\System.Xml.XmlElement.datasource" />
     <None Include="Properties\Settings.settings">
@@ -652,6 +721,16 @@
       <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
+    <PublishFile Include="Microsoft.VisualBasic.PowerPacks.Vs">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
@@ -669,6 +748,7 @@
       <Link>Reporte\%(RecursiveDir)%(FileName)%(Extension)</Link>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

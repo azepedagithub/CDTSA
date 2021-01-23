@@ -28,11 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmConsultaAsiento));
 			this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
 			this.txtTC = new DevExpress.XtraEditors.TextEdit();
-			this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
+			this.barManager1 = new DevExpress.XtraBars.BarManager();
 			this.bar1 = new DevExpress.XtraBars.Bar();
 			this.btnImprimir = new DevExpress.XtraBars.BarButtonItem();
 			this.btnExportar = new DevExpress.XtraBars.BarButtonItem();

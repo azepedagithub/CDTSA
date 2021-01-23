@@ -379,12 +379,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Reportes\Plantillas\rptLiquidacionCompra.repx">
+    <Content Include="Reportes\Plantillas\rptLiquidacionCompra.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Reportes\Plantillas\rptOrdenCompra.repx">
+    </Content>
+    <Content Include="Reportes\Plantillas\rptOrdenCompra.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
     <None Include="Reportes\rptSolicitudCompra.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

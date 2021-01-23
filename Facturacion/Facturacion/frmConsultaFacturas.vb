@@ -98,7 +98,7 @@ Public Class frmConsultaFacturas
 
         If tableData.Rows.Count > 0 Then
 
-            Dim report As DevExpress.XtraReports.UI.XtraReport = DevExpress.XtraReports.UI.XtraReport.FromFile("./Reportes/rptFacturaFinal.repx", True)
+            Dim report As DevExpress.XtraReports.UI.XtraReport = DevExpress.XtraReports.UI.XtraReport.FromFile("./Reporte/Factura/rptFacturaFinal.repx", True)
 
             Dim ds As New DataSet
             ds.Tables.Add(tableDataLote)

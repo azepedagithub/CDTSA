@@ -70,6 +70,7 @@ namespace CG
                 oAdaptador.InsertCommand.Parameters.Add("@Descr", SqlDbType.NVarChar).SourceColumn = "Descr";
                 oAdaptador.InsertCommand.Parameters.Add("@EsMayor", SqlDbType.Bit).SourceColumn = "EsMayor";
                 oAdaptador.InsertCommand.Parameters.Add("@AceptaDatos", SqlDbType.Bit).SourceColumn = "AceptaDatos";
+				oAdaptador.InsertCommand.Parameters.Add("@AplicaDifCamb", SqlDbType.Int).SourceColumn = "AplicaDifCamb";
                 oAdaptador.InsertCommand.Parameters.Add("@Activa", SqlDbType.Bit).SourceColumn = "Activa";
                 oAdaptador.InsertCommand.Parameters.Add("@IDCuentaAnterior", SqlDbType.BigInt).SourceColumn = "IDCuentaAnterior";
                 oAdaptador.InsertCommand.Parameters.Add("@IDCuentaMayor", SqlDbType.BigInt).SourceColumn = "IDCuentaMayor";
@@ -94,6 +95,7 @@ namespace CG
                 oAdaptador.UpdateCommand.Parameters.Add("@Descr", SqlDbType.NVarChar).SourceColumn = "Descr";
                 oAdaptador.UpdateCommand.Parameters.Add("@EsMayor", SqlDbType.Bit).SourceColumn = "EsMayor";
                 oAdaptador.UpdateCommand.Parameters.Add("@AceptaDatos", SqlDbType.Bit).SourceColumn = "AceptaDatos";
+				oAdaptador.UpdateCommand.Parameters.Add("@AplicaDifCamb", SqlDbType.Int).SourceColumn = "AplicaDifCamb";
                 oAdaptador.UpdateCommand.Parameters.Add("@Activa", SqlDbType.Bit).SourceColumn = "Activa";
                 oAdaptador.UpdateCommand.Parameters.Add("@IDCuentaAnterior", SqlDbType.BigInt).SourceColumn = "IDCuentaAnterior";
                 oAdaptador.UpdateCommand.Parameters.Add("@IDCuentaMayor", SqlDbType.BigInt).SourceColumn = "IDCuentaMayor";
@@ -120,6 +122,7 @@ namespace CG
                 oAdaptador.DeleteCommand.Parameters.Add("@Descr", SqlDbType.NVarChar).SourceColumn = "Descr";
                 oAdaptador.DeleteCommand.Parameters.Add("@EsMayor", SqlDbType.Bit).SourceColumn = "EsMayor";
                 oAdaptador.DeleteCommand.Parameters.Add("@AceptaDatos", SqlDbType.Bit).SourceColumn = "AceptaDatos";
+				oAdaptador.DeleteCommand.Parameters.Add("@AplicaDifCamb", SqlDbType.Int).SourceColumn = "AplicaDifCamb";
                 oAdaptador.DeleteCommand.Parameters.Add("@Activa", SqlDbType.Bit).SourceColumn = "Activa";
                 oAdaptador.DeleteCommand.Parameters.Add("@IDCuentaAnterior", SqlDbType.BigInt).SourceColumn = "IDCuentaAnterior";
                 oAdaptador.DeleteCommand.Parameters.Add("@IDCuentaMayor", SqlDbType.BigInt).SourceColumn = "IDCuentaMayor";

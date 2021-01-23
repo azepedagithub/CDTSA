@@ -107,6 +107,8 @@
 			this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem19 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.chkAplicaDiferencial = new DevExpress.XtraEditors.CheckEdit();
+			this.layoutControlItem21 = new DevExpress.XtraLayout.LayoutControlItem();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
 			this.layoutControl1.SuspendLayout();
@@ -159,6 +161,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem19)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.chkAplicaDiferencial.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem21)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// Descripcion
@@ -312,6 +316,7 @@
 			// 
 			// layoutControl1
 			// 
+			this.layoutControl1.Controls.Add(this.chkAplicaDiferencial);
 			this.layoutControl1.Controls.Add(this.txtNivel6);
 			this.layoutControl1.Controls.Add(this.txtNivel5);
 			this.layoutControl1.Controls.Add(this.txtNivel4);
@@ -410,11 +415,11 @@
 			// 
 			// chkActiva
 			// 
-			this.chkActiva.Location = new System.Drawing.Point(293, 137);
+			this.chkActiva.Location = new System.Drawing.Point(256, 137);
 			this.chkActiva.MenuManager = this.ribbonControl;
 			this.chkActiva.Name = "chkActiva";
 			this.chkActiva.Properties.Caption = "Activa";
-			this.chkActiva.Size = new System.Drawing.Size(66, 19);
+			this.chkActiva.Size = new System.Drawing.Size(103, 19);
 			this.chkActiva.StyleController = this.layoutControl1;
 			this.chkActiva.TabIndex = 10;
 			// 
@@ -459,22 +464,22 @@
 			// 
 			// chkEsMayor
 			// 
-			this.chkEsMayor.Location = new System.Drawing.Point(180, 137);
+			this.chkEsMayor.Location = new System.Drawing.Point(165, 137);
 			this.chkEsMayor.MenuManager = this.ribbonControl;
 			this.chkEsMayor.Name = "chkEsMayor";
 			this.chkEsMayor.Properties.Caption = "Es de Mayor";
-			this.chkEsMayor.Size = new System.Drawing.Size(109, 19);
+			this.chkEsMayor.Size = new System.Drawing.Size(87, 19);
 			this.chkEsMayor.StyleController = this.layoutControl1;
 			this.chkEsMayor.TabIndex = 3;
 			this.chkEsMayor.CheckStateChanged += new System.EventHandler(this.chkEsMayor_CheckStateChanged);
 			// 
 			// chkAceptaDatos
 			// 
-			this.chkAceptaDatos.Location = new System.Drawing.Point(180, 160);
+			this.chkAceptaDatos.Location = new System.Drawing.Point(165, 160);
 			this.chkAceptaDatos.MenuManager = this.ribbonControl;
 			this.chkAceptaDatos.Name = "chkAceptaDatos";
 			this.chkAceptaDatos.Properties.Caption = "Acepta Datos";
-			this.chkAceptaDatos.Size = new System.Drawing.Size(109, 19);
+			this.chkAceptaDatos.Size = new System.Drawing.Size(87, 19);
 			this.chkAceptaDatos.StyleController = this.layoutControl1;
 			this.chkAceptaDatos.TabIndex = 4;
 			this.chkAceptaDatos.CheckStateChanged += new System.EventHandler(this.chkAceptaDatos_CheckStateChanged);
@@ -485,7 +490,7 @@
 			this.chkUsaCentroCosto.MenuManager = this.ribbonControl;
 			this.chkUsaCentroCosto.Name = "chkUsaCentroCosto";
 			this.chkUsaCentroCosto.Properties.Caption = "Usa Centro de Costo";
-			this.chkUsaCentroCosto.Size = new System.Drawing.Size(152, 19);
+			this.chkUsaCentroCosto.Size = new System.Drawing.Size(137, 19);
 			this.chkUsaCentroCosto.StyleController = this.layoutControl1;
 			this.chkUsaCentroCosto.TabIndex = 3;
 			// 
@@ -495,7 +500,7 @@
 			this.chkComplementaria.MenuManager = this.ribbonControl;
 			this.chkComplementaria.Name = "chkComplementaria";
 			this.chkComplementaria.Properties.Caption = "Complementaria";
-			this.chkComplementaria.Size = new System.Drawing.Size(152, 19);
+			this.chkComplementaria.Size = new System.Drawing.Size(137, 19);
 			this.chkComplementaria.StyleController = this.layoutControl1;
 			this.chkComplementaria.TabIndex = 2;
 			// 
@@ -786,7 +791,8 @@
             this.layoutControlItem14,
             this.layoutControlItem2,
             this.layoutControlItem17,
-            this.layoutControlItem16});
+            this.layoutControlItem16,
+            this.layoutControlItem21});
 			this.layoutControlGroup2.Location = new System.Drawing.Point(0, 23);
 			this.layoutControlGroup2.Name = "layoutControlGroup2";
 			this.layoutControlGroup2.Size = new System.Drawing.Size(715, 160);
@@ -841,16 +847,16 @@
 			this.layoutControlItem12.Control = this.chkComplementaria;
 			this.layoutControlItem12.Location = new System.Drawing.Point(0, 72);
 			this.layoutControlItem12.Name = "layoutControlItem12";
-			this.layoutControlItem12.Size = new System.Drawing.Size(156, 23);
+			this.layoutControlItem12.Size = new System.Drawing.Size(141, 23);
 			this.layoutControlItem12.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem12.TextVisible = false;
 			// 
 			// layoutControlItem15
 			// 
 			this.layoutControlItem15.Control = this.chkEsMayor;
-			this.layoutControlItem15.Location = new System.Drawing.Point(156, 72);
+			this.layoutControlItem15.Location = new System.Drawing.Point(141, 72);
 			this.layoutControlItem15.Name = "layoutControlItem15";
-			this.layoutControlItem15.Size = new System.Drawing.Size(113, 23);
+			this.layoutControlItem15.Size = new System.Drawing.Size(91, 23);
 			this.layoutControlItem15.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem15.TextVisible = false;
 			// 
@@ -859,25 +865,25 @@
 			this.layoutControlItem13.Control = this.chkUsaCentroCosto;
 			this.layoutControlItem13.Location = new System.Drawing.Point(0, 95);
 			this.layoutControlItem13.Name = "layoutControlItem13";
-			this.layoutControlItem13.Size = new System.Drawing.Size(156, 23);
+			this.layoutControlItem13.Size = new System.Drawing.Size(141, 23);
 			this.layoutControlItem13.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem13.TextVisible = false;
 			// 
 			// layoutControlItem18
 			// 
 			this.layoutControlItem18.Control = this.chkActiva;
-			this.layoutControlItem18.Location = new System.Drawing.Point(269, 72);
+			this.layoutControlItem18.Location = new System.Drawing.Point(232, 72);
 			this.layoutControlItem18.Name = "layoutControlItem18";
-			this.layoutControlItem18.Size = new System.Drawing.Size(70, 46);
+			this.layoutControlItem18.Size = new System.Drawing.Size(107, 23);
 			this.layoutControlItem18.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem18.TextVisible = false;
 			// 
 			// layoutControlItem14
 			// 
 			this.layoutControlItem14.Control = this.chkAceptaDatos;
-			this.layoutControlItem14.Location = new System.Drawing.Point(156, 95);
+			this.layoutControlItem14.Location = new System.Drawing.Point(141, 95);
 			this.layoutControlItem14.Name = "layoutControlItem14";
-			this.layoutControlItem14.Size = new System.Drawing.Size(113, 23);
+			this.layoutControlItem14.Size = new System.Drawing.Size(91, 23);
 			this.layoutControlItem14.Text = "Acepta Datos";
 			this.layoutControlItem14.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem14.TextVisible = false;
@@ -969,6 +975,25 @@
 			this.layoutControlItem19.TextVisible = false;
 			this.layoutControlItem19.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
 			// 
+			// chkAplicaDiferencial
+			// 
+			this.chkAplicaDiferencial.Location = new System.Drawing.Point(256, 160);
+			this.chkAplicaDiferencial.MenuManager = this.ribbonControl;
+			this.chkAplicaDiferencial.Name = "chkAplicaDiferencial";
+			this.chkAplicaDiferencial.Properties.Caption = "Aplica Diferencial";
+			this.chkAplicaDiferencial.Size = new System.Drawing.Size(103, 19);
+			this.chkAplicaDiferencial.StyleController = this.layoutControl1;
+			this.chkAplicaDiferencial.TabIndex = 100008;
+			// 
+			// layoutControlItem21
+			// 
+			this.layoutControlItem21.Control = this.chkAplicaDiferencial;
+			this.layoutControlItem21.Location = new System.Drawing.Point(232, 95);
+			this.layoutControlItem21.Name = "layoutControlItem21";
+			this.layoutControlItem21.Size = new System.Drawing.Size(107, 23);
+			this.layoutControlItem21.TextSize = new System.Drawing.Size(0, 0);
+			this.layoutControlItem21.TextVisible = false;
+			// 
 			// frmListadoCuentaContable
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1036,6 +1061,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem19)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.chkAplicaDiferencial.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem21)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -1119,5 +1146,7 @@
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem9;
 		private DevExpress.XtraEditors.TextEdit txtNivel6;
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem19;
+		private DevExpress.XtraEditors.CheckEdit chkAplicaDiferencial;
+		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem21;
     }
 }

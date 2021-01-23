@@ -1064,7 +1064,7 @@ Public Class frmCPDocumentos
         tableData = cManager.ExecSPgetData("ccfGetDocumento", sParameters)
         If tableData.Rows.Count > 0 Then
 
-            Dim report As DevExpress.XtraReports.UI.XtraReport = DevExpress.XtraReports.UI.XtraReport.FromFile("./Reportes/rptDocumentoCCF.repx", True)
+            Dim report As DevExpress.XtraReports.UI.XtraReport = DevExpress.XtraReports.UI.XtraReport.FromFile("./Reporte/Factura/rptDocumentoCCF.repx", True)
             report.DataSource = vbNull
             report.DataSource = tableData
             ' report.DataMember = "ccfrptMovimientos"

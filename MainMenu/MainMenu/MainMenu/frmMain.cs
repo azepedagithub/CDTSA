@@ -76,7 +76,7 @@ namespace MainMenu
 
 		void treeListCuentasXCobrar_DoubleClick(object sender, EventArgs e)
 		{
-			 DevExpress.XtraTreeList.Nodes.TreeListNode node = default(DevExpress.XtraTreeList.Nodes.TreeListNode);
+			DevExpress.XtraTreeList.Nodes.TreeListNode node = default(DevExpress.XtraTreeList.Nodes.TreeListNode);
             node = ((TreeList)sender).FocusedNode;
             if (node.Tag == null)
                 return;
@@ -314,6 +314,8 @@ namespace MainMenu
         {
             DevExpress.XtraTreeList.Nodes.TreeListNode node = default(DevExpress.XtraTreeList.Nodes.TreeListNode);
             node = ((TreeList)sender).FocusedNode;
+			if (node.Tag == null)
+				return;
             if (Application.OpenForms[node.Tag.ToString()] != null)
             {
                 Application.OpenForms[node.Tag.ToString()].Activate();
@@ -382,6 +384,8 @@ namespace MainMenu
 		{
 			DevExpress.XtraTreeList.Nodes.TreeListNode node = default(DevExpress.XtraTreeList.Nodes.TreeListNode);
 			node = ((TreeList)sender).FocusedNode;
+			if (node.Tag == null)
+				return;
 			if (Application.OpenForms[node.Tag.ToString()] != null)
 			{
 				Application.OpenForms[node.Tag.ToString()].Activate();
@@ -410,6 +414,8 @@ namespace MainMenu
         {
             DevExpress.XtraTreeList.Nodes.TreeListNode node = default(DevExpress.XtraTreeList.Nodes.TreeListNode);
             node = ((TreeList)sender).FocusedNode;
+			if (node.Tag == null)
+				return;
             if (Application.OpenForms[node.Tag.ToString()] != null)
             {
                 Application.OpenForms[node.Tag.ToString()].Activate();
@@ -482,6 +488,8 @@ namespace MainMenu
         {
             DevExpress.XtraTreeList.Nodes.TreeListNode node = default(DevExpress.XtraTreeList.Nodes.TreeListNode);
             node = ((TreeList)sender).FocusedNode;
+			if (node.Tag == null)
+				return;
             if (Application.OpenForms[node.Tag.ToString()] != null)
             {
                 Application.OpenForms[node.Tag.ToString()].Activate();

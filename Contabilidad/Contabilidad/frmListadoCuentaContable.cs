@@ -199,6 +199,7 @@ namespace CG
             this.chkEsMayor.EditValue = null;
             this.chkActiva.EditValue = true;
             this.chkAceptaDatos.EditValue = null;
+			this.chkAplicaDiferencial.EditValue = null;
             this.chkUsaCentroCosto.EditValue = null;
             this.txtCuenta.Text = "";
             this.txtDescripcion.Text = "";
@@ -216,6 +217,7 @@ namespace CG
             this.chkActiva.ReadOnly = !Activo;
             this.chkAceptaDatos.ReadOnly = !Activo;
             this.chkUsaCentroCosto.ReadOnly = !Activo;
+			this.chkAplicaDiferencial.ReadOnly = !Activo;
             this.txtDescripcion.ReadOnly = !Activo;
             this.slkupCuentaMayor.ReadOnly = !Activo;
 
@@ -275,6 +277,7 @@ namespace CG
                 this.chkEsMayor.EditValue = Convert.ToBoolean(Row["EsMayor"]);
                 this.chkActiva.EditValue = Convert.ToBoolean(Row["Activa"]);
                 this.chkAceptaDatos.EditValue = Convert.ToBoolean(Row["AceptaDatos"]);
+				this.chkAplicaDiferencial.EditValue = Convert.ToBoolean(Row["AplicaDifCamb"]);
                 this.chkUsaCentroCosto.EditValue = Convert.ToBoolean(Row["UsaCentroCosto"]);
                 this.txtCuenta.Text = Row["Cuenta"].ToString();
                 this.txtDescripcion.Text = Row["Descr"].ToString();
@@ -408,6 +411,7 @@ namespace CG
                     currentRow["Descr"] = this.txtDescripcion.Text;
                     currentRow["EsMayor"] = (this.chkEsMayor.EditValue == null) ? false : this.chkEsMayor.EditValue;
                     currentRow["AceptaDatos"] = (this.chkAceptaDatos.EditValue == null) ? false : this.chkAceptaDatos.EditValue;
+					currentRow["AplicaDifCamb"] = (this.chkAplicaDiferencial.EditValue == null) ? false : this.chkAplicaDiferencial.EditValue;
                     currentRow["Activa"] = (this.chkActiva.EditValue == null) ? false : this.chkActiva.EditValue;
                     currentRow["IDCuentaAnterior"] = (this.slkupCuentaAnterior.EditValue == null) ? 0 : this.slkupCuentaAnterior.EditValue;
                     currentRow["IDCuentaMayor"] = (this.slkupCuentaMayor.EditValue == null) ? 0 : this.slkupCuentaMayor.EditValue;
@@ -481,6 +485,7 @@ namespace CG
                     currentRow["Descr"] = this.txtDescripcion.Text;
                     currentRow["EsMayor"] = (this.chkEsMayor.EditValue == null) ? false : this.chkEsMayor.EditValue;
                     currentRow["AceptaDatos"] = (this.chkAceptaDatos.EditValue == null) ? false : this.chkAceptaDatos.EditValue;
+					currentRow["AplicaDifCamb"] = (this.chkAplicaDiferencial.EditValue == null) ? false : this.chkAplicaDiferencial.EditValue;
                     currentRow["Activa"] = (this.chkActiva.EditValue == null) ? false : this.chkActiva.EditValue;
                     currentRow["IDCuentaAnterior"] = (this.slkupCuentaAnterior.EditValue == null) ? 0 : this.slkupCuentaAnterior.EditValue;
                     currentRow["IDCuentaMayor"] = (this.slkupCuentaMayor.EditValue == null) ? 0 : this.slkupCuentaMayor.EditValue;

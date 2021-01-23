@@ -565,7 +565,8 @@ namespace CG
         {
             try
             {
-                CargarDatosPeriodoActivo();
+               	if (Accion =="New")
+					CargarDatosPeriodoActivo();
                 HabilitarControles(false, false);
                 CargarSimbolosMoneda();
                 CargarPrivilegios();

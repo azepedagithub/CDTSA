@@ -371,6 +371,7 @@ CREATE TABLE dbo.coObligacionProveedor (
 	MontoFlete DECIMAL(28,8) DEFAULT 0,
 	MontoSeguro DECIMAL(28,8) DEFAULT 0,
 	MontoDesc DECIMAL(28,8) DEFAULT 0,
+	MontoImpuesto DECIMAL(28,8) DEFAULT 0,
 	MontoAnticipo Decimal(28,8)  DEFAULT 0,
 	MontoTotal DECIMAL(28,8) DEFAULT 0,
 	Asiento NVARCHAR(20),
@@ -810,7 +811,7 @@ AND (a.IDProveedor IN (SELECT Value FROM [dbo].[ConvertListToTable](@Proveedor,@
 go 
 
 
-ALTER PROCEDURE dbo.coGetOrdenCompraByID( @IDOrdenCompra AS INT)
+CREATE PROCEDURE dbo.coGetOrdenCompraByID( @IDOrdenCompra AS INT)
 AS 
 SELECT  A.IDOrdenCompra ,OrdenCompra ,A.Fecha ,FechaRequerida ,FechaEmision ,FechaRequeridaEmbarque ,FechaCotizacion ,IDEstado, B.Descr DescrEstado,A.IDBodega, C.Descr DescrBodega, 
 		A.IDProveedor ,D.Nombre DescrProveedor,A.IDMoneda, E.Descr DescrMoneda,A.IDCondicionPago , F.Descr DescrCondicionPago,F.Dias DiasCondicionPago,
@@ -1761,20 +1762,20 @@ GO
 
 CREATE PROCEDURE dbo.coUpdateObligacionProveedor (@Operacion AS NVARCHAR(1), @IDObligacion AS INT OUTPUT ,@IDEmbarque AS INT,@flgDocCPGenerado AS bit,@Fecha DATETIME,
 		@FechaVence date, @FechaPoliza Date, @NumPoliza nvarchar(250), @NumFactura nvarchar(250), @Guia_BL nvarchar(250), @TipoCambio decimal(28,8),@ValorMercaderia decimal(28,8),
-		@MontoFlete decimal(28,8),@MontoSeguro decimal(28,8),@MontoDesc DECIMAL(28,8), @MontoAnticipo DECIMAL(28,8), @MontoTotal decimal(28,8))
+		@MontoFlete decimal(28,8),@MontoSeguro decimal(28,8),@MontoDesc DECIMAL(28,8),@MontoImpuesto DECIMAL(28,8), @MontoAnticipo DECIMAL(28,8), @MontoTotal decimal(28,8))
 AS 
 IF @Operacion ='I'
 BEGIN
 	SELECT  @IDObligacion = ISNULL(MAX(IDObligacion),0)  FROM dbo.coObligacionProveedor
 	SET @IDObligacion = @IDObligacion + 1
-	INSERT INTO dbo.coObligacionProveedor(IDObligacion, IDEmbarque,flgDocCPGenerado,Fecha, FechaVence, FechaPoliza,NumPoliza,NumFactura,Guia_BL, TipoCambio,ValorMercaderia,MontoFlete,MontoSeguro,MontoDesc,MontoAnticipo,MontoTotal)
-	VALUES(@IDObligacion, @IDEmbarque, @flgDocCPGenerado,@Fecha,@FechaVence,@FechaPoliza,@NumPoliza,@NumFactura,@Guia_BL, @TipoCambio,@ValorMercaderia,@MontoFlete,@MontoSeguro,@MontoDesc,@MontoAnticipo,@MontoTotal)
+	INSERT INTO dbo.coObligacionProveedor(IDObligacion, IDEmbarque,flgDocCPGenerado,Fecha, FechaVence, FechaPoliza,NumPoliza,NumFactura,Guia_BL, TipoCambio,ValorMercaderia,MontoFlete,MontoSeguro,MontoDesc,MontoImpuesto,MontoAnticipo,MontoTotal)
+	VALUES(@IDObligacion, @IDEmbarque, @flgDocCPGenerado,@Fecha,@FechaVence,@FechaPoliza,@NumPoliza,@NumFactura,@Guia_BL, @TipoCambio,@ValorMercaderia,@MontoFlete,@MontoSeguro,@MontoDesc,@MontoImpuesto,@MontoAnticipo,@MontoTotal)
 END
 IF @Operacion ='U'
 BEGIN
 	UPDATE dbo.coObligacionProveedor SET Fecha=@Fecha, FechaVence = @FechaVence, FechaPoliza= @FechaPoliza, NumPoliza=@NumPoliza, 
 									NumFactura=@NumFactura,Guia_BL= @Guia_BL, TipoCambio=@TipoCambio, ValorMercaderia =@ValorMercaderia, 
-									MontoFlete = @MontoFlete, MontoSeguro = @MontoSeguro,MontoDesc = @MontoDesc, MontoAnticipo = @MontoAnticipo, Montototal= @MontoTotal  
+									MontoFlete = @MontoFlete, MontoSeguro = @MontoSeguro,MontoDesc = @MontoDesc,MontoImpuesto=@MontoImpuesto, MontoAnticipo = @MontoAnticipo, Montototal= @MontoTotal  
 	WHERE IdObligacion=@IDObligacion
 END
 IF @Operacion ='D'
@@ -1788,7 +1789,7 @@ GO
 CREATE PROCEDURE dbo.coGetObligacionProveedor(@IDEmbarque AS INT, @IDObligacion AS INT)
 AS 
 SELECT  IDObligacion ,IDEmbarque ,flgDocCPGenerado ,Fecha ,FechaVence ,FechaPoliza ,NumPoliza ,NumFactura ,Guia_BL ,
-		TipoCambio ,ValorMercaderia ,MontoFlete ,MontoSeguro,MontoDesc,MontoAnticipo ,MontoTotal, Asiento  FROM dbo.coObligacionProveedor
+		TipoCambio ,ValorMercaderia ,MontoFlete ,MontoSeguro,MontoDesc,MontoImpuesto,MontoAnticipo ,MontoTotal, Asiento  FROM dbo.coObligacionProveedor
 WHERE IDEmbarque = @IDEmbarque AND (IDObligacion=@IDObligacion OR @IDObligacion = -1)
 
 GO
@@ -2285,3 +2286,16 @@ AS
 SELECT DATEADD(DAY,C.Dias,@Fecha) FechaVencimiento  FROM dbo.coOrdenCompra O
 INNER JOIN dbo.cppCondicionPago C ON O.IDCondicionPago = C.IDCondicionPago
 WHERE IDOrdenCompra =@IDOrdenCompra
+
+
+GO
+
+
+CREATE PROCEDURE dbo.coGetImpuestroFromOC @IDOrdenCompra BIGINT
+AS 
+
+SELECT SUM((CantidadAceptada * PrecioUnitario) * (Impuesto/100) ) Impuesto  FROM dbo.coOrdenCompraDetalle
+WHERE IDOrdenCompra = @IDOrdenCompra AND Impuesto>0
+
+
+GO

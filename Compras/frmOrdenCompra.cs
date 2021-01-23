@@ -126,7 +126,6 @@ namespace CO
 
             this.txtNotas.Text = "";
             this.txtMontoFactura.Text = "";
-            this.txtPorcDescuento.Text = "";
             this.txtSeguro.Text = "";
             
             this.txtAnticipos.Text = "";
@@ -204,7 +203,6 @@ namespace CO
                 this.slkupCondicionPago.ReadOnly = false;
                 this.dtpFechaRequeridaEmbarque.ReadOnly = false;
                 this.dtpFechaCotizacion.ReadOnly = false;
-                this.txtPorcDescuento.ReadOnly = false;
                 this.txtFlete.ReadOnly = false;
                 this.txtSeguro.ReadOnly = false;
                 this.txtAnticipos.ReadOnly = false;
@@ -234,7 +232,6 @@ namespace CO
                 this.slkupCondicionPago.ReadOnly = true;
                 this.dtpFechaRequeridaEmbarque.ReadOnly = true;
                 this.dtpFechaCotizacion.ReadOnly = true;
-                this.txtPorcDescuento.ReadOnly = true;
                 this.txtFlete.ReadOnly = true;
                 this.txtSeguro.ReadOnly = true;
                 this.txtAnticipos.ReadOnly = true;
@@ -316,7 +313,7 @@ namespace CO
             this.slkupCondicionPago.EditValue = Convert.ToInt32(cabecera["IDCondicionPago"]);
             this.dtpFechaRequeridaEmbarque.EditValue = Convert.ToDateTime(cabecera["FechaRequeridaEmbarque"]);
             this.dtpFechaCotizacion.EditValue = Convert.ToDateTime(cabecera["FechaCotizacion"]);
-            this.txtPorcDescuento.EditValue = Convert.ToDecimal((cabecera["Descuento"] == System.DBNull.Value) ? 0 : cabecera["Descuento"]);
+            this.txtDescuentoTotal.EditValue = Convert.ToDecimal((cabecera["Descuento"] == System.DBNull.Value) ? 0 : cabecera["Descuento"]);
             this.txtFlete.EditValue = Convert.ToDecimal((cabecera["Flete"] == System.DBNull.Value) ? 0 : cabecera["Flete"]);
             this.txtSeguro.EditValue = Convert.ToDecimal((cabecera["Seguro"] == System.DBNull.Value) ? 0 : cabecera["Seguro"]);
             this.txtAnticipos.EditValue = Convert.ToDecimal((cabecera["Anticipos"] == System.DBNull.Value) ? 0 : cabecera["Anticipos"]);
@@ -586,18 +583,18 @@ namespace CO
             decimal MontoDesc = Convert.ToDecimal((dtDetalleOrden.Compute("Sum(MontoDesc)", "[MontoDesc] IS NOT NULL") != DBNull.Value) ? dtDetalleOrden.Compute("Sum(MontoDesc)", "[MontoDesc] IS NOT NULL") : 0);
 
             decimal? dTotalMercaderia = dtDetalleOrden.AsEnumerable().Sum(
-                r => r.Field<decimal?>("Cantidad") * (r.Field<decimal?>("PrecioUnitario") == null ? (decimal?)0 : r.Field<decimal?>("PrecioUnitario")) - MontoDesc);
-            decimal? dDescuento = (this.txtPorcDescuento.EditValue == null || this.txtPorcDescuento.EditValue.ToString() == "") ? 0 : (Convert.ToDecimal(this.txtPorcDescuento.EditValue)/100) * dTotalMercaderia;
+                r => r.Field<decimal?>("Cantidad") * (r.Field<decimal?>("PrecioUnitario") == null ? (decimal?)0 : r.Field<decimal?>("PrecioUnitario")));
+            //decimal? dDescuento = (this.txtPorcDescuento.EditValue == null || this.txtPorcDescuento.EditValue.ToString() == "") ? 0 : (Convert.ToDecimal(this.txtPorcDescuento.EditValue)/100) * dTotalMercaderia;
             decimal dFlete = (this.txtFlete.EditValue == null || this.txtFlete.EditValue.ToString() == "") ? 0 : Convert.ToDecimal(this.txtFlete.EditValue);
             decimal dSeguro = (this.txtSeguro.EditValue == null || this.txtSeguro.EditValue.ToString() == "") ? 0 : Convert.ToDecimal(this.txtSeguro.EditValue);
             decimal dAnticipos = (this.txtAnticipos.EditValue == null || this.txtAnticipos.EditValue.ToString() == "") ? 0 : Convert.ToDecimal(this.txtAnticipos.EditValue);
             decimal dImpuestoConsumo = 0;
-            decimal dImpuestoVenta = Convert.ToDecimal(dtDetalleOrden.AsEnumerable().Sum(r => (r.Field<decimal?>("Impuesto")/100) * (r.Field<decimal?>("Cantidad") * (r.Field<decimal?>("PrecioUnitario") == null ? (decimal?)0 : r.Field<decimal?>("PrecioUnitario")) - MontoDesc)));
-            decimal? dSubTotal = (dTotalMercaderia - dDescuento + dImpuestoVenta + dImpuestoConsumo + dFlete + dSeguro );
+			decimal dImpuestoVenta = Convert.ToDecimal(dtDetalleOrden.AsEnumerable().Sum(r => (r.Field<decimal?>("Impuesto") / 100) * (r.Field<decimal?>("Cantidad") * (r.Field<decimal?>("PrecioUnitario") == null ? (decimal?)0 : r.Field<decimal?>("PrecioUnitario")) - r.Field<decimal?>("MontoDesc"))));
+			decimal? dSubTotal = (dTotalMercaderia - MontoDesc + dImpuestoVenta + dImpuestoConsumo + dFlete + dSeguro);
             decimal? dSaldo = dSubTotal - dAnticipos;
 
             this.txtTotalMercaderia.EditValue = Convert.ToDecimal(dTotalMercaderia).ToString("N" + Util.Util.DecimalLenght);
-            this.txtDescuentoTotal.EditValue = Convert.ToDecimal(dDescuento).ToString("N" + Util.Util.DecimalLenght);
+			this.txtDescuentoTotal.EditValue = Convert.ToDecimal(MontoDesc).ToString("N" + Util.Util.DecimalLenght);
             this.txtFleteTotal.EditValue = dFlete.ToString("N" + Util.Util.DecimalLenght);
             this.txtSeguroTotal.EditValue = dSeguro.ToString("N" + Util.Util.DecimalLenght);
             this.txtAnticipoTotal.EditValue = dAnticipos.ToString("N" + Util.Util.DecimalLenght);
@@ -822,7 +819,7 @@ namespace CO
                     IDCondicionPago = Convert.ToInt32(this.slkupCondicionPago.EditValue);
                     FechaRequeridaEmbarque = Convert.ToDateTime(this.dtpFechaRequeridaEmbarque.EditValue);
                     FechaCotizacion = Convert.ToDateTime(this.dtpFechaCotizacion.EditValue);
-                    Descuento = (this.txtPorcDescuento.EditValue != null && this.txtPorcDescuento.EditValue.ToString() != "") ? Convert.ToDecimal(this.txtPorcDescuento.EditValue) : 0;
+                    Descuento = (this.txtDescuentoTotal.EditValue != null && this.txtDescuentoTotal.EditValue.ToString() != "") ? Convert.ToDecimal(this.txtDescuentoTotal.EditValue) : 0;
                     Flete = (this.txtFlete.EditValue != null && this.txtFlete.EditValue.ToString() != "") ? Convert.ToDecimal(this.txtFlete.EditValue) : 0;
                     Seguro = (this.txtSeguro.EditValue != null && this.txtSeguro.EditValue.ToString() != "") ? Convert.ToDecimal(this.txtSeguro.EditValue) : 0;
                     Anticipos = (this.txtAnticipos.EditValue != null && this.txtAnticipos.EditValue.ToString() != "") ? Convert.ToDecimal(this.txtAnticipos.EditValue) : 0;

@@ -10,7 +10,7 @@ namespace CO.DAC
 {
     public static class clsObligacionProveedorDAC
     {
-        public static long InsertUpdate(string Operacion, ref int IDObligacion, int IDEmbarque, bool flgDocCPGenerado, DateTime Fecha, DateTime FechaVence, DateTime FechaPoliza, String NumPoliza, String NumFactura,String Guia_BL, decimal TipoCambio, decimal ValorMercancia, decimal MontoFlete, decimal MontoSeguro,decimal MontoDesc, decimal MontoAnticipo, decimal MontoTotal, SqlTransaction tran)
+        public static long InsertUpdate(string Operacion, ref int IDObligacion, int IDEmbarque, bool flgDocCPGenerado, DateTime Fecha, DateTime FechaVence, DateTime FechaPoliza, String NumPoliza, String NumFactura,String Guia_BL, decimal TipoCambio, decimal ValorMercancia, decimal MontoFlete, decimal MontoSeguro,decimal MontoDesc, decimal MontoImpuesto,decimal MontoAnticipo, decimal MontoTotal, SqlTransaction tran)
         {
             long result = -1;
             String strSQL = "dbo.coUpdateObligacionProveedor";
@@ -33,6 +33,7 @@ namespace CO.DAC
             oCmd.Parameters.Add(new SqlParameter("@MontoFlete", MontoFlete));
             oCmd.Parameters.Add(new SqlParameter("@MontoSeguro", MontoSeguro));
 			oCmd.Parameters.Add(new SqlParameter("@MontoDesc", MontoDesc));
+			oCmd.Parameters.Add(new SqlParameter("@MontoImpuesto", MontoImpuesto));
 			oCmd.Parameters.Add(new SqlParameter("@MontoAnticipo", MontoAnticipo));
             oCmd.Parameters.Add(new SqlParameter("@MontoTotal", MontoTotal));
             
@@ -92,6 +93,7 @@ namespace CO.DAC
 
         }
 
+		
         public static bool GeneraAsientoContable(int IDEmbarque, String Usuario, ref String Asiento, SqlTransaction tran)
         {
             String strSql = "dbo.coGeneraAsientoObligacionProveedor";
