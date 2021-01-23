@@ -242,18 +242,18 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="App.config" />
-    <None Include="rptAnalisisVencimiento.repx">
+    <Content Include="rptAnalisisVencimiento.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="rptDesglosePagos.repx">
+    </Content>
+    <Content Include="rptDesglosePagos.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="rptDocumentosxPagar.repx">
+    </Content>
+    <Content Include="rptDocumentosxPagar.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="rptMovimientos.repx">
+    </Content>
+    <Content Include="rptMovimientos.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Clases\Clases.vbproj">

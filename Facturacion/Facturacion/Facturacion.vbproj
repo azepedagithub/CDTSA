@@ -839,43 +839,43 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="App.config" />
-    <None Include="Reportes\rptAnalisisVencimiento.repx">
+    <Content Include="Reportes\rptAnalisisVencimiento.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Reportes\rptAntiguedadSaldosSucursal.repx">
+    </Content>
+    <Content Include="Reportes\rptAntiguedadSaldosSucursal.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Reportes\rptDesglosePagos.repx">
+    </Content>
+    <Content Include="Reportes\rptDesglosePagos.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Reportes\rptDocumentoCCF.repx">
+    </Content>
+    <Content Include="Reportes\rptDocumentoCCF.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Reportes\rptDocumentosCobrar.repx">
+    </Content>
+    <Content Include="Reportes\rptDocumentosCobrar.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Reportes\rptFactura.repx">
+    </Content>
+    <Content Include="Reportes\rptFactura.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Reportes\rptFacturaFinal.repx">
+    </Content>
+    <Content Include="Reportes\rptFacturaFinal.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Reportes\rptFacturaV2.repx">
+    </Content>
+    <Content Include="Reportes\rptFacturaV2.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Reportes\rptListaPreciosbyProveedor.repx">
+    </Content>
+    <Content Include="Reportes\rptListaPreciosbyProveedor.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Reportes\rptLotesFactura.repx" />
-    <None Include="Reportes\rptMovimientos.repx">
+    </Content>
+    <Content Include="Reportes\rptLotesFactura.repx" />
+    <Content Include="Reportes\rptMovimientos.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Reportes\rptPedido.repx">
+    </Content>
+    <Content Include="Reportes\rptPedido.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Reportes\rptTablaBonificacionPrecios.repx">
+    </Content>
+    <Content Include="Reportes\rptTablaBonificacionPrecios.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Clases\Clases.vbproj">
