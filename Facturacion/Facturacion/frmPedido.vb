@@ -734,7 +734,7 @@ Public Class frmPedido
         tableData = cManager.ExecSPgetData("fafPrintPedido", pIDPedido.ToString())
         If tableData.Rows.Count > 0 Then
 
-            Dim report As DevExpress.XtraReports.UI.XtraReport = DevExpress.XtraReports.UI.XtraReport.FromFile("./Reportes/rptPedido.repx", True)
+            Dim report As DevExpress.XtraReports.UI.XtraReport = DevExpress.XtraReports.UI.XtraReport.FromFile("./Reporte/Factura/rptPedido.repx", True)
             report.DataSource = vbNull
             report.DataSource = tableData
             report.DataMember = "fafPrintPedido"

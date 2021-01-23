@@ -827,7 +827,7 @@ Public Class frmPrecios
         Try
             If tableData.Rows.Count > 0 Then
 
-                Dim report As DevExpress.XtraReports.UI.XtraReport = DevExpress.XtraReports.UI.XtraReport.FromFile("./Reportes/rptListaPreciosbyProveedor.repx", True)
+                Dim report As DevExpress.XtraReports.UI.XtraReport = DevExpress.XtraReports.UI.XtraReport.FromFile("./Reporte/Factura/rptListaPreciosbyProveedor.repx", True)
                 report.DataSource = vbNull
                 report.DataSource = tableData
                 report.DataMember = "rptListaPreciosbyProveedor"
@@ -864,7 +864,7 @@ Public Class frmPrecios
 
             If t.Rows.Count > 0 Then
 
-                Dim report As DevExpress.XtraReports.UI.XtraReport = DevExpress.XtraReports.UI.XtraReport.FromFile("./Reportes/rptTablaBonificacionPrecios.repx", True)
+                Dim report As DevExpress.XtraReports.UI.XtraReport = DevExpress.XtraReports.UI.XtraReport.FromFile("./Reporte/Factura/rptTablaBonificacionPrecios.repx", True)
                 report.DataSource = vbNull
                 report.DataSource = t
                 report.DataMember = "rptTablaBonificacionPrecios"

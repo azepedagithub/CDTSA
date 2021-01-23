@@ -82,7 +82,7 @@ Public Class frmRemision
         tableData = cManager.ExecSPgetData("fafGetFacturaEntregaProducto", pIDFactura.ToString())
         If tableData.Rows.Count > 0 Then
 
-            Dim report As DevExpress.XtraReports.UI.XtraReport = DevExpress.XtraReports.UI.XtraReport.FromFile("./Reportes/rptRemision.repx", True)
+            Dim report As DevExpress.XtraReports.UI.XtraReport = DevExpress.XtraReports.UI.XtraReport.FromFile("./Reporte/Factura/rptRemision.repx", True)
             report.DataSource = vbNull
             report.DataSource = tableData
             report.DataMember = "fafGetFacturaEntregaProducto"

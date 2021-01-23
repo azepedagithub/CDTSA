@@ -12,6 +12,21 @@
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -458,96 +473,96 @@
     <Compile Include="frmSubCatalogo.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Reportes\rptFacturaFinal.Designer.vb">
+    <Compile Include="Reporte\rptFacturaFinal.Designer.vb">
       <DependentUpon>rptFacturaFinal.vb</DependentUpon>
     </Compile>
-    <Compile Include="Reportes\rptFacturaFinal.vb">
+    <Compile Include="Reporte\rptFacturaFinal.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reportes\rptAnalisisVencimiento.Designer.vb">
+    <Compile Include="Reporte\rptAnalisisVencimiento.Designer.vb">
       <DependentUpon>rptAnalisisVencimiento.vb</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Reportes\rptAnalisisVencimiento.vb">
+    <Compile Include="Reporte\rptAnalisisVencimiento.vb">
       <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Reportes\rptAntiguedadSaldosSucursal.Designer.vb">
+    <Compile Include="Reporte\rptAntiguedadSaldosSucursal.Designer.vb">
       <DependentUpon>rptAntiguedadSaldosSucursal.vb</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Reportes\rptAntiguedadSaldosSucursal.vb">
+    <Compile Include="Reporte\rptAntiguedadSaldosSucursal.vb">
       <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Reportes\rptDesglosePagos.Designer.vb">
+    <Compile Include="Reporte\rptDesglosePagos.Designer.vb">
       <DependentUpon>rptDesglosePagos.vb</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Reportes\rptDesglosePagos.vb">
+    <Compile Include="Reporte\rptDesglosePagos.vb">
       <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Reportes\rptDocumentosCobrar.Designer.vb">
+    <Compile Include="Reporte\rptDocumentosCobrar.Designer.vb">
       <DependentUpon>rptDocumentosCobrar.vb</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Reportes\rptDocumentosCobrar.vb">
+    <Compile Include="Reporte\rptDocumentosCobrar.vb">
       <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Reportes\rptListaPreciosbyProveedor.Designer.vb">
+    <Compile Include="Reporte\rptListaPreciosbyProveedor.Designer.vb">
       <DependentUpon>rptListaPreciosbyProveedor.vb</DependentUpon>
     </Compile>
-    <Compile Include="Reportes\rptListaPreciosbyProveedor.vb">
+    <Compile Include="Reporte\rptListaPreciosbyProveedor.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reportes\rptListaPreciobyProveedor.Designer.vb">
+    <Compile Include="Reporte\rptListaPreciobyProveedor.Designer.vb">
       <DependentUpon>rptListaPreciobyProveedor.vb</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Reportes\rptListaPreciobyProveedor.vb">
+    <Compile Include="Reporte\rptListaPreciobyProveedor.vb">
       <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Reportes\rptLotesFactura.Designer.vb">
+    <Compile Include="Reporte\rptLotesFactura.Designer.vb">
       <DependentUpon>rptLotesFactura.vb</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Reportes\rptLotesFactura.vb">
+    <Compile Include="Reporte\rptLotesFactura.vb">
       <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Reportes\rptMovimientos.Designer.vb">
+    <Compile Include="Reporte\rptMovimientos.Designer.vb">
       <DependentUpon>rptMovimientos.vb</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Reportes\rptMovimientos.vb">
+    <Compile Include="Reporte\rptMovimientos.vb">
       <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Reportes\rptsample.Designer.vb">
+    <Compile Include="Reporte\rptsample.Designer.vb">
       <DependentUpon>rptsample.vb</DependentUpon>
     </Compile>
-    <Compile Include="Reportes\rptsample.vb">
+    <Compile Include="Reporte\rptsample.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reportes\rptTablaBonificacionPrecios.Designer.vb">
+    <Compile Include="Reporte\rptTablaBonificacionPrecios.Designer.vb">
       <DependentUpon>rptTablaBonificacionPrecios.vb</DependentUpon>
     </Compile>
-    <Compile Include="Reportes\rptTablaBonificacionPrecios.vb">
+    <Compile Include="Reporte\rptTablaBonificacionPrecios.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reportes\XtraReport1.Designer.vb">
+    <Compile Include="Reporte\XtraReport1.Designer.vb">
       <DependentUpon>XtraReport1.vb</DependentUpon>
     </Compile>
-    <Compile Include="Reportes\XtraReport1.vb">
+    <Compile Include="Reporte\XtraReport1.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reportes\XtraReportPedido.Designer.vb">
+    <Compile Include="Reporte\XtraReportPedido.Designer.vb">
       <DependentUpon>XtraReportPedido.vb</DependentUpon>
     </Compile>
-    <Compile Include="Reportes\XtraReportPedido.vb">
+    <Compile Include="Reporte\XtraReportPedido.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="rptDocumentoCCF.Designer.vb">
@@ -762,47 +777,47 @@
     <EmbeddedResource Include="frmClientes.resx">
       <DependentUpon>frmClientes.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\rptFacturaFinal.resx">
+    <EmbeddedResource Include="Reporte\rptFacturaFinal.resx">
       <DependentUpon>rptFacturaFinal.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\rptAnalisisVencimiento.resx">
+    <EmbeddedResource Include="Reporte\rptAnalisisVencimiento.resx">
       <DependentUpon>rptAnalisisVencimiento.vb</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\rptAntiguedadSaldosSucursal.resx">
+    <EmbeddedResource Include="Reporte\rptAntiguedadSaldosSucursal.resx">
       <DependentUpon>rptAntiguedadSaldosSucursal.vb</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\rptDesglosePagos.resx">
+    <EmbeddedResource Include="Reporte\rptDesglosePagos.resx">
       <DependentUpon>rptDesglosePagos.vb</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\rptDocumentosCobrar.resx">
+    <EmbeddedResource Include="Reporte\rptDocumentosCobrar.resx">
       <DependentUpon>rptDocumentosCobrar.vb</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\rptListaPreciosbyProveedor.resx">
+    <EmbeddedResource Include="Reporte\rptListaPreciosbyProveedor.resx">
       <DependentUpon>rptListaPreciosbyProveedor.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\rptListaPreciobyProveedor.resx">
+    <EmbeddedResource Include="Reporte\rptListaPreciobyProveedor.resx">
       <DependentUpon>rptListaPreciobyProveedor.vb</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\rptLotesFactura.resx">
+    <EmbeddedResource Include="Reporte\rptLotesFactura.resx">
       <DependentUpon>rptLotesFactura.vb</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\rptMovimientos.resx">
+    <EmbeddedResource Include="Reporte\rptMovimientos.resx">
       <DependentUpon>rptMovimientos.vb</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\rptsample.resx">
+    <EmbeddedResource Include="Reporte\rptsample.resx">
       <DependentUpon>rptsample.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\rptTablaBonificacionPrecios.resx">
+    <EmbeddedResource Include="Reporte\rptTablaBonificacionPrecios.resx">
       <DependentUpon>rptTablaBonificacionPrecios.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\XtraReportPedido.resx">
+    <EmbeddedResource Include="Reporte\XtraReportPedido.resx">
       <DependentUpon>XtraReportPedido.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="rptDocumentoCCF.resx">
@@ -839,41 +854,40 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="App.config" />
-    <Content Include="Reportes\rptAnalisisVencimiento.repx">
+    <Content Include="Reporte\Factura\rptAnalisisVencimiento.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Reportes\rptAntiguedadSaldosSucursal.repx">
+    <Content Include="Reporte\Factura\rptAntiguedadSaldosSucursal.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Reportes\rptDesglosePagos.repx">
+    <Content Include="Reporte\Factura\rptDesglosePagos.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Reportes\rptDocumentoCCF.repx">
+    <Content Include="Reporte\Factura\rptDocumentoCCF.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Reportes\rptDocumentosCobrar.repx">
+    <Content Include="Reporte\Factura\rptDocumentosCobrar.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Reportes\rptFactura.repx">
+    <Content Include="Reporte\Factura\rptFactura.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Reportes\rptFacturaFinal.repx">
+    <Content Include="Reporte\Factura\rptFacturaFinal.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Reportes\rptFacturaV2.repx">
+    <Content Include="Reporte\Factura\rptListaPreciosbyProveedor.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Reportes\rptListaPreciosbyProveedor.repx">
+    <Content Include="Reporte\Factura\rptLotesFactura.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Reportes\rptLotesFactura.repx" />
-    <Content Include="Reportes\rptMovimientos.repx">
+    <Content Include="Reporte\Factura\rptMovimientos.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Reportes\rptPedido.repx">
+    <Content Include="Reporte\Factura\rptPedido.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Reportes\rptTablaBonificacionPrecios.repx">
+    <Content Include="Reporte\Factura\rptTablaBonificacionPrecios.repx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -907,6 +921,9 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Reporte\Factura\rptFacturaV2.repx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Resources\archivo.png" />
   </ItemGroup>
   <ItemGroup>
@@ -923,6 +940,23 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\cobrar.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

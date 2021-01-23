@@ -116,7 +116,7 @@ Public Class frmCCFFiltroReportes
             tableData = cManager.ExecSPgetData("ccfrptMovimientos", sParameters)
             If tableData.Rows.Count > 0 Then
 
-                Dim report As DevExpress.XtraReports.UI.XtraReport = DevExpress.XtraReports.UI.XtraReport.FromFile("./Reportes/rptMovimientos.repx", True)
+                Dim report As DevExpress.XtraReports.UI.XtraReport = DevExpress.XtraReports.UI.XtraReport.FromFile("./Reporte/Factura/rptMovimientos.repx", True)
                 report.DataSource = vbNull
                 report.DataSource = tableData
                 report.DataMember = "ccfrptMovimientos"
@@ -148,7 +148,7 @@ Public Class frmCCFFiltroReportes
             sParameters = sParameters & ",'" & CDate(Me.DateEditFechaFinal.EditValue).ToString("yyyyMMdd") & "',0"
             tableData = cManager.ExecSPgetData("ccfDocumentosxCobrar", sParameters)
             If tableData.Rows.Count > 0 Then
-                Dim report As DevExpress.XtraReports.UI.XtraReport = DevExpress.XtraReports.UI.XtraReport.FromFile("./Reportes/rptDocumentosCobrar.repx", True)
+                Dim report As DevExpress.XtraReports.UI.XtraReport = DevExpress.XtraReports.UI.XtraReport.FromFile("./Reporte/Factura/rptDocumentosCobrar.repx", True)
                 report.DataSource = vbNull
                 report.DataSource = tableData
                 report.DataMember = "ccfDocumentosxCobrar"
@@ -195,7 +195,7 @@ Public Class frmCCFFiltroReportes
             sParameters = sParameters & ",'" & CDate(Me.DateEditFechaFinal.EditValue).ToString("yyyyMMdd") & "'"
             tableData = cManager.ExecSPgetData("ccfrptDesglosePagos", sParameters)
             If tableData.Rows.Count > 0 Then
-                Dim report As DevExpress.XtraReports.UI.XtraReport = DevExpress.XtraReports.UI.XtraReport.FromFile("./Reportes/rptDesglosePagos.repx", True)
+                Dim report As DevExpress.XtraReports.UI.XtraReport = DevExpress.XtraReports.UI.XtraReport.FromFile("./Reporte/Factura/rptDesglosePagos.repx", True)
                 report.DataSource = vbNull
                 report.DataSource = tableData
                 report.DataMember = "ccfrptDesglosePagos"
@@ -232,7 +232,7 @@ Public Class frmCCFFiltroReportes
             sParameters = sParameters & ",'" & CDate(Me.DateEditFechaFinal.EditValue).ToString("yyyyMMdd") & "'"
             tableData = cManager.ExecSPgetData("ccfrptAntiguedadSaldosPorCliente", sParameters)
             If tableData.Rows.Count > 0 Then
-                Dim report As DevExpress.XtraReports.UI.XtraReport = DevExpress.XtraReports.UI.XtraReport.FromFile("./Reportes/rptAnalisisVencimiento.repx", True)
+                Dim report As DevExpress.XtraReports.UI.XtraReport = DevExpress.XtraReports.UI.XtraReport.FromFile("./Reporte/Factura/rptAnalisisVencimiento.repx", True)
                 report.DataSource = vbNull
                 report.DataSource = tableData
                 report.DataMember = "ccfrptAntiguedadSaldosPorCliente"
@@ -288,7 +288,7 @@ Public Class frmCCFFiltroReportes
             sParameters = sParameters & ",'" & CDate(Me.DateEditFechaFinal.EditValue).ToString("yyyyMMdd") & "'," & iDolar.ToString()
             tableData = cManager.ExecSPgetData("ccfrptAntiguedadSaldosPorSucursal", sParameters)
             If tableData.Rows.Count > 0 Then
-                Dim report As DevExpress.XtraReports.UI.XtraReport = DevExpress.XtraReports.UI.XtraReport.FromFile("./Reportes/rptAntiguedadSaldosSucursal.repx", True)
+                Dim report As DevExpress.XtraReports.UI.XtraReport = DevExpress.XtraReports.UI.XtraReport.FromFile("./Reporte/Factura/rptAntiguedadSaldosSucursal.repx", True)
                 report.Parameters("psEmpresa").Value = gsNombreEmpresa
 
                 report.Parameters("psMoneda").Value = sMoneda
