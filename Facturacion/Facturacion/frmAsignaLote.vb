@@ -321,25 +321,25 @@ Public Class frmAsignaLote
             Me.txtTotalExistencia.EditValue = Existencia
             Me.txtTotalBO.EditValue = Bonificado
             Me.txtTotalBOPrecio.EditValue = BonificadoPrecio
-            If Me.txtCantidad.EditValue > (Asignado + Bonificado) Then
-                MessageBox.Show("La cantidad asignada en los lotes no cubre la cantidad a Facturar", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
-                'txtCantidad.EditValue = Asignado
-                'txtBonifPedido.EditValue = Bonificado
-                gbErrorEnLote = True 'new 15/09
+            If (Asignado + Bonificado) > 0 Then
+                If Me.txtCantidad.EditValue > (Asignado + Bonificado) Then
+                    ' MessageBox.Show("La cantidad asignada en los lotes no cubre la cantidad a Facturar", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                    'txtCantidad.EditValue = Asignado
+                    'txtBonifPedido.EditValue = Bonificado
+                    gbErrorEnLote = True 'new 15/09
+                End If
+
+            End If
+            If (Asignado + Bonificado) > 0 Then
+                If (Asignado + Bonificado) > Me.txtCantidad.EditValue + Bonificado Then
+                    'MessageBox.Show("La cantidad asignada en los lotes es mayor a la cantidad a Facturar", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                    gbErrorEnLote = True
+                    'txtCantidad.EditValue = Asignado
+                    'txtBonifPedido.EditValue = Bonificado
+                End If
+
             End If
 
-            If (Asignado + Bonificado) > Me.txtCantidad.EditValue + Bonificado Then
-                MessageBox.Show("La cantidad asignada en los lotes es mayor a la cantidad a Facturar", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
-                gbErrorEnLote = True
-                'txtCantidad.EditValue = Asignado
-                'txtBonifPedido.EditValue = Bonificado
-            End If
-            'If Me.txtTotalExistencia.EditValue < (Asignado + Bonificado) Then
-            '    MessageBox.Show("La cantidad existente en bodega es menor que la cantidad a Asignada y Bonificada, por favor revise", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
-            '    txtCantidad.EditValue = Asignado
-            '    txtBonifPedido.EditValue = Bonificado
-            '    'gbErrorEnLote = True ' new 15/09
-            'End If
 
         Catch ex As Exception
             MessageBox.Show("Ha ocurrido un error  " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -356,20 +356,9 @@ Public Class frmAsignaLote
             Dim asignadaPrecio As Decimal = Convert.ToDecimal(GridViewProducto.GetRowCellValue(e.RowHandle, "AsignadoPrecio"))
             Dim Existencia As Decimal = Convert.ToDecimal(GridViewProducto.GetRowCellValue(e.RowHandle, "Existencia"))
 
-            'If asignadaBO > 0 Then
-            '    GridViewProducto.SetRowCellValue(e.RowHandle, "BonifProd", 1)
-            '    'Else
-            '    '    GridViewProducto.SetRowCellValue(e.RowHandle, "BonifProd", 0)
-            'End If
-
-            'If asignadaBO = 0 Then
-            '    GridViewProducto.SetRowCellValue(e.RowHandle, "BonifProd", 0)
-            'End If
 
             If (asignada + asignadaBO) > Existencia Then
-                MessageBox.Show("Ud no puede asignar más que la existencia en ese lote", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                ' 15/09 lO quite porque puede ser que bonifiquen aunque no haya producto y en ese caso deben dar descuento en precio
-                'GridViewProducto.SetRowCellValue(GridViewProducto.FocusedRowHandle, GridViewProducto.FocusedColumn, 0)
+                'MessageBox.Show("Ud no puede asignar más que la existencia en ese lote", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Me.chkBonifProd.Checked = False
                 gbBonificaProd = False
                 gbErrorEnLote = True
@@ -462,20 +451,12 @@ Public Class frmAsignaLote
 
             GridViewProducto.SetRowCellValue(i, "AsignadoBO", valorBO)
             GridViewProducto.SetRowCellValue(i, "AsignadoPrecio", txtCantPrecio.EditValue) ' agregado el 21/09/2020 9 pm
-            'If valorBO > 0 Then
-            '    GridViewProducto.SetRowCellValue(i, "BonifProd", 1)
-            'Else
-            '    GridViewProducto.SetRowCellValue(i, "BonifProd", 0)
-            'End If
+   
             i = i + 1
         End While
         If i > 0 And dCantBonif > 0 And valorBO = 0 Then ' 15/09 si no lo asigno porque no habia existencia ... poner a fuerza en el ultimo registros la cantidad bonificada
             GridViewProducto.SetRowCellValue(i - 1, "AsignadoBO", dCantBonif)
-            'If dCantBonif > 0 Then
-            '    GridViewProducto.SetRowCellValue(i, "BonifProd", 1)
-            'Else
-            '    GridViewProducto.SetRowCellValue(i, "BonifProd", 0)
-            'End If
+     
 
         End If
     End Sub
@@ -511,6 +492,20 @@ Public Class frmAsignaLote
     End Sub
 
     Private Sub btnAplicar_Click(sender As Object, e As EventArgs) Handles btnAplicar.Click
+        If CDec(txtTotalAsignado.EditValue) > CDec(txtCantidad.EditValue) Then
+            MessageBox.Show("Ud no puede asignar más que la cantidad en Factura en ese lote", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Exit Sub
+        End If
+        ' esto fue cambiado el 15/09/2020 porque debe dejar pasar mas de lo existente cuando hay bonificacion para permitir descuentos 
+        If (CDec(txtTotalAsignado.EditValue) + CDec(txtTotalBO.EditValue)) > CDec(txtTotalExistencia.EditValue) Then
+            MessageBox.Show("La existencia no cubre la cantidad asignada", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Exit Sub
+        End If
+
+        If Me.txtCantidad.EditValue > (CDec(txtTotalAsignado.EditValue) + CDec(txtTotalBO.EditValue)) Then
+            MessageBox.Show("No se puede asignar una cantidad menor a la cantidad a Facturar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Exit Sub
+        End If
         AplicaLote()
         Me.Close()
     End Sub
