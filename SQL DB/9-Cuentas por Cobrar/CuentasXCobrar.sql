@@ -1580,7 +1580,7 @@ if @FechaFinal is null
 	set @FechaFinal = '20500101' 
 SELECT R.Documento Recibo, R.Fecha ,R.IDCliente, C.Nombre, R.IDVendedor, V.Nombre NombreVendedor,  R.MontoOriginal MontoRecibo, R.SaldoActual SaldoCredito, R.Efectivo, R.Descuento, R.RetencionMunicipal, R.RetencionRenta,
 R.flgFlotante, isnull(R.IDChequePos,0) IDChequePos , R.MontoChequePos, R.Anulado, R.flgAprobado Aprobado, P.Cobrado, P.SinFondo, R.flgAprobado, R.IDBodega, R.Asiento, R.TipoCambio, R.IDCredito, R.IDMoneda, M.Descr DescrMoneda
-  FROM [ceda].[dbo].[ccfCreditos] R left join dbo.ccfClientes C
+  FROM [dbo].[ccfCreditos] R left join dbo.ccfClientes C
   on R.IDCliente = C.IDCliente inner join dbo.fafVendedor V
   on R.IDVendedor = V.IDVendedor left join dbo.ccfChequePosFechado P
  on R.IDChequePos = P.IDChequePos left join dbo.globalMoneda M
