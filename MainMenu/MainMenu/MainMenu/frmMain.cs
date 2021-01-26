@@ -468,6 +468,9 @@ namespace MainMenu
 					ofrmMain.MenuListaPrecios();
 					break;
 				case "optCrearPromocion":
+					ofrmMain.MenuPromociones();
+					break;
+				case "optCrearBonificacion":
 					ofrmMain.MenuBonificaciones();
 					break;
 				case "optTablaDesc":
