@@ -127,10 +127,14 @@ Public Class frmDescuentos
         If Val(CInt(txtDesde.EditValue)) > Val(CInt(txtHasta.EditValue)) Then
             lbok = False
         End If
-
-        If CDate(DateEditInicio.EditValue) > CDate(DateEditFin.EditValue) Then
+        If (DateEditInicio.EditValue IsNot Nothing And DateEditFin.EditValue IsNot Nothing) And (DateEditInicio.Text <> "" And DateEditFin.Text <> "") Then
+            If CDate(DateEditInicio.EditValue) > CDate(DateEditFin.EditValue) Then
+                lbok = False
+            End If
+        Else
             lbok = False
         End If
+
         Return lbok
     End Function
 

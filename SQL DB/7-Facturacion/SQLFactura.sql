@@ -4031,15 +4031,15 @@ go
 -- para la preparacion del Pedido 
 --update invlote set FechaVencimiento = '20210130' where IDLote = 333 select * from fafpedido
 Declare @IDPedido int
-set @IDPedido = 7
+set @IDPedido = 8
 Declare @Fuente  table (Linea int, ItemLote int, IDBodega int, IDPedido int, IDProducto int, Descr nvarchar(250), Cantidad int,
-IDLote int, LoteProveedor nvarchar(50), Existencia int, FechaVencimiento date);
+IDLote int, LoteProveedor nvarchar(50), Existencia int, FechaVencimiento date, CantBonificada int, CantPrecio int);
 insert  @Fuente( linea, ItemLote, IDBodega, IDPedido, IDProducto, Descr, Cantidad, IDLote,LoteProveedor,
-Existencia, FechaVencimiento  )
+Existencia, FechaVencimiento, CantBonificada, CantPrecio   )
 Select ROW_NUMBER() OVER (ORDER BY P.IDProducto) Linea, 
 	ROW_NUMBER() OVER(PARTITION BY P.IDProducto ORDER BY P.IDProducto) AS ItemLote, 
 	P.IDBodega, P.IDPedido, P.IDProducto, T.Descr,  P.Cantidad, T.IDLote,T.LoteProveedor,
-	T.Existencia, T.FechaVencimiento 
+	T.Existencia, T.FechaVencimiento, P.CantBonificada, P.CantPrecio  
 From (
 	Select P.IDBodega, P.IDPedido, D.IDProducto, 
 	D.CantFacturada, D.CantBonificada, D.CantPrecio,D.Cantidad 
@@ -4059,6 +4059,34 @@ From (
 ) T
 on P.IDBodega = T.IDBodega and P.IDProducto = T.IDProducto
 --WHERE T.IDLOTE IS NOT NULL
-Select Linea, IDProducto, ItemLote,IDlote, LoteProveedor, FechaVencimiento, Cantidad, Existencia
+Select Linea, IDProducto, ItemLote,IDlote, LoteProveedor, FechaVencimiento, Cantidad,
+CantBonificada, CantPrecio, (Cantidad + CantBonificada ) CantAPreparar ,  Existencia
 from @Fuente;
 
+Declare @Linea int, @TotalLineas int, @indexProducto int, @ItemLote int, @MaxItemLote int
+@indexLote int, @CantTotalProducto int, @CantAcumulada int, @IDProducto int , @ExistenciaLote int
+Set @Linea = 1
+set @TotalLineas = (Select MAX(Linea) from @Fuente)
+if @TotalLineas >1 
+begin
+	While @Linea <= @TotalLineas
+	begin
+		Select @IDProducto = IDProducto, @ItemLote = ItemLote,
+		@CantTotalProducto = (Cantidad + CantBonificada )
+		From @Fuente where Linea = @Linea
+		Select @MaxItemLote = MAX (itemLote) from @Fuente Where IDProducto = @IDProducto
+		set @CantAcumulada = 0
+		While @ItemLote <= @MaxItemLote
+		begin
+			Select @ExistenciaLote  =  Existencia From @Fuente 
+			where IDProducto = @IDProducto and ItemLote = @ItemLote 
+			if @CantTotalProducto > @ExistenciaLote
+				Set @CantAcumulada = @CantAcumulada + @ExistenciaLote
+			else
+				Set @CantAcumulada = @CantAcumulada + @CantTotalProducto	
+		end
+		
+		
+	end
+
+end
