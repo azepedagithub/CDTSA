@@ -1767,7 +1767,7 @@ From dbo.invExistenciaBodega E inner join dbo.invLote L
 on E.IDLote = L.IDLote and E.IDProducto= L.IDProducto  join dbo.invProducto P
 on E.IDProducto = P.IDProducto 
 Where (E.IDBodega = @IDBodega or @IDBodega = 0) and 
-(E.IDProducto = @IDProducto or @IDProducto = 0)
+(E.IDProducto = @IDProducto or @IDProducto = 0) 
 order by E.IDProducto, L.FechaVencimiento asc
 
 SELECT IDBodega, IDProducto, Descr , IDLote, LoteInterno , LoteProveedor , FechaVencimiento, Existencia, AsignadoFA , AsignadoBO, Atendido, AsignadoPrecio   
@@ -3987,30 +3987,78 @@ Where (IDCliente = @IDCliente or @IDCliente = 0) and
 ORDER BY D.IDDevolucion
 go
 
---exec dbo.fafgetDevolucionHeader 17, '*', '20200101', '20201231', '*',0
---exec dbo.fafgetDevolucionDetail 51,'000001','20201024','20201224','000038',0
+--- A PATIR DE AQUI SE HARAN ALTER A LOS CAMBIOS 
 
---where Devolucion like ''''+  '%' + @Devolucion + '%' + ''''
---Create Procedure dbo.fafgetMontoEnLetras  @Monto decimal(28,4)
---as
---set nocount on 
-
---Select dbo.globalNumberToLetter (@Monto)
---go
-
-
---Exec dbo.fafgetMontoEnLetras 256.3458 -1,-1,-1
-
---select * from dbo.fafPrecios dbo.fafTipoFactura 
---select * from dbo.fafTipoEntrega  SELECT * FROM DBO.FAFPARAMETROS
-
-
-
--- Update dbo.invbodega set ConsecMaskDevolucion = 'D'
+Create table dbo.fafPedidoPreparado(IDPedido int not null, IDProducto bigint not null, 
+IDLote int not null, CantFacturada int default 0, CantBonificada int default 0,
+CantTotal as (CantFacturada + CantBonificada),
+Usuario nvarchar(20), Fecha datetime)
+go
+Alter table dbo.fafPedidoPreparado 
+add constraint pkPedidoPreparado primary key (IDPedido, IDProducto, IDLote)
+go
+alter table dbo.fafPedidoPreparado add constraint fkPedPreparadoPed foreign key (IDPedido) references dbo.fafPedido (IDPedido)
+go
+alter table dbo.fafPedidoPreparado add constraint fkPedPreparadoLote foreign key ( IDLote, IDProducto) references dbo.invLote (IDLote, IDProducto)
+go
+alter table dbo.fafPedidoPreparado add constraint fkPedPreparadoProd foreign key (  IDProducto) references dbo.invProducto (IDProducto)
+go
 
 
+--exec [dbo].[fafgetProductoLote] 1, 115
+ALTER Procedure [dbo].[fafgetProductoLote] @IDBodega int, @IDProducto bigint
+as 
+Set Nocount on 
+Create Table #Resultado ( IDBodega int not null, IDProducto int not null, Descr nvarchar(255),
+IDLote int not null, LoteInterno nvarchar(50), LoteProveedor nvarchar(50), FechaVencimiento date,
+Existencia decimal(28,2) default 0, AsignadoFA decimal(28,4) default 0, AsignadoBO decimal(28,4) default 0, Atendido bit default 0, AsignadoPrecio decimal(28,4) default 0 )
+alter table #Resultado add constraint pkresult primary key (IDBodega, IDPRoducto, IDLote)
 
---Select * from dbo.fafDevolucion  Select * from dbo.fafDevDetalle Delete from dbo.fafDevolucion  Delete from dbo.fafDevDetalle
---Exec dbo.fafUpdateDevolucion 'I',41,'20181106','D','DV-002',1, 'azepeda',32.7000, 0,0
+insert #Resultado (IDBodega, IDProducto, Descr , IDLote, LoteInterno , LoteProveedor , FechaVencimiento, Existencia, AsignadoFA , AsignadoBO, AsignadoPrecio )
+Select E.IDBodega,  E.IDProducto, P.Descr, E.IDLote, L.LoteInterno, L.LoteProveedor, L.FechaVencimiento, 
+(E.Existencia + Transito - Reservada) Existencia, 0.00  AsignadoFA , 0.00 AsignadoBO, 0 AsignadoPrecio 
+From dbo.invExistenciaBodega E inner join dbo.invLote L 
+on E.IDLote = L.IDLote and E.IDProducto= L.IDProducto inner join dbo.invProducto P
+on E.IDProducto = P.IDProducto 
+Where (E.IDBodega = @IDBodega or @IDBodega = 0) and 
+(E.IDProducto = @IDProducto or @IDProducto = 0) AND CAST( L.FechaVencimiento  as DATE ) > CAST( GETDATE()  as DATE )
+order by E.IDProducto, L.FechaVencimiento asc
 
--- select *  from dbo.fafFActura DBO.invLote Where IDProducto=3 and IDmONEDA =1 and IDCliente =1 and IDNivel =1
+SELECT IDBodega, IDProducto, Descr , IDLote, LoteInterno , LoteProveedor , FechaVencimiento, Existencia, AsignadoFA , AsignadoBO, Atendido, AsignadoPrecio   
+FROM #Resultado 
+drop table #Resultado
+go
+-- para la preparacion del Pedido 
+--update invlote set FechaVencimiento = '20210130' where IDLote = 333 select * from fafpedido
+Declare @IDPedido int
+set @IDPedido = 7
+Declare @Fuente  table (Linea int, ItemLote int, IDBodega int, IDPedido int, IDProducto int, Descr nvarchar(250), Cantidad int,
+IDLote int, LoteProveedor nvarchar(50), Existencia int, FechaVencimiento date);
+insert  @Fuente( linea, ItemLote, IDBodega, IDPedido, IDProducto, Descr, Cantidad, IDLote,LoteProveedor,
+Existencia, FechaVencimiento  )
+Select ROW_NUMBER() OVER (ORDER BY P.IDProducto) Linea, 
+	ROW_NUMBER() OVER(PARTITION BY P.IDProducto ORDER BY P.IDProducto) AS ItemLote, 
+	P.IDBodega, P.IDPedido, P.IDProducto, T.Descr,  P.Cantidad, T.IDLote,T.LoteProveedor,
+	T.Existencia, T.FechaVencimiento 
+From (
+	Select P.IDBodega, P.IDPedido, D.IDProducto, 
+	D.CantFacturada, D.CantBonificada, D.CantPrecio,D.Cantidad 
+	from dbo.fafPedido P inner join fafPedidoProd D
+	on P.IDPedido = D.IDPedido and P.IDBodega = D.IDBodega
+	Where P.IDPedido = @IDPedido
+) P left join 
+(
+	Select E.IDBodega,  E.IDProducto, P.Descr, L.IDLote, L.LoteInterno, L.LoteProveedor, L.FechaVencimiento, 
+	(E.Existencia + Transito - Reservada) Existencia, 0.00  AsignadoFA , 0.00 AsignadoBO, 0 AsignadoPrecio 
+	From dbo.invExistenciaBodega E inner join dbo.invLote L 
+	on E.IDLote = L.IDLote and E.IDProducto= L.IDProducto inner join dbo.invProducto P
+	on E.IDProducto = P.IDProducto and L.IDProducto = P.IDProducto 
+	Where CAST( L.FechaVencimiento  as DATE ) > CAST( GETDATE()  as DATE )
+	--order by E.IDProducto, L.FechaVencimiento asc
+
+) T
+on P.IDBodega = T.IDBodega and P.IDProducto = T.IDProducto
+--WHERE T.IDLOTE IS NOT NULL
+Select Linea, IDProducto, ItemLote,IDlote, LoteProveedor, FechaVencimiento, Cantidad, Existencia
+from @Fuente;
+
