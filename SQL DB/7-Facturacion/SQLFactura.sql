@@ -332,7 +332,9 @@ GO
 Insert dbo.fafEstadoPedido (Estado, Descr )
 values ('D', 'DENEGADO')
 GO
-
+Insert dbo.fafEstadoPedido (Estado, Descr )
+values ('P', 'PROCESO')
+GO
 -- drop table dbo.fafpedido alter table dbo.[fafPedido] add IDPlazo int not null
 CREATE TABLE dbo.[fafPedido] (	
 	[IDPedido] [int] not NULL  Identity(1,1),
@@ -4014,3 +4016,13 @@ go
 --Exec dbo.fafUpdateDevolucion 'I',41,'20181106','D','DV-002',1, 'azepeda',32.7000, 0,0
 
 -- select *  from dbo.fafFActura DBO.invLote Where IDProducto=3 and IDmONEDA =1 and IDCliente =1 and IDNivel =1
+
+GO
+
+CREATE PROCEDURE dbo.fafGetPedidosRemision @IDEstado INT
+AS 
+--'A','P'
+SELECT IDPedido, CAST(a.IDCliente AS NVARCHAR(20)) + ' - ' + C.Nombre Cliente,Fecha,A.dateUpdate  FROM dbo.fafPedido A
+INNER JOIN dbo.ccfClientes C ON A.IDCliente = C.IDCliente
+WHERE A.Estado=@IDEstado
+ORDER BY IDPedido

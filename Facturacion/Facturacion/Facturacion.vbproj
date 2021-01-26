@@ -416,6 +416,12 @@
     <Compile Include="frmRemision.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmRemisionBodega.Designer.vb">
+      <DependentUpon>frmRemisionBodega.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmRemisionBodega.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmReport.Designer.vb">
       <DependentUpon>frmReport.vb</DependentUpon>
     </Compile>
@@ -745,6 +751,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmRemision.resx">
       <DependentUpon>frmRemision.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmRemisionBodega.resx">
+      <DependentUpon>frmRemisionBodega.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmReport.resx">
       <DependentUpon>frmReport.vb</DependentUpon>
