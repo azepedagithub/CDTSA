@@ -332,7 +332,9 @@ GO
 Insert dbo.fafEstadoPedido (Estado, Descr )
 values ('D', 'DENEGADO')
 GO
-
+Insert dbo.fafEstadoPedido (Estado, Descr )
+values ('P', 'PROCESO')
+GO
 -- drop table dbo.fafpedido alter table dbo.[fafPedido] add IDPlazo int not null
 CREATE TABLE dbo.[fafPedido] (	
 	[IDPedido] [int] not NULL  Identity(1,1),
@@ -4346,4 +4348,223 @@ select * from fafPedidoPreparado
 */
 
 
+-- select *  from dbo.fafFActura DBO.invLote Where IDProducto=3 and IDmONEDA =1 and IDCliente =1 and IDNivel =1
+
+GO
+
+--- A PATIR DE AQUI SE HARAN ALTER A LOS CAMBIOS 
+
+Create table dbo.fafPedidoPreparado(IDPedido int not null, IDProducto bigint not null, 
+IDLote int not null, CantFacturada int default 0, CantBonificada int default 0,
+CantTotal as (CantFacturada + CantBonificada),
+Usuario nvarchar(20), Fecha datetime)
+go
+Alter table dbo.fafPedidoPreparado 
+add constraint pkPedidoPreparado primary key (IDPedido, IDProducto, IDLote)
+go
+alter table dbo.fafPedidoPreparado add constraint fkPedPreparadoPed foreign key (IDPedido) references dbo.fafPedido (IDPedido)
+go
+alter table dbo.fafPedidoPreparado add constraint fkPedPreparadoLote foreign key ( IDLote, IDProducto) references dbo.invLote (IDLote, IDProducto)
+go
+alter table dbo.fafPedidoPreparado add constraint fkPedPreparadoProd foreign key (  IDProducto) references dbo.invProducto (IDProducto)
+go
+
+
+--exec [dbo].[fafgetProductoLote] 1, 115
+alter Procedure [dbo].[fafgetProductoLote] @IDBodega int, @IDProducto bigint
+as 
+Set Nocount on 
+Create Table #Resultado ( IDBodega int not null, IDProducto int not null, Descr nvarchar(255),
+IDLote int not null, LoteInterno nvarchar(50), LoteProveedor nvarchar(50), FechaVencimiento date,
+Existencia decimal(28,2) default 0, AsignadoFA decimal(28,4) default 0, AsignadoBO decimal(28,4) default 0, Atendido bit default 0, AsignadoPrecio decimal(28,4) default 0 )
+alter table #Resultado add constraint pkresult primary key (IDBodega, IDPRoducto, IDLote)
+
+insert #Resultado (IDBodega, IDProducto, Descr , IDLote, LoteInterno , LoteProveedor , FechaVencimiento, Existencia, AsignadoFA , AsignadoBO, AsignadoPrecio )
+Select E.IDBodega,  E.IDProducto, P.Descr, E.IDLote, L.LoteInterno, L.LoteProveedor, L.FechaVencimiento, 
+(E.Existencia + Transito - Reservada) Existencia, 0.00  AsignadoFA , 0.00 AsignadoBO, 0 AsignadoPrecio 
+From dbo.invExistenciaBodega E inner join dbo.invLote L 
+on E.IDLote = L.IDLote and E.IDProducto= L.IDProducto inner join dbo.invProducto P
+on E.IDProducto = P.IDProducto 
+Where (E.IDBodega = @IDBodega or @IDBodega = 0) and 
+(E.IDProducto = @IDProducto or @IDProducto = 0) AND CAST( L.FechaVencimiento  as DATE ) > CAST( GETDATE()  as DATE )
+order by E.IDProducto, L.FechaVencimiento asc
+
+SELECT IDBodega, IDProducto, Descr , IDLote, LoteInterno , LoteProveedor , FechaVencimiento, Existencia, AsignadoFA , AsignadoBO, Atendido, AsignadoPrecio   
+FROM #Resultado 
+drop table #Resultado
+
+GO
+
+-- exec dbo.fafgetPedidoSugeridoLote  8, 'azepeda',1 exec fafgetProductoLote 1, 115
+CREATE PROCEDURE dbo.fafgetPedidoSugeridoLote  @IDPedido int, @Usuario nvarchar(20), @SoloConExistencia bit = 1, @CreaPedidoSugerido bit = 1
+AS
+SET NOCOUNT ON
+Declare @Fuente  table (Linea int, ItemLote int, IDBodega int, IDPedido int, IDProducto int, Descr nvarchar(250), Cantidad int,
+IDLote int, LoteProveedor nvarchar(50), Existencia int, FechaVencimiento date, CantBonificada int, CantPedido int);
+if @CreaPedidoSugerido is null
+	set @CreaPedidoSugerido = 1
+if @SoloConExistencia is null
+	set @SoloConExistencia = 1
+
+insert  @Fuente( linea, ItemLote, IDBodega, IDPedido, IDProducto, Descr, Cantidad, IDLote,LoteProveedor,
+Existencia, FechaVencimiento, CantBonificada, CantPedido   )
+
+Select ROW_NUMBER() OVER (ORDER BY P.IDProducto) Linea, 
+	ROW_NUMBER() OVER(PARTITION BY P.IDProducto ORDER BY P.IDProducto) AS ItemLote, 
+	P.IDBodega, P.IDPedido, P.IDProducto, T.Descr,  P.Cantidad, T.IDLote,T.LoteProveedor,
+	T.Existencia, T.FechaVencimiento, P.CantBonificada, P.Cantidad  
+From (
+	Select P.IDBodega, P.IDPedido, D.IDProducto, 
+	D.Cantidad, D.CantBonificada, D.CantPrecio 
+	from dbo.fafPedido P inner join fafPedidoProd D
+	on P.IDPedido = D.IDPedido and P.IDBodega = D.IDBodega
+	Where P.IDPedido = @IDPedido
+) P left join 
+(
+	Select E.IDBodega,  E.IDProducto, P.Descr, L.IDLote, L.LoteInterno, L.LoteProveedor, L.FechaVencimiento, 
+	(E.Existencia + Transito - Reservada) Existencia, 0.00  AsignadoFA , 0.00 AsignadoBO, 0 AsignadoPrecio 
+	From dbo.invExistenciaBodega E inner join dbo.invLote L 
+	on E.IDLote = L.IDLote and E.IDProducto= L.IDProducto inner join dbo.invProducto P
+	on E.IDProducto = P.IDProducto and L.IDProducto = P.IDProducto 
+	Where CAST( L.FechaVencimiento  as DATE ) > CAST( GETDATE()  as DATE )
+	--order by E.IDProducto, L.FechaVencimiento asc
+
+) T
+on  P.IDBodega = T.IDBodega and P.IDProducto = T.IDProducto
+
+Declare @PedidoAtendido as table ( IDPedido int, IDProducto int, IDLote int, FechaVencimiento date, CantAtendida int, Usuario nvarchar(20), CantPedido int, CantBonif int, ExistenciaLote int)
+Declare @Linea int, @TotalLineas int, @indexProducto int, @ItemLote int, @MaxItemLote int,
+@indexLote int, @CantTotalProducto int, @CantAcumulada int, @IDProducto int , @ExistenciaLote int,
+@CantAcumBonificada int,@CantPed int, @CantBonif int, @IDLote int, @CantLoteSugerido int, @FechaVencimiento date
+Set @Linea = 1
+set @TotalLineas = (Select MAX(Linea) from @Fuente)
+if @TotalLineas >1 
+begin
+	While @Linea <= @TotalLineas
+	begin
+		Select @IDProducto = IDProducto,
+		@CantTotalProducto = (Cantidad + CantBonificada )
+		From @Fuente where Linea = @Linea
+		
+		Select @MaxItemLote = MAX (itemLote) 
+		from @Fuente Where IDProducto = @IDProducto
+		set @ItemLote = 1
+		set @CantLoteSugerido = 0
+		While @ItemLote <= @MaxItemLote
+		begin
+			Select @IDLote = IDLote, @ExistenciaLote  =  Existencia, @cantPed = Cantidad, 
+			@CantBonif = CantBonificada, @FechaVencimiento = FechaVencimiento   
+			From @Fuente 
+			where IDProducto = @IDProducto and ItemLote = @ItemLote 
+			
+			if @CantTotalProducto <= @ExistenciaLote
+				Set @CantLoteSugerido = @CantTotalProducto
+			else
+				Set @CantLoteSugerido = @ExistenciaLote
+			set @CantTotalProducto = @CantTotalProducto - @CantLoteSugerido
+
+		if (@SoloConExistencia = 1 and @CantLoteSugerido > 1 ) or @SoloConExistencia = 0
+		begin
+		insert @PedidoAtendido ( IDPedido, IDProducto, IDLote, FechaVencimiento, CantAtendida, Usuario, CantPedido, CantBonif, ExistenciaLote  )		
+			SElect  @IDPedido IDPedido, @IDProducto IDProducto, @IDLote IDLote, @FechaVencimiento , @CantLoteSugerido CantLoteSugerido, @Usuario Usuario,
+			@CantPed, @CantBonif, @ExistenciaLote 
+		end
+			set @ItemLote = @ItemLote + 1
+		Set @Linea = @Linea + 1	
+		end		
+	Set @Linea = @Linea + 1	
+	end
+	if @CreaPedidoSugerido = 0
+	begin
+	Select  A.IDPedido, A.IDProducto, P.Descr, A.IDLote, L.LoteProveedor, L.LoteInterno, A.FechaVencimiento, A.ExistenciaLote, 
+	A.CantPedido CantPedidoProd, A.CantBonif CantBonifProd,  
+	A.CantAtendida CantAtendidaLote,  cast(GETDATE()as DATE) FechaGeneracion, A.Usuario 
+	From @PedidoAtendido A inner join dbo.invLote L 
+	on A.IDLote = L.IDLote and A.IDProducto= L.IDProducto  join dbo.invProducto P
+	on A.IDProducto = P.IDProducto 
+	end
+	else
+	begin
+	
+	Select  A.IDPedido, A.IDProducto, A.IDLote, A.FechaVencimiento, 
+	A.CantAtendida CantAtendidaLote,  cast(GETDATE()as DATE) FechaGeneracion, A.Usuario 
+	From @PedidoAtendido A inner join dbo.invLote L 
+	on A.IDLote = L.IDLote and A.IDProducto= L.IDProducto  join dbo.invProducto P
+	on A.IDProducto = P.IDProducto 	
+	end
+end
+
+go
+
+-- Select * from dbo.fafPedidoPreparado exec dbo.fafInsertPedidoSugeridoLote 8,'admin'
+CREATE Procedure dbo.fafInsertPedidoSugeridoLote @IDPedido int, @Usuario nvarchar(20)
+as 
+set nocount on
+begin transaction 
+begin try
+
+	DECLARE @PedidoPreaparado AS TABLE(IDPedido INT, IDProducto BIGINT,IDLote INT, FechaVencimiento DATE,CantAtendida INT, FechaPreparacion DATE,Usuario NVARCHAR(100))
+	INSERT @PedidoPreaparado( IDPedido, IDProducto, IDLote, FechaVencimiento, CantAtendida,
+	FechaPreparacion, Usuario )
+	exec dbo.fafgetPedidoSugeridoLote  @IDPedido, @Usuario,1
+	
+	INSERT INTO dbo.fafPedidoPreparado( IDPedido ,IDProducto ,IDLote ,CantFacturada ,Usuario ,Fecha)
+	SELECT IDPedido,IDProducto,IDLote,CantAtendida,Usuario,GETDATE()  FROM @PedidoPreaparado
+	
+	UPDATE dbo.fafPedido SET Estado='P' WHERE IDPedido= @IDPedido
+
+	commit
+end try
+begin catch
+    DECLARE @ErrorMessage NVARCHAR(4000);
+    DECLARE @ErrorSeverity INT;
+    DECLARE @ErrorState INT;
+	--rollback
+SELECT 
+        @ErrorMessage = ERROR_MESSAGE(),
+        @ErrorSeverity = ERROR_SEVERITY(),
+        @ErrorState = ERROR_STATE();
+
+    RAISERROR (@ErrorMessage, -- Message text.
+               16, --@ErrorSeverity, -- Severity.
+               16--@ErrorState -- State.
+               );
+        IF @@TRANCOUNT > 0  
+			ROLLBACK TRANSACTION; 
+end catch 
+
+go
+/*
+EXEC fafInsertPedidoSugeridoLote 8, 'admin'
+select * from fafPedidoPreparado
+*/
+
+
 -- select * from dbo.fafPedidoPreparado
+INSERT INTO dbo.fafEstadoPedido
+        ( Estado, Descr, Activo )
+VALUES  ( N'P', -- Estado - nvarchar(1)
+          N'PROCESO', -- Descr - nvarchar(50)
+          1  -- Activo - bit
+          )
+
+go
+
+CREATE PROCEDURE dbo.fafGetPedidosRemision @IDEstado INT
+AS 
+--'A','P'
+SELECT IDPedido, CAST(a.IDCliente AS NVARCHAR(20)) + ' - ' + C.Nombre Cliente,Fecha,A.dateUpdate  FROM dbo.fafPedido A
+INNER JOIN dbo.ccfClientes C ON A.IDCliente = C.IDCliente
+WHERE A.Estado=@IDEstado
+ORDER BY IDPedido
+
+GO
+
+
+CREATE PROCEDURE dbo.fafGetPedidoDetalleRemision @IDPedido INT, @IDProducto INT=-1
+AS 
+SELECT A.IDPedido,A.IDProducto,P.Descr,A.IDLote,L.LoteProveedor,L.FechaVencimiento,A.CantFacturada+A.CantBonificada Cantidad  FROM dbo.fafPedidoPreparado A
+INNER JOIN dbo.invProducto P ON A.IDProducto = P.IDProducto
+INNER JOIN dbo.invLote L ON A.IDLote = L.IDLote AND A.IDProducto = L.IDProducto
+WHERE IDPedido = @IDPedido AND (A.IDProducto = @IDProducto OR @IDProducto = -1)
+
