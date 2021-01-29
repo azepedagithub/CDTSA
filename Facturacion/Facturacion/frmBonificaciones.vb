@@ -161,12 +161,9 @@ Public Class frmBonificaciones
             e.KeyChar = Chr(Solo_Numeros(Asc(e.KeyChar)))
         End If
         If sender.name = "txtdesde" And Asc(e.KeyChar) = Keys.Return Then
-            txtDesde.Focus()
+            txtHasta.Focus()
         End If
         If sender.name = "txtHasta" And Asc(e.KeyChar) = Keys.Return Then
-            Me.txtHasta.Focus()
-        End If
-        If sender.name = "txtBono" And Asc(e.KeyChar) = Keys.Return Then
             Me.txtBono.Focus()
         End If
 
@@ -238,7 +235,7 @@ Public Class frmBonificaciones
 
     End Sub
 
-    Private Sub GridViewDetalle_FocusedRowChanged(sender As Object, e As DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs) Handles GridViewDetalle.FocusedRowChanged
+    Private Sub RefreshItemRowToConstrols()
         Dim index As Integer = GridViewDetalle.FocusedRowHandle
         If index > -1 Then
             Dim dr As DataRow = GridViewDetalle.GetFocusedDataRow()
@@ -254,6 +251,11 @@ Public Class frmBonificaciones
                 lbAdd = False
             End If
         End If
+
+    End Sub
+
+    Private Sub GridViewDetalle_FocusedRowChanged(sender As Object, e As DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs) Handles GridViewDetalle.FocusedRowChanged
+        RefreshItemRowToConstrols()
     End Sub
 
     Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
@@ -424,5 +426,23 @@ Public Class frmBonificaciones
         If file.ShowDialog() = DialogResult.OK Then
             Me.GridControl1.ExportToXls(file.FileName)
         End If
+    End Sub
+
+    Private Sub btnCancel_Click_1(sender As Object, e As EventArgs) Handles btnCancel.Click
+        Try
+            If Me.GridViewDetalle.RowCount > 0 Then
+
+                GridViewDetalle.MoveFirst()
+                RefreshItemRowToConstrols()
+            Else
+                ClearControls()
+                lbAdd = False
+                lbEdit = False
+
+            End If
+
+        Catch ex As Exception
+            MessageBox.Show("Ha ocurrido un error al Cancelar la operación " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 End Class

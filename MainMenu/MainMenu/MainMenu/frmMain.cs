@@ -470,6 +470,10 @@ namespace MainMenu
 				case "optCrearPromocion":
 					ofrmMain.MenuPromociones();
 					break;
+                case "optTablaPromClientes":
+                    frmPromocionesClientes frm = new frmPromocionesClientes();
+                    frm.Show();
+                    break;
 				case "optCrearBonificacion":
 					ofrmMain.MenuBonificaciones();
 					break;
@@ -1080,10 +1084,14 @@ namespace MainMenu
 					TreeListNode nodeCreaPromocion = tl.AppendNode(new object[] { "Crear Promoción" }, nodePromociones.Id, 11, 11, 11);
 					nodeCreaPromocion.Tag = "optCrearPromocion";
 
+					TreeListNode nodeTablaDescCliente = tl.AppendNode(new object[] { "Promocion Dirigida a Clientes" }, nodePromociones.Id, 11, 11, 11);
+					nodeTablaDescCliente.Tag = "optTablaPromClientes";
+
+
 					TreeListNode nodeCrearBonificaciones = tl.AppendNode(new object[] { "Crear Bonificaciones" }, nodePromociones.Id, 11, 11, 11);
 					nodeCrearBonificaciones.Tag = "optCrearBonificacion";
 
-					TreeListNode nodeTablaDesc = tl.AppendNode(new object[] { "Tabla de Descuentos" }, nodePromociones.Id, 11, 11, 11);
+					TreeListNode nodeTablaDesc = tl.AppendNode(new object[] { "Tabla de Descuentos con Bonificación" }, nodePromociones.Id, 11, 11, 11);
 					nodeTablaDesc.Tag = "optTablaDesc";
 
 

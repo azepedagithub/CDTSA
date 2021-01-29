@@ -104,6 +104,8 @@ Partial Class frmDescuentos
         Me.CantHasta = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.Descuento = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.AlertControl1 = New DevExpress.XtraBars.Alerter.AlertControl(Me.components)
+        Me.btnCancel = New DevExpress.XtraEditors.SimpleButton()
+        Me.LayoutControlItem24 = New DevExpress.XtraLayout.LayoutControlItem()
         CType(Me.LayoutControl2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.LayoutControl2.SuspendLayout()
         CType(Me.chkdejarFechas.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -164,10 +166,12 @@ Partial Class frmDescuentos
         CType(Me.LayoutControlItem23, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridViewDetalle, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.LayoutControlItem24, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'LayoutControl2
         '
+        Me.LayoutControl2.Controls.Add(Me.btnCancel)
         Me.LayoutControl2.Controls.Add(Me.LabelControl2)
         Me.LayoutControl2.Controls.Add(Me.btnPropFecha)
         Me.LayoutControl2.Controls.Add(Me.chkdejarFechas)
@@ -194,7 +198,7 @@ Partial Class frmDescuentos
         Me.LayoutControl2.Location = New System.Drawing.Point(53, 2)
         Me.LayoutControl2.Name = "LayoutControl2"
         Me.LayoutControl2.Root = Me.LayoutControlGroup3
-        Me.LayoutControl2.Size = New System.Drawing.Size(881, 219)
+        Me.LayoutControl2.Size = New System.Drawing.Size(928, 219)
         Me.LayoutControl2.TabIndex = 29
         Me.LayoutControl2.Text = "LayoutControl2"
         '
@@ -211,7 +215,7 @@ Partial Class frmDescuentos
         'btnPropFecha
         '
         Me.btnPropFecha.Image = CType(resources.GetObject("btnPropFecha.Image"), System.Drawing.Image)
-        Me.btnPropFecha.Location = New System.Drawing.Point(454, 151)
+        Me.btnPropFecha.Location = New System.Drawing.Point(477, 151)
         Me.btnPropFecha.Name = "btnPropFecha"
         Me.btnPropFecha.Size = New System.Drawing.Size(40, 38)
         Me.btnPropFecha.StyleController = Me.LayoutControl2
@@ -220,21 +224,21 @@ Partial Class frmDescuentos
         '
         'chkdejarFechas
         '
-        Me.chkdejarFechas.Location = New System.Drawing.Point(295, 175)
+        Me.chkdejarFechas.Location = New System.Drawing.Point(321, 175)
         Me.chkdejarFechas.Name = "chkdejarFechas"
         Me.chkdejarFechas.Properties.Caption = "Mantener Fechas"
-        Me.chkdejarFechas.Size = New System.Drawing.Size(105, 19)
+        Me.chkdejarFechas.Size = New System.Drawing.Size(108, 19)
         Me.chkdejarFechas.StyleController = Me.LayoutControl2
         Me.chkdejarFechas.TabIndex = 41
         '
         'DateEditFin
         '
         Me.DateEditFin.EditValue = Nothing
-        Me.DateEditFin.Location = New System.Drawing.Point(221, 175)
+        Me.DateEditFin.Location = New System.Drawing.Point(230, 175)
         Me.DateEditFin.Name = "DateEditFin"
         Me.DateEditFin.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
         Me.DateEditFin.Properties.CalendarTimeProperties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
-        Me.DateEditFin.Size = New System.Drawing.Size(70, 20)
+        Me.DateEditFin.Size = New System.Drawing.Size(87, 20)
         Me.DateEditFin.StyleController = Me.LayoutControl2
         Me.DateEditFin.TabIndex = 40
         '
@@ -245,14 +249,14 @@ Partial Class frmDescuentos
         Me.DateEditInicio.Name = "DateEditInicio"
         Me.DateEditInicio.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
         Me.DateEditInicio.Properties.CalendarTimeProperties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
-        Me.DateEditInicio.Size = New System.Drawing.Size(70, 20)
+        Me.DateEditInicio.Size = New System.Drawing.Size(79, 20)
         Me.DateEditInicio.StyleController = Me.LayoutControl2
         Me.DateEditInicio.TabIndex = 39
         '
         'cmdCopyEscala
         '
         Me.cmdCopyEscala.Image = CType(resources.GetObject("cmdCopyEscala.Image"), System.Drawing.Image)
-        Me.cmdCopyEscala.Location = New System.Drawing.Point(508, 151)
+        Me.cmdCopyEscala.Location = New System.Drawing.Point(531, 151)
         Me.cmdCopyEscala.Name = "cmdCopyEscala"
         Me.cmdCopyEscala.Size = New System.Drawing.Size(40, 38)
         Me.cmdCopyEscala.StyleController = Me.LayoutControl2
@@ -265,7 +269,7 @@ Partial Class frmDescuentos
         Me.SearchLookUpEditProductoReceptor.Name = "SearchLookUpEditProductoReceptor"
         Me.SearchLookUpEditProductoReceptor.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
         Me.SearchLookUpEditProductoReceptor.Properties.View = Me.GridView1
-        Me.SearchLookUpEditProductoReceptor.Size = New System.Drawing.Size(427, 20)
+        Me.SearchLookUpEditProductoReceptor.Size = New System.Drawing.Size(456, 20)
         Me.SearchLookUpEditProductoReceptor.StyleController = Me.LayoutControl2
         Me.SearchLookUpEditProductoReceptor.TabIndex = 37
         '
@@ -279,25 +283,25 @@ Partial Class frmDescuentos
         'btnExcel
         '
         Me.btnExcel.Image = CType(resources.GetObject("btnExcel.Image"), System.Drawing.Image)
-        Me.btnExcel.Location = New System.Drawing.Point(792, 151)
+        Me.btnExcel.Location = New System.Drawing.Point(801, 151)
         Me.btnExcel.Name = "btnExcel"
-        Me.btnExcel.Size = New System.Drawing.Size(52, 38)
+        Me.btnExcel.Size = New System.Drawing.Size(40, 38)
         Me.btnExcel.StyleController = Me.LayoutControl2
         Me.btnExcel.TabIndex = 33
         '
         'btnDelete
         '
         Me.btnDelete.Image = CType(resources.GetObject("btnDelete.Image"), System.Drawing.Image)
-        Me.btnDelete.Location = New System.Drawing.Point(729, 151)
+        Me.btnDelete.Location = New System.Drawing.Point(747, 151)
         Me.btnDelete.Name = "btnDelete"
-        Me.btnDelete.Size = New System.Drawing.Size(42, 38)
+        Me.btnDelete.Size = New System.Drawing.Size(40, 38)
         Me.btnDelete.StyleController = Me.LayoutControl2
         Me.btnDelete.TabIndex = 34
         '
         'btnEdit
         '
         Me.btnEdit.Image = CType(resources.GetObject("btnEdit.Image"), System.Drawing.Image)
-        Me.btnEdit.Location = New System.Drawing.Point(670, 151)
+        Me.btnEdit.Location = New System.Drawing.Point(693, 151)
         Me.btnEdit.Name = "btnEdit"
         Me.btnEdit.Size = New System.Drawing.Size(40, 38)
         Me.btnEdit.StyleController = Me.LayoutControl2
@@ -306,7 +310,7 @@ Partial Class frmDescuentos
         'cmdNewClear
         '
         Me.cmdNewClear.Image = CType(resources.GetObject("cmdNewClear.Image"), System.Drawing.Image)
-        Me.cmdNewClear.Location = New System.Drawing.Point(616, 151)
+        Me.cmdNewClear.Location = New System.Drawing.Point(639, 151)
         Me.cmdNewClear.Name = "cmdNewClear"
         Me.cmdNewClear.Size = New System.Drawing.Size(40, 38)
         Me.cmdNewClear.StyleController = Me.LayoutControl2
@@ -316,7 +320,7 @@ Partial Class frmDescuentos
         'cmdEscalaenLote
         '
         Me.cmdEscalaenLote.Image = CType(resources.GetObject("cmdEscalaenLote.Image"), System.Drawing.Image)
-        Me.cmdEscalaenLote.Location = New System.Drawing.Point(562, 151)
+        Me.cmdEscalaenLote.Location = New System.Drawing.Point(585, 151)
         Me.cmdEscalaenLote.Name = "cmdEscalaenLote"
         Me.cmdEscalaenLote.Size = New System.Drawing.Size(40, 38)
         Me.cmdEscalaenLote.StyleController = Me.LayoutControl2
@@ -327,37 +331,37 @@ Partial Class frmDescuentos
         'cmdDelProd
         '
         Me.cmdDelProd.Image = CType(resources.GetObject("cmdDelProd.Image"), System.Drawing.Image)
-        Me.cmdDelProd.Location = New System.Drawing.Point(548, 74)
+        Me.cmdDelProd.Location = New System.Drawing.Point(577, 74)
         Me.cmdDelProd.Name = "cmdDelProd"
-        Me.cmdDelProd.Size = New System.Drawing.Size(25, 22)
+        Me.cmdDelProd.Size = New System.Drawing.Size(27, 22)
         Me.cmdDelProd.StyleController = Me.LayoutControl2
         Me.cmdDelProd.TabIndex = 23
         '
         'cmdDelProv
         '
         Me.cmdDelProv.Image = CType(resources.GetObject("cmdDelProv.Image"), System.Drawing.Image)
-        Me.cmdDelProv.Location = New System.Drawing.Point(548, 48)
+        Me.cmdDelProv.Location = New System.Drawing.Point(577, 48)
         Me.cmdDelProv.Name = "cmdDelProv"
-        Me.cmdDelProv.Size = New System.Drawing.Size(25, 22)
+        Me.cmdDelProv.Size = New System.Drawing.Size(27, 22)
         Me.cmdDelProv.StyleController = Me.LayoutControl2
         Me.cmdDelProv.TabIndex = 22
         '
         'cmdRefresh
         '
         Me.cmdRefresh.Image = CType(resources.GetObject("cmdRefresh.Image"), System.Drawing.Image)
-        Me.cmdRefresh.Location = New System.Drawing.Point(769, 48)
+        Me.cmdRefresh.Location = New System.Drawing.Point(811, 48)
         Me.cmdRefresh.Name = "cmdRefresh"
-        Me.cmdRefresh.Size = New System.Drawing.Size(88, 38)
+        Me.cmdRefresh.Size = New System.Drawing.Size(93, 38)
         Me.cmdRefresh.StyleController = Me.LayoutControl2
         Me.cmdRefresh.TabIndex = 21
         Me.cmdRefresh.Text = "Refresh"
         '
         'chkDejarProducto
         '
-        Me.chkDejarProducto.Location = New System.Drawing.Point(577, 71)
+        Me.chkDejarProducto.Location = New System.Drawing.Point(608, 71)
         Me.chkDejarProducto.Name = "chkDejarProducto"
         Me.chkDejarProducto.Properties.Caption = "Mantener Producto Base"
-        Me.chkDejarProducto.Size = New System.Drawing.Size(143, 19)
+        Me.chkDejarProducto.Size = New System.Drawing.Size(151, 19)
         Me.chkDejarProducto.StyleController = Me.LayoutControl2
         Me.chkDejarProducto.TabIndex = 20
         '
@@ -375,10 +379,10 @@ Partial Class frmDescuentos
         '
         'chkDejarProv
         '
-        Me.chkDejarProv.Location = New System.Drawing.Point(577, 48)
+        Me.chkDejarProv.Location = New System.Drawing.Point(608, 48)
         Me.chkDejarProv.Name = "chkDejarProv"
         Me.chkDejarProv.Properties.Caption = "Mantener Proveedor"
-        Me.chkDejarProv.Size = New System.Drawing.Size(143, 19)
+        Me.chkDejarProv.Size = New System.Drawing.Size(151, 19)
         Me.chkDejarProv.StyleController = Me.LayoutControl2
         Me.chkDejarProv.TabIndex = 17
         '
@@ -388,7 +392,7 @@ Partial Class frmDescuentos
         Me.SearchLookUpEditProveedor.Name = "SearchLookUpEditProveedor"
         Me.SearchLookUpEditProveedor.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
         Me.SearchLookUpEditProveedor.Properties.View = Me.SearchLookUpEdit1View
-        Me.SearchLookUpEditProveedor.Size = New System.Drawing.Size(427, 20)
+        Me.SearchLookUpEditProveedor.Size = New System.Drawing.Size(456, 20)
         Me.SearchLookUpEditProveedor.StyleController = Me.LayoutControl2
         Me.SearchLookUpEditProveedor.TabIndex = 13
         '
@@ -402,20 +406,20 @@ Partial Class frmDescuentos
         'txtDescuento
         '
         Me.txtDescuento.EditValue = ""
-        Me.txtDescuento.Location = New System.Drawing.Point(390, 151)
+        Me.txtDescuento.Location = New System.Drawing.Point(389, 151)
         Me.txtDescuento.Name = "txtDescuento"
-        Me.txtDescuento.Size = New System.Drawing.Size(50, 20)
+        Me.txtDescuento.Size = New System.Drawing.Size(52, 20)
         Me.txtDescuento.StyleController = Me.LayoutControl2
         Me.txtDescuento.TabIndex = 12
         '
         'txtHasta
         '
         Me.txtHasta.EditValue = ""
-        Me.txtHasta.Location = New System.Drawing.Point(195, 151)
+        Me.txtHasta.Location = New System.Drawing.Point(204, 151)
         Me.txtHasta.Name = "txtHasta"
         Me.txtHasta.Properties.DisplayFormat.FormatString = "d"
         Me.txtHasta.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Custom
-        Me.txtHasta.Size = New System.Drawing.Size(66, 20)
+        Me.txtHasta.Size = New System.Drawing.Size(71, 20)
         Me.txtHasta.StyleController = Me.LayoutControl2
         Me.txtHasta.TabIndex = 6
         '
@@ -425,7 +429,7 @@ Partial Class frmDescuentos
         Me.SearchLookUpEditProducto.Name = "SearchLookUpEditProducto"
         Me.SearchLookUpEditProducto.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
         Me.SearchLookUpEditProducto.Properties.View = Me.GridView4
-        Me.SearchLookUpEditProducto.Size = New System.Drawing.Size(427, 20)
+        Me.SearchLookUpEditProducto.Size = New System.Drawing.Size(456, 20)
         Me.SearchLookUpEditProducto.StyleController = Me.LayoutControl2
         Me.SearchLookUpEditProducto.TabIndex = 5
         '
@@ -439,10 +443,10 @@ Partial Class frmDescuentos
         'txtDesde
         '
         Me.txtDesde.EditValue = ""
-        Me.txtDesde.Location = New System.Drawing.Point(81, 151)
+        Me.txtDesde.Location = New System.Drawing.Point(88, 151)
         Me.txtDesde.Name = "txtDesde"
         Me.txtDesde.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
-        Me.txtDesde.Size = New System.Drawing.Size(77, 20)
+        Me.txtDesde.Size = New System.Drawing.Size(79, 20)
         Me.txtDesde.StyleController = Me.LayoutControl2
         Me.txtDesde.TabIndex = 4
         '
@@ -453,16 +457,16 @@ Partial Class frmDescuentos
         Me.LayoutControlGroup3.Items.AddRange(New DevExpress.XtraLayout.BaseLayoutItem() {Me.LayoutControlGroup4})
         Me.LayoutControlGroup3.Location = New System.Drawing.Point(0, 0)
         Me.LayoutControlGroup3.Name = "LayoutControlGroup3"
-        Me.LayoutControlGroup3.Size = New System.Drawing.Size(881, 219)
+        Me.LayoutControlGroup3.Size = New System.Drawing.Size(928, 219)
         Me.LayoutControlGroup3.TextVisible = False
         '
         'LayoutControlGroup4
         '
         Me.LayoutControlGroup4.CaptionImage = CType(resources.GetObject("LayoutControlGroup4.CaptionImage"), System.Drawing.Image)
-        Me.LayoutControlGroup4.Items.AddRange(New DevExpress.XtraLayout.BaseLayoutItem() {Me.LayoutControlItem10, Me.LayoutControlItem1, Me.LayoutControlItem3, Me.LayoutControlItem5, Me.LayoutControlItem4, Me.LayoutControlItem7, Me.LayoutControlItem8, Me.EmptySpaceItem3, Me.EmptySpaceItem2, Me.LayoutControlItem6, Me.LayoutControlItem15, Me.LayoutControlItem16, Me.LayoutControlItem14, Me.LayoutControlItem13, Me.EmptySpaceItem1, Me.EmptySpaceItem5, Me.EmptySpaceItem7, Me.EmptySpaceItem4, Me.EmptySpaceItem9, Me.LayoutControlItem2, Me.LayoutControlItem9, Me.LayoutControlItem11, Me.LayoutControlItem17, Me.EmptySpaceItem10, Me.LayoutControlItem18, Me.EmptySpaceItem8, Me.LayoutControlItem19, Me.LayoutControlItem20, Me.EmptySpaceItem12, Me.EmptySpaceItem13, Me.LayoutControlItem21, Me.EmptySpaceItem14, Me.LayoutControlItem22, Me.EmptySpaceItem15, Me.EmptySpaceItem6, Me.LayoutControlItem12, Me.EmptySpaceItem11, Me.LayoutControlItem23})
+        Me.LayoutControlGroup4.Items.AddRange(New DevExpress.XtraLayout.BaseLayoutItem() {Me.LayoutControlItem10, Me.LayoutControlItem1, Me.LayoutControlItem3, Me.LayoutControlItem5, Me.LayoutControlItem4, Me.LayoutControlItem7, Me.LayoutControlItem8, Me.EmptySpaceItem3, Me.EmptySpaceItem2, Me.LayoutControlItem6, Me.LayoutControlItem15, Me.LayoutControlItem16, Me.LayoutControlItem14, Me.LayoutControlItem13, Me.EmptySpaceItem1, Me.EmptySpaceItem5, Me.EmptySpaceItem7, Me.EmptySpaceItem4, Me.EmptySpaceItem9, Me.LayoutControlItem2, Me.LayoutControlItem9, Me.LayoutControlItem11, Me.LayoutControlItem17, Me.EmptySpaceItem10, Me.LayoutControlItem18, Me.EmptySpaceItem8, Me.LayoutControlItem19, Me.LayoutControlItem20, Me.EmptySpaceItem12, Me.EmptySpaceItem13, Me.LayoutControlItem21, Me.EmptySpaceItem14, Me.LayoutControlItem22, Me.EmptySpaceItem15, Me.LayoutControlItem12, Me.EmptySpaceItem11, Me.LayoutControlItem23, Me.LayoutControlItem24, Me.EmptySpaceItem6})
         Me.LayoutControlGroup4.Location = New System.Drawing.Point(0, 0)
         Me.LayoutControlGroup4.Name = "LayoutControlGroup4"
-        Me.LayoutControlGroup4.Size = New System.Drawing.Size(861, 199)
+        Me.LayoutControlGroup4.Size = New System.Drawing.Size(908, 199)
         Me.LayoutControlGroup4.Text = "Captación de Descuentos con Escalas"
         '
         'LayoutControlItem10
@@ -470,7 +474,7 @@ Partial Class frmDescuentos
         Me.LayoutControlItem10.Control = Me.SearchLookUpEditProducto
         Me.LayoutControlItem10.Location = New System.Drawing.Point(0, 24)
         Me.LayoutControlItem10.Name = "LayoutControlItem10"
-        Me.LayoutControlItem10.Size = New System.Drawing.Size(524, 28)
+        Me.LayoutControlItem10.Size = New System.Drawing.Size(553, 28)
         Me.LayoutControlItem10.Text = "Producto Base "
         Me.LayoutControlItem10.TextSize = New System.Drawing.Size(90, 13)
         '
@@ -479,61 +483,61 @@ Partial Class frmDescuentos
         Me.LayoutControlItem1.Control = Me.SearchLookUpEditProveedor
         Me.LayoutControlItem1.Location = New System.Drawing.Point(0, 0)
         Me.LayoutControlItem1.Name = "LayoutControlItem1"
-        Me.LayoutControlItem1.Size = New System.Drawing.Size(524, 24)
+        Me.LayoutControlItem1.Size = New System.Drawing.Size(553, 24)
         Me.LayoutControlItem1.Text = "Proveedor"
         Me.LayoutControlItem1.TextSize = New System.Drawing.Size(90, 13)
         '
         'LayoutControlItem3
         '
         Me.LayoutControlItem3.Control = Me.chkDejarProducto
-        Me.LayoutControlItem3.Location = New System.Drawing.Point(553, 23)
+        Me.LayoutControlItem3.Location = New System.Drawing.Point(584, 23)
         Me.LayoutControlItem3.Name = "LayoutControlItem3"
-        Me.LayoutControlItem3.Size = New System.Drawing.Size(147, 29)
+        Me.LayoutControlItem3.Size = New System.Drawing.Size(155, 29)
         Me.LayoutControlItem3.TextSize = New System.Drawing.Size(0, 0)
         Me.LayoutControlItem3.TextVisible = False
         '
         'LayoutControlItem5
         '
         Me.LayoutControlItem5.Control = Me.chkDejarProv
-        Me.LayoutControlItem5.Location = New System.Drawing.Point(553, 0)
+        Me.LayoutControlItem5.Location = New System.Drawing.Point(584, 0)
         Me.LayoutControlItem5.Name = "LayoutControlItem5"
-        Me.LayoutControlItem5.Size = New System.Drawing.Size(147, 23)
+        Me.LayoutControlItem5.Size = New System.Drawing.Size(155, 23)
         Me.LayoutControlItem5.TextSize = New System.Drawing.Size(0, 0)
         Me.LayoutControlItem5.TextVisible = False
         '
         'LayoutControlItem4
         '
         Me.LayoutControlItem4.Control = Me.cmdRefresh
-        Me.LayoutControlItem4.Location = New System.Drawing.Point(745, 0)
+        Me.LayoutControlItem4.Location = New System.Drawing.Point(787, 0)
         Me.LayoutControlItem4.Name = "LayoutControlItem4"
-        Me.LayoutControlItem4.Size = New System.Drawing.Size(92, 86)
+        Me.LayoutControlItem4.Size = New System.Drawing.Size(97, 86)
         Me.LayoutControlItem4.TextSize = New System.Drawing.Size(0, 0)
         Me.LayoutControlItem4.TextVisible = False
         '
         'LayoutControlItem7
         '
         Me.LayoutControlItem7.Control = Me.cmdDelProv
-        Me.LayoutControlItem7.Location = New System.Drawing.Point(524, 0)
+        Me.LayoutControlItem7.Location = New System.Drawing.Point(553, 0)
         Me.LayoutControlItem7.Name = "LayoutControlItem7"
-        Me.LayoutControlItem7.Size = New System.Drawing.Size(29, 26)
+        Me.LayoutControlItem7.Size = New System.Drawing.Size(31, 26)
         Me.LayoutControlItem7.TextSize = New System.Drawing.Size(0, 0)
         Me.LayoutControlItem7.TextVisible = False
         '
         'LayoutControlItem8
         '
         Me.LayoutControlItem8.Control = Me.cmdDelProd
-        Me.LayoutControlItem8.Location = New System.Drawing.Point(524, 26)
+        Me.LayoutControlItem8.Location = New System.Drawing.Point(553, 26)
         Me.LayoutControlItem8.Name = "LayoutControlItem8"
-        Me.LayoutControlItem8.Size = New System.Drawing.Size(29, 26)
+        Me.LayoutControlItem8.Size = New System.Drawing.Size(31, 26)
         Me.LayoutControlItem8.TextSize = New System.Drawing.Size(0, 0)
         Me.LayoutControlItem8.TextVisible = False
         '
         'EmptySpaceItem3
         '
         Me.EmptySpaceItem3.AllowHotTrack = False
-        Me.EmptySpaceItem3.Location = New System.Drawing.Point(700, 0)
+        Me.EmptySpaceItem3.Location = New System.Drawing.Point(739, 0)
         Me.EmptySpaceItem3.Name = "EmptySpaceItem3"
-        Me.EmptySpaceItem3.Size = New System.Drawing.Size(45, 86)
+        Me.EmptySpaceItem3.Size = New System.Drawing.Size(48, 86)
         Me.EmptySpaceItem3.TextSize = New System.Drawing.Size(0, 0)
         '
         'EmptySpaceItem2
@@ -541,13 +545,13 @@ Partial Class frmDescuentos
         Me.EmptySpaceItem2.AllowHotTrack = False
         Me.EmptySpaceItem2.Location = New System.Drawing.Point(0, 76)
         Me.EmptySpaceItem2.Name = "EmptySpaceItem2"
-        Me.EmptySpaceItem2.Size = New System.Drawing.Size(700, 10)
+        Me.EmptySpaceItem2.Size = New System.Drawing.Size(739, 10)
         Me.EmptySpaceItem2.TextSize = New System.Drawing.Size(0, 0)
         '
         'LayoutControlItem6
         '
         Me.LayoutControlItem6.Control = Me.cmdEscalaenLote
-        Me.LayoutControlItem6.Location = New System.Drawing.Point(538, 103)
+        Me.LayoutControlItem6.Location = New System.Drawing.Point(561, 103)
         Me.LayoutControlItem6.Name = "LayoutControlItem6"
         Me.LayoutControlItem6.Size = New System.Drawing.Size(44, 48)
         Me.LayoutControlItem6.TextSize = New System.Drawing.Size(0, 0)
@@ -556,25 +560,25 @@ Partial Class frmDescuentos
         'LayoutControlItem15
         '
         Me.LayoutControlItem15.Control = Me.btnDelete
-        Me.LayoutControlItem15.Location = New System.Drawing.Point(705, 103)
+        Me.LayoutControlItem15.Location = New System.Drawing.Point(723, 103)
         Me.LayoutControlItem15.Name = "LayoutControlItem15"
-        Me.LayoutControlItem15.Size = New System.Drawing.Size(46, 48)
+        Me.LayoutControlItem15.Size = New System.Drawing.Size(44, 48)
         Me.LayoutControlItem15.TextSize = New System.Drawing.Size(0, 0)
         Me.LayoutControlItem15.TextVisible = False
         '
         'LayoutControlItem16
         '
         Me.LayoutControlItem16.Control = Me.btnExcel
-        Me.LayoutControlItem16.Location = New System.Drawing.Point(768, 103)
+        Me.LayoutControlItem16.Location = New System.Drawing.Point(777, 103)
         Me.LayoutControlItem16.Name = "LayoutControlItem16"
-        Me.LayoutControlItem16.Size = New System.Drawing.Size(56, 48)
+        Me.LayoutControlItem16.Size = New System.Drawing.Size(44, 48)
         Me.LayoutControlItem16.TextSize = New System.Drawing.Size(0, 0)
         Me.LayoutControlItem16.TextVisible = False
         '
         'LayoutControlItem14
         '
         Me.LayoutControlItem14.Control = Me.btnEdit
-        Me.LayoutControlItem14.Location = New System.Drawing.Point(646, 103)
+        Me.LayoutControlItem14.Location = New System.Drawing.Point(669, 103)
         Me.LayoutControlItem14.Name = "LayoutControlItem14"
         Me.LayoutControlItem14.Size = New System.Drawing.Size(44, 48)
         Me.LayoutControlItem14.TextSize = New System.Drawing.Size(0, 0)
@@ -583,7 +587,7 @@ Partial Class frmDescuentos
         'LayoutControlItem13
         '
         Me.LayoutControlItem13.Control = Me.cmdNewClear
-        Me.LayoutControlItem13.Location = New System.Drawing.Point(592, 103)
+        Me.LayoutControlItem13.Location = New System.Drawing.Point(615, 103)
         Me.LayoutControlItem13.Name = "LayoutControlItem13"
         Me.LayoutControlItem13.Size = New System.Drawing.Size(44, 48)
         Me.LayoutControlItem13.TextSize = New System.Drawing.Size(0, 0)
@@ -592,15 +596,15 @@ Partial Class frmDescuentos
         'EmptySpaceItem1
         '
         Me.EmptySpaceItem1.AllowHotTrack = False
-        Me.EmptySpaceItem1.Location = New System.Drawing.Point(690, 103)
+        Me.EmptySpaceItem1.Location = New System.Drawing.Point(713, 103)
         Me.EmptySpaceItem1.Name = "EmptySpaceItem1"
-        Me.EmptySpaceItem1.Size = New System.Drawing.Size(15, 48)
+        Me.EmptySpaceItem1.Size = New System.Drawing.Size(10, 48)
         Me.EmptySpaceItem1.TextSize = New System.Drawing.Size(0, 0)
         '
         'EmptySpaceItem5
         '
         Me.EmptySpaceItem5.AllowHotTrack = False
-        Me.EmptySpaceItem5.Location = New System.Drawing.Point(636, 103)
+        Me.EmptySpaceItem5.Location = New System.Drawing.Point(659, 103)
         Me.EmptySpaceItem5.Name = "EmptySpaceItem5"
         Me.EmptySpaceItem5.Size = New System.Drawing.Size(10, 48)
         Me.EmptySpaceItem5.TextSize = New System.Drawing.Size(0, 0)
@@ -608,7 +612,7 @@ Partial Class frmDescuentos
         'EmptySpaceItem7
         '
         Me.EmptySpaceItem7.AllowHotTrack = False
-        Me.EmptySpaceItem7.Location = New System.Drawing.Point(582, 103)
+        Me.EmptySpaceItem7.Location = New System.Drawing.Point(605, 103)
         Me.EmptySpaceItem7.Name = "EmptySpaceItem7"
         Me.EmptySpaceItem7.Size = New System.Drawing.Size(10, 48)
         Me.EmptySpaceItem7.TextSize = New System.Drawing.Size(0, 0)
@@ -616,9 +620,9 @@ Partial Class frmDescuentos
         'EmptySpaceItem4
         '
         Me.EmptySpaceItem4.AllowHotTrack = False
-        Me.EmptySpaceItem4.Location = New System.Drawing.Point(751, 103)
+        Me.EmptySpaceItem4.Location = New System.Drawing.Point(767, 103)
         Me.EmptySpaceItem4.Name = "EmptySpaceItem4"
-        Me.EmptySpaceItem4.Size = New System.Drawing.Size(17, 48)
+        Me.EmptySpaceItem4.Size = New System.Drawing.Size(10, 48)
         Me.EmptySpaceItem4.TextSize = New System.Drawing.Size(0, 0)
         '
         'EmptySpaceItem9
@@ -626,7 +630,7 @@ Partial Class frmDescuentos
         Me.EmptySpaceItem9.AllowHotTrack = False
         Me.EmptySpaceItem9.Location = New System.Drawing.Point(530, 86)
         Me.EmptySpaceItem9.Name = "EmptySpaceItem9"
-        Me.EmptySpaceItem9.Size = New System.Drawing.Size(307, 17)
+        Me.EmptySpaceItem9.Size = New System.Drawing.Size(354, 17)
         Me.EmptySpaceItem9.TextSize = New System.Drawing.Size(0, 0)
         '
         'LayoutControlItem2
@@ -641,9 +645,9 @@ Partial Class frmDescuentos
         'LayoutControlItem9
         '
         Me.LayoutControlItem9.Control = Me.txtDesde
-        Me.LayoutControlItem9.Location = New System.Drawing.Point(22, 103)
+        Me.LayoutControlItem9.Location = New System.Drawing.Point(29, 103)
         Me.LayoutControlItem9.Name = "LayoutControlItem9"
-        Me.LayoutControlItem9.Size = New System.Drawing.Size(116, 24)
+        Me.LayoutControlItem9.Size = New System.Drawing.Size(118, 24)
         Me.LayoutControlItem9.Text = "Desde"
         Me.LayoutControlItem9.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize
         Me.LayoutControlItem9.TextSize = New System.Drawing.Size(30, 13)
@@ -652,9 +656,9 @@ Partial Class frmDescuentos
         'LayoutControlItem11
         '
         Me.LayoutControlItem11.Control = Me.txtHasta
-        Me.LayoutControlItem11.Location = New System.Drawing.Point(138, 103)
+        Me.LayoutControlItem11.Location = New System.Drawing.Point(147, 103)
         Me.LayoutControlItem11.Name = "LayoutControlItem11"
-        Me.LayoutControlItem11.Size = New System.Drawing.Size(103, 24)
+        Me.LayoutControlItem11.Size = New System.Drawing.Size(108, 24)
         Me.LayoutControlItem11.Text = "Hasta"
         Me.LayoutControlItem11.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize
         Me.LayoutControlItem11.TextSize = New System.Drawing.Size(28, 13)
@@ -665,22 +669,22 @@ Partial Class frmDescuentos
         Me.LayoutControlItem17.Control = Me.SearchLookUpEditProductoReceptor
         Me.LayoutControlItem17.Location = New System.Drawing.Point(0, 52)
         Me.LayoutControlItem17.Name = "LayoutControlItem17"
-        Me.LayoutControlItem17.Size = New System.Drawing.Size(524, 24)
+        Me.LayoutControlItem17.Size = New System.Drawing.Size(553, 24)
         Me.LayoutControlItem17.Text = "Producto Receptor"
         Me.LayoutControlItem17.TextSize = New System.Drawing.Size(90, 13)
         '
         'EmptySpaceItem10
         '
         Me.EmptySpaceItem10.AllowHotTrack = False
-        Me.EmptySpaceItem10.Location = New System.Drawing.Point(524, 52)
+        Me.EmptySpaceItem10.Location = New System.Drawing.Point(553, 52)
         Me.EmptySpaceItem10.Name = "EmptySpaceItem10"
-        Me.EmptySpaceItem10.Size = New System.Drawing.Size(176, 24)
+        Me.EmptySpaceItem10.Size = New System.Drawing.Size(186, 24)
         Me.EmptySpaceItem10.TextSize = New System.Drawing.Size(0, 0)
         '
         'LayoutControlItem18
         '
         Me.LayoutControlItem18.Control = Me.cmdCopyEscala
-        Me.LayoutControlItem18.Location = New System.Drawing.Point(484, 103)
+        Me.LayoutControlItem18.Location = New System.Drawing.Point(507, 103)
         Me.LayoutControlItem18.Name = "LayoutControlItem18"
         Me.LayoutControlItem18.Size = New System.Drawing.Size(44, 48)
         Me.LayoutControlItem18.TextSize = New System.Drawing.Size(0, 0)
@@ -689,7 +693,7 @@ Partial Class frmDescuentos
         'EmptySpaceItem8
         '
         Me.EmptySpaceItem8.AllowHotTrack = False
-        Me.EmptySpaceItem8.Location = New System.Drawing.Point(528, 103)
+        Me.EmptySpaceItem8.Location = New System.Drawing.Point(551, 103)
         Me.EmptySpaceItem8.Name = "EmptySpaceItem8"
         Me.EmptySpaceItem8.Size = New System.Drawing.Size(10, 48)
         Me.EmptySpaceItem8.TextSize = New System.Drawing.Size(0, 0)
@@ -699,7 +703,7 @@ Partial Class frmDescuentos
         Me.LayoutControlItem19.Control = Me.DateEditInicio
         Me.LayoutControlItem19.Location = New System.Drawing.Point(0, 127)
         Me.LayoutControlItem19.Name = "LayoutControlItem19"
-        Me.LayoutControlItem19.Size = New System.Drawing.Size(138, 24)
+        Me.LayoutControlItem19.Size = New System.Drawing.Size(147, 24)
         Me.LayoutControlItem19.Text = "Fecha Inicial"
         Me.LayoutControlItem19.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize
         Me.LayoutControlItem19.TextSize = New System.Drawing.Size(59, 13)
@@ -708,9 +712,9 @@ Partial Class frmDescuentos
         'LayoutControlItem20
         '
         Me.LayoutControlItem20.Control = Me.DateEditFin
-        Me.LayoutControlItem20.Location = New System.Drawing.Point(138, 127)
+        Me.LayoutControlItem20.Location = New System.Drawing.Point(147, 127)
         Me.LayoutControlItem20.Name = "LayoutControlItem20"
-        Me.LayoutControlItem20.Size = New System.Drawing.Size(133, 24)
+        Me.LayoutControlItem20.Size = New System.Drawing.Size(150, 24)
         Me.LayoutControlItem20.Text = "Fecha Final"
         Me.LayoutControlItem20.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize
         Me.LayoutControlItem20.TextSize = New System.Drawing.Size(54, 13)
@@ -721,24 +725,24 @@ Partial Class frmDescuentos
         Me.EmptySpaceItem12.AllowHotTrack = False
         Me.EmptySpaceItem12.Location = New System.Drawing.Point(0, 103)
         Me.EmptySpaceItem12.Name = "EmptySpaceItem12"
-        Me.EmptySpaceItem12.Size = New System.Drawing.Size(22, 24)
+        Me.EmptySpaceItem12.Size = New System.Drawing.Size(29, 24)
         Me.EmptySpaceItem12.TextSize = New System.Drawing.Size(0, 0)
         '
         'EmptySpaceItem13
         '
         Me.EmptySpaceItem13.AllowHotTrack = False
-        Me.EmptySpaceItem13.Location = New System.Drawing.Point(420, 103)
+        Me.EmptySpaceItem13.Location = New System.Drawing.Point(421, 103)
         Me.EmptySpaceItem13.Name = "EmptySpaceItem13"
-        Me.EmptySpaceItem13.Size = New System.Drawing.Size(10, 48)
+        Me.EmptySpaceItem13.Size = New System.Drawing.Size(32, 48)
         Me.EmptySpaceItem13.TextSize = New System.Drawing.Size(0, 0)
         '
         'LayoutControlItem21
         '
         Me.LayoutControlItem21.Control = Me.txtDescuento
         Me.LayoutControlItem21.CustomizationFormText = "Bono Bono"
-        Me.LayoutControlItem21.Location = New System.Drawing.Point(298, 103)
+        Me.LayoutControlItem21.Location = New System.Drawing.Point(297, 103)
         Me.LayoutControlItem21.Name = "LayoutControlItem21"
-        Me.LayoutControlItem21.Size = New System.Drawing.Size(122, 24)
+        Me.LayoutControlItem21.Size = New System.Drawing.Size(124, 24)
         Me.LayoutControlItem21.Text = "% Promoción"
         Me.LayoutControlItem21.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize
         Me.LayoutControlItem21.TextSize = New System.Drawing.Size(63, 13)
@@ -747,32 +751,32 @@ Partial Class frmDescuentos
         'EmptySpaceItem14
         '
         Me.EmptySpaceItem14.AllowHotTrack = False
-        Me.EmptySpaceItem14.Location = New System.Drawing.Point(380, 127)
+        Me.EmptySpaceItem14.Location = New System.Drawing.Point(409, 127)
         Me.EmptySpaceItem14.Name = "EmptySpaceItem14"
-        Me.EmptySpaceItem14.Size = New System.Drawing.Size(40, 24)
+        Me.EmptySpaceItem14.Size = New System.Drawing.Size(12, 24)
         Me.EmptySpaceItem14.TextSize = New System.Drawing.Size(0, 0)
         '
         'LayoutControlItem22
         '
         Me.LayoutControlItem22.Control = Me.chkdejarFechas
-        Me.LayoutControlItem22.Location = New System.Drawing.Point(271, 127)
+        Me.LayoutControlItem22.Location = New System.Drawing.Point(297, 127)
         Me.LayoutControlItem22.Name = "LayoutControlItem22"
-        Me.LayoutControlItem22.Size = New System.Drawing.Size(109, 24)
+        Me.LayoutControlItem22.Size = New System.Drawing.Size(112, 24)
         Me.LayoutControlItem22.TextSize = New System.Drawing.Size(0, 0)
         Me.LayoutControlItem22.TextVisible = False
         '
         'EmptySpaceItem15
         '
         Me.EmptySpaceItem15.AllowHotTrack = False
-        Me.EmptySpaceItem15.Location = New System.Drawing.Point(241, 103)
+        Me.EmptySpaceItem15.Location = New System.Drawing.Point(255, 103)
         Me.EmptySpaceItem15.Name = "EmptySpaceItem15"
-        Me.EmptySpaceItem15.Size = New System.Drawing.Size(57, 24)
+        Me.EmptySpaceItem15.Size = New System.Drawing.Size(42, 24)
         Me.EmptySpaceItem15.TextSize = New System.Drawing.Size(0, 0)
         '
         'EmptySpaceItem6
         '
         Me.EmptySpaceItem6.AllowHotTrack = False
-        Me.EmptySpaceItem6.Location = New System.Drawing.Point(824, 103)
+        Me.EmptySpaceItem6.Location = New System.Drawing.Point(821, 103)
         Me.EmptySpaceItem6.Name = "EmptySpaceItem6"
         Me.EmptySpaceItem6.Size = New System.Drawing.Size(13, 48)
         Me.EmptySpaceItem6.TextSize = New System.Drawing.Size(0, 0)
@@ -780,7 +784,7 @@ Partial Class frmDescuentos
         'LayoutControlItem12
         '
         Me.LayoutControlItem12.Control = Me.btnPropFecha
-        Me.LayoutControlItem12.Location = New System.Drawing.Point(430, 103)
+        Me.LayoutControlItem12.Location = New System.Drawing.Point(453, 103)
         Me.LayoutControlItem12.Name = "LayoutControlItem12"
         Me.LayoutControlItem12.Size = New System.Drawing.Size(44, 48)
         Me.LayoutControlItem12.TextSize = New System.Drawing.Size(0, 0)
@@ -789,7 +793,7 @@ Partial Class frmDescuentos
         'EmptySpaceItem11
         '
         Me.EmptySpaceItem11.AllowHotTrack = False
-        Me.EmptySpaceItem11.Location = New System.Drawing.Point(474, 103)
+        Me.EmptySpaceItem11.Location = New System.Drawing.Point(497, 103)
         Me.EmptySpaceItem11.Name = "EmptySpaceItem11"
         Me.EmptySpaceItem11.Size = New System.Drawing.Size(10, 48)
         Me.EmptySpaceItem11.TextSize = New System.Drawing.Size(0, 0)
@@ -822,7 +826,7 @@ Partial Class frmDescuentos
         Me.GridViewDetalle.GroupSummary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Count, "", Me.Descr, "{Count = {0}}")})
         Me.GridViewDetalle.Name = "GridViewDetalle"
         Me.GridViewDetalle.OptionsBehavior.ReadOnly = True
-        Me.GridViewDetalle.OptionsFind.AlwaysVisible = True
+        Me.GridViewDetalle.OptionsFind.AllowFindPanel = False
         Me.GridViewDetalle.OptionsView.AllowCellMerge = True
         Me.GridViewDetalle.OptionsView.ShowAutoFilterRow = True
         Me.GridViewDetalle.OptionsView.ShowFooter = True
@@ -918,6 +922,24 @@ Partial Class frmDescuentos
         Me.Descuento.VisibleIndex = 8
         Me.Descuento.Width = 72
         '
+        'btnCancel
+        '
+        Me.btnCancel.Image = CType(resources.GetObject("btnCancel.Image"), System.Drawing.Image)
+        Me.btnCancel.Location = New System.Drawing.Point(858, 151)
+        Me.btnCancel.Name = "btnCancel"
+        Me.btnCancel.Size = New System.Drawing.Size(46, 38)
+        Me.btnCancel.StyleController = Me.LayoutControl2
+        Me.btnCancel.TabIndex = 42
+        '
+        'LayoutControlItem24
+        '
+        Me.LayoutControlItem24.Control = Me.btnCancel
+        Me.LayoutControlItem24.Location = New System.Drawing.Point(834, 103)
+        Me.LayoutControlItem24.Name = "LayoutControlItem24"
+        Me.LayoutControlItem24.Size = New System.Drawing.Size(50, 48)
+        Me.LayoutControlItem24.TextSize = New System.Drawing.Size(0, 0)
+        Me.LayoutControlItem24.TextVisible = False
+        '
         'frmDescuentos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -987,6 +1009,7 @@ Partial Class frmDescuentos
         CType(Me.LayoutControlItem23, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridControl1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridViewDetalle, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.LayoutControlItem24, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1070,4 +1093,6 @@ Partial Class frmDescuentos
     Friend WithEvents LabelControl2 As DevExpress.XtraEditors.LabelControl
     Friend WithEvents LayoutControlItem23 As DevExpress.XtraLayout.LayoutControlItem
     Friend WithEvents AlertControl1 As DevExpress.XtraBars.Alerter.AlertControl
+    Friend WithEvents btnCancel As DevExpress.XtraEditors.SimpleButton
+    Friend WithEvents LayoutControlItem24 As DevExpress.XtraLayout.LayoutControlItem
 End Class
