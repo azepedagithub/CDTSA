@@ -26,6 +26,8 @@ Partial Class frmRemisionBodega
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmRemisionBodega))
         Me.LayoutControl1 = New DevExpress.XtraLayout.LayoutControl()
         Me.LayoutControl2 = New DevExpress.XtraLayout.LayoutControl()
+        Me.lblIDPedido = New DevExpress.XtraEditors.LabelControl()
+        Me.lblNombreClientePedido = New DevExpress.XtraEditors.LabelControl()
         Me.btnRegresar = New DevExpress.XtraEditors.SimpleButton()
         Me.btnCancelar = New DevExpress.XtraEditors.SimpleButton()
         Me.btnModificar = New DevExpress.XtraEditors.SimpleButton()
@@ -65,6 +67,11 @@ Partial Class frmRemisionBodega
         Me.groupModify = New DevExpress.XtraLayout.LayoutControlGroup()
         Me.LayoutControlItem8 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.EmptySpaceItem5 = New DevExpress.XtraLayout.EmptySpaceItem()
+        Me.LayoutControlItem16 = New DevExpress.XtraLayout.LayoutControlItem()
+        Me.EmptySpaceItem7 = New DevExpress.XtraLayout.EmptySpaceItem()
+        Me.LayoutControlItem18 = New DevExpress.XtraLayout.LayoutControlItem()
+        Me.EmptySpaceItem6 = New DevExpress.XtraLayout.EmptySpaceItem()
+        Me.EmptySpaceItem8 = New DevExpress.XtraLayout.EmptySpaceItem()
         Me.dtgPedidosProceso = New DevExpress.XtraGrid.GridControl()
         Me.GridViewPedidoInProcess = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.colIDPedidoProceso = New DevExpress.XtraGrid.Columns.GridColumn()
@@ -117,6 +124,11 @@ Partial Class frmRemisionBodega
         CType(Me.groupModify, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem8, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.EmptySpaceItem5, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.LayoutControlItem16, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.EmptySpaceItem7, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.LayoutControlItem18, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.EmptySpaceItem6, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.EmptySpaceItem8, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dtgPedidosProceso, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridViewPedidoInProcess, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dtgPedidos, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -146,6 +158,8 @@ Partial Class frmRemisionBodega
         '
         'LayoutControl2
         '
+        Me.LayoutControl2.Controls.Add(Me.lblIDPedido)
+        Me.LayoutControl2.Controls.Add(Me.lblNombreClientePedido)
         Me.LayoutControl2.Controls.Add(Me.btnRegresar)
         Me.LayoutControl2.Controls.Add(Me.btnCancelar)
         Me.LayoutControl2.Controls.Add(Me.btnModificar)
@@ -160,18 +174,38 @@ Partial Class frmRemisionBodega
         Me.LayoutControl2.Controls.Add(Me.txtCantidad)
         Me.LayoutControl2.Location = New System.Drawing.Point(12, 326)
         Me.LayoutControl2.Name = "LayoutControl2"
-        Me.LayoutControl2.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = New System.Drawing.Rectangle(431, 158, 250, 350)
+        Me.LayoutControl2.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = New System.Drawing.Rectangle(823, 6, 250, 350)
         Me.LayoutControl2.Root = Me.Root
         Me.LayoutControl2.Size = New System.Drawing.Size(1009, 412)
         Me.LayoutControl2.TabIndex = 6
         Me.LayoutControl2.Text = "LayoutControl2"
         '
+        'lblIDPedido
+        '
+        Me.lblIDPedido.Appearance.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblIDPedido.Location = New System.Drawing.Point(93, 116)
+        Me.lblIDPedido.Name = "lblIDPedido"
+        Me.lblIDPedido.Size = New System.Drawing.Size(28, 16)
+        Me.lblIDPedido.StyleController = Me.LayoutControl2
+        Me.lblIDPedido.TabIndex = 19
+        Me.lblIDPedido.Text = "-- --"
+        '
+        'lblNombreClientePedido
+        '
+        Me.lblNombreClientePedido.Appearance.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblNombreClientePedido.Location = New System.Drawing.Point(150, 116)
+        Me.lblNombreClientePedido.Name = "lblNombreClientePedido"
+        Me.lblNombreClientePedido.Size = New System.Drawing.Size(28, 16)
+        Me.lblNombreClientePedido.StyleController = Me.LayoutControl2
+        Me.lblNombreClientePedido.TabIndex = 17
+        Me.lblNombreClientePedido.Text = "-- --"
+        '
         'btnRegresar
         '
         Me.btnRegresar.Image = CType(resources.GetObject("btnRegresar.Image"), System.Drawing.Image)
-        Me.btnRegresar.Location = New System.Drawing.Point(890, 35)
+        Me.btnRegresar.Location = New System.Drawing.Point(881, 32)
         Me.btnRegresar.Name = "btnRegresar"
-        Me.btnRegresar.Size = New System.Drawing.Size(107, 38)
+        Me.btnRegresar.Size = New System.Drawing.Size(116, 38)
         Me.btnRegresar.StyleController = Me.LayoutControl2
         Me.btnRegresar.TabIndex = 16
         Me.btnRegresar.Text = "Regresar"
@@ -180,7 +214,7 @@ Partial Class frmRemisionBodega
         '
         Me.btnCancelar.Enabled = False
         Me.btnCancelar.Image = CType(resources.GetObject("btnCancelar.Image"), System.Drawing.Image)
-        Me.btnCancelar.Location = New System.Drawing.Point(435, 35)
+        Me.btnCancelar.Location = New System.Drawing.Point(431, 32)
         Me.btnCancelar.Name = "btnCancelar"
         Me.btnCancelar.Size = New System.Drawing.Size(86, 38)
         Me.btnCancelar.StyleController = Me.LayoutControl2
@@ -190,9 +224,9 @@ Partial Class frmRemisionBodega
         'btnModificar
         '
         Me.btnModificar.Image = CType(resources.GetObject("btnModificar.Image"), System.Drawing.Image)
-        Me.btnModificar.Location = New System.Drawing.Point(12, 77)
+        Me.btnModificar.Location = New System.Drawing.Point(12, 74)
         Me.btnModificar.Name = "btnModificar"
-        Me.btnModificar.Size = New System.Drawing.Size(97, 38)
+        Me.btnModificar.Size = New System.Drawing.Size(96, 38)
         Me.btnModificar.StyleController = Me.LayoutControl2
         Me.btnModificar.TabIndex = 14
         Me.btnModificar.Text = "Modificar"
@@ -200,10 +234,10 @@ Partial Class frmRemisionBodega
         'dtgDetallePedido
         '
         Me.dtgDetallePedido.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.dtgDetallePedido.Location = New System.Drawing.Point(12, 167)
+        Me.dtgDetallePedido.Location = New System.Drawing.Point(12, 184)
         Me.dtgDetallePedido.MainView = Me.GridViewDetallePedido
         Me.dtgDetallePedido.Name = "dtgDetallePedido"
-        Me.dtgDetallePedido.Size = New System.Drawing.Size(985, 233)
+        Me.dtgDetallePedido.Size = New System.Drawing.Size(985, 216)
         Me.dtgDetallePedido.TabIndex = 13
         Me.dtgDetallePedido.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GridViewDetallePedido})
         '
@@ -271,9 +305,9 @@ Partial Class frmRemisionBodega
         '
         Me.btnGuardar.Enabled = False
         Me.btnGuardar.Image = CType(resources.GetObject("btnGuardar.Image"), System.Drawing.Image)
-        Me.btnGuardar.Location = New System.Drawing.Point(323, 35)
+        Me.btnGuardar.Location = New System.Drawing.Point(320, 32)
         Me.btnGuardar.Name = "btnGuardar"
-        Me.btnGuardar.Size = New System.Drawing.Size(108, 38)
+        Me.btnGuardar.Size = New System.Drawing.Size(107, 38)
         Me.btnGuardar.StyleController = Me.LayoutControl2
         Me.btnGuardar.TabIndex = 12
         Me.btnGuardar.Text = "Guardar"
@@ -281,9 +315,9 @@ Partial Class frmRemisionBodega
         'btnEliminar
         '
         Me.btnEliminar.Image = CType(resources.GetObject("btnEliminar.Image"), System.Drawing.Image)
-        Me.btnEliminar.Location = New System.Drawing.Point(113, 35)
+        Me.btnEliminar.Location = New System.Drawing.Point(112, 32)
         Me.btnEliminar.Name = "btnEliminar"
-        Me.btnEliminar.Size = New System.Drawing.Size(98, 38)
+        Me.btnEliminar.Size = New System.Drawing.Size(97, 38)
         Me.btnEliminar.StyleController = Me.LayoutControl2
         Me.btnEliminar.TabIndex = 11
         Me.btnEliminar.Text = "Eliminar"
@@ -291,9 +325,9 @@ Partial Class frmRemisionBodega
         'btnEditar
         '
         Me.btnEditar.Image = CType(resources.GetObject("btnEditar.Image"), System.Drawing.Image)
-        Me.btnEditar.Location = New System.Drawing.Point(12, 35)
+        Me.btnEditar.Location = New System.Drawing.Point(12, 32)
         Me.btnEditar.Name = "btnEditar"
-        Me.btnEditar.Size = New System.Drawing.Size(97, 38)
+        Me.btnEditar.Size = New System.Drawing.Size(96, 38)
         Me.btnEditar.StyleController = Me.LayoutControl2
         Me.btnEditar.TabIndex = 10
         Me.btnEditar.Text = "Editar"
@@ -301,32 +335,34 @@ Partial Class frmRemisionBodega
         'btnAgregar
         '
         Me.btnAgregar.Image = CType(resources.GetObject("btnAgregar.Image"), System.Drawing.Image)
-        Me.btnAgregar.Location = New System.Drawing.Point(215, 35)
+        Me.btnAgregar.Location = New System.Drawing.Point(213, 32)
         Me.btnAgregar.Name = "btnAgregar"
-        Me.btnAgregar.Size = New System.Drawing.Size(104, 38)
+        Me.btnAgregar.Size = New System.Drawing.Size(103, 38)
         Me.btnAgregar.StyleController = Me.LayoutControl2
         Me.btnAgregar.TabIndex = 9
         Me.btnAgregar.Text = "Agregar"
         '
         'txtCantLote
         '
-        Me.txtCantLote.Location = New System.Drawing.Point(749, 143)
+        Me.txtCantLote.Enabled = False
+        Me.txtCantLote.Location = New System.Drawing.Point(742, 160)
         Me.txtCantLote.Name = "txtCantLote"
-        Me.txtCantLote.Size = New System.Drawing.Size(248, 20)
+        Me.txtCantLote.Size = New System.Drawing.Size(255, 20)
         Me.txtCantLote.StyleController = Me.LayoutControl2
         Me.txtCantLote.TabIndex = 7
         '
         'slkupLote
         '
         Me.slkupLote.EditValue = "--"
-        Me.slkupLote.Location = New System.Drawing.Point(89, 143)
+        Me.slkupLote.Enabled = False
+        Me.slkupLote.Location = New System.Drawing.Point(89, 160)
         Me.slkupLote.Name = "slkupLote"
         Me.slkupLote.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
         Me.slkupLote.Properties.DisplayMember = "LoteProveedor"
         Me.slkupLote.Properties.NullText = "-- --"
         Me.slkupLote.Properties.ValueMember = "IDLote"
         Me.slkupLote.Properties.View = Me.SearchLookUpEdit1View
-        Me.slkupLote.Size = New System.Drawing.Size(579, 20)
+        Me.slkupLote.Size = New System.Drawing.Size(572, 20)
         Me.slkupLote.StyleController = Me.LayoutControl2
         Me.slkupLote.TabIndex = 6
         '
@@ -356,17 +392,23 @@ Partial Class frmRemisionBodega
         '
         'txtProducto
         '
-        Me.txtProducto.Location = New System.Drawing.Point(89, 119)
+        Me.txtProducto.Location = New System.Drawing.Point(89, 136)
         Me.txtProducto.Name = "txtProducto"
-        Me.txtProducto.Size = New System.Drawing.Size(412, 20)
+        Me.txtProducto.Properties.Appearance.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtProducto.Properties.Appearance.Options.UseFont = True
+        Me.txtProducto.Properties.ReadOnly = True
+        Me.txtProducto.Size = New System.Drawing.Size(572, 20)
         Me.txtProducto.StyleController = Me.LayoutControl2
         Me.txtProducto.TabIndex = 5
         '
         'txtCantidad
         '
-        Me.txtCantidad.Location = New System.Drawing.Point(582, 119)
+        Me.txtCantidad.Location = New System.Drawing.Point(742, 136)
         Me.txtCantidad.Name = "txtCantidad"
-        Me.txtCantidad.Size = New System.Drawing.Size(415, 20)
+        Me.txtCantidad.Properties.Appearance.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtCantidad.Properties.Appearance.Options.UseFont = True
+        Me.txtCantidad.Properties.ReadOnly = True
+        Me.txtCantidad.Size = New System.Drawing.Size(255, 20)
         Me.txtCantidad.StyleController = Me.LayoutControl2
         Me.txtCantidad.TabIndex = 4
         '
@@ -374,7 +416,7 @@ Partial Class frmRemisionBodega
         '
         Me.Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.[True]
         Me.Root.GroupBordersVisible = False
-        Me.Root.Items.AddRange(New DevExpress.XtraLayout.BaseLayoutItem() {Me.LayoutControlItem4, Me.LayoutControlItem5, Me.LayoutControlItem6, Me.LayoutControlItem7, Me.LayoutControlItem12, Me.EmptySpaceItem4, Me.GroupMenu, Me.groupModify})
+        Me.Root.Items.AddRange(New DevExpress.XtraLayout.BaseLayoutItem() {Me.LayoutControlItem4, Me.LayoutControlItem5, Me.LayoutControlItem6, Me.LayoutControlItem7, Me.LayoutControlItem12, Me.EmptySpaceItem4, Me.GroupMenu, Me.groupModify, Me.LayoutControlItem16, Me.EmptySpaceItem7, Me.LayoutControlItem18, Me.EmptySpaceItem6, Me.EmptySpaceItem8})
         Me.Root.Location = New System.Drawing.Point(0, 0)
         Me.Root.Name = "Root"
         Me.Root.Size = New System.Drawing.Size(1009, 412)
@@ -383,45 +425,47 @@ Partial Class frmRemisionBodega
         'LayoutControlItem4
         '
         Me.LayoutControlItem4.Control = Me.txtCantidad
-        Me.LayoutControlItem4.Location = New System.Drawing.Point(493, 107)
+        Me.LayoutControlItem4.Location = New System.Drawing.Point(653, 124)
+        Me.LayoutControlItem4.MinSize = New System.Drawing.Size(131, 24)
         Me.LayoutControlItem4.Name = "LayoutControlItem4"
-        Me.LayoutControlItem4.Size = New System.Drawing.Size(496, 24)
+        Me.LayoutControlItem4.Size = New System.Drawing.Size(336, 24)
+        Me.LayoutControlItem4.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom
         Me.LayoutControlItem4.Text = "Cantidad Total:"
         Me.LayoutControlItem4.TextSize = New System.Drawing.Size(74, 13)
         '
         'LayoutControlItem5
         '
         Me.LayoutControlItem5.Control = Me.txtProducto
-        Me.LayoutControlItem5.Location = New System.Drawing.Point(0, 107)
+        Me.LayoutControlItem5.Location = New System.Drawing.Point(0, 124)
         Me.LayoutControlItem5.Name = "LayoutControlItem5"
-        Me.LayoutControlItem5.Size = New System.Drawing.Size(493, 24)
+        Me.LayoutControlItem5.Size = New System.Drawing.Size(653, 24)
         Me.LayoutControlItem5.Text = "Producto:"
         Me.LayoutControlItem5.TextSize = New System.Drawing.Size(74, 13)
         '
         'LayoutControlItem6
         '
         Me.LayoutControlItem6.Control = Me.slkupLote
-        Me.LayoutControlItem6.Location = New System.Drawing.Point(0, 131)
+        Me.LayoutControlItem6.Location = New System.Drawing.Point(0, 148)
         Me.LayoutControlItem6.Name = "LayoutControlItem6"
-        Me.LayoutControlItem6.Size = New System.Drawing.Size(660, 24)
+        Me.LayoutControlItem6.Size = New System.Drawing.Size(653, 24)
         Me.LayoutControlItem6.Text = "Lote:"
         Me.LayoutControlItem6.TextSize = New System.Drawing.Size(74, 13)
         '
         'LayoutControlItem7
         '
         Me.LayoutControlItem7.Control = Me.txtCantLote
-        Me.LayoutControlItem7.Location = New System.Drawing.Point(660, 131)
+        Me.LayoutControlItem7.Location = New System.Drawing.Point(653, 148)
         Me.LayoutControlItem7.Name = "LayoutControlItem7"
-        Me.LayoutControlItem7.Size = New System.Drawing.Size(329, 24)
+        Me.LayoutControlItem7.Size = New System.Drawing.Size(336, 24)
         Me.LayoutControlItem7.Text = "Cant Lote:"
         Me.LayoutControlItem7.TextSize = New System.Drawing.Size(74, 13)
         '
         'LayoutControlItem12
         '
         Me.LayoutControlItem12.Control = Me.dtgDetallePedido
-        Me.LayoutControlItem12.Location = New System.Drawing.Point(0, 155)
+        Me.LayoutControlItem12.Location = New System.Drawing.Point(0, 172)
         Me.LayoutControlItem12.Name = "LayoutControlItem12"
-        Me.LayoutControlItem12.Size = New System.Drawing.Size(989, 237)
+        Me.LayoutControlItem12.Size = New System.Drawing.Size(989, 220)
         Me.LayoutControlItem12.TextSize = New System.Drawing.Size(0, 0)
         Me.LayoutControlItem12.TextVisible = False
         '
@@ -434,7 +478,7 @@ Partial Class frmRemisionBodega
         Me.EmptySpaceItem4.AppearanceItemCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center
         Me.EmptySpaceItem4.Location = New System.Drawing.Point(0, 0)
         Me.EmptySpaceItem4.Name = "EmptySpaceItem4"
-        Me.EmptySpaceItem4.Size = New System.Drawing.Size(989, 23)
+        Me.EmptySpaceItem4.Size = New System.Drawing.Size(989, 20)
         Me.EmptySpaceItem4.Text = "Detalle del Pedido"
         Me.EmptySpaceItem4.TextSize = New System.Drawing.Size(74, 0)
         Me.EmptySpaceItem4.TextVisible = True
@@ -443,7 +487,7 @@ Partial Class frmRemisionBodega
         '
         Me.GroupMenu.GroupBordersVisible = False
         Me.GroupMenu.Items.AddRange(New DevExpress.XtraLayout.BaseLayoutItem() {Me.LayoutControlItem10, Me.LayoutControlItem11, Me.LayoutControlItem9, Me.LayoutControlItem13, Me.EmptySpaceItem1, Me.LayoutControlItem14, Me.LayoutControlItem15})
-        Me.GroupMenu.Location = New System.Drawing.Point(0, 23)
+        Me.GroupMenu.Location = New System.Drawing.Point(0, 20)
         Me.GroupMenu.Name = "GroupMenu"
         Me.GroupMenu.Size = New System.Drawing.Size(989, 42)
         Me.GroupMenu.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never
@@ -453,49 +497,49 @@ Partial Class frmRemisionBodega
         Me.LayoutControlItem10.Control = Me.btnEditar
         Me.LayoutControlItem10.Location = New System.Drawing.Point(0, 0)
         Me.LayoutControlItem10.Name = "LayoutControlItem10"
-        Me.LayoutControlItem10.Size = New System.Drawing.Size(101, 42)
+        Me.LayoutControlItem10.Size = New System.Drawing.Size(100, 42)
         Me.LayoutControlItem10.TextSize = New System.Drawing.Size(0, 0)
         Me.LayoutControlItem10.TextVisible = False
         '
         'LayoutControlItem11
         '
         Me.LayoutControlItem11.Control = Me.btnEliminar
-        Me.LayoutControlItem11.Location = New System.Drawing.Point(101, 0)
+        Me.LayoutControlItem11.Location = New System.Drawing.Point(100, 0)
         Me.LayoutControlItem11.Name = "LayoutControlItem11"
-        Me.LayoutControlItem11.Size = New System.Drawing.Size(102, 42)
+        Me.LayoutControlItem11.Size = New System.Drawing.Size(101, 42)
         Me.LayoutControlItem11.TextSize = New System.Drawing.Size(0, 0)
         Me.LayoutControlItem11.TextVisible = False
         '
         'LayoutControlItem9
         '
         Me.LayoutControlItem9.Control = Me.btnAgregar
-        Me.LayoutControlItem9.Location = New System.Drawing.Point(203, 0)
+        Me.LayoutControlItem9.Location = New System.Drawing.Point(201, 0)
         Me.LayoutControlItem9.Name = "LayoutControlItem9"
-        Me.LayoutControlItem9.Size = New System.Drawing.Size(108, 42)
+        Me.LayoutControlItem9.Size = New System.Drawing.Size(107, 42)
         Me.LayoutControlItem9.TextSize = New System.Drawing.Size(0, 0)
         Me.LayoutControlItem9.TextVisible = False
         '
         'LayoutControlItem13
         '
         Me.LayoutControlItem13.Control = Me.btnGuardar
-        Me.LayoutControlItem13.Location = New System.Drawing.Point(311, 0)
+        Me.LayoutControlItem13.Location = New System.Drawing.Point(308, 0)
         Me.LayoutControlItem13.Name = "LayoutControlItem13"
-        Me.LayoutControlItem13.Size = New System.Drawing.Size(112, 42)
+        Me.LayoutControlItem13.Size = New System.Drawing.Size(111, 42)
         Me.LayoutControlItem13.TextSize = New System.Drawing.Size(0, 0)
         Me.LayoutControlItem13.TextVisible = False
         '
         'EmptySpaceItem1
         '
         Me.EmptySpaceItem1.AllowHotTrack = False
-        Me.EmptySpaceItem1.Location = New System.Drawing.Point(513, 0)
+        Me.EmptySpaceItem1.Location = New System.Drawing.Point(509, 0)
         Me.EmptySpaceItem1.Name = "EmptySpaceItem1"
-        Me.EmptySpaceItem1.Size = New System.Drawing.Size(365, 42)
+        Me.EmptySpaceItem1.Size = New System.Drawing.Size(360, 42)
         Me.EmptySpaceItem1.TextSize = New System.Drawing.Size(0, 0)
         '
         'LayoutControlItem14
         '
         Me.LayoutControlItem14.Control = Me.btnCancelar
-        Me.LayoutControlItem14.Location = New System.Drawing.Point(423, 0)
+        Me.LayoutControlItem14.Location = New System.Drawing.Point(419, 0)
         Me.LayoutControlItem14.Name = "LayoutControlItem14"
         Me.LayoutControlItem14.Size = New System.Drawing.Size(90, 42)
         Me.LayoutControlItem14.TextSize = New System.Drawing.Size(0, 0)
@@ -504,9 +548,9 @@ Partial Class frmRemisionBodega
         'LayoutControlItem15
         '
         Me.LayoutControlItem15.Control = Me.btnRegresar
-        Me.LayoutControlItem15.Location = New System.Drawing.Point(878, 0)
+        Me.LayoutControlItem15.Location = New System.Drawing.Point(869, 0)
         Me.LayoutControlItem15.Name = "LayoutControlItem15"
-        Me.LayoutControlItem15.Size = New System.Drawing.Size(111, 42)
+        Me.LayoutControlItem15.Size = New System.Drawing.Size(120, 42)
         Me.LayoutControlItem15.TextSize = New System.Drawing.Size(0, 0)
         Me.LayoutControlItem15.TextVisible = False
         '
@@ -514,7 +558,7 @@ Partial Class frmRemisionBodega
         '
         Me.groupModify.GroupBordersVisible = False
         Me.groupModify.Items.AddRange(New DevExpress.XtraLayout.BaseLayoutItem() {Me.LayoutControlItem8, Me.EmptySpaceItem5})
-        Me.groupModify.Location = New System.Drawing.Point(0, 65)
+        Me.groupModify.Location = New System.Drawing.Point(0, 62)
         Me.groupModify.Name = "groupModify"
         Me.groupModify.Size = New System.Drawing.Size(989, 42)
         '
@@ -523,17 +567,59 @@ Partial Class frmRemisionBodega
         Me.LayoutControlItem8.Control = Me.btnModificar
         Me.LayoutControlItem8.Location = New System.Drawing.Point(0, 0)
         Me.LayoutControlItem8.Name = "LayoutControlItem8"
-        Me.LayoutControlItem8.Size = New System.Drawing.Size(101, 42)
+        Me.LayoutControlItem8.Size = New System.Drawing.Size(100, 42)
         Me.LayoutControlItem8.TextSize = New System.Drawing.Size(0, 0)
         Me.LayoutControlItem8.TextVisible = False
         '
         'EmptySpaceItem5
         '
         Me.EmptySpaceItem5.AllowHotTrack = False
-        Me.EmptySpaceItem5.Location = New System.Drawing.Point(101, 0)
+        Me.EmptySpaceItem5.Location = New System.Drawing.Point(100, 0)
         Me.EmptySpaceItem5.Name = "EmptySpaceItem5"
-        Me.EmptySpaceItem5.Size = New System.Drawing.Size(888, 42)
+        Me.EmptySpaceItem5.Size = New System.Drawing.Size(889, 42)
         Me.EmptySpaceItem5.TextSize = New System.Drawing.Size(0, 0)
+        '
+        'LayoutControlItem16
+        '
+        Me.LayoutControlItem16.Control = Me.lblNombreClientePedido
+        Me.LayoutControlItem16.Location = New System.Drawing.Point(138, 104)
+        Me.LayoutControlItem16.Name = "LayoutControlItem16"
+        Me.LayoutControlItem16.Size = New System.Drawing.Size(32, 20)
+        Me.LayoutControlItem16.TextSize = New System.Drawing.Size(0, 0)
+        Me.LayoutControlItem16.TextVisible = False
+        '
+        'EmptySpaceItem7
+        '
+        Me.EmptySpaceItem7.AllowHotTrack = False
+        Me.EmptySpaceItem7.Location = New System.Drawing.Point(170, 104)
+        Me.EmptySpaceItem7.Name = "EmptySpaceItem7"
+        Me.EmptySpaceItem7.Size = New System.Drawing.Size(819, 20)
+        Me.EmptySpaceItem7.TextSize = New System.Drawing.Size(0, 0)
+        '
+        'LayoutControlItem18
+        '
+        Me.LayoutControlItem18.Control = Me.lblIDPedido
+        Me.LayoutControlItem18.Location = New System.Drawing.Point(81, 104)
+        Me.LayoutControlItem18.Name = "LayoutControlItem18"
+        Me.LayoutControlItem18.Size = New System.Drawing.Size(32, 20)
+        Me.LayoutControlItem18.TextSize = New System.Drawing.Size(0, 0)
+        Me.LayoutControlItem18.TextVisible = False
+        '
+        'EmptySpaceItem6
+        '
+        Me.EmptySpaceItem6.AllowHotTrack = False
+        Me.EmptySpaceItem6.Location = New System.Drawing.Point(113, 104)
+        Me.EmptySpaceItem6.Name = "EmptySpaceItem6"
+        Me.EmptySpaceItem6.Size = New System.Drawing.Size(25, 20)
+        Me.EmptySpaceItem6.TextSize = New System.Drawing.Size(0, 0)
+        '
+        'EmptySpaceItem8
+        '
+        Me.EmptySpaceItem8.AllowHotTrack = False
+        Me.EmptySpaceItem8.Location = New System.Drawing.Point(0, 104)
+        Me.EmptySpaceItem8.Name = "EmptySpaceItem8"
+        Me.EmptySpaceItem8.Size = New System.Drawing.Size(81, 20)
+        Me.EmptySpaceItem8.TextSize = New System.Drawing.Size(0, 0)
         '
         'dtgPedidosProceso
         '
@@ -821,6 +907,11 @@ Partial Class frmRemisionBodega
         CType(Me.groupModify, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem8, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.EmptySpaceItem5, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.LayoutControlItem16, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.EmptySpaceItem7, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.LayoutControlItem18, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.EmptySpaceItem6, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.EmptySpaceItem8, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dtgPedidosProceso, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridViewPedidoInProcess, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dtgPedidos, System.ComponentModel.ISupportInitialize).EndInit()
@@ -902,4 +993,11 @@ Partial Class frmRemisionBodega
     Friend WithEvents colIDProductoDetalle As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents btnRegresar As DevExpress.XtraEditors.SimpleButton
     Friend WithEvents LayoutControlItem15 As DevExpress.XtraLayout.LayoutControlItem
+    Friend WithEvents lblIDPedido As DevExpress.XtraEditors.LabelControl
+    Friend WithEvents lblNombreClientePedido As DevExpress.XtraEditors.LabelControl
+    Friend WithEvents LayoutControlItem16 As DevExpress.XtraLayout.LayoutControlItem
+    Friend WithEvents EmptySpaceItem7 As DevExpress.XtraLayout.EmptySpaceItem
+    Friend WithEvents LayoutControlItem18 As DevExpress.XtraLayout.LayoutControlItem
+    Friend WithEvents EmptySpaceItem6 As DevExpress.XtraLayout.EmptySpaceItem
+    Friend WithEvents EmptySpaceItem8 As DevExpress.XtraLayout.EmptySpaceItem
 End Class

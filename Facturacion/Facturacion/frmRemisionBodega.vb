@@ -38,7 +38,15 @@ Public Class frmRemisionBodega
     Sub CargarDetallePedido()
         If currentRow IsNot Nothing Then
             Dim IDPedido As Integer
+            Dim sNombreCliente As String
+
             IDPedido = CInt(currentRow("IDPedido"))
+            sNombreCliente = currentRow("Cliente").ToString()
+
+            Me.lblIDPedido.Text = "IDPedido: " + IDPedido.ToString()
+            Me.lblNombreClientePedido.Text = "Cliente: " + sNombreCliente
+
+
             dtDetallePedido = CManager.ExecSPgetData("fafGetPedidoDetalleRemision", IDPedido.ToString() + ",-1")
             Me.dtgDetallePedido.DataSource = dtDetallePedido
         End If
@@ -87,6 +95,8 @@ Public Class frmRemisionBodega
         If (Me.GridViewDetallePedido.FocusedRowHandle > -1) Then
             Me.groupModify.Visibility = XtraLayout.Utils.LayoutVisibility.Never
             Me.GroupMenu.Visibility = XtraLayout.Utils.LayoutVisibility.Always
+            Me.slkupLote.Enabled = True
+            Me.txtCantLote.Enabled = True
 
             Dim row As DataRow = Me.GridViewDetallePedido.GetFocusedDataRow
 
@@ -247,6 +257,8 @@ Public Class frmRemisionBodega
         CargarDetallePedido()
         Me.dtgPedidos.Enabled = True
         Me.dtgPedidosProceso.Enabled = True
+        Me.slkupLote.Enabled = False
+        Me.txtCantLote.Enabled = False
         'Validar que el pedido sea el total 
         'Guardar el pedido
     End Sub

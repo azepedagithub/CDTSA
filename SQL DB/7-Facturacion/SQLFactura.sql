@@ -4071,48 +4071,51 @@ From (
 ) T
 on  P.IDBodega = T.IDBodega and P.IDProducto = T.IDProducto
 
-Declare @PedidoAtendido as table ( IDPedido int, IDProducto int, IDLote int, FechaVencimiento date, CantAtendida int, Usuario nvarchar(20), CantPedido int, CantBonif int, ExistenciaLote int)
-Declare @Linea int, @TotalLineas int, @indexProducto int, @ItemLote int, @MaxItemLote int,
-@indexLote int, @CantTotalProducto int, @CantAcumulada int, @IDProducto int , @ExistenciaLote int,
-@CantAcumBonificada int,@CantPed int, @CantBonif int, @IDLote int, @CantLoteSugerido int, @FechaVencimiento date
-Set @Linea = 1
-set @TotalLineas = (Select MAX(Linea) from @Fuente)
-if @TotalLineas >1 
-begin
-	While @Linea <= @TotalLineas
-	begin
-		Select @IDProducto = IDProducto,
-		@CantTotalProducto = (Cantidad + CantBonificada )
-		From @Fuente where Linea = @Linea
-		
-		Select @MaxItemLote = MAX (itemLote) 
-		from @Fuente Where IDProducto = @IDProducto
-		set @ItemLote = 1
-		set @CantLoteSugerido = 0
-		While @ItemLote <= @MaxItemLote
-		begin
-			Select @IDLote = IDLote, @ExistenciaLote  =  Existencia, @cantPed = Cantidad, 
-			@CantBonif = CantBonificada, @FechaVencimiento = FechaVencimiento   
-			From @Fuente 
-			where IDProducto = @IDProducto and ItemLote = @ItemLote 
-			
-			if @CantTotalProducto <= @ExistenciaLote
-				Set @CantLoteSugerido = @CantTotalProducto
-			else
-				Set @CantLoteSugerido = @ExistenciaLote
-			set @CantTotalProducto = @CantTotalProducto - @CantLoteSugerido
+Create table #Productos (IndexProd int identity (1,1), IDProducto bigint, CantTotalPedido int default 0, CantBonificada int, CantPedido int)
+insert #Productos (IDProducto, CantTotalPedido, CantBonificada, CantPedido  )
+Select Distinct IDProducto,(Cantidad + CantBonificada ) CantTotalPedido, CantBonificada, Cantidad 
+from @Fuente
 
-		if (@SoloConExistencia = 1 and @CantLoteSugerido > 1 ) or @SoloConExistencia = 0
+Declare @PedidoAtendido as table ( IDPedido int, IDProducto int, IDLote int, 
+FechaVencimiento date, CantAtendida int, 
+Usuario nvarchar(20), CantPedido int, CantBonif int, ExistenciaLote int)
+
+declare @IndexProd int, @CantProd int, @CantTotalPedido int, @IDProducto bigint, @CantAsgAcumulada int,
+@ItemLote int, @MaxItemLote int, @IDLote int, @Existencia int, @CantAsignadaLote int, @Cubierto bit,
+@FechaVencimiento date, @CantBonificada int
+set @CantProd = isnull((select COUNT (*) from #Productos), 0)
+set @IndexProd = 1
+While  @IndexProd <= @CantProd
+begin
+	Select @CantTotalPedido = CantTotalPedido, @IDProducto = IDProducto, @CantBonificada = CantBonificada 
+	from #Productos where IndexProd =  @IndexProd
+	set @MaxItemLote = (select COUNT(*) from  @Fuente where IDProducto = @IDProducto )
+	set @itemLote = 1
+	set @CantAsgAcumulada = 0
+	set @Cubierto = 0
+	While  @itemLote <= @MaxItemLote and @Cubierto = 0
+	begin
+	
+		select @IDLote = IDLote, @Existencia = Existencia, @FechaVencimiento = FechaVencimiento 
+		From @Fuente where IDProducto = @IDProducto and ItemLote = @itemLote
+		
+		if (@CantTotalPedido - @CantAsgAcumulada) >= @Existencia
 		begin
-		insert @PedidoAtendido ( IDPedido, IDProducto, IDLote, FechaVencimiento, CantAtendida, Usuario, CantPedido, CantBonif, ExistenciaLote  )		
-			SElect  @IDPedido IDPedido, @IDProducto IDProducto, @IDLote IDLote, @FechaVencimiento , @CantLoteSugerido CantLoteSugerido, @Usuario Usuario,
-			@CantPed, @CantBonif, @ExistenciaLote 
+			set @CantAsignadaLote = @Existencia
+			set @Cubierto = 1
 		end
-			set @ItemLote = @ItemLote + 1
-		Set @Linea = @Linea + 1	
-		end		
-	Set @Linea = @Linea + 1	
+		else
+				set @CantAsignadaLote = (@CantTotalPedido - @CantAsgAcumulada)
+		set @CantAsgAcumulada = @CantAsgAcumulada + @CantAsignadaLote
+		
+		insert @PedidoAtendido ( IDPedido, IDProducto, IDLote, FechaVencimiento, CantAtendida, Usuario, CantPedido, CantBonif, ExistenciaLote  )		
+		Select @IDPedido, @IDProducto IDProducto, @IDLote IDLote, @FechaVencimiento, @CantAsignadaLote, @Usuario, @CantTotalPedido, @CantBonificada, @Existencia    
+		
+		set @itemLote = @itemLote + 1
 	end
+set @IndexProd = @IndexProd + 1	
+end
+
 	if @CreaPedidoSugerido = 0
 	begin
 	Select  A.IDPedido, A.IDProducto, P.Descr, A.IDLote, L.LoteProveedor, L.LoteInterno, A.FechaVencimiento, A.ExistenciaLote, 
@@ -4121,17 +4124,20 @@ begin
 	From @PedidoAtendido A inner join dbo.invLote L 
 	on A.IDLote = L.IDLote and A.IDProducto= L.IDProducto  join dbo.invProducto P
 	on A.IDProducto = P.IDProducto 
+	Where (@SoloConExistencia = 1 and A.CantAtendida >0 ) or @SoloConExistencia = 0
 	end
 	else
 	begin
-	
-	Select  A.IDPedido, A.IDProducto, A.IDLote, A.FechaVencimiento, 
-	A.CantAtendida CantAtendidaLote,  cast(GETDATE()as DATE) FechaGeneracion, A.Usuario 
-	From @PedidoAtendido A inner join dbo.invLote L 
-	on A.IDLote = L.IDLote and A.IDProducto= L.IDProducto  join dbo.invProducto P
-	on A.IDProducto = P.IDProducto 	
+
+		Select  A.IDPedido, A.IDProducto, A.IDLote, A.FechaVencimiento, 
+		A.CantAtendida CantAtendidaLote,  cast(GETDATE()as DATE) FechaGeneracion, A.Usuario 
+		From @PedidoAtendido A inner join dbo.invLote L 
+		on A.IDLote = L.IDLote and A.IDProducto= L.IDProducto  join dbo.invProducto P
+		on A.IDProducto = P.IDProducto 	
+		Where (@SoloConExistencia = 1 and A.CantAtendida >0 ) or @SoloConExistencia = 0
 	end
-end
+
+drop table  #Productos 
 
 go
 
@@ -4436,13 +4442,13 @@ CREATE PROCEDURE [dbo].[fafUpdatePedidoPreparado] @Operacion AS NVARCHAR(1), @ID
 AS 
 if (@Operacion ='I')
 BEGIN	
-	INSERT INTO dbo.fafPedidoPreparado(IdPedido, IDProducto,IDLote,CantFacturada, CantBonificada,Usuario,Fecha)
-	VALUES	(@IDPedido, @IDProducto,@IDLote,@Cantidad,0,@Usuario,GETDATE())
+	INSERT INTO dbo.fafPedidoPreparado(IdPedido, IDProducto,IDLote,CantAtendida,Usuario,Fecha)
+	VALUES	(@IDPedido, @IDProducto,@IDLote,@Cantidad,@Usuario,GETDATE())
 END	
 
 if (@Operacion ='U')
 BEGIN	
-	UPDATE dbo.fafPedidoPreparado SET CantFacturada = @Cantidad WHERE IDPedido=@IDPedido AND IDProducto=@IDProducto AND IDLote=@IDLote
+	UPDATE dbo.fafPedidoPreparado SET CantAtendida = @Cantidad WHERE IDPedido=@IDPedido AND IDProducto=@IDProducto AND IDLote=@IDLote
 END	
 IF (@Operacion ='D')
 BEGIN
