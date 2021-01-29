@@ -6,7 +6,7 @@ Imports DevExpress.XtraGrid.Editors
 Imports DevExpress.XtraGrid.Views.Grid
 Imports DevExpress.XtraGrid
 Imports DevExpress.XtraGrid.GridControl
-Public Class frmPromociones
+Public Class frmPromocionesClientes
     Dim cManager As New ClassManager
     Dim tableData As New DataTable()
     Public gsStoreProcNameGetData As String
@@ -26,7 +26,7 @@ Public Class frmPromociones
     Sub CargagridLookUpsFromTables()
 
         CargagridSearchLookUp(Me.SearchLookUpEditProveedor, "cppProveedor", "IDProveedor, Nombre, Activo", "", "IDProveedor", "Nombre", "IDProveedor")
-
+        CargagridSearchLookUp(Me.SearchLookUpEditCliente, "ccfClientes", "IDCliente, Nombre, Farmacia", "", "IDCliente", "Nombre", "IDCliente")
 
     End Sub
     Sub CargagridSearchLookUp(ByVal g As SearchLookUpEdit, sTableName As String, sFieldsName As String, sWhere As String, sOrderBy As String, sDisplayMember As String, sValueMember As String)
@@ -41,15 +41,24 @@ Public Class frmPromociones
     Sub RefreshGrid()
         Try
             Dim sProveedor As String
+            Dim sCliente As String
+            Dim sParametros As String
             If Me.SearchLookUpEditProveedor.Text <> "" Then
                 sProveedor = SearchLookUpEditProveedor.EditValue.ToString
             Else
                 sProveedor = "0"
             End If
-            tableData = cManager.ExecSPgetData("fafgetPromociones", sProveedor)
+            If Me.SearchLookUpEditCliente.Text <> "" Then
+                sCliente = SearchLookUpEditCliente.EditValue.ToString
+            Else
+                sCliente = "0"
+            End If
+            sParametros = sProveedor & "," & sCliente
+            tableData = cManager.ExecSPgetData("fafgetPromocionesClientes", sParametros)
             GridControl1.DataSource = tableData
 
             GridControl1.Refresh()
+            txtPorcDesc.Focus()
         Catch ex As Exception
             MessageBox.Show(ex.Message())
         End Try
@@ -66,10 +75,10 @@ Public Class frmPromociones
             Else
                 sRequiereBonif = "0"
             End If
-            sParameters = "'" & sOperacion & "'," & sIDTabla & " ," & SearchLookUpEditProveedor.EditValue.ToString() & "," & _
+            sParameters = "'" & sOperacion & "'," & sIDTabla & " ," & SearchLookUpEditProveedor.EditValue.ToString() & "," & SearchLookUpEditCliente.EditValue.ToString() & "," & _
             SearchLookUpEditProducto.EditValue.ToString() & "," & _
              txtPorcDesc.Text & "," & txtPorcDescCliEsp.Text & ", '" & sFechadesde & "','" & sFechaHasta & "'," & sRequiereBonif & "," & sTodos
-            tableData = cManager.ExecSPgetData("fafUpdatePromociones", sParameters)
+            tableData = cManager.ExecSPgetData("fafUpdatePromocionesClientes", sParameters)
             RefreshGrid()
 
 
@@ -113,6 +122,9 @@ Public Class frmPromociones
         If chkDejarProv.Checked = False Then
             Me.SearchLookUpEditProveedor.Text = ""
         End If
+        If chkDejarCliente.Checked = False Then
+            Me.SearchLookUpEditCliente.Text = ""
+        End If
     End Sub
     Private Sub EnableButtons()
         If lbAdd = False And lbEdit = False Then
@@ -144,10 +156,9 @@ Public Class frmPromociones
         Me.DateEditHasta.Text = ""
     End Sub
     Private Sub GridViewDetalle_FocusedRowChanged(sender As Object, e As DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs) Handles GridViewDetalle.FocusedRowChanged
-        RefreshItemGridToControls()
+        RefreshItemRowToControl()
     End Sub
-
-    Private Sub RefreshItemGridToControls()
+    Private Sub RefreshItemRowToControl()
         Dim index As Integer = GridViewDetalle.FocusedRowHandle
         If index > -1 Then
             Dim dr As DataRow = GridViewDetalle.GetFocusedDataRow()
@@ -155,6 +166,7 @@ Public Class frmPromociones
             If dr IsNot Nothing Then
                 sIDTabla = dr("IDPromocion").ToString()
                 Me.SearchLookUpEditProveedor.EditValue = dr("IDProveedor").ToString()
+                Me.SearchLookUpEditCliente.EditValue = dr("IDCliente").ToString()
                 Me.SearchLookUpEditProducto.EditValue = dr("IDProducto").ToString()
                 Me.txtPorcDesc.Text = dr("PorcDesc")
                 Me.txtPorcDescCliEsp.Text = dr("PorcDescCliEsp")
@@ -167,6 +179,7 @@ Public Class frmPromociones
             End If
         End If
     End Sub
+
     Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
         Try
             Dim sTodos As String = "0"
@@ -215,7 +228,7 @@ Public Class frmPromociones
                 End If
 
                 If chkTodosProd.Checked = True Then
-                    If MessageBox.Show("Ud va a aplicar a todos los productos del Proveeedor el mismo descuento en las mismas fechas, Ud está de acuerdo ?", "Advertencia", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) = Windows.Forms.DialogResult.No Then
+                    If MessageBox.Show("Ud va a aplicar a todos los productos del Proveeedor al Cliente seleccionado el mismo descuento en las mismas fechas, Ud está de acuerdo ?", "Advertencia", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) = Windows.Forms.DialogResult.No Then
                         Exit Sub
                     Else
                         sTodos = "1"
@@ -224,7 +237,7 @@ Public Class frmPromociones
                     sTodos = "0"
                     Dim foundRow() As DataRow
                     Dim sCondicion As String
-                    sCondicion = "IDProveedor=" & Me.SearchLookUpEditProveedor.EditValue.ToString() & " and IDProducto =" & Me.SearchLookUpEditProducto.EditValue.ToString() & _
+                    sCondicion = "IDProveedor=" & Me.SearchLookUpEditProveedor.EditValue.ToString() & " and IDCliente =" & Me.SearchLookUpEditCliente.EditValue.ToString() & " and IDProducto =" & Me.SearchLookUpEditProducto.EditValue.ToString() & _
                         " And Desde ='" & Me.DateEditDesde.EditValue.ToString() & "' And " & " Hasta = '" & Me.DateEditHasta.EditValue.ToString() & "'"
                     foundRow = tableData.Select(sCondicion)
 
@@ -315,7 +328,7 @@ Public Class frmPromociones
             e.KeyChar = Chr(Solo_Numeros(Asc(e.KeyChar)))
         End If
         If sender.name = "txtPorcDesc" And Asc(e.KeyChar) = Keys.Return Then
-            txtPorcDescCliEsp.Focus()
+            txtPorcDesc.Focus()
         End If
         If sender.name = "txtPorcDescCliEsp" And Asc(e.KeyChar) = Keys.Return Then
             Me.DateEditDesde.Focus()
@@ -362,11 +375,15 @@ Public Class frmPromociones
 
     End Sub
 
+    Private Sub txtPorcDesc_EditValueChanged(sender As Object, e As EventArgs) Handles txtPorcDesc.EditValueChanged
+        Me.txtPorcDescCliEsp.EditValue = txtPorcDesc.EditValue
+    End Sub
+
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
         Try
             If Me.GridViewDetalle.RowCount > 0 Then
-                    GridViewDetalle.MoveFirst()
-                    RefreshItemGridToControls()
+                GridViewDetalle.MoveFirst()
+                RefreshItemRowToControl()
             Else
                 ClearControls()
                 lbAdd = False
@@ -377,6 +394,7 @@ Public Class frmPromociones
         Catch ex As Exception
             MessageBox.Show("Ha ocurrido un error al Cancelar la operación " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+
     End Sub
 
     Private Sub chkTodosProd_CheckedChanged(sender As Object, e As EventArgs) Handles chkTodosProd.CheckedChanged
@@ -385,9 +403,5 @@ Public Class frmPromociones
                 MessageBox.Show("Para que esta operación tenga efecto, Ud debe indicar que va a adicionar un item y luego proceder, de lo contrario no tendrá efecto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If
         End If
-    End Sub
-
-    Private Sub txtPorcDesc_EditValueChanged(sender As Object, e As EventArgs) Handles txtPorcDesc.EditValueChanged
-        txtPorcDescCliEsp.EditValue = txtPorcDesc.EditValue
     End Sub
 End Class

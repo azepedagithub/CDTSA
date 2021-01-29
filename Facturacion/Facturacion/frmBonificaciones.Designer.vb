@@ -90,6 +90,8 @@ Partial Class frmBonificaciones
         Me.LayoutControlItem16 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem12 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.AlertControl1 = New DevExpress.XtraBars.Alerter.AlertControl(Me.components)
+        Me.btnCancel = New DevExpress.XtraEditors.SimpleButton()
+        Me.LayoutControlItem19 = New DevExpress.XtraLayout.LayoutControlItem()
         CType(Me.GridControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridViewDetalle, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControl2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -137,6 +139,7 @@ Partial Class frmBonificaciones
         CType(Me.EmptySpaceItem11, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem16, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem12, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.LayoutControlItem19, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'GridControl1
@@ -239,6 +242,7 @@ Partial Class frmBonificaciones
         '
         'LayoutControl2
         '
+        Me.LayoutControl2.Controls.Add(Me.btnCancel)
         Me.LayoutControl2.Controls.Add(Me.LabelControl2)
         Me.LayoutControl2.Controls.Add(Me.btnExcel)
         Me.LayoutControl2.Controls.Add(Me.cmdCopyEscala)
@@ -278,7 +282,7 @@ Partial Class frmBonificaciones
         'btnExcel
         '
         Me.btnExcel.Image = CType(resources.GetObject("btnExcel.Image"), System.Drawing.Image)
-        Me.btnExcel.Location = New System.Drawing.Point(817, 151)
+        Me.btnExcel.Location = New System.Drawing.Point(773, 151)
         Me.btnExcel.Name = "btnExcel"
         Me.btnExcel.Size = New System.Drawing.Size(40, 38)
         Me.btnExcel.StyleController = Me.LayoutControl2
@@ -314,27 +318,27 @@ Partial Class frmBonificaciones
         'btnDelete
         '
         Me.btnDelete.Image = CType(resources.GetObject("btnDelete.Image"), System.Drawing.Image)
-        Me.btnDelete.Location = New System.Drawing.Point(759, 151)
+        Me.btnDelete.Location = New System.Drawing.Point(719, 151)
         Me.btnDelete.Name = "btnDelete"
-        Me.btnDelete.Size = New System.Drawing.Size(42, 38)
+        Me.btnDelete.Size = New System.Drawing.Size(40, 38)
         Me.btnDelete.StyleController = Me.LayoutControl2
         Me.btnDelete.TabIndex = 34
         '
         'btnEdit
         '
         Me.btnEdit.Image = CType(resources.GetObject("btnEdit.Image"), System.Drawing.Image)
-        Me.btnEdit.Location = New System.Drawing.Point(704, 151)
+        Me.btnEdit.Location = New System.Drawing.Point(665, 151)
         Me.btnEdit.Name = "btnEdit"
-        Me.btnEdit.Size = New System.Drawing.Size(41, 38)
+        Me.btnEdit.Size = New System.Drawing.Size(40, 38)
         Me.btnEdit.StyleController = Me.LayoutControl2
         Me.btnEdit.TabIndex = 32
         '
         'cmdNewClear
         '
         Me.cmdNewClear.Image = CType(resources.GetObject("cmdNewClear.Image"), System.Drawing.Image)
-        Me.cmdNewClear.Location = New System.Drawing.Point(649, 151)
+        Me.cmdNewClear.Location = New System.Drawing.Point(611, 151)
         Me.cmdNewClear.Name = "cmdNewClear"
-        Me.cmdNewClear.Size = New System.Drawing.Size(41, 38)
+        Me.cmdNewClear.Size = New System.Drawing.Size(40, 38)
         Me.cmdNewClear.StyleController = Me.LayoutControl2
         Me.cmdNewClear.TabIndex = 35
         Me.cmdNewClear.ToolTip = "Prepara el nuevo registro, limpia los controles"
@@ -484,7 +488,7 @@ Partial Class frmBonificaciones
         'LayoutControlGroup4
         '
         Me.LayoutControlGroup4.CaptionImage = CType(resources.GetObject("LayoutControlGroup4.CaptionImage"), System.Drawing.Image)
-        Me.LayoutControlGroup4.Items.AddRange(New DevExpress.XtraLayout.BaseLayoutItem() {Me.LayoutControlItem10, Me.LayoutControlItem1, Me.LayoutControlItem3, Me.LayoutControlItem5, Me.LayoutControlItem4, Me.LayoutControlItem7, Me.LayoutControlItem8, Me.EmptySpaceItem3, Me.EmptySpaceItem2, Me.LayoutControlItem6, Me.LayoutControlItem15, Me.LayoutControlItem14, Me.LayoutControlItem13, Me.EmptySpaceItem1, Me.EmptySpaceItem5, Me.EmptySpaceItem6, Me.EmptySpaceItem7, Me.EmptySpaceItem4, Me.EmptySpaceItem9, Me.LayoutControlItem2, Me.LayoutControlItem9, Me.LayoutControlItem11, Me.LayoutControlItem21, Me.LayoutControlItem17, Me.EmptySpaceItem10, Me.LayoutControlItem18, Me.EmptySpaceItem8, Me.EmptySpaceItem11, Me.LayoutControlItem16, Me.LayoutControlItem12})
+        Me.LayoutControlGroup4.Items.AddRange(New DevExpress.XtraLayout.BaseLayoutItem() {Me.LayoutControlItem10, Me.LayoutControlItem1, Me.LayoutControlItem3, Me.LayoutControlItem5, Me.LayoutControlItem4, Me.LayoutControlItem7, Me.LayoutControlItem8, Me.EmptySpaceItem3, Me.EmptySpaceItem2, Me.LayoutControlItem6, Me.LayoutControlItem15, Me.LayoutControlItem14, Me.LayoutControlItem13, Me.EmptySpaceItem1, Me.EmptySpaceItem5, Me.EmptySpaceItem6, Me.EmptySpaceItem7, Me.EmptySpaceItem4, Me.EmptySpaceItem9, Me.LayoutControlItem2, Me.LayoutControlItem9, Me.LayoutControlItem11, Me.LayoutControlItem21, Me.LayoutControlItem17, Me.EmptySpaceItem10, Me.LayoutControlItem18, Me.EmptySpaceItem8, Me.EmptySpaceItem11, Me.LayoutControlItem16, Me.LayoutControlItem12, Me.LayoutControlItem19})
         Me.LayoutControlGroup4.Location = New System.Drawing.Point(0, 0)
         Me.LayoutControlGroup4.Name = "LayoutControlGroup4"
         Me.LayoutControlGroup4.Size = New System.Drawing.Size(861, 198)
@@ -581,34 +585,34 @@ Partial Class frmBonificaciones
         'LayoutControlItem15
         '
         Me.LayoutControlItem15.Control = Me.btnDelete
-        Me.LayoutControlItem15.Location = New System.Drawing.Point(735, 103)
+        Me.LayoutControlItem15.Location = New System.Drawing.Point(695, 103)
         Me.LayoutControlItem15.Name = "LayoutControlItem15"
-        Me.LayoutControlItem15.Size = New System.Drawing.Size(46, 47)
+        Me.LayoutControlItem15.Size = New System.Drawing.Size(44, 47)
         Me.LayoutControlItem15.TextSize = New System.Drawing.Size(0, 0)
         Me.LayoutControlItem15.TextVisible = False
         '
         'LayoutControlItem14
         '
         Me.LayoutControlItem14.Control = Me.btnEdit
-        Me.LayoutControlItem14.Location = New System.Drawing.Point(680, 103)
+        Me.LayoutControlItem14.Location = New System.Drawing.Point(641, 103)
         Me.LayoutControlItem14.Name = "LayoutControlItem14"
-        Me.LayoutControlItem14.Size = New System.Drawing.Size(45, 47)
+        Me.LayoutControlItem14.Size = New System.Drawing.Size(44, 47)
         Me.LayoutControlItem14.TextSize = New System.Drawing.Size(0, 0)
         Me.LayoutControlItem14.TextVisible = False
         '
         'LayoutControlItem13
         '
         Me.LayoutControlItem13.Control = Me.cmdNewClear
-        Me.LayoutControlItem13.Location = New System.Drawing.Point(625, 103)
+        Me.LayoutControlItem13.Location = New System.Drawing.Point(587, 103)
         Me.LayoutControlItem13.Name = "LayoutControlItem13"
-        Me.LayoutControlItem13.Size = New System.Drawing.Size(45, 47)
+        Me.LayoutControlItem13.Size = New System.Drawing.Size(44, 47)
         Me.LayoutControlItem13.TextSize = New System.Drawing.Size(0, 0)
         Me.LayoutControlItem13.TextVisible = False
         '
         'EmptySpaceItem1
         '
         Me.EmptySpaceItem1.AllowHotTrack = False
-        Me.EmptySpaceItem1.Location = New System.Drawing.Point(725, 103)
+        Me.EmptySpaceItem1.Location = New System.Drawing.Point(685, 103)
         Me.EmptySpaceItem1.Name = "EmptySpaceItem1"
         Me.EmptySpaceItem1.Size = New System.Drawing.Size(10, 47)
         Me.EmptySpaceItem1.TextSize = New System.Drawing.Size(0, 0)
@@ -616,7 +620,7 @@ Partial Class frmBonificaciones
         'EmptySpaceItem5
         '
         Me.EmptySpaceItem5.AllowHotTrack = False
-        Me.EmptySpaceItem5.Location = New System.Drawing.Point(670, 103)
+        Me.EmptySpaceItem5.Location = New System.Drawing.Point(631, 103)
         Me.EmptySpaceItem5.Name = "EmptySpaceItem5"
         Me.EmptySpaceItem5.Size = New System.Drawing.Size(10, 47)
         Me.EmptySpaceItem5.TextSize = New System.Drawing.Size(0, 0)
@@ -626,7 +630,7 @@ Partial Class frmBonificaciones
         Me.EmptySpaceItem6.AllowHotTrack = False
         Me.EmptySpaceItem6.Location = New System.Drawing.Point(570, 103)
         Me.EmptySpaceItem6.Name = "EmptySpaceItem6"
-        Me.EmptySpaceItem6.Size = New System.Drawing.Size(55, 47)
+        Me.EmptySpaceItem6.Size = New System.Drawing.Size(17, 47)
         Me.EmptySpaceItem6.TextSize = New System.Drawing.Size(0, 0)
         '
         'EmptySpaceItem7
@@ -640,9 +644,9 @@ Partial Class frmBonificaciones
         'EmptySpaceItem4
         '
         Me.EmptySpaceItem4.AllowHotTrack = False
-        Me.EmptySpaceItem4.Location = New System.Drawing.Point(781, 103)
+        Me.EmptySpaceItem4.Location = New System.Drawing.Point(739, 103)
         Me.EmptySpaceItem4.Name = "EmptySpaceItem4"
-        Me.EmptySpaceItem4.Size = New System.Drawing.Size(12, 47)
+        Me.EmptySpaceItem4.Size = New System.Drawing.Size(10, 47)
         Me.EmptySpaceItem4.TextSize = New System.Drawing.Size(0, 0)
         '
         'EmptySpaceItem9
@@ -735,7 +739,7 @@ Partial Class frmBonificaciones
         'LayoutControlItem16
         '
         Me.LayoutControlItem16.Control = Me.btnExcel
-        Me.LayoutControlItem16.Location = New System.Drawing.Point(793, 103)
+        Me.LayoutControlItem16.Location = New System.Drawing.Point(749, 103)
         Me.LayoutControlItem16.Name = "LayoutControlItem16"
         Me.LayoutControlItem16.Size = New System.Drawing.Size(44, 47)
         Me.LayoutControlItem16.TextSize = New System.Drawing.Size(0, 0)
@@ -753,6 +757,24 @@ Partial Class frmBonificaciones
         'AlertControl1
         '
         Me.AlertControl1.ControlBoxPosition = DevExpress.XtraBars.Alerter.AlertFormControlBoxPosition.Right
+        '
+        'btnCancel
+        '
+        Me.btnCancel.Image = CType(resources.GetObject("btnCancel.Image"), System.Drawing.Image)
+        Me.btnCancel.Location = New System.Drawing.Point(817, 151)
+        Me.btnCancel.Name = "btnCancel"
+        Me.btnCancel.Size = New System.Drawing.Size(40, 38)
+        Me.btnCancel.StyleController = Me.LayoutControl2
+        Me.btnCancel.TabIndex = 40
+        '
+        'LayoutControlItem19
+        '
+        Me.LayoutControlItem19.Control = Me.btnCancel
+        Me.LayoutControlItem19.Location = New System.Drawing.Point(793, 103)
+        Me.LayoutControlItem19.Name = "LayoutControlItem19"
+        Me.LayoutControlItem19.Size = New System.Drawing.Size(44, 47)
+        Me.LayoutControlItem19.TextSize = New System.Drawing.Size(0, 0)
+        Me.LayoutControlItem19.TextVisible = False
         '
         'frmBonificaciones
         '
@@ -812,6 +834,7 @@ Partial Class frmBonificaciones
         CType(Me.EmptySpaceItem11, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem16, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem12, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.LayoutControlItem19, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -881,4 +904,6 @@ Partial Class frmBonificaciones
     Friend WithEvents LabelControl2 As DevExpress.XtraEditors.LabelControl
     Friend WithEvents LayoutControlItem12 As DevExpress.XtraLayout.LayoutControlItem
     Friend WithEvents AlertControl1 As DevExpress.XtraBars.Alerter.AlertControl
+    Friend WithEvents btnCancel As DevExpress.XtraEditors.SimpleButton
+    Friend WithEvents LayoutControlItem19 As DevExpress.XtraLayout.LayoutControlItem
 End Class

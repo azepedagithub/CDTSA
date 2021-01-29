@@ -4028,7 +4028,7 @@ go
 alter table dbo.fafPedidoPreparado add constraint fkPedPreparadoProd foreign key (  IDProducto) references dbo.invProducto (IDProducto)
 go
 
--- exec dbo.fafgetPedidoSugeridoLote  8, 'azepeda',1 exec fafgetProductoLote 1, 115
+-- exec dbo.fafgetPedidoSugeridoLote  8, 'azepeda',1,0 exec fafgetProductoLote 1, 115
 CREATE PROCEDURE dbo.fafgetPedidoSugeridoLote  @IDPedido int, @Usuario nvarchar(20), @SoloConExistencia bit = 1, @CreaPedidoSugerido bit = 1
 AS
 SET NOCOUNT ON
@@ -4160,6 +4160,186 @@ SELECT
 			ROLLBACK TRANSACTION; 
 end catch 
 go
+
+Create Table dbo.fafPromocionesClientes ( IDPromocion int  identity(1,1) not null , IDProveedor int not null, IDCliente int not null, IDProducto bigint not null, 
+PorcDesc decimal(28,2) default 0,PorcDescCliEsp decimal(28,2) default 0, Desde date, Hasta date, RequiereBonif bit default 0 )
+go
+alter table dbo.fafPromocionesClientes add constraint pkPromocionescli primary key (IDPromocion) 
+go
+alter table dbo.fafPromocionesClientes add constraint fkPromProvcliprov foreign key (IDProveedor) references dbo.cppProveedor (IDProveedor)
+go
+alter table dbo.fafPromocionesClientes add constraint fkPromProvcliprovcli foreign key (IDCliente) references dbo.ccfClientes (IDCliente)
+go
+alter table dbo.fafPromocionesClientes add constraint fkPromProvProd foreign key (IDProducto) references dbo.invProducto (IDProducto)
+go
+
+-- exec fafUpdatePromocionesClientes 'I',1 ,1,1,101,5,5, '20210128','20210128',0,1 Delete from fafPromocionesClientes
+Create procedure dbo.fafUpdatePromocionesClientes @Operacion nvarchar(1), @IDPromocion int, 
+@IDProveedor int , @IDCliente int , @IDProducto bigint ,@PorcDesc decimal(28,2) , @PorcDescCliEsp decimal(28,2) , @Desde date, @Hasta date,@RequiereBonif bit,
+@TodosProdProveedor bit = null
+
+as
+set nocount on 
+if @TodosProdProveedor is null
+	set @TodosProdProveedor = 0
+	
+if @Operacion = 'I' 
+	if @TodosProdProveedor = 1 
+	begin 
+	Delete from dbo.fafPromocionesClientes  where IDProveedor = @IDProveedor and IDCliente = @IDCliente 
+	Insert dbo.fafPromocionesClientes ( IDProveedor , IDCliente, IDProducto,  PorcDesc, PorcDescCliEsp, Desde, Hasta, RequiereBonif )
+	Select L.IDProveedor , L.IDCliente, L.IDProducto,  L.PorcDesc, L.PorcDescCliEsp, L.Desde, L.Hasta, L.RequiereBonif 
+	From (
+	Select IDProveedor, @IDCliente IDCliente, IDProducto , @PorcDesc PorcDesc , @PorcDescCliEsp PorcDescCliEsp, @Desde Desde, @Hasta Hasta, @RequiereBonif RequiereBonif
+	from dbo.invProducto 
+	where IDProveedor = @IDProveedor ) L left join dbo.fafPromocionesClientes R
+	on L.IDProveedor = R.IDProveedor and L.IDCliente = R.IDCliente and L.IDProducto = R.IDProducto 
+	Where R.IDProducto is null and R.IDProveedor is null  and R.IDCliente is null
+	end
+	else
+	begin
+	Delete from dbo.fafPromocionesClientes  where IDProveedor = @IDProveedor and IDCliente = @IDCliente and IDProducto = @IDProducto
+	Insert dbo.fafPromocionesClientes ( IDProveedor , IDCliente, IDProducto,  PorcDesc,  PorcDescCliEsp, Desde, Hasta, RequiereBonif )
+	values ( @IDProveedor , @IDCliente, @IDProducto, @PorcDesc , @PorcDescCliEsp ,@Desde, @Hasta, @RequiereBonif)
+	end
+
+if @Operacion = 'U'
+begin
+	Update dbo.fafPromocionesClientes set 
+	PorcDesc = @PorcDesc  ,	PorcDescCliEsp = @PorcDescCliEsp  ,Desde = @Desde , Hasta = @Hasta, RequiereBonif = @RequiereBonif
+	where (@TodosProdProveedor = 0 and   IDPromocion = @IDPromocion ) or
+	(@TodosProdProveedor = 1 and  IDProveedor = @IDProveedor and IDCliente = @IDCliente )
+end
+if @Operacion = 'D'
+begin
+	Delete from dbo.fafPromocionesClientes
+	where (@TodosProdProveedor = 0 and   IDPromocion = @IDPromocion ) or
+	(@TodosProdProveedor = 1 and  IDProveedor = @IDProveedor and  IDCliente = @IDCliente)
+end
+if @Operacion = 'F'
+begin
+	Update dbo.fafPromocionesClientes set Desde = @Desde , Hasta = @Hasta
+	Where (@TodosProdProveedor = 1 and  IDProveedor = @IDProveedor and IDCliente = @IDCliente )
+end
+go
+
+--exec  dbo.fafgetPromocionesClientes 1, 1, 0
+Create Procedure dbo.fafgetPromocionesClientes @IDProveedor int, @IDCliente int, @IDProducto bigint = null
+as
+
+
+if @IDProducto is null
+	set @IDProducto = 0
+if @IDCliente is null
+	set @IDCliente = 0
+
+set nocount on 
+SELECT T.IDPromocion , T.IDCliente, C.Nombre NombreCliente, T.IDProveedor, P.Nombre, T.IDProducto, A.Descr Descr, T.porcDesc, T.PorcDescCliEsp, T.Desde, T.Hasta, T.RequiereBonif 
+FROM dbo.fafPromocionesClientes  T inner join dbo.cppProveedor P on T.IDProveedor = P.IDProveedor 
+inner join dbo.invProducto A on T.IDProducto = A.IDProducto inner join
+dbo.ccfClientes C on T.IDCliente = C.IDCliente  
+where (( @IDProveedor = 0  ) or ( @IDProveedor <> 0 and T.IDProveedor = @IDProveedor ) ) 
+and
+(( @IDCliente = 0  ) or ( @IDCliente <> 0 and T.IDCliente = @IDCliente ) )
+and
+(@IDProducto = 0 or (@IDProducto <> 0 and T.IDProducto = @IDProducto))
+order by T.IDProveedor, T.IDCliente 
+
+go
+-- EXEC dbo.fafGetPorcDescuento 100, '20210128', 1
+Alter Procedure dbo.fafGetPorcDescuento (@IDProducto int , @Fecha date, @IDCliente int)
+as
+Set nocount on
+Declare @PorcDescuento decimal(28,2), @flgEspecial bit, @flgRequiereBonif bit
+Select @flgEspecial = flgEspecial 
+From dbo.ccfClientes 
+where IDCliente = @IDCliente 
+if @flgEspecial is null 
+	set @flgEspecial = 0
+
+if exists (
+		SELECT IDCLIENTE 
+		FROM DBO.fafPromocionesClientes 
+		WHERE IDCliente = @IDCliente and IDProducto = @IDProducto AND @Fecha between Desde  and Hasta
+)
+BEGIN -- EL CLIENTE TIENE DESCUENTO DIRIGIDO POR PARTE DEL PROVEEDOR
+		SELECT TOP 1 @PorcDescuento = 
+			case when @flgEspecial=0 then isnull(PorcDesc , 0)
+			else
+			case when PorcDescCliEsp > 0 and PorcDescCliEsp > PorcDesc 
+			then PorcDescCliEsp
+			else PorcDesc
+			end
+			end,
+		@flgRequiereBonif = RequiereBonif 	 
+		FROM DBO.fafPromocionesClientes 
+		WHERE IDCliente = @IDCliente and IDProducto = @IDProducto AND @Fecha between Desde  and Hasta
+
+END
+ELSE -- EL CLIENTE NO TIENE DESCUENTO DIRIGIDO 
+BEGIN
+	SELECT TOP 1 @PorcDescuento = case when @flgEspecial=0 then isnull(PorcDesc , 0)
+		else
+		case when PorcDescCliEsp > 0 and PorcDescCliEsp > PorcDesc 
+		then PorcDescCliEsp
+		else PorcDesc
+		end
+		end,
+		@flgRequiereBonif = RequiereBonif 	
+
+	FROM DBO.fafPromociones 
+	WHERE IDProducto = @IDProducto AND @Fecha between Desde  and Hasta 
+END
+Select isnull(@PorcDescuento, 0) PorcDescuento, isnull(@flgRequiereBonif, 0 ) RequiereBonif
+go
+
+--exec dbo.fafgetPedidoSugeridoLote  8, 'azepeda',1,0
+--Declare @IDPedido int, @Usuario nvarchar(20)
+--set @IDPedido = 8
+--set @Usuario = 'azepeda' exec dbo.fafGetStatusPedidoBeforeInvoice 8, 'admin'
+Create procedure dbo.fafGetStatusPedidoBeforeInvoice @IDPedido int, @Usuario nvarchar(20)
+as 
+set nocount on 
+
+Declare  @Resultado table(IDPedido int, IDProducto int, Descr nvarchar(255), IDLote int, LoteProveedor nvarchar(50),
+ LoteInterno nvarchar(50), FechaVencimiento date, ExistenciaLote int,
+ CantPedidoProd int, CantBonifProd int, CantAtendidaLote int, FechaGeneracion date,
+ Usuario nvarchar(20))
+ insert @Resultado (IDPedido, IDProducto,Descr, IDLote , LoteProveedor , LoteInterno, FechaVencimiento , ExistenciaLote ,
+ CantPedidoProd , CantBonifProd , CantAtendidaLote , FechaGeneracion , Usuario)
+ EXEC fafgetPedidoSugeridoLote @IDPedido, @Usuario,1, 0
+ 
+ Declare @Compare as table ( IDPedido int , IDProducto int, IDLoteFA int, LoteProveedorFA nvarchar(50), 
+ CantSugeridaFA int default 0, IDLoteBodega int , CantBodega int default 0 )
+ 
+ Insert @Compare (IDPedido, IDProducto,  IDLoteFA)
+ Select distinct IDPedido, IDProducto,  IDLote
+ From (
+ Select IDPedido, IDProducto,  IDLote --, LoteProveedor --, CantAtendidaLote 
+ from @Resultado S 
+ union all
+ Select P.IDPedido, P.IDProducto, P.IDLote
+ From dbo.fafPedidoPreparado P 
+ ) X
+ 
+ -- Los Sugeridos Facturas 
+ Update C set IDLoteFA = S.IDLote , LoteProveedorFA = S.LoteProveedor , CantSugeridaFA = S.CantAtendidaLote 
+ From @Compare C inner join @Resultado S
+ on C.IDPedido = S.IDPedido and C.IDProducto = S.IDProducto and C.IDLoteFA = S.IDLote 
+ 
+ -- Los Sugeridos atendidos por Bodega 
+ Update C set  IDLoteBodega = S.IDLote , CantBodega = S.CantAtendida 
+ From @Compare C inner join dbo.fafPedidoPreparado S
+ on C.IDPedido = S.IDPedido and C.IDProducto = S.IDProducto and C.IDLoteFA = S.IDLote 
+ 
+ select C.IDPedido, C.IDProducto, P.descr, C.LoteProveedorFA, C.CantSugeridaFA,
+ L.LoteProveedor LoteBodega, C.CantBodega,
+ Case when C.LoteProveedorFA <> L.LoteProveedor or C.CantSugeridaFA <> C.CantBodega then 'DIFERENCIA' ELSE 'OK' END STATUS
+ from @Compare C inner join dbo.invProducto P
+ on C.IDProducto = P.IDProducto inner join dbo.invLote L
+ on C.IDLoteBodega = L.IDLote
+go
+ 
 /*
 EXEC fafInsertPedidoSugeridoLote 8, 'admin'
 select * from fafPedidoPreparado

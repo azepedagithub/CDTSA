@@ -404,6 +404,12 @@
     <Compile Include="frmPromociones.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmPromocionesClientes.designer.vb">
+      <DependentUpon>frmPromocionesClientes.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmPromocionesClientes.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmRecibos.Designer.vb">
       <DependentUpon>frmRecibos.vb</DependentUpon>
     </Compile>
@@ -739,6 +745,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmPromociones.resx">
       <DependentUpon>frmPromociones.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPromocionesClientes.resx">
+      <DependentUpon>frmPromocionesClientes.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmRecibos.resx">
       <DependentUpon>frmRecibos.vb</DependentUpon>
