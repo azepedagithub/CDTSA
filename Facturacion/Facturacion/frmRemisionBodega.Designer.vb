@@ -22,9 +22,11 @@ Partial Class frmRemisionBodega
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmRemisionBodega))
         Me.LayoutControl1 = New DevExpress.XtraLayout.LayoutControl()
         Me.LayoutControl2 = New DevExpress.XtraLayout.LayoutControl()
+        Me.btnRegresar = New DevExpress.XtraEditors.SimpleButton()
         Me.btnCancelar = New DevExpress.XtraEditors.SimpleButton()
         Me.btnModificar = New DevExpress.XtraEditors.SimpleButton()
         Me.dtgDetallePedido = New DevExpress.XtraGrid.GridControl()
@@ -59,6 +61,7 @@ Partial Class frmRemisionBodega
         Me.LayoutControlItem13 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.EmptySpaceItem1 = New DevExpress.XtraLayout.EmptySpaceItem()
         Me.LayoutControlItem14 = New DevExpress.XtraLayout.LayoutControlItem()
+        Me.LayoutControlItem15 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.groupModify = New DevExpress.XtraLayout.LayoutControlGroup()
         Me.LayoutControlItem8 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.EmptySpaceItem5 = New DevExpress.XtraLayout.EmptySpaceItem()
@@ -78,15 +81,13 @@ Partial Class frmRemisionBodega
         Me.LayoutControlItem3 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.EmptySpaceItem2 = New DevExpress.XtraLayout.EmptySpaceItem()
         Me.EmptySpaceItem3 = New DevExpress.XtraLayout.EmptySpaceItem()
-        Me.BarManager1 = New DevExpress.XtraBars.BarManager()
+        Me.BarManager1 = New DevExpress.XtraBars.BarManager(Me.components)
         Me.Bar1 = New DevExpress.XtraBars.Bar()
         Me.btnImprimir = New DevExpress.XtraBars.BarButtonItem()
         Me.barDockControlTop = New DevExpress.XtraBars.BarDockControl()
         Me.barDockControlBottom = New DevExpress.XtraBars.BarDockControl()
         Me.barDockControlLeft = New DevExpress.XtraBars.BarDockControl()
         Me.barDockControlRight = New DevExpress.XtraBars.BarDockControl()
-        Me.btnRegresar = New DevExpress.XtraEditors.SimpleButton()
-        Me.LayoutControlItem15 = New DevExpress.XtraLayout.LayoutControlItem()
         CType(Me.LayoutControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.LayoutControl1.SuspendLayout()
         CType(Me.LayoutControl2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -112,6 +113,7 @@ Partial Class frmRemisionBodega
         CType(Me.LayoutControlItem13, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.EmptySpaceItem1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem14, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.LayoutControlItem15, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.groupModify, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem8, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.EmptySpaceItem5, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -126,7 +128,6 @@ Partial Class frmRemisionBodega
         CType(Me.EmptySpaceItem2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.EmptySpaceItem3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BarManager1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.LayoutControlItem15, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'LayoutControl1
@@ -165,8 +166,19 @@ Partial Class frmRemisionBodega
         Me.LayoutControl2.TabIndex = 6
         Me.LayoutControl2.Text = "LayoutControl2"
         '
+        'btnRegresar
+        '
+        Me.btnRegresar.Image = CType(resources.GetObject("btnRegresar.Image"), System.Drawing.Image)
+        Me.btnRegresar.Location = New System.Drawing.Point(890, 35)
+        Me.btnRegresar.Name = "btnRegresar"
+        Me.btnRegresar.Size = New System.Drawing.Size(107, 38)
+        Me.btnRegresar.StyleController = Me.LayoutControl2
+        Me.btnRegresar.TabIndex = 16
+        Me.btnRegresar.Text = "Regresar"
+        '
         'btnCancelar
         '
+        Me.btnCancelar.Enabled = False
         Me.btnCancelar.Image = CType(resources.GetObject("btnCancelar.Image"), System.Drawing.Image)
         Me.btnCancelar.Location = New System.Drawing.Point(435, 35)
         Me.btnCancelar.Name = "btnCancelar"
@@ -257,6 +269,7 @@ Partial Class frmRemisionBodega
         '
         'btnGuardar
         '
+        Me.btnGuardar.Enabled = False
         Me.btnGuardar.Image = CType(resources.GetObject("btnGuardar.Image"), System.Drawing.Image)
         Me.btnGuardar.Location = New System.Drawing.Point(323, 35)
         Me.btnGuardar.Name = "btnGuardar"
@@ -305,10 +318,12 @@ Partial Class frmRemisionBodega
         '
         'slkupLote
         '
+        Me.slkupLote.EditValue = "--"
         Me.slkupLote.Location = New System.Drawing.Point(89, 143)
         Me.slkupLote.Name = "slkupLote"
         Me.slkupLote.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
         Me.slkupLote.Properties.DisplayMember = "LoteProveedor"
+        Me.slkupLote.Properties.NullText = "-- --"
         Me.slkupLote.Properties.ValueMember = "IDLote"
         Me.slkupLote.Properties.View = Me.SearchLookUpEdit1View
         Me.slkupLote.Size = New System.Drawing.Size(579, 20)
@@ -485,6 +500,15 @@ Partial Class frmRemisionBodega
         Me.LayoutControlItem14.Size = New System.Drawing.Size(90, 42)
         Me.LayoutControlItem14.TextSize = New System.Drawing.Size(0, 0)
         Me.LayoutControlItem14.TextVisible = False
+        '
+        'LayoutControlItem15
+        '
+        Me.LayoutControlItem15.Control = Me.btnRegresar
+        Me.LayoutControlItem15.Location = New System.Drawing.Point(878, 0)
+        Me.LayoutControlItem15.Name = "LayoutControlItem15"
+        Me.LayoutControlItem15.Size = New System.Drawing.Size(111, 42)
+        Me.LayoutControlItem15.TextSize = New System.Drawing.Size(0, 0)
+        Me.LayoutControlItem15.TextVisible = False
         '
         'groupModify
         '
@@ -754,25 +778,6 @@ Partial Class frmRemisionBodega
         Me.barDockControlRight.Location = New System.Drawing.Point(1033, 47)
         Me.barDockControlRight.Size = New System.Drawing.Size(0, 750)
         '
-        'btnRegresar
-        '
-        Me.btnRegresar.Image = CType(resources.GetObject("btnRegresar.Image"), System.Drawing.Image)
-        Me.btnRegresar.Location = New System.Drawing.Point(890, 35)
-        Me.btnRegresar.Name = "btnRegresar"
-        Me.btnRegresar.Size = New System.Drawing.Size(107, 38)
-        Me.btnRegresar.StyleController = Me.LayoutControl2
-        Me.btnRegresar.TabIndex = 16
-        Me.btnRegresar.Text = "Regresar"
-        '
-        'LayoutControlItem15
-        '
-        Me.LayoutControlItem15.Control = Me.btnRegresar
-        Me.LayoutControlItem15.Location = New System.Drawing.Point(878, 0)
-        Me.LayoutControlItem15.Name = "LayoutControlItem15"
-        Me.LayoutControlItem15.Size = New System.Drawing.Size(111, 42)
-        Me.LayoutControlItem15.TextSize = New System.Drawing.Size(0, 0)
-        Me.LayoutControlItem15.TextVisible = False
-        '
         'frmRemisionBodega
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
@@ -812,6 +817,7 @@ Partial Class frmRemisionBodega
         CType(Me.LayoutControlItem13, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.EmptySpaceItem1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem14, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.LayoutControlItem15, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.groupModify, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem8, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.EmptySpaceItem5, System.ComponentModel.ISupportInitialize).EndInit()
@@ -826,7 +832,6 @@ Partial Class frmRemisionBodega
         CType(Me.EmptySpaceItem2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.EmptySpaceItem3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.BarManager1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.LayoutControlItem15, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
