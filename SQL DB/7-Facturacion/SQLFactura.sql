@@ -4369,7 +4369,13 @@ Return isnull(@Descuento,0)
 end
 go
  
+CREATE PROCEDURE [dbo].[fafUpdateEstadoPedido] @IDPedido AS INT, @Estado nvarchar(1)
+AS 
+UPDATE dbo.fafPedido set  @Estado = @Estado   
+WHERE IDPedido = @IDPedido
 
+
+GO
  
 /*
 
