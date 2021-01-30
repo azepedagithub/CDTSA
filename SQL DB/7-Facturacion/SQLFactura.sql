@@ -4383,16 +4383,57 @@ values ('P', 'EN PROCESO')
 GO
 
 
-
- 
-/*
-
- select *
- from dbo.faftablabonificacion where IDProducto = 175
- where IDPedido = 9
-EXEC fafInsertPedidoSugeridoLote , 'admin'
-select * from fafPedidoPreparado
-*/
+Insert dbo.fafEstadoPedido (Estado, Descr )
+values ('E', 'PEDIDO ENTREGADO')
+GO
 
 
--- select * from dbo.faftablabonificacion clientes
+CREATE PROCEDURE [dbo].[fafGetPedidosRemision] @IDEstado NVARCHAR(1)
+AS 
+--'A','P'
+SELECT IDPedido, CAST(a.IDCliente AS NVARCHAR(20)) + ' - ' + C.Nombre Cliente,Fecha,A.dateUpdate  FROM dbo.fafPedido A
+INNER JOIN dbo.ccfClientes C ON A.IDCliente = C.IDCliente
+WHERE A.Estado=@IDEstado
+ORDER BY IDPedido
+
+
+GO
+
+
+CREATE  PROCEDURE [dbo].[fafGetPedidoDetalleRemision] @IDPedido INT, @IDProducto INT=-1
+AS 
+SELECT A.IDPedido,A.IDProducto,P.Descr,A.IDLote,L.LoteProveedor,L.FechaVencimiento,A.CantAtendida Cantidad  FROM dbo.fafPedidoPreparado A
+INNER JOIN dbo.invProducto P ON A.IDProducto = P.IDProducto
+INNER JOIN dbo.invLote L ON A.IDLote = L.IDLote AND A.IDProducto = L.IDProducto
+WHERE IDPedido = @IDPedido AND (A.IDProducto = @IDProducto OR @IDProducto = -1)
+
+GO
+
+CREATE PROCEDURE [dbo].[fafGetDetallePedido] @IDPedido AS INT,@IDProduto AS BIGINT
+AS
+SELECT IDProducto,DescrProducto,Cantidad  FROM dbo.vfafPedidoDetalleProd
+WHERE IDPedido = @IDPedido AND (IDProducto = @IDProduto OR  @IDProduto =-1)
+GO
+
+CREATE PROCEDURE [dbo].[fafUpdatePedidoPreparado] @Operacion AS NVARCHAR(1), @IDPedido AS INT, @IDProducto  BIGINT, 
+					@IDLote AS INT, @Cantidad AS INT,@Usuario NVARCHAR(20)
+AS 
+if (@Operacion ='I')
+BEGIN	
+	INSERT INTO dbo.fafPedidoPreparado(IdPedido, IDProducto,IDLote,CantAtendida,Usuario,Fecha)
+	VALUES	(@IDPedido, @IDProducto,@IDLote,@Cantidad,@Usuario,GETDATE())
+END	
+
+if (@Operacion ='U')
+BEGIN	
+	UPDATE dbo.fafPedidoPreparado SET CantAtendida = @Cantidad WHERE IDPedido=@IDPedido AND IDProducto=@IDProducto AND IDLote=@IDLote
+END	
+IF (@Operacion ='D')
+BEGIN
+	DELETE FROM dbo.fafPedidoPreparado WHERE IDPedido=@IDPedido AND (IDProducto = @IdProducto OR @IDProducto=-1) AND (IDLote = @IDLote OR @IDLote = -1)
+END
+
+
+
+GO
+

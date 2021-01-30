@@ -61,6 +61,8 @@ Public Class frmRemisionBodega
         If Index > -1 Then
             currentRow = GriView.GetFocusedDataRow
             CargarDetallePedido()
+            Me.btnRemisionar.Enabled = False
+            Me.btnEditar.Enabled = False
         End If
 
     End Sub
@@ -71,6 +73,8 @@ Public Class frmRemisionBodega
         If Index > -1 Then
             currentRow = GriView.GetFocusedDataRow
             CargarDetallePedido()
+            Me.btnRemisionar.Enabled = True
+            Me.btnEditar.Enabled = True
         End If
 
     End Sub
@@ -135,19 +139,9 @@ Public Class frmRemisionBodega
             _IDLote = CInt(row("IDLote"))
             _IDPedido = CInt(row("IDPedido"))
 
-            
-            'Dim dtDetallePedido As DataTable = CManager.ExecSPgetData("fafGetDetallePedido", _IDPedido.ToString() + "," + _IDProducto.ToString())
-
             Me.txtCantLote.EditValue = Cantidad
-            ' Me.txtProducto.EditValue = row("Descr").ToString()
             Me.slkupLote.EditValue = _IDLote
-            'Me.txtCantidad.EditValue = CInt(dtDetallePedido.Rows(0)("Cantidad"))
-
-
-            'dtDetallePedido = CManager.ExecSPgetData("fafGetPedidoDetalleRemision", _IDPedido.ToString() + "," + _IDProducto.ToString())
-            'Me.dtgDetallePedido.DataSource = dtDetallePedido
-
-
+            
         End If
     End Sub
 
@@ -231,35 +225,63 @@ Public Class frmRemisionBodega
     End Sub
 
     Private Sub btnRegresar_Click(sender As Object, e As EventArgs) Handles btnRegresar.Click
+
+        Try
+            Dim Total As Decimal
+            Dim dtDetalleModif As DataTable = Me.dtgDetallePedido.DataSource
+            Total = 0
+            For Each fila As DataRow In dtDetalleModif.Rows
+                Total = Total + CDec(fila("Cantidad"))
+            Next
+
+            If Total <> CDec(Me.txtCantidad.EditValue) Then
+                MessageBox.Show("Por favor verique las cantidades totales del pedido, deben de ser iguales a las del pedido detallado en Lotes")
+                Return
+            End If
+            Me.groupModify.Visibility = XtraLayout.Utils.LayoutVisibility.Always
+            Me.GroupMenu.Visibility = XtraLayout.Utils.LayoutVisibility.Never
+            sAccion = "View"
+
+            'Eliminar todo del producto
+            CManager.ExecSP("fafUpdatePedidoPreparado", "'D'," + Me._IDPedido.ToString() + "," + Me._IDProducto.ToString() + ",-1,0,'admin'")
+
+            For Each fila As DataRow In dtDetalleModif.Rows
+                CManager.ExecSP("fafUpdatePedidoPreparado", "'I'," + Me._IDPedido.ToString() + "," + Me._IDProducto.ToString() + "," + fila("IDLote").ToString() + "," + fila("Cantidad").ToString() + ",'" + gsUsuario + "'")
+            Next
+
+            CargarDetallePedido()
+            Me.dtgPedidos.Enabled = True
+            Me.dtgPedidosProceso.Enabled = True
+            Me.slkupLote.Enabled = False
+            Me.txtCantLote.Enabled = False
+           
+        Catch ex As Exception
+            MessageBox.Show("Han ocurrido los siguientes errores: " + ex.Message)
+        End Try
        
-        Dim Total As Decimal
-        Dim dtDetalleModif As DataTable = Me.dtgDetallePedido.DataSource
-        Total = 0
-        For Each fila As DataRow In dtDetalleModif.Rows
-            Total = Total + CDec(fila("Cantidad"))
-        Next
+    End Sub
 
-        If Total <> CDec(Me.txtCantidad.EditValue) Then
-            MessageBox.Show("Por favor verique las cantidades, estas deben de ser iguales a las del pedido")
-            Return
-        End If
-        Me.groupModify.Visibility = XtraLayout.Utils.LayoutVisibility.Always
-        Me.GroupMenu.Visibility = XtraLayout.Utils.LayoutVisibility.Never
-        sAccion = "View"
+    Private Sub btnRemisionar_Click(sender As Object, e As EventArgs) Handles btnRemisionar.Click
+        Try
+            If (MessageBox.Show("Esta seguro de remisionar el pedido? ", "Remisión de Pedidio", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes) Then
+                CManager.ExecSP("fafUpdateEstadoPedido", _IDPedido.ToString() + ",'E'")
+                CargarPedidos()
+                CargarPedidoInProcess()
 
-        'Eliminar todo del producto
-        CManager.ExecSP("fafUpdatePedidoPreparado", "'D'," + Me._IDPedido.ToString() + "," + Me._IDProducto.ToString() + ",-1,0,'admin'")
+                MessageBox.Show("Proceso exitoso!!")
+            End If
+        Catch ex As Exception
+            MessageBox.Show("Han ocurrido los siguientes errores: " + ex.Message)
+        End Try
+    End Sub
 
-        For Each fila As DataRow In dtDetalleModif.Rows
-            CManager.ExecSP("fafUpdatePedidoPreparado", "'I'," + Me._IDPedido.ToString() + "," + Me._IDProducto.ToString() + "," + fila("IDLote").ToString() + "," + fila("Cantidad").ToString() + ",'" + gsUsuario + "'")
-        Next
+    Private Sub btnRefrescar_ItemClick(sender As Object, e As XtraBars.ItemClickEventArgs) Handles btnRefrescar.ItemClick
+        Try
+            CargarPedidos()
+            CargarPedidoInProcess()
+        Catch ex As Exception
+            MessageBox.Show("Han ocurrido los siguientes errores: " + ex.Message)
+        End Try
 
-        CargarDetallePedido()
-        Me.dtgPedidos.Enabled = True
-        Me.dtgPedidosProceso.Enabled = True
-        Me.slkupLote.Enabled = False
-        Me.txtCantLote.Enabled = False
-        'Validar que el pedido sea el total 
-        'Guardar el pedido
     End Sub
 End Class
