@@ -4376,6 +4376,14 @@ WHERE IDPedido = @IDPedido
 
 
 GO
+
+
+Insert dbo.fafEstadoPedido (Estado, Descr )
+values ('P', 'EN PROCESO')
+GO
+
+
+
  
 /*
 
