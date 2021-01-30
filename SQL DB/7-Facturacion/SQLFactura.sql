@@ -4136,7 +4136,7 @@ go
 
 -- Select * from dbo.fafPedidoPreparado exec dbo.fafInsertPedidoSugeridoLote 8,'admin'
 
-exec  dbo.fafgetPedidoSugeridoLote  9, 'jespinoza',1
+--exec  dbo.fafgetPedidoSugeridoLote  9, 'jespinoza',1
 Create Procedure dbo.fafInsertPedidoSugeridoLote @IDPedido int, @Usuario nvarchar(20)
 as 
 set nocount on

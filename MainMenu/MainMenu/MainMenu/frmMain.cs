@@ -847,6 +847,8 @@ namespace MainMenu
                     nodeCuentasContables.Tag = "frmInvCuentaContable";
                     TreeListNode nodeBodegas = tl.AppendNode(new object[] { "Bodegas" }, nodeAdministracion.Id, 11, 11, 11);
                     nodeBodegas.Tag = "frmBodegas";
+					TreeListNode nodeRemision = tl.AppendNode(new object[] { "Remision" }, nodeAdministracion.Id, 11, 11, 11);
+					nodeRemision.Tag = "frmRemision";
                     break;
                 case "treeListAdministracion":
                     TreeListNode nodeTipos = tl.AppendNode(new object[] { "Catálogos" }, -1, 9, 10, 9);
@@ -1375,6 +1377,13 @@ namespace MainMenu
                     ShowPagesRibbonMan(false);
                     ofrmUnidad.Show();
                     break;
+				case "frmRemision":
+					Facturacion.frmRemisionBodega ofrmRemision = new frmRemisionBodega();
+					ofrmRemision.MdiParent = this;
+					ofrmRemision.WindowState = FormWindowState.Maximized;
+					ShowPagesRibbonMan(false);
+					ofrmRemision.Show();
+					break;
             }
 
         }
