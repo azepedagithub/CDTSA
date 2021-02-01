@@ -26,6 +26,7 @@ Partial Class frmRemisionBodega
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmRemisionBodega))
         Me.LayoutControl1 = New DevExpress.XtraLayout.LayoutControl()
         Me.LayoutControl2 = New DevExpress.XtraLayout.LayoutControl()
+        Me.btnRemisionar = New DevExpress.XtraEditors.SimpleButton()
         Me.lblIDPedido = New DevExpress.XtraEditors.LabelControl()
         Me.lblNombreClientePedido = New DevExpress.XtraEditors.LabelControl()
         Me.btnRegresar = New DevExpress.XtraEditors.SimpleButton()
@@ -67,6 +68,7 @@ Partial Class frmRemisionBodega
         Me.groupModify = New DevExpress.XtraLayout.LayoutControlGroup()
         Me.LayoutControlItem8 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.EmptySpaceItem5 = New DevExpress.XtraLayout.EmptySpaceItem()
+        Me.LayoutControlItem17 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem16 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.EmptySpaceItem7 = New DevExpress.XtraLayout.EmptySpaceItem()
         Me.LayoutControlItem18 = New DevExpress.XtraLayout.LayoutControlItem()
@@ -90,6 +92,7 @@ Partial Class frmRemisionBodega
         Me.EmptySpaceItem3 = New DevExpress.XtraLayout.EmptySpaceItem()
         Me.BarManager1 = New DevExpress.XtraBars.BarManager(Me.components)
         Me.Bar1 = New DevExpress.XtraBars.Bar()
+        Me.btnRefrescar = New DevExpress.XtraBars.BarButtonItem()
         Me.btnImprimir = New DevExpress.XtraBars.BarButtonItem()
         Me.barDockControlTop = New DevExpress.XtraBars.BarDockControl()
         Me.barDockControlBottom = New DevExpress.XtraBars.BarDockControl()
@@ -124,6 +127,7 @@ Partial Class frmRemisionBodega
         CType(Me.groupModify, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem8, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.EmptySpaceItem5, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.LayoutControlItem17, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem16, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.EmptySpaceItem7, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem18, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -158,6 +162,7 @@ Partial Class frmRemisionBodega
         '
         'LayoutControl2
         '
+        Me.LayoutControl2.Controls.Add(Me.btnRemisionar)
         Me.LayoutControl2.Controls.Add(Me.lblIDPedido)
         Me.LayoutControl2.Controls.Add(Me.lblNombreClientePedido)
         Me.LayoutControl2.Controls.Add(Me.btnRegresar)
@@ -179,6 +184,16 @@ Partial Class frmRemisionBodega
         Me.LayoutControl2.Size = New System.Drawing.Size(1009, 412)
         Me.LayoutControl2.TabIndex = 6
         Me.LayoutControl2.Text = "LayoutControl2"
+        '
+        'btnRemisionar
+        '
+        Me.btnRemisionar.Image = CType(resources.GetObject("btnRemisionar.Image"), System.Drawing.Image)
+        Me.btnRemisionar.Location = New System.Drawing.Point(901, 74)
+        Me.btnRemisionar.Name = "btnRemisionar"
+        Me.btnRemisionar.Size = New System.Drawing.Size(96, 38)
+        Me.btnRemisionar.StyleController = Me.LayoutControl2
+        Me.btnRemisionar.TabIndex = 20
+        Me.btnRemisionar.Text = "Remisionar"
         '
         'lblIDPedido
         '
@@ -557,7 +572,7 @@ Partial Class frmRemisionBodega
         'groupModify
         '
         Me.groupModify.GroupBordersVisible = False
-        Me.groupModify.Items.AddRange(New DevExpress.XtraLayout.BaseLayoutItem() {Me.LayoutControlItem8, Me.EmptySpaceItem5})
+        Me.groupModify.Items.AddRange(New DevExpress.XtraLayout.BaseLayoutItem() {Me.LayoutControlItem8, Me.EmptySpaceItem5, Me.LayoutControlItem17})
         Me.groupModify.Location = New System.Drawing.Point(0, 62)
         Me.groupModify.Name = "groupModify"
         Me.groupModify.Size = New System.Drawing.Size(989, 42)
@@ -576,8 +591,17 @@ Partial Class frmRemisionBodega
         Me.EmptySpaceItem5.AllowHotTrack = False
         Me.EmptySpaceItem5.Location = New System.Drawing.Point(100, 0)
         Me.EmptySpaceItem5.Name = "EmptySpaceItem5"
-        Me.EmptySpaceItem5.Size = New System.Drawing.Size(889, 42)
+        Me.EmptySpaceItem5.Size = New System.Drawing.Size(789, 42)
         Me.EmptySpaceItem5.TextSize = New System.Drawing.Size(0, 0)
+        '
+        'LayoutControlItem17
+        '
+        Me.LayoutControlItem17.Control = Me.btnRemisionar
+        Me.LayoutControlItem17.Location = New System.Drawing.Point(889, 0)
+        Me.LayoutControlItem17.Name = "LayoutControlItem17"
+        Me.LayoutControlItem17.Size = New System.Drawing.Size(100, 42)
+        Me.LayoutControlItem17.TextSize = New System.Drawing.Size(0, 0)
+        Me.LayoutControlItem17.TextVisible = False
         '
         'LayoutControlItem16
         '
@@ -816,8 +840,8 @@ Partial Class frmRemisionBodega
         Me.BarManager1.DockControls.Add(Me.barDockControlLeft)
         Me.BarManager1.DockControls.Add(Me.barDockControlRight)
         Me.BarManager1.Form = Me
-        Me.BarManager1.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.btnImprimir})
-        Me.BarManager1.MaxItemId = 1
+        Me.BarManager1.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.btnImprimir, Me.btnRefrescar})
+        Me.BarManager1.MaxItemId = 2
         '
         'Bar1
         '
@@ -825,8 +849,16 @@ Partial Class frmRemisionBodega
         Me.Bar1.DockCol = 0
         Me.Bar1.DockRow = 0
         Me.Bar1.DockStyle = DevExpress.XtraBars.BarDockStyle.Top
-        Me.Bar1.LinksPersistInfo.AddRange(New DevExpress.XtraBars.LinkPersistInfo() {New DevExpress.XtraBars.LinkPersistInfo(Me.btnImprimir)})
+        Me.Bar1.LinksPersistInfo.AddRange(New DevExpress.XtraBars.LinkPersistInfo() {New DevExpress.XtraBars.LinkPersistInfo(Me.btnImprimir), New DevExpress.XtraBars.LinkPersistInfo(Me.btnRefrescar)})
         Me.Bar1.Text = "Tools"
+        '
+        'btnRefrescar
+        '
+        Me.btnRefrescar.Caption = "Refrescar"
+        Me.btnRefrescar.Glyph = CType(resources.GetObject("btnRefrescar.Glyph"), System.Drawing.Image)
+        Me.btnRefrescar.Id = 1
+        Me.btnRefrescar.LargeGlyph = CType(resources.GetObject("btnRefrescar.LargeGlyph"), System.Drawing.Image)
+        Me.btnRefrescar.Name = "btnRefrescar"
         '
         'btnImprimir
         '
@@ -907,6 +939,7 @@ Partial Class frmRemisionBodega
         CType(Me.groupModify, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem8, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.EmptySpaceItem5, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.LayoutControlItem17, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem16, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.EmptySpaceItem7, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem18, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1000,4 +1033,7 @@ Partial Class frmRemisionBodega
     Friend WithEvents LayoutControlItem18 As DevExpress.XtraLayout.LayoutControlItem
     Friend WithEvents EmptySpaceItem6 As DevExpress.XtraLayout.EmptySpaceItem
     Friend WithEvents EmptySpaceItem8 As DevExpress.XtraLayout.EmptySpaceItem
+    Friend WithEvents btnRemisionar As DevExpress.XtraEditors.SimpleButton
+    Friend WithEvents LayoutControlItem17 As DevExpress.XtraLayout.LayoutControlItem
+    Friend WithEvents btnRefrescar As DevExpress.XtraBars.BarButtonItem
 End Class

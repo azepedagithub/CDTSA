@@ -3911,5 +3911,131 @@ IF (@Operacion='D')
 
 GO
 
+--Ver seguimiento de Release
+ALTER TABLE dbo.invproducto DROP CONSTRAINT DF__invProduc__Preci__02925FBF
+GO
+ALTER TABLE dbo.invProducto DROP COLUMN PrecioCIFLocal
+GO
+ALTER TABLE dbo.invProducto DROP CONSTRAINT DF__invProduc__Preci__038683F8
+GO
+ALTER TABLE dbo.invProducto DROP COLUMN PrecioFOBLocal
+GO
+
+ALTER TABLE dbo.invProducto ADD PrecioFOB DECIMAL(28,8) DEFAULT 0
+GO
+ALTER TABLE dbo.invProducto ADD PrecioCIF DECIMAL(28,8) DEFAULT 0
+GO
+ALTER TABLE dbo.invProducto ADD TipoPrecio NVARCHAR(3)
+GO
+UPDATE dbo.invProducto SET  PrecioCIF = 0, precioFOB = 0
+
+GO
+ALTER PROCEDURE [dbo].[invGetProducto] @IDProducto BIgint	,@Descr AS NVARCHAR(250),@Alias NVARCHAR(250),@Clasif1 int, @Clasif2 INT, @Clasif3 INT ,@Clasif4 INT , @Clasif5 INT, @Clasif6 INT, @CodigoBarra NVARCHAR(50),
+															@EsMuestra INT,@EsControlado INT,@EsEtico INT
+AS 
+	SELECT IDProducto,Descr , Generico,Alias ,Clasif1 ,Clasif2 ,Clasif3 ,Clasif4 ,Clasif5 ,Clasif6 ,CodigoBarra,IDProveedor,IDCuentaContable ,IDUnidad ,FactorEmpaque ,TipoImpuesto ,
+	          EsMuestra ,EsControlado ,EsEtico,EsGenerico, CostoUltLocal,CostoUltDolar,CostoPromLocal,CostoPromDolar,Activo,Bonifica,NumRegSanitario,FechaVencimientoRegistro,PrecioCIF,PrecioFOB,TipoPrecio,UserInsert ,UserUpdate  ,UpdateDate,CreateDate 
+	          FROM dbo.invProducto 
+	          WHERE (IDProducto =@IDProducto OR  @IDProducto=-1)
+	          AND (Clasif1 =@Clasif1 OR @Clasif1=-1) AND (Clasif2 =@Clasif2 OR @Clasif2=-1) AND (Clasif3 =@Clasif3 OR @Clasif3=-1)
+	          AND (Clasif4 =@Clasif4 OR @Clasif4=-1) AND (Clasif5 =@Clasif5 OR @Clasif5=-1) AND (Clasif6 =@Clasif6 OR @Clasif6=-1)
+	          AND (CodigoBarra=@CodigoBarra OR @CodigoBarra='*') AND ( EsMuestra =@EsMuestra OR @EsMuestra=-1)  AND
+	          (EsControlado =  @EsControlado OR @EsControlado =-1) AND (EsEtico= @EsEtico OR @EsEtico=-1) AND 
+	          (Descr =@Descr OR Descr LIKE '%' +@Descr + '%' OR @Descr='*') AND (Alias=@Alias OR Alias LIKE '%'+ @Alias + '%' OR @Alias = '*')  
+	          
+
+GO
+
+ALTER PROCEDURE [dbo].[invGetProductoByID] @IDProducto BIgint	,@Descr AS NVARCHAR(250)
+AS 
+	SELECT IDProducto,P.Descr ,P.Alias ,Clasif1,C1.Descr DescrClasif1 ,Clasif2 ,C2.Descr DescrClasif2,Clasif3,C3.Descr DescrClasif3 ,Clasif4 ,C4.Descr DescrClasif4,
+				Clasif5 ,C5.Descr DescrClasif5 ,Clasif6, C6.Descr DescrClasif6 ,PR.IDProveedor,PR.Nombre NombreProveedor, P.CostoPromDolar,P.CostoPromLocal,P.CostoUltDolar,P.CostoUltLocal,CodigoBarra,IDCuentaContable ,P.IDUnidad ,UM.Descr DescrUnidadMedida,FactorEmpaque ,TipoImpuesto , I.Descr DescrTipoImpuesto,
+	          EsMuestra ,EsControlado ,EsEtico ,EsGenerico, P.Activo, P.Bonifica,NumRegSanitario,FechaVencimientoRegistro,PrecioCIF,PrecioFOB,TipoPrecio,UserInsert ,UserUpdate  ,UpdateDate,CreateDate FROM dbo.invProducto  P
+	          LEFT JOIN dbo.invUnidadMedida UM ON P.IDUnidad = UM.IDUnidad
+	          LEFT JOIN dbo.globalImpuesto I ON P.TipoImpuesto = I.IDImpuesto
+			  LEFT JOIN dbo.invClasificacion C1 ON P.Clasif1=C1.IDClasificacion  AND C1.IDGrupo=1
+			  LEFT JOIN dbo.invClasificacion C2 ON P.Clasif2=C2.IDClasificacion  AND C2.IDGrupo=2
+			  LEFT JOIN dbo.invClasificacion C3 ON P.Clasif3=C3.IDClasificacion  AND C3.IDGrupo=3
+			  LEFT JOIN dbo.invClasificacion C4 ON P.Clasif4=C4.IDClasificacion  AND C4.IDGrupo=4
+			  LEFT JOIN dbo.invClasificacion C5 ON P.Clasif5=C5.IDClasificacion  AND C5.IDGrupo=5
+			  LEFT JOIN dbo.invClasificacion C6 ON P.Clasif6=C6.IDClasificacion  AND C6.IDGrupo=6
+			  LEFT  JOIN dbo.cppProveedor PR ON P.IDProveedor = PR.IDProveedor
+	          WHERE P.EsMuestra=0 AND  (IDProducto=@IDProducto OR  @IDProducto=-1) AND 
+	          (P.Descr =@Descr OR P.Descr LIKE '%' +@Descr + '%' OR @Descr='*') 
+	          
+
+GO
+
+
+ALTER Procedure  [dbo].[invUpdateProducto] @Operacion nvarchar(1), @IDProducto BIGINT , @Descr nvarchar(250), @Generico NVARCHAR(250), @Alias nvarchar(250),
+@Clasif1 int, @Clasif2 INT, @Clasif3 INT ,@Clasif4 INT , @Clasif5 INT, @Clasif6 INT,@IDProveedor AS INT,@IDCuentaContable AS BIGINT, @CodigoBarra NVARCHAR(50),@IDUnidad INT,
+@FactorEmpaque DECIMAL(28,4), @TipoImpuesto INT, @EsMuestra BIT, @EsControlado BIT, @EsEtico BIT,@EsGenerico BIT, @Activo BIT,@Bonifica BIT,@NumRegistroSanitario NVARCHAR(250),
+@PrecioCIF DECIMAL(28,4), @PrecioFOB DECIMAL(28,4),@TipoPrecio NVARCHAR(3),@FechaVencimientoRegistro DATE,@UserInsert NVARCHAR(50),@UserUpdate NVARCHAR(50),@UpdateDate DATETIME
+as
+set nocount on 
+
+if upper(@Operacion) = 'I'
+BEGIN
+
+	IF (EXISTS (SELECT IDProducto  FROM dbo.invProducto WHERE IDProducto=@IDProducto))
+	BEGIN	
+		RAISERROR ( 'El código del producto ya se existe', 16, 1) ;
+		return				
+	END
+
+	INSERT INTO dbo.invProducto( IDProducto, Descr ,Generico,Alias ,Clasif1 ,Clasif2 ,Clasif3 ,Clasif4 ,Clasif5 ,Clasif6 ,IDProveedor,IDCuentaContable,CodigoBarra ,IDUnidad ,FactorEmpaque ,TipoImpuesto ,
+	          EsMuestra ,EsControlado ,EsEtico ,EsGenerico,Activo,Bonifica ,NumRegSanitario,FechaVencimientoRegistro,PrecioCIF,PrecioFOB,TipoPrecio,UserInsert ,UserUpdate  ,UpdateDate)
+	VALUES (@IDProducto, @Descr,@Generico,@Alias,@Clasif1,@Clasif2,@Clasif3,@Clasif4,@Clasif5,@Clasif6,@IDProveedor,@IDCuentaContable,@CodigoBarra,@IDUnidad,@FactorEmpaque,@TipoImpuesto,
+		@EsMuestra,@EsControlado,@EsEtico,@EsGenerico,	@Activo,@Bonifica,@NumRegistroSanitario,@FechaVencimientoRegistro,@PrecioCIF,@PrecioFOB,@TipoPrecio,@UserInsert,@UserUpdate,@UpdateDate)
+	
+		
+		INSERT INTO dbo.invLote( IDLote ,IDProducto ,LoteInterno ,LoteProveedor ,FechaVencimiento ,FechaFabricacion )
+		VALUES  ( 0 , 
+		          @IDProducto , -- IDProducto - bigint
+		          N'ND' , -- LoteInterno - nvarchar(50)
+		          N'ND' , -- LoteProveedor - nvarchar(50)
+		          '19810101' , -- FechaVencimiento - smalldatetime
+		          '19810101'-- FechaFabricacion - smalldatetime
+		        )
+end
+
+if upper(@Operacion) = 'D'
+begin
+	
+	if Exists ( Select IDProducto  from  dbo.invTransaccionLinea   Where IDProducto  = @IDProducto)	
+	begin 
+		RAISERROR ( 'El producto no puede ser eliminado, tiene movimientos en el inventario, unicamente lo puede desactivar', 16, 1) ;
+		return				
+	END
+	
+	if Exists ( SELECT IDProducto  from  dbo.invExistenciaBodega    Where IDProducto  = @IDProducto AND Existencia>0 )	
+	begin 
+		RAISERROR ( 'El artículo tiene existencia en Bodega, no se puede eliminar', 16, 1) ;
+		return				
+	END
+
+	if Exists ( Select IDLote  from  dbo.invLote    Where IDProducto  = @IDProducto AND IDLote<>0)	
+	begin 
+		RAISERROR ( 'El artículo tiene asociado lotes, por favor elimine los lotes antes de eliminar el producto', 16, 1) ;
+		return				
+	end
+	
+	DELETE FROM dbo.invLote WHERE IDLote=0 AND IDProducto=@IDProducto
+	DELETE  FROM dbo.invProducto WHERE IDProducto = @IDProducto
+	
+end
+
+if upper(@Operacion) = 'U' 
+BEGIN
+	UPDATE dbo.invProducto SET Descr=@Descr,Generico = @Generico ,Alias = @Alias,Clasif1=@Clasif1,Clasif2=@Clasif2,Clasif3=@Clasif3,Clasif4=@Clasif4,Clasif5=@Clasif5,Clasif6=@Clasif6,
+	IDProveedor=@IDProveedor,IDCuentaContable = @IDCuentaContable,CodigoBarra =@CodigoBarra,IDUnidad=@IDUnidad,FactorEmpaque=@FactorEmpaque,TipoImpuesto=@TipoImpuesto,EsMuestra=@EsMuestra,EsControlado=@EsControlado,
+	EsEtico=@EsEtico,EsGenerico=@EsGenerico,Activo=@Activo,Bonifica =@Bonifica,NumRegSanitario=@NumRegistroSanitario,FechaVencimientoRegistro = @FechaVencimientoRegistro,UserUpdate=@UserUpdate,UpdateDate=@UpdateDate,
+	PrecioCIF = @PrecioCIF,PrecioFOB = @PrecioFOB,TipoPrecio = @TipoPrecio
+	WHERE IDProducto=@IDProducto
+	
+end
+
+
+go
 
 

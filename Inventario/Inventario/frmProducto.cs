@@ -121,6 +121,11 @@ namespace CI
             _currentRow["CostoUltDolar"] = 0;
             _currentRow["CostoPromLocal"] = 0;
             _currentRow["CostoPromDolar"] = 0;
+			_currentRow["PrecioCIF"] = 0;
+			_currentRow["PrecioFOB"] = 0;
+			_currentRow["TipoPrecio"] = "CIF";
+
+
         }
 
         public void cargarProducto(int Codigo) {
@@ -153,8 +158,10 @@ namespace CI
             this.txtCostoPromDolar.EditValue = ((Decimal)_currentRow["CostoPromDolar"]).ToString("N" + Util.Util.DecimalLenght);
             this.txtCostoPromLocal.EditValue = ((Decimal)_currentRow["CostoPromLocal"]).ToString("N" + Util.Util.DecimalLenght);
             this.txtUltimoCostoDolar.EditValue = ((Decimal)_currentRow["CostoUltDolar"]).ToString("N" + Util.Util.DecimalLenght);
-            this.txtUltimoCostoLocal.EditValue = ((Decimal)_currentRow["CostoUltLocal"]).ToString("N" + Util.Util.DecimalLenght); 
-
+            this.txtUltimoCostoLocal.EditValue = ((Decimal)_currentRow["CostoUltLocal"]).ToString("N" + Util.Util.DecimalLenght);
+			this.txtPrecioCIF.EditValue = ((Decimal)_currentRow["PrecioCIF"]).ToString("N" + Util.Util.DecimalLenght);
+			this.txtPrecioFOB.EditValue = ((Decimal)_currentRow["PrecioFOB"]).ToString("N" + Util.Util.DecimalLenght);
+			this.cmbPrecioActivo.EditValue = _currentRow["TipoPrecio"].ToString();
 
             this.slkupClasif1.EditValue = _currentRow["Clasif1"];
             this.slkupClasif2.EditValue = _currentRow["Clasif2"];
@@ -199,7 +206,10 @@ namespace CI
             this.chkEsEtico.ReadOnly = !Activo;
             this.chkEsMuestra.ReadOnly = !Activo;
 			this.chkEsGenerico.ReadOnly = !Activo;
-            
+
+			this.txtPrecioCIF.ReadOnly = !Activo;
+			this.txtPrecioFOB.ReadOnly = !Activo;
+			this.cmbPrecioActivo.ReadOnly = !Activo;
             
             this.slkupClasif1.ReadOnly = !Activo;
             this.slkupClasif2.ReadOnly = !Activo;
@@ -306,7 +316,8 @@ namespace CI
                 sMensaje = sMensaje + "     • Ingrese el Tipo de Impuesto del Producto. \n\r";
             if (this.slkupCuentaArticulo.EditValue == null || this.slkupCuentaArticulo.EditValue.ToString() == "")
                 sMensaje = sMensaje + "     • Ingrese la Cuenta contable del Producto. \n\r";
-            
+			if (this.cmbPrecioActivo.EditValue == null || this.cmbPrecioActivo.EditValue.ToString() == "")
+				sMensaje = sMensaje + "		• Ingrese el tipo de Precio que se aplicara al producto. \n\r";
          
 
             if (sMensaje != "")
@@ -366,6 +377,9 @@ namespace CI
                     _currentRow["Bonifica"] = this.chkBonifica.EditValue;
 					_currentRow["NumRegSanitario"] = this.txtNumRegistroSanitario.EditValue.ToString().Trim();
 					_currentRow["FechaVencimientoRegistro"] =this.dtpFechaCaducidadRegistro.EditValue;
+					_currentRow["PrecioCIF"] = Convert.ToDecimal(this.txtPrecioCIF.EditValue);
+					_currentRow["PrecioFOB"] = Convert.ToDecimal(this.txtPrecioFOB.EditValue);
+					_currentRow["TipoPrecio"] = this.cmbPrecioActivo.EditValue.ToString();
                     _currentRow["UserInsert"] = sUsuario;
                     _currentRow["UserUpdate"] = sUsuario;
                     _currentRow["UpdateDate"] = DateTime.Now;
@@ -445,6 +459,9 @@ namespace CI
                     _currentRow["Bonifica"] = this.chkBonifica.EditValue;
 					_currentRow["NumRegSanitario"] = this.txtNumRegistroSanitario.EditValue.ToString().Trim();
 					_currentRow["FechaVencimientoRegistro"] = Convert.ToDateTime(this.dtpFechaCaducidadRegistro.EditValue);
+					_currentRow["PrecioCIF"] = Convert.ToDecimal(this.txtPrecioCIF.EditValue);
+					_currentRow["PrecioFOB"] = Convert.ToDecimal(this.txtPrecioFOB.EditValue);
+					_currentRow["TipoPrecio"] = this.cmbPrecioActivo.EditValue.ToString();
                     _currentRow["UserInsert"] = sUsuario;
                     _currentRow["UserUpdate"] = sUsuario;
                     _currentRow["UpdateDate"] = DateTime.Now;
@@ -534,6 +551,9 @@ namespace CI
             this.txtCostoPromDolar.EditValue = "";
             this.txtUltimoCostoDolar.EditValue = "";
             this.txtUltimoCostoLocal.EditValue = "";
+			this.txtPrecioCIF.EditValue = "";
+			this.txtPrecioFOB.EditValue = "";
+			this.cmbPrecioActivo.SelectedIndex = -1;
 
             this.slkupClasif1.EditValue = null;
             this.slkupClasif2.EditValue = null;
@@ -629,6 +649,8 @@ namespace CI
                 Util.Util.SetFormatTextEdit(txtUltimoCostoLocal, Util.Util.FormatType.Numerico);
                 Util.Util.SetFormatTextEdit(txtCostoPromDolar, Util.Util.FormatType.Numerico);
                 Util.Util.SetFormatTextEdit(txtCostoPromLocal, Util.Util.FormatType.Numerico);
+				Util.Util.SetFormatTextEdit(txtPrecioCIF, Util.Util.FormatType.Numerico);
+				Util.Util.SetFormatTextEdit(txtPrecioFOB, Util.Util.FormatType.Numerico);
 
                 
                 

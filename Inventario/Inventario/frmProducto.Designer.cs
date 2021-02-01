@@ -205,6 +205,13 @@
 			this.simpleLabelItem1 = new DevExpress.XtraLayout.SimpleLabelItem();
 			this.simpleLabelItem2 = new DevExpress.XtraLayout.SimpleLabelItem();
 			this.emptySpaceItem23 = new DevExpress.XtraLayout.EmptySpaceItem();
+			this.emptySpaceItem24 = new DevExpress.XtraLayout.EmptySpaceItem();
+			this.txtPrecioCIF = new DevExpress.XtraEditors.TextEdit();
+			this.layoutControlItem20 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.txtPrecioFOB = new DevExpress.XtraEditors.TextEdit();
+			this.layoutControlItem27 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.cmbPrecioActivo = new DevExpress.XtraEditors.ComboBoxEdit();
+			this.layoutControlItem28 = new DevExpress.XtraLayout.LayoutControlItem();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
 			this.layoutControl1.SuspendLayout();
@@ -322,6 +329,13 @@
 			((System.ComponentModel.ISupportInitialize)(this.simpleLabelItem1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.simpleLabelItem2)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem23)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem24)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.txtPrecioCIF.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem20)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.txtPrecioFOB.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem27)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.cmbPrecioActivo.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem28)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// ribbonControl
@@ -430,6 +444,9 @@
 			// 
 			// layoutControl1
 			// 
+			this.layoutControl1.Controls.Add(this.cmbPrecioActivo);
+			this.layoutControl1.Controls.Add(this.txtPrecioFOB);
+			this.layoutControl1.Controls.Add(this.txtPrecioCIF);
 			this.layoutControl1.Controls.Add(this.txtNumRegistroSanitario);
 			this.layoutControl1.Controls.Add(this.dtpFechaCaducidadRegistro);
 			this.layoutControl1.Controls.Add(this.chkEsGenerico);
@@ -1420,8 +1437,8 @@
 			// 
 			this.tabbedControlGroup1.Location = new System.Drawing.Point(0, 50);
 			this.tabbedControlGroup1.Name = "tabbedControlGroup1";
-			this.tabbedControlGroup1.SelectedTabPage = this.layoutControlGroup2;
-			this.tabbedControlGroup1.SelectedTabPageIndex = 0;
+			this.tabbedControlGroup1.SelectedTabPage = this.layoutControlGroup3;
+			this.tabbedControlGroup1.SelectedTabPageIndex = 2;
 			this.tabbedControlGroup1.Size = new System.Drawing.Size(701, 418);
 			this.tabbedControlGroup1.TabPages.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlGroup2,
@@ -1916,11 +1933,15 @@
             this.emptySpaceItem2,
             this.emptySpaceItem3,
             this.emptySpaceItem4,
-            this.emptySpaceItem13});
+            this.emptySpaceItem13,
+            this.emptySpaceItem24,
+            this.layoutControlItem20,
+            this.layoutControlItem27,
+            this.layoutControlItem28});
 			this.layoutControlGroup3.Location = new System.Drawing.Point(0, 0);
 			this.layoutControlGroup3.Name = "layoutControlGroup3";
 			this.layoutControlGroup3.Size = new System.Drawing.Size(677, 371);
-			this.layoutControlGroup3.Text = "Costos";
+			this.layoutControlGroup3.Text = "Costos y Precios";
 			// 
 			// layoutControlItem4
 			// 
@@ -1967,9 +1988,9 @@
 			// emptySpaceItem1
 			// 
 			this.emptySpaceItem1.AllowHotTrack = false;
-			this.emptySpaceItem1.Location = new System.Drawing.Point(0, 79);
+			this.emptySpaceItem1.Location = new System.Drawing.Point(0, 178);
 			this.emptySpaceItem1.Name = "emptySpaceItem1";
-			this.emptySpaceItem1.Size = new System.Drawing.Size(439, 292);
+			this.emptySpaceItem1.Size = new System.Drawing.Size(439, 193);
 			this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
 			// 
 			// emptySpaceItem2
@@ -2173,6 +2194,82 @@
 			this.emptySpaceItem23.TextSize = new System.Drawing.Size(101, 0);
 			this.emptySpaceItem23.TextVisible = true;
 			// 
+			// emptySpaceItem24
+			// 
+			this.emptySpaceItem24.AllowHotTrack = false;
+			this.emptySpaceItem24.AppearanceItemCaption.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.emptySpaceItem24.AppearanceItemCaption.Options.UseFont = true;
+			this.emptySpaceItem24.AppearanceItemCaption.Options.UseTextOptions = true;
+			this.emptySpaceItem24.AppearanceItemCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+			this.emptySpaceItem24.Location = new System.Drawing.Point(0, 79);
+			this.emptySpaceItem24.MaxSize = new System.Drawing.Size(0, 27);
+			this.emptySpaceItem24.MinSize = new System.Drawing.Size(10, 27);
+			this.emptySpaceItem24.Name = "emptySpaceItem24";
+			this.emptySpaceItem24.Size = new System.Drawing.Size(439, 27);
+			this.emptySpaceItem24.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+			this.emptySpaceItem24.Text = "Precios";
+			this.emptySpaceItem24.TextSize = new System.Drawing.Size(101, 0);
+			this.emptySpaceItem24.TextVisible = true;
+			// 
+			// txtPrecioCIF
+			// 
+			this.txtPrecioCIF.Location = new System.Drawing.Point(128, 203);
+			this.txtPrecioCIF.MenuManager = this.ribbonControl;
+			this.txtPrecioCIF.Name = "txtPrecioCIF";
+			this.txtPrecioCIF.Size = new System.Drawing.Size(331, 20);
+			this.txtPrecioCIF.StyleController = this.layoutControl1;
+			this.txtPrecioCIF.TabIndex = 10007;
+			// 
+			// layoutControlItem20
+			// 
+			this.layoutControlItem20.Control = this.txtPrecioCIF;
+			this.layoutControlItem20.Location = new System.Drawing.Point(0, 106);
+			this.layoutControlItem20.Name = "layoutControlItem20";
+			this.layoutControlItem20.Size = new System.Drawing.Size(439, 24);
+			this.layoutControlItem20.Text = "Precio CIF:";
+			this.layoutControlItem20.TextSize = new System.Drawing.Size(101, 13);
+			// 
+			// txtPrecioFOB
+			// 
+			this.txtPrecioFOB.Location = new System.Drawing.Point(128, 227);
+			this.txtPrecioFOB.MenuManager = this.ribbonControl;
+			this.txtPrecioFOB.Name = "txtPrecioFOB";
+			this.txtPrecioFOB.Size = new System.Drawing.Size(331, 20);
+			this.txtPrecioFOB.StyleController = this.layoutControl1;
+			this.txtPrecioFOB.TabIndex = 10008;
+			// 
+			// layoutControlItem27
+			// 
+			this.layoutControlItem27.Control = this.txtPrecioFOB;
+			this.layoutControlItem27.Location = new System.Drawing.Point(0, 130);
+			this.layoutControlItem27.Name = "layoutControlItem27";
+			this.layoutControlItem27.Size = new System.Drawing.Size(439, 24);
+			this.layoutControlItem27.Text = "Precio FOB";
+			this.layoutControlItem27.TextSize = new System.Drawing.Size(101, 13);
+			// 
+			// cmbPrecioActivo
+			// 
+			this.cmbPrecioActivo.Location = new System.Drawing.Point(128, 251);
+			this.cmbPrecioActivo.MenuManager = this.ribbonControl;
+			this.cmbPrecioActivo.Name = "cmbPrecioActivo";
+			this.cmbPrecioActivo.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+			this.cmbPrecioActivo.Properties.Items.AddRange(new object[] {
+            "CIF",
+            "FOB"});
+			this.cmbPrecioActivo.Size = new System.Drawing.Size(331, 20);
+			this.cmbPrecioActivo.StyleController = this.layoutControl1;
+			this.cmbPrecioActivo.TabIndex = 10009;
+			// 
+			// layoutControlItem28
+			// 
+			this.layoutControlItem28.Control = this.cmbPrecioActivo;
+			this.layoutControlItem28.Location = new System.Drawing.Point(0, 154);
+			this.layoutControlItem28.Name = "layoutControlItem28";
+			this.layoutControlItem28.Size = new System.Drawing.Size(439, 24);
+			this.layoutControlItem28.Text = "Activo:";
+			this.layoutControlItem28.TextSize = new System.Drawing.Size(101, 13);
+			// 
 			// frmProducto
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2303,6 +2400,13 @@
 			((System.ComponentModel.ISupportInitialize)(this.simpleLabelItem1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.simpleLabelItem2)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem23)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem24)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.txtPrecioCIF.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem20)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.txtPrecioFOB.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem27)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.cmbPrecioActivo.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem28)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -2486,5 +2590,12 @@
 				private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup5;
 				private DevExpress.XtraLayout.LayoutControlItem layoutControlItem19;
 				private DevExpress.XtraLayout.LayoutControlItem layoutControlItem18;
+				private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem24;
+				private DevExpress.XtraEditors.ComboBoxEdit cmbPrecioActivo;
+				private DevExpress.XtraEditors.TextEdit txtPrecioFOB;
+				private DevExpress.XtraEditors.TextEdit txtPrecioCIF;
+				private DevExpress.XtraLayout.LayoutControlItem layoutControlItem20;
+				private DevExpress.XtraLayout.LayoutControlItem layoutControlItem27;
+				private DevExpress.XtraLayout.LayoutControlItem layoutControlItem28;
     }
 }

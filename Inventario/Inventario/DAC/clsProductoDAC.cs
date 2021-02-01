@@ -77,6 +77,9 @@ namespace CI.DAC
                 oAdaptador.InsertCommand.Parameters.Add("@Bonifica", SqlDbType.Bit).SourceColumn = "Bonifica";
 				oAdaptador.InsertCommand.Parameters.Add("@NumRegistroSanitario", SqlDbType.NVarChar).SourceColumn = "NumRegSanitario";
 				oAdaptador.InsertCommand.Parameters.Add("@FechaVencimientoRegistro", SqlDbType.Date).SourceColumn = "FechaVencimientoRegistro";
+				oAdaptador.InsertCommand.Parameters.Add("@PrecioCIF", SqlDbType.Decimal).SourceColumn = "PrecioCIF";
+				oAdaptador.InsertCommand.Parameters.Add("@PrecioFOB", SqlDbType.Decimal).SourceColumn = "PrecioFOB";
+				oAdaptador.InsertCommand.Parameters.Add("@TipoPrecio", SqlDbType.NChar).SourceColumn = "TipoPrecio";
                 oAdaptador.InsertCommand.Parameters.Add("@UserInsert", SqlDbType.NChar).SourceColumn = "UserInsert";
                 oAdaptador.InsertCommand.Parameters.Add("@UserUpdate", SqlDbType.NChar).SourceColumn = "UserUpdate";
                 oAdaptador.InsertCommand.Parameters.Add("@UpdateDate", SqlDbType.Date).SourceColumn = "UpdateDate";
@@ -108,6 +111,9 @@ namespace CI.DAC
                 oAdaptador.UpdateCommand.Parameters.Add("@Bonifica", SqlDbType.Bit).SourceColumn = "Bonifica";
 				oAdaptador.UpdateCommand.Parameters.Add("@NumRegistroSanitario", SqlDbType.NVarChar).SourceColumn = "NumRegSanitario";
 				oAdaptador.UpdateCommand.Parameters.Add("@FechaVencimientoRegistro", SqlDbType.Date).SourceColumn = "FechaVencimientoRegistro";
+				oAdaptador.UpdateCommand.Parameters.Add("@PrecioCIF", SqlDbType.Decimal).SourceColumn = "PrecioCIF";
+				oAdaptador.UpdateCommand.Parameters.Add("@PrecioFOB", SqlDbType.Decimal).SourceColumn = "PrecioFOB";
+				oAdaptador.UpdateCommand.Parameters.Add("@TipoPrecio", SqlDbType.NChar).SourceColumn = "TipoPrecio";
                 oAdaptador.UpdateCommand.Parameters.Add("@UserInsert", SqlDbType.NChar).SourceColumn = "UserInsert";
                 oAdaptador.UpdateCommand.Parameters.Add("@UserUpdate", SqlDbType.NChar).SourceColumn = "UserUpdate";
                 oAdaptador.UpdateCommand.Parameters.Add("@UpdateDate", SqlDbType.Date).SourceColumn = "UpdateDate";
@@ -141,6 +147,9 @@ namespace CI.DAC
                 oAdaptador.DeleteCommand.Parameters.Add("@Bonifica", SqlDbType.Bit).SourceColumn = "Bonifica";
 				oAdaptador.DeleteCommand.Parameters.Add("@NumRegistroSanitario", SqlDbType.NVarChar).SourceColumn = "NumRegSanitario";
 				oAdaptador.DeleteCommand.Parameters.Add("@FechaVencimientoRegistro", SqlDbType.Date).SourceColumn = "FechaVencimientoRegistro";
+				oAdaptador.DeleteCommand.Parameters.Add("@PrecioCIF", SqlDbType.Decimal).SourceColumn = "PrecioCIF";
+				oAdaptador.DeleteCommand.Parameters.Add("@PrecioFOB", SqlDbType.Decimal).SourceColumn = "PrecioFOB";
+				oAdaptador.DeleteCommand.Parameters.Add("@TipoPrecio", SqlDbType.NChar).SourceColumn = "TipoPrecio";
                 oAdaptador.DeleteCommand.Parameters.Add("@UserInsert", SqlDbType.NChar).SourceColumn = "UserInsert";
                 oAdaptador.DeleteCommand.Parameters.Add("@UserUpdate", SqlDbType.NChar).SourceColumn = "UserUpdate";
                 oAdaptador.DeleteCommand.Parameters.Add("@UpdateDate", SqlDbType.Date).SourceColumn = "UpdateDate";
@@ -167,7 +176,7 @@ namespace CI.DAC
             String strSQL = "SELECT  IDProducto ,Descr ,Alias ,Generico,CostoUltLocal ,CostoUltDolar ,CostoPromLocal ,CostoPromDolar ,PrecioPublicoLocal ,PrecioFarmaciaLocal ,PrecioCIFLocal ," +
                             "PrecioFOBLocal ,PrecioDolar ,Clasif1 ,Clasif2 ,Clasif3 ,Clasif4 ,Clasif5 ,Clasif6,IDProveedor ,IDCuentaContable,CodigoBarra ,IDUnidad ,FactorEmpaque ,TipoImpuesto ,EsMuestra , " +
                             "EsControlado ,EsEtico, EsGenerico," +
-                            "Activo,Bonifica,NumRegSanitario,FechaVencimientoRegistro ,UserInsert ,UserUpdate ,CreateDate ,UpdateDate  FROM dbo.invProducto WHERE 1=2";
+                            "Activo,Bonifica,NumRegSanitario,FechaVencimientoRegistro,PrecioCIF,PrecioFOB,TipoPrecio ,UserInsert ,UserUpdate ,CreateDate ,UpdateDate  FROM dbo.invProducto WHERE 1=2";
 
             SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
             SqlDataAdapter oAdaptador = new SqlDataAdapter(oCmd);
