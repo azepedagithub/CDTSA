@@ -957,15 +957,15 @@ Public Class frmtmpMain
 
     Public Sub MenuClientes()
         Try
-            Dim frm As New frmDetalles
-            frm.gsFormDetalleName = "CLIENTE"
-            frm.gsCaptionFrm = "Clientes"
-            frm.gsTableName = "ccfClientes"
-            frm.gsCodeName = "IDCliente"
-            frm.gbCodeNumeric = True
-            frm.gsDescrName = "Nombre"
-            frm.gsFieldsRest = "Activo"
-            frm.gsOrder = "IDCliente"
+            Dim frm As New frmDetClientes
+            'frm.gsFormDetalleName = "CLIENTE"
+            'frm.gsCaptionFrm = "Clientes"
+            'frm.gsTableName = "ccfClientes"
+            'frm.gsCodeName = "IDCliente"
+            'frm.gbCodeNumeric = True
+            'frm.gsDescrName = "Nombre"
+            'frm.gsFieldsRest = "Activo"
+            'frm.gsOrder = "IDCliente"
 
             frm.Show()
 

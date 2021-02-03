@@ -4302,50 +4302,8 @@ go
 
 --exec dbo.fafgetPedidoSugeridoLote  8, 'azepeda',1,0
 --Declare @IDPedido int, @Usuario nvarchar(20)
---set @IDPedido = 8
+--set @IDPedido = 8 select * from dbo.fafPedidoPreparado
 --set @Usuario = 'azepeda' exec dbo.fafGetStatusPedidoBeforeInvoice 8, 'admin'
-Create procedure dbo.fafGetStatusPedidoBeforeInvoice @IDPedido int, @Usuario nvarchar(20)
-as 
-set nocount on 
-
-Declare  @Resultado table(IDPedido int, IDProducto int, Descr nvarchar(255), IDLote int, LoteProveedor nvarchar(50),
- LoteInterno nvarchar(50), FechaVencimiento date, ExistenciaLote int,
- CantPedidoProd int, CantBonifProd int, CantAtendidaLote int, FechaGeneracion date,
- Usuario nvarchar(20))
- insert @Resultado (IDPedido, IDProducto,Descr, IDLote , LoteProveedor , LoteInterno, FechaVencimiento , ExistenciaLote ,
- CantPedidoProd , CantBonifProd , CantAtendidaLote , FechaGeneracion , Usuario)
- EXEC fafgetPedidoSugeridoLote @IDPedido, @Usuario,1, 0
- 
- Declare @Compare as table ( IDPedido int , IDProducto int, IDLoteFA int, LoteProveedorFA nvarchar(50), 
- CantSugeridaFA int default 0, IDLoteBodega int , CantBodega int default 0 )
- 
- Insert @Compare (IDPedido, IDProducto,  IDLoteFA)
- Select distinct IDPedido, IDProducto,  IDLote
- From (
- Select IDPedido, IDProducto,  IDLote --, LoteProveedor --, CantAtendidaLote 
- from @Resultado S 
- union all
- Select P.IDPedido, P.IDProducto, P.IDLote
- From dbo.fafPedidoPreparado P 
- ) X
- 
- -- Los Sugeridos Facturas 
- Update C set IDLoteFA = S.IDLote , LoteProveedorFA = S.LoteProveedor , CantSugeridaFA = S.CantAtendidaLote 
- From @Compare C inner join @Resultado S
- on C.IDPedido = S.IDPedido and C.IDProducto = S.IDProducto and C.IDLoteFA = S.IDLote 
- 
- -- Los Sugeridos atendidos por Bodega 
- Update C set  IDLoteBodega = S.IDLote , CantBodega = S.CantAtendida 
- From @Compare C inner join dbo.fafPedidoPreparado S
- on C.IDPedido = S.IDPedido and C.IDProducto = S.IDProducto and C.IDLoteFA = S.IDLote 
- 
- select C.IDPedido, C.IDProducto, P.descr, C.LoteProveedorFA, C.CantSugeridaFA,
- L.LoteProveedor LoteBodega, C.CantBodega,
- Case when C.LoteProveedorFA <> L.LoteProveedor or C.CantSugeridaFA <> C.CantBodega then 'DIFERENCIA' ELSE 'OK' END STATUS
- from @Compare C inner join dbo.invProducto P
- on C.IDProducto = P.IDProducto inner join dbo.invLote L
- on C.IDLoteBodega = L.IDLote
-go
 
 
 alter Function dbo.fafgetDescuentoPorEscala( @IDProducto int, @CantFactura int )
@@ -4377,6 +4335,178 @@ WHERE IDPedido = @IDPedido
 
 GO
 
+-- exec dbo.fafgetPedidoSugeridoLote 8, 'azepeda', 0,0
+alter PROCEDURE dbo.fafgetPedidoSugeridoLote  @IDPedido int, @Usuario nvarchar(20), @SoloConExistencia bit = 1, @CreaPedidoSugerido bit = 1
+AS
+SET NOCOUNT ON
+
+Declare @Fuente  table (Linea int, ItemLote int, IDBodega int, IDPedido int, IDProducto int, Descr nvarchar(250), Cantidad int,
+IDLote int, LoteProveedor nvarchar(50), Existencia int, FechaVencimiento date, CantBonificada int, CantPedido int);
+if @CreaPedidoSugerido is null
+	set @CreaPedidoSugerido = 1
+if @SoloConExistencia is null
+	set @SoloConExistencia = 1
+
+insert  @Fuente( linea, ItemLote, IDBodega, IDPedido, IDProducto, Descr, Cantidad, IDLote,LoteProveedor,
+Existencia, FechaVencimiento, CantBonificada, CantPedido   )
+
+Select ROW_NUMBER() OVER (ORDER BY P.IDProducto) Linea, 
+	ROW_NUMBER() OVER(PARTITION BY P.IDProducto ORDER BY P.IDProducto) AS ItemLote, 
+	P.IDBodega, P.IDPedido, P.IDProducto, T.Descr,  P.Cantidad, T.IDLote,T.LoteProveedor,
+	T.Existencia, T.FechaVencimiento, P.CantBonificada, P.Cantidad  
+From (
+	Select P.IDBodega, P.IDPedido, D.IDProducto, 
+	D.Cantidad, D.CantBonificada, D.CantPrecio 
+	from dbo.fafPedido P inner join fafPedidoProd D
+	on P.IDPedido = D.IDPedido and P.IDBodega = D.IDBodega
+	Where P.IDPedido = @IDPedido
+) P left join 
+(
+	Select E.IDBodega,  E.IDProducto, P.Descr, L.IDLote, L.LoteInterno, L.LoteProveedor, L.FechaVencimiento, 
+	(E.Existencia + Transito - Reservada) Existencia, 0.00  AsignadoFA , 0.00 AsignadoBO, 0 AsignadoPrecio 
+	From dbo.invExistenciaBodega E inner join dbo.invLote L 
+	on E.IDLote = L.IDLote and E.IDProducto= L.IDProducto inner join dbo.invProducto P
+	on E.IDProducto = P.IDProducto and L.IDProducto = P.IDProducto 
+	Where CAST( L.FechaVencimiento  as DATE ) > CAST( GETDATE()  as DATE )
+	--order by E.IDProducto, L.FechaVencimiento asc
+
+) T
+on  P.IDBodega = T.IDBodega and P.IDProducto = T.IDProducto
+
+Create table #Productos (IndexProd int identity (1,1), IDProducto bigint, CantTotalPedido int default 0, CantBonificada int, CantPedido int)
+insert #Productos (IDProducto, CantTotalPedido, CantBonificada, CantPedido  )
+Select Distinct IDProducto,(Cantidad + CantBonificada ) CantTotalPedido, CantBonificada, Cantidad 
+from @Fuente
+
+Declare @PedidoAtendido as table ( IDPedido int, IDProducto int, IDLote int, 
+FechaVencimiento date, CantAtendida int, 
+Usuario nvarchar(20), CantPedido int, CantBonif int, ExistenciaLote int)
+
+declare @IndexProd int, @CantProd int, @CantTotalPedido int, @IDProducto bigint, @CantAsgAcumulada int,
+@ItemLote int, @MaxItemLote int, @IDLote int, @Existencia int, @CantAsignadaLote int, @Cubierto bit,
+@FechaVencimiento date, @CantBonificada int
+set @CantProd = isnull((select COUNT (*) from #Productos), 0)
+set @IndexProd = 1
+While  @IndexProd <= @CantProd
+begin
+	Select @CantTotalPedido = CantTotalPedido, @IDProducto = IDProducto, @CantBonificada = CantBonificada 
+	from #Productos where IndexProd =  @IndexProd
+	set @MaxItemLote = (select COUNT(*) from  @Fuente where IDProducto = @IDProducto )
+	set @itemLote = 1
+	set @CantAsgAcumulada = 0
+	set @Cubierto = 0
+	While  @itemLote <= @MaxItemLote and @Cubierto = 0
+	begin
+	
+		select @IDLote = IDLote, @Existencia = Existencia, @FechaVencimiento = FechaVencimiento 
+		From @Fuente where IDProducto = @IDProducto and ItemLote = @itemLote
+		
+		if (@CantTotalPedido - @CantAsgAcumulada) >= @Existencia
+		begin
+			set @CantAsignadaLote = @Existencia	
+		end
+		else
+				set @CantAsignadaLote = (@CantTotalPedido - @CantAsgAcumulada)
+				
+		set @CantAsgAcumulada = @CantAsgAcumulada + @CantAsignadaLote
+		
+		if @CantAsgAcumulada = @CantTotalPedido
+			set @Cubierto = 1
+		
+		insert @PedidoAtendido ( IDPedido, IDProducto, IDLote, FechaVencimiento, CantAtendida, Usuario, CantPedido, CantBonif, ExistenciaLote  )		
+		Select @IDPedido, @IDProducto IDProducto, @IDLote IDLote, @FechaVencimiento, @CantAsignadaLote, @Usuario, @CantTotalPedido, @CantBonificada, @Existencia    
+		
+		set @itemLote = @itemLote + 1
+	end
+set @IndexProd = @IndexProd + 1	
+end
+
+	if @CreaPedidoSugerido = 0
+	begin
+	Select  A.IDPedido, A.IDProducto, P.Descr, A.IDLote, L.LoteProveedor, L.LoteInterno, A.FechaVencimiento, A.ExistenciaLote, 
+	A.CantPedido CantPedidoProd, A.CantBonif CantBonifProd,  
+	A.CantAtendida CantAtendidaLote,  cast(GETDATE()as DATE) FechaGeneracion, A.Usuario 
+	From @PedidoAtendido A inner join dbo.invLote L 
+	on A.IDLote = L.IDLote and A.IDProducto= L.IDProducto  join dbo.invProducto P
+	on A.IDProducto = P.IDProducto 
+	Where (@SoloConExistencia = 1 and A.CantAtendida >0 ) or @SoloConExistencia = 0
+	end
+	else
+	begin
+
+		Select  A.IDPedido, A.IDProducto, A.IDLote, A.FechaVencimiento, 
+		A.CantAtendida CantAtendidaLote,  cast(GETDATE()as DATE) FechaGeneracion, A.Usuario 
+		From @PedidoAtendido A inner join dbo.invLote L 
+		on A.IDLote = L.IDLote and A.IDProducto= L.IDProducto  join dbo.invProducto P
+		on A.IDProducto = P.IDProducto 	
+		Where (@SoloConExistencia = 1 and A.CantAtendida >0 ) or @SoloConExistencia = 0
+	end
+
+drop table  #Productos 
+go
+-- exec  dbo.fafGetStatusPedidoBeforeInvoice 8, 'azepeda'  EXEC dbo.fafgetPedidoSugeridoLote 8, 'azepeda',0, 0
+Create  procedure dbo.fafGetStatusPedidoBeforeInvoice @IDPedido int, @Usuario nvarchar(20)
+as 
+set nocount on 
+Declare  @Resultado table(IDPedido int, IDProducto int, Descr nvarchar(255), IDLote int, LoteProveedor nvarchar(50),
+ LoteInterno nvarchar(50), FechaVencimiento date, ExistenciaLote int,
+ CantPedidoProd int, CantBonifProd int, CantAtendidaLote int, FechaGeneracion date,
+ Usuario nvarchar(20))
+ insert @Resultado (IDPedido, IDProducto,Descr, IDLote , LoteProveedor , LoteInterno, FechaVencimiento, ExistenciaLote ,
+ CantPedidoProd , CantBonifProd , CantAtendidaLote , FechaGeneracion , Usuario)
+ EXEC dbo.fafgetPedidoSugeridoLote @IDPedido, @Usuario,0, 0
+ 
+ Declare @Compare as table ( IDPedido int , IDProducto int, IDLoteFA int, LoteProveedorFA nvarchar(50), 
+ CantSugeridaFA int default 0, IDLoteBodega int , CantBodega int default 0 , CantPedidoProd int default 0, AsignAutomatico bit default 0)
+ 
+ Insert @Compare (IDPedido, IDProducto,  IDLoteFA, AsignAutomatico, CantSugeridaFA)
+ Select Distinct IDPedido, IDProducto,  IDLote, 1, CantAtendidaLote --, LoteProveedor --, CantAtendidaLote 
+ from @Resultado S 
+ 
+ Insert @Compare (IDPedido, IDProducto,  IDLoteBodega, AsignAutomatico, CantBodega)
+ Select P.IDPedido, P.IDProducto, P.IDLote, 0, P.CantAtendida
+ From dbo.fafPedidoPreparado P 
+ Where IDPedido = @IDPedido 
+ 
+ Declare @ResultadoUnificado as table ( IDPedido int , IDProducto int, IDLoteFA int, 
+ CantSugeridaFA int default 0, IDLoteBodega int , CantBodega int default 0 )
+ 
+ Insert @ResultadoUnificado (IDPedido, IDProducto, IDLoteFA, CantSugeridaFA  )
+ Select IDPedido, IDProducto, IDLoteFA, CantSugeridaFA 
+ from @Compare
+ where AsignAutomatico = 1
+ 
+ Update @ResultadoUnificado set IDLoteBodega = B.IDLoteBodega, CantBodega = B.CantBodega
+ From @ResultadoUnificado U inner join (Select IDProducto, IDLoteBodega, CantBodega  from @Compare Where AsignAutomatico = 0) B
+ on U.IDLoteFA = B.IDLoteBodega and U.IDProducto = B.IDProducto 
+ 
+ Insert @ResultadoUnificado (IDPedido, IDProducto, IDLoteBodega, CantBodega ) 
+ select @IDPedido, B.IDProducto, B.IDLoteBodega, B.CantBodega 
+ From @ResultadoUnificado U right join (Select IDProducto, IDLoteBodega, CantBodega  from @Compare Where AsignAutomatico = 0) B
+ on U.IDProducto = B.IDProducto  and U.IDLoteFA = B.IDLoteBodega
+ where U.idlotefa is null
+
+ Select Pd.IDCliente, Pd.Nombre, Pd.Fecha,  C.IDPedido,  C.IDProducto, P.descr, F.CantPedidoProd CantTotalProducto,  
+ isnull(C.IDLoteFA,0) IDLoteFA ,  isnull(L.LoteProveedor,'') LoteFactura,L.FechaVencimiento VencLoteFact, 
+ C.CantSugeridaFA, ISNULL( C.IDLoteBodega, 0 ) IDLoteBodega, isnull(LL.LoteProveedor,'') LoteBodega,
+  LL.FechaVencimiento VencLoteBodega,  C.CantBodega ,
+ case when ISNULL( C.IDLoteBodega, 0 ) <> isnull(C.IDLoteFA,0) then 'DIFERENCIA' ELSE 'OK' end EstadoLotes
+ from  @ResultadoUnificado C inner join dbo.invProducto P
+ on C.IDProducto = P.IDProducto left join dbo.invLote L
+ on C.IDLoteFA = L.IDLote and C.IDProducto = L.IDProducto left join dbo.invlote LL
+ on C.IDProducto = LL.IDproducto and c.IDLoteBodega = LL.IDLote
+ left join ( Select Distinct IDPedido, IDProducto, CantPedidoProd From @Resultado ) F 
+ on C.IDPedido = F.IDPedido and C.IDProducto = F.IDProducto 
+ left join ( Select Ped.IDCliente, Cli.Nombre, Ped.IDPedido, Ped.Fecha
+			 From dbo.fafPedido Ped inner join dbo.ccfClientes  Cli
+				on Ped.IDCliente = cli.IDCliente 
+			 Where IDPedido = @IDPedido ) Pd
+on C.IDPedido = Pd.IDPedido 
+				
+go
+
+
+ 
 
 Insert dbo.fafEstadoPedido (Estado, Descr )
 values ('P', 'EN PROCESO')
