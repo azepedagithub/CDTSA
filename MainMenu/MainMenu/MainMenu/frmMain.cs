@@ -797,6 +797,8 @@ namespace MainMenu
 
         void ofrmParametrosGenerales_FormClosed(object sender, FormClosedEventArgs e)
         {
+			CDTSA.frmParametrosGenerales ofrmParametros = (CDTSA.frmParametrosGenerales)sender;
+			ofrmParametros.FormClosed -= ofrmParametrosGenerales_FormClosed; 
             //Recargar los parametros del sistema
             CargarParametrosSistema();
         }
