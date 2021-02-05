@@ -269,6 +269,42 @@ namespace ControlBancario.DAC
 			return Saldo;
 
 		}
+
+
+		public static DataSet GetEstadoCuentaBancaria(DateTime FechaInicial, DateTime FechaFinal, int IDCuentaBanco)
+		{
+
+			DataSet DS = new DataSet();
+
+			SqlCommand oCmd = new SqlCommand("dbo.cbGetEstadoCuenta", ConnectionManager.GetConnection());
+			SqlConnection oConn = oCmd.Connection;
+			try
+			{
+
+
+				oCmd.CommandType = CommandType.StoredProcedure;
+				SqlDataAdapter oAdapatadorTmp = new SqlDataAdapter(oCmd);
+				oCmd.Parameters.Add("@FechaInicial", SqlDbType.DateTime, 50).Value = FechaInicial;
+				oCmd.Parameters.Add("@FechaFinal", SqlDbType.DateTime, 50).Value = FechaFinal;
+				oCmd.Parameters.Add("@IDCuentaBanco", SqlDbType.Int, 50).Value = IDCuentaBanco;
+				
+				oAdapatadorTmp.Fill(DS, "Data");
+
+
+			}
+			catch (Exception)
+			{
+				throw;
+			}
+			finally
+			{
+				if (oConn.State == ConnectionState.Open)
+					oConn.Close();
+
+			}
+			return DS;
+
+		}
        
     }
 }

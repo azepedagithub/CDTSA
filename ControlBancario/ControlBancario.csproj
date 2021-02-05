@@ -157,6 +157,12 @@
     <Compile Include="frmDocumento.Designer.cs">
       <DependentUpon>frmDocumento.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmEstadoCuenta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEstadoCuenta.Designer.cs">
+      <DependentUpon>frmEstadoCuenta.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmImportMovBancos.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -237,6 +243,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reportes\rptMovimientoCuentaBanco.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\rptMovimientoCuentaBanco.Designer.cs">
+      <DependentUpon>rptMovimientoCuentaBanco.cs</DependentUpon>
+    </Compile>
     <Compile Include="SaveCommandHandler.cs" />
     <EmbeddedResource Include="FormatosCheques\rptChequeBase.resx">
       <DependentUpon>rptChequeBase.cs</DependentUpon>
@@ -247,6 +259,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmDocumento.resx">
       <DependentUpon>frmDocumento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmEstadoCuenta.resx">
+      <DependentUpon>frmEstadoCuenta.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmImportMovBancos.resx">
       <DependentUpon>frmImportMovBancos.cs</DependentUpon>
@@ -297,6 +312,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Reportes\rptMovimientoCuentaBanco.resx">
+      <DependentUpon>rptMovimientoCuentaBanco.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -307,6 +325,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Content Include="Reportes\rptMovimientoCuentaBanco.repx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

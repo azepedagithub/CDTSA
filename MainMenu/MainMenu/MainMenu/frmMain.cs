@@ -371,6 +371,12 @@ namespace MainMenu
                     ofrmCheque.MdiParent = this;
                     ShowPagesRibbonMan(false);
                     ofrmCheque.Show();
+					break;
+				case "frmEstadoCuenta":
+					ControlBancario.frmEstadoCuenta ofrmEstadoCuenta = new frmEstadoCuenta();
+					ofrmEstadoCuenta.MdiParent = this;
+					ShowPagesRibbonMan(false);
+					ofrmEstadoCuenta.Show();
                     //ControlBancario.frmCheque ofrmCheque = new frmCheque();
                     //ofrmCheque.MdiParent = this;
                     //ShowPagesRibbonMan(false);
@@ -900,6 +906,8 @@ namespace MainMenu
                     TreeListNode nodeDocumentos = tl.AppendNode(new object[] { "Documentos" }, -1, 9, 10, 9);
                     TreeListNode nodeCheques = tl.AppendNode(new object[] { "Listado de Documentos" }, nodeDocumentos.Id, 11, 11, 11);
                     nodeCheques.Tag = "frmListadoDocumentosBancarios";
+					TreeListNode nodeEstadoCuenta = tl.AppendNode(new object[] { "Estado de Cuenta" }, nodeDocumentos.Id, 11, 11, 11);
+					nodeEstadoCuenta.Tag = "frmEstadoCuenta";
                     TreeListNode nodeNit = tl.AppendNode(new object[] { "Nit" }, nodeDocumentos.Id, 11, 11, 11);
                     nodeNit.Tag = "frmNIT";
 					TreeListNode nodeProcesosBanco = tl.AppendNode(new object[] { "Procesos" }, -1, 9, 10, 9);
