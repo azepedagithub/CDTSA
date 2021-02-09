@@ -116,7 +116,8 @@ namespace ControlBancario
 					for (int j = 1; j <= Cols; j++)
 					{
 						Object valor = xlRange.Cells[i, j].Value2;
-
+						if (valor == null)
+							break;
 						if (i >= 2)
 						{
 							//Validar Los datos

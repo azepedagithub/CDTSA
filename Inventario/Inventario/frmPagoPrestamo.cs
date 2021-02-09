@@ -101,12 +101,12 @@ namespace CI
 
 			_currentRow["IDTransaccion"] = -1;
 			_currentRow["ModuloOrigen"] = "CI";
-			_currentRow["IDPaquete"] = 10;
+			_currentRow["IDPaquete"] = 7;
 			_currentRow["Fecha"] = DateTime.Now;
 			_currentRow["Usuario"] = sUsuario;
 
 			_currentRow["Referencia"] = "Pago de Prestamo";
-			_currentRow["Documento"] = "";
+			_currentRow["Documento"] = "-- --";
 			_currentRow["Aplicado"] = true;
 			_currentRow["UniqueValue"] = Guid.NewGuid();
 			_currentRow["EsTraslado"] = false; //Cambiar

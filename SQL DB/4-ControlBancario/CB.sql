@@ -1495,5 +1495,6 @@ WHERE A.Fecha BETWEEN @FechaInicial  AND @FechaFinal
 UNION all
 SELECT 'F' Orden ,@FechaInicial,'SALDO FINAL','','','', SaldoLibro Monto  FROM  @tbSaldoFinal
 
+GO
 
 

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDocumentoInv));
 			this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
 			this.hlblAsiento = new DevExpress.XtraEditors.HyperlinkLabelControl();
@@ -50,6 +51,7 @@
 			this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.tabDetalle = new DevExpress.XtraTab.XtraTabPage();
 			this.layoutControl3 = new DevExpress.XtraLayout.LayoutControl();
+			this.btnAgregarLote = new DevExpress.XtraEditors.SimpleButton();
 			this.separatorControl2 = new DevExpress.XtraEditors.SeparatorControl();
 			this.separatorControl1 = new DevExpress.XtraEditors.SeparatorControl();
 			this.slkupLote = new DevExpress.XtraEditors.SearchLookUpEdit();
@@ -97,6 +99,7 @@
 			this.layoutControlItem22 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem23 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem17 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.layoutControlItem25 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.txtIDTransaccion = new DevExpress.XtraEditors.TextEdit();
 			this.txtModuloOrigen = new DevExpress.XtraEditors.TextEdit();
 			this.txtIDTraslado = new DevExpress.XtraEditors.TextEdit();
@@ -109,7 +112,7 @@
 			this.layoutControlItem20 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem24 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.barManager1 = new DevExpress.XtraBars.BarManager();
+			this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
 			this.bar1 = new DevExpress.XtraBars.Bar();
 			this.btnAddDoc = new DevExpress.XtraBars.BarButtonItem();
 			this.btnSaveDoc = new DevExpress.XtraBars.BarButtonItem();
@@ -123,8 +126,6 @@
 			this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
-			this.btnAgregarLote = new DevExpress.XtraEditors.SimpleButton();
-			this.layoutControlItem25 = new DevExpress.XtraLayout.LayoutControlItem();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
 			this.layoutControl1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.txtPaquete.Properties)).BeginInit();
@@ -186,6 +187,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem22)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem23)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem17)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem25)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtIDTransaccion.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtModuloOrigen.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtIDTraslado.Properties)).BeginInit();
@@ -199,7 +201,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem24)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem25)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// layoutControl1
@@ -486,6 +487,18 @@
 			this.layoutControl3.Size = new System.Drawing.Size(865, 433);
 			this.layoutControl3.TabIndex = 0;
 			this.layoutControl3.Text = "layoutControl3";
+			// 
+			// btnAgregarLote
+			// 
+			this.btnAgregarLote.Enabled = false;
+			this.btnAgregarLote.Image = ((System.Drawing.Image)(resources.GetObject("btnAgregarLote.Image")));
+			this.btnAgregarLote.Location = new System.Drawing.Point(746, 311);
+			this.btnAgregarLote.Name = "btnAgregarLote";
+			this.btnAgregarLote.Size = new System.Drawing.Size(95, 22);
+			this.btnAgregarLote.StyleController = this.layoutControl3;
+			this.btnAgregarLote.TabIndex = 21;
+			this.btnAgregarLote.Text = "Agregar Lote";
+			this.btnAgregarLote.Click += new System.EventHandler(this.btnAgregarLote_Click);
 			// 
 			// separatorControl2
 			// 
@@ -1017,6 +1030,15 @@
 			this.layoutControlItem17.Text = "Bodega Destino:";
 			this.layoutControlItem17.TextSize = new System.Drawing.Size(79, 13);
 			// 
+			// layoutControlItem25
+			// 
+			this.layoutControlItem25.Control = this.btnAgregarLote;
+			this.layoutControlItem25.Location = new System.Drawing.Point(722, 102);
+			this.layoutControlItem25.Name = "layoutControlItem25";
+			this.layoutControlItem25.Size = new System.Drawing.Size(99, 26);
+			this.layoutControlItem25.TextSize = new System.Drawing.Size(0, 0);
+			this.layoutControlItem25.TextVisible = false;
+			// 
 			// txtIDTransaccion
 			// 
 			this.txtIDTransaccion.Location = new System.Drawing.Point(731, 37);
@@ -1307,27 +1329,6 @@
 			this.barDockControlRight.Location = new System.Drawing.Point(897, 31);
 			this.barDockControlRight.Size = new System.Drawing.Size(0, 550);
 			// 
-			// btnAgregarLote
-			// 
-			this.btnAgregarLote.Enabled = false;
-			this.btnAgregarLote.Image = ((System.Drawing.Image)(resources.GetObject("btnAgregarLote.Image")));
-			this.btnAgregarLote.Location = new System.Drawing.Point(746, 311);
-			this.btnAgregarLote.Name = "btnAgregarLote";
-			this.btnAgregarLote.Size = new System.Drawing.Size(95, 22);
-			this.btnAgregarLote.StyleController = this.layoutControl3;
-			this.btnAgregarLote.TabIndex = 21;
-			this.btnAgregarLote.Text = "Agregar Lote";
-			this.btnAgregarLote.Click += new System.EventHandler(this.btnAgregarLote_Click);
-			// 
-			// layoutControlItem25
-			// 
-			this.layoutControlItem25.Control = this.btnAgregarLote;
-			this.layoutControlItem25.Location = new System.Drawing.Point(722, 102);
-			this.layoutControlItem25.Name = "layoutControlItem25";
-			this.layoutControlItem25.Size = new System.Drawing.Size(99, 26);
-			this.layoutControlItem25.TextSize = new System.Drawing.Size(0, 0);
-			this.layoutControlItem25.TextVisible = false;
-			// 
 			// frmDocumentoInv
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1405,6 +1406,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem22)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem23)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem17)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem25)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtIDTransaccion.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtModuloOrigen.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtIDTraslado.Properties)).EndInit();
@@ -1418,7 +1420,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem24)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem25)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
