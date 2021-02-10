@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmConciliacionBancaria));
 			DevExpress.XtraGrid.GridFormatRule gridFormatRule1 = new DevExpress.XtraGrid.GridFormatRule();
 			DevExpress.XtraEditors.FormatConditionRuleContains formatConditionRuleContains1 = new DevExpress.XtraEditors.FormatConditionRuleContains();
@@ -44,7 +45,7 @@
 			this.btnDesAsociar = new DevExpress.XtraBars.BarButtonItem();
 			this.btnConciliar = new DevExpress.XtraBars.BarButtonItem();
 			this.btnCancelar = new DevExpress.XtraBars.BarButtonItem();
-			this.btnEliminar = new DevExpress.XtraBars.BarButtonItem();
+			this.btnConciliarConDiff = new DevExpress.XtraBars.BarButtonItem();
 			this.lblStatus = new DevExpress.XtraBars.BarStaticItem();
 			this.btnImportar = new DevExpress.XtraBars.BarButtonItem();
 			this.btnRefrescar = new DevExpress.XtraBars.BarButtonItem();
@@ -114,7 +115,8 @@
 			this.layoutControlItem17 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.emptySpaceItem8 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.emptySpaceItem9 = new DevExpress.XtraLayout.EmptySpaceItem();
-			this.imgCollection = new DevExpress.Utils.ImageCollection();
+			this.imgCollection = new DevExpress.Utils.ImageCollection(this.components);
+			this.colConciliado = new DevExpress.XtraGrid.Columns.GridColumn();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
 			this.layoutControl1.SuspendLayout();
@@ -199,7 +201,7 @@
             this.btnDesAsociar,
             this.btnConciliar,
             this.btnCancelar,
-            this.btnEliminar,
+            this.btnConciliarConDiff,
             this.lblStatus,
             this.btnImportar,
             this.btnRefrescar,
@@ -252,15 +254,17 @@
 			this.btnCancelar.Id = 4;
 			this.btnCancelar.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnCancelar.LargeGlyph")));
 			this.btnCancelar.Name = "btnCancelar";
+			this.btnCancelar.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnCancelar_ItemClick);
 			// 
-			// btnEliminar
+			// btnConciliarConDiff
 			// 
-			this.btnEliminar.Caption = "Eliminar";
-			this.btnEliminar.Enabled = false;
-			this.btnEliminar.Glyph = ((System.Drawing.Image)(resources.GetObject("btnEliminar.Glyph")));
-			this.btnEliminar.Id = 5;
-			this.btnEliminar.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnEliminar.LargeGlyph")));
-			this.btnEliminar.Name = "btnEliminar";
+			this.btnConciliarConDiff.Caption = "Coinciliar con Diff";
+			this.btnConciliarConDiff.Enabled = false;
+			this.btnConciliarConDiff.Glyph = ((System.Drawing.Image)(resources.GetObject("btnConciliarConDiff.Glyph")));
+			this.btnConciliarConDiff.Id = 5;
+			this.btnConciliarConDiff.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnConciliarConDiff.LargeGlyph")));
+			this.btnConciliarConDiff.Name = "btnConciliarConDiff";
+			this.btnConciliarConDiff.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnConciliarConDiff_ItemClick);
 			// 
 			// lblStatus
 			// 
@@ -338,7 +342,7 @@
 			this.ribbonPageGroup1.ItemLinks.Add(this.btnDesAsociar);
 			this.ribbonPageGroup1.ItemLinks.Add(this.btnConciliar);
 			this.ribbonPageGroup1.ItemLinks.Add(this.btnCancelar);
-			this.ribbonPageGroup1.ItemLinks.Add(this.btnEliminar);
+			this.ribbonPageGroup1.ItemLinks.Add(this.btnConciliarConDiff);
 			this.ribbonPageGroup1.ItemLinks.Add(this.btnImportar);
 			this.ribbonPageGroup1.ItemLinks.Add(this.btnRefrescar);
 			this.ribbonPageGroup1.ItemLinks.Add(this.btnGuardar);
@@ -407,6 +411,7 @@
 			this.dtpFechaFinal.Size = new System.Drawing.Size(330, 20);
 			this.dtpFechaFinal.StyleController = this.layoutControl1;
 			this.dtpFechaFinal.TabIndex = 18;
+			this.dtpFechaFinal.EditValueChanged += new System.EventHandler(this.dtpFechaFinal_EditValueChanged);
 			// 
 			// dtpFechaInicial
 			// 
@@ -575,7 +580,8 @@
             this.colMonto,
             this.colCheck,
             this.colMatchNumber,
-            this.colNotaConciliacion});
+            this.colNotaConciliacion,
+            this.colConciliado});
 			gridFormatRule3.ApplyToRow = true;
 			gridFormatRule3.Column = this.colCheck;
 			gridFormatRule3.Enabled = false;
@@ -1043,6 +1049,14 @@
 			this.imgCollection.InsertGalleryImage("pielabelstooltips_16x16.png", "images/chart/pielabelstooltips_16x16.png", DevExpress.Images.ImageResourceCache.Default.GetImage("images/chart/pielabelstooltips_16x16.png"), 0);
 			this.imgCollection.Images.SetKeyName(0, "pielabelstooltips_16x16.png");
 			// 
+			// colConciliado
+			// 
+			this.colConciliado.Caption = "Conciliacion con Diferencias";
+			this.colConciliado.FieldName = "ConciliadoConDiff";
+			this.colConciliado.Name = "colConciliado";
+			this.colConciliado.Visible = true;
+			this.colConciliado.VisibleIndex = 8;
+			// 
 			// frmConciliacionBancaria
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1122,7 +1136,7 @@
 		private DevExpress.XtraBars.BarButtonItem btnDesAsociar;
 		private DevExpress.XtraBars.BarButtonItem btnConciliar;
 		private DevExpress.XtraBars.BarButtonItem btnCancelar;
-		private DevExpress.XtraBars.BarButtonItem btnEliminar;
+		private DevExpress.XtraBars.BarButtonItem btnConciliarConDiff;
 		private DevExpress.XtraBars.BarStaticItem lblStatus;
 		private DevExpress.XtraBars.BarButtonItem btnImportar;
 		private DevExpress.XtraBars.BarButtonItem btnRefrescar;
@@ -1195,5 +1209,6 @@
 		private DevExpress.XtraGrid.Columns.GridColumn colNotaConciliacion;
 		private DevExpress.XtraBars.BarButtonItem btnMensaje;
 		private DevExpress.Utils.ImageCollection imgCollection;
+		private DevExpress.XtraGrid.Columns.GridColumn colConciliado;
 	}
 }

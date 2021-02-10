@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmListadoConciliacionesBancarias));
 			this.ribbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
 			this.btnAgregar = new DevExpress.XtraBars.BarButtonItem();
@@ -49,7 +50,9 @@
 			this.colSaldoFinalBanco = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colSaldoFinalLibro = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colUsuario = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colEstado = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colImageStatus = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.cmbStatus = new DevExpress.XtraEditors.Repository.RepositoryItemImageComboBox();
+			this.imageCollection1 = new DevExpress.Utils.ImageCollection(this.components);
 			this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -63,6 +66,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.dtpFechaInicial.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dtgConciliaciones)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.cmbStatus)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.imageCollection1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
@@ -208,6 +213,8 @@
 			this.dtgConciliaciones.MainView = this.gridView1;
 			this.dtgConciliaciones.MenuManager = this.ribbonControl;
 			this.dtgConciliaciones.Name = "dtgConciliaciones";
+			this.dtgConciliaciones.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.cmbStatus});
 			this.dtgConciliaciones.Size = new System.Drawing.Size(624, 250);
 			this.dtgConciliaciones.TabIndex = 7;
 			this.dtgConciliaciones.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -221,9 +228,10 @@
             this.colSaldoFinalBanco,
             this.colSaldoFinalLibro,
             this.colUsuario,
-            this.colEstado});
+            this.colImageStatus});
 			this.gridView1.GridControl = this.dtgConciliaciones;
 			this.gridView1.Name = "gridView1";
+			this.gridView1.OptionsView.ShowGroupPanel = false;
 			this.gridView1.DoubleClick += new System.EventHandler(this.gridView1_DoubleClick);
 			// 
 			// colIDConciliacion
@@ -266,13 +274,33 @@
 			this.colUsuario.Visible = true;
 			this.colUsuario.VisibleIndex = 4;
 			// 
-			// colEstado
+			// colImageStatus
 			// 
-			this.colEstado.Caption = "Estado";
-			this.colEstado.FieldName = "Estado";
-			this.colEstado.Name = "colEstado";
-			this.colEstado.Visible = true;
-			this.colEstado.VisibleIndex = 5;
+			this.colImageStatus.Caption = "Estado";
+			this.colImageStatus.ColumnEdit = this.cmbStatus;
+			this.colImageStatus.FieldName = "Estado";
+			this.colImageStatus.Name = "colImageStatus";
+			this.colImageStatus.Visible = true;
+			this.colImageStatus.VisibleIndex = 5;
+			// 
+			// cmbStatus
+			// 
+			this.cmbStatus.AutoHeight = false;
+			this.cmbStatus.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+			this.cmbStatus.Items.AddRange(new DevExpress.XtraEditors.Controls.ImageComboBoxItem[] {
+            new DevExpress.XtraEditors.Controls.ImageComboBoxItem("", "F", 0),
+            new DevExpress.XtraEditors.Controls.ImageComboBoxItem("", "P", 1)});
+			this.cmbStatus.Name = "cmbStatus";
+			this.cmbStatus.SmallImages = this.imageCollection1;
+			// 
+			// imageCollection1
+			// 
+			this.imageCollection1.ImageStream = ((DevExpress.Utils.ImageCollectionStreamer)(resources.GetObject("imageCollection1.ImageStream")));
+			this.imageCollection1.InsertGalleryImage("apply_16x16.png", "images/actions/apply_16x16.png", DevExpress.Images.ImageResourceCache.Default.GetImage("images/actions/apply_16x16.png"), 0);
+			this.imageCollection1.Images.SetKeyName(0, "apply_16x16.png");
+			this.imageCollection1.InsertGalleryImage("time_16x16.png", "images/scheduling/time_16x16.png", DevExpress.Images.ImageResourceCache.Default.GetImage("images/scheduling/time_16x16.png"), 1);
+			this.imageCollection1.Images.SetKeyName(1, "time_16x16.png");
 			// 
 			// layoutControlGroup1
 			// 
@@ -334,6 +362,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.dtpFechaInicial.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.dtgConciliaciones)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.cmbStatus)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.imageCollection1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
@@ -369,6 +399,8 @@
 		private DevExpress.XtraGrid.Columns.GridColumn colSaldoFinalBanco;
 		private DevExpress.XtraGrid.Columns.GridColumn colSaldoFinalLibro;
 		private DevExpress.XtraGrid.Columns.GridColumn colUsuario;
-		private DevExpress.XtraGrid.Columns.GridColumn colEstado;
+		private DevExpress.XtraGrid.Columns.GridColumn colImageStatus;
+		private DevExpress.XtraEditors.Repository.RepositoryItemImageComboBox cmbStatus;
+		private DevExpress.Utils.ImageCollection imageCollection1;
 	}
 }

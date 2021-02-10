@@ -152,6 +152,23 @@ namespace ControlBancario.DAC
 			return DS.Tables[0];
 		}
 
+
+		public static DataTable GetMovimientoLibrosContablesForConciliacion(int IDCuentaBancaria, DateTime FechaInicial,DateTime FechaFinal)
+		{
+			DataSet DS = CreateDataSet();
+			SqlCommand ocmd = new SqlCommand("dbo.cbGetMovimientoLibrosForConciliacion", ConnectionManager.GetConnection());
+			ocmd.Parameters.Add(new SqlParameter("@IDCuentaBancaria", IDCuentaBancaria));
+			ocmd.Parameters.Add(new SqlParameter("@FechaInicial", FechaInicial));
+			ocmd.Parameters.Add(new SqlParameter("@FechaFinal", FechaFinal));
+			ocmd.CommandType = CommandType.StoredProcedure;
+			SqlDataAdapter oTempAdaptador = new SqlDataAdapter(ocmd);
+			oTempAdaptador.Fill(DS, "data");
+			return DS.Tables[0];
+		}
+
+
+		
+
 		public static DataSet GetConciliacionByQuery(int IDCuentaBancaria, DateTime FechaInicial, DateTime FechaFinal)
 		{
 			DataSet DS = CreateDataSet();
@@ -165,9 +182,12 @@ namespace ControlBancario.DAC
 			return DS;
 		}
 
-		public static String CanAddConciliacionBancaria() {
+
+		public static String CanAddConciliacionBancaria(int IDCuentaBancaria) {
 			DataSet DS = new DataSet();
 			SqlCommand ocmd = new SqlCommand("dbo.cbCanAddConciliacionBancaria", ConnectionManager.GetConnection());
+			ocmd.Parameters.Add(new SqlParameter("@IDCuentaBanco", IDCuentaBancaria));
+			ocmd.CommandType = CommandType.StoredProcedure;
 			SqlDataAdapter oAdaptador = new SqlDataAdapter(ocmd);
 			oAdaptador.Fill(DS, "Data");
 			return DS.Tables[0].Rows[0]["Estado"].ToString();
@@ -255,6 +275,36 @@ namespace ControlBancario.DAC
 			result = oCmd.ExecuteNonQuery();
 			bresult = (result != 0) ? true : false;
 			return bresult;
+		}
+
+		public static bool UpdateMovBancoConciliacionWithDiff(long IDMovBanco, int IDConciliacion, SqlTransaction tran)
+		{
+			bool bresult = false;
+			long result;
+			String strSQL = "dbo.cbUpdateMovBancoConcilicionWithDiff";
+
+			SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
+
+			oCmd.Parameters.Add(new SqlParameter("@IDMovBanco", IDMovBanco));
+			oCmd.Parameters.Add(new SqlParameter("@IDConciliacion", IDConciliacion));
+
+			oCmd.CommandType = CommandType.StoredProcedure;
+			oCmd.Transaction = tran;
+			if (oCmd.Connection.State != ConnectionState.Open)
+				oCmd.Connection.Open();
+			result = oCmd.ExecuteNonQuery();
+			bresult = (result != 0) ? true : false;
+			return bresult;
+		}
+
+		public static int GetLasIdConciliacion( SqlTransaction tran)
+		{
+			DataSet DS = CreateDataSet();
+			SqlCommand ocmd = new SqlCommand("dbo.cbGetLastIDConcilicacion", ConnectionManager.GetConnection());
+			ocmd.CommandType = CommandType.StoredProcedure;
+			SqlDataAdapter oTempAdaptador = new SqlDataAdapter(ocmd);
+			oTempAdaptador.Fill(DS, "data");
+			return Convert.ToInt32(DS.Tables[0].Rows[0]["IDConciliacion"]);
 		}
 
 
