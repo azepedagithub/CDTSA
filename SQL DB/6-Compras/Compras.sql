@@ -2005,7 +2005,7 @@ UPDATE @tmpProductos SET MontoFlete = @MontoFlete * Porc, MontoSeguro = @MontoSe
 
 
 SELECT IDLiquidacion,A.IDProducto,P.Descr DescrProducto,A.Cantidad,A.Porc Peso,A.MontoMercaderia,A.MontoFlete,A.MontoSeguro,A.MontoGasto, (A.MontoMercaderia + A.MontoFlete + A.MontoSEguro) MontoTotalOrden, (A.MontoMercaderia + A.MontoFlete + A.MontoSEguro + A.MontoGasto) Total, (A.MontoMercaderia + A.MontoFlete + A.MontoSEguro + A.MontoGasto) / A.Cantidad PrecioUnitario  FROM
-(SELECT @IDLiquidacion IDLiquidacion, IDProducto,MontoMercaderia,MontoFlete,MontoSeguro,A.Cantidad,Porc,B.Monto * Porc MontoGasto,1 Prioridad
+(SELECT @IDLiquidacion IDLiquidacion, IDProducto,MontoMercaderia,MontoFlete,MontoSeguro,A.Cantidad,Porc,ISNULL(B.Monto,0) * Porc MontoGasto,1 Prioridad
 FROM @tmpProductos A
 CROSS JOIN (SELECT sum(Monto) Monto FROM 	@Gastos) B ) A
 INNER JOIN dbo.invProducto P ON A.IDProducto=P.IDProducto
