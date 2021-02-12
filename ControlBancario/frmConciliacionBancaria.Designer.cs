@@ -80,6 +80,7 @@
 			this.colMonto = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colMatchNumber = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colNotaConciliacion = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colConciliado = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.txtSaldoBanco = new DevExpress.XtraEditors.TextEdit();
 			this.txtSaldoLibro = new DevExpress.XtraEditors.TextEdit();
 			this.dtpFechaSaldo = new DevExpress.XtraEditors.DateEdit();
@@ -116,7 +117,6 @@
 			this.emptySpaceItem8 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.emptySpaceItem9 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.imgCollection = new DevExpress.Utils.ImageCollection(this.components);
-			this.colConciliado = new DevExpress.XtraGrid.Columns.GridColumn();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
 			this.layoutControl1.SuspendLayout();
@@ -682,6 +682,14 @@
 			this.colNotaConciliacion.VisibleIndex = 7;
 			this.colNotaConciliacion.Width = 228;
 			// 
+			// colConciliado
+			// 
+			this.colConciliado.Caption = "Conciliacion con Diferencias";
+			this.colConciliado.FieldName = "ConciliadoConDiff";
+			this.colConciliado.Name = "colConciliado";
+			this.colConciliado.Visible = true;
+			this.colConciliado.VisibleIndex = 8;
+			// 
 			// txtSaldoBanco
 			// 
 			this.txtSaldoBanco.Location = new System.Drawing.Point(505, 183);
@@ -1048,14 +1056,6 @@
 			this.imgCollection.ImageStream = ((DevExpress.Utils.ImageCollectionStreamer)(resources.GetObject("imgCollection.ImageStream")));
 			this.imgCollection.InsertGalleryImage("pielabelstooltips_16x16.png", "images/chart/pielabelstooltips_16x16.png", DevExpress.Images.ImageResourceCache.Default.GetImage("images/chart/pielabelstooltips_16x16.png"), 0);
 			this.imgCollection.Images.SetKeyName(0, "pielabelstooltips_16x16.png");
-			// 
-			// colConciliado
-			// 
-			this.colConciliado.Caption = "Conciliacion con Diferencias";
-			this.colConciliado.FieldName = "ConciliadoConDiff";
-			this.colConciliado.Name = "colConciliado";
-			this.colConciliado.Visible = true;
-			this.colConciliado.VisibleIndex = 8;
 			// 
 			// frmConciliacionBancaria
 			// 

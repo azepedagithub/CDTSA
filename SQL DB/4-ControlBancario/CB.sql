@@ -1033,7 +1033,7 @@ AS
 SELECT  IDConciliacion ,IDCuentaBanco ,FechaInicio ,FechaFin ,SaldoInicialBanco ,TotalIngresosBanco ,TotalSalidasBanco ,
         SaldoFinalBanco ,SaldoInicialLibro ,TotalIngresosLibro ,TotalSalidasLibro ,SaldoFinalLibro ,Estado ,
         Usuario  FROM dbo.cbConciliacion
-WHERE (IDConciliacion=@IDConciliacion OR @IDConciliacion = -1) OR (IDCuentaBanco = @IDCuenta OR @IDCuenta = -1)
+WHERE (IDConciliacion=@IDConciliacion OR @IDConciliacion = -1) and (IDCuentaBanco = @IDCuenta OR @IDCuenta = -1)
 
 GO
 

@@ -99,13 +99,14 @@ namespace ControlBancario
 				Util.Util.ConfigLookupEdit(this.slkupCuentaBancaria, DAC.CuentaBancariaDAC.GetData(-1, -1).Tables["Data"], "Descr", "IDCuentaBanco");
 				Util.Util.ConfigLookupEditSetViewColumns(this.slkupCuentaBancaria, "[{'ColumnCaption':'Codigo','ColumnField':'Codigo','width':30},{'ColumnCaption':'Descr','ColumnField':'Descr','width':70}]");
 
+				ActivarControles();
+
 				LoadData();
 
 				CalcularTotales();
 
 				AplicarPrivilegios();
 
-				ActivarControles();
 			}
 			catch (Exception ex)
 			{
@@ -211,14 +212,10 @@ namespace ControlBancario
 					this.btnConciliarConDiff.Enabled = false;
 					this.btnGuardar.Enabled = false;
 					this.btnImportar.Enabled = false;
-
-					//Deshabilitar los controles 
-					this.dtpFechaInicial.ReadOnly = true;
-					this.dtpFechaFinal.ReadOnly = true;
-					this.dtpFechaSaldo.ReadOnly = true;
-					this.slkupCuentaBancaria.ReadOnly = true;
 					this.gridViewMovBanco.OptionsBehavior.ReadOnly = true;
 					this.gridViewMovLibros.OptionsBehavior.ReadOnly = true;
+					this.dtpFechaFinal.ReadOnly = true;
+				
 				}
 				else if (Accion =="Edit") {
 					this.btnAsociar.Enabled = true;
@@ -229,6 +226,12 @@ namespace ControlBancario
 					this.btnImportar.Enabled = true;
 					
 				}
+
+				//Deshabilitar los controles 
+				this.dtpFechaInicial.ReadOnly = true;
+				this.dtpFechaSaldo.ReadOnly = true;
+				this.slkupCuentaBancaria.ReadOnly = true;
+			
 
 				//TODO Calcular los totales marcados.
 			}
