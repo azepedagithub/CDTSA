@@ -413,6 +413,7 @@ namespace CI
                            //dr = (DataRowView)slkupLote.Properties.View.GetRow(slkupLote.Properties.GetIndexByKeyValue(slkupLote.EditValue));
                            dr = (DataRowView)slkupLote.Properties.GetRowByKeyValue(slkupLote.EditValue);
                            _currentRowDetalle["LoteInterno"] = dr["LoteInterno"].ToString();
+						   _currentRowDetalle["FechaVencimiento"] = Convert.ToDateTime(dr["FechaVencimiento"]);
                            _currentRowDetalle["IDTipoTran"] = Convert.ToInt32(this.slkupTransaccion.EditValue);
                            //dr = (DataRowView)slkupBodegaOrigen.Properties.View.GetRow(slkupBodegaOrigen.Properties.GetIndexByKeyValue(slkupBodegaOrigen.EditValue));
                            dr = (DataRowView)slkupBodegaOrigen.Properties.GetRowByKeyValue(slkupBodegaOrigen.EditValue);
@@ -466,6 +467,7 @@ namespace CI
                            //dr = (DataRowView)slkupLote.Properties.View.GetRow(slkupLote.Properties.GetIndexByKeyValue(slkupLote.EditValue));
                            dr = (DataRowView)slkupLote.Properties.GetRowByKeyValue(slkupLote.EditValue);
                            _currentRowDetalle["LoteInterno"] = dr["LoteInterno"].ToString();
+						   _currentRowDetalle["FechaVencimiento"] = Convert.ToDateTime(dr["FechaVencimiento"]);
                            _currentRowDetalle["IDTipoTran"] = Convert.ToInt32(this.slkupTransaccion.EditValue);
                            //dr = (DataRowView)slkupBodegaOrigen.Properties.View.GetRow(slkupBodegaOrigen.Properties.GetIndexByKeyValue(slkupBodegaOrigen.EditValue));
                            dr = (DataRowView)slkupBodegaOrigen.Properties.GetRowByKeyValue(slkupBodegaOrigen.EditValue);
@@ -563,7 +565,7 @@ namespace CI
                if  (this.txtPrecioDolar.EditValue ==null || this.txtPrecioLocal.EditValue.ToString()=="")
                    sMensaje = " • Ingrese el precio del producto \n\r";
             }
-            else if (Convert.ToBoolean(dr["EsAjuste"]) || Convert.ToBoolean(dr["EsCompra"]) && (Convert.ToBoolean(_dtPaquete.Rows[0]["IsReadOnly"]) == false ))
+            else if ((Convert.ToBoolean(dr["EsAjuste"]) || Convert.ToBoolean(dr["EsCompra"])) && Convert.ToBoolean(_dtPaquete.Rows[0]["isReadOnly"]) == false )
             {
                 if (this.txtCostoDolar.EditValue == null || this.txtCostoDolar.EditValue.ToString() == "")
                     sMensaje = " • Ingrese sel costo del producto \n\r";
@@ -658,9 +660,10 @@ namespace CI
                 BotoneriaSuperior();
                 UpdateControlsFromDataRow(_currentRow);
 
-				if (_dtPaquete.Rows[0]["Transaccion"].ToString() == "PR" && Convert.ToInt32(this.txtIDTransaccion.EditValue) != -1 && Convert.ToBoolean(_currentRow["IsChildPrestamo"]) == false)
+				if (_dtPaquete.Rows[0]["Transaccion"].ToString() == "PR"  && Convert.ToBoolean(_currentRow["IsChildPrestamo"] == DBNull.Value ? false:_currentRow["IsChildPrestamo"]) == false)
 				{
-					if (Convert.ToBoolean(_currentRow["IsPrestamoPagado"]) == true)
+
+					if (Convert.ToBoolean(_currentRow["IsPrestamoPagado"] == DBNull.Value ? false : _currentRow["IsPrestamoPagado"]) == true)
 					{
 						this.btnPagoPrestamos.Enabled = false;
 						this.btnFinalizarPrestamo.Enabled = false;

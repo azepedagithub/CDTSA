@@ -143,9 +143,14 @@
             this.colCantPendiente});
 			this.dtgViewPrestados.GridControl = this.dtgDetallePrestamos;
 			this.dtgViewPrestados.Name = "dtgViewPrestados";
+			this.dtgViewPrestados.OptionsSelection.EnableAppearanceFocusedCell = false;
+			this.dtgViewPrestados.OptionsSelection.EnableAppearanceFocusedRow = false;
+			this.dtgViewPrestados.OptionsView.ShowGroupPanel = false;
 			// 
 			// ColIDProducto
 			// 
+			this.ColIDProducto.AppearanceHeader.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ColIDProducto.AppearanceHeader.Options.UseFont = true;
 			this.ColIDProducto.Caption = "ID Producto";
 			this.ColIDProducto.FieldName = "IDProducto";
 			this.ColIDProducto.Name = "ColIDProducto";
@@ -156,6 +161,7 @@
 			// colDescrProd
 			// 
 			this.colDescrProd.Caption = "Descr Producto";
+			this.colDescrProd.FieldName = "DescrProducto";
 			this.colDescrProd.Name = "colDescrProd";
 			this.colDescrProd.OptionsColumn.ReadOnly = true;
 			this.colDescrProd.Visible = true;
@@ -200,7 +206,10 @@
 			// colCantPendiente
 			// 
 			this.colCantPendiente.AppearanceCell.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+			this.colCantPendiente.AppearanceCell.BackColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
 			this.colCantPendiente.AppearanceCell.Options.UseBackColor = true;
+			this.colCantPendiente.AppearanceHeader.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.colCantPendiente.AppearanceHeader.Options.UseFont = true;
 			this.colCantPendiente.Caption = "Cant Pendiente";
 			this.colCantPendiente.FieldName = "Pendiente";
 			this.colCantPendiente.Name = "colCantPendiente";

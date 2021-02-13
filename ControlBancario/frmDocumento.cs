@@ -371,7 +371,7 @@ namespace ControlBancario
             bool result = true;
             String sMensaje = "";
 
-            if (this.slkupCuentaBancaria.EditValue == null || this.slkupCuentaBancaria.EditValue.ToString() == "")
+            if (this.slkupCuentaBancaria.EditValue == null || this.slkupCuentaBancaria.EditValue.ToString() == "" || this.slkupCuentaBancaria.EditValue.ToString() =="0")
                 sMensaje = sMensaje + "     • Seleccione la cuenta bancaria. \n\r";
             if (this.dtpFecha.EditValue == null || this.dtpFecha.EditValue.ToString()=="")
                 sMensaje = sMensaje + "     • Ingrese la fecha del Cheque. \n\r";

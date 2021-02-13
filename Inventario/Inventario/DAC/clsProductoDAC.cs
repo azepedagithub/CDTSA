@@ -77,6 +77,7 @@ namespace CI.DAC
                 oAdaptador.InsertCommand.Parameters.Add("@Bonifica", SqlDbType.Bit).SourceColumn = "Bonifica";
 				oAdaptador.InsertCommand.Parameters.Add("@NumRegistroSanitario", SqlDbType.NVarChar).SourceColumn = "NumRegSanitario";
 				oAdaptador.InsertCommand.Parameters.Add("@FechaVencimientoRegistro", SqlDbType.Date).SourceColumn = "FechaVencimientoRegistro";
+				oAdaptador.InsertCommand.Parameters.Add("@Concentracion", SqlDbType.NChar).SourceColumn = "Concentracion";
 				oAdaptador.InsertCommand.Parameters.Add("@PrecioCIF", SqlDbType.Decimal).SourceColumn = "PrecioCIF";
 				oAdaptador.InsertCommand.Parameters.Add("@PrecioFOB", SqlDbType.Decimal).SourceColumn = "PrecioFOB";
 				oAdaptador.InsertCommand.Parameters.Add("@TipoPrecio", SqlDbType.NChar).SourceColumn = "TipoPrecio";
@@ -111,6 +112,7 @@ namespace CI.DAC
                 oAdaptador.UpdateCommand.Parameters.Add("@Bonifica", SqlDbType.Bit).SourceColumn = "Bonifica";
 				oAdaptador.UpdateCommand.Parameters.Add("@NumRegistroSanitario", SqlDbType.NVarChar).SourceColumn = "NumRegSanitario";
 				oAdaptador.UpdateCommand.Parameters.Add("@FechaVencimientoRegistro", SqlDbType.Date).SourceColumn = "FechaVencimientoRegistro";
+				oAdaptador.UpdateCommand.Parameters.Add("@Concentracion", SqlDbType.NChar).SourceColumn = "Concentracion";
 				oAdaptador.UpdateCommand.Parameters.Add("@PrecioCIF", SqlDbType.Decimal).SourceColumn = "PrecioCIF";
 				oAdaptador.UpdateCommand.Parameters.Add("@PrecioFOB", SqlDbType.Decimal).SourceColumn = "PrecioFOB";
 				oAdaptador.UpdateCommand.Parameters.Add("@TipoPrecio", SqlDbType.NChar).SourceColumn = "TipoPrecio";
@@ -147,6 +149,7 @@ namespace CI.DAC
                 oAdaptador.DeleteCommand.Parameters.Add("@Bonifica", SqlDbType.Bit).SourceColumn = "Bonifica";
 				oAdaptador.DeleteCommand.Parameters.Add("@NumRegistroSanitario", SqlDbType.NVarChar).SourceColumn = "NumRegSanitario";
 				oAdaptador.DeleteCommand.Parameters.Add("@FechaVencimientoRegistro", SqlDbType.Date).SourceColumn = "FechaVencimientoRegistro";
+				oAdaptador.DeleteCommand.Parameters.Add("@Concentracion", SqlDbType.NChar).SourceColumn = "Concentracion";
 				oAdaptador.DeleteCommand.Parameters.Add("@PrecioCIF", SqlDbType.Decimal).SourceColumn = "PrecioCIF";
 				oAdaptador.DeleteCommand.Parameters.Add("@PrecioFOB", SqlDbType.Decimal).SourceColumn = "PrecioFOB";
 				oAdaptador.DeleteCommand.Parameters.Add("@TipoPrecio", SqlDbType.NChar).SourceColumn = "TipoPrecio";
@@ -173,10 +176,10 @@ namespace CI.DAC
 
         public static DataSet GetDataEmpty()
         {
-            String strSQL = "SELECT  IDProducto ,Descr ,Alias ,Generico,CostoUltLocal ,CostoUltDolar ,CostoPromLocal ,CostoPromDolar ,PrecioPublicoLocal ,PrecioFarmaciaLocal ,PrecioCIFLocal ," +
-                            "PrecioFOBLocal ,PrecioDolar ,Clasif1 ,Clasif2 ,Clasif3 ,Clasif4 ,Clasif5 ,Clasif6,IDProveedor ,IDCuentaContable,CodigoBarra ,IDUnidad ,FactorEmpaque ,TipoImpuesto ,EsMuestra , " +
+            String strSQL = "SELECT  IDProducto ,Descr ,Alias ,Generico,CostoUltLocal ,CostoUltDolar ,CostoPromLocal ,CostoPromDolar ,PrecioPublicoLocal ,PrecioFarmaciaLocal  ," +
+                            "PrecioDolar ,Clasif1 ,Clasif2 ,Clasif3 ,Clasif4 ,Clasif5 ,Clasif6,IDProveedor ,IDCuentaContable,CodigoBarra ,IDUnidad ,FactorEmpaque ,TipoImpuesto ,EsMuestra , " +
                             "EsControlado ,EsEtico, EsGenerico," +
-                            "Activo,Bonifica,NumRegSanitario,FechaVencimientoRegistro,PrecioCIF,PrecioFOB,TipoPrecio ,UserInsert ,UserUpdate ,CreateDate ,UpdateDate  FROM dbo.invProducto WHERE 1=2";
+                            "Activo,Bonifica,NumRegSanitario,FechaVencimientoRegistro,Concentracion,PrecioCIF,PrecioFOB,TipoPrecio ,UserInsert ,UserUpdate ,CreateDate ,UpdateDate  FROM dbo.invProducto WHERE 1=2";
 
             SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
             SqlDataAdapter oAdaptador = new SqlDataAdapter(oCmd);

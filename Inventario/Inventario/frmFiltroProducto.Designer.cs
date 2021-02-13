@@ -742,7 +742,7 @@
 			// 
 			this.tabClasificaciones.Controls.Add(this.layoutControl3);
 			this.tabClasificaciones.Name = "tabClasificaciones";
-			this.tabClasificaciones.Size = new System.Drawing.Size(559, 311);
+			this.tabClasificaciones.Size = new System.Drawing.Size(559, 332);
 			this.tabClasificaciones.Text = "Clasificaciones";
 			// 
 			// layoutControl3
@@ -757,7 +757,7 @@
 			this.layoutControl3.Location = new System.Drawing.Point(0, 0);
 			this.layoutControl3.Name = "layoutControl3";
 			this.layoutControl3.Root = this.layoutControlGroup3;
-			this.layoutControl3.Size = new System.Drawing.Size(559, 311);
+			this.layoutControl3.Size = new System.Drawing.Size(559, 332);
 			this.layoutControl3.TabIndex = 0;
 			this.layoutControl3.Text = "layoutControl3";
 			// 
@@ -888,7 +888,7 @@
             this.lyClasificacion6});
 			this.layoutControlGroup3.Location = new System.Drawing.Point(0, 0);
 			this.layoutControlGroup3.Name = "layoutControlGroup2";
-			this.layoutControlGroup3.Size = new System.Drawing.Size(559, 311);
+			this.layoutControlGroup3.Size = new System.Drawing.Size(559, 332);
 			this.layoutControlGroup3.TextVisible = false;
 			// 
 			// lyClasificacion1
@@ -947,7 +947,7 @@
 			this.lyClasificacion6.Location = new System.Drawing.Point(0, 130);
 			this.lyClasificacion6.Name = "lyClasificacion6";
 			this.lyClasificacion6.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
-			this.lyClasificacion6.Size = new System.Drawing.Size(539, 161);
+			this.lyClasificacion6.Size = new System.Drawing.Size(539, 182);
 			this.lyClasificacion6.Text = "Clasificación6:";
 			this.lyClasificacion6.TextSize = new System.Drawing.Size(68, 13);
 			// 

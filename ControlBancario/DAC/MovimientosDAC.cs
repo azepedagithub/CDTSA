@@ -201,6 +201,7 @@ namespace ControlBancario.DAC
         {
 
             DataSet DS = new DataSet();
+			String sResult = "";
 
             SqlCommand oCmd = new SqlCommand("dbo.getNotaMovLibro", ConnectionManager.GetConnection());
             SqlConnection oConn = oCmd.Connection;
@@ -214,7 +215,8 @@ namespace ControlBancario.DAC
 
 				oAdapatadorTmp.Fill(DS, "Data"); 
 
-				
+				if (DS.Tables[0].Rows.Count > 0)
+				  	sResult = DS.Tables[0].Rows[0]["NotaConciliacion"].ToString();
 
 				
 
@@ -229,7 +231,7 @@ namespace ControlBancario.DAC
                     oConn.Close();
 
             }
-			return DS.Tables[0].Rows[0]["NotaConciliacion"].ToString();
+			return sResult;
 
         }
 

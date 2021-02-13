@@ -215,7 +215,7 @@ namespace CI
 			}
 			else
 			{
-				if (Convert.ToBoolean(currentRow["isReadObly"]))
+				if (Convert.ToBoolean(currentRow["isReadOnly"]))
 				{
 					MessageBox.Show("El elemento es solo lectura, no se puede modificar");
 					return;

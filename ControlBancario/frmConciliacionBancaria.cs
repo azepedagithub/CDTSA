@@ -22,9 +22,11 @@ namespace ControlBancario
 		DataTable dtMovLibros = new DataTable();
 		DataTable dtMovBanco = new DataTable();
 		private DataTable _dtSecurity;
+		private int IDConciliacionPrev;
 
 		int IDMovBancoSelected = -1;
 		int IDMovimientoSelected = -1;
+	
 		
 		int IDConciliacion = -1;
 		BaseEdit editLibros = null;
@@ -97,13 +99,14 @@ namespace ControlBancario
 				Util.Util.ConfigLookupEdit(this.slkupCuentaBancaria, DAC.CuentaBancariaDAC.GetData(-1, -1).Tables["Data"], "Descr", "IDCuentaBanco");
 				Util.Util.ConfigLookupEditSetViewColumns(this.slkupCuentaBancaria, "[{'ColumnCaption':'Codigo','ColumnField':'Codigo','width':30},{'ColumnCaption':'Descr','ColumnField':'Descr','width':70}]");
 
+				ActivarControles();
+
 				LoadData();
 
 				CalcularTotales();
 
 				AplicarPrivilegios();
 
-				ActivarControles();
 			}
 			catch (Exception ex)
 			{
@@ -122,7 +125,7 @@ namespace ControlBancario
 				this.btnAsociar.Enabled = false;
 				this.btnConciliar.Enabled = false;
 				this.btnDesAsociar.Enabled = false;
-				this.btnEliminar.Enabled = false;
+				this.btnConciliarConDiff.Enabled = false;
 				this.btnGuardar.Enabled = false;
 				this.btnAsociarSimilares.Enabled = false;
 				this.slkupCuentaBancaria.Properties.ReadOnly = true;
@@ -139,7 +142,7 @@ namespace ControlBancario
 				this.btnAsociar.Enabled = true;
 				this.btnConciliar.Enabled = true;
 				this.btnDesAsociar.Enabled = true;
-				this.btnEliminar.Enabled = true;
+				this.btnConciliarConDiff.Enabled = true;
 				this.btnGuardar.Enabled = true;
 				this.btnAsociarSimilares.Enabled = true;
 				this.slkupCuentaBancaria.Properties.ReadOnly = false;
@@ -206,41 +209,34 @@ namespace ControlBancario
 					this.btnAsociar.Enabled = false;
 					this.btnConciliar.Enabled = false;
 					this.btnDesAsociar.Enabled = false;
-					this.btnEliminar.Enabled = false;
+					this.btnConciliarConDiff.Enabled = false;
 					this.btnGuardar.Enabled = false;
 					this.btnImportar.Enabled = false;
-
-					//Deshabilitar los controles 
-					this.dtpFechaInicial.ReadOnly = true;
-					this.dtpFechaFinal.ReadOnly = true;
-					this.dtpFechaSaldo.ReadOnly = true;
-					this.slkupCuentaBancaria.ReadOnly = true;
 					this.gridViewMovBanco.OptionsBehavior.ReadOnly = true;
 					this.gridViewMovLibros.OptionsBehavior.ReadOnly = true;
+					this.dtpFechaFinal.ReadOnly = true;
+				
 				}
 				else if (Accion =="Edit") {
 					this.btnAsociar.Enabled = true;
 					this.btnConciliar.Enabled = true;
 					this.btnDesAsociar.Enabled = true;
-					this.btnEliminar.Enabled = true;
+					this.btnConciliarConDiff.Enabled = true;
 					this.btnGuardar.Enabled = true;
 					this.btnImportar.Enabled = true;
 					
 				}
 
-				//TODO Calcular los totales marcados.
-			} if (Accion == "New") { 
-				//Validar que no exista ciliaciones en proceso
-				String sCanAddConciliacion =DAC.ConciliacionDAC.CanAddConciliacionBancaria(); 
-				if (sCanAddConciliacion !="Ok") 
-				{
-					if (sCanAddConciliacion == "EnProceso") {
-						MessageBox.Show("Existen conciliaciones en proceso no puede generar una nueva conciliación");
-						this.BeginInvoke(new MethodInvoker(this.Close));
-					}	
-				}
+				//Deshabilitar los controles 
+				this.dtpFechaInicial.ReadOnly = true;
+				this.dtpFechaSaldo.ReadOnly = true;
+				this.slkupCuentaBancaria.ReadOnly = true;
+			
 
+				//TODO Calcular los totales marcados.
 			}
+
+			
 		}
 
 		private void slkupCuentaBancaria_EditValueChanged(object sender, EventArgs e)
@@ -252,6 +248,32 @@ namespace ControlBancario
 				this.txtBanco.Text = drCuenta["IDBanco"].ToString() + " - " + drCuenta["DescrBanco"].ToString();
 				this.txtMoneda.Text = drCuenta["IDMoneda"].ToString() + " - " + drCuenta["DescrMoneda"].ToString();
 				this.SaldoInicialLibro = DAC.ConciliacionDAC.GetSaldoInicialLibroByCuentaBancaria(Convert.ToInt32(this.slkupCuentaBancaria.EditValue));
+
+				if (Accion == "New")
+				{
+					//Validar que no exista ciliaciones en proceso
+					String sCanAddConciliacion = DAC.ConciliacionDAC.CanAddConciliacionBancaria(Convert.ToInt32(this.slkupCuentaBancaria.EditValue));
+					if (sCanAddConciliacion != "Ok")
+					{
+						if (sCanAddConciliacion == "EnProceso")
+						{
+							MessageBox.Show("Existen conciliaciones en proceso no puede generar una nueva conciliación");
+							this.BeginInvoke(new MethodInvoker(this.Close));
+						}
+					}
+
+					//Obtener datos de la ultima conciliacion  y setear valores por defecto
+					IDConciliacionPrev = DAC.ConciliacionDAC.GetLasIdConciliacion(null);
+					if (IDConciliacionPrev > 0)
+					{
+						DataTable dtConcilicacionPrev = DAC.ConciliacionDAC.GetData(IDConciliacionPrev, -1).Tables[0];
+						this.dtpFechaInicial.EditValue = Convert.ToDateTime(dtConcilicacionPrev.Rows[0]["FechaFin"]).AddDays(1);
+						this.dtpFechaInicial.ReadOnly = true;
+						this.dtpFechaSaldo.EditValue = this.dtpFechaInicial.EditValue;
+						this.dtpFechaSaldo.ReadOnly = true;
+					}
+				}
+
 				if (this.dtpFechaSaldo.EditValue != null || this.dtpFechaSaldo.EditValue.ToString() != "")
 				{
 					CargarMovimientosLibros();
@@ -371,7 +393,7 @@ namespace ControlBancario
 				}
 
 				this.btnGuardar.ItemAppearance.Normal.BackColor = Color.Transparent;
-				this.btnEliminar.Enabled = true;
+				this.btnConciliarConDiff.Enabled = true;
 				this.btnRefrescar.Enabled = true;
 			}
 		}
@@ -383,7 +405,7 @@ namespace ControlBancario
 
 		private void CargarMovimientosLibros()
 		{
-			dtMovLibros = DAC.ConciliacionDAC.GetMovimientoLibrosContables(Convert.ToInt32(this.slkupCuentaBancaria.EditValue), Convert.ToDateTime(this.dtpFechaSaldo.EditValue), Convert.ToDateTime(this.dtpFechaFinal.EditValue));
+			dtMovLibros = DAC.ConciliacionDAC.GetMovimientoLibrosContablesForConciliacion(Convert.ToInt32(this.slkupCuentaBancaria.EditValue), Convert.ToDateTime(this.dtpFechaSaldo.EditValue), Convert.ToDateTime(this.dtpFechaFinal.EditValue));
 			this.gridMobLibros.DataSource = null;
 			this.gridMobLibros.DataSource = dtMovLibros;
 		}
@@ -785,54 +807,53 @@ namespace ControlBancario
 
 		private void btnConciliar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
 		{
-			if (IDMovBancoSelected != -1 || IDMovimientoSelected != -1)
+			try
 			{
-				Security.ConnectionManager.BeginTran();
-				DAC.ConciliacionDAC.CerrarConciliacion(this.IDConciliacion,  Security.ConnectionManager.Tran);
-				Security.ConnectionManager.CommitTran();
-			}
-			CargarMovimientosLibros();
-			CargarMovimientoBancos();
+				if (IDMovBancoSelected != -1 || IDMovimientoSelected != -1)
+				{
+					Security.ConnectionManager.BeginTran();
+					DAC.ConciliacionDAC.CerrarConciliacion(this.IDConciliacion, Security.ConnectionManager.Tran);
+					Security.ConnectionManager.CommitTran();
+				}
+				CargarMovimientosLibros();
+				CargarMovimientoBancos();
 
-			CalcularTotalesMovBanco();
-			CalcularTotalesMovLibros();
-			CalcularTotalesSelectMovBanco();
-			CalcularTotalesSelectMovLibros();
-			ValidarElementosToAsociar();
+				CalcularTotalesMovBanco();
+				CalcularTotalesMovLibros();
+				CalcularTotalesSelectMovBanco();
+				CalcularTotalesSelectMovLibros();
+				ValidarElementosToAsociar();
+			}
+			catch (Exception ex) {
+				MessageBox.Show("Han Ocurrido los siguientes errores: \n\r" + ex.Message);
+				Security.ConnectionManager.RollBackTran();
+			}
 		}
 
 		private void btnMensaje_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
 		{
-			int index = (int)this.gridViewMovLibros.FocusedRowHandle;
+			AddMessage();
+			
+		}
+
+		private void AddMessage() {
+			int index = (int)this.gridViewMovLibros.GetSelectedRows()[0];
 			if (index > -1)
 			{
 				DataRow ele = this.gridViewMovLibros.GetDataRow(Convert.ToInt32(index));
 				int iMov = Convert.ToInt32(ele["IDMovimiento"]);
 				if (iMov != -1)
 				{
-					frmMensaje ofrmMensaje = new frmMensaje(this.IDMovimientoSelected);
+					frmMensaje ofrmMensaje = new frmMensaje(iMov);
 					ofrmMensaje.ShowDialog();
 				}
-				
+
 			}
-			
 		}
 
 		private void gridViewMovLibros_DoubleClick(object sender, EventArgs e)
 		{
-			
-			int index = (int)this.gridViewMovLibros.FocusedRowHandle;
-			if (index > -1)
-			{
-				DataRow ele = this.gridViewMovLibros.GetDataRow(Convert.ToInt32(index));
-				int iMov = Convert.ToInt32(ele["IDMovimiento"]);
-				if (iMov != -1)
-				{
-					frmMensaje ofrmMensaje = new frmMensaje(this.IDMovimientoSelected);
-					ofrmMensaje.ShowDialog();
-				}
-
-			}
+			AddMessage();
 		}
 
 		private void gridViewMovLibros_CustomDrawCell(object sender, DevExpress.XtraGrid.Views.Base.RowCellCustomDrawEventArgs e)
@@ -851,6 +872,49 @@ namespace ControlBancario
 			}
 	
 			
+		}
+
+		private void dtpFechaFinal_EditValueChanged(object sender, EventArgs e)
+		{
+		   //Cargar Movi
+			if (this.slkupCuentaBancaria.EditValue != null)
+			{
+				CargarMovimientosLibros();
+				HabilitarBtnAsociacion();
+			}
+		}
+
+		private void btnCancelar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+		{
+			this.Close();
+		}
+
+		private void btnConciliarConDiff_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+		{
+			try
+			{
+				if (this.gridViewMovLibros.GetSelectedRows().Count() > 0)
+				{
+					int i = (int)this.gridViewMovLibros.GetSelectedRows()[0];
+					DataRow ele = this.gridViewMovLibros.GetDataRow(i);
+					if (ele["MatchNumber"] == DBNull.Value)
+					{
+						bool ConciWithDiff = Convert.ToBoolean(ele["ConciliadoConDiff"]);
+						Int64 IDMov	 = Convert.ToInt64(ele["IDMovimiento"]);
+						int IDTempConciliacion = IDConciliacion;
+						if (ConciWithDiff)
+							IDTempConciliacion = -1;
+						Security.ConnectionManager.BeginTran();
+						DAC.ConciliacionDAC.UpdateMovBancoConciliacionWithDiff(IDMov, IDTempConciliacion, Security.ConnectionManager.Tran);
+						Security.ConnectionManager.CommitTran();
+					}
+
+				}
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
 		}
 
 

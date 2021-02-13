@@ -114,6 +114,7 @@ namespace CI
             _currentRow["Bonifica"] = false;
 			_currentRow["NumRegSanitario"] = "";
 			_currentRow["FechaVencimientoRegistro"] = DateTime.Now;
+			_currentRow["Concentracion"] = "";
             _currentRow["UserInsert"] = sUsuario;
             _currentRow["UserUpdate"] = DateTime.Now;
             _currentRow["UpdateDate"] = DateTime.Now;
@@ -153,6 +154,7 @@ namespace CI
             this.chkEsControlado.EditValue = _currentRow["EsControlado"];
             this.chkEsEtico.EditValue = _currentRow["EsEtico"];
 			this.chkEsGenerico.EditValue = _currentRow["EsGenerico"];
+			this.txtConcentracion.EditValue = _currentRow["Concentracion"].ToString();
             
             //TODO Actualizar los Costos
             this.txtCostoPromDolar.EditValue = ((Decimal)_currentRow["CostoPromDolar"]).ToString("N" + Util.Util.DecimalLenght);
@@ -197,6 +199,7 @@ namespace CI
             this.txtAlias.ReadOnly = !Activo;
 						this.txtGenerico.ReadOnly = !Activo;
             this.txtCodigoBarra.ReadOnly = !Activo;
+			this.txtConcentracion.ReadOnly = !Activo;
             this.slkupUnidadMedida.ReadOnly = !Activo;
             //this.dtpFecha.Text = Convert.ToDateTime(_currentRow["Fecha"]).ToShortDateString();
             this.slkupTipoImpuesto.ReadOnly = !Activo;
@@ -377,6 +380,7 @@ namespace CI
                     _currentRow["Bonifica"] = this.chkBonifica.EditValue;
 					_currentRow["NumRegSanitario"] = this.txtNumRegistroSanitario.EditValue.ToString().Trim();
 					_currentRow["FechaVencimientoRegistro"] =this.dtpFechaCaducidadRegistro.EditValue;
+					_currentRow["Concentracion"] = this.txtConcentracion.EditValue;
 					_currentRow["PrecioCIF"] = Convert.ToDecimal(this.txtPrecioCIF.EditValue);
 					_currentRow["PrecioFOB"] = Convert.ToDecimal(this.txtPrecioFOB.EditValue);
 					_currentRow["TipoPrecio"] = this.cmbPrecioActivo.EditValue.ToString();
@@ -459,6 +463,7 @@ namespace CI
                     _currentRow["Bonifica"] = this.chkBonifica.EditValue;
 					_currentRow["NumRegSanitario"] = this.txtNumRegistroSanitario.EditValue.ToString().Trim();
 					_currentRow["FechaVencimientoRegistro"] = Convert.ToDateTime(this.dtpFechaCaducidadRegistro.EditValue);
+					_currentRow["Concentracion"] = this.txtConcentracion.EditValue;
 					_currentRow["PrecioCIF"] = Convert.ToDecimal(this.txtPrecioCIF.EditValue);
 					_currentRow["PrecioFOB"] = Convert.ToDecimal(this.txtPrecioFOB.EditValue);
 					_currentRow["TipoPrecio"] = this.cmbPrecioActivo.EditValue.ToString();
@@ -536,7 +541,8 @@ namespace CI
             this.txtIDProducto.EditValue = "";
             this.txtDescr.EditValue = "";
             this.txtAlias.EditValue = "";
-						this.txtGenerico.EditValue = "";
+			this.txtGenerico.EditValue = "";
+			this.txtConcentracion.EditValue = "";
             this.txtCodigoBarra.EditValue = "";
             this.slkupUnidadMedida.EditValue = null;
             this.slkupTipoImpuesto.EditValue = null;

@@ -775,10 +775,12 @@ DECLARE @IDRuc AS INT
 DECLARE	@TipoTC AS NVARCHAR(20)
 SELECT @TipoTC = TipoCambio FROM dbo.cntParametros
 
-SET @TipoCambio = (SELECT dbo.globalGetTipoCambio(@Fecha,@TipoTC))
-SELECT @Fecha = Fecha , @Monto = CASE WHEN C.IDMoneda=2  THEN Monto * @TipoCambio ELSE Monto END, @IDRuc =IDRuc  FROM dbo.cbMovimientos M
+SELECT @Fecha = Fecha , @Monto = CASE WHEN C.IDMoneda=2  THEN Monto * dbo.globalGetTipoCambio(Fecha,@TipoTC) ELSE Monto END, @IDRuc =IDRuc  FROM dbo.cbMovimientos M
 INNER JOIN dbo.cbCuentaBancaria C ON M.IDCuentaBanco = C.IDCuentaBanco
  WHERE M.IDCuentaBanco=@IDCuentaBanco AND M.IDTipo=@IDTipo AND IDSubTipo =@IDSubTipo AND Numero=@Numero
+
+SET @TipoCambio = (SELECT dbo.globalGetTipoCambio(@Fecha,@TipoTC))
+
 
 SELECT @IDCuentaContableBanco=IDCuenta  FROM dbo.cbCuentaBancaria WHERE IDCuentaBanco=@IDCuentaBanco
 
@@ -1031,7 +1033,7 @@ AS
 SELECT  IDConciliacion ,IDCuentaBanco ,FechaInicio ,FechaFin ,SaldoInicialBanco ,TotalIngresosBanco ,TotalSalidasBanco ,
         SaldoFinalBanco ,SaldoInicialLibro ,TotalIngresosLibro ,TotalSalidasLibro ,SaldoFinalLibro ,Estado ,
         Usuario  FROM dbo.cbConciliacion
-WHERE (IDConciliacion=@IDConciliacion OR @IDConciliacion = -1) OR (IDCuentaBanco = @IDCuenta OR @IDCuenta = -1)
+WHERE (IDConciliacion=@IDConciliacion OR @IDConciliacion = -1) and (IDCuentaBanco = @IDCuenta OR @IDCuenta = -1)
 
 GO
 
@@ -1053,13 +1055,13 @@ SELECT ISNULL(@SaldoInicialLibro,0) SaldoInicialLibro
 GO
 
 
-CREATE  PROCEDURE dbo.cbGetMovLibrosContable @IDCuentaBancaria INT, @FechaInicial DATETIME, @FechaFinal DATETIME
+CREATE ALTER PROCEDURE dbo.cbGetMovLibrosContable @IDCuentaBancaria INT, @FechaInicial DATETIME, @FechaFinal DATETIME
 AS 
 
 set @FechaInicial = CAST(SUBSTRING(CAST(@FechaInicial AS CHAR),1,11) + ' 00:00:00.000' AS DATETIME)
 set @FechaFinal = CAST(SUBSTRING(CAST(@FechaFinal AS CHAR),1,11) + ' 23:59:59.998' AS DATETIME)
 
-SELECT IDMovimiento, Fecha,Numero Referencia,T.Descr TipoMov,ConceptoContable,Monto * T.Factor Monto,CAST(CASE WHEN MatchNumber IS NOT NULl THEN 1 ELSE 0 END AS BIT) Selected, MatchNumber
+SELECT IDMovimiento, Fecha,Numero Referencia,T.Descr TipoMov,ConceptoContable,Monto * T.Factor Monto,CAST(CASE WHEN MatchNumber IS NOT NULl THEN 1 ELSE 0 END AS BIT) Selected, MatchNumber,IDConciliacionWithDiff, CAST(CASE WHEN IDConciliacionWithDiff IS NOT NULL THEN 1 ELSE 0 END AS BIT) ConciliadoConDiff
 FROM dbo.cbMovimientos M
 INNER JOIN dbo.cbTipoDocumento T ON M.IDTipo = T.IDTipo
 WHERE Fecha BETWEEN @FechaInicial and @FechaFinal AND IDCuentaBanco = @IDCuentaBancaria
@@ -1097,11 +1099,11 @@ FROM dbo.cbConcMovBanco WHERE (IDConciliacion=@IDConciliacion OR @IDConciliacion
 
 GO
 
-CREATE PROCEDURE dbo.cbCanAddConciliacionBancaria
+CREATE PROCEDURE dbo.cbCanAddConciliacionBancaria @IDCuentaBanco INT
 AS 
 DECLARE @Status NVARCHAR(10)
 SET @Status = 'Ok'
-IF EXISTS(SELECT TOP 1 IDConciliacion FROM dbo.cbConciliacion WHERE Estado='P' ORDER BY FechaFin DESC)
+IF EXISTS(SELECT TOP 1 IDConciliacion FROM dbo.cbConciliacion WHERE Estado='P' AND IDCuentaBanco=@IDCuentaBanco ORDER BY FechaFin DESC)
 BEGIN
 	SET @Status = 'EnProceso'
 END
@@ -1170,9 +1172,9 @@ IF (@IDAccion = 1 )
 BEGIN
 	
 	SELECT @Saldo = ISNULL(SaldoLibro,0), @CansobreGiro = Sobregiro, @IDTipo = IDTipo  FROM dbo.cbCuentaBancaria WHERE IDCuentaBanco = @IDCuentaBanco
-	SET @MontoMov = (SELECT ISNULL((B.Factor * A.Monto),0)  FROM dbo.cbMovimientos A
+	SELECT @MontoMov = ISNULL((B.Factor * A.Monto),0), @IDTipo = A.IDTipo  FROM dbo.cbMovimientos A
 	INNER JOIN dbo.cbTipoDocumento B ON A.IDTipo = B.IDTipo
-	WHERE IDMovimiento = @IDMovimiento)
+	WHERE IDMovimiento = @IDMovimiento
 	
 	SET @Saldo = @Saldo + @MontoMov
 	IF (@Saldo < 0 AND @CansobreGiro = 0 )
@@ -1252,8 +1254,11 @@ BEGIN
 	DECLARE @FechaInicial DATETIME
 	
 	SET @IDConciliacion = (SELECT ISNULL(MAX(IDConciliacion),-1) FROM dbo.cbConciliacion WHERE IDCuentaBanco = @IDCuentaBanco)
+	IF (@IDConciliacion <> -1)
+		SELECT @Saldo = ISNULL(SaldoFinalLibro,0), @FechaInicial = DATEADD(DAY,1,FechaFin)   FROM dbo.cbConciliacion WHERE IDConciliacion = @IDConciliacion
+	ELSE
+		SELECT @Saldo = ISNULL(SaldoInicial, 0)  FROM dbo.cbCuentaBancaria WHERE IDCuentaBanco=@IDCuentaBanco
 	
-	SELECT @Saldo = ISNULL(SaldoFinalLibro,0), @FechaInicial = DATEADD(DAY,1,FechaFin)   FROM dbo.cbConciliacion WHERE IDConciliacion = @IDConciliacion
 	SET @FechaInicial = CAST(SUBSTRING(CAST(@FechaInicial AS CHAR),1,11) + ' 00:00:00.000' AS DATETIME)
 	
 	SET @MontoMov = (SELECT ISNULL(SUM(Monto * Factor),0)  FROM dbo.cbMovimientos A
@@ -1349,7 +1354,7 @@ set @FechaFinal = CAST(SUBSTRING(CAST(@FechaFinal AS CHAR),1,11) + ' 23:59:59.99
 
 SELECT IDConciliacion, A.IDCuentaBanco ,B.Descr DescrCuenta,SaldoFinalBanco,SaldoFinalLibro,Estado,Usuario, FechaInicio,FechaFin  FROM dbo.cbConciliacion A
 INNER JOIN dbo.cbCuentaBancaria B ON A.IDCuentaBanco = B.IDCuentaBanco
-WHERE FechaInicio >= @FechaInicial AND FechaFin>= @FechaFinal AND  (@IDCuentaBanco = -1 OR A.IDCuentaBanco = @IDCuentaBanco)
+WHERE FechaInicio >= @FechaInicial AND FechaFin<= @FechaFinal AND  (@IDCuentaBanco = -1 OR A.IDCuentaBanco = @IDCuentaBanco)
 
 
 GO
@@ -1372,7 +1377,8 @@ DECLARE @FechaInicial DATETIME	,@FechaFinal DATETIME
 DECLARE @SalidasBanco DECIMAL(28,8), @EntradasBanco DECIMAL(28,8),
 		@SalidasLibro DECIMAL(28,8), @EntradasLibro DECIMAL(28,8),
 		@SaldoFinalBanco DECIMAL(28,8), @SaldoFinalLibro  DECIMAL(28,8),
-		@SaldoInicialBanco DECIMAL(28,8), @SaldoInicialLibro DECIMAL(28,8)
+		@SaldoInicialBanco DECIMAL(28,8), @SaldoInicialLibro DECIMAL(28,8),
+		@IDCuentaBanco AS INT
 
 
 SET @EntradasLibro = 0
@@ -1384,7 +1390,7 @@ SET @SaldoFinalLibro= 0
 SET @SaldoInicialBanco = 0
 SET @SaldoInicialLibro = 0		
 
-SELECT @FechaInicial= FechaInicio, @FechaFinal = FechaFin , @SaldoInicialBanco= SaldoInicialBanco, @SaldoInicialLibro = SaldoInicialLibro
+SELECT @FechaInicial= FechaInicio, @FechaFinal = FechaFin , @SaldoInicialBanco= SaldoInicialBanco, @SaldoInicialLibro = SaldoInicialLibro, @IDCuentaBanco = IDCuentaBanco
 FROM dbo.cbConciliacion WHERE IDConciliacion=@IDConciliacion
 
 SET @FechaInicial = CAST(SUBSTRING(CAST(@FechaInicial AS CHAR),1,11) + ' 00:00:00.000' AS DATETIME)
@@ -1401,7 +1407,7 @@ FROM
 		CASE WHEN B.Factor=-1 THEN ISNULL(Monto,0) ELSE 0 END Salidas
 	FROM dbo.cbMovimientos A
 	INNER JOIN dbo.cbTipoDocumento B ON  A.IDTipo = B.IDTipo
-	WHERE Fecha BETWEEN @FechaInicial AND @FechaFinal	
+	WHERE Fecha BETWEEN @FechaInicial AND @FechaFinal AND IDConciliacionWithDiff IS NULL
 	) A
 
 
@@ -1435,6 +1441,9 @@ UPDATE dbo.cbConciliacion SET SaldoFinalBanco = @SaldoFinalBanco, SaldoFinalLibr
 							  Estado= 'F'
 WHERE IDConciliacion = @IDConciliacion
 
+UPDATE dbo.cbCuentaBancaria SET SaldoBanco = @SaldoFinalBanco WHERE IDCuenta= @IDCuentaBanco
+
+
 
 GO
 
@@ -1449,3 +1458,110 @@ GO
 CREATE PROCEDURE dbo.getNotaMovLibro @IDMovimiento INT
 AS 
 SELECT NotaConciliacion  FROM dbo.cbMovimientos WHERE IDMovimiento = @IDMovimiento
+
+
+GO
+
+--Agrego
+
+CREATE PROCEDURE dbo.cbGetEstadoCuenta  @FechaInicial AS DATE, @FechaFinal AS DATE, @IDCuentaBanco as int	
+
+AS 
+
+
+--DECLARE @FechaInicial AS DATE
+--DECLARE @FechaFinal AS DATE
+--DECLARE @IDCuentaBanco as int	
+
+--SET @FechaInicial ='20210208'
+--SET @FechaFinal ='20210225'
+--SET @IDCuentaBanco = 1
+
+set @FechaInicial = CAST(SUBSTRING(CAST(@FechaInicial AS CHAR),1,11) + ' 00:00:00.000' AS DATETIME)
+set @FechaFinal = CAST(SUBSTRING(CAST(@FechaFinal AS CHAR),1,11) + ' 23:59:59.998' AS DATETIME)
+
+DECLARE @FechaSaldo AS DATE
+SET @FechaSaldo = DATEADD(DAY,-1, @FechaInicial)
+
+declare @tbSaldoInicial as table(SaldoLibro varchar(25))
+declare @tbSaldoFinal as table(SaldoLibro varchar(25))
+
+insert into @tbSaldoInicial
+EXEC dbo.cbGetSaldoCuentaLibros @IDCuentaBanco,@FechaSaldo,1 
+insert into @tbSaldoFinal
+EXEC dbo.cbGetSaldoCuentaLibros @IDCuentaBanco,@FechaFinal,1
+
+SELECT 'I' Orden, @FechaInicial Fecha,'SALDO INICIAL' Descr,'' Numero,''Pagadero,'' ConceptoContable, SaldoLibro Monto  FROM  @tbSaldoInicial
+UNION all
+SELECT 'D' Orden, A.Fecha,B.Descr,A.Numero,A.Pagadero_a,A.ConceptoContable,A.Monto  FROM dbo.cbMovimientos A
+INNER JOIN dbo.cbSubTipoDocumento B ON A.IDTipo = B.IDTipo AND A.IDSubTipo = B.IDSubtipo
+WHERE A.Fecha BETWEEN @FechaInicial  AND @FechaFinal
+UNION all
+SELECT 'F' Orden ,@FechaInicial,'SALDO FINAL','','','', SaldoLibro Monto  FROM  @tbSaldoFinal
+
+GO
+
+ALTER TABLE dbo.cbMovimientos ADD IDConciliacionWithDiff  BigInt
+
+GO
+
+CREATE   PROCEDURE dbo.cbUpdateMovBancoConcilicionWithDiff(@IDMovBanco AS BIGINT, @IDConciliacion AS INT)
+AS 
+IF (@IDConciliacion =-1)
+	SET @IDConciliacion = NULL
+UPDATE dbo.cbMovimientos SET IDConciliacionWithDiff=@IDConciliacion WHERE IDMovimiento = @IDMovBanco 
+
+GO
+
+
+CREATE PROCEDURE dbo.cbGetLastIDConcilicacion
+AS 
+SELECT ISNULL(MAX(IDConciliacion),0) IDConciliacion FROM dbo.cbConciliacion
+
+GO
+
+
+CREATE PROCEDURE dbo.cbGetMovimientoLibrosForConciliacion  @FechaInicial AS DATE, @FechaFinal AS DATE,@IDCuentaBancaria as int
+AS 
+--DECLARE @FechaInicial AS DATE,
+--		@FechaFinal AS DATE,
+--		@IDCuentaBancaria as int	
+		
+--SET @FechaInicial ='20210210'
+--SET @FechaFinal = '20210331'
+--SET @IDCuentaBancaria = 1
+
+
+DECLARE @LastIDConciliacion  AS INT
+
+SET @LastIDConciliacion = (SELECT ISNULL(MAX(IDConciliacion),0)  FROM dbo.cbConciliacion WHERE IDCuentaBanco=@IDCuentaBancaria)
+
+DECLARE @MovimientoLibros AS 
+TABLE(
+[IDMovimiento] [bigint] NOT NULL,
+[Fecha] [date] NOT NULL,
+[Referencia] [nvarchar] (250) null ,
+[TipoMov] [nvarchar] (200)  NULL,
+[ConceptoContable] [nvarchar] (255)  NULL,
+[Monto] [decimal] (38, 4) NULL,
+[Selected] [bit] NULL,
+[MatchNumber] [int] NULL,
+[IDConciliacionWithDiff] [bigint] NULL,
+[ConciliadoConDiff] [bit] NULL
+) 
+
+--Doc Pendientes
+INSERT INTO @MovimientoLibros
+SELECT IDMovimiento,Fecha,Numero Referencia ,T.Descr TipoMov,ConceptoContable,Monto,CAST(CASE WHEN MatchNumber IS NOT NULl THEN 1 ELSE 0 END AS BIT) Selected, MatchNumber,IDConciliacionWithDiff, CAST(CASE WHEN IDConciliacionWithDiff IS NOT NULL THEN 1 ELSE 0 END AS BIT) ConciliadoConDiff  FROM dbo.cbMovimientos A
+INNER JOIN dbo.cbTipoDocumento T ON A.IDTipo = T.IDTipo
+WHERE IDConciliacionWithDiff = @LastIDConciliacion
+
+--Mov de Libros
+INSERT INTO @MovimientoLibros
+EXEC cbGetMovLibrosContable @IDCuentaBancaria, @FechaInicial,@FechaFinal
+
+SELECT  IDMovimiento ,Fecha ,Referencia ,TipoMov ,ConceptoContable ,Monto ,Selected ,MatchNumber ,IDConciliacionWithDiff ,ConciliadoConDiff  FROM @MovimientoLibros
+
+
+GO
+

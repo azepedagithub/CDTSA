@@ -26,6 +26,7 @@ namespace MainMenu
     public partial class frmMain : DevExpress.XtraBars.Ribbon.RibbonForm
     {
         private String CodTipoCambio;
+		private String StatusError ="None";
 
 
         public frmMain()
@@ -209,7 +210,7 @@ namespace MainMenu
             {
                 this.lblFecha.Caption = "Fecha: " + Convert.ToDateTime(DS.Tables[0].Rows[0]["Fecha"]).ToShortDateString();
                 this.lblTipoCambio.Caption = "TC: " + Convert.ToDecimal(DS.Tables[0].Rows[0]["Monto"]).ToString("N4");
-
+				StatusError = "None";
                 enlazarEventos();
             }
             else
@@ -224,16 +225,16 @@ namespace MainMenu
                 if (UsuarioDAC.PermiteAccion((int)Acciones.PrivilegiosContableType.RegistrarTipoCambio, DT))
                 {
                     MessageBox.Show("El tipo de cambio para el día no esta registrado, por favor ingrese el detalle del tipo de cambios \n\r ");
+					StatusError = "On";
                     foreach (Form frm in Application.OpenForms)
                     {
                         if (frm.GetType() == typeof(CG.frmTipoCambioDetalle))
                         {
-                            // MessageBox.Show("El formulario 2 esta abierto");
-                            break;
+                            return;
                         }
                     }
                     CG.frmTipoCambioDetalle ofrmTipoCambio = new frmTipoCambioDetalle(CodTipoCambio, "");
-                    ofrmTipoCambio.FormClosed += ofrmTipoCambio_FormClosed;
+					ofrmTipoCambio.FormClosing += ofrmTipoCambio_FormClosing;
                     ofrmTipoCambio.MdiParent = this;
                     ofrmTipoCambio.StartPosition = FormStartPosition.CenterScreen;
                     ofrmTipoCambio.Show();
@@ -244,10 +245,21 @@ namespace MainMenu
             }
         }
 
+		void ofrmTipoCambio_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			CargarParametrosSistema();
+			if (StatusError == "On")
+				e.Cancel = true;
+			else
+				e.Cancel = false;
+
+		}
+
         void ofrmTipoCambio_FormClosed(object sender, FormClosedEventArgs e)
         {
-
+			((frmTipoCambioDetalle)sender).FormClosed -= ofrmTipoCambio_FormClosed;
             CargarParametrosSistema();
+			
         }
 
         private void CargarParametrosSistema()
@@ -359,6 +371,12 @@ namespace MainMenu
                     ofrmCheque.MdiParent = this;
                     ShowPagesRibbonMan(false);
                     ofrmCheque.Show();
+					break;
+				case "frmEstadoCuenta":
+					ControlBancario.frmEstadoCuenta ofrmEstadoCuenta = new frmEstadoCuenta();
+					ofrmEstadoCuenta.MdiParent = this;
+					ShowPagesRibbonMan(false);
+					ofrmEstadoCuenta.Show();
                     //ControlBancario.frmCheque ofrmCheque = new frmCheque();
                     //ofrmCheque.MdiParent = this;
                     //ShowPagesRibbonMan(false);
@@ -797,6 +815,8 @@ namespace MainMenu
 
         void ofrmParametrosGenerales_FormClosed(object sender, FormClosedEventArgs e)
         {
+			CDTSA.frmParametrosGenerales ofrmParametros = (CDTSA.frmParametrosGenerales)sender;
+			ofrmParametros.FormClosed -= ofrmParametrosGenerales_FormClosed; 
             //Recargar los parametros del sistema
             CargarParametrosSistema();
         }
@@ -886,6 +906,8 @@ namespace MainMenu
                     TreeListNode nodeDocumentos = tl.AppendNode(new object[] { "Documentos" }, -1, 9, 10, 9);
                     TreeListNode nodeCheques = tl.AppendNode(new object[] { "Listado de Documentos" }, nodeDocumentos.Id, 11, 11, 11);
                     nodeCheques.Tag = "frmListadoDocumentosBancarios";
+					TreeListNode nodeEstadoCuenta = tl.AppendNode(new object[] { "Estado de Cuenta" }, nodeDocumentos.Id, 11, 11, 11);
+					nodeEstadoCuenta.Tag = "frmEstadoCuenta";
                     TreeListNode nodeNit = tl.AppendNode(new object[] { "Nit" }, nodeDocumentos.Id, 11, 11, 11);
                     nodeNit.Tag = "frmNIT";
 					TreeListNode nodeProcesosBanco = tl.AppendNode(new object[] { "Procesos" }, -1, 9, 10, 9);

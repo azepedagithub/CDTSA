@@ -229,10 +229,10 @@ namespace Util
             lkupControl.Properties.NullText = "--- ---";
             lkupControl.Properties.View.BestFitColumns();
             lkupControl.Properties.NullValuePrompt = "--- ---";
-            lkupControl.Properties.PopupFilterMode = DevExpress.XtraEditors.PopupFilterMode.Contains;
+			//lkupControl.Properties.PopupFilterMode = DevExpress.XtraEditors.PopupFilterMode.StartsWith;
         }
 
-        public static void ConfigRepositoryLookupEditSetViewColumns(RepositoryItemSearchLookUpEdit lkupControl, String Columns)
+        public static void ConfigRepositoryLookupEditSetViewColumns(RepositoryItemSearchLookUpEdit lkupControl, String Columns, DevExpress.XtraGrid.Columns.AutoFilterCondition filterConditions  = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains)
         {
             dynamic oColumns = JArray.Parse(Columns);
             DevExpress.XtraGrid.Views.Grid.GridView lookupView = lkupControl.View; //new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -246,7 +246,7 @@ namespace Util
                 col.FieldName = ele.ColumnField;
                 col.MinWidth = 10;
                 col.Visible = true;
-                col.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+				col.OptionsFilter.AutoFilterCondition = filterConditions;
                 col.VisibleIndex = count;
 
                 if (ele.width != null)
@@ -277,7 +277,7 @@ namespace Util
         }
 
 
-        public static void ConfigLookupEditSetViewColumns(SearchLookUpEdit lkupControl, String Columns)
+		public static void ConfigLookupEditSetViewColumns(SearchLookUpEdit lkupControl, String Columns, DevExpress.XtraGrid.Columns.AutoFilterCondition filterConditions = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains)
         {
             dynamic oColumns = JArray.Parse(Columns);
             DevExpress.XtraGrid.Views.Grid.GridView lookupView = lkupControl.Properties.View; //new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -291,7 +291,8 @@ namespace Util
                 col.FieldName = ele.ColumnField;
                 col.MinWidth = 10;
                 col.Visible = true;
-                col.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+				col.FilterMode = ColumnFilterMode.DisplayText;
+				col.OptionsFilter.AutoFilterCondition = filterConditions;
                 col.VisibleIndex = count;
 
                 if (ele.width != null)
@@ -306,6 +307,7 @@ namespace Util
                 count++;
             }
 
+			
             lookupView.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
             lookupView.OptionsLayout.StoreAllOptions = true;
             lookupView.BestFitMaxRowCount = -1;
@@ -318,6 +320,7 @@ namespace Util
             lookupView.OptionsLayout.Columns.AddNewColumns = false;
             lookupView.OptionsSelection.EnableAppearanceFocusedCell = false;
             lookupView.OptionsView.ShowGroupPanel = false;
+			lookupView.OptionsView.ShowAutoFilterRow = false;
             lkupControl.Properties.View = lookupView;
         }
 

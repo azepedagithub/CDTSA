@@ -93,6 +93,7 @@ CREATE     TABLE  [dbo].[invProducto](
 	[Bonifica][bit] NOT NULL DEFAULT 0,
 	[NumRegSanitario] NVARCHAR(250) NULL,
 	[FechaVencimientoRegistro] DATE  NULL,
+	[Concentracion] NVARCHAR(250) NULL,
 	[UserInsert] NVARCHAR(50) NULL,
 	[UserUpdate] NVARCHAR(50) NULL,
 	[CreateDate] [datetime] NOT NULL DEFAULT (GETDATE()),
@@ -921,7 +922,6 @@ GO
 
 ALTER TABLE [dbo].[invHistCostoPromedio] ADD  DEFAULT ((0)) FOR [CostoPromDolar]
 GO
-
 --Ageregar los datos de las tablas que son de sistemas
 /*	INSERT DE GRUPO CLASIFICACIONES */
 INSERT INTO dbo.invGrupoClasif  ( IDGrupo, Descr, Activo, Etiqueta )
@@ -952,7 +952,7 @@ INSERT INTO dbo.globalImpuesto(Descr,Porc,Activo)
 VALUES ('EXENTO',0,1)
 GO
 INSERT INTO dbo.globalImpuesto(Descr,Porc,Activo)
-VALUES ('IGV',15,1)
+VALUES ('IVA',15,1)
 
 ----Unidad de Medida
 --INSERT INTO dbo.invUnidadMedida
@@ -1142,12 +1142,12 @@ VALUES ('MOV','TRASLADOS',9,'TR',1,1)
 GO
 
 INSERT INTO DBO.invPaquete( PAQUETE ,Descr ,IDConsecutivo ,Transaccion ,Activo,isReadOnly)
-VALUES ('PRE','Prestamos',10,'PR',1,1)
+VALUES ('PRE','Prestamos',11,'PR',1,1)
 
 GO
 
 INSERT INTO DBO.invPaquete( PAQUETE ,Descr ,IDConsecutivo ,Transaccion ,Activo,isReadOnly)
-VALUES ('DEVFA','DEVOLUCION FACTURA',11,'DV',1,1)
+VALUES ('DEVFA','DEVOLUCION FACTURA',10,'DV',1,1)
 
 
 
@@ -1158,7 +1158,7 @@ GO
 
 CREATE Procedure  [dbo].[invUpdateProducto] @Operacion nvarchar(1), @IDProducto BIGINT , @Descr nvarchar(250), @Generico NVARCHAR(250), @Alias nvarchar(250),
 @Clasif1 int, @Clasif2 INT, @Clasif3 INT ,@Clasif4 INT , @Clasif5 INT, @Clasif6 INT,@IDProveedor AS INT,@IDCuentaContable AS BIGINT, @CodigoBarra NVARCHAR(50),@IDUnidad INT,
-@FactorEmpaque DECIMAL(28,4), @TipoImpuesto INT, @EsMuestra BIT, @EsControlado BIT, @EsEtico BIT,@EsGenerico BIT, @Activo BIT,@Bonifica BIT,@NumRegistroSanitario NVARCHAR(250),@FechaVencimientoRegistro DATE,@UserInsert NVARCHAR(50),@UserUpdate NVARCHAR(50),@UpdateDate DATETIME
+@FactorEmpaque DECIMAL(28,4), @TipoImpuesto INT, @EsMuestra BIT, @EsControlado BIT, @EsEtico BIT,@EsGenerico BIT, @Activo BIT,@Bonifica BIT,@NumRegistroSanitario NVARCHAR(250),@FechaVencimientoRegistro DATE,@Concentracion NVARCHAR(250),@UserInsert NVARCHAR(50),@UserUpdate NVARCHAR(50),@UpdateDate DATETIME
 as
 set nocount on 
 
@@ -1172,9 +1172,9 @@ BEGIN
 	END
 
 	INSERT INTO dbo.invProducto( IDProducto, Descr ,Generico,Alias ,Clasif1 ,Clasif2 ,Clasif3 ,Clasif4 ,Clasif5 ,Clasif6 ,IDProveedor,IDCuentaContable,CodigoBarra ,IDUnidad ,FactorEmpaque ,TipoImpuesto ,
-	          EsMuestra ,EsControlado ,EsEtico ,EsGenerico,Activo,Bonifica ,NumRegSanitario,FechaVencimientoRegistro,UserInsert ,UserUpdate  ,UpdateDate)
+	          EsMuestra ,EsControlado ,EsEtico ,EsGenerico,Activo,Bonifica ,NumRegSanitario,FechaVencimientoRegistro,Concentracion,UserInsert ,UserUpdate  ,UpdateDate)
 	VALUES (@IDProducto, @Descr,@Generico,@Alias,@Clasif1,@Clasif2,@Clasif3,@Clasif4,@Clasif5,@Clasif6,@IDProveedor,@IDCuentaContable,@CodigoBarra,@IDUnidad,@FactorEmpaque,@TipoImpuesto,
-		@EsMuestra,@EsControlado,@EsEtico,@EsGenerico,	@Activo,@Bonifica,@NumRegistroSanitario,@FechaVencimientoRegistro,@UserInsert,@UserUpdate,@UpdateDate)
+		@EsMuestra,@EsControlado,@EsEtico,@EsGenerico,	@Activo,@Bonifica,@NumRegistroSanitario,@FechaVencimientoRegistro,@Concentracion,@UserInsert,@UserUpdate,@UpdateDate)
 	
 		
 		INSERT INTO dbo.invLote( IDLote ,IDProducto ,LoteInterno ,LoteProveedor ,FechaVencimiento ,FechaFabricacion )
@@ -1217,7 +1217,7 @@ if upper(@Operacion) = 'U'
 BEGIN
 	UPDATE dbo.invProducto SET Descr=@Descr,Generico = @Generico ,Alias = @Alias,Clasif1=@Clasif1,Clasif2=@Clasif2,Clasif3=@Clasif3,Clasif4=@Clasif4,Clasif5=@Clasif5,Clasif6=@Clasif6,
 	IDProveedor=@IDProveedor,IDCuentaContable = @IDCuentaContable,CodigoBarra =@CodigoBarra,IDUnidad=@IDUnidad,FactorEmpaque=@FactorEmpaque,TipoImpuesto=@TipoImpuesto,EsMuestra=@EsMuestra,EsControlado=@EsControlado,
-	EsEtico=@EsEtico,EsGenerico=@EsGenerico,Activo=@Activo,Bonifica =@Bonifica,NumRegSanitario=@NumRegistroSanitario,FechaVencimientoRegistro = @FechaVencimientoRegistro,UserUpdate=@UserUpdate,UpdateDate=@UpdateDate
+	EsEtico=@EsEtico,EsGenerico=@EsGenerico,Activo=@Activo,Bonifica =@Bonifica,NumRegSanitario=@NumRegistroSanitario,FechaVencimientoRegistro = @FechaVencimientoRegistro,Concentracion = @Concentracion,UserUpdate=@UserUpdate,UpdateDate=@UpdateDate
 	WHERE IDProducto=@IDProducto
 	
 end
@@ -1230,7 +1230,7 @@ CREATE PROCEDURE [dbo].[invGetProducto] @IDProducto BIgint	,@Descr AS NVARCHAR(2
 															@EsMuestra INT,@EsControlado INT,@EsEtico INT
 AS 
 	SELECT IDProducto,Descr , Generico,Alias ,Clasif1 ,Clasif2 ,Clasif3 ,Clasif4 ,Clasif5 ,Clasif6 ,CodigoBarra,IDProveedor,IDCuentaContable ,IDUnidad ,FactorEmpaque ,TipoImpuesto ,
-	          EsMuestra ,EsControlado ,EsEtico,EsGenerico, CostoUltLocal,CostoUltDolar,CostoPromLocal,CostoPromDolar,Activo,Bonifica,NumRegSanitario,FechaVencimientoRegistro,UserInsert ,UserUpdate  ,UpdateDate,CreateDate 
+	          EsMuestra ,EsControlado ,EsEtico,EsGenerico, CostoUltLocal,CostoUltDolar,CostoPromLocal,CostoPromDolar,Activo,Bonifica,NumRegSanitario,FechaVencimientoRegistro,Concentracion,UserInsert ,UserUpdate  ,UpdateDate,CreateDate 
 	          FROM dbo.invProducto 
 	          WHERE (IDProducto =@IDProducto OR  @IDProducto=-1)
 	          AND (Clasif1 =@Clasif1 OR @Clasif1=-1) AND (Clasif2 =@Clasif2 OR @Clasif2=-1) AND (Clasif3 =@Clasif3 OR @Clasif3=-1)
@@ -1644,9 +1644,9 @@ LEFT  JOIN dbo.invExistenciaBodega E ON a.IDBodega = E.IDBodega AND A.IDProducto
 
 go
 
-CREATE  PROCEDURE dbo.invGetEmptyTransaccionInvDetalle 
+CREATE PROCEDURE dbo.invGetEmptyTransaccionInvDetalle 
 AS 
-SELECT  IDTransaccion ,'A' Estado,A.IDProducto, P.Descr DescrProducto ,A.IDLote, L.LoteInterno,L.LoteProveedor ,A.IDTipoTran,TT.Descr DescrTipoTran ,A.IDBodega IDBodegaOrigen,BO.Descr DescrBodegaOrigen,A.IDBodega IDBodegaDestino,Bo.Descr DescrBodegaDestino ,IDTraslado ,A.Naturaleza ,A.Factor ,Cantidad ,CostoUntLocal ,CostoUntDolar ,PrecioUntLocal ,PrecioUntDolar ,A.Transaccion ,TipoCambio   
+SELECT  IDTransaccion ,'A' Estado,A.IDProducto, P.Descr DescrProducto ,A.IDLote, L.LoteInterno,L.LoteProveedor,L.FechaVencimiento ,A.IDTipoTran,TT.Descr DescrTipoTran ,A.IDBodega IDBodegaOrigen,BO.Descr DescrBodegaOrigen,A.IDBodega IDBodegaDestino,Bo.Descr DescrBodegaDestino ,IDTraslado ,A.Naturaleza ,A.Factor ,Cantidad ,CostoUntLocal ,CostoUntDolar ,PrecioUntLocal ,PrecioUntDolar ,A.Transaccion ,TipoCambio   
 FROM dbo.invTransaccionLinea A 
 INNER JOIN dbo.invProducto P ON	A.IDProducto = P.IDProducto
 INNER JOIN dbo.invBodega BO ON A.IDBodega= BO.IDBodega
@@ -2694,8 +2694,7 @@ UPDATE dbo.invTransaccion SET Aplicado=1 WHERE IDTransaccion= @IDTransaccion
 GO
 
 
-
-CREATE  PROCEDURE dbo.fafGeneraAsientoContableFactura @Modulo AS NVARCHAR(4), @IDDocumento AS INT,@Usuario AS NVARCHAR(50),@Asiento AS NVARCHAR(20) OUTPUT 
+ALTER PROCEDURE dbo.fafGeneraAsientoContableFactura @Modulo AS NVARCHAR(4), @IDDocumento AS INT,@Usuario AS NVARCHAR(50),@Asiento AS NVARCHAR(20) OUTPUT 
 AS
 --BEGIN TRAN
 /*
@@ -2739,12 +2738,14 @@ INSERT INTO dbo.cntAsiento( IDEjercicio ,Periodo ,Asiento ,Tipo ,Fecha ,FechaHor
 VALUES (	@IDEjercicio,@Periodo	,@Asiento,'FA',@FechaDocumento,GETDATE(),@Usuario,GETDATE(),NULL,NULL,NULL,NULL,'Factura',0,0,@TipoCambio,'FA',0)		
 						
 SELECT A.IDProducto,A.IDBodega,L.IDLote,L.Cantidad,A.PrecioDolar,A.PrecioLocal,P.CostoPromDolar,P.CostoPromLocal,SubTotalLocal,SubTotalDolar,DescuentoLocal,DescuentoDolar,DescuentoEspecialLocal,DescuentoEspecialDolar,ImpuestoLocal,ImpuestoDolar,
-			C.CtaCostoVenta,C.CtrCostoVenta,    C.CtaCostoDesc,C.CtrCostoDesc,   C.CtaDescBonificacion,C.CtrDescBonificacion,   C.CtaDescVenta, C.CtrDescVenta    ,
-			C.CtaInventario,C.CtrInventario     ,C.CtaVenta,C.CtrVenta INTO #tmpFactura  FROM  dbo.fafFacturaProd A
+			C.CtaCostoVenta,C.CtrCostoVenta, C.CtaDescBonificacion,C.CtrDescBonificacion,   C.CtaDescVenta, C.CtrDescVenta ,
+			C.CtaInventario,C.CtrInventario ,C.CtaVenta,C.CtrVenta INTO #tmpFactura  FROM  dbo.fafFacturaProd A
 INNER JOIN dbo.fafFacturaProdLote L ON A.IDFacturaProd = L.IDFacturaProd
 INNER JOIN dbo.invProducto P ON A.IDProducto=P.IDProducto
 LEFT  JOIN dbo.invCuentaContable C ON P.IDCuentaContable=C.IDCuenta
 WHERE IDFactura =@IDDocumento
+
+
 
 
 SET @Rows = @@ROWCOUNT
@@ -2753,7 +2754,6 @@ DECLARE @IDProducto AS BIGINT,@IDBodega AS INT,@IDLote AS INT,@Cantidad AS DECIM
 @CostoPromDolar AS DECIMAL(28,4),@CostoPromLocal AS DECIMAL(28,4),
 @CtaContado AS BIGINT,@CtrContado AS INT,
 @CtaCostoVenta AS BIGINT, @CtrCostoVenta AS INT,
-@CtaCostoDesc AS BIGINT, @CtrCostoDesc AS INT,
 @CtaDescBonificacion AS BIGINT,@CtrDescBonificacion AS INT,
 @CtaDescVenta AS BIGINT,@CtrDescVenta AS INT,
 @CtaInventario AS BIGINT,@CtrInventario AS INT,
@@ -2766,10 +2766,11 @@ DECLARE @Linea AS INT
 SET @i=1
 SET @Linea = 0
 
+
 WHILE (@Rows>=@i)
 BEGIN
 	SELECT @IDProducto = IDProducto, @IDBodega = IDBodega, @IDLote = IDLote,@Cantidad = Cantidad, @PrecioLocal = PrecioLocal, @PrecioDolar = PrecioDolar,
-	@CostoPromDolar = CostoPromDolar,@CostoPromLocal = CostoPromLocal,@CtaCostoVenta =CtaCostoVenta, @CtrCostoVenta=CtrCostoVenta,@CtaCostoDesc = CtaCostoDesc,
+	@CostoPromDolar = CostoPromDolar,@CostoPromLocal = CostoPromLocal,@CtaCostoVenta =CtaCostoVenta, @CtrCostoVenta=CtrCostoVenta,
 	@CtaDescBonificacion =CtaDescBonificacion, @CtrDescBonificacion = CtaDescBonificacion, @CtaDescVenta = CtaDescVenta, @CtrDescVenta = CtrDescVenta,
 	@CtaInventario = CtaInventario,@CtrInventario = CtrInventario,@CtaVenta = CtaVenta, @CtrVenta = CtrVenta
 	  FROM #tmpFactura WHERE ID =@Rows
@@ -2791,32 +2792,47 @@ BEGIN
 END
 
 DECLARE @IVALocal AS DECIMAL(28,4),@DescLocal AS DECIMAL(28,4),@DescEspecial AS DECIMAL(28,4), @VentaLocal AS DECIMAL(28,4)
+SET @IVALocal =0 
+SET @DescLocal = 0
+SET @DescEspecial = 0
+SET @VentaLocal = 0
 
 SELECT  @IVALocal = SUM(ImpuestoLocal) ,@DescLocal = SUM(DescuentoLocal) ,@DescEspecial = SUM(DescuentoEspecialLocal), @VentaLocal = SUM(SubTotalLocal)  
 FROM #tmpFactura
 
 	SELECT @IDProducto = IDProducto, @IDBodega = IDBodega, @IDLote = IDLote,@Cantidad = Cantidad, @PrecioLocal = PrecioLocal, @PrecioDolar = PrecioDolar,
-	@CostoPromDolar = CostoPromDolar,@CostoPromLocal = CostoPromLocal,@CtaCostoVenta =CtaCostoVenta, @CtrCostoVenta=CtrCostoVenta,@CtaCostoDesc = CtaCostoDesc,
+	@CostoPromDolar = CostoPromDolar,@CostoPromLocal = CostoPromLocal,@CtaCostoVenta =CtaCostoVenta, @CtrCostoVenta=CtrCostoVenta,
 	@CtaDescBonificacion =CtaDescBonificacion, @CtrDescBonificacion = CtaDescBonificacion, @CtaDescVenta = CtaDescVenta, @CtrDescVenta = CtrDescVenta,
 	@CtaInventario = CtaInventario,@CtrInventario = CtrInventario,@CtaVenta = CtaVenta, @CtrVenta = CtrVenta
 	  FROM #tmpFactura WHERE ID =1
 	  
 /*
   § NOTA§
-  Pendiente la contabilizacion de Descuentos y Bonificaciones.
+  Pendiente la contabilizacion  Bonificaciones.
 */
 
- --//IVA
-SET @Linea = @Linea + 1 
-INSERT INTO dbo.cntAsientoDetalle( Asiento ,Linea ,IDCentro ,IDCuenta ,Referencia ,Debito ,Credito ,Documento ,daterecord)
-VALUES (@Asiento,@Linea,@CtrIVA,@CtaIVA,'IVA: Venta de ' + CAST(@IDProducto AS NVARCHAR(20)) + 'CI-' + @Documento, 0,@IVALocal,@Documento,GETDATE())
+ --//Desc
+ IF @DescLocal > 0 
+ BEGIN
+	SET @Linea = @Linea + 1 
+	INSERT INTO dbo.cntAsientoDetalle( Asiento ,Linea ,IDCentro ,IDCuenta ,Referencia ,Debito ,Credito ,Documento ,daterecord)
+	VALUES (@Asiento,@Linea,@CtrDescVenta,@CtaDescVenta,'Desc: Desc de ' + CAST(@IDProducto AS NVARCHAR(20)) + 'CI-' + @Documento, 0,@DescLocal,@Documento,GETDATE())
+ END
+
+--//IVA
+IF @IVALocal > 0
+BEGIN
+	SET @Linea = @Linea + 1 
+	INSERT INTO dbo.cntAsientoDetalle( Asiento ,Linea ,IDCentro ,IDCuenta ,Referencia ,Debito ,Credito ,Documento ,daterecord)
+	VALUES (@Asiento,@Linea,@CtrIVA,@CtaIVA,'IVA: Venta de ' + CAST(@IDProducto AS NVARCHAR(20)) + 'CI-' + @Documento, 0,@IVALocal,@Documento,GETDATE())
+END
 
 --//Venta
 SET @Linea = @Linea + 1 
 DECLARE @FondosPorDep AS DECIMAL(28,4) 
 --SET @FondosPorDep =  @VentaLocal + @IVALocal - @DescLocal - @DescEspecial
 INSERT INTO dbo.cntAsientoDetalle( Asiento ,Linea ,IDCentro ,IDCuenta ,Referencia ,Debito ,Credito ,Documento ,daterecord)
-VALUES (@Asiento,@Linea,@CtrVenta,@CtaVenta,'Venta: Venta de ' + CAST(@IDProducto AS NVARCHAR(20))+ 'CI-' + @Documento, @VentaLocal,0,@Documento,GETDATE())
+VALUES (@Asiento,@Linea,@CtrVenta,@CtaVenta,'Venta: Venta de ' + CAST(@IDProducto AS NVARCHAR(20))+ 'CI-' + @Documento,0, @VentaLocal,@Documento,GETDATE())
 
 IF (@TipoFactura= 1) 
 BEGIN
@@ -2830,7 +2846,7 @@ ELSE
 BEGIN
 		DECLARE @CtrCxC AS INT,@CtaCxC AS BIGINT
 		
-		 SELECT @CtrCxC = CtrCxc, @CtaCxC = CtaCxC  
+		 SELECT @CtrCxC = IDCtrCxc, @CtaCxC = IDCtaCxC  
 		 FROM dbo.fafCategoriaCliente 
 		 WHERE IDCategoria =  (SELECT IDCategoria FROM dbo.ccfClientes WHERE IDCliente = @CodCliente)
 		 
@@ -2896,7 +2912,7 @@ VALUES (	@IDEjercicio,@Periodo	,@Asiento,'IN',@FechaDocumento,GETDATE(),@Usuario
 SELECT A.IDProducto,A.IDBodega,A.IDLote,A.Cantidad,P.CostoPromDolar,P.CostoPromLocal,A.CostoUntLocal,A.PrecioUntLocal,
 			C.CtaInventario,C.CtrInventario , C.CtaSobranteInvFisico,C.CtrSobranteInvFisico,
 			C.CtaFaltanteInvFisico,C.CtrFaltanteInvFisico,C.CtaVariacionCosto,C.CtrVariacionCosto,
-			C.CtaCompra,C.CtrCompra, C.CtaConsumo,C.CtrConsumo,
+			C.CtaCompra,C.CtrCompra, C.CtaConsumo,C.CtrConsumo,C.CtaPrestamos,C.CtrPrestamos,
 			A.IDTipoTran INTO #tmpDocumento 
 			FROM dbo.invTransaccionLinea A
 			INNER JOIN dbo.invProducto P ON A.IDProducto=P.IDProducto
@@ -2934,7 +2950,7 @@ BEGIN
 	@CtaVariacionCosto = CtaVariacionCosto, @CtrVariacionCosto = CtrVariacionCosto,
 	@CtaCompra = CtaCompra,@CtrCompra = CtrCompra,
 	@CtaConsumo =  CtaConsumo,@CtrConsumo = CtrConsumo,
-	@CtaPrestamo = CtaPrestamo, @CtrPrestamo = CtrPrestamo,
+	@CtaPrestamo = CtaPrestamos, @CtrPrestamo = CtrPrestamos,
 	@IDTipoTran = IDTipoTran
 	  FROM #tmpDocumento WHERE ID =@i
 
@@ -3934,7 +3950,7 @@ ALTER PROCEDURE [dbo].[invGetProducto] @IDProducto BIgint	,@Descr AS NVARCHAR(25
 															@EsMuestra INT,@EsControlado INT,@EsEtico INT
 AS 
 	SELECT IDProducto,Descr , Generico,Alias ,Clasif1 ,Clasif2 ,Clasif3 ,Clasif4 ,Clasif5 ,Clasif6 ,CodigoBarra,IDProveedor,IDCuentaContable ,IDUnidad ,FactorEmpaque ,TipoImpuesto ,
-	          EsMuestra ,EsControlado ,EsEtico,EsGenerico, CostoUltLocal,CostoUltDolar,CostoPromLocal,CostoPromDolar,Activo,Bonifica,NumRegSanitario,FechaVencimientoRegistro,PrecioCIF,PrecioFOB,TipoPrecio,UserInsert ,UserUpdate  ,UpdateDate,CreateDate 
+	          EsMuestra ,EsControlado ,EsEtico,EsGenerico, CostoUltLocal,CostoUltDolar,CostoPromLocal,CostoPromDolar,Activo,Bonifica,NumRegSanitario,FechaVencimientoRegistro,Concentracion,PrecioCIF,PrecioFOB,TipoPrecio,UserInsert ,UserUpdate  ,UpdateDate,CreateDate 
 	          FROM dbo.invProducto 
 	          WHERE (IDProducto =@IDProducto OR  @IDProducto=-1)
 	          AND (Clasif1 =@Clasif1 OR @Clasif1=-1) AND (Clasif2 =@Clasif2 OR @Clasif2=-1) AND (Clasif3 =@Clasif3 OR @Clasif3=-1)
@@ -3950,7 +3966,7 @@ ALTER PROCEDURE [dbo].[invGetProductoByID] @IDProducto BIgint	,@Descr AS NVARCHA
 AS 
 	SELECT IDProducto,P.Descr ,P.Alias ,Clasif1,C1.Descr DescrClasif1 ,Clasif2 ,C2.Descr DescrClasif2,Clasif3,C3.Descr DescrClasif3 ,Clasif4 ,C4.Descr DescrClasif4,
 				Clasif5 ,C5.Descr DescrClasif5 ,Clasif6, C6.Descr DescrClasif6 ,PR.IDProveedor,PR.Nombre NombreProveedor, P.CostoPromDolar,P.CostoPromLocal,P.CostoUltDolar,P.CostoUltLocal,CodigoBarra,IDCuentaContable ,P.IDUnidad ,UM.Descr DescrUnidadMedida,FactorEmpaque ,TipoImpuesto , I.Descr DescrTipoImpuesto,
-	          EsMuestra ,EsControlado ,EsEtico ,EsGenerico, P.Activo, P.Bonifica,NumRegSanitario,FechaVencimientoRegistro,PrecioCIF,PrecioFOB,TipoPrecio,UserInsert ,UserUpdate  ,UpdateDate,CreateDate FROM dbo.invProducto  P
+	          EsMuestra ,EsControlado ,EsEtico ,EsGenerico, P.Activo, P.Bonifica,NumRegSanitario,FechaVencimientoRegistro,Concentracion,PrecioCIF,PrecioFOB,TipoPrecio,UserInsert ,UserUpdate  ,UpdateDate,CreateDate FROM dbo.invProducto  P
 	          LEFT JOIN dbo.invUnidadMedida UM ON P.IDUnidad = UM.IDUnidad
 	          LEFT JOIN dbo.globalImpuesto I ON P.TipoImpuesto = I.IDImpuesto
 			  LEFT JOIN dbo.invClasificacion C1 ON P.Clasif1=C1.IDClasificacion  AND C1.IDGrupo=1
@@ -3970,7 +3986,7 @@ GO
 ALTER Procedure  [dbo].[invUpdateProducto] @Operacion nvarchar(1), @IDProducto BIGINT , @Descr nvarchar(250), @Generico NVARCHAR(250), @Alias nvarchar(250),
 @Clasif1 int, @Clasif2 INT, @Clasif3 INT ,@Clasif4 INT , @Clasif5 INT, @Clasif6 INT,@IDProveedor AS INT,@IDCuentaContable AS BIGINT, @CodigoBarra NVARCHAR(50),@IDUnidad INT,
 @FactorEmpaque DECIMAL(28,4), @TipoImpuesto INT, @EsMuestra BIT, @EsControlado BIT, @EsEtico BIT,@EsGenerico BIT, @Activo BIT,@Bonifica BIT,@NumRegistroSanitario NVARCHAR(250),
-@PrecioCIF DECIMAL(28,4), @PrecioFOB DECIMAL(28,4),@TipoPrecio NVARCHAR(3),@FechaVencimientoRegistro DATE,@UserInsert NVARCHAR(50),@UserUpdate NVARCHAR(50),@UpdateDate DATETIME
+@Concentracion NVARCHAR(250), @PrecioCIF DECIMAL(28,4), @PrecioFOB DECIMAL(28,4),@TipoPrecio NVARCHAR(3),@FechaVencimientoRegistro DATE,@UserInsert NVARCHAR(50),@UserUpdate NVARCHAR(50),@UpdateDate DATETIME
 as
 set nocount on 
 
@@ -3984,9 +4000,9 @@ BEGIN
 	END
 
 	INSERT INTO dbo.invProducto( IDProducto, Descr ,Generico,Alias ,Clasif1 ,Clasif2 ,Clasif3 ,Clasif4 ,Clasif5 ,Clasif6 ,IDProveedor,IDCuentaContable,CodigoBarra ,IDUnidad ,FactorEmpaque ,TipoImpuesto ,
-	          EsMuestra ,EsControlado ,EsEtico ,EsGenerico,Activo,Bonifica ,NumRegSanitario,FechaVencimientoRegistro,PrecioCIF,PrecioFOB,TipoPrecio,UserInsert ,UserUpdate  ,UpdateDate)
+	          EsMuestra ,EsControlado ,EsEtico ,EsGenerico,Activo,Bonifica ,NumRegSanitario,FechaVencimientoRegistro,Concentracion,PrecioCIF,PrecioFOB,TipoPrecio,UserInsert ,UserUpdate  ,UpdateDate)
 	VALUES (@IDProducto, @Descr,@Generico,@Alias,@Clasif1,@Clasif2,@Clasif3,@Clasif4,@Clasif5,@Clasif6,@IDProveedor,@IDCuentaContable,@CodigoBarra,@IDUnidad,@FactorEmpaque,@TipoImpuesto,
-		@EsMuestra,@EsControlado,@EsEtico,@EsGenerico,	@Activo,@Bonifica,@NumRegistroSanitario,@FechaVencimientoRegistro,@PrecioCIF,@PrecioFOB,@TipoPrecio,@UserInsert,@UserUpdate,@UpdateDate)
+		@EsMuestra,@EsControlado,@EsEtico,@EsGenerico,	@Activo,@Bonifica,@NumRegistroSanitario,@FechaVencimientoRegistro,@Concentracion,@PrecioCIF,@PrecioFOB,@TipoPrecio,@UserInsert,@UserUpdate,@UpdateDate)
 	
 		
 		INSERT INTO dbo.invLote( IDLote ,IDProducto ,LoteInterno ,LoteProveedor ,FechaVencimiento ,FechaFabricacion )
@@ -4029,7 +4045,7 @@ if upper(@Operacion) = 'U'
 BEGIN
 	UPDATE dbo.invProducto SET Descr=@Descr,Generico = @Generico ,Alias = @Alias,Clasif1=@Clasif1,Clasif2=@Clasif2,Clasif3=@Clasif3,Clasif4=@Clasif4,Clasif5=@Clasif5,Clasif6=@Clasif6,
 	IDProveedor=@IDProveedor,IDCuentaContable = @IDCuentaContable,CodigoBarra =@CodigoBarra,IDUnidad=@IDUnidad,FactorEmpaque=@FactorEmpaque,TipoImpuesto=@TipoImpuesto,EsMuestra=@EsMuestra,EsControlado=@EsControlado,
-	EsEtico=@EsEtico,EsGenerico=@EsGenerico,Activo=@Activo,Bonifica =@Bonifica,NumRegSanitario=@NumRegistroSanitario,FechaVencimientoRegistro = @FechaVencimientoRegistro,UserUpdate=@UserUpdate,UpdateDate=@UpdateDate,
+	EsEtico=@EsEtico,EsGenerico=@EsGenerico,Activo=@Activo,Bonifica =@Bonifica,Concentracion = @Concentracion,NumRegSanitario=@NumRegistroSanitario,FechaVencimientoRegistro = @FechaVencimientoRegistro,UserUpdate=@UserUpdate,UpdateDate=@UpdateDate,
 	PrecioCIF = @PrecioCIF,PrecioFOB = @PrecioFOB,TipoPrecio = @TipoPrecio
 	WHERE IDProducto=@IDProducto
 	

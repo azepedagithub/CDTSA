@@ -129,7 +129,9 @@ namespace CI
 
             //Cuentas contables
             Util.Util.ConfigLookupEdit(this.slkuCtaDevVentas, _dtCuentasContables, "Descr", "IDCuenta");
-            Util.Util.ConfigLookupEditSetViewColumns(this.slkuCtaDevVentas, "[{'ColumnCaption':'Cuenta','ColumnField':'Cuenta','width':30},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':70}]");
+            Util.Util.ConfigLookupEditSetViewColumns(this.slkuCtaDevVentas, "[{'ColumnCaption':'Cuenta','ColumnField':'Cuenta','width':30},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':70}]", DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains);
+
+			
 
             Util.Util.ConfigLookupEdit(this.slkuCtaVentas, _dtCuentasContables, "Descr", "IDCuenta");
             Util.Util.ConfigLookupEditSetViewColumns(this.slkuCtaVentas, "[{'ColumnCaption':'Cuenta','ColumnField':'Cuenta','width':30},{'ColumnCaption':'Descripción','ColumnField':'Descr','width':70}]");
