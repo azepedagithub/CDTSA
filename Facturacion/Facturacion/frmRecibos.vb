@@ -220,6 +220,11 @@ Public Class frmRecibos
             If txtTotalPosFechado.Text = "" Then
                 txtTotalPosFechado.Text = "0"
             End If
+
+            If (txtchkPosMonto.EditValue = Me.txtTotalPosFechado.EditValue) Then
+                MessageBox.Show("El Monto indicado en el Cheque ha sido aplicado totalmente, no puede aplicar mas facturas a ese monto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Return
+            End If
             If CDec(txtchkPosMonto.EditValue) < CDec(txtTotalPosFechado.EditValue) Then
                 MessageBox.Show("Por favor revise el valor del Monto del Cheque Pos Fechado al aplicar... debe ser menor o igual al valor del Cheque", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Me.txtchkPosMonto.Focus()
@@ -1114,6 +1119,11 @@ Public Class frmRecibos
             Me.SearchLookUpEditSubTipoDebito.EditValue = frm.giIDSubtipo
             Me.txtIDDebito.EditValue = frm.giIDDebito
             txtSaldo.EditValue = frm.gdSaldo
+            If txtSaldo.EditValue <= (txtchkPosMonto.EditValue - txtTotalPosFechado.EditValue) Then
+                txtPagoPosfechado.EditValue = txtSaldo.EditValue
+            Else
+                txtPagoPosfechado.EditValue = (txtchkPosMonto.EditValue - txtTotalPosFechado.EditValue)
+            End If
             Me.DateEditFecha.EditValue = frm.gdFecha
             Me.DateEditVence.EditValue = frm.gdFechaVencimiento
             Me.txtDiasVencidos.EditValue = frm.giDiasVencidos
@@ -1124,7 +1134,7 @@ Public Class frmRecibos
 
     End Sub
 
- 
+
     Private Sub txtRetencionRenta_KeyDown(sender As Object, e As KeyEventArgs) Handles txtRetencionRenta.KeyDown
         If e.KeyCode = Keys.Enter Then
             If Me.chkPosfechado.Checked = False Then

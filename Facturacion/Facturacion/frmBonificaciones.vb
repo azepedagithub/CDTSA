@@ -88,13 +88,13 @@ Public Class frmBonificaciones
             MessageBox.Show(ex.Message())
         End Try
     End Sub
-    
+
 
     Sub AddDataToGrid(Optional ByVal sTodos As String = "0", Optional ByVal sOperacion As String = "I")
         Try
 
             Dim sParameters As String
-            
+
             sParameters = "'" & sOperacion & "'," & sIDTabla & " ," & SearchLookUpEditProveedor.EditValue.ToString() & "," & _
             SearchLookUpEditProducto.EditValue.ToString() & "," & txtDesde.Text & "," & txtHasta.Text & "," & txtBono.Text
 
@@ -150,7 +150,7 @@ Public Class frmBonificaciones
         If chkDejarProv.Checked = False Then
             Me.SearchLookUpEditProveedor.Text = ""
         End If
- 
+
     End Sub
     ' Exisgir campso solo letras y campos solo numeros
     Private Sub ValidaLetraNumero(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) _

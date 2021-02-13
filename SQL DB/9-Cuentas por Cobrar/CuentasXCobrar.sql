@@ -1798,6 +1798,42 @@ exec dbo.fafUpdateDevolucion   'F',@IDDevolucion, 0 ,
 @Usuario , @TipoCambio  , 0 , '' , @IDCredito
 
 go 
+
+--exec dbo.ccfgetChequesPos 0, '20210101', '20210228', '*', -1, 0
+--EXEC dbo.ccfUpdateChequePos 1, 0, 1 SELECT * FROM DBO.ccfChequePosFechado UPDATE SELECT * FROM  UPDATE DBO.ccfChequePosFechado SET SINFONDO = 0, COBRADO = 0, ANULADO = 0 WHERE NUMERO = '4565' = 2 
+Alter Procedure dbo.ccfUpdateChequePos (@IDChequePos int, @Cobrado bit, @SinFondo bit )
+as
+set nocount on
+select P.IDChequePos, Numero, P.IDBanco, C.IDCliente 
+into #DetalleCheque 
+From dbo.ccfChequePosFechado P inner join dbo.ccfCreditos C
+on P.IDCredito = C.IDCredito 
+where P.IDChequePos = @IDChequePos 
+if @Cobrado = 1 
+begin
+	Update P set Cobrado = @Cobrado
+	From dbo.ccfChequePosFechado P inner join dbo.ccfCreditos C
+	on P.IDCredito = C.IDCredito inner join #DetalleCheque D
+	on P.Numero = D.numero and P.IDBanco = D.IDBanco and C.IDCliente = D.IDCliente 
+
+end
+if @SinFondo = 1 
+begin
+declare @IDCredito int
+	--Select @IDCredito = IDCredito 
+	--From dbo.ccfChequePosFechado Where IDChequePos = @IDChequePos 
+	
+	Update P set SinFondo = @SinFondo, Anulado = 1
+	From dbo.ccfChequePosFechado P inner join dbo.ccfCreditos C
+	on P.IDCredito = C.IDCredito inner join #DetalleCheque D
+	on P.Numero = D.numero and P.IDBanco = D.IDBanco and C.IDCliente = C.IDCliente 
+	-- OJO SE DEBE ANULAR LOS RECIBOS DE CAJA INVOLUCRADOS CON EL CHEQUE el R/C, esto est· pendiente 
+	Update dbo.ccfCreditos set Anulado = 1
+	Where IDCredito = @IDCredito
+end
+go
+
+
  
 
 --select dbo.ccfgetAutorizacion (1,GETDATE()) select dbo.ccfgetAutorizacion (1,'20201203') exec dbo.ccfgetDatoAutorizacion 1

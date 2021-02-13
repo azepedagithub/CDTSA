@@ -340,5 +340,12 @@ Public Class frmCatalogos
     'End Sub
 
 
+    Private Sub GridControl1_DoubleClick(sender As Object, e As EventArgs) Handles GridControl1.DoubleClick
+        Dim dr As DataRow = GridView1.GetFocusedDataRow
+        If dr IsNot Nothing Then
+            PreparaEdicion()
+        End If
+    End Sub
+
 End Class
 

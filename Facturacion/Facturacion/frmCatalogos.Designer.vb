@@ -38,6 +38,7 @@ Partial Class frmCatalogos
         Me.btnEdit = New DevExpress.XtraEditors.SimpleButton()
         Me.btnCancel = New DevExpress.XtraEditors.SimpleButton()
         Me.GroupControl1 = New DevExpress.XtraEditors.GroupControl()
+        Me.chkExtra = New DevExpress.XtraEditors.CheckEdit()
         Me.lblExtragridLookup = New DevExpress.XtraEditors.LabelControl()
         Me.gridLookUpEditExtra = New DevExpress.XtraEditors.GridLookUpEdit()
         Me.GridLookUpEdit1View = New DevExpress.XtraGrid.Views.Grid.GridView()
@@ -46,19 +47,18 @@ Partial Class frmCatalogos
         Me.LabelControl1 = New DevExpress.XtraEditors.LabelControl()
         Me.txtDescr = New DevExpress.XtraEditors.TextEdit()
         Me.txtCodigo = New DevExpress.XtraEditors.TextEdit()
-        Me.chkExtra = New DevExpress.XtraEditors.CheckEdit()
         CType(Me.GridControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.searchLookUpEdit, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RepositoryItemSearchLookUpEdit1View, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GroupControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupControl1.SuspendLayout()
+        CType(Me.chkExtra.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.gridLookUpEditExtra.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridLookUpEdit1View, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.chkActivo.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtDescr.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtCodigo.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.chkExtra.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnAdd
@@ -210,6 +210,15 @@ Partial Class frmCatalogos
         Me.GroupControl1.Size = New System.Drawing.Size(569, 93)
         Me.GroupControl1.TabIndex = 19
         '
+        'chkExtra
+        '
+        Me.chkExtra.Location = New System.Drawing.Point(368, 63)
+        Me.chkExtra.Name = "chkExtra"
+        Me.chkExtra.Properties.Caption = "chkExtra"
+        Me.chkExtra.Size = New System.Drawing.Size(170, 19)
+        Me.chkExtra.TabIndex = 22
+        Me.chkExtra.Visible = False
+        '
         'lblExtragridLookup
         '
         Me.lblExtragridLookup.Location = New System.Drawing.Point(18, 66)
@@ -274,15 +283,6 @@ Partial Class frmCatalogos
         Me.txtCodigo.Size = New System.Drawing.Size(83, 20)
         Me.txtCodigo.TabIndex = 15
         '
-        'chkExtra
-        '
-        Me.chkExtra.Location = New System.Drawing.Point(368, 63)
-        Me.chkExtra.Name = "chkExtra"
-        Me.chkExtra.Properties.Caption = "chkExtra"
-        Me.chkExtra.Size = New System.Drawing.Size(170, 19)
-        Me.chkExtra.TabIndex = 22
-        Me.chkExtra.Visible = False
-        '
         'frmCatalogos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -306,12 +306,12 @@ Partial Class frmCatalogos
         CType(Me.GroupControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupControl1.ResumeLayout(False)
         Me.GroupControl1.PerformLayout()
+        CType(Me.chkExtra.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.gridLookUpEditExtra.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridLookUpEdit1View, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.chkActivo.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtDescr.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtCodigo.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.chkExtra.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub

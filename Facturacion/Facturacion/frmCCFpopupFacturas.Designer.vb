@@ -34,9 +34,9 @@ Partial Class frmCCFpopupFacturas
         Me.IDMonedaC = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.Moneda = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.Saldo = New DevExpress.XtraGrid.Columns.GridColumn()
-        CType(Me.GridControl1,System.ComponentModel.ISupportInitialize).BeginInit
-        CType(Me.GridView1,System.ComponentModel.ISupportInitialize).BeginInit
-        Me.SuspendLayout
+        CType(Me.GridControl1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuspendLayout()
         '
         'GridControl1
         '
@@ -55,6 +55,8 @@ Partial Class frmCCFpopupFacturas
         Me.GridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.[False]
         Me.GridView1.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.[False]
         Me.GridView1.OptionsCustomization.AllowSort = False
+        Me.GridView1.OptionsFind.AlwaysVisible = True
+        Me.GridView1.OptionsView.ShowAutoFilterRow = True
         Me.GridView1.OptionsView.ShowViewCaption = True
         Me.GridView1.ViewCaption = "Documentos Pendientes de Pago"
         '
@@ -174,11 +176,11 @@ Partial Class frmCCFpopupFacturas
         Me.Name = "frmCCFpopupFacturas"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Documentos por Cobrar"
-        CType(Me.GridControl1,System.ComponentModel.ISupportInitialize).EndInit
-        CType(Me.GridView1,System.ComponentModel.ISupportInitialize).EndInit
-        Me.ResumeLayout(false)
+        CType(Me.GridControl1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ResumeLayout(False)
 
-End Sub
+    End Sub
     Friend WithEvents GridControl1 As DevExpress.XtraGrid.GridControl
     Friend WithEvents GridView1 As DevExpress.XtraGrid.Views.Grid.GridView
     Friend WithEvents IDDebito As DevExpress.XtraGrid.Columns.GridColumn

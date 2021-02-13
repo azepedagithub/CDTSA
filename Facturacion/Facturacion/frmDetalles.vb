@@ -174,7 +174,19 @@ Public Class frmDetalles
     End Sub
 
 
-    Private Sub GridControl1_DoubleClick(sender As Object, e As EventArgs) Handles GridControl1.DoubleClick
-        ShowDataDetail()
+    'Private Sub GridControl1_DoubleClick(sender As Object, e As EventArgs) Handles GridControl1.DoubleClick
+    '    ShowDataDetail()
+    'End Sub
+
+    Private Sub GridView1_DoubleClick(sender As Object, e As EventArgs) Handles GridView1.DoubleClick
+        Dim dr As DataRow = GridView1.GetFocusedDataRow
+        If dr IsNot Nothing Then
+            ShowDataDetail()
+        End If
+    End Sub
+
+
+    Private Sub GridControl1_Click(sender As Object, e As EventArgs) Handles GridControl1.Click
+
     End Sub
 End Class

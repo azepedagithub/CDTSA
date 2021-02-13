@@ -26,7 +26,7 @@ Partial Class frmRecibos
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmRecibos))
         Me.LayoutControl1 = New DevExpress.XtraLayout.LayoutControl()
         Me.LayoutControl2 = New DevExpress.XtraLayout.LayoutControl()
-        Me.txtIDCredito = New DevExpress.XtraEditors.TextEdit()
+        Me.txtTotalRetRenta = New DevExpress.XtraEditors.TextEdit()
         Me.BarManager1 = New DevExpress.XtraBars.BarManager(Me.components)
         Me.Bar2 = New DevExpress.XtraBars.Bar()
         Me.BarButtonItemNew = New DevExpress.XtraBars.BarButtonItem()
@@ -42,6 +42,7 @@ Partial Class frmRecibos
         Me.BarButtonItem1 = New DevExpress.XtraBars.BarButtonItem()
         Me.BarButtonItem4 = New DevExpress.XtraBars.BarButtonItem()
         Me.BarButtonItem8 = New DevExpress.XtraBars.BarButtonItem()
+        Me.txtIDCredito = New DevExpress.XtraEditors.TextEdit()
         Me.txtTotalPosFechado = New DevExpress.XtraEditors.TextEdit()
         Me.chkPosfechado = New DevExpress.XtraEditors.CheckEdit()
         Me.LabelControl1 = New DevExpress.XtraEditors.LabelControl()
@@ -136,6 +137,7 @@ Partial Class frmRecibos
         Me.LayoutControlItem107 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.posfechado = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem109 = New DevExpress.XtraLayout.LayoutControlItem()
+        Me.LayoutControlItem114 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlGroup1 = New DevExpress.XtraLayout.LayoutControlGroup()
         Me.LayoutControlItem1 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.RadioButton1 = New System.Windows.Forms.RadioButton()
@@ -354,14 +356,13 @@ Partial Class frmRecibos
         Me.Bar3 = New DevExpress.XtraBars.Bar()
         Me.btnEdit = New DevExpress.XtraEditors.SimpleButton()
         Me.btnNew = New DevExpress.XtraEditors.SimpleButton()
-        Me.txtTotalRetRenta = New DevExpress.XtraEditors.TextEdit()
-        Me.LayoutControlItem114 = New DevExpress.XtraLayout.LayoutControlItem()
         CType(Me.LayoutControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.LayoutControl1.SuspendLayout()
         CType(Me.LayoutControl2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.LayoutControl2.SuspendLayout()
-        CType(Me.txtIDCredito.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.txtTotalRetRenta.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BarManager1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.txtIDCredito.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtTotalPosFechado.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.chkPosfechado.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DateEditFechaCredito.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -461,6 +462,7 @@ Partial Class frmRecibos
         CType(Me.LayoutControlItem107, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.posfechado, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem109, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.LayoutControlItem114, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlGroup1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControl3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -674,8 +676,6 @@ Partial Class frmRecibos
         CType(Me.LayoutControlGroup15, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlGroup16, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem101, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.txtTotalRetRenta.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.LayoutControlItem114, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'LayoutControl1
@@ -721,16 +721,15 @@ Partial Class frmRecibos
         Me.LayoutControl2.TabIndex = 2
         Me.LayoutControl2.Text = "LayoutControl2"
         '
-        'txtIDCredito
+        'txtTotalRetRenta
         '
-        Me.txtIDCredito.Enabled = False
-        Me.txtIDCredito.Location = New System.Drawing.Point(1168, 42)
-        Me.txtIDCredito.MenuManager = Me.BarManager1
-        Me.txtIDCredito.Name = "txtIDCredito"
-        Me.txtIDCredito.Size = New System.Drawing.Size(72, 20)
-        Me.txtIDCredito.StyleController = Me.LayoutControl2
-        Me.txtIDCredito.TabIndex = 27
-        Me.txtIDCredito.Visible = False
+        Me.txtTotalRetRenta.EditValue = "0"
+        Me.txtTotalRetRenta.Location = New System.Drawing.Point(595, 300)
+        Me.txtTotalRetRenta.MenuManager = Me.BarManager1
+        Me.txtTotalRetRenta.Name = "txtTotalRetRenta"
+        Me.txtTotalRetRenta.Size = New System.Drawing.Size(115, 20)
+        Me.txtTotalRetRenta.StyleController = Me.LayoutControl2
+        Me.txtTotalRetRenta.TabIndex = 28
         '
         'BarManager1
         '
@@ -802,28 +801,28 @@ Partial Class frmRecibos
         Me.BarDockControl1.CausesValidation = False
         Me.BarDockControl1.Dock = System.Windows.Forms.DockStyle.Top
         Me.BarDockControl1.Location = New System.Drawing.Point(0, 0)
-        Me.BarDockControl1.Size = New System.Drawing.Size(1293, 40)
+        Me.BarDockControl1.Size = New System.Drawing.Size(1282, 40)
         '
         'BarDockControl2
         '
         Me.BarDockControl2.CausesValidation = False
         Me.BarDockControl2.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.BarDockControl2.Location = New System.Drawing.Point(0, 679)
-        Me.BarDockControl2.Size = New System.Drawing.Size(1293, 0)
+        Me.BarDockControl2.Location = New System.Drawing.Point(0, 681)
+        Me.BarDockControl2.Size = New System.Drawing.Size(1282, 0)
         '
         'BarDockControl3
         '
         Me.BarDockControl3.CausesValidation = False
         Me.BarDockControl3.Dock = System.Windows.Forms.DockStyle.Left
         Me.BarDockControl3.Location = New System.Drawing.Point(0, 40)
-        Me.BarDockControl3.Size = New System.Drawing.Size(0, 639)
+        Me.BarDockControl3.Size = New System.Drawing.Size(0, 641)
         '
         'BarDockControl4
         '
         Me.BarDockControl4.CausesValidation = False
         Me.BarDockControl4.Dock = System.Windows.Forms.DockStyle.Right
-        Me.BarDockControl4.Location = New System.Drawing.Point(1293, 40)
-        Me.BarDockControl4.Size = New System.Drawing.Size(0, 639)
+        Me.BarDockControl4.Location = New System.Drawing.Point(1282, 40)
+        Me.BarDockControl4.Size = New System.Drawing.Size(0, 641)
         '
         'BarButtonItem1
         '
@@ -846,6 +845,17 @@ Partial Class frmRecibos
         Me.BarButtonItem8.Id = 7
         Me.BarButtonItem8.Name = "BarButtonItem8"
         '
+        'txtIDCredito
+        '
+        Me.txtIDCredito.Enabled = False
+        Me.txtIDCredito.Location = New System.Drawing.Point(1168, 42)
+        Me.txtIDCredito.MenuManager = Me.BarManager1
+        Me.txtIDCredito.Name = "txtIDCredito"
+        Me.txtIDCredito.Size = New System.Drawing.Size(72, 20)
+        Me.txtIDCredito.StyleController = Me.LayoutControl2
+        Me.txtIDCredito.TabIndex = 27
+        Me.txtIDCredito.Visible = False
+        '
         'txtTotalPosFechado
         '
         Me.txtTotalPosFechado.EditValue = "0"
@@ -862,7 +872,7 @@ Partial Class frmRecibos
         Me.chkPosfechado.Location = New System.Drawing.Point(938, 92)
         Me.chkPosfechado.MenuManager = Me.BarManager1
         Me.chkPosfechado.Name = "chkPosfechado"
-        Me.chkPosfechado.Properties.Caption = "Cheque Pos Fechado ( Flotante )?"
+        Me.chkPosfechado.Properties.Caption = "Cheque ?"
         Me.chkPosfechado.Size = New System.Drawing.Size(302, 19)
         Me.chkPosfechado.StyleController = Me.LayoutControl2
         Me.chkPosfechado.TabIndex = 25
@@ -1057,25 +1067,25 @@ Partial Class frmRecibos
         Me.LayoutControl8.Name = "LayoutControl8"
         Me.LayoutControl8.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = New System.Drawing.Rectangle(580, 274, 466, 396)
         Me.LayoutControl8.Root = Me.LayoutControlGroup3
-        Me.LayoutControl8.Size = New System.Drawing.Size(1100, 72)
+        Me.LayoutControl8.Size = New System.Drawing.Size(1192, 72)
         Me.LayoutControl8.TabIndex = 0
         Me.LayoutControl8.Text = "LayoutControl8"
         '
         'txtRetencionRenta
         '
-        Me.txtRetencionRenta.Location = New System.Drawing.Point(885, 38)
+        Me.txtRetencionRenta.Location = New System.Drawing.Point(1091, 38)
         Me.txtRetencionRenta.MenuManager = Me.BarManager1
         Me.txtRetencionRenta.Name = "txtRetencionRenta"
-        Me.txtRetencionRenta.Size = New System.Drawing.Size(63, 20)
+        Me.txtRetencionRenta.Size = New System.Drawing.Size(89, 20)
         Me.txtRetencionRenta.StyleController = Me.LayoutControl8
         Me.txtRetencionRenta.TabIndex = 29
         '
         'btnFacturas
         '
         Me.btnFacturas.Image = CType(resources.GetObject("btnFacturas.Image"), System.Drawing.Image)
-        Me.btnFacturas.Location = New System.Drawing.Point(135, 12)
+        Me.btnFacturas.Location = New System.Drawing.Point(152, 12)
         Me.btnFacturas.Name = "btnFacturas"
-        Me.btnFacturas.Size = New System.Drawing.Size(55, 22)
+        Me.btnFacturas.Size = New System.Drawing.Size(54, 22)
         Me.btnFacturas.StyleController = Me.LayoutControl8
         Me.btnFacturas.TabIndex = 28
         Me.btnFacturas.Text = "..."
@@ -1084,44 +1094,44 @@ Partial Class frmRecibos
         'txtSaldo
         '
         Me.txtSaldo.EditValue = "0"
-        Me.txtSaldo.Location = New System.Drawing.Point(271, 38)
+        Me.txtSaldo.Location = New System.Drawing.Point(297, 38)
         Me.txtSaldo.MenuManager = Me.BarManager1
         Me.txtSaldo.Name = "txtSaldo"
         Me.txtSaldo.Properties.ReadOnly = True
-        Me.txtSaldo.Size = New System.Drawing.Size(93, 20)
+        Me.txtSaldo.Size = New System.Drawing.Size(103, 20)
         Me.txtSaldo.StyleController = Me.LayoutControl8
         Me.txtSaldo.TabIndex = 27
         '
         'DateEditFecha
         '
         Me.DateEditFecha.EditValue = Nothing
-        Me.DateEditFecha.Location = New System.Drawing.Point(902, 12)
+        Me.DateEditFecha.Location = New System.Drawing.Point(1038, 12)
         Me.DateEditFecha.MenuManager = Me.BarManager1
         Me.DateEditFecha.Name = "DateEditFecha"
         Me.DateEditFecha.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
         Me.DateEditFecha.Properties.CalendarTimeProperties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
-        Me.DateEditFecha.Size = New System.Drawing.Size(88, 20)
+        Me.DateEditFecha.Size = New System.Drawing.Size(66, 20)
         Me.DateEditFecha.StyleController = Me.LayoutControl8
         Me.DateEditFecha.TabIndex = 26
         '
         'txtPagoPosfechado
         '
         Me.txtPagoPosfechado.EditValue = "0"
-        Me.txtPagoPosfechado.Location = New System.Drawing.Point(1015, 38)
+        Me.txtPagoPosfechado.Location = New System.Drawing.Point(454, 38)
         Me.txtPagoPosfechado.MenuManager = Me.BarManager1
         Me.txtPagoPosfechado.Name = "txtPagoPosfechado"
         Me.txtPagoPosfechado.Properties.ReadOnly = True
-        Me.txtPagoPosfechado.Size = New System.Drawing.Size(73, 20)
+        Me.txtPagoPosfechado.Size = New System.Drawing.Size(111, 20)
         Me.txtPagoPosfechado.StyleController = Me.LayoutControl8
         Me.txtPagoPosfechado.TabIndex = 25
         '
         'txtDiasVencidos
         '
-        Me.txtDiasVencidos.Location = New System.Drawing.Point(186, 38)
+        Me.txtDiasVencidos.Location = New System.Drawing.Point(203, 38)
         Me.txtDiasVencidos.MenuManager = Me.BarManager1
         Me.txtDiasVencidos.Name = "txtDiasVencidos"
         Me.txtDiasVencidos.Properties.ReadOnly = True
-        Me.txtDiasVencidos.Size = New System.Drawing.Size(50, 20)
+        Me.txtDiasVencidos.Size = New System.Drawing.Size(59, 20)
         Me.txtDiasVencidos.StyleController = Me.LayoutControl8
         Me.txtDiasVencidos.TabIndex = 24
         '
@@ -1134,17 +1144,17 @@ Partial Class frmRecibos
         Me.DateEditVence.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
         Me.DateEditVence.Properties.CalendarTimeProperties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
         Me.DateEditVence.Properties.ReadOnly = True
-        Me.DateEditVence.Size = New System.Drawing.Size(85, 20)
+        Me.DateEditVence.Size = New System.Drawing.Size(102, 20)
         Me.DateEditVence.StyleController = Me.LayoutControl8
         Me.DateEditVence.TabIndex = 23
         '
         'SearchLookUpEditClaseDebito
         '
-        Me.SearchLookUpEditClaseDebito.Location = New System.Drawing.Point(225, 12)
+        Me.SearchLookUpEditClaseDebito.Location = New System.Drawing.Point(241, 12)
         Me.SearchLookUpEditClaseDebito.Name = "SearchLookUpEditClaseDebito"
         Me.SearchLookUpEditClaseDebito.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
         Me.SearchLookUpEditClaseDebito.Properties.View = Me.GridView12
-        Me.SearchLookUpEditClaseDebito.Size = New System.Drawing.Size(118, 20)
+        Me.SearchLookUpEditClaseDebito.Size = New System.Drawing.Size(218, 20)
         Me.SearchLookUpEditClaseDebito.StyleController = Me.LayoutControl8
         Me.SearchLookUpEditClaseDebito.TabIndex = 18
         '
@@ -1159,17 +1169,17 @@ Partial Class frmRecibos
         '
         Me.txtFactura.Location = New System.Drawing.Point(60, 12)
         Me.txtFactura.Name = "txtFactura"
-        Me.txtFactura.Size = New System.Drawing.Size(71, 20)
+        Me.txtFactura.Size = New System.Drawing.Size(88, 20)
         Me.txtFactura.StyleController = Me.LayoutControl8
         Me.txtFactura.TabIndex = 6
         '
         'SearchLookUpEditSubTipoDebito
         '
-        Me.SearchLookUpEditSubTipoDebito.Location = New System.Drawing.Point(390, 12)
+        Me.SearchLookUpEditSubTipoDebito.Location = New System.Drawing.Point(506, 12)
         Me.SearchLookUpEditSubTipoDebito.Name = "SearchLookUpEditSubTipoDebito"
         Me.SearchLookUpEditSubTipoDebito.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
         Me.SearchLookUpEditSubTipoDebito.Properties.View = Me.GridView20
-        Me.SearchLookUpEditSubTipoDebito.Size = New System.Drawing.Size(241, 20)
+        Me.SearchLookUpEditSubTipoDebito.Size = New System.Drawing.Size(317, 20)
         Me.SearchLookUpEditSubTipoDebito.StyleController = Me.LayoutControl8
         Me.SearchLookUpEditSubTipoDebito.TabIndex = 19
         '
@@ -1182,12 +1192,12 @@ Partial Class frmRecibos
         '
         'SearchLookUpEditMonedaFactura
         '
-        Me.SearchLookUpEditMonedaFactura.Location = New System.Drawing.Point(678, 12)
+        Me.SearchLookUpEditMonedaFactura.Location = New System.Drawing.Point(870, 12)
         Me.SearchLookUpEditMonedaFactura.Name = "SearchLookUpEditMonedaFactura"
         Me.SearchLookUpEditMonedaFactura.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
         Me.SearchLookUpEditMonedaFactura.Properties.ReadOnly = True
         Me.SearchLookUpEditMonedaFactura.Properties.View = Me.GridView21
-        Me.SearchLookUpEditMonedaFactura.Size = New System.Drawing.Size(186, 20)
+        Me.SearchLookUpEditMonedaFactura.Size = New System.Drawing.Size(130, 20)
         Me.SearchLookUpEditMonedaFactura.StyleController = Me.LayoutControl8
         Me.SearchLookUpEditMonedaFactura.TabIndex = 20
         '
@@ -1201,36 +1211,36 @@ Partial Class frmRecibos
         'txtEfectivo
         '
         Me.txtEfectivo.EditValue = "0"
-        Me.txtEfectivo.Location = New System.Drawing.Point(415, 38)
+        Me.txtEfectivo.Location = New System.Drawing.Point(616, 38)
         Me.txtEfectivo.Name = "txtEfectivo"
-        Me.txtEfectivo.Size = New System.Drawing.Size(96, 20)
+        Me.txtEfectivo.Size = New System.Drawing.Size(88, 20)
         Me.txtEfectivo.StyleController = Me.LayoutControl8
         Me.txtEfectivo.TabIndex = 6
         '
         'txtDescuento
         '
         Me.txtDescuento.EditValue = "0"
-        Me.txtDescuento.Location = New System.Drawing.Point(571, 38)
+        Me.txtDescuento.Location = New System.Drawing.Point(764, 38)
         Me.txtDescuento.Name = "txtDescuento"
-        Me.txtDescuento.Size = New System.Drawing.Size(60, 20)
+        Me.txtDescuento.Size = New System.Drawing.Size(59, 20)
         Me.txtDescuento.StyleController = Me.LayoutControl8
         Me.txtDescuento.TabIndex = 6
         '
         'txtRetencionMunicipal
         '
         Me.txtRetencionMunicipal.EditValue = "0"
-        Me.txtRetencionMunicipal.Location = New System.Drawing.Point(718, 38)
+        Me.txtRetencionMunicipal.Location = New System.Drawing.Point(910, 38)
         Me.txtRetencionMunicipal.Name = "txtRetencionMunicipal"
-        Me.txtRetencionMunicipal.Size = New System.Drawing.Size(80, 20)
+        Me.txtRetencionMunicipal.Size = New System.Drawing.Size(94, 20)
         Me.txtRetencionMunicipal.StyleController = Me.LayoutControl8
         Me.txtRetencionMunicipal.TabIndex = 6
         '
         'txtIDDebito
         '
-        Me.txtIDDebito.Location = New System.Drawing.Point(1010, 12)
+        Me.txtIDDebito.Location = New System.Drawing.Point(1124, 12)
         Me.txtIDDebito.Name = "txtIDDebito"
         Me.txtIDDebito.Properties.ReadOnly = True
-        Me.txtIDDebito.Size = New System.Drawing.Size(78, 20)
+        Me.txtIDDebito.Size = New System.Drawing.Size(56, 20)
         Me.txtIDDebito.StyleController = Me.LayoutControl8
         Me.txtIDDebito.TabIndex = 6
         '
@@ -1238,19 +1248,19 @@ Partial Class frmRecibos
         '
         Me.LayoutControlGroup3.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.[True]
         Me.LayoutControlGroup3.GroupBordersVisible = False
-        Me.LayoutControlGroup3.Items.AddRange(New DevExpress.XtraLayout.BaseLayoutItem() {Me.LayoutControlItem84, Me.LayoutControlItem89, Me.LayoutControlItem91, Me.LayoutControlItem108, Me.LayoutControlItem87, Me.LayoutControlItem88, Me.LayoutControlItem96, Me.LayoutControlItem102, Me.LayoutControlItem110, Me.LayoutControlItem112, Me.LayoutControlItem113, Me.LayoutControlItem49, Me.LayoutControlItem90, Me.LayoutControlItem103, Me.LayoutControlItem104})
+        Me.LayoutControlGroup3.Items.AddRange(New DevExpress.XtraLayout.BaseLayoutItem() {Me.LayoutControlItem84, Me.LayoutControlItem89, Me.LayoutControlItem91, Me.LayoutControlItem87, Me.LayoutControlItem88, Me.LayoutControlItem96, Me.LayoutControlItem102, Me.LayoutControlItem110, Me.LayoutControlItem112, Me.LayoutControlItem113, Me.LayoutControlItem49, Me.LayoutControlItem90, Me.LayoutControlItem103, Me.LayoutControlItem104, Me.LayoutControlItem108})
         Me.LayoutControlGroup3.Location = New System.Drawing.Point(0, 0)
         Me.LayoutControlGroup3.Name = "Root"
-        Me.LayoutControlGroup3.Size = New System.Drawing.Size(1100, 72)
+        Me.LayoutControlGroup3.Size = New System.Drawing.Size(1192, 72)
         Me.LayoutControlGroup3.TextVisible = False
         '
         'LayoutControlItem84
         '
         Me.LayoutControlItem84.Control = Me.txtEfectivo
         Me.LayoutControlItem84.CustomizationFormText = "No Documento"
-        Me.LayoutControlItem84.Location = New System.Drawing.Point(356, 26)
+        Me.LayoutControlItem84.Location = New System.Drawing.Point(557, 26)
         Me.LayoutControlItem84.Name = "LayoutControlItem84"
-        Me.LayoutControlItem84.Size = New System.Drawing.Size(147, 26)
+        Me.LayoutControlItem84.Size = New System.Drawing.Size(139, 26)
         Me.LayoutControlItem84.Text = "Efectivo "
         Me.LayoutControlItem84.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize
         Me.LayoutControlItem84.TextLocation = DevExpress.Utils.Locations.Left
@@ -1261,9 +1271,9 @@ Partial Class frmRecibos
         '
         Me.LayoutControlItem89.Control = Me.txtDescuento
         Me.LayoutControlItem89.CustomizationFormText = "No Documento"
-        Me.LayoutControlItem89.Location = New System.Drawing.Point(503, 26)
+        Me.LayoutControlItem89.Location = New System.Drawing.Point(696, 26)
         Me.LayoutControlItem89.Name = "LayoutControlItem89"
-        Me.LayoutControlItem89.Size = New System.Drawing.Size(120, 26)
+        Me.LayoutControlItem89.Size = New System.Drawing.Size(119, 26)
         Me.LayoutControlItem89.Text = "Descuento"
         Me.LayoutControlItem89.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize
         Me.LayoutControlItem89.TextLocation = DevExpress.Utils.Locations.Left
@@ -1274,9 +1284,9 @@ Partial Class frmRecibos
         '
         Me.LayoutControlItem91.Control = Me.txtRetencionMunicipal
         Me.LayoutControlItem91.CustomizationFormText = "No Documento"
-        Me.LayoutControlItem91.Location = New System.Drawing.Point(623, 26)
+        Me.LayoutControlItem91.Location = New System.Drawing.Point(815, 26)
         Me.LayoutControlItem91.Name = "LayoutControlItem91"
-        Me.LayoutControlItem91.Size = New System.Drawing.Size(167, 26)
+        Me.LayoutControlItem91.Size = New System.Drawing.Size(181, 26)
         Me.LayoutControlItem91.Text = "Retención Munic"
         Me.LayoutControlItem91.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize
         Me.LayoutControlItem91.TextSize = New System.Drawing.Size(78, 13)
@@ -1285,21 +1295,21 @@ Partial Class frmRecibos
         'LayoutControlItem108
         '
         Me.LayoutControlItem108.Control = Me.txtPagoPosfechado
-        Me.LayoutControlItem108.Location = New System.Drawing.Point(940, 26)
+        Me.LayoutControlItem108.Location = New System.Drawing.Point(392, 26)
         Me.LayoutControlItem108.Name = "LayoutControlItem108"
-        Me.LayoutControlItem108.Size = New System.Drawing.Size(140, 26)
-        Me.LayoutControlItem108.Text = "PosFechado"
+        Me.LayoutControlItem108.Size = New System.Drawing.Size(165, 26)
+        Me.LayoutControlItem108.Text = "Pago Chk"
         Me.LayoutControlItem108.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize
-        Me.LayoutControlItem108.TextSize = New System.Drawing.Size(58, 13)
+        Me.LayoutControlItem108.TextSize = New System.Drawing.Size(45, 13)
         Me.LayoutControlItem108.TextToControlDistance = 5
         '
         'LayoutControlItem87
         '
         Me.LayoutControlItem87.Control = Me.SearchLookUpEditSubTipoDebito
         Me.LayoutControlItem87.CustomizationFormText = "SubTipo"
-        Me.LayoutControlItem87.Location = New System.Drawing.Point(335, 0)
+        Me.LayoutControlItem87.Location = New System.Drawing.Point(451, 0)
         Me.LayoutControlItem87.Name = "LayoutControlItem87"
-        Me.LayoutControlItem87.Size = New System.Drawing.Size(288, 26)
+        Me.LayoutControlItem87.Size = New System.Drawing.Size(364, 26)
         Me.LayoutControlItem87.Text = "SubTipo"
         Me.LayoutControlItem87.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.CustomSize
         Me.LayoutControlItem87.TextSize = New System.Drawing.Size(38, 13)
@@ -1309,9 +1319,9 @@ Partial Class frmRecibos
         '
         Me.LayoutControlItem88.Control = Me.SearchLookUpEditMonedaFactura
         Me.LayoutControlItem88.CustomizationFormText = "Moneda"
-        Me.LayoutControlItem88.Location = New System.Drawing.Point(623, 0)
+        Me.LayoutControlItem88.Location = New System.Drawing.Point(815, 0)
         Me.LayoutControlItem88.Name = "LayoutControlItem88"
-        Me.LayoutControlItem88.Size = New System.Drawing.Size(233, 26)
+        Me.LayoutControlItem88.Size = New System.Drawing.Size(177, 26)
         Me.LayoutControlItem88.Text = "Moneda"
         Me.LayoutControlItem88.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize
         Me.LayoutControlItem88.TextSize = New System.Drawing.Size(38, 13)
@@ -1321,9 +1331,9 @@ Partial Class frmRecibos
         '
         Me.LayoutControlItem96.Control = Me.txtIDDebito
         Me.LayoutControlItem96.CustomizationFormText = "No Documento"
-        Me.LayoutControlItem96.Location = New System.Drawing.Point(982, 0)
+        Me.LayoutControlItem96.Location = New System.Drawing.Point(1096, 0)
         Me.LayoutControlItem96.Name = "LayoutControlItem96"
-        Me.LayoutControlItem96.Size = New System.Drawing.Size(98, 26)
+        Me.LayoutControlItem96.Size = New System.Drawing.Size(76, 26)
         Me.LayoutControlItem96.Text = "ID"
         Me.LayoutControlItem96.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize
         Me.LayoutControlItem96.TextLocation = DevExpress.Utils.Locations.Left
@@ -1333,9 +1343,9 @@ Partial Class frmRecibos
         'LayoutControlItem102
         '
         Me.LayoutControlItem102.Control = Me.DateEditFecha
-        Me.LayoutControlItem102.Location = New System.Drawing.Point(856, 0)
+        Me.LayoutControlItem102.Location = New System.Drawing.Point(992, 0)
         Me.LayoutControlItem102.Name = "LayoutControlItem102"
-        Me.LayoutControlItem102.Size = New System.Drawing.Size(126, 26)
+        Me.LayoutControlItem102.Size = New System.Drawing.Size(104, 26)
         Me.LayoutControlItem102.Text = "Fecha"
         Me.LayoutControlItem102.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize
         Me.LayoutControlItem102.TextSize = New System.Drawing.Size(29, 13)
@@ -1344,9 +1354,9 @@ Partial Class frmRecibos
         'LayoutControlItem110
         '
         Me.LayoutControlItem110.Control = Me.txtSaldo
-        Me.LayoutControlItem110.Location = New System.Drawing.Point(228, 26)
+        Me.LayoutControlItem110.Location = New System.Drawing.Point(254, 26)
         Me.LayoutControlItem110.Name = "LayoutControlItem110"
-        Me.LayoutControlItem110.Size = New System.Drawing.Size(128, 26)
+        Me.LayoutControlItem110.Size = New System.Drawing.Size(138, 26)
         Me.LayoutControlItem110.Text = "Saldo"
         Me.LayoutControlItem110.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize
         Me.LayoutControlItem110.TextSize = New System.Drawing.Size(26, 13)
@@ -1355,18 +1365,18 @@ Partial Class frmRecibos
         'LayoutControlItem112
         '
         Me.LayoutControlItem112.Control = Me.btnFacturas
-        Me.LayoutControlItem112.Location = New System.Drawing.Point(123, 0)
+        Me.LayoutControlItem112.Location = New System.Drawing.Point(140, 0)
         Me.LayoutControlItem112.Name = "LayoutControlItem112"
-        Me.LayoutControlItem112.Size = New System.Drawing.Size(59, 26)
+        Me.LayoutControlItem112.Size = New System.Drawing.Size(58, 26)
         Me.LayoutControlItem112.TextSize = New System.Drawing.Size(0, 0)
         Me.LayoutControlItem112.TextVisible = False
         '
         'LayoutControlItem113
         '
         Me.LayoutControlItem113.Control = Me.txtRetencionRenta
-        Me.LayoutControlItem113.Location = New System.Drawing.Point(790, 26)
+        Me.LayoutControlItem113.Location = New System.Drawing.Point(996, 26)
         Me.LayoutControlItem113.Name = "LayoutControlItem113"
-        Me.LayoutControlItem113.Size = New System.Drawing.Size(150, 26)
+        Me.LayoutControlItem113.Size = New System.Drawing.Size(176, 26)
         Me.LayoutControlItem113.Text = "Retención Renta"
         Me.LayoutControlItem113.TextSize = New System.Drawing.Size(80, 13)
         '
@@ -1374,9 +1384,9 @@ Partial Class frmRecibos
         '
         Me.LayoutControlItem49.Control = Me.SearchLookUpEditClaseDebito
         Me.LayoutControlItem49.CustomizationFormText = "Clase de Documento"
-        Me.LayoutControlItem49.Location = New System.Drawing.Point(182, 0)
+        Me.LayoutControlItem49.Location = New System.Drawing.Point(198, 0)
         Me.LayoutControlItem49.Name = "LayoutControlItem49"
-        Me.LayoutControlItem49.Size = New System.Drawing.Size(153, 26)
+        Me.LayoutControlItem49.Size = New System.Drawing.Size(253, 26)
         Me.LayoutControlItem49.Text = "Clase"
         Me.LayoutControlItem49.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize
         Me.LayoutControlItem49.TextSize = New System.Drawing.Size(26, 13)
@@ -1388,7 +1398,7 @@ Partial Class frmRecibos
         Me.LayoutControlItem90.CustomizationFormText = "No Documento"
         Me.LayoutControlItem90.Location = New System.Drawing.Point(0, 0)
         Me.LayoutControlItem90.Name = "LayoutControlItem90"
-        Me.LayoutControlItem90.Size = New System.Drawing.Size(123, 26)
+        Me.LayoutControlItem90.Size = New System.Drawing.Size(140, 26)
         Me.LayoutControlItem90.Text = "Número  "
         Me.LayoutControlItem90.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize
         Me.LayoutControlItem90.TextLocation = DevExpress.Utils.Locations.Left
@@ -1400,7 +1410,7 @@ Partial Class frmRecibos
         Me.LayoutControlItem103.Control = Me.DateEditVence
         Me.LayoutControlItem103.Location = New System.Drawing.Point(0, 26)
         Me.LayoutControlItem103.Name = "LayoutControlItem103"
-        Me.LayoutControlItem103.Size = New System.Drawing.Size(123, 26)
+        Me.LayoutControlItem103.Size = New System.Drawing.Size(140, 26)
         Me.LayoutControlItem103.Text = "Vence"
         Me.LayoutControlItem103.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize
         Me.LayoutControlItem103.TextSize = New System.Drawing.Size(29, 13)
@@ -1409,9 +1419,9 @@ Partial Class frmRecibos
         'LayoutControlItem104
         '
         Me.LayoutControlItem104.Control = Me.txtDiasVencidos
-        Me.LayoutControlItem104.Location = New System.Drawing.Point(123, 26)
+        Me.LayoutControlItem104.Location = New System.Drawing.Point(140, 26)
         Me.LayoutControlItem104.Name = "LayoutControlItem104"
-        Me.LayoutControlItem104.Size = New System.Drawing.Size(105, 26)
+        Me.LayoutControlItem104.Size = New System.Drawing.Size(114, 26)
         Me.LayoutControlItem104.Text = "Dias Venc"
         Me.LayoutControlItem104.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize
         Me.LayoutControlItem104.TextSize = New System.Drawing.Size(46, 13)
@@ -1827,6 +1837,17 @@ Partial Class frmRecibos
         Me.LayoutControlItem109.Size = New System.Drawing.Size(173, 24)
         Me.LayoutControlItem109.Text = "Total chkPos"
         Me.LayoutControlItem109.TextSize = New System.Drawing.Size(75, 13)
+        '
+        'LayoutControlItem114
+        '
+        Me.LayoutControlItem114.Control = Me.txtTotalRetRenta
+        Me.LayoutControlItem114.Location = New System.Drawing.Point(532, 288)
+        Me.LayoutControlItem114.Name = "LayoutControlItem114"
+        Me.LayoutControlItem114.Size = New System.Drawing.Size(170, 24)
+        Me.LayoutControlItem114.Text = "RetRenta"
+        Me.LayoutControlItem114.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize
+        Me.LayoutControlItem114.TextSize = New System.Drawing.Size(46, 13)
+        Me.LayoutControlItem114.TextToControlDistance = 5
         '
         'LayoutControlGroup1
         '
@@ -3900,32 +3921,11 @@ Partial Class frmRecibos
         Me.btnNew.TabIndex = 28
         Me.btnNew.Text = "Nueva Fact"
         '
-        'txtTotalRetRenta
-        '
-        Me.txtTotalRetRenta.EditValue = "0"
-        Me.txtTotalRetRenta.Location = New System.Drawing.Point(595, 300)
-        Me.txtTotalRetRenta.MenuManager = Me.BarManager1
-        Me.txtTotalRetRenta.Name = "txtTotalRetRenta"
-        Me.txtTotalRetRenta.Size = New System.Drawing.Size(115, 20)
-        Me.txtTotalRetRenta.StyleController = Me.LayoutControl2
-        Me.txtTotalRetRenta.TabIndex = 28
-        '
-        'LayoutControlItem114
-        '
-        Me.LayoutControlItem114.Control = Me.txtTotalRetRenta
-        Me.LayoutControlItem114.Location = New System.Drawing.Point(532, 288)
-        Me.LayoutControlItem114.Name = "LayoutControlItem114"
-        Me.LayoutControlItem114.Size = New System.Drawing.Size(170, 24)
-        Me.LayoutControlItem114.Text = "RetRenta"
-        Me.LayoutControlItem114.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize
-        Me.LayoutControlItem114.TextSize = New System.Drawing.Size(46, 13)
-        Me.LayoutControlItem114.TextToControlDistance = 5
-        '
         'frmRecibos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1293, 679)
+        Me.ClientSize = New System.Drawing.Size(1282, 681)
         Me.Controls.Add(Me.btnNew)
         Me.Controls.Add(Me.btnEdit)
         Me.Controls.Add(Me.btnEliminar)
@@ -3943,8 +3943,9 @@ Partial Class frmRecibos
         Me.LayoutControl1.ResumeLayout(False)
         CType(Me.LayoutControl2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.LayoutControl2.ResumeLayout(False)
-        CType(Me.txtIDCredito.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.txtTotalRetRenta.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.BarManager1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.txtIDCredito.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtTotalPosFechado.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.chkPosfechado.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DateEditFechaCredito.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).EndInit()
@@ -4044,6 +4045,7 @@ Partial Class frmRecibos
         CType(Me.LayoutControlItem107, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.posfechado, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem109, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.LayoutControlItem114, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlGroup1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControl3, System.ComponentModel.ISupportInitialize).EndInit()
@@ -4257,8 +4259,6 @@ Partial Class frmRecibos
         CType(Me.LayoutControlGroup15, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlGroup16, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem101, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.txtTotalRetRenta.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.LayoutControlItem114, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
