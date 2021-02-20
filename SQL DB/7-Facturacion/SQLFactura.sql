@@ -4562,8 +4562,7 @@ IF (@Operacion ='D')
 BEGIN
 	DELETE FROM dbo.fafPedidoPreparado WHERE IDPedido=@IDPedido AND (IDProducto = @IdProducto OR @IDProducto=-1) AND (IDLote = @IDLote OR @IDLote = -1)
 END
-
-
-
 GO
+
+
 
