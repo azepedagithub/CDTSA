@@ -169,6 +169,11 @@ Public Class frmRecibos
             Return
         End If
 
+        If CDec(txtSaldo.EditValue) < (CDec(txtEfectivo.EditValue) + CDec(txtPagoPosfechado.EditValue) + CDec(txtDescuento.EditValue) + CDec(txtRetencionMunicipal.EditValue) + CDec(txtRetencionRenta.EditValue)) Then
+            MessageBox.Show("Ud. No puede hacer un Pago mayor que el Saldo del Documento", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return
+        End If
+
         If CDec(txtSaldo.EditValue) <= 0 Then
             MessageBox.Show("No se puede cancelar un dédito con saldo menor o igual a cero, por favor revise", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             ClearControlsForNew()
@@ -732,7 +737,7 @@ Public Class frmRecibos
             Me.txtRetencionMunicipal.Enabled = True
             Me.txtRetencionRenta.Enabled = True
             txtDescuento.EditValue = 0
-            Me.txtDescuento.Enabled = False
+            Me.txtDescuento.Enabled = True
             txtPagoPosfechado.EditValue = 0
             Me.txtPagoPosfechado.Enabled = True
             Me.txtPagoPosfechado.ReadOnly = False
@@ -908,7 +913,7 @@ Public Class frmRecibos
             sparameterValues = sparameterValues & txtTotalPosFechado.EditValue.ToString() & ",'"
             sparameterValues = sparameterValues & txtchkPosNumero.EditValue.ToString() & "',"
             sparameterValues = sparameterValues & SearchLookUpEditBanco.EditValue.ToString() & ",'"
-            sparameterValues = sparameterValues & CDate(Me.DateEditFechaCredito.EditValue).ToString("yyyyMMdd") & "'"
+            sparameterValues = sparameterValues & CDate(Me.DateEditFechaCredito.EditValue).ToString("yyyyMMdd") & "'," & Me.txtchkPosMonto.EditValue.ToString()
             'td = cManager.ExecSPgetData(storeName, sparameterValues)
             'If td.Rows.Count > 0 Then
             '    Me.txtIDCredito.EditValue = td.Rows(0)(0).ToString()
@@ -1036,12 +1041,31 @@ Public Class frmRecibos
 
     Private Sub txtchkPosNumero_KeyDown(sender As Object, e As KeyEventArgs) Handles txtchkPosNumero.KeyDown
         If e.KeyCode = Keys.Enter Then
+            SearchLookUpEditBanco.Text = ""
             SearchLookUpEditBanco.Focus()
         End If
     End Sub
 
     Private Sub SearchLookUpEditBanco_EditValueChanged(sender As Object, e As EventArgs) Handles SearchLookUpEditBanco.EditValueChanged
-        txtchkPosMonto.Focus()
+        Try
+            Dim td As DataTable
+            Dim sParameters As String
+            If SearchLookUpEditBanco.Text <> "" And Me.txtchkPosNumero.EditValue.ToString() <> "" And txtIDCliente.EditValue.ToString() <> "" Then
+                sParameters = "'" & Me.txtchkPosNumero.EditValue.ToString() & "'," & SearchLookUpEditBanco.EditValue.ToString() & ",0," & txtIDCliente.EditValue.ToString()
+                td = cManager.ExecFunction("ccfgetMontoSaldoChequePos", sParameters)
+                If td.Rows.Count > 0 Then
+                    If CDec(td.Rows(0)(0)) = 0 Then
+                        txtchkPosMonto.Focus()
+                    Else
+                        txtchkPosMonto.EditValue = CDec(td.Rows(0)(0))
+                    End If
+                End If
+
+            End If
+        Catch ex As Exception
+            MessageBox.Show("Error al consultar el saldo del Cheque " & Err.Description, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+
     End Sub
 
     Private Sub txtchkPosMonto_KeyDown(sender As Object, e As KeyEventArgs) Handles txtchkPosMonto.KeyDown
@@ -1146,7 +1170,9 @@ Public Class frmRecibos
         End If
     End Sub
 
-    Private Sub txtchkPosMonto_Leave(sender As Object, e As EventArgs) Handles txtchkPosMonto.Leave
-        txtPagoPosfechado.EditValue = txtchkPosMonto.EditValue
+
+    Private Sub txtchkPosNumero_Leave(sender As Object, e As EventArgs) Handles txtchkPosNumero.Leave
+        SearchLookUpEditBanco.Text = ""
+        SearchLookUpEditBanco.Focus()
     End Sub
 End Class

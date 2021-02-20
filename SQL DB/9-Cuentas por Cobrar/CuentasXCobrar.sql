@@ -1833,6 +1833,184 @@ declare @IDCredito int
 end
 go
 
+--ULTIMOS CAMBIOS SABADO 13 DE FREBRERO  
+Alter table dbo.ccfChequePosFechado add MontoOriginal decimal (28,4) default 0
+go
+
+alter table dbo.ccfChequePosfechado add constraint fkccfChquePosFechadoBanco foreign key (IDBanco) 
+references dbo.cbBanco (IDBanco)
+go
+
+Create index _indechechkpos on dbo.ccfChequePosFechado (IDBanco, Numero)
+go
+
+
+--set @NumeroChkPos = '4565'
+--set @IDBancoChkPos = 1 select * from ccfChequePosFechado
+--Select dbo.ccfgetMontoSaldoChequePos ('1111', 1, 0,24)
+Create Function dbo.ccfgetMontoSaldoChequePos (  @NumeroChkPos nvarchar(20), @IDBancoChkPos int ,
+@MontoChequePos 	decimal (28,4), @IDCliente int  ) 
+returns decimal (28,4)
+as
+begin
+Declare @Numero nvarchar(20), @IDBancoParent int, @IDParent int , @MontoOrignal decimal (28,4)
+, @TotalAplicado 	decimal (28,4)
+Select TOP 1 @IDParent = MIN(isnull(K.IDChequePos,0) ) 
+from dbo.ccfChequePosFechado K inner join dbo.ccfCreditos C
+on K.IDCredito = C.IDCredito 
+Where K.Numero = @NumeroChkPos and K.IDBanco = @IDBancoChkPos and C.IDCliente = @IDCliente 
+IF @IDParent IS NULL -- NO EXISTE EL CHEQUE
+BEGIN
+	set @MontoOrignal = @MontoChequePos
+END
+ELSE
+BEGIN
+	SELECT top 1 @MontoOrignal = MontoOriginal, @IDBancoParent = IDBanco 
+	FROM dbo.ccfChequePosFechado Where IDChequePos = @IDParent
+
+	Select @TotalAplicado =  SUM(A.MontoCredito - C.Descuento - C.RetencionRenta - C.RetencionMunicipal)  
+	From dbo.ccfAplicaciones A inner join dbo.ccfCreditos C
+		on A.IDCredito = C.IDCredito 
+	where A.IDCredito in 
+	(Select K.IDCredito from dbo.ccfChequePosFechado K inner join dbo.ccfCreditos C
+		on K.IDCredito = C.IDCredito 
+		Where K.Numero = @NumeroChkPos and K.IDBanco = @IDBancoChkPos and C.IDCliente = @IDCliente)
+	
+	
+END
+--select isnull(@MontoOrignal,0) MontoOriginal, isnull(@TotalAplicado,0) TotalAplicado, 
+--isnull(@MontoOrignal,0) - isnull(@TotalAplicado,0) NuevoMonto,
+-- @IDBancoParent IDBancoParent
+Return  isnull(@MontoOrignal,0) - isnull(@TotalAplicado,0)
+end
+go
+
+--Select * from dbo.ccfChequePosFechado
+
+Alter Procedure dbo.ccfUpdateccfCreditos @Operation nvarchar(1),  @IDCredito int Output, 
+@IDCliente int  ,@IDBodega int  ,@TipoDocumento nvarchar(1) , @IDClase nvarchar(10), 
+@IDSubTipo	int , @Documento nvarchar(20) , @Fecha datetime , @Plazo INT ,  @MontoOriginal decimal(28,4) ,
+@ConceptoSistema nvarchar(500),@ConceptoUsuario nvarchar(500), @RecibimosDe nvarchar(250),
+@Usuario nvarchar(20), @TipoCambio decimal(28,4), @IDVendedor int, 	@flgOrigenExterno bit ,
+@flgAprobado bit,   @CodigoConsecutivoMask nvarchar(20) = null, @IDMoneda int = null, @Anulado bit = null, @flgFlotante bit = null,
+@Efectivo decimal (28,4) = null,
+@Descuento decimal (28,4) = null,
+@RetencionMunicipal decimal (28,4) = null,
+@RetencionRenta decimal (28,4) = null,
+@MontoChequePos 	decimal (28,4) = null, @NumeroChkPos nvarchar(20) = null, @IDBancoChkPos int = null, @FechaCobroChkpos date = null,  @MontoOriginalChk decimal (28, 4) 
+-- @Operation = I Nuevo, D Eliminar, F Modifica Fecha Credito
+as
+set nocount on
+declare @Ok bit, @Vencimiento datetime ,@VencimientoVar datetime ,@FechaUltCredito datetime, @SaldoActual  decimal(28,4) 
+,  @Cancelado bit, @IDChequePos int 
+set @Ok = 0
+
+if @Anulado is null 
+	set @Anulado = 0
+if @flgFlotante is null 
+	set @flgFlotante = 0
+if @Efectivo is null 
+	set @Efectivo = 0
+if @Descuento is null 
+	set @Descuento = 0	
+if @RetencionMunicipal is null 
+	set @RetencionMunicipal = 0
+if @RetencionRenta is null 
+	set @RetencionRenta = 0	
+	
+if @MontoChequePos is null 
+	set @MontoChequePos = 0	
+if @NumeroChkPos is null 
+	set @NumeroChkPos = ''
+set @MontoOriginalChk = isnull (@MontoOriginalChk,0)	
+--begin transaction 
+begin try
+if upper(@Operation) = 'I'
+begin
+	SET @Vencimiento = DATEADD(day, @Plazo, @Fecha )
+
+	SET @SaldoActual = @MontoOriginal
+
+	set @Cancelado = 0
+
+	if @flgFlotante = 1 
+	begin
+	
+	insert dbo.ccfChequePosFechado (IDCredito, Numero, Monto, IDBanco, SinFondo, Cobrado, FechaCobro, MontoOriginal )
+	Values (null,@NumeroChkPos,@MontoChequePos,  @IDBancoChkPos, 0, 0, @FechaCobroChkpos,@MontoOriginalChk  )
+	
+	set @IDChequePos = (SELECT SCOPE_IDENTITY())
+	
+	end
+	 
+	if @IDClase = 'R/C' 
+	set @flgAprobado = 1
+	else
+	set @flgAprobado = 0
+	insert dbo.ccfCreditos ( IDCliente , IDBodega , TipoDocumento, IDClase, IDSubTipo,Documento,Fecha,
+	 MontoOriginal, FechaUltCredito, SaldoActual, 
+	Cancelado, Anulado, ConceptoSistema, ConceptoUsuario, RecibimosDe,Usuario, TipoCambio, IDVendedor, flgOrigenExterno, flgAprobado, 
+	IDMoneda, flgFlotante, Efectivo, Descuento, RetencionMunicipal, RetencionRenta,  MontoChequePos, IDChequePos  )
+
+	values (
+	@IDCliente ,@IDBodega ,@TipoDocumento, @IDClase, @IDSubTipo,@Documento,@Fecha,
+	@MontoOriginal,	@FechaUltCredito, @MontoOriginal, @Cancelado,  @Anulado, @ConceptoSistema, @ConceptoUsuario,
+	@RecibimosDe, @Usuario, @TipoCambio, @IDVendedor, @flgOrigenExterno, @flgAprobado, 
+	@IDMoneda, @flgFlotante, @Efectivo, @Descuento, @RetencionMunicipal, @RetencionRenta ,  @MontoChequePos, @IDChequePos
+	)
+	Set @IDCredito  = (SELECT SCOPE_IDENTITY())
+	
+	Update dbo.ccfChequePosFechado set IDCredito = @IDCredito 
+	Where IDChequePos = @IDChequePos 
+
+	Update dbo.globalConsecMask set Consecutivo = @Documento where Codigo = @CodigoConsecutivoMask
+end
+
+if upper(@Operation) = 'U'
+begin
+	Update dbo.ccfCreditos set ConceptoUsuario = @ConceptoUsuario , Documento = @Documento,
+	Fecha = @Fecha, MontoOriginal = @MontoOriginal 
+	where IDCredito  =  @IDCredito  and flgAprobado = 0 and flgOrigenExterno = 0 and Anulado = 0
+end
+
+if upper(@Operation) = 'D'
+begin
+set @Ok = 1
+	if exists( Select IDAplicacion from dbo.ccfAPLICACIONES (Nolock)  where IDCredito =  @IDCredito )
+	begin
+	RAISERROR ('Ud est· queriendo eliminar un documento que tiene Aplicaciones, primero elimÌnelas', 16, 10);
+	set @Ok = 0
+	end
+	if  @Ok = 1
+	Delete from dbo.ccfCreditos where IDCredito  =  @IDCredito and flgAprobado = 0 and flgOrigenExterno = 0 and Anulado = 0
+end
+
+--commit 
+SELECT isnull(@IDCredito,0) IDCredito
+Return isnull(@IDCredito,0)
+end try
+begin catch
+    DECLARE @ErrorMessage NVARCHAR(4000);
+    DECLARE @ErrorSeverity INT;
+    DECLARE @ErrorState INT;
+	--rollback
+SELECT 
+        @ErrorMessage = ERROR_MESSAGE(),
+        @ErrorSeverity = ERROR_SEVERITY(),
+        @ErrorState = ERROR_STATE();
+
+    RAISERROR (@ErrorMessage, -- Message text.
+               16, --@ErrorSeverity, -- Severity.
+               16--@ErrorState -- State.
+               );
+   --     IF @@TRANCOUNT > 0  
+	--ROLLBACK TRANSACTION; 
+end catch 
+go
+
+
+
+
 
  
 
