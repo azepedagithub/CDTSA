@@ -342,7 +342,7 @@ IDRuc int not null,
 Numero NVARCHAR(250) not null, Pagadero_a nvarchar(250), Monto decimal(28,4) default 0, Asiento nvarchar(20), Anulado bit default 0, AsientoAnulacion nvarchar(20),
 Usuario nvarchar(20), UsuarioAnulacion nvarchar(20), FechaAnulacion date,UsuarioAprobacion nvarchar(20), FechaAprobacion date,UsuarioImpresion nvarchar(20),
 FechaImpresion date,Impreso bit DEFAULT(0), ConceptoContable nvarchar(255),IDEstado INT DEFAULT 0, IDConciliacion int, MatchNumber int default 0, UsuarioConciliacion nvarchar(20), EstadoConciliacion nvarchar(1),
-NotaConciliacion nvarchar(255) )
+NotaConciliacion nvarchar(255), IDConciliacionWithDiff BIGINT )
 go
 
 --Alter table dbo.cbMovimientos add IDConciliacion int, MatchNumber int default 0, UsuarioConciliacion nvarchar(20), EstadoConciliacion nvarchar(1), NotaConciliacion nvarchar(255)
@@ -956,7 +956,7 @@ alter table  dbo.cbConciliacion add constraint pkConciliacion primary key ( IDCo
 go
 -- Se debe crear un proceso que importe el estado de cuenta del banco a esta tabla.
 Create table dbo.cbConcMovBanco (IDMovBanco int identity (1,1) not null, IDCuentaBanco int not null, Fecha date, IDConciliacion int,
-Referencia nvarchar(255), Monto decimal (28, 4) default 0, Factor int, MatchNumber int , Usuario nvarchar(20), Estado nvarchar(1)  ) 
+Referencia nvarchar(255), Monto decimal (28, 4) default 0, Factor int, MatchNumber int , Usuario nvarchar(20), Estado nvarchar(1)   ) 
 go
 
 alter table dbo.cbConcMovBanco add constraint pkMovBanco primary key (IDMovBanco)
@@ -1055,7 +1055,7 @@ SELECT ISNULL(@SaldoInicialLibro,0) SaldoInicialLibro
 GO
 
 
-CREATE ALTER PROCEDURE dbo.cbGetMovLibrosContable @IDCuentaBancaria INT, @FechaInicial DATETIME, @FechaFinal DATETIME
+CREATE  PROCEDURE dbo.cbGetMovLibrosContable @IDCuentaBancaria INT, @FechaInicial DATETIME, @FechaFinal DATETIME
 AS 
 
 set @FechaInicial = CAST(SUBSTRING(CAST(@FechaInicial AS CHAR),1,11) + ' 00:00:00.000' AS DATETIME)
@@ -1498,10 +1498,6 @@ INNER JOIN dbo.cbSubTipoDocumento B ON A.IDTipo = B.IDTipo AND A.IDSubTipo = B.I
 WHERE A.Fecha BETWEEN @FechaInicial  AND @FechaFinal
 UNION all
 SELECT 'F' Orden ,@FechaInicial,'SALDO FINAL','','','', SaldoLibro Monto  FROM  @tbSaldoFinal
-
-GO
-
-ALTER TABLE dbo.cbMovimientos ADD IDConciliacionWithDiff  BigInt
 
 GO
 

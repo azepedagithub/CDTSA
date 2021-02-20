@@ -70,9 +70,10 @@ CREATE     TABLE  [dbo].[invProducto](
 	[CostoPromDolar] [decimal](28, 4) NOT NULL DEFAULT 0,
 	[PrecioPublicoLocal] [decimal](28, 4) NOT NULL DEFAULT 0,
 	[PrecioFarmaciaLocal] [decimal](28, 4) NOT NULL DEFAULT 0,
-	[PrecioCIFLocal] [decimal](28, 4) NOT NULL DEFAULT 0,
-	[PrecioFOBLocal] [decimal](28, 4) NOT NULL DEFAULT 0,
 	[PrecioDolar] [decimal](28, 4)  NOT NULL DEFAULT 0,
+	PrecioFOB DECIMAL(28,8) DEFAULT 0,
+	PrecioCIF DECIMAL(28,8) DEFAULT 0,
+	TipoPrecio NVARCHAR(3),
 	[Clasif1] [int] NOT NULL DEFAULT 1,
 	[Clasif2] [int] NOT NULL DEFAULT 2,
 	[Clasif3] [int] NOT NULL DEFAULT 3,
@@ -2694,7 +2695,7 @@ UPDATE dbo.invTransaccion SET Aplicado=1 WHERE IDTransaccion= @IDTransaccion
 GO
 
 
-ALTER PROCEDURE dbo.fafGeneraAsientoContableFactura @Modulo AS NVARCHAR(4), @IDDocumento AS INT,@Usuario AS NVARCHAR(50),@Asiento AS NVARCHAR(20) OUTPUT 
+CREATE PROCEDURE dbo.fafGeneraAsientoContableFactura @Modulo AS NVARCHAR(4), @IDDocumento AS INT,@Usuario AS NVARCHAR(50),@Asiento AS NVARCHAR(20) OUTPUT 
 AS
 --BEGIN TRAN
 /*
@@ -3928,24 +3929,8 @@ IF (@Operacion='D')
 GO
 
 --Ver seguimiento de Release
-ALTER TABLE dbo.invproducto DROP CONSTRAINT DF__invProduc__Preci__02925FBF
-GO
-ALTER TABLE dbo.invProducto DROP COLUMN PrecioCIFLocal
-GO
-ALTER TABLE dbo.invProducto DROP CONSTRAINT DF__invProduc__Preci__038683F8
-GO
-ALTER TABLE dbo.invProducto DROP COLUMN PrecioFOBLocal
-GO
 
-ALTER TABLE dbo.invProducto ADD PrecioFOB DECIMAL(28,8) DEFAULT 0
-GO
-ALTER TABLE dbo.invProducto ADD PrecioCIF DECIMAL(28,8) DEFAULT 0
-GO
-ALTER TABLE dbo.invProducto ADD TipoPrecio NVARCHAR(3)
-GO
-UPDATE dbo.invProducto SET  PrecioCIF = 0, precioFOB = 0
 
-GO
 ALTER PROCEDURE [dbo].[invGetProducto] @IDProducto BIgint	,@Descr AS NVARCHAR(250),@Alias NVARCHAR(250),@Clasif1 int, @Clasif2 INT, @Clasif3 INT ,@Clasif4 INT , @Clasif5 INT, @Clasif6 INT, @CodigoBarra NVARCHAR(50),
 															@EsMuestra INT,@EsControlado INT,@EsEtico INT
 AS 

@@ -4015,8 +4015,8 @@ go
 
 --drop table dbo.fafPedidoPreparado
 Create table dbo.fafPedidoPreparado(IDPedido int not null, IDProducto bigint not null, 
-IDLote int not null,  FechaVencimiento date, CantAtendida int,
-Usuario nvarchar(20), FechaPreparacion datetime)
+IDLote int not null,  CantAtendida int,
+Usuario nvarchar(20), Fecha datetime)
 go
 Alter table dbo.fafPedidoPreparado 
 add constraint pkPedidoPreparado primary key (IDPedido, IDProducto, IDLote)
@@ -4143,8 +4143,8 @@ set nocount on
 begin transaction 
 begin try
 
-	INSERT dbo.fafPedidoPreparado ( IDPedido, IDProducto, IDLote, FechaVencimiento, CantAtendida,
-	FechaPreparacion, Usuario )
+	INSERT dbo.fafPedidoPreparado ( IDPedido, IDProducto, IDLote, CantAtendida,
+	Fecha, Usuario )
 	exec dbo.fafgetPedidoSugeridoLote  @IDPedido, @Usuario,1
 
 commit
@@ -4434,8 +4434,8 @@ end
 	else
 	begin
 
-		Select  A.IDPedido, A.IDProducto, A.IDLote, A.FechaVencimiento, 
-		A.CantAtendida CantAtendidaLote,  cast(GETDATE()as DATE) FechaGeneracion, A.Usuario 
+		Select  A.IDPedido, A.IDProducto, A.IDLote,L.FechaVencimiento,
+		A.CantAtendida CantAtendidaLote,  cast(GETDATE()as DATE) Fecha, A.Usuario 
 		From @PedidoAtendido A inner join dbo.invLote L 
 		on A.IDLote = L.IDLote and A.IDProducto= L.IDProducto  join dbo.invProducto P
 		on A.IDProducto = P.IDProducto 	
