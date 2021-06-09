@@ -257,7 +257,9 @@ namespace CO
         private void HabilitarBotones(DataTable dt)
         {
             DataRow cabecera = dt.Rows[0];
-					  int IDEstado = Convert.ToInt32(cabecera["IDEstado"]);
+			int IDEstado = Convert.ToInt32(cabecera["IDEstado"]);
+			this.btnRevertirAnulacion.Enabled = false;
+			this.btnRevertirAnulacion.Visibility = DevExpress.XtraBars.BarItemVisibility.Never;
             //Estado Inicial
             if  (IDEstado == 0)
             {
@@ -265,6 +267,8 @@ namespace CO
                 this.btnDesconfirmar.Enabled = false;
                 this.btnAnular.Enabled = false;
                 this.btnEmbarque.Enabled = false;
+				this.btnCargarPedido.Enabled = true;
+				this.btnImportFromExcel.Enabled = true;
             }
             //Estado Confirmada
             if (IDEstado == 1)
@@ -273,6 +277,8 @@ namespace CO
                 this.btnDesconfirmar.Enabled = true;
                 this.btnAnular.Enabled = true;
                 this.btnEmbarque.Enabled = true;
+				this.btnCargarPedido.Enabled = false;
+				this.btnImportFromExcel.Enabled = false;
             }
 			//Estado Cancelada
 				if (IDEstado == 2)
@@ -285,6 +291,8 @@ namespace CO
 					this.btnGuardar.Enabled = false;
 					this.btnAgregar.Enabled = false;
 					this.btnEliminar.Enabled = false;
+					this.btnRevertirAnulacion.Enabled = true;
+					this.btnRevertirAnulacion.Visibility = DevExpress.XtraBars.BarItemVisibility.Always;
 				}
 				if (IDEstado == 3)
 				{
@@ -911,7 +919,7 @@ namespace CO
             try
             {
                 if (Convert.ToInt32(dtOrdenCompra.Rows[0]["IDEstado"]) >= 1) {
-                    MessageBox.Show("Solo puede eliminar ordenes cuyo estdo sea el inicial");
+                    MessageBox.Show("Solo puede eliminar ordenes cuyo estado sea  INICIAL");
                     return;
                 }
                 if (MessageBox.Show("Esta seguro que desea eliminar la Orden de Compra seleccionada ? ", "Listado de Ordenes de Compra", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
@@ -1265,20 +1273,24 @@ namespace CO
         private void btnAnular_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             //Validar
-            DataTable dt = clsEmbarqueDAC.GetByID(-7, this.IDOrdenCompra).Tables[0];
-            if (dt.Rows.Count > 0)
-            {
-                MessageBox.Show("No se puede Anular, posee embarques asociados");
-                return;
-            }
-            ConnectionManager.BeginTran();
-            clsOrdenCompraDAC.CancelarOrdenCompra(this.IDOrdenCompra, ConnectionManager.Tran);
-            dtOrdenCompra.Rows[0]["IDEstado"] = 2;
-            dtOrdenCompra.Rows[0]["DescrEstado"] = "CANCELADA";
-            ConnectionManager.CommitTran();
-            this.IDEstado = 2;
-            HabilitarBotones(this.dtOrdenCompra);
-            MessageBox.Show("La Orden ha sido Confirmada correctamente");
+			if (MessageBox.Show( "Este proceso cancelara la orden de Orden de Compra, esta seguro que desea proseguir?","Orden de Compra", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+			{
+				DataTable dt = clsEmbarqueDAC.GetByID(-7, this.IDOrdenCompra).Tables[0];
+				if (dt.Rows.Count > 0)
+				{
+					MessageBox.Show("No se puede Anular, posee embarques asociados");
+					return;
+				}
+				ConnectionManager.BeginTran();
+				clsOrdenCompraDAC.CancelarOrdenCompra(this.IDOrdenCompra, ConnectionManager.Tran);
+				dtOrdenCompra.Rows[0]["IDEstado"] = 2;
+				dtOrdenCompra.Rows[0]["DescrEstado"] = "CANCELADA";
+				ConnectionManager.CommitTran();
+				this.IDEstado = 2;
+				UpdateControlsFromData(this.dtOrdenCompra);
+				
+				MessageBox.Show("La Orden ha sido Cancelada correctamente");
+			}
         }
 
         private void btnEmbarque_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -1375,10 +1387,12 @@ namespace CO
                 this.slkupMoneda.EditValue = Convert.ToInt32(drProveedor["IDMoneda"]);
                 this.slkupMoneda.Enabled = (Convert.ToBoolean(drProveedor["MultiMoneda"]) == true) ? true : false;
 
-							  //dtProductos = CI.DAC.clsProductoDAC.GetData(-1, "*", "*", -1, -1, -1, -1, -1, -1, "*", -1, -1, -1).Tables[0];
-								dtProductos = CI.DAC.clsProductoDAC.GetProductoByProveedor(Convert.ToInt32(drProveedor["IDProveedor"])).Tables[0];
-								this.slkupIDProducto.DataSource = dtProductos;
-								this.slkupDescrProducto.DataSource = dtProductos;
+				//dtProductos = CI.DAC.clsProductoDAC.GetData(-1, "*", "*", -1, -1, -1, -1, -1, -1, "*", -1, -1, -1).Tables[0];
+				dtProductos = CI.DAC.clsProductoDAC.GetProductoByProveedor(Convert.ToInt32(drProveedor["IDProveedor"])).Tables[0];
+				this.slkupIDProducto.DataSource = dtProductos;
+				this.slkupDescrProducto.DataSource = dtProductos;
+				
+
 								
             }
         }
@@ -1413,39 +1427,74 @@ namespace CO
 
 		private void btnCargarPedido_Click(object sender, EventArgs e)
 		{
-			DataTable dtPedidoSugerido = clsOrdenCompraDetalleDAC.ObtenerPedidoSugerido(-1, DateTime.Now).Tables[0];
-
-			foreach (DataRow fila in dtPedidoSugerido.Rows)
+			if (this.slkupProveedor.EditValue != null)
 			{
-				DataRow nuevaFila = this.dtDetalleOrden.NewRow();
-				nuevaFila["IDProducto"] = fila["IDProducto"];
-				nuevaFila["DescrProducto"] = fila["DescrProducto"];
-				nuevaFila["Cantidad"] = fila["Cantidad"];
-				nuevaFila["PrecioUnitario"] = fila["PrecioUnitario"];
-				nuevaFila["MontoDesc"] = 0;
-				//if (Convert.ToDecimal(fila["PorcDesc"]) > 0)
-				//{
-				//	decimal Cantidad = Convert.ToDecimal(fila["Cantidad"]);
-				//	decimal Precio = Convert.ToDecimal(fila["PrecioUnitario"]);
-				//	decimal Porc = Convert.ToDecimal(fila["PorcDesc"]);
-				//	nuevaFila["MontoDesc"] = (Cantidad * Precio) * (Porc / 100);
-				//}
-				//if (Convert.ToDecimal(fila["MontoDesc"]) > 0 && Convert.ToDecimal(fila["PorcDesc"]) == 0)
-				//{
-				//	decimal Cantidad = Convert.ToDecimal(fila["Cantidad"]);
-				//	decimal Precio = Convert.ToDecimal(fila["PrecioUnitario"]);
-				//	decimal MontoDesc = Convert.ToDecimal(fila["MontoDesc"]);
-				//	nuevaFila["PorcDesc"] = ((Cantidad * Precio) / MontoDesc) * 100;
-				//}
-				nuevaFila["PorcDesc"] = 0;
-				nuevaFila["Comentario"] = "";
-				nuevaFila["Impuesto"] = 0;
-				nuevaFila["Monto"] = fila["Monto"];
-				this.dtDetalleOrden.Rows.InsertAt(nuevaFila, 0);
-
+				this.IDProveedor = Convert.ToInt32(this.slkupProveedor.EditValue);
+				frmPedidoSugerido ofrmPedido = new frmPedidoSugerido(this.IDProveedor);
+				ofrmPedido.FormClosed += ofrmPedido_FormClosed;
+				ofrmPedido.ShowDialog();
 			}
+			else
+			{
+				MessageBox.Show("Por favor seleccione primero el proveedor, para poder sugerir el pedido!", "Sugerido de Pedido");
+			}
+		}
 
-			CalcularMontosOrden();
+		void ofrmPedido_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			frmPedidoSugerido ofrmPedido = (frmPedidoSugerido)sender;
+			if (ofrmPedido.DialogResult == System.Windows.Forms.DialogResult.OK)
+			{
+				DataTable dtPedidoSugerido = ofrmPedido.GetDTPedidoSugerido();
+
+				foreach (DataRow fila in dtPedidoSugerido.Rows)
+				{
+					DataRow nuevaFila = this.dtDetalleOrden.NewRow();
+					nuevaFila["IDProducto"] = fila["IDProducto"];
+					nuevaFila["DescrProducto"] = fila["DescrProducto"];
+					nuevaFila["Cantidad"] = fila["CantSugerida"];
+					nuevaFila["PrecioUnitario"] = fila["PrecioUnitario"];
+					nuevaFila["MontoDesc"] = 0;
+					//if (Convert.ToDecimal(fila["PorcDesc"]) > 0)
+					//{
+					//	decimal Cantidad = Convert.ToDecimal(fila["Cantidad"]);
+					//	decimal Precio = Convert.ToDecimal(fila["PrecioUnitario"]);
+					//	decimal Porc = Convert.ToDecimal(fila["PorcDesc"]);
+					//	nuevaFila["MontoDesc"] = (Cantidad * Precio) * (Porc / 100);
+					//}
+					//if (Convert.ToDecimal(fila["MontoDesc"]) > 0 && Convert.ToDecimal(fila["PorcDesc"]) == 0)
+					//{
+					//	decimal Cantidad = Convert.ToDecimal(fila["Cantidad"]);
+					//	decimal Precio = Convert.ToDecimal(fila["PrecioUnitario"]);
+					//	decimal MontoDesc = Convert.ToDecimal(fila["MontoDesc"]);
+					//	nuevaFila["PorcDesc"] = ((Cantidad * Precio) / MontoDesc) * 100;
+					//}
+					nuevaFila["PorcDesc"] = 0;
+					nuevaFila["Comentario"] = "";
+					nuevaFila["Impuesto"] = 0;
+					nuevaFila["Monto"] = fila["Monto"];
+					this.dtDetalleOrden.Rows.InsertAt(nuevaFila, 0);
+
+				}
+
+				CalcularMontosOrden();
+			}
+		}
+
+		private void btnRevertirAnulacion_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+		{
+			
+			ConnectionManager.BeginTran();
+			clsOrdenCompraDAC.RevertirAnulacion(this.IDOrdenCompra, ConnectionManager.Tran);
+			dtOrdenCompra.Rows[0]["IDEstado"] = 0;
+			dtOrdenCompra.Rows[0]["DescrEstado"] = "INICIAL";
+			ConnectionManager.CommitTran();
+			this.IDEstado = 0;
+			HabilitarBotoneriaPrincipal();
+			UpdateControlsFromData(this.dtOrdenCompra);
+			
+			
+			MessageBox.Show("La Orden se ha revertido correctamente");
 		}                                       
 
 

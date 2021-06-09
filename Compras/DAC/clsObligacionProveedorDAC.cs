@@ -93,6 +93,9 @@ namespace CO.DAC
 
         }
 
+	
+
+		
 		
         public static bool GeneraAsientoContable(int IDEmbarque, String Usuario, ref String Asiento, SqlTransaction tran)
         {
@@ -116,5 +119,23 @@ namespace CO.DAC
             return bResult;
 
         }
+
+		public static bool RemoveReferenciaContable(long IDEmbarque, SqlTransaction tran)
+		{
+			String strSql = "dbo.coRemoveObligacionProveedorRefContable";
+			bool bResult = false;
+			int result;
+			SqlCommand oCmd = new SqlCommand(strSql, Security.ConnectionManager.GetConnection());
+			oCmd.Parameters.Add(new SqlParameter("@IDEmbarque", IDEmbarque));
+			oCmd.CommandType = CommandType.StoredProcedure;
+			oCmd.Transaction = tran;
+			if (oCmd.Connection.State == ConnectionState.Closed) oCmd.Connection.Open();
+
+			result = oCmd.ExecuteNonQuery();
+
+			bResult = true;
+			return bResult;
+
+		}
     }
 }

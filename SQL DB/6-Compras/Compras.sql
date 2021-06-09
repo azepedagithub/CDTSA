@@ -2236,10 +2236,13 @@ ORDER BY IDOrdenCompra DESC
 GO
 
 
-CREATE PROCEDURE dbo.coGetPedidoSugerido(@IDProveedor INT, @Fecha DATE)
-AS 
---SET @Fecha = '20201002'
 
+CREATE PROCEDURE dbo.coGetPedidoSugerido(@IDProveedor INT, @Fecha DATE, @CantUmbral INT =1)
+AS 
+--DECLARE @IDProveedor INT, @Fecha DATE
+
+--SET @Fecha = '20210630'
+--SET @IDProveedor=1
 
 DECLARE @FechaInicial AS DATETIME,@FechaFinal AS DATETIME
 
@@ -2247,29 +2250,87 @@ set @FechaInicial = CAST(SUBSTRING(CAST(DATEADD(MONTH,-3,@Fecha) AS CHAR),1,11) 
 set @FechaFinal = CAST(SUBSTRING(CAST(@Fecha AS CHAR),1,11) + ' 23:59:59.998' AS DATETIME)
 
 
-SELECT  P.IDProducto,P.Descr DescrProducto,Cantidad,CostoPromDolar, Cantidad * PrecioUnitario Monto,ISNULL(PrecioUnitario,0) PrecioUnitario FROM  
+SELECT A.IDProducto,D.IsLocal, SUM(Cantidad) Cantidad,A.Fecha,0 Mes INTO #tmpFuenteVenta
+FROM dbo.vfafDetalleProducto A
+INNER JOIN dbo.invProducto P ON A.IDProducto = P.IDProducto
+INNER JOIN dbo.cppProveedor D ON P.IDProveedor = D.IDProveedor
+WHERE Fecha BETWEEN @FechaInicial AND @FechaFinal AND  D.IDProveedor = @IDProveedor AND P.Activo=1
+GROUP BY a.IDProducto,D.IsLocal,A.Fecha 
+UNION ALL 
+SELECT A.IDProducto,D.IsLocal, SUM(Cantidad) Cantidad,A.Fecha, 0 Mes
+FROM dbo.fafHistoricoVentaAnterior A
+INNER JOIN dbo.invProducto P ON A.IDProducto = P.IDProducto
+INNER JOIN dbo.cppProveedor D ON P.IDProveedor = D.IDProveedor
+WHERE Fecha BETWEEN @FechaInicial AND @FechaFinal AND  D.IDProveedor = @IDProveedor AND P.Activo=1
+GROUP BY a.IDProducto,D.IsLocal,A.Fecha
+
+
+UPDATE A SET A.mes = 
+	CASE WHEN DATEDIFF(DAY,Fecha,@FechaFinal) >=62 THEN 1 ELSE 
+	CASE WHEN DATEDIFF(DAY,Fecha,@FechaFinal) >=32 THEN 2 ELSE
+	3 END END   
+FROM #tmpFuenteVenta A
+	
+	
+ -- // Venta Historial de los ultimos tres meses 
+SELECT  IDProducto ,
+        IsLocal ,
+        Cantidad ,
+        CantMeses INTO #tmpVentaH  FROM 
 (
-	SELECT IDProducto,Cantidad * (CASE WHEN J.IsLocal=1 THEN 2 ELSE 3.5 END) Cantidad FROM 
-		(SELECT A.IDProducto,D.IsLocal, SUM(Cantidad)/3 Cantidad 
-			FROM dbo.vfafDetalleProducto A
-		    INNER JOIN dbo.invProducto P ON A.IDProducto = P.IDProducto
-			INNER JOIN dbo.cppProveedor D ON P.IDProveedor = D.IDProveedor
-			WHERE Fecha BETWEEN @FechaInicial AND @FechaFinal AND  D.IDProveedor = @IDProveedor 
-			GROUP BY a.IDProducto,D.IsLocal
-		) J
-) D
-INNER JOIN dbo.invProducto P ON D.IDProducto=P.IDProducto 
-LEFT JOIN (
-	SELECT A.IDProducto,PrecioUnitario FROM 
-	(SELECT MAX(A.IDEmbarque) IDEmbarque,IDProducto  FROM dbo.coEmbarqueDetalle A
+	
+	SELECT IDProducto,IsLocal, sum(Cantidad) Cantidad,
+	COUNT(distinct Mes)  CantMeses
+	FROM #tmpFuenteVenta
+	GROUP BY IDProducto,IsLocal
+	
+) A
+
+
+
+
+-- // Inventario de los productos del proveedor
+SELECT a.IDProducto,SUM(Existencia) Existencia INTO #tmpExistencias  FROM dbo.invExistenciaBodega A
+INNER JOIN dbo.invProducto P ON A.IDProducto = P.IDProducto
+INNER JOIN dbo.cppProveedor PRO  ON P.IDProveedor=PRO.IDProveedor
+WHERE PRO.IDProveedor=@IDProveedor AND P.Activo=1 
+GROUP BY A.IDProducto
+
+-- // Ultimo precio de compara de los productos
+SELECT A.IDProducto,PrecioUnitario INTO #LastPrecio FROM 
+(
+	SELECT MAX(A.IDEmbarque) IDEmbarque,IDProducto  FROM dbo.coEmbarqueDetalle A
 	INNER JOIN dbo.coEmbarque B ON A.IDEmbarque = B.IDEmbarque
-	GROUP BY IDProducto) A
-	INNER JOIN dbo.coEmbarqueDetalle B ON A.IDEmbarque = B.IDEmbarque AND A.IDProducto = B.IDProducto
-) M ON P.IDProducto = M.IDProducto
+	GROUP BY IDProducto
+) A
+INNER JOIN dbo.coEmbarqueDetalle B ON A.IDEmbarque = B.IDEmbarque AND A.IDProducto = B.IDProducto
 
 
+
+-- //Reporte de salida
+SELECT D.IDProducto,P.Descr DescrProducto,D.Cantidad UndVentaTotal,CantMeses,CostoPromDolar
+		,Cantidad * ISNULL(PrecioUnitario,0) MontoOrden,ISNULL(PrecioUnitario,0) PrecioUnitCompra,ISNULL(EX.Existencia,0) Existencia,ROUND((Cantidad/CantMeses) * (CASE WHEN IsLocal=1 THEN 2 ELSE 3.5 END),0) CantSugerida,'' Mensaje
+FROM #tmpVentaH D
+INNER JOIN dbo.invProducto P ON D.IDProducto=P.IDProducto 
+LEFT JOIN #LastPrecio M ON P.IDProducto = M.IDProducto
+LEFT  JOIN #tmpExistencias EX ON D.IDProducto=EX.IDProducto
+UNION ALL
+SELECT A.IDProducto,P.Descr DescrProducto,0 UndVentaTotal,0 CantMeses,  P.CostoPromDolar,0 MontoOrden, ISNULL(M.PrecioUnitario,0) PrecioUnitCompra,ISNULL(A.Existencia,0) Existencia,0 CantidadProm,'Revisar' Mensaje
+FROM #tmpExistencias A
+LEFT JOIN #tmpVentaH B ON A.IDProducto = B.IDProducto
+INNER JOIN dbo.invProducto P ON A.IDProducto=P.IDProducto 
+LEFT JOIN #LastPrecio M ON P.IDProducto = M.IDProducto
+WHERE B.IDProducto IS NULL AND  Existencia<=@CantUmbral
+
+
+DROP TABLE #tmpExistencias
+DROP TABLE #tmpVentaH
+DROP TABLE #tmpFuenteVenta
+drop TABLE #LastPrecio
+DROP TABLE #totalMes
 
 GO
+
 
 CREATE PROCEDURE dbo.coGetEstadoOrdenCompra @IDOrdenCompra AS INT
 AS
@@ -2299,3 +2360,28 @@ WHERE IDOrdenCompra = @IDOrdenCompra AND Impuesto>0
 
 
 GO
+
+CREATE PROCEDURE dbo.coRemoveObligacionProveedorRefContable  @IDEmbarque INT
+AS 
+UPDATE  dbo.coObligacionProveedor SET Asiento=null WHERE IDEmbarque = @IDEmbarque	
+	
+GO
+
+CREATE  PROCEDURE [dbo].[coRevertirAnulacionOrdenCompra] @IDOrdenCompra  AS INT
+AS
+UPDATE dbo.coOrdenCompra SET IDEstado=0
+WHERE IDOrdenCompra = @IDOrdenCompra
+
+GO
+
+
+
+CREATE TABLE dbo.fafHistoricoVentaAnterior(
+	IDProducto BIGINT NOT NULL,
+	Cantidad DECIMAL(28,4),
+	Fecha DATE NOT NULL
+)
+
+GO 
+
+ALTER TABLE dbo.fafHistoricoVentaAnterior ADD CONSTRAINT pk_HistoVentAnt PRIMARY KEY (IDProducto, Fecha)

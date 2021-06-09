@@ -42,6 +42,7 @@
 			this.btnEmbarque = new DevExpress.XtraBars.BarButtonItem();
 			this.btnDesconfirmar = new DevExpress.XtraBars.BarButtonItem();
 			this.btnImprimir = new DevExpress.XtraBars.BarButtonItem();
+			this.btnRevertirAnulacion = new DevExpress.XtraBars.BarButtonItem();
 			this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
@@ -110,16 +111,17 @@
 			this.txtFlete = new DevExpress.XtraEditors.TextEdit();
 			this.layoutControlGroup4 = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.layoutControlItem31 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.layoutControlItem27 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.layoutControlItem28 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.layoutControlItem30 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.layoutControlItem33 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.layoutControlItem35 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem36 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem38 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem39 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem40 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.layoutControlItem27 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.emptySpaceItem6 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.layoutControlItem32 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.layoutControlItem30 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.layoutControlItem33 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.layoutControlItem28 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.layoutControlItem35 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.tabFactura = new DevExpress.XtraTab.XtraTabPage();
 			this.layoutControl3 = new DevExpress.XtraLayout.LayoutControl();
 			this.txtNotas = new DevExpress.XtraEditors.MemoEdit();
@@ -166,7 +168,6 @@
 			this.layoutControlItem42 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem16 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.emptySpaceItem6 = new DevExpress.XtraLayout.EmptySpaceItem();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
 			this.layoutControl1.SuspendLayout();
@@ -212,16 +213,17 @@
 			((System.ComponentModel.ISupportInitialize)(this.txtFlete.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup4)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem31)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem27)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem28)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem30)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem33)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem35)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem36)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem38)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem39)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem40)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem27)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem6)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem32)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem30)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem33)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem28)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem35)).BeginInit();
 			this.tabFactura.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl3)).BeginInit();
 			this.layoutControl3.SuspendLayout();
@@ -275,7 +277,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem42)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem16)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem6)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// ribbonControl1
@@ -292,9 +293,10 @@
             this.btnAnular,
             this.btnEmbarque,
             this.btnDesconfirmar,
-            this.btnImprimir});
+            this.btnImprimir,
+            this.btnRevertirAnulacion});
 			this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-			this.ribbonControl1.MaxItemId = 7;
+			this.ribbonControl1.MaxItemId = 8;
 			this.ribbonControl1.Name = "ribbonControl1";
 			this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -389,6 +391,15 @@
 			this.btnImprimir.Name = "btnImprimir";
 			this.btnImprimir.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnImprimir_ItemClick_1);
 			// 
+			// btnRevertirAnulacion
+			// 
+			this.btnRevertirAnulacion.Caption = "Revertir Anulación";
+			this.btnRevertirAnulacion.Glyph = ((System.Drawing.Image)(resources.GetObject("btnRevertirAnulacion.Glyph")));
+			this.btnRevertirAnulacion.Id = 7;
+			this.btnRevertirAnulacion.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnRevertirAnulacion.LargeGlyph")));
+			this.btnRevertirAnulacion.Name = "btnRevertirAnulacion";
+			this.btnRevertirAnulacion.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnRevertirAnulacion_ItemClick);
+			// 
 			// ribbonPage1
 			// 
 			this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -414,6 +425,7 @@
 			this.ribbonPageGroup1.ItemLinks.Add(this.btnAnular);
 			this.ribbonPageGroup1.ItemLinks.Add(this.btnEmbarque);
 			this.ribbonPageGroup1.ItemLinks.Add(this.btnImprimir);
+			this.ribbonPageGroup1.ItemLinks.Add(this.btnRevertirAnulacion);
 			this.ribbonPageGroup1.Name = "ribbonPageGroup1";
 			// 
 			// layoutControl1
@@ -523,6 +535,7 @@
 			this.layoutControl2.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.layoutControl2.Location = new System.Drawing.Point(0, 0);
 			this.layoutControl2.Name = "layoutControl2";
+			this.layoutControl2.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(793, 458, 250, 350);
 			this.layoutControl2.Root = this.layoutControlGroup2;
 			this.layoutControl2.Size = new System.Drawing.Size(919, 319);
 			this.layoutControl2.TabIndex = 0;
@@ -531,9 +544,9 @@
 			// btnCargarPedido
 			// 
 			this.btnCargarPedido.Image = ((System.Drawing.Image)(resources.GetObject("btnCargarPedido.Image")));
-			this.btnCargarPedido.Location = new System.Drawing.Point(274, 12);
+			this.btnCargarPedido.Location = new System.Drawing.Point(266, 12);
 			this.btnCargarPedido.Name = "btnCargarPedido";
-			this.btnCargarPedido.Size = new System.Drawing.Size(144, 22);
+			this.btnCargarPedido.Size = new System.Drawing.Size(157, 22);
 			this.btnCargarPedido.StyleController = this.layoutControl2;
 			this.btnCargarPedido.TabIndex = 20;
 			this.btnCargarPedido.Text = "Cargar Pedido Sugerido";
@@ -542,12 +555,12 @@
 			// btnOpenTemplate
 			// 
 			this.btnOpenTemplate.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenTemplate.Image")));
-			this.btnOpenTemplate.Location = new System.Drawing.Point(161, 12);
+			this.btnOpenTemplate.Location = new System.Drawing.Point(12, 12);
 			this.btnOpenTemplate.Name = "btnOpenTemplate";
-			this.btnOpenTemplate.Size = new System.Drawing.Size(109, 22);
+			this.btnOpenTemplate.Size = new System.Drawing.Size(116, 22);
 			this.btnOpenTemplate.StyleController = this.layoutControl2;
 			this.btnOpenTemplate.TabIndex = 19;
-			this.btnOpenTemplate.Text = "Open Template";
+			this.btnOpenTemplate.Text = "Descargar Plantilla";
 			this.btnOpenTemplate.Click += new System.EventHandler(this.btnOpenTemplate_Click);
 			// 
 			// dtgDetalle
@@ -885,9 +898,9 @@
 			// btnImportFromExcel
 			// 
 			this.btnImportFromExcel.Image = ((System.Drawing.Image)(resources.GetObject("btnImportFromExcel.Image")));
-			this.btnImportFromExcel.Location = new System.Drawing.Point(12, 12);
+			this.btnImportFromExcel.Location = new System.Drawing.Point(132, 12);
 			this.btnImportFromExcel.Name = "btnImportFromExcel";
-			this.btnImportFromExcel.Size = new System.Drawing.Size(145, 22);
+			this.btnImportFromExcel.Size = new System.Drawing.Size(130, 22);
 			this.btnImportFromExcel.StyleController = this.layoutControl2;
 			this.btnImportFromExcel.TabIndex = 18;
 			this.btnImportFromExcel.Text = "Importar desde Excel";
@@ -901,10 +914,10 @@
             this.layoutControlItem10,
             this.layoutControlItem14,
             this.emptySpaceItem2,
-            this.layoutControlItem12,
-            this.layoutControlItem11});
+            this.layoutControlItem11,
+            this.layoutControlItem12});
 			this.layoutControlGroup2.Location = new System.Drawing.Point(0, 0);
-			this.layoutControlGroup2.Name = "layoutControlGroup2";
+			this.layoutControlGroup2.Name = "Root";
 			this.layoutControlGroup2.Size = new System.Drawing.Size(919, 319);
 			this.layoutControlGroup2.TextVisible = false;
 			// 
@@ -921,35 +934,35 @@
 			// layoutControlItem14
 			// 
 			this.layoutControlItem14.Control = this.btnImportFromExcel;
-			this.layoutControlItem14.Location = new System.Drawing.Point(0, 0);
+			this.layoutControlItem14.Location = new System.Drawing.Point(120, 0);
 			this.layoutControlItem14.Name = "layoutControlItem14";
-			this.layoutControlItem14.Size = new System.Drawing.Size(149, 26);
+			this.layoutControlItem14.Size = new System.Drawing.Size(134, 26);
 			this.layoutControlItem14.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem14.TextVisible = false;
 			// 
 			// emptySpaceItem2
 			// 
 			this.emptySpaceItem2.AllowHotTrack = false;
-			this.emptySpaceItem2.Location = new System.Drawing.Point(410, 0);
+			this.emptySpaceItem2.Location = new System.Drawing.Point(415, 0);
 			this.emptySpaceItem2.Name = "emptySpaceItem2";
-			this.emptySpaceItem2.Size = new System.Drawing.Size(489, 26);
+			this.emptySpaceItem2.Size = new System.Drawing.Size(484, 26);
 			this.emptySpaceItem2.TextSize = new System.Drawing.Size(0, 0);
 			// 
 			// layoutControlItem12
 			// 
 			this.layoutControlItem12.Control = this.btnOpenTemplate;
-			this.layoutControlItem12.Location = new System.Drawing.Point(149, 0);
+			this.layoutControlItem12.Location = new System.Drawing.Point(0, 0);
 			this.layoutControlItem12.Name = "layoutControlItem12";
-			this.layoutControlItem12.Size = new System.Drawing.Size(113, 26);
+			this.layoutControlItem12.Size = new System.Drawing.Size(120, 26);
 			this.layoutControlItem12.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem12.TextVisible = false;
 			// 
 			// layoutControlItem11
 			// 
 			this.layoutControlItem11.Control = this.btnCargarPedido;
-			this.layoutControlItem11.Location = new System.Drawing.Point(262, 0);
+			this.layoutControlItem11.Location = new System.Drawing.Point(254, 0);
 			this.layoutControlItem11.Name = "layoutControlItem11";
-			this.layoutControlItem11.Size = new System.Drawing.Size(148, 26);
+			this.layoutControlItem11.Size = new System.Drawing.Size(161, 26);
 			this.layoutControlItem11.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem11.TextVisible = false;
 			// 
@@ -1128,6 +1141,51 @@
 			this.layoutControlItem31.Text = "Total Mercaderia:";
 			this.layoutControlItem31.TextSize = new System.Drawing.Size(88, 13);
 			// 
+			// layoutControlItem27
+			// 
+			this.layoutControlItem27.Control = this.txtFlete;
+			this.layoutControlItem27.Location = new System.Drawing.Point(0, 0);
+			this.layoutControlItem27.Name = "layoutControlItem27";
+			this.layoutControlItem27.Size = new System.Drawing.Size(277, 24);
+			this.layoutControlItem27.Text = "Flete:";
+			this.layoutControlItem27.TextSize = new System.Drawing.Size(88, 13);
+			// 
+			// layoutControlItem28
+			// 
+			this.layoutControlItem28.Control = this.txtSeguro;
+			this.layoutControlItem28.Location = new System.Drawing.Point(0, 24);
+			this.layoutControlItem28.Name = "layoutControlItem28";
+			this.layoutControlItem28.Size = new System.Drawing.Size(277, 24);
+			this.layoutControlItem28.Text = "Seguro:";
+			this.layoutControlItem28.TextSize = new System.Drawing.Size(88, 13);
+			// 
+			// layoutControlItem30
+			// 
+			this.layoutControlItem30.Control = this.txtAnticipos;
+			this.layoutControlItem30.Location = new System.Drawing.Point(0, 48);
+			this.layoutControlItem30.Name = "layoutControlItem30";
+			this.layoutControlItem30.Size = new System.Drawing.Size(277, 251);
+			this.layoutControlItem30.Text = "Anticipos:";
+			this.layoutControlItem30.TextSize = new System.Drawing.Size(88, 13);
+			// 
+			// layoutControlItem33
+			// 
+			this.layoutControlItem33.Control = this.txtImpuestoVenta;
+			this.layoutControlItem33.Location = new System.Drawing.Point(430, 48);
+			this.layoutControlItem33.Name = "layoutControlItem33";
+			this.layoutControlItem33.Size = new System.Drawing.Size(469, 24);
+			this.layoutControlItem33.Text = "+ Imp. de Ventas:";
+			this.layoutControlItem33.TextSize = new System.Drawing.Size(88, 13);
+			// 
+			// layoutControlItem35
+			// 
+			this.layoutControlItem35.Control = this.txtFleteTotal;
+			this.layoutControlItem35.Location = new System.Drawing.Point(430, 72);
+			this.layoutControlItem35.Name = "layoutControlItem35";
+			this.layoutControlItem35.Size = new System.Drawing.Size(469, 24);
+			this.layoutControlItem35.Text = "+ Flete:";
+			this.layoutControlItem35.TextSize = new System.Drawing.Size(88, 13);
+			// 
 			// layoutControlItem36
 			// 
 			this.layoutControlItem36.Control = this.txtSeguroTotal;
@@ -1164,14 +1222,13 @@
 			this.layoutControlItem40.Text = "= Saldo:";
 			this.layoutControlItem40.TextSize = new System.Drawing.Size(88, 13);
 			// 
-			// layoutControlItem27
+			// emptySpaceItem6
 			// 
-			this.layoutControlItem27.Control = this.txtFlete;
-			this.layoutControlItem27.Location = new System.Drawing.Point(0, 0);
-			this.layoutControlItem27.Name = "layoutControlItem27";
-			this.layoutControlItem27.Size = new System.Drawing.Size(277, 24);
-			this.layoutControlItem27.Text = "Flete:";
-			this.layoutControlItem27.TextSize = new System.Drawing.Size(88, 13);
+			this.emptySpaceItem6.AllowHotTrack = false;
+			this.emptySpaceItem6.Location = new System.Drawing.Point(277, 0);
+			this.emptySpaceItem6.Name = "emptySpaceItem6";
+			this.emptySpaceItem6.Size = new System.Drawing.Size(153, 299);
+			this.emptySpaceItem6.TextSize = new System.Drawing.Size(0, 0);
 			// 
 			// layoutControlItem32
 			// 
@@ -1181,42 +1238,6 @@
 			this.layoutControlItem32.Size = new System.Drawing.Size(469, 24);
 			this.layoutControlItem32.Text = "- Descuento:";
 			this.layoutControlItem32.TextSize = new System.Drawing.Size(88, 13);
-			// 
-			// layoutControlItem30
-			// 
-			this.layoutControlItem30.Control = this.txtAnticipos;
-			this.layoutControlItem30.Location = new System.Drawing.Point(0, 48);
-			this.layoutControlItem30.Name = "layoutControlItem30";
-			this.layoutControlItem30.Size = new System.Drawing.Size(277, 251);
-			this.layoutControlItem30.Text = "Anticipos:";
-			this.layoutControlItem30.TextSize = new System.Drawing.Size(88, 13);
-			// 
-			// layoutControlItem33
-			// 
-			this.layoutControlItem33.Control = this.txtImpuestoVenta;
-			this.layoutControlItem33.Location = new System.Drawing.Point(430, 48);
-			this.layoutControlItem33.Name = "layoutControlItem33";
-			this.layoutControlItem33.Size = new System.Drawing.Size(469, 24);
-			this.layoutControlItem33.Text = "+ Imp. de Ventas:";
-			this.layoutControlItem33.TextSize = new System.Drawing.Size(88, 13);
-			// 
-			// layoutControlItem28
-			// 
-			this.layoutControlItem28.Control = this.txtSeguro;
-			this.layoutControlItem28.Location = new System.Drawing.Point(0, 24);
-			this.layoutControlItem28.Name = "layoutControlItem28";
-			this.layoutControlItem28.Size = new System.Drawing.Size(277, 24);
-			this.layoutControlItem28.Text = "Seguro:";
-			this.layoutControlItem28.TextSize = new System.Drawing.Size(88, 13);
-			// 
-			// layoutControlItem35
-			// 
-			this.layoutControlItem35.Control = this.txtFleteTotal;
-			this.layoutControlItem35.Location = new System.Drawing.Point(430, 72);
-			this.layoutControlItem35.Name = "layoutControlItem35";
-			this.layoutControlItem35.Size = new System.Drawing.Size(469, 24);
-			this.layoutControlItem35.Text = "+ Flete:";
-			this.layoutControlItem35.TextSize = new System.Drawing.Size(88, 13);
 			// 
 			// tabFactura
 			// 
@@ -1711,14 +1732,6 @@
 			this.layoutControlItem4.Text = "Condición de Pago:";
 			this.layoutControlItem4.TextSize = new System.Drawing.Size(136, 13);
 			// 
-			// emptySpaceItem6
-			// 
-			this.emptySpaceItem6.AllowHotTrack = false;
-			this.emptySpaceItem6.Location = new System.Drawing.Point(277, 0);
-			this.emptySpaceItem6.Name = "emptySpaceItem6";
-			this.emptySpaceItem6.Size = new System.Drawing.Size(153, 299);
-			this.emptySpaceItem6.TextSize = new System.Drawing.Size(0, 0);
-			// 
 			// frmOrdenCompra
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1776,16 +1789,17 @@
 			((System.ComponentModel.ISupportInitialize)(this.txtFlete.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup4)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem31)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem27)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem28)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem30)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem33)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem35)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem36)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem38)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem39)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem40)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem27)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem6)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem32)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem30)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem33)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem28)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem35)).EndInit();
 			this.tabFactura.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl3)).EndInit();
 			this.layoutControl3.ResumeLayout(false);
@@ -1839,7 +1853,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem42)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem16)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem6)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -1983,5 +1996,6 @@
 		private DevExpress.XtraEditors.SimpleButton btnCargarPedido;
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem11;
 		private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem6;
+		private DevExpress.XtraBars.BarButtonItem btnRevertirAnulacion;
     }
 }

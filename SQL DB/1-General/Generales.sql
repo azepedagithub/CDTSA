@@ -146,3 +146,16 @@ ALTER TABLE [dbo].[globalCompania] CHECK CONSTRAINT [FK_globalCompania_globalTip
 GO
 
 
+CREATE FUNCTION dbo.[GetLastDayOftheMonth] 
+(
+	
+	@Fecha datetime
+)
+RETURNS datetime
+AS
+BEGIN
+DECLARE @Date DATETIME
+	SET @date = (SELECT DATEADD(s,-1,DATEADD(mm, DATEDIFF(m,0,@Fecha)+1,0)))
+	RETURN @Date
+END
+GO

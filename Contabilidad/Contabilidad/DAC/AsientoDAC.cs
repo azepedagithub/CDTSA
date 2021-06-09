@@ -48,10 +48,10 @@ namespace CG
             return DS;
         }
 
-        public static DataSet GetDataByAsiento(String Aseinto)
+        public static DataSet GetDataByAsiento(String Asiento)
         {
             DataSet DS = CreateDataSet();
-            oAdaptador.SelectCommand.Parameters["@Asiento"].Value = Aseinto;
+			oAdaptador.SelectCommand.Parameters["@Asiento"].Value = Asiento;
 
             oAdaptador.Fill(DS.Tables["Data"]);
             return DS;

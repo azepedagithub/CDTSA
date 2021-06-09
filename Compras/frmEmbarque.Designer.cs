@@ -39,6 +39,7 @@
 			this.btnAplicar = new DevExpress.XtraBars.BarButtonItem();
 			this.btnConfirmar = new DevExpress.XtraBars.BarButtonItem();
 			this.btnRecepcionMercaderia = new DevExpress.XtraBars.BarButtonItem();
+			this.btnDesconfirmar = new DevExpress.XtraBars.BarButtonItem();
 			this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
@@ -77,6 +78,7 @@
 			this.tabFactura = new DevExpress.XtraTab.XtraTabPage();
 			this.layoutControl3 = new DevExpress.XtraLayout.LayoutControl();
 			this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
+			this.btnReversionContable = new DevExpress.XtraEditors.SimpleButton();
 			this.linkAsientoMercaderia = new DevExpress.XtraEditors.HyperlinkLabelControl();
 			this.btnGenerarDocCPFactura = new DevExpress.XtraEditors.SimpleButton();
 			this.btnGuardarFactura = new DevExpress.XtraEditors.SimpleButton();
@@ -286,9 +288,10 @@
             this.btnEliminar,
             this.btnAplicar,
             this.btnConfirmar,
-            this.btnRecepcionMercaderia});
+            this.btnRecepcionMercaderia,
+            this.btnDesconfirmar});
 			this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-			this.ribbonControl1.MaxItemId = 4;
+			this.ribbonControl1.MaxItemId = 5;
 			this.ribbonControl1.Name = "ribbonControl1";
 			this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -358,6 +361,16 @@
 			this.btnRecepcionMercaderia.Name = "btnRecepcionMercaderia";
 			this.btnRecepcionMercaderia.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnRecepcionMercaderia_ItemClick);
 			// 
+			// btnDesconfirmar
+			// 
+			this.btnDesconfirmar.Caption = "Desconfirmar";
+			this.btnDesconfirmar.Enabled = false;
+			this.btnDesconfirmar.Glyph = ((System.Drawing.Image)(resources.GetObject("btnDesconfirmar.Glyph")));
+			this.btnDesconfirmar.Id = 4;
+			this.btnDesconfirmar.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("btnDesconfirmar.LargeGlyph")));
+			this.btnDesconfirmar.Name = "btnDesconfirmar";
+			this.btnDesconfirmar.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnDesconfirmar_ItemClick);
+			// 
 			// ribbonPage1
 			// 
 			this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -386,6 +399,7 @@
 			this.ribbonPageGroup1.ItemLinks.Add(this.btnAplicar);
 			this.ribbonPageGroup1.ItemLinks.Add(this.btnConfirmar);
 			this.ribbonPageGroup1.ItemLinks.Add(this.btnRecepcionMercaderia);
+			this.ribbonPageGroup1.ItemLinks.Add(this.btnDesconfirmar);
 			this.ribbonPageGroup1.Name = "ribbonPageGroup1";
 			// 
 			// layoutControl1
@@ -758,6 +772,7 @@
 			// 
 			// panelControl1
 			// 
+			this.panelControl1.Controls.Add(this.btnReversionContable);
 			this.panelControl1.Controls.Add(this.linkAsientoMercaderia);
 			this.panelControl1.Controls.Add(this.btnGenerarDocCPFactura);
 			this.panelControl1.Controls.Add(this.btnGuardarFactura);
@@ -797,6 +812,16 @@
 			this.panelControl1.Size = new System.Drawing.Size(786, 308);
 			this.panelControl1.TabIndex = 4;
 			// 
+			// btnReversionContable
+			// 
+			this.btnReversionContable.Image = ((System.Drawing.Image)(resources.GetObject("btnReversionContable.Image")));
+			this.btnReversionContable.Location = new System.Drawing.Point(263, 6);
+			this.btnReversionContable.Name = "btnReversionContable";
+			this.btnReversionContable.Size = new System.Drawing.Size(140, 23);
+			this.btnReversionContable.TabIndex = 5;
+			this.btnReversionContable.Text = "Anular Contabilización";
+			this.btnReversionContable.Click += new System.EventHandler(this.btnReversionContable_Click);
+			// 
 			// linkAsientoMercaderia
 			// 
 			this.linkAsientoMercaderia.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -812,9 +837,9 @@
 			this.btnGenerarDocCPFactura.Image = ((System.Drawing.Image)(resources.GetObject("btnGenerarDocCPFactura.Image")));
 			this.btnGenerarDocCPFactura.Location = new System.Drawing.Point(91, 6);
 			this.btnGenerarDocCPFactura.Name = "btnGenerarDocCPFactura";
-			this.btnGenerarDocCPFactura.Size = new System.Drawing.Size(141, 23);
+			this.btnGenerarDocCPFactura.Size = new System.Drawing.Size(166, 23);
 			this.btnGenerarDocCPFactura.TabIndex = 3;
-			this.btnGenerarDocCPFactura.Text = "Generar Documento";
+			this.btnGenerarDocCPFactura.Text = "Generar Cuentas x Pagar";
 			this.btnGenerarDocCPFactura.Click += new System.EventHandler(this.btnGenerarDocCPFactura_Click);
 			// 
 			// btnGuardarFactura
@@ -1999,6 +2024,8 @@
 				private DevExpress.XtraEditors.TextEdit txtMontoDesc;
 				private DevExpress.XtraEditors.LabelControl labelControl16;
 				private DevExpress.XtraEditors.TextEdit txtMontoImpuesto;
+				private DevExpress.XtraEditors.SimpleButton btnReversionContable;
+				private DevExpress.XtraBars.BarButtonItem btnDesconfirmar;
         
 
     }

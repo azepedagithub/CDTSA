@@ -1298,7 +1298,7 @@ Public Class frmtmpMain
 
     Public Sub MenuCatCliente()
         Try
-            Dim frm As New frmDetClientes()
+            Dim frm As New frmCategoriaCliente()
             frm.Show()
 
         Catch ex As Exception

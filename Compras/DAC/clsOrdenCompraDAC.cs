@@ -89,6 +89,24 @@ namespace CO.DAC
 
         }
 
+
+		public static long RevertirAnulacion(long IDOrdenCompra, SqlTransaction tran)
+		{
+			long result = -1;
+			String strSQL = "dbo.coRevertirAnulacionOrdenCompra";
+
+			SqlCommand oCmd = new SqlCommand(strSQL, Security.ConnectionManager.GetConnection());
+
+			oCmd.Parameters.Add(new SqlParameter("@IDOrdenCompra", IDOrdenCompra));
+
+			oCmd.CommandType = CommandType.StoredProcedure;
+			oCmd.Transaction = tran;
+			result = oCmd.ExecuteNonQuery();
+
+			return result;
+
+		}
+
 		
 
 		public static decimal GetImpuestoFromOC(long IDOrdenCompra)

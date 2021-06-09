@@ -233,6 +233,12 @@
     <Compile Include="frmParametros.Designer.cs">
       <DependentUpon>frmParametros.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmPedidoSugerido.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPedidoSugerido.Designer.cs">
+      <DependentUpon>frmPedidoSugerido.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmProveedor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -330,6 +336,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmParametros.resx">
       <DependentUpon>frmParametros.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPedidoSugerido.resx">
+      <DependentUpon>frmPedidoSugerido.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmProveedor.resx">
       <DependentUpon>frmProveedor.cs</DependentUpon>

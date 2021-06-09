@@ -82,13 +82,14 @@ namespace CO.DAC
         }
 
 
-		public static DataSet ObtenerPedidoSugerido(int IDProveedor, DateTime Fecha)
+		public static DataSet ObtenerPedidoSugerido(int IDProveedor, DateTime Fecha,int CantUmbral)
 		{
 			String strSQL = "dbo.coGetPedidoSugerido";
 
 			SqlCommand oCmd = new SqlCommand(strSQL, ConnectionManager.GetConnection());
 
 			oCmd.Parameters.Add(new SqlParameter("@IDProveedor", IDProveedor));
+			oCmd.Parameters.Add(new SqlParameter("@CantUmbral", CantUmbral));
 			oCmd.Parameters.Add(new SqlParameter("@Fecha", Fecha));
 
 			oCmd.CommandType = CommandType.StoredProcedure;
