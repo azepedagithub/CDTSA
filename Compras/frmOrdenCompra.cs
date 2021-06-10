@@ -1451,9 +1451,10 @@ namespace CO
 				{
 					DataRow nuevaFila = this.dtDetalleOrden.NewRow();
 					nuevaFila["IDProducto"] = fila["IDProducto"];
+					nuevaFila["IDUnidad"] = fila["IDUnidad"];
 					nuevaFila["DescrProducto"] = fila["DescrProducto"];
 					nuevaFila["Cantidad"] = fila["CantSugerida"];
-					nuevaFila["PrecioUnitario"] = fila["PrecioUnitario"];
+					nuevaFila["PrecioUnitario"] = fila["PrecioUnitCompra"];
 					nuevaFila["MontoDesc"] = 0;
 					//if (Convert.ToDecimal(fila["PorcDesc"]) > 0)
 					//{
@@ -1472,7 +1473,7 @@ namespace CO
 					nuevaFila["PorcDesc"] = 0;
 					nuevaFila["Comentario"] = "";
 					nuevaFila["Impuesto"] = 0;
-					nuevaFila["Monto"] = fila["Monto"];
+					nuevaFila["Monto"] = fila["MontoOrden"];
 					this.dtDetalleOrden.Rows.InsertAt(nuevaFila, 0);
 
 				}

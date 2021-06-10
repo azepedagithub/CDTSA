@@ -38,6 +38,7 @@ Partial Class frmRemision
         Me.GridColumn20 = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumnRemisionada = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumnPesoKG = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumnDescrtipoentrega = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumnTipoEntrega = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridProducto = New DevExpress.XtraGrid.GridControl()
         Me.GridViewProducto = New DevExpress.XtraGrid.Views.Grid.GridView()
@@ -60,7 +61,6 @@ Partial Class frmRemision
         Me.cmdRemisionar = New DevExpress.XtraEditors.SimpleButton()
         Me.GroupControl1 = New DevExpress.XtraEditors.GroupControl()
         Me.GroupControl2 = New DevExpress.XtraEditors.GroupControl()
-        Me.GridColumnDescrtipoentrega = New DevExpress.XtraGrid.Columns.GridColumn()
         CType(Me.DateEditHasta.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DateEditHasta.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DateEditDesde.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -222,6 +222,15 @@ Partial Class frmRemision
         Me.GridColumnPesoKG.Visible = True
         Me.GridColumnPesoKG.VisibleIndex = 6
         Me.GridColumnPesoKG.Width = 49
+        '
+        'GridColumnDescrtipoentrega
+        '
+        Me.GridColumnDescrtipoentrega.Caption = "TipoEntrega"
+        Me.GridColumnDescrtipoentrega.FieldName = "DescrEntrega"
+        Me.GridColumnDescrtipoentrega.Name = "GridColumnDescrtipoentrega"
+        Me.GridColumnDescrtipoentrega.Visible = True
+        Me.GridColumnDescrtipoentrega.VisibleIndex = 8
+        Me.GridColumnDescrtipoentrega.Width = 84
         '
         'GridColumnTipoEntrega
         '
@@ -452,15 +461,6 @@ Partial Class frmRemision
         Me.GroupControl2.Size = New System.Drawing.Size(368, 74)
         Me.GroupControl2.TabIndex = 60
         Me.GroupControl2.Text = "Acciones"
-        '
-        'GridColumnDescrtipoentrega
-        '
-        Me.GridColumnDescrtipoentrega.Caption = "TipoEntrega"
-        Me.GridColumnDescrtipoentrega.FieldName = "DescrEntrega"
-        Me.GridColumnDescrtipoentrega.Name = "GridColumnDescrtipoentrega"
-        Me.GridColumnDescrtipoentrega.Visible = True
-        Me.GridColumnDescrtipoentrega.VisibleIndex = 8
-        Me.GridColumnDescrtipoentrega.Width = 84
         '
         'frmRemision
         '

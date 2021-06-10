@@ -38,9 +38,9 @@ namespace CO
 			DateTime dtFecha = Convert.ToDateTime(this.dtpFecha.EditValue);
 			int CantUmbral = Convert.ToInt32(this.txtUmbralExistencia.EditValue);
 
-			DataTable dtPedidoSugerido = clsOrdenCompraDetalleDAC.ObtenerPedidoSugerido(IDProveedor, dtFecha, CantUmbral).Tables[0];
+			dtPedidoSugerido = clsOrdenCompraDetalleDAC.ObtenerPedidoSugerido(IDProveedor, dtFecha, CantUmbral).Tables[0];
 
-			this.dtgPedidoSugerido.DataSource = dtgPedidoSugerido;
+			this.dtgPedidoSugerido.DataSource = dtPedidoSugerido;
 
 			
 		}
@@ -49,6 +49,22 @@ namespace CO
 		{
 			this.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.Close();
+		}
+
+		private void btnQuitarMensaje_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+		{
+			DataRow[] rows;
+			rows = dtPedidoSugerido.Select("Mensaje <>''");  //'UserName' is ColumnName
+			foreach (DataRow row in rows)
+				dtPedidoSugerido.Rows.Remove(row);
+		}
+
+		private void btnEliminarLinea_Click(object sender, EventArgs e)
+		{
+			if (this.gridViewPedido.GetSelectedRows().Count() > 0) {
+				DataRow fila = ((DataRowView) this.gridViewPedido.GetRow(this.gridViewPedido.GetSelectedRows()[0])).Row;
+				dtPedidoSugerido.Rows.Remove(fila);
+			}
 		}
 	}
 }

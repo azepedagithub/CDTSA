@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmEmbarque));
-			DevExpress.XtraBars.Ribbon.ReduceOperation reduceOperation1 = new DevExpress.XtraBars.Ribbon.ReduceOperation();
-			DevExpress.XtraBars.Ribbon.ReduceOperation reduceOperation2 = new DevExpress.XtraBars.Ribbon.ReduceOperation();
+			DevExpress.XtraBars.Ribbon.ReduceOperation reduceOperation3 = new DevExpress.XtraBars.Ribbon.ReduceOperation();
+			DevExpress.XtraBars.Ribbon.ReduceOperation reduceOperation4 = new DevExpress.XtraBars.Ribbon.ReduceOperation();
 			this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
 			this.btnEditar = new DevExpress.XtraBars.BarButtonItem();
 			this.btnGuardar = new DevExpress.XtraBars.BarButtonItem();
@@ -174,6 +174,8 @@
 			this.layoutControlItem13 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.emptySpaceItem7 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
+			this.layoutControlItem17 = new DevExpress.XtraLayout.LayoutControlItem();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
 			this.layoutControl1.SuspendLayout();
@@ -275,6 +277,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem13)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem7)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem17)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// ribbonControl1
@@ -376,18 +379,18 @@
 			this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.ribbonPageGroup1});
 			this.ribbonPage1.Name = "ribbonPage1";
-			reduceOperation1.Behavior = DevExpress.XtraBars.Ribbon.ReduceOperationBehavior.Single;
-			reduceOperation1.Group = null;
-			reduceOperation1.ItemLinkIndex = 0;
-			reduceOperation1.ItemLinksCount = 0;
-			reduceOperation1.Operation = DevExpress.XtraBars.Ribbon.ReduceOperationType.LargeButtons;
-			reduceOperation2.Behavior = DevExpress.XtraBars.Ribbon.ReduceOperationBehavior.Single;
-			reduceOperation2.Group = null;
-			reduceOperation2.ItemLinkIndex = 0;
-			reduceOperation2.ItemLinksCount = 0;
-			reduceOperation2.Operation = DevExpress.XtraBars.Ribbon.ReduceOperationType.Gallery;
-			this.ribbonPage1.ReduceOperations.Add(reduceOperation1);
-			this.ribbonPage1.ReduceOperations.Add(reduceOperation2);
+			reduceOperation3.Behavior = DevExpress.XtraBars.Ribbon.ReduceOperationBehavior.Single;
+			reduceOperation3.Group = null;
+			reduceOperation3.ItemLinkIndex = 0;
+			reduceOperation3.ItemLinksCount = 0;
+			reduceOperation3.Operation = DevExpress.XtraBars.Ribbon.ReduceOperationType.LargeButtons;
+			reduceOperation4.Behavior = DevExpress.XtraBars.Ribbon.ReduceOperationBehavior.Single;
+			reduceOperation4.Group = null;
+			reduceOperation4.ItemLinkIndex = 0;
+			reduceOperation4.ItemLinksCount = 0;
+			reduceOperation4.Operation = DevExpress.XtraBars.Ribbon.ReduceOperationType.Gallery;
+			this.ribbonPage1.ReduceOperations.Add(reduceOperation3);
+			this.ribbonPage1.ReduceOperations.Add(reduceOperation4);
 			this.ribbonPage1.Text = "Opciones Generales";
 			// 
 			// ribbonPageGroup1
@@ -1149,6 +1152,7 @@
 			// 
 			// layoutControl4
 			// 
+			this.layoutControl4.Controls.Add(this.simpleButton1);
 			this.layoutControl4.Controls.Add(this.txtDocumentoOtrosPagos);
 			this.layoutControl4.Controls.Add(this.txtMontoOtrosPagos);
 			this.layoutControl4.Controls.Add(this.dtpFechaOtrosPagos);
@@ -1316,7 +1320,7 @@
 			this.btnEliminarOtrosGastos.Image = ((System.Drawing.Image)(resources.GetObject("btnEliminarOtrosGastos.Image")));
 			this.btnEliminarOtrosGastos.Location = new System.Drawing.Point(313, 12);
 			this.btnEliminarOtrosGastos.Name = "btnEliminarOtrosGastos";
-			this.btnEliminarOtrosGastos.Size = new System.Drawing.Size(76, 22);
+			this.btnEliminarOtrosGastos.Size = new System.Drawing.Size(75, 22);
 			this.btnEliminarOtrosGastos.StyleController = this.layoutControl4;
 			this.btnEliminarOtrosGastos.TabIndex = 15;
 			this.btnEliminarOtrosGastos.Text = "Eliminar";
@@ -1446,7 +1450,8 @@
             this.layoutControlItem23,
             this.layoutControlItem24,
             this.layoutControlItem25,
-            this.emptySpaceItem3});
+            this.emptySpaceItem3,
+            this.layoutControlItem17});
 			this.layoutControlGroup4.Location = new System.Drawing.Point(0, 0);
 			this.layoutControlGroup4.Name = "layoutControlGroup4";
 			this.layoutControlGroup4.Size = new System.Drawing.Size(810, 332);
@@ -1545,9 +1550,9 @@
 			// emptySpaceItem5
 			// 
 			this.emptySpaceItem5.AllowHotTrack = false;
-			this.emptySpaceItem5.Location = new System.Drawing.Point(381, 0);
+			this.emptySpaceItem5.Location = new System.Drawing.Point(468, 0);
 			this.emptySpaceItem5.Name = "emptySpaceItem5";
-			this.emptySpaceItem5.Size = new System.Drawing.Size(409, 26);
+			this.emptySpaceItem5.Size = new System.Drawing.Size(322, 26);
 			this.emptySpaceItem5.TextSize = new System.Drawing.Size(0, 0);
 			// 
 			// emptySpaceItem8
@@ -1566,7 +1571,7 @@
 			this.layoutControlItem23.Control = this.btnEliminarOtrosGastos;
 			this.layoutControlItem23.Location = new System.Drawing.Point(301, 0);
 			this.layoutControlItem23.Name = "layoutControlItem23";
-			this.layoutControlItem23.Size = new System.Drawing.Size(80, 26);
+			this.layoutControlItem23.Size = new System.Drawing.Size(79, 26);
 			this.layoutControlItem23.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem23.TextVisible = false;
 			// 
@@ -1762,6 +1767,25 @@
 			this.layoutControlItem2.Text = "Embarque:";
 			this.layoutControlItem2.TextSize = new System.Drawing.Size(84, 13);
 			// 
+			// simpleButton1
+			// 
+			this.simpleButton1.Image = ((System.Drawing.Image)(resources.GetObject("simpleButton1.Image")));
+			this.simpleButton1.Location = new System.Drawing.Point(392, 12);
+			this.simpleButton1.Name = "simpleButton1";
+			this.simpleButton1.Size = new System.Drawing.Size(84, 22);
+			this.simpleButton1.StyleController = this.layoutControl4;
+			this.simpleButton1.TabIndex = 18;
+			this.simpleButton1.Text = "Contabilizar";
+			// 
+			// layoutControlItem17
+			// 
+			this.layoutControlItem17.Control = this.simpleButton1;
+			this.layoutControlItem17.Location = new System.Drawing.Point(380, 0);
+			this.layoutControlItem17.Name = "layoutControlItem17";
+			this.layoutControlItem17.Size = new System.Drawing.Size(88, 26);
+			this.layoutControlItem17.TextSize = new System.Drawing.Size(0, 0);
+			this.layoutControlItem17.TextVisible = false;
+			// 
 			// frmEmbarque
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1876,6 +1900,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem13)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem7)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem17)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -2026,6 +2051,8 @@
 				private DevExpress.XtraEditors.TextEdit txtMontoImpuesto;
 				private DevExpress.XtraEditors.SimpleButton btnReversionContable;
 				private DevExpress.XtraBars.BarButtonItem btnDesconfirmar;
+				private DevExpress.XtraEditors.SimpleButton simpleButton1;
+				private DevExpress.XtraLayout.LayoutControlItem layoutControlItem17;
         
 
     }

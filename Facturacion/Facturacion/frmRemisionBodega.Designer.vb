@@ -22,7 +22,6 @@ Partial Class frmRemisionBodega
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmRemisionBodega))
         Me.LayoutControl1 = New DevExpress.XtraLayout.LayoutControl()
         Me.LayoutControl2 = New DevExpress.XtraLayout.LayoutControl()
@@ -90,10 +89,10 @@ Partial Class frmRemisionBodega
         Me.LayoutControlItem3 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.EmptySpaceItem2 = New DevExpress.XtraLayout.EmptySpaceItem()
         Me.EmptySpaceItem3 = New DevExpress.XtraLayout.EmptySpaceItem()
-        Me.BarManager1 = New DevExpress.XtraBars.BarManager(Me.components)
+        Me.BarManager1 = New DevExpress.XtraBars.BarManager()
         Me.Bar1 = New DevExpress.XtraBars.Bar()
-        Me.btnRefrescar = New DevExpress.XtraBars.BarButtonItem()
         Me.btnImprimir = New DevExpress.XtraBars.BarButtonItem()
+        Me.btnRefrescar = New DevExpress.XtraBars.BarButtonItem()
         Me.barDockControlTop = New DevExpress.XtraBars.BarDockControl()
         Me.barDockControlBottom = New DevExpress.XtraBars.BarDockControl()
         Me.barDockControlLeft = New DevExpress.XtraBars.BarDockControl()
@@ -852,14 +851,6 @@ Partial Class frmRemisionBodega
         Me.Bar1.LinksPersistInfo.AddRange(New DevExpress.XtraBars.LinkPersistInfo() {New DevExpress.XtraBars.LinkPersistInfo(Me.btnImprimir), New DevExpress.XtraBars.LinkPersistInfo(Me.btnRefrescar)})
         Me.Bar1.Text = "Tools"
         '
-        'btnRefrescar
-        '
-        Me.btnRefrescar.Caption = "Refrescar"
-        Me.btnRefrescar.Glyph = CType(resources.GetObject("btnRefrescar.Glyph"), System.Drawing.Image)
-        Me.btnRefrescar.Id = 1
-        Me.btnRefrescar.LargeGlyph = CType(resources.GetObject("btnRefrescar.LargeGlyph"), System.Drawing.Image)
-        Me.btnRefrescar.Name = "btnRefrescar"
-        '
         'btnImprimir
         '
         Me.btnImprimir.Caption = "Imprimir"
@@ -867,6 +858,14 @@ Partial Class frmRemisionBodega
         Me.btnImprimir.Id = 0
         Me.btnImprimir.LargeGlyph = CType(resources.GetObject("btnImprimir.LargeGlyph"), System.Drawing.Image)
         Me.btnImprimir.Name = "btnImprimir"
+        '
+        'btnRefrescar
+        '
+        Me.btnRefrescar.Caption = "Refrescar"
+        Me.btnRefrescar.Glyph = CType(resources.GetObject("btnRefrescar.Glyph"), System.Drawing.Image)
+        Me.btnRefrescar.Id = 1
+        Me.btnRefrescar.LargeGlyph = CType(resources.GetObject("btnRefrescar.LargeGlyph"), System.Drawing.Image)
+        Me.btnRefrescar.Name = "btnRefrescar"
         '
         'barDockControlTop
         '

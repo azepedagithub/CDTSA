@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmOrdenCompra));
-			DevExpress.XtraBars.Ribbon.ReduceOperation reduceOperation5 = new DevExpress.XtraBars.Ribbon.ReduceOperation();
-			DevExpress.XtraBars.Ribbon.ReduceOperation reduceOperation6 = new DevExpress.XtraBars.Ribbon.ReduceOperation();
+			DevExpress.XtraBars.Ribbon.ReduceOperation reduceOperation1 = new DevExpress.XtraBars.Ribbon.ReduceOperation();
+			DevExpress.XtraBars.Ribbon.ReduceOperation reduceOperation2 = new DevExpress.XtraBars.Ribbon.ReduceOperation();
 			this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
 			this.btnAgregar = new DevExpress.XtraBars.BarButtonItem();
 			this.btnEditar = new DevExpress.XtraBars.BarButtonItem();
@@ -94,8 +94,8 @@
 			this.layoutControlItem10 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem14 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
-			this.layoutControlItem12 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem11 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.layoutControlItem12 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.tabMontos = new DevExpress.XtraTab.XtraTabPage();
 			this.layoutControl4 = new DevExpress.XtraLayout.LayoutControl();
 			this.txtSaldo = new DevExpress.XtraEditors.TextEdit();
@@ -195,8 +195,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem14)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem12)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem11)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem12)).BeginInit();
 			this.tabMontos.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl4)).BeginInit();
 			this.layoutControl4.SuspendLayout();
@@ -405,12 +405,12 @@
 			this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.ribbonPageGroup1});
 			this.ribbonPage1.Name = "ribbonPage1";
-			reduceOperation5.Behavior = DevExpress.XtraBars.Ribbon.ReduceOperationBehavior.Single;
-			reduceOperation5.Group = null;
-			reduceOperation5.ItemLinkIndex = 0;
-			reduceOperation5.ItemLinksCount = 0;
-			reduceOperation5.Operation = DevExpress.XtraBars.Ribbon.ReduceOperationType.Gallery;
-			this.ribbonPage1.ReduceOperations.Add(reduceOperation5);
+			reduceOperation1.Behavior = DevExpress.XtraBars.Ribbon.ReduceOperationBehavior.Single;
+			reduceOperation1.Group = null;
+			reduceOperation1.ItemLinkIndex = 0;
+			reduceOperation1.ItemLinksCount = 0;
+			reduceOperation1.Operation = DevExpress.XtraBars.Ribbon.ReduceOperationType.Gallery;
+			this.ribbonPage1.ReduceOperations.Add(reduceOperation1);
 			this.ribbonPage1.Text = "Opciones Generales";
 			// 
 			// ribbonPageGroup1
@@ -876,12 +876,12 @@
 			this.ribbonPage2.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.ribbonPageGroup2});
 			this.ribbonPage2.Name = "ribbonPage2";
-			reduceOperation6.Behavior = DevExpress.XtraBars.Ribbon.ReduceOperationBehavior.Single;
-			reduceOperation6.Group = null;
-			reduceOperation6.ItemLinkIndex = 0;
-			reduceOperation6.ItemLinksCount = 0;
-			reduceOperation6.Operation = DevExpress.XtraBars.Ribbon.ReduceOperationType.Gallery;
-			this.ribbonPage2.ReduceOperations.Add(reduceOperation6);
+			reduceOperation2.Behavior = DevExpress.XtraBars.Ribbon.ReduceOperationBehavior.Single;
+			reduceOperation2.Group = null;
+			reduceOperation2.ItemLinkIndex = 0;
+			reduceOperation2.ItemLinksCount = 0;
+			reduceOperation2.Operation = DevExpress.XtraBars.Ribbon.ReduceOperationType.Gallery;
+			this.ribbonPage2.ReduceOperations.Add(reduceOperation2);
 			this.ribbonPage2.Text = "Opciones Generales";
 			// 
 			// ribbonPageGroup2
@@ -948,15 +948,6 @@
 			this.emptySpaceItem2.Size = new System.Drawing.Size(484, 26);
 			this.emptySpaceItem2.TextSize = new System.Drawing.Size(0, 0);
 			// 
-			// layoutControlItem12
-			// 
-			this.layoutControlItem12.Control = this.btnOpenTemplate;
-			this.layoutControlItem12.Location = new System.Drawing.Point(0, 0);
-			this.layoutControlItem12.Name = "layoutControlItem12";
-			this.layoutControlItem12.Size = new System.Drawing.Size(120, 26);
-			this.layoutControlItem12.TextSize = new System.Drawing.Size(0, 0);
-			this.layoutControlItem12.TextVisible = false;
-			// 
 			// layoutControlItem11
 			// 
 			this.layoutControlItem11.Control = this.btnCargarPedido;
@@ -965,6 +956,15 @@
 			this.layoutControlItem11.Size = new System.Drawing.Size(161, 26);
 			this.layoutControlItem11.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem11.TextVisible = false;
+			// 
+			// layoutControlItem12
+			// 
+			this.layoutControlItem12.Control = this.btnOpenTemplate;
+			this.layoutControlItem12.Location = new System.Drawing.Point(0, 0);
+			this.layoutControlItem12.Name = "layoutControlItem12";
+			this.layoutControlItem12.Size = new System.Drawing.Size(120, 26);
+			this.layoutControlItem12.TextSize = new System.Drawing.Size(0, 0);
+			this.layoutControlItem12.TextVisible = false;
 			// 
 			// tabMontos
 			// 
@@ -1771,8 +1771,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem14)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem12)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem11)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem12)).EndInit();
 			this.tabMontos.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.layoutControl4)).EndInit();
 			this.layoutControl4.ResumeLayout(false);
