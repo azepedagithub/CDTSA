@@ -249,9 +249,10 @@ Public Class frmPromocionesClientes
                 End If
 
                 AddDataToGrid(sTodos, "I")
-                'If Me.chkTodosProd.EditValue = True Then
-                '    Me.chkTodosProd.EditValue = False
-                'End If
+                If Me.chkTodosProd.Checked = True Then
+                    Me.chkTodosProd.Checked = False
+                    sTodos = "0"
+                End If
                 'If chkDejarProv.EditValue = False Then
                 '    Me.SearchLookUpEditProveedor.Text = ""
                 'End If

@@ -83,6 +83,9 @@ namespace MainMenu
 
 			this.treelstCuentasPorPagar.DoubleClick-=treelstCuentasPorPagar_DoubleClick;
 			this.treelstCuentasPorPagar.DoubleClick += treelstCuentasPorPagar_DoubleClick;
+
+            //this.treeLsttNomina.DoubleClick -= treelstNomina_DoubleClick;
+            //this.treeLsttNomina.DoubleClick += treelstNomina_DoubleClick;
             
         }
 
@@ -557,7 +560,27 @@ namespace MainMenu
 			}
 		}
 
+
+
+        void treelstNomina_DoubleClick(object sender, EventArgs e)
+        {
+            DevExpress.XtraTreeList.Nodes.TreeListNode node = default(DevExpress.XtraTreeList.Nodes.TreeListNode);
+            node = ((TreeList)sender).FocusedNode;
+            if (node.Tag == null)
+                return;
+            switch (node.Tag.ToString())
+            {
+                case "optConceptosNomina":
+                    Nomina.frmDetConceptos oConceptos = new Nomina.frmDetConceptos();
+                    oConceptos.ShowDialog();
+                    break;
+                
+            }
+        }
+
+
 		void treeListControlBancario_DoubleClick(object sender, EventArgs e)
+
 		{
 			DevExpress.XtraTreeList.Nodes.TreeListNode node = default(DevExpress.XtraTreeList.Nodes.TreeListNode);
 			node = ((TreeList)sender).FocusedNode;
@@ -961,9 +984,7 @@ namespace MainMenu
 					ofrmTipoAsiento.Show();
 					break;
 			}
-
-
-		}
+        }
 
 
 		private void treeListInventario_DoubleClick(object sender, EventArgs e)

@@ -1094,4 +1094,9 @@ Public Class frmAutorizaPedido
             End If
         End If
     End Sub
+
+
+    Private Sub txtCantBonifPrecio_EditValueChanged(sender As Object, e As EventArgs) Handles txtCantBonifPrecio.EditValueChanged
+
+    End Sub
 End Class

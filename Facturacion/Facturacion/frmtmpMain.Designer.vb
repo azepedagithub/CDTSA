@@ -369,7 +369,6 @@ Partial Class frmtmpMain
         'NavBarGroup1
         '
         Me.NavBarGroup1.Caption = "Cuentas por Cobrar"
-        Me.NavBarGroup1.Expanded = True
         Me.NavBarGroup1.GroupStyle = DevExpress.XtraNavBar.NavBarGroupStyle.SmallIconsText
         Me.NavBarGroup1.ItemLinks.AddRange(New DevExpress.XtraNavBar.NavBarItemLink() {New DevExpress.XtraNavBar.NavBarItemLink(Me.NavBarItemTransacciones), New DevExpress.XtraNavBar.NavBarItemLink(Me.NavBarItem9), New DevExpress.XtraNavBar.NavBarItemLink(Me.NavBarItemCheques), New DevExpress.XtraNavBar.NavBarItemLink(Me.NavBarItemAutorizaciones), New DevExpress.XtraNavBar.NavBarItemLink(Me.NavBarItemGrabDocAnulado), New DevExpress.XtraNavBar.NavBarItemLink(Me.NavBarItemReportes), New DevExpress.XtraNavBar.NavBarItemLink(Me.NavBarItemMovimientos), New DevExpress.XtraNavBar.NavBarItemLink(Me.NavBarItemDesglosePagos), New DevExpress.XtraNavBar.NavBarItemLink(Me.NavBarItemDocumentosporCobrar), New DevExpress.XtraNavBar.NavBarItemLink(Me.NavBarItemAnalisisVencimiento), New DevExpress.XtraNavBar.NavBarItemLink(Me.NavBarItem1), New DevExpress.XtraNavBar.NavBarItemLink(Me.NavBarItemParametros)})
         Me.NavBarGroup1.Name = "NavBarGroup1"
