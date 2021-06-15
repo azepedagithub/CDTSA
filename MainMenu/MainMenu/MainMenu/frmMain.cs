@@ -47,6 +47,7 @@ namespace MainMenu
             CreateNodes(treeListCuentasXCobrar);
             CreateNodes(treelstCompras);
             CreateNodes(treelstCuentasPorPagar);
+            CreateNodes(treelstNomina);
             this.Load += frmMain_Load;
             ShowPagesRibbonMan(false);
         }
@@ -84,6 +85,8 @@ namespace MainMenu
             this.treelstCuentasPorPagar.DoubleClick -= treelstCuentasPorPagar_DoubleClick;
             this.treelstCuentasPorPagar.DoubleClick += treelstCuentasPorPagar_DoubleClick;
 
+            this.treelstNomina.DoubleClick -= treelstNomina_DoubleClick;
+            this.treelstNomina.DoubleClick += treelstNomina_DoubleClick;
         }
 
         private void InicializarControles()
@@ -319,6 +322,11 @@ namespace MainMenu
                     addNodeToTree(tl, "Roles", "frmRoles", nodeSeguridad.Id);
                     addNodeToTree(tl, "Usuarios", "frmListadoUsuario", nodeSeguridad.Id);
                     break;
+                case "treelstNomina":
+                    TreeListNode nodeAdministracionNom = addNodeToTree(tl, "Administración", "", -1);
+                    addNodeToTree(tl, "Conceptos", "frmDetConceptos", nodeAdministracionNom.Id);
+                    
+                    break;
                 case "treeListControlBancario":
                     TreeListNode nodeCatalogoBanco = addNodeToTree(tl, "Catálogos", "", -1);
                     addNodeToTree(tl, "Tipo Cuenta", "frmTipoCuenta", nodeCatalogoBanco.Id);
@@ -463,6 +471,21 @@ namespace MainMenu
         #endregion
 
         #region TREELIST DOUBLECLICK
+        void treelstNomina_DoubleClick(object sender, EventArgs e)
+        {
+            DevExpress.XtraTreeList.Nodes.TreeListNode node = default(DevExpress.XtraTreeList.Nodes.TreeListNode);
+            node = ((TreeList)sender).FocusedNode;
+            if (node.Tag == null)
+                return;
+           
+            switch (node.Tag.ToString())
+            {
+                case "frmDetConceptos":
+                   Nomina.frmDetConceptos frmDetConceptos= new Nomina.frmDetConceptos();
+                   frmDetConceptos.Show();
+                    break;
+            }
+        }
         void treeListCuentasXCobrar_DoubleClick(object sender, EventArgs e)
         {
             DevExpress.XtraTreeList.Nodes.TreeListNode node = default(DevExpress.XtraTreeList.Nodes.TreeListNode);
